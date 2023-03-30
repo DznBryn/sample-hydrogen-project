@@ -2,7 +2,10 @@
 #! oxygen_storefront_id: 295085
 
 name: Storefront 295085
-on: [push]
+'on':
+  push:
+    branches:
+      - main
 
 permissions:
   contents: read
