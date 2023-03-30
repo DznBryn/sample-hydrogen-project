@@ -14,5 +14,5 @@ export async function loader({context}) {
 
 export default function CollectionPage() {
   const {collections} = useLoaderData();
-  return 
+  return collections;
 }
