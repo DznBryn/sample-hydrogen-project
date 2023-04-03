@@ -35,9 +35,9 @@ export async function loader({context}) {
 }
 
 export default function App() {
-  // const data = useLoaderData();
+  const data = useLoaderData();
 
-  // const {name} = data.layout.shop;
+  const {name} = data.layout.shop;
 
   return (
     <html lang="en">
@@ -47,8 +47,7 @@ export default function App() {
       </head>
       <body>
         <h1>Hello, {name}</h1>
-        <p>This is a custom storefront powered by Hydrogen</p>
-        <p>And with this paragraph we are testing git actions to deploy only after a merged PR</p>
+        <br />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
