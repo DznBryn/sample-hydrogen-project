@@ -45,3 +45,54 @@ export const PRODUCTS_QUERY = `#graphql
   }
 }
 `;
+
+export const PRODUCT_QUERY = `#graphql
+  query Product($handle: String!) {
+  product(handle: $handle) {
+    id
+    title
+    availableForSale
+    description
+    descriptionHtml
+    handle
+    images(first: 50) {
+      nodes {
+        id
+        url
+        altText
+        height
+        width
+      }
+    }
+    isGiftCard
+  	priceRange {
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    tags
+    totalInventory
+    variants(first:100) {
+      nodes {
+        id
+        title
+        availableForSale
+        price {
+          amount
+        }
+        image {
+          url
+          altText
+          width
+          height
+        }
+      }
+    }
+  }
+}
+`;
