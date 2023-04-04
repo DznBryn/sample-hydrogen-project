@@ -47,8 +47,7 @@ export default function App() {
       </head>
       <body>
         <h1>Hello, {name}</h1>
-        <p>This is a custom storefront powered by Hydrogen</p>
-        <p>And with this paragraph we are testing git actions to deploy only after a merged PR</p>
+        <br />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
