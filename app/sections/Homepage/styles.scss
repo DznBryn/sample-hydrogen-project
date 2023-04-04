@@ -1,0 +1,17 @@
+$color: #48c6d9;
+
+.mainContainer
+{
+    border: 1px solid gray;
+    padding: 5px;
+
+    .title{
+        color: $color;
+        margin: 0;
+    }
+
+    .content{
+        font-style: italic;
+    }
+
+}
