@@ -1,3 +1,5 @@
+import Homepage from '../sections/Homepage';
+
 export const meta = () => {
   return {
     title: 'Hydrogen',
@@ -7,7 +9,7 @@ export const meta = () => {
 export default function Index() {
   return (
     <div>
-      <h3>Hello from the home page!</h3>
+      <Homepage />
     </div>
   );
 }
