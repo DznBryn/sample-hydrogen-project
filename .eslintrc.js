@@ -18,6 +18,7 @@ module.exports = {
   rules: {
     'react-hooks/exhaustive-deps': 'off',
     'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
     'no-whitespace-before-property': 'error',
     'no-template-curly-in-string': 'error',
     'array-callback-return': 'error',
