@@ -43,7 +43,7 @@ const Homepage = ({prop1, prop2}) => {
 
   return (
     <section className="mainContainer">
-      <h3 className="title">{getTitle('Welcome to our site', (Math.floor(Math.random() * 1000) + 1))}</h3>
+      <h3 className="title">{getTitle('Welcome to our site', 2)}</h3>
       <p className="content">{getCopy()}</p>
     </section>
   );
