@@ -2,8 +2,8 @@ import Homepage from '../sections/Homepage';
 
 export const meta = () => {
   return {
-    title: 'Hydrogen',
-    description: 'A custom storefront powered by Hydrogen',
+    title: 'TULA Skincare: Probiotic Skin Care Products',
+    description: 'Clean + effective probiotic skincare products made with superfoods.',
   };
 };
 export default function Index() {
