@@ -1,0 +1,13 @@
+.mainContainer {
+  border: 1px solid gray;
+  padding: 5px;
+}
+.mainContainer .title {
+  color: #48c6d9;
+  margin: 0;
+}
+.mainContainer .content {
+  font-style: italic;
+}
+
+/*# sourceMappingURL=styles.css.map */
