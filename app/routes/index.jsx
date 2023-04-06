@@ -1,4 +1,4 @@
-import Homepage from '../sections/Homepage';
+import Homepage from '../modules/homepage';
 
 export const meta = () => {
   return {
