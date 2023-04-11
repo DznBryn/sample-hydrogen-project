@@ -7,8 +7,8 @@ import {
   useLoaderData,
 } from '@remix-run/react';
 import styles from './styles/app.css';
-import favicon from '../public/favicon.svg';
-import {links as homePageStyles} from './sections/Homepage';
+import favicon from '../public/favicon.ico';
+import {links as homePageStyles} from './modules/homepage';
 
 export const links = () => {
   return [
