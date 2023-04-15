@@ -33,17 +33,13 @@ export const loader = async ({ params, context }) => {
 
 export default function PDP() {
   const { handle, product } = useLoaderData();
-  console.log('SOmething is ',product.variants[0].id)
   return product ? (
     <div className="outline outline-2 outline-blue-300 p-4 my-2">
       <summary>
         Collection: {product?.title ?? ''} ({handle})
       </summary>
       <div>
-        
         <ProductForm variantId={product.variants[0].id} />
-
-
       </div>
       <pre>{JSON.stringify(product, null, 2)}</pre>
     </div>
@@ -57,7 +53,6 @@ export function ProductForm({ variantId }) {
   const selectedLocale = root?.data?.selectedLocale;
   const fetcher = useFetcher();
   const lines = [{ merchandiseId: variantId, quantity: 1 }];
-  console.log('SHOW FORMS: ', { root, variantId, fetcher });
 
   return (
     <fetcher.Form action="/cart" method="post">
@@ -74,39 +69,3 @@ export function ProductForm({ variantId }) {
     </fetcher.Form>
   );
 }
-
-// export function AddToCartButton({
-//   children,
-//   lines,
-//   className = '',
-//   variant = 'primary',
-//   width = 'full',
-//   disabled,
-//   analytics,
-//   ...props
-// }) {
-//   const [root] = useMatches();
-//   const selectedLocale = root?.data?.selectedLocale;
-//   const fetcher = useFetcher();
-//   const fetcherIsNotIdle = fetcher.state !== 'idle';
-
-//   return (
-//     <fetcher.Form action="/cart" method="post">
-//       <input type="hidden" name="cartAction" value={CartAction.ADD_TO_CART} />
-//       <input type="hidden" name="countryCode" value={selectedLocale.country} />
-//       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-//       <input type="hidden" name="analytics" value={JSON.stringify(analytics)} />
-//       <Button
-//         as="button"
-//         type="submit"
-//         width={width}
-//         variant={variant}
-//         className={className}
-//         disabled={disabled ?? fetcherIsNotIdle}
-//         {...props}
-//       >
-//         {children}
-//       </Button>
-//     </fetcher.Form>
-//   );
-// }
