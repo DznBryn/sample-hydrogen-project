@@ -13,8 +13,6 @@ export async function action({ request, context }) {
     session.get('customerAccessToken'),
   ]);
 
-  console.log("SESSION: ", request.formData())
-
   let cartId = storedCartId;
   let status = 200;
   let result;
@@ -38,7 +36,6 @@ export async function action({ request, context }) {
         storefront,
       });
     }
-
     cartId = result.cart.id;
   }
 
@@ -69,7 +66,7 @@ export async function action({ request, context }) {
 
 export async function loader({ context }) {
   const cartId = await context.session.get('cartId');
-  console.log(cartId)
+  
   const cart = cartId ? (
     await context.storefront.query(CART_QUERY, {
       variables: {
@@ -78,18 +75,19 @@ export async function loader({ context }) {
         language: context.stroefront?.i18n?.language,
       },
       cache: context.storefront.CacheNone(),
-    }).cart
+    })
   ) : null;
-  console.log(cart)
-  return json({ cart });
+
+  return json({ cart: cart.cart });
 }
 
 export default function Cart() {
   const { cart } = useLoaderData();
-  const [root] = useMatches()
-  console.log(cart, root)
+
   return cart?.totalQuantity > 0 ? (
-    <div></div>
+    <div>
+      <pre>{JSON.stringify(cart, null, 2)}</pre>
+    </div>
   ) : (
     <div className="">
       <h2 className="">
