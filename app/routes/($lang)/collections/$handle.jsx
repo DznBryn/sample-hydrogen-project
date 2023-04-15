@@ -26,7 +26,7 @@ export const loader = async ({params, context}) => {
 };
 export default function PLP() {
   const {handle, collection} = useLoaderData();
-  return collection.title != '' ? (
+  return collection.title !== '' ? (
     <div className="outline outline-2 outline-blue-300 p-4 my-2">
       <summary>
         Collection: {collection.title} ({handle})
