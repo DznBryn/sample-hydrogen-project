@@ -67,7 +67,7 @@ export async function action({ request, context }) {
 export async function loader({ context }) {
   const cartId = await context.session.get('cartId');
   
-  const cart = cartId ? (
+  const cartData = cartId ? (
     await context.storefront.query(CART_QUERY, {
       variables: {
         cartId,
@@ -78,7 +78,7 @@ export async function loader({ context }) {
     })
   ) : null;
 
-  return json({ cart: cart.cart });
+  return json({ cart: cartData.cart });
 }
 
 export default function Cart() {
