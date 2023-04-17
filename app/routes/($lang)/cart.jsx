@@ -1,4 +1,4 @@
-import { Link, useLoaderData, useMatches } from '@remix-run/react';
+import { Link, useLoaderData} from '@remix-run/react';
 import { json } from '@shopify/remix-oxygen';
 import { cartAddItems, cartCreate, cartRemoveItems } from '~/utils/mutations/cart';
 import { CART_QUERY } from '~/utils/queries/cart';

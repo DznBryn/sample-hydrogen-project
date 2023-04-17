@@ -48,6 +48,7 @@ export default function PDP() {
   );
 }
 
+// @TODO: ProductForm must be converted in AddToCart global component
 export function ProductForm({ variantId }) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
