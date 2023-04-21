@@ -1,3 +1,5 @@
+import { MONEY_FRAGMENT } from '../fragments';
+
 export const COLLECTIONS_QUERY = `#graphql
   query Collections {
     collections(first: 10) {
@@ -31,12 +33,10 @@ export const PRODUCTS_QUERY = `#graphql
         }
 				priceRange{
           minVariantPrice {
-            amount
-            currencyCode
+            ...MoneyFragment
           }
           maxVariantPrice {
-            amount
-            currencyCode
+            ...MoneyFragment
           }
         }
         availableForSale
@@ -44,6 +44,7 @@ export const PRODUCTS_QUERY = `#graphql
     }
   }
 }
+${MONEY_FRAGMENT}
 `;
 
 export const PRODUCT_QUERY = `#graphql
@@ -67,12 +68,10 @@ export const PRODUCT_QUERY = `#graphql
     isGiftCard
   	priceRange {
       minVariantPrice {
-        amount
-        currencyCode
+        ...MoneyFragment
       }
       maxVariantPrice {
-        amount
-        currencyCode
+        ...MoneyFragment
       }
     }
     tags
@@ -95,4 +94,5 @@ export const PRODUCT_QUERY = `#graphql
     }
   }
 }
+${MONEY_FRAGMENT}
 `;

@@ -1,4 +1,4 @@
-import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from './fragments';
+import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from '../fragments';
 
 const CART_FRAGMENT = `#graphql
   fragment CartFragment on Cart {

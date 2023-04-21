@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { flattenConnection } from '@shopify/hydrogen-react';
 import { useLoaderData } from 'react-router';
-import { PRODUCT_QUERY } from '~/utils/queries/collections';
+import { PRODUCT_QUERY } from '~/utils/graphql/queries/collections';
 import { json } from '@shopify/remix-oxygen';
 import { useFetcher, useMatches } from '@remix-run/react';
 
@@ -48,6 +48,7 @@ export default function PDP() {
   );
 }
 
+// @TODO: ProductForm must be converted in AddToCart global component
 export function ProductForm({ variantId }) {
   const [root] = useMatches();
   const selectedLocale = root?.data?.selectedLocale;
