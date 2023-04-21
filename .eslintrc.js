@@ -8,6 +8,9 @@ module.exports = {
     'eslint:recommended',
     'plugin:react/recommended',
   ],
+  settings: {
+    react: {version: 'detect',},
+  },
   parserOptions: {
     'ecmaVersion': 'latest',
     'sourceType': 'module'

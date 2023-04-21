@@ -17,7 +17,7 @@ export async function loader({ request, context, params }) {
   customer.addresses = flattenConnection(customer.addresses);
   customer.orders = flattenConnection(customer.orders);
 
-  const header = customer ? customer?.firstName ? `Welcome, ${customer.firstName}`: 'Welcome to your account' : 'Account Page'
+  const header = customer ? customer?.firstName ? `Welcome, ${customer.firstName}`: 'Welcome to your account' : 'Account Page';
 
   return defer(
     {

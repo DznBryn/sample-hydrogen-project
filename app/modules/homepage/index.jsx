@@ -10,7 +10,7 @@ export const links = () => {
  * @param {string} props.prop1 - Property 1.
  * @param {number} props.prop2 - Property 2.
  */
-const Homepage = ({prop1, prop2}) => {
+const Homepage = () => {
 
   /**
    * page's copy

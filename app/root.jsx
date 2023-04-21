@@ -5,11 +5,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from '@remix-run/react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
-import { links as homePageStyles } from './modules/homepage';
+import { links as homePageStyles } from './modules/Homepage';
 import { defer } from '@shopify/remix-oxygen';
 import { getCart } from './utils/graphql/queries/cart';
 
@@ -52,9 +51,6 @@ export async function loader({ context }) {
 }
 
 export default function App() {
-  const data = useLoaderData();
-
-  const { name } = data.layout.shop;
   const links = [
     {
       name: 'Account Page',
