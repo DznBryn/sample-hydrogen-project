@@ -1,7 +1,7 @@
 import { Link, useLoaderData} from '@remix-run/react';
 import { json } from '@shopify/remix-oxygen';
-import { cartAddItems, cartCreate, cartRemoveItems } from '~/utils/mutations/cart';
-import { CART_QUERY } from '~/utils/queries/cart';
+import { cartAddItems, cartCreate, cartRemoveItems } from '~/utils/graphql/mutations/cart';
+import { CART_QUERY } from '~/utils/graphql/queries/cart';
 
 export async function action({ request, context }) {
   const { session, storefront } = context;

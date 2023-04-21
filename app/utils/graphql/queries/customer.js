@@ -1,5 +1,5 @@
 import logout from '~/routes/($lang)/account/__private/logout';
-import {MONEY_FRAGMENT} from './fragments';
+import {MONEY_FRAGMENT} from '../fragments';
 
 export async function getCustomer(context, customerAccessToken) {
   const {storefront} = context;

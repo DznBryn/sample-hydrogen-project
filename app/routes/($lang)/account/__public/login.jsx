@@ -1,11 +1,11 @@
-import { Form, useActionData } from '@remix-run/react';
+import { Form, Link, useActionData } from '@remix-run/react';
 import { json, redirect } from '@shopify/remix-oxygen';
-import { login } from '~/utils/mutations/customer';
+import { login } from '~/utils/graphql/mutations/customer';
 
 export async function action({ request, context, params }) {
+  const { session, storefront } = context;
   const formData = await request.formData();
   const { email, password } = Object.fromEntries(formData);
-  const { session, storefront } = context;
 
   if (!email || !password || typeof email !== 'string' || typeof password !== 'string') {
     return json({ message: 'Invalid Credentials.' }, { status: 400 });
@@ -48,6 +48,7 @@ export default function LoginPage() {
   console.log('Your response from Form data:', actionData);
   return (
     <div>
+      <h1>Login</h1>
       <Form
         method='post'
         noValidate
@@ -80,6 +81,8 @@ export default function LoginPage() {
           Login
         </button>
       </Form>
+      <br/>
+      <Link to={'/account/register'}>sign up</Link>
     </div>
   );
 }
