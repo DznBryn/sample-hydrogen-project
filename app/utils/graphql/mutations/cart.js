@@ -1,3 +1,5 @@
+import {json} from '@shopify/remix-oxygen';
+
 export async function cartCreate({input, storefront}) {
   const {cartCreate} = await storefront.mutate(CREATE_CART_MUTATION, {
     variables: {input},
@@ -29,6 +31,42 @@ export async function cartRemoveItems({cartId, lineIds, storefront}) {
     throw new Error('No data returned from remove lines mutation');
   }
   return cartLinesRemove;
+}
+
+export async function cartUpdate({cartId, lines, storefront}) {
+  const {cartLinesUpdate} = await storefront.mutate(LINES_CART_FRAGMENT, {
+    variables: {
+      cartId,
+      lines,
+    },
+  });
+
+  if (!cartLinesUpdate) {
+    throw new Error('No data returned from update line items mutation');
+  }
+
+  return cartLinesUpdate;
+}
+
+export async function cartUpdateCustomerIdentity({
+  cartId,
+  buyerIdentity,
+  storefront,
+}) {
+  const {cartBuyerIdentityUpdate} = await storefront.mutate(UPDATE_CART_BUYER, {
+    variables: {
+      cartId,
+      buyerIdentity,
+    },
+  });
+
+  if (!cartBuyerIdentityUpdate) {
+    throw new Error(
+      'No data returned from cart buyer identity update mutation',
+    );
+  }
+
+  return cartBuyerIdentityUpdate;
 }
 
 const USER_ERROR_FRAGMENT = `#graphql
@@ -102,4 +140,46 @@ export const REMOVE_LINE_ITEMS_MUTATION = `#graphql
       }
     }
   }
+`;
+
+export const UPDATE_LINE_ITEMS_MUTATION = `#graphql
+  mutation ($cartId: ID!, $lines: [CartLineUpdateInput!]!, $language: LanguageCode, $country: CountryCode)
+  @inContext(country: $country, language: $language){
+    cartLinesUpdate(cartId: $cartId, lines: $lines){
+      cart {
+        ...CartLinesFragment
+      },
+      userErrors {
+        ...ErrorFragment
+      }
+    }
+  }
+  ${LINES_CART_FRAGMENT}
+  ${USER_ERROR_FRAGMENT}
+`;
+
+export const UPDATE_CART_BUYER = `#graphql
+  mutation(
+    $cartId: ID!
+    $buyerIdentity: CartBuyerIdentityInput!
+    $country: CountryCode = ZZ
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language){
+    cartBuyerIdentityUpdate(cartId: $cartId, buyerIdentity: $buyerIdentity) {
+      cart {
+        id
+        buyerIdentity {
+          email
+          countryCode
+          phone        
+        }
+      }
+      userErrors {
+        message
+        field
+        code
+      }
+    }
+  }
+
 `;
