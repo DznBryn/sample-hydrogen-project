@@ -1,5 +1,3 @@
-import {json} from '@shopify/remix-oxygen';
-
 export async function cartCreate({input, storefront}) {
   const {cartCreate} = await storefront.mutate(CREATE_CART_MUTATION, {
     variables: {input},
