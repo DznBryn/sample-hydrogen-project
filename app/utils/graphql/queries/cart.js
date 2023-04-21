@@ -1,4 +1,22 @@
-import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from '../fragments';
+import {json} from '@shopify/remix-oxygen';
+import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
+
+export async function getCart(context) {
+  const cartId = await context.session.get('cartId');
+
+  const cartData = cartId
+    ? await context.storefront.query(CART_QUERY, {
+      variables: {
+        cartId,
+        country: context.storefront?.i18n?.country,
+        language: context.stroefront?.i18n?.language,
+      },
+      cache: context.storefront.CacheNone(),
+    })
+    : null;
+
+  return json({cart: cartData.cart});
+}
 
 const CART_FRAGMENT = `#graphql
   fragment CartFragment on Cart {

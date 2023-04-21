@@ -1,7 +1,7 @@
-import { Link, useLoaderData} from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import { json } from '@shopify/remix-oxygen';
-import { cartAddItems, cartCreate, cartRemoveItems } from '~/utils/graphql/mutations/cart';
-import { CART_QUERY } from '~/utils/graphql/queries/cart';
+import { cartAddItems, cartCreate, cartRemoveItems, cartUpdate, cartUpdateCustomerIdentity } from '~/utils/graphql/mutations/cart';
+import { getCart } from '~/utils/graphql/queries/cart';
 
 export async function action({ request, context }) {
   const { session, storefront } = context;
@@ -19,7 +19,11 @@ export async function action({ request, context }) {
 
   const cartAction = formData.get('cartAction');
   const countryCode = formData?.get('countryCode') ?? null;
-
+  
+  if(!cartAction || cartAction === '') {
+    return json({ message: 'Cart action not found' }, { status: 400 });
+  }
+  
   if (cartAction === 'ADD_TO_CART') {
     const lines = formData.get('lines') ? JSON.parse(String(formData.get('lines')))
       : [];
@@ -36,7 +40,7 @@ export async function action({ request, context }) {
         storefront,
       });
     }
-    cartId = result.cart.id;
+    cartId = result?.cart?.id;
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
@@ -54,31 +58,73 @@ export async function action({ request, context }) {
       storefront,
     });
 
-    cartId = result.cart.id;
+    cartId = result?.cart?.id;
+  }
+
+  if (cartAction === 'UPDATE_CART') {
+    const updatesLines = formData.get('lines') ? JSON.parse(String(formData.get('lines'))) : [];
+
+    if (updatesLines.length === 0) {
+      return json({ message: 'No lines to update' }, { status: 400 });
+    }
+
+    result = await cartUpdate({
+      cartId,
+      lines: updatesLines,
+      storefront
+    });
+
+    cartId = result?.cart?.id;
+  }
+
+  if (cartAction === 'UPDATE_BUYER_IDENTITY') {
+    const customer = formData.get('buyerIdentity') ? JSON.parse(String(formData.get('buyerIdentity'))) : {};
+    console.log('BUYER ID:', customer);
+
+    result = cartId ? await cartUpdateCustomerIdentity({
+      cartId,
+      buyerIdentity: {
+        ...customer,
+        customerAccessToken
+      }
+    }) : await cartCreate({
+      input: {
+        buyerIdentity: {
+          ...customer,
+          customerAccessToken
+        }
+      },
+      storefront
+    });
+
+    cartId = result?.cart?.id;
   }
 
   session.set('cartId', cartId);
   headers.set('Set-Cookie', await session.commit());
+
+  const redirectTo = formData.get('redirectTo') ?? null;
+
+  const isLocalPath = (url) => {
+    try {
+      new URL(url);
+    } catch (error) {
+      return true;
+    }
+    return false;
+  };
+
+  if (typeof redirectTo === 'string' && isLocalPath(redirectTo)) {
+    status = 303;
+    headers.set('Location', redirectTo);
+  }
 
   const { cart, errors } = result;
   return json({ cart, errors }, { status, headers });
 }
 
 export async function loader({ context }) {
-  const cartId = await context.session.get('cartId');
-  
-  const cartData = cartId ? (
-    await context.storefront.query(CART_QUERY, {
-      variables: {
-        cartId,
-        country: context.storefront?.i18n?.country,
-        language: context.stroefront?.i18n?.language,
-      },
-      cache: context.storefront.CacheNone(),
-    })
-  ) : null;
-
-  return json({ cart: cartData.cart });
+  return await getCart(context);
 }
 
 export default function Cart() {
