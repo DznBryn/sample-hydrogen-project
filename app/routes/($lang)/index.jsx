@@ -1,5 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
-import { client } from 'sanity.js';
+
+import apolloClient from '~/utils/graphql/sanity/apolloClient';
+import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
 
 import Homepage from '../../modules/Homepage';
 
@@ -11,19 +13,21 @@ export const meta = () => {
 };
 
 export const loader = async () => {
-  const query = '*[_type == "pet"]';
-  const pets = await client.fetch(query);
 
-  return { pets };
+  const result = await apolloClient.query({ query: GET_ALL_PETS });
+  const { allPet } = result.data;
+
+  return { allPet };
+
 };
 
 export default function Index() {
 
-  const { pets } = useLoaderData();
+  const { allPet } = useLoaderData();
 
   return (
     <div>
-      <Homepage pets={pets}/>
+      <Homepage pets={allPet} />
     </div>
   );
 }

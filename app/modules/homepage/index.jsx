@@ -11,7 +11,7 @@ const Homepage = ({pets}) => {
       <p className="content">This is the home page.</p>
       <p><b>Sanity Data Fetch Test:</b></p>
       <ol>
-        {pets.map(pet => <li key={pet}>{pet.name}</li>)}
+        {pets.map(pet => <li key={pet.name}>{pet.name}</li>)}
       </ol>
     </section>
   );
