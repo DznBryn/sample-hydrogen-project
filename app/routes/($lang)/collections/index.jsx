@@ -1,6 +1,6 @@
 import {useLoaderData} from '@remix-run/react';
 import {flattenConnection} from '@shopify/hydrogen-react';
-import { COLLECTIONS_QUERY } from '~/utils/graphql/queries/collections';
+import { COLLECTIONS_QUERY } from '~/utils/graphql/shopify/queries/collections';
 
 export const meta = () => {
   return {
