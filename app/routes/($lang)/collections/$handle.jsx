@@ -1,6 +1,6 @@
 import {flattenConnection} from '@shopify/hydrogen-react';
 import {useLoaderData} from 'react-router';
-import {PRODUCTS_QUERY} from '~/utils/graphql/queries/collections';
+import {PRODUCTS_QUERY} from '~/utils/graphql/shopify/queries/collections';
 import {json} from '@shopify/remix-oxygen';
 
 export const loader = async ({params, context}) => {

@@ -1,6 +1,6 @@
 import { Form, Link, useActionData } from '@remix-run/react';
 import { json, redirect } from '@shopify/remix-oxygen';
-import { login } from '~/utils/graphql/mutations/customer';
+import { login } from '~/utils/graphql/shopify/mutations/customer';
 
 export async function action({ request, context, params }) {
   const { session, storefront } = context;

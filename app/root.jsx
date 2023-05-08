@@ -10,7 +10,7 @@ import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { links as homePageStyles } from './modules/Homepage';
 import { defer } from '@shopify/remix-oxygen';
-import { getCart } from './utils/graphql/queries/cart';
+import { getCart } from './utils/graphql/shopify/queries/cart';
 
 export const links = () => {
   return [
@@ -77,7 +77,7 @@ export default function App() {
       </head>
       <body>
         {
-          links.map(item => <><Link to={item.link} key={item.link}>{item.name}</Link><br/></>)
+          links.map(item => <p key={item.link}><Link to={item.link}>{item.name}</Link></p>)
         }
         <Outlet />
         <ScrollRestoration />

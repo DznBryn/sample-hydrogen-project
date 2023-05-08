@@ -13,10 +13,19 @@
     "g": "shopify hydrogen generate",
     "generate-doc": "npx jsdoc -c jsdoc.config.json"
   },
-  "lint-staged": {"**/*.{js,jsx,ts,tsx}": ["npm run lint"]},
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npm run lint"
+    ]
+  },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
+    "@apollo/client": "^3.7.14",
+    "@portabletext/react": "^3.0.0",
     "@remix-run/react": "1.14.0",
+    "@sanity/client": "^6.0.1",
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/preview-kit": "^1.5.2",
     "@shopify/cli": "3.29.0",
     "@shopify/cli-hydrogen": "^4.0.9",
     "@shopify/hydrogen": "^2023.1.6",

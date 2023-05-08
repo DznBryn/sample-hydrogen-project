@@ -1,6 +1,6 @@
 import { json, redirect } from '@shopify/remix-oxygen';
 import React from 'react';
-import { activateAccount } from '~/utils/graphql/mutations/customer';
+import { activateAccount } from '~/utils/graphql/shopify/mutations/customer';
 
 export async function action({ request, context, params }) {
   if (!params?.id || !params?.activationToken || typeof params.id !== 'string' || typeof params.activationToken) {

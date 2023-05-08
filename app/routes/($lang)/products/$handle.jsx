@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { flattenConnection } from '@shopify/hydrogen-react';
 import { useLoaderData } from 'react-router';
-import { PRODUCT_QUERY } from '~/utils/graphql/queries/collections';
+import { PRODUCT_QUERY } from '~/utils/graphql/shopify/queries/collections';
 import { json } from '@shopify/remix-oxygen';
 import { useFetcher, useMatches } from '@remix-run/react';
 
