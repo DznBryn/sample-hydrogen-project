@@ -8,7 +8,7 @@ import {
 } from '@remix-run/react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
-import { links as homePageStyles } from './modules/Homepage';
+import { links as homePageStyles } from './modules/homepage';
 import { defer } from '@shopify/remix-oxygen';
 import { getCart } from './utils/graphql/shopify/queries/cart';
 

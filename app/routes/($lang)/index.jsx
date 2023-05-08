@@ -2,7 +2,7 @@ import { useLoaderData } from '@remix-run/react';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
 
-import Homepage from '../../modules/Homepage';
+import Homepage from '../../modules/homepage';
 
 export const meta = () => {
   return {
