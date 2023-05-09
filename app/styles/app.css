@@ -1,3 +1,28 @@
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Light.otf?v=1615476619") format("truetype");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Roman.otf?v=1615476619") format("truetype");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Medium.otf?v=1615476619") format("truetype");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Heavy.otf?v=1615476619") format("truetype");
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Avenir LT Pro";
+  src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Black.otf?v=1615476619") format("truetype");
+  font-weight: 900;
+}
 * {
   margin: 0;
   padding: 0;
