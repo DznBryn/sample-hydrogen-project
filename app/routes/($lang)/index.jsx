@@ -4,7 +4,6 @@ import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
 import Homepage from '../../modules/homepage';
 import Layouts from '~/layouts';
 
-
 export const meta = () => {
   return {
     title: 'TULA Skincare: Probiotic Skin Care Products',
