@@ -1,14 +1,14 @@
 import { useLoaderData } from '@remix-run/react';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
-import Homepage from '../../modules/homepage';
-import Layouts from '~/layouts';
+import Layouts, { links as layoutsStyles } from '~/layouts';
+import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
-export const meta = () => {
-  return {
-    title: 'TULA Skincare: Probiotic Skin Care Products',
-    description: 'Clean + effective probiotic skincare products made with superfoods.',
-  };
+export const links = () => {
+  return [
+    ...homePageStyles(),
+    ...layoutsStyles().mainNavFooterStyles,
+  ];
 };
 
 export const loader = async ({context}) => {

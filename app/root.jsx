@@ -8,13 +8,11 @@ import {
 } from '@remix-run/react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
-import { links as homePageStyles } from './modules/homepage';
 import { defer } from '@shopify/remix-oxygen';
 import { getCart } from './utils/graphql/shopify/queries/cart';
 
 export const links = () => {
   return [
-    ...homePageStyles(),
     { rel: 'stylesheet', href: styles },
     {
       rel: 'preconnect',
@@ -31,6 +29,8 @@ export const links = () => {
 export const meta = () => ({
   charset: 'utf-8',
   viewport: 'width=device-width,initial-scale=1',
+  title: 'TULA Skincare: Probiotic Skin Care Products',
+  description: 'Clean + effective probiotic skincare products made with superfoods.',
 });
 
 export async function loader({ context }) {
