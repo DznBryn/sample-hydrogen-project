@@ -1,8 +1,9 @@
 import { useLoaderData } from '@remix-run/react';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
-
 import Homepage from '../../modules/homepage';
+import Layouts from '~/layouts';
+
 
 export const meta = () => {
   return {
@@ -27,8 +28,8 @@ export default function Index() {
   const { allPet } = useLoaderData();
 
   return (
-    <div>
+    <Layouts.MainNavFooter>
       <Homepage pets={allPet} />
-    </div>
+    </Layouts.MainNavFooter>
   );
 }
