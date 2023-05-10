@@ -1,4 +1,4 @@
-export async function login({storefront}, {email, password}) {
+export async function login({ storefront }, { email, password }) {
   const data = await storefront.mutate(LOGIN_MUTATION, {
     variables: {
       input: {
@@ -18,7 +18,7 @@ export async function login({storefront}, {email, password}) {
   );
 }
 
-export async function register({storefront}, customerObj) {
+export async function register({ storefront }, customerObj) {
   const data = await storefront.mutate(REGISTER_MUTATION, {
     variables: {
       input: {
@@ -26,21 +26,21 @@ export async function register({storefront}, customerObj) {
         lastName: customerObj?.lastName,
         email: customerObj?.email,
         password: customerObj?.password,
-        phone: customerObj?.phone !== '' ? `+1${customerObj.phone}` : null,
         acceptsMarketing: false,
       },
     },
   });
   console.log('Show data', customerObj.acceptsMarketing);
   if (!data?.customerCreate?.customer?.id) {
+    console.log(data?.customerCreate?.customerUserErrors);
     throw new Error(data?.customerCreate?.customerUserErrors.join(', '));
   }
 }
 
 export async function activateAccount(
   id,
-  {session, storefront},
-  {password, verifyPassword},
+  { session, storefront },
+  { password, verifyPassword },
 ) {
   const data = await storefront.mutate(CUSTOMER_ACTIVATE_MUTATION, {
     variables: {
@@ -52,7 +52,7 @@ export async function activateAccount(
     },
   });
 
-  const {customerAccessToken} = data?.customerActivate?.customerAccessToken ?? {};
+  const { customerAccessToken } = data?.customerActivate?.customerAccessToken ?? {};
 
   if (!customerAccessToken) {
     throw new Error(data?.customerActivate?.customerUserErrors.join(', '));
