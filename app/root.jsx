@@ -5,11 +5,14 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from '@remix-run/react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
-import { getCart } from './utils/graphql/shopify/queries/cart';
+// import { getCart } from './utils/graphql/shopify/queries/cart';
+import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
+import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 
 export const links = () => {
   return [
@@ -33,24 +36,71 @@ export const meta = () => ({
   description: 'Clean + effective probiotic skincare products made with superfoods.',
 });
 
+// const LAYOUT_QUERY = `#graphql
+//   query layout {
+//     shop {
+//       name
+//       description
+//     }
+//   }
+// `;
+
+// export async function loader({ context }) {
+//   const [customerAccessToken] = await Promise.all([
+//     context.session.get('customerAccessToken'),
+//   ]);
+
+//   console.log('SESSION:', context.session.session.data);
+
+//   const layout = await context.storefront.query(LAYOUT_QUERY);
+
+//   return defer({
+//     isLoggedIn: Boolean(customerAccessToken),
+//     selectedLocate: context?.storefront?.i18n,
+//     cart: getCart(context),
+//     layout
+//   });
+// }
+
 export async function loader({ context }) {
-  const [customerAccessToken] = await Promise.all([
-    context.session.get('customerAccessToken'),
-  ]);
 
-  console.log('SESSION:', context.session.session.data);
+  const customerAccessToken = await context.session.get('customerAccessToken');
 
-  const layout = await context.storefront.query(LAYOUT_QUERY);
+  if (customerAccessToken) {
 
-  return defer({
-    isLoggedIn: Boolean(customerAccessToken),
-    selectedLocate: context?.storefront?.i18n,
-    cart: getCart(context),
-    layout
-  });
+    const customer = await getCustomer(context, customerAccessToken);
+    customer.addresses = flattenConnection(customer.addresses);
+    customer.orders = flattenConnection(customer.orders);
+
+    return defer(
+      {
+        customer
+      },
+      {
+        headers: {
+          'Cache-Control': generateCacheControlHeader(CacheShort())
+        }
+      }
+    );
+
+  } else {
+
+    return ({
+      customer: {
+        id: '',
+        firstName: '',
+        email: '',
+      }
+    });
+
+  }
+
 }
 
 export default function App() {
+
+  const { customer } = useLoaderData();
+
   const links = [
     {
       name: 'Account Page',
@@ -69,6 +119,7 @@ export default function App() {
       link: '/cart'
     },
   ];
+
   return (
     <html lang="en">
       <head>
@@ -79,19 +130,11 @@ export default function App() {
         {
           links.map(item => <p key={item.link}><Link to={item.link}>{item.name}</Link></p>)
         }
-        <Outlet />
+        <br />
+        <Outlet context={{ customer }} />
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
 }
-
-const LAYOUT_QUERY = `#graphql
-  query layout {
-    shop {
-      name
-      description
-    }
-  }
-`;
