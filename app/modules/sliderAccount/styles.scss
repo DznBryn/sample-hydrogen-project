@@ -1,0 +1,611 @@
+#sliderAccWraper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+}
+
+#sliderAccWraper input {
+  font-family: "Avenir LT Pro", sans-serif !important;
+}
+
+#sliderAccWraper a {
+  text-decoration: none;
+}
+
+.header {
+  font-weight: 800;
+  font-size: 21px;
+  line-height: 14px;
+  color: #4C4E56;
+  padding: 19px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.header p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: 0.15px;
+  color: #4C4E56;
+}
+
+.header>span {
+  text-transform: capitalize;
+}
+
+.header>span>span {
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0em;
+  text-align: left;
+  text-transform: lowercase;
+  color: #4C4E56;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px 24px 24px 24px;
+}
+
+.form>span {
+  font-weight: 300;
+  font-size: 11px;
+  letter-spacing: 0.15px;
+  color: rgba(76, 78, 86, 0.6);
+}
+
+#closeButton {
+  padding: 19px 24px 16px 24px;
+  text-align: right;
+}
+
+#closeButton span {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 28px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #4C4E56;
+}
+
+.disabledButton {
+  background-color: #DBDCDD !important;
+  color: rgba(76, 78, 86, 0.4) !important;
+  cursor: default !important;
+  border: none !important;
+}
+
+.input {
+  height: 43px;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid rgba(76, 78, 86, 0.2);
+  padding: 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #4c4e56;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input span {
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  text-decoration-line: underline;
+  color: rgba(76, 78, 86, 0.4);
+}
+
+.passwordInput {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: rgba(76, 78, 86, 0.6);
+  border: none;
+  width: 100%;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+
+  height: 43px;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid rgba(76, 78, 86, 0.2);
+  background: rgba(72, 198, 217, 1);
+  padding: 10px;
+  margin-bottom: 6px;
+
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+
+  cursor: pointer;
+}
+
+.subText {
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0.15px;
+  color: #4C4E56;
+  cursor: pointer;
+  width: fit-content;
+}
+
+.subTextAlt {
+  font-size: 12px;
+  cursor: auto;
+}
+
+.subText>a {
+  text-decoration: underline !important;
+}
+
+#createNewAccRewards {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 20px 0 20px 24px;
+  background: rgba(248, 248, 248, 0.8);
+  color: #4C4E56;
+}
+
+#createNewAccRewards>p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+#createNewAcc {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 20px 24px;
+  background: rgba(239, 249, 251, 1);
+  color: #4C4E56;
+}
+
+#createNewAcc>p {
+  color: #4C4E56;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+#createNewAccButton {
+  display: flex;
+  justify-content: center;
+
+  height: 43px;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid rgba(72, 198, 217, 1);
+  background: #FFFFFF;
+  padding: 10px;
+
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  text-transform: uppercase;
+  color: rgba(72, 198, 217, 1);
+}
+
+#createNewAccRewards>p>span {
+  font-weight: 800;
+  color: #47C6D9;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rewardsBannerContainer {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+}
+
+/* #createNewAcc .rewardsBannerContainer::-webkit-scrollbar {
+    display: none;
+} */
+
+.rewardsBannerContainer div span path {
+  fill: white;
+}
+
+.rewardsBannerContainer div p {
+  display: flex;
+  gap: 2px;
+  color: white;
+}
+
+.rewardsBannerContainer>a {
+  min-width: 257px;
+  height: 151px;
+  border-radius: 3px;
+  background-size: cover;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+}
+
+.rewardsBannerContainer>a:nth-child(1) {
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_1.jpg?v=1668635657");
+}
+
+.rewardsBannerContainer>a:nth-child(2) {
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_2.jpg?v=1668635656");
+}
+
+.rewardsBannerContainer>a:nth-child(3) {
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_3.jpg?v=1668635656");
+  margin-right: 16px;
+}
+
+.rewardsBannerContainer>a>span,
+.welcomeButton>div>span {
+  background: rgba(71, 198, 217, 0.7);
+  border-radius: 2px;
+  padding: 5px;
+  padding-top: 6px;
+  font-size: 10px;
+  width: fit-content;
+  text-transform: uppercase;
+  color: white;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.welcomeButton.rewards {
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/banner-bg.png?v=1669932469") !important;
+  background-size: cover !important;
+}
+
+.welcomeButton.rewards>div {
+  color: white !important;
+  align-items: flex-start !important;
+}
+
+.welcomeButton.rewards>div>span {
+  padding: 2px 5px 1px 5px !important;
+}
+
+.welcomeButton.rewards>p {
+  color: white !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+}
+
+.welcomeButton.rewards>p>svg {
+  margin-top: -4px;
+  margin-right: 3px;
+}
+
+.pointsDisplay {
+  margin-right: 3px;
+}
+
+.rewardsBannerContainer>a>div:first-of-type {
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.rewardsBannerContainer>a>div:last-of-type {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.rewardsBannerContainer>a>div:last-of-type>span>b {
+  text-decoration: underline
+}
+
+#links {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 18px;
+}
+
+#links>a {
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.15px;
+  text-transform: lowercase;
+  color: #4C4E56;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+#links>a>span {
+  background: #47C6D9;
+  border-radius: 2px;
+  font-size: 9px;
+  color: white;
+  padding: 3px 5px 1px 5px;
+  text-transform: uppercase;
+}
+
+#links>a>svg {
+  margin-left: auto;
+}
+
+#checkInbox,
+#createAccountSuccess {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 27px;
+  padding: 53px 24px;
+
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  text-align: center;
+  letter-spacing: 0.15px;
+  color: #4C4E56;
+
+  height: 100%;
+}
+
+#checkInbox p,
+#createAccountSuccess p {
+  font-weight: 800;
+  font-size: 21px;
+  line-height: 24px;
+  text-align: center;
+  color: #4C4E56;
+}
+
+#createAccountSuccess #createAccountBannersContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 16px;
+  overflow-x: auto;
+  color: white;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+#createAccountSuccess>svg {
+  width: 42px;
+  height: 42px;
+}
+
+#createAccountSuccess #createAccountBannersContainer>a {
+  height: 154px;
+  border-radius: 7px;
+  background-size: cover;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+  text-align: left;
+  color: white;
+}
+
+#createAccountSuccess #createAccountBannersContainer>a>span {
+  background: #47C6D9;
+  border-radius: 2px;
+  padding: 2px 5px 0 5px;
+  margin-bottom: 5px;
+  line-height: 14px;
+  font-size: 10px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+#createAccountSuccess #createAccountBannersContainer>a>div:last-of-type {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+#createAccountSuccess #createAccountBannersContainer>a>div:first-of-type,
+#createAccountSuccess #createAccountBannersContainer>a>div:only-child {
+  font-weight: 800;
+  font-size: 24px;
+}
+
+#createAccountSuccess #createAccountBannersContainer>.rewardsBanner {
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Account_Slider_Confirmation_Image_1.jpg?v=1668715516");
+}
+
+#createAccountSuccess #createAccountBannersContainer>.skinquizBanner {
+  align-items: flex-end;
+  text-align: right;
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Account_Slider_Confirmation_Image_2.jpg?v=1668715516");
+}
+
+.viewMyAccountLink {
+  font-weight: 500;
+  font-size: 14px;
+  text-decoration-line: underline !important;
+  color: rgba(76, 78, 86, 0.8);
+}
+
+.welcomeButtonsWrap {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 42px 24px;
+  padding-bottom: 20px;
+  grid-gap: 13px;
+}
+
+.welcomeButtonsWrap .welcomeButton {
+  background: rgba(235, 249, 251, 1);
+  background: #EBF9FB;
+  background-size: cover;
+  border-radius: 3px;
+  padding: 10px;
+  height: 99px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.welcomeButtonsWrap .welcomeButton .title {
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  color: #4C4E56;
+  justify-content: space-between;
+}
+
+.welcomeButtonsWrap .welcomeButton p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: #4C4E56;
+  padding-right: 8px;
+}
+
+.welcomeBottomButton {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 33px;
+  letter-spacing: 0.15px;
+  text-decoration-line: underline;
+  text-transform: lowercase;
+  color: #000000;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.errorHighlight {
+  color: red !important;
+  border-color: red !important;
+}
+
+.errorMessage {
+  font-size: 12px !important;
+  color: red !important;
+}
+
+.form .checkInput {
+  display: flex;
+  align-items: center;
+  padding: 14px 0 6px 0;
+}
+
+.form .checkInput>label {
+  font-weight: 300;
+  font-size: 12px;
+  color: #4C4E56;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  display: flex;
+  align-items: center;
+}
+
+.form .checkInput>label>input {
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 20px;
+  width: 20px;
+  border-radius: 2px;
+  padding: 3px 0 0 6px;
+  border: 1px solid rgba(76, 78, 86, 0.2);
+  background-color: white;
+  margin-right: 6px;
+}
+
+.form .checkInput>label>input:checked~.checkmark {
+  background-color: #47C6D9;
+  border: none;
+}
+
+.checkmark:after {
+  content: "";
+  display: none;
+}
+
+.form .checkInput>label>input:checked~.checkmark:after {
+  display: block;
+}
+
+.form .checkInput>label>.checkmark:after {
+  width: 5px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.hideOnDesktop {
+  display: none !important;
+}
+
+@media only screen and (max-width: 768px) {
+  .hideOnDesktop {
+    display: flex !important;
+  }
+}
+
+/**/
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: -webkit-fill-available;
+}
+
+.spinLoader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #48c6d9;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

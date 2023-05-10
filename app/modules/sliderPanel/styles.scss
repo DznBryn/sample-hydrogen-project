@@ -1,0 +1,59 @@
+.bodyWrap {
+  height: 100%;
+  overflow: hidden;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, .66);
+  height: 100%;
+  width: 100%;
+}
+
+.sliderWrap {
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0px;
+  overflow: hidden;
+  z-index: 2147483001;
+  display: flex;
+}
+
+.slider {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 95vw;
+  margin-left: auto;
+  position: absolute;
+  right: -100%;
+  transition: all 1s;
+}
+
+.sliderWrap.visible .slider {
+  right: 0;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .3s linear;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s .3s, opacity .3s linear;
+}
+
+@media only screen and (min-width: 768px) {
+  .sliderWrap {
+    /* background-color: rgba(0, 0, 0, .7); */
+    height: 100vh;
+  }
+
+  .slider {
+    width: 400px;
+  }
+}

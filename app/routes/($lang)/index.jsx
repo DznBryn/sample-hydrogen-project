@@ -1,14 +1,14 @@
 import { useLoaderData } from '@remix-run/react';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
+import Layouts, { links as layoutsStyles } from '~/layouts';
+import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
-import Homepage from '../../modules/homepage';
-
-export const meta = () => {
-  return {
-    title: 'TULA Skincare: Probiotic Skin Care Products',
-    description: 'Clean + effective probiotic skincare products made with superfoods.',
-  };
+export const links = () => {
+  return [
+    ...homePageStyles(),
+    ...layoutsStyles().mainNavFooterStyles,
+  ];
 };
 
 export const loader = async ({context}) => {
@@ -27,8 +27,8 @@ export default function Index() {
   const { allPet } = useLoaderData();
 
   return (
-    <div>
+    <Layouts.MainNavFooter>
       <Homepage pets={allPet} />
-    </div>
+    </Layouts.MainNavFooter>
   );
 }
