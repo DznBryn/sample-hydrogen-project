@@ -2,8 +2,10 @@
 #! oxygen_storefront_id: 295085
 
 name: Storefront 295085
-'on':
-  push:
+on:
+  pull_request:
+    types:
+      - closed
     branches:
       - main
 

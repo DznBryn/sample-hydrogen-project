@@ -1,6 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
-import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pet';
+import { GET_ALL_PETS } from '~/utils/graphql/sanity/queries/pets';
 import Layouts, { links as layoutsStyles } from '~/layouts';
 import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
