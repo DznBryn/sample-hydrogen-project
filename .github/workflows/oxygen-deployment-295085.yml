@@ -3,9 +3,9 @@
 
 name: Storefront 295085
 on:
-  push:
-    branches:
-      - main
+  pull_request_target:
+    types:
+      - closed
 
 permissions:
   contents: read
@@ -15,7 +15,7 @@ jobs:
   deploy:
     name: Deploy to Oxygen
     timeout-minutes: 30
-    if: github.event.pull_request.merged
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
