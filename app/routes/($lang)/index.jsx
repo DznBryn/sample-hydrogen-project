@@ -16,19 +16,19 @@ export const loader = async ({context}) => {
   const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
   
   const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query: GET_ALL_PETS });
-  const { allPet } = result.data;
+  const { allPets } = result.data;
 
-  return { allPet };
+  return { allPets };
 
 };
 
 export default function Index() {
 
-  const { allPet } = useLoaderData();
+  const { allPets } = useLoaderData();
 
   return (
     <Layouts.MainNavFooter>
-      <Homepage pets={allPet} />
+      <Homepage pets={allPets} />
     </Layouts.MainNavFooter>
   );
 }
