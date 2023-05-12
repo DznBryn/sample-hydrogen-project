@@ -17,6 +17,7 @@ jobs:
   deploy:
     name: Deploy to Oxygen
     timeout-minutes: 30
+    if: ${{ github.event.pull_request.merged }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -57,3 +58,4 @@ jobs:
           token: ${{ github.token }}
           environment: 'preview'
           preview_url: ${{ steps.deploy.outputs.url }}
+          description: ${{ github.event.head_commit.message }}
