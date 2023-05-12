@@ -9,7 +9,7 @@ const Homepage = ({pets}) => {
     <section className="mainContainer">
       <h3 className="title">Welcome to our site!</h3>
       <p className="content">This is the home page.</p>
-      <p><b>Sanity Data GraphQL API Test:</b></p>
+      <p><b>Sanity Data GraphQL API New Test:</b></p>
       <ol>
         {pets.map(pet => <li key={pet.name}>{pet.name}</li>)}
       </ol>
