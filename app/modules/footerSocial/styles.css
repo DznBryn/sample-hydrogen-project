@@ -1,0 +1,50 @@
+#socialContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* max-width: 220px; */
+  max-width: 137px;
+  /* height: 89px; */
+  /* padding: 30px 0px; */
+}
+
+#socialContainer li {
+  text-decoration: none;
+  list-style: none;
+  /* width: 35px; */
+  height: 29px;
+}
+
+#socialContainer svg {
+  width: 15px;
+  height: 15px;
+  /* object-fit: contain;  */
+  /* fill: #fff; */
+}
+
+@media only screen and (min-width: 768px) {
+  #socialContainer {
+    /* padding: 0 10px; */
+    max-width: 188px;
+    height: 29px;
+  }
+  #socialContainer svg {
+    height: 26px;
+    width: 26px;
+  }
+}
+@media all and (max-width: 768px) {
+  #socialContainer {
+    max-width: 100%;
+  }
+  #socialContainer li {
+    height: 25px;
+    width: 25px;
+  }
+  #socialContainer li svg {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
