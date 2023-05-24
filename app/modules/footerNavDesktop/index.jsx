@@ -144,7 +144,7 @@ const FooterSubNavDesktop = ({ navLinks = [] }) => {
           <li key={linkItem._id} className={classes.desktopSubNavListItem}>
             <Link to={linkItem.url} className={classes.listItemLink} style={linkItem?.fontColorHex ? { color: linkItem?.fontColorHex } : undefined}>
               {linkItem.displayText}
-              {linkItem?.emoji && <img src={linkItem.emoji?.src} />}
+              {linkItem?.emoji && <img src={linkItem.emoji?.asset?.url} />}
             </Link>
           </li>
         )

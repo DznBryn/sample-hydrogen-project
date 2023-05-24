@@ -10,7 +10,10 @@ export const links = () => {
   ];
 };
 
-const MainNavFooter = ({ children }) => {
+const MainNavFooter = ({ children, footers }) => {
+
+  const desktopFooter = footers.find(doc => doc.name === 'Desktop');
+  const mobileFooter = footers.find(doc => doc.name === 'Mobile');
 
   return (
 
@@ -29,7 +32,7 @@ const MainNavFooter = ({ children }) => {
         children
       }
       <h3>BodyBottom</h3>
-      <Footer/>
+      <Footer desktopFooter={desktopFooter} mobileFooter={mobileFooter}/>
 
     </>
 
