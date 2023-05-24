@@ -1,9 +1,12 @@
 import SliderAccount, { links as sliderAccountStyles} from '~/modules/sliderAccount';
 import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
+import Footer, { links as footerStyles } from '~/modules/footer';
 
 export const links = () => {
   return [
     ...sliderAccountStyles(),
+    ...footerStyles(),
+
   ];
 };
 
@@ -26,7 +29,7 @@ const MainNavFooter = ({ children }) => {
         children
       }
       <h3>BodyBottom</h3>
-      <h3>Footer</h3>
+      <Footer/>
 
     </>
 
