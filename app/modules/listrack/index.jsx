@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { appendScript } from '~/utils/functions/getApiKeys';
 import getApiKeys from '~/utils/functions/getApiKeys';
 
@@ -6,7 +6,7 @@ const Listrack = ({ productList }) => {
 
   const _ltk = _ltk;
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     const triggerListrak = () => {
 
