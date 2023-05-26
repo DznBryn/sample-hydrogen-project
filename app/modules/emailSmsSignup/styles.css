@@ -1,0 +1,245 @@
+.signupWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.afterEmailSubmit {
+  display: none;
+}
+
+.afterEmailSubmit p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.email {
+  background-color: #D7F0F4;
+  Padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hide {
+  display: none !important;
+}
+
+.email > h1 {
+  color: #4C4E56;
+}
+
+.emailFormWrap form {
+  display: flex;
+}
+
+.emailFormWrap input {
+  background-color: #D7F0F4;
+  border: 1px solid #4C4E56;
+}
+
+.emailText {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  /*color: rgba(76, 78, 86, 0.3);*/
+  border: none;
+  flex-grow: 2;
+  height: 45px;
+  padding-left: 15px;
+}
+
+.emailText::placeholder {
+  color: rgba(76, 78, 86, 0.3);
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.emailButton {
+  border: 0;
+  background: none;
+  background-color: #48C6D9;
+  color: #fff;
+  box-shadow: none;
+  margin-left: 8px;
+  padding: 14px 0;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  width: 135px;
+  height: 45px;
+  border-radius: 3px;
+}
+
+.sms {
+  background-color: #F7F7F7;
+  Padding: 25px 40px;
+}
+
+.sms h1 {
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 21px;
+  letter-spacing: 0.01em;
+  color: #4C4E56;
+  margin-bottom: 20px;
+}
+
+.sms .smsLegal {
+  font-size: 8px;
+  line-height: 14px;
+  color: #4C4E56;
+}
+
+.sms .topText {
+  background-color: #48C6D9;
+  border-radius: 13px;
+  border: 1px solid #48C6D9;
+  max-width: 407px;
+  margin-left: auto;
+  margin-bottom: 16px;
+}
+
+.sms .topText h1 {
+  color: #fff;
+}
+
+.sms .bottomText {
+  background-color: #EEEEEE;
+  border-radius: 13px;
+  border: 1px solid #EEEEEE;
+  margin-right: auto;
+  margin-bottom: 21px;
+  width: 14em;
+}
+
+.sms .topText h1,
+.sms .bottomText h1 {
+  padding: 20px 16px;
+  font-size: 18px;
+  line-height: 26px;
+  margin: 0;
+}
+
+.success_message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  line-height: 34px;
+}
+
+.success_message h1 {
+  margin: 12px 0;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.success_message p {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.error_message {
+  color: var(--color-secondary-pink);
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.formFootnote {
+  font-size: 10px;
+  margin: 1em 0;
+}
+
+@media only screen and (min-width: 1024px) {
+  .signupWrap {
+    flex-direction: row;
+  }
+  .email,
+  .sms {
+    width: 50%;
+    padding: 45px;
+  }
+  .email h1,
+  .sms h1 {
+    font-size: 24px;
+    line-height: 28px;
+  }
+  .emailFormWrap {
+    margin-top: 16px;
+  }
+  .sms .smsLegal {
+    margin-bottom: 45px;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .email {
+    padding: 45px 150px;
+  }
+  .sms .smsLegal {
+    margin-bottom: 0px;
+  }
+}
+@media all and (max-width: 768px) {
+  .email h1,
+  .sms h1 {
+    font-size: 18px;
+    line-height: 21px;
+  }
+  .email {
+    padding: 32px 30px;
+  }
+  .beforeEmailSubmit h1 {
+    margin-bottom: 10px;
+  }
+  .email input {
+    width: 188px;
+    height: 35px;
+    font-size: 12px;
+    line-height: 24px;
+  }
+  .email input {
+    padding: 5px 9px;
+  }
+  .email input::placeholder {
+    font-size: 12px;
+    line-height: 24px;
+  }
+  .email .emailButton {
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .sms {
+    padding: 22px;
+  }
+  .sms .topText {
+    width: 233px;
+  }
+  .sms .bottomText {
+    width: 13em;
+  }
+  .sms .topText h1,
+  .sms .bottomText h1 {
+    padding: 12px 15px;
+    font-size: 16px;
+    line-height: 21px;
+  }
+  .afterEmailSubmit p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+}
+@media all and (max-width: 768px) {
+  .emailButton {
+    width: 102px;
+    height: 35px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
