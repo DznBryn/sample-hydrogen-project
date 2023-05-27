@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const GET_FOOTERS = gql`
-  query GetAllPets {
+  query GetAllFooters {
     allFooters {
       _id
       name
