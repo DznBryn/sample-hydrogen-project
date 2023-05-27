@@ -1,8 +1,7 @@
 import React from 'react';
 import { submitFooterContact } from '~/utils/functions/listrakFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
-
-// import RichText from 'frontend-ui/RichText';
+import {PortableText} from '@portabletext/react';
 
 import styles from './styles.css';
 
@@ -10,74 +9,6 @@ export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
   ];
-};
-
-const mockCommunications = {
-  'name': 'Primary',
-  'newsletterText': [
-    {
-      'children': [
-        {
-          'text': 'Take 15% off your first order and get exclusive offers and more.'
-        }
-      ],
-      'type': 'h1'
-    }
-  ],
-  'newsletterTextAfterEmailSubmit': [
-    {
-      'children': [
-        {
-          'text': 'Thanks! Look out for us in your inbox.'
-        }
-      ],
-      'type': 'h1'
-    }
-  ],
-  'newsletterSubtextAfterEmailSubmit': [
-    {
-      'children': [
-        {
-          'text': 'Optional: enter your bithday for a gift!'
-        }
-      ],
-      'type': 'paragraph'
-    }
-  ],
-  'newsletterFooterUS': 'For more information about our privacy practices, please visit our Privacy Policy and Notice of Financial Incentives for California residents.',
-  'newsletterFooter': [
-    {
-      'type': 'paragraph',
-      'children': [
-        {
-          'text': 'For more information about our privacy practices, please visit our Privacy Policy.'
-        },
-      ]
-    }
-  ],
-  'smsFooterTextUS': 'By texting GLOW to 56529 you authorize TULA & its service providers to send you automated marketing texts to the provided number. No purchase required. Msg & data rates may apply. Text STOP to 56529 to opt-out of receiving messages. For more information please visit our Terms & Conditions & our Privacy Policy, and our Notice of Financial Incentives for California residents.',
-  'smsFooterText': 'By texting GLOW to 56529 you authorize TULA & its service providers to send you automated marketing texts to the provided number. No purchase required. Msg & data rates may apply. Text STOP to 56529 to opt-out of receiving messages. For more information please visit our Terms & Conditions & our Privacy Policy.',
-  'smsText1': [
-    {
-      'children': [
-        {
-          'text': 'get 15% off your next order & more smiles when you sign up for text alerts!'
-        }
-      ],
-      'type': 'h1'
-    }
-  ],
-  'smsText2': [
-    {
-      'children': [
-        {
-          'text': 'text GLOW to 56529'
-        }
-      ],
-      'type': 'h1'
-    }
-  ],
-  'newsletterButtonLabel': 'Get 15%'
 };
 
 const SuccessIcon = () => (
@@ -103,8 +34,8 @@ const SuccessIcon = () => (
   </svg>
 );
 
-const EmailSmsSignup = ({ communicationsConfig }) => {
-  const communication = communicationsConfig?.name ? communicationsConfig : mockCommunications;
+const EmailSmsSignup = ({ emailSmsSignupContent }) => {
+  const communication = emailSmsSignupContent;
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   // const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
@@ -223,11 +154,11 @@ const EmailSmsSignup = ({ communicationsConfig }) => {
     <div className={'signupWrap'}>
       <div className={'email'} >
         <div ref={headerBeforeEmailSubmit} className={'beforeEmailSubmit'}>
-          {/* <RichText source={communication.newsletterText} /> */}
+          <PortableText value={communication.newsletterTextRaw} />
         </div>
         <div ref={headerAfterEmailSubmit} className={'afterEmailSubmit'}>
-          {/* <RichText source={communication.newsletterTextAfterEmailSubmit} />
-          <RichText source={communication.newsletterSubtextAfterEmailSubmit} /> */}
+          <PortableText value={communication.newsletterTextAfterEmailSubmitRaw} />
+          <PortableText value={communication.newsletterSubtextAfterEmailSubmitRaw} />
         </div>
         <div className={'emailFormWrap'}>
           <form onSubmit={(e) => { e.preventDefault(); return false; }}>
@@ -258,7 +189,7 @@ const EmailSmsSignup = ({ communicationsConfig }) => {
             </button>
           </form>
           <p className={'formFootnote'}>
-            {/* <RichText source={communication.newsletterFooter} /> */}
+            <PortableText value={communication.newsletterFooterRaw} />
           </p>
           <div className="submit_messages">
             <div className={'success_message hide'}><SuccessIcon />
@@ -271,13 +202,13 @@ const EmailSmsSignup = ({ communicationsConfig }) => {
       </div>
       <div className={'sms'} >
         <div className={'topText'}>
-          {/* <RichText source={communication.smsText1} /> */}
+          <PortableText value={communication.smsText1Raw} />
         </div>
         <div className={'bottomText'}>
-          {/* <RichText source={communication.smsText2} /> */}
+          <PortableText value={communication.smsText2Raw} />
         </div>
         <div className={'smsLegal'}>
-          {/* <RichText source={communication.smsFooterText} /> */}
+          <PortableText value={communication.smsFooterTextRaw} />
         </div>
       </div>
     </div>
