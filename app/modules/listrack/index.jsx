@@ -1,17 +1,15 @@
 import { useEffect } from 'react';
-import { appendScript } from '~/utils/functions/getApiKeys';
+import { appendScript } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 
 const Listrack = ({ productList }) => {
-
-  const _ltk = _ltk;
 
   useEffect(() => {
 
     const triggerListrak = () => {
 
-      _ltk.Signup.New('Footer', 'email_signup_new', _ltk.Signup.TYPE.CLICK, 'FooterNewsletterSubmit', 'channel');
-      _ltk.OnsiteContent?.reload();
+      window._ltk.Signup.New('Footer', 'email_signup_new', window._ltk.Signup.TYPE.CLICK, 'FooterNewsletterSubmit', 'channel');
+      window._ltk.OnsiteContent?.reload();
 
       if (window.location.href.includes('/products/')) {
 
@@ -19,15 +17,15 @@ const Listrack = ({ productList }) => {
 
         const product = productList.products.filter((prod) => (prod.slug === slug));
 
-        _ltk.Activity.AddProductBrowse(product[0].externalId.toString());
+        window._ltk.Activity.AddProductBrowse(product[0].externalId.toString());
 
       }
 
-      _ltk.Activity.AddPageBrowse(window.location.href);
+      window._ltk.Activity.AddPageBrowse(window.location.href);
 
     };
 
-    if (typeof _ltk === 'undefined') {
+    if (typeof window._ltk === 'undefined') {
       appendScript(getApiKeys().LISTRAK_SCRIPT, 'listrak', true, triggerListrak);
     } else {
       triggerListrak();
