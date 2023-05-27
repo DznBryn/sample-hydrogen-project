@@ -1,0 +1,41 @@
+.PLPSkeleton {
+  width: 100%;
+  max-width: 1140px;
+  height: 100vh;
+  display: none;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 7.5em;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  justify-content: space-between;
+  padding: 0 53.5px;
+  z-index: -10;
+  margin-top: 2em;
+}
+
+.PLPSkeleton > div {
+  margin-right: 0;
+  margin-bottom: 76px;
+}
+
+.productPlaceholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 403px;
+  width: 205px;
+}
+
+.bigPlaceholder {
+  margin-right: 0 !important;
+  height: 420px;
+}
+
+@media all and (max-width: 768px) {
+  .PLPSkeleton {
+    justify-content: center;
+  }
+}

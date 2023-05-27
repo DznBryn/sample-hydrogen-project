@@ -2,15 +2,18 @@ import SliderAccount, { links as sliderAccountStyles} from '~/modules/sliderAcco
 import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
 import Footer, { links as footerStyles } from '~/modules/footer';
 
+
+import BodyBottom, { links as BodyBottomStyles } from '~/modules/bodyBottom';
+
 export const links = () => {
   return [
     ...sliderAccountStyles(),
+    ...BodyBottomStyles(),
     ...footerStyles(),
-
   ];
 };
 
-const MainNavFooter = ({ children, footers }) => {
+const MainNavFooter = ({ children, footers, productsList, emailSmsSignupContent }) => {
 
   const desktopFooter = footers.find(doc => doc.name === 'Desktop');
   const mobileFooter = footers.find(doc => doc.name === 'Mobile');
@@ -18,7 +21,6 @@ const MainNavFooter = ({ children, footers }) => {
   return (
 
     <>
-
       <button className="btn" onClick={() => switchSliderPanelVisibility('SliderAccount')}>
         open slider account
       </button>
@@ -31,9 +33,8 @@ const MainNavFooter = ({ children, footers }) => {
       {
         children
       }
-      <h3>BodyBottom</h3>
+      <BodyBottom emailSmsSignupContent={emailSmsSignupContent} productList={productsList}/>
       <Footer desktopFooter={desktopFooter} mobileFooter={mobileFooter}/>
-
     </>
 
   );

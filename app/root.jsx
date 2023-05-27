@@ -90,6 +90,7 @@ export async function loader({ context }) {
         id: '',
         firstName: '',
         email: '',
+        phone: '',
       }
     });
 
