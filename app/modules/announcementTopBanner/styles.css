@@ -1,0 +1,54 @@
+.bannerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  position: relative;
+}
+
+.bannerContainer p {
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #53273D;
+}
+
+.bannerContainer a {
+  display: block;
+  font-size: 12px;
+  color: #53273D;
+}
+
+.bannerContainer span {
+  cursor: pointer;
+  font-size: 1.25rem;
+  position: absolute;
+  top: 0.475rem;
+  right: 1rem;
+  transform: rotate(45deg);
+}
+
+.hideBanner {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .bannerContainer p {
+    font-weight: 900;
+    font-size: 17px;
+    line-height: 32px;
+  }
+  .bannerContainer a {
+    display: initial;
+    font-weight: 900;
+    font-size: 17px;
+    line-height: 32px;
+  }
+  .bannerContainer span {
+    top: 0.475rem;
+    right: 4.625rem;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
