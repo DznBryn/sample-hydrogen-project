@@ -128,13 +128,12 @@ export default function App() {
         <Links />
       </head>
       <body>
-        {
-          links.map(item => <p key={item.link}><Link to={item.link}>{item.name}</Link></p>)
-        }
-        <br />
         <Outlet context={{ customer }} />
         <ScrollRestoration />
         <Scripts />
+        {
+          links.map(item => <p key={item.link}><Link to={item.link}>{item.name}</Link></p>)
+        }
       </body>
     </html>
   );
