@@ -1,0 +1,46 @@
+.cart_icon__container {
+  --primary-color: #48C6D9;
+  --white-color: #fff;
+}
+
+#frontend-root a {
+  text-decoration: none;
+}
+
+.cart_icon__container svg {
+  fill: #4c4e56;
+  cursor: pointer;
+}
+
+.cart_icon__container {
+  display: flex;
+}
+
+.cart_listNumber {
+  width: 19px;
+  height: 19px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  background-color: #47C6D9;
+  color: #fff;
+  padding: 0;
+  line-height: 0;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  margin-left: -8px;
+  margin-top: -5px;
+  padding-top: 2px;
+  cursor: pointer;
+}
+
+.cart_listNumber span {
+  margin: 3px 0 0 2px;
+  text-decoration: none;
+}
