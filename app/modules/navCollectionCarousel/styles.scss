@@ -1,0 +1,80 @@
+.navCollectionCarousel {
+  display: flex;
+  background-color: #fff;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 88px;
+  width: 100%;
+  border-bottom: 1px solid #E5E5E5;
+}
+
+.navCollectionWrap {
+  height: 190px;
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  width: 86%;
+  max-width: 1140px;
+  user-select: none;
+}
+
+.navCollection {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  transition: all .5s ease 0s;
+}
+
+.rightArrow,
+.leftArrow {
+  cursor: pointer;
+  margin-top: 65px;
+}
+
+.rightArrow {
+  margin-left: 25px;
+}
+
+.leftArrow {
+  margin-right: 25px;
+}
+
+.viewAllWrap {
+  width: 100%;
+}
+
+a.viewAllLink {
+  display: block;
+  color: #4C4E56;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 18px;
+  margin: 22px auto 24px;
+  text-align: center;
+  text-decoration-line: underline;
+  text-transform: lowercase;
+}
+
+.visible {
+  display: flex;
+  opacity: 1;
+  top: 88px;
+  transition: opacity .1s linear;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+  top: -88px;
+  /* transition: visibility 0s .1s, opacity .1s linear; */
+}
+
+@media only screen and (max-width: 1024px) {
+  .navCollectionCarousel {
+    left: 0px;
+  }
+}
