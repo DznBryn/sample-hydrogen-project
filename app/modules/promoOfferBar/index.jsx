@@ -134,8 +134,8 @@ const PromoOfferBar = ({ content }) => {
   });
 
   return (
-    <div ref={promoBgColor} id="promotionBar" className={styles.promoOfferBar}>
-      <div ref={promoMessage} id="promoCopyWrapper" className={styles.textWrapper}></div>
+    <div ref={promoBgColor} id="promotionBar" className={'promoOfferBar'}>
+      <div ref={promoMessage} id="promoCopyWrapper" className={'textWrapper'}></div>
       <button id="close-promotionBar" className="close-promotional-banner">+</button>
       <button id="expand-promotionBar">
         <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/dropdown_arrow.svg?v=1662651827" alt="expand" />
