@@ -1,0 +1,44 @@
+.productImg {
+  width: 100px;
+  height: 123.47px;
+  display: block;
+  margin: 15px auto 5.5px;
+}
+
+.productName {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 16px;
+  text-align: center;
+  color: #4C4E56;
+  width: 130px;
+}
+
+.productAlt {
+  text-align: center;
+  color: #4C4E56;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.productLink {
+  position: relative;
+  text-decoration: none;
+  margin: 0px 40px;
+  display: block;
+  pointer-events: all;
+}
+
+.productWrap {
+  -webkit-backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*# sourceMappingURL=styles.css.map */
