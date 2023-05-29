@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import LoadingSkeleton from '~/modules/loadingSkeleton';
+import LoadingSkeleton, { links as loadingSkeletonStyles } from '../loadingSkeleton';
 import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import { Link } from '@remix-run/react';
@@ -10,6 +10,7 @@ import styles from './styles.css';
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...loadingSkeletonStyles(),
   ];
 };
 

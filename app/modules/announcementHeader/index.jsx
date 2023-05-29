@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // import { PortableText } from '@portabletext/react';
-import ModalGeneric from '~/modules/modalGeneric';
+import ModalGeneric, { links as modalGenericStyles } from '~/modules/modalGeneric';
 import { Link } from '@remix-run/react';
 
 import styles from './styles.css';
@@ -8,6 +8,7 @@ import styles from './styles.css';
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...modalGenericStyles(),
   ];
 };
 
@@ -45,7 +46,7 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
   }, [isModalOpen, index, announcementMessages]);
 
   return (
-    <React.Fragment>
+    <>
       <div key={index} className={'messageBox'}>
         <a className={'messageLink'} style={{ fontColor: fontColor }} href={announcementUrl}>
           {/* <PortableText value={getFirstPromoRichText(announcementText)} /> */}
@@ -76,7 +77,7 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
       <ModalGeneric isOpen={isModalOpen} handleClose={handleModal}>
         {/* <PortableText value={modalContent} /> */}
       </ModalGeneric>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,11 +1,13 @@
-import AnnouncementHeader from '~/modules/announcementHeader';
-import MyAccountDropdown from '~/modules/myAccountDropdown';
+import MyAccountDropdown, { links as myAccountDropdownStyles } from '~/modules/myAccountDropdown';
+import AnnouncementHeader, { links as announcementHeaderStyles } from '~/modules/announcementHeader';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...myAccountDropdownStyles(),
+    ...announcementHeaderStyles(),
   ];
 };
 
