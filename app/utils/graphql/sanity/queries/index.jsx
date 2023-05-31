@@ -41,3 +41,20 @@ export const GET_FOOTERS = gql`
     }
   }
 `;
+
+export const GET_EMAIL_SMS_SIGNUP_CONTENT = gql`
+  query GetAllEmailSmsSignupContent {
+    allEmailSmsSignupContent {
+      _id
+      name
+      newsletterTextRaw
+      newsletterTextAfterEmailSubmitRaw
+      newsletterSubtextAfterEmailSubmitRaw
+      smsText1Raw
+      smsText2Raw
+      newsletterButtonLabel
+      newsletterFooterRaw
+      smsFooterTextRaw
+    }
+  }
+`;
