@@ -1,4 +1,5 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import getApiKeys from './getApiKeys';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US') ? 'afterpay' : 'klarna';
@@ -533,4 +534,19 @@ export function getCartTotalForFreeShippingGraphQL() {
   //   }
   // });
   // return totalPrice;
+}
+
+export async function getCMSContent(context, query){
+
+  const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
+  const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query });
+  
+  return Object.values(result.data)[0];
+
+}
+
+export function getCMSDoc(content, docName){
+
+  return content.find(doc => doc.name === docName);
+
 }

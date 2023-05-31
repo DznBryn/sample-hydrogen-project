@@ -1,8 +1,7 @@
 import { useLoaderData } from '@remix-run/react';
 import {flattenConnection} from '@shopify/hydrogen-react';
-import apolloClient from '~/utils/graphql/sanity/apolloClient';
-import { GET_FOOTERS, } from '~/utils/graphql/sanity/queries/footers';
-import { GET_EMAIL_SMS_SIGNUP_CONTENT } from '~/utils/graphql/sanity/queries/emailSmsSignupContent';
+import { getCMSContent } from '~/utils/functions/eventFunctions';
+import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT } from '~/utils/graphql/sanity/queries';
 import { PRODUCTS_QUERY } from '~/utils/graphql/shopify/queries/collections';
 import Layouts, { links as layoutsStyles } from '~/layouts';
 import Homepage, { links as homePageStyles } from '~/modules/homepage';
@@ -28,33 +27,16 @@ async function getCollectionProducts(context){
 
 }
 
-async function getFooterData(context){
-
-  const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
-  const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query: GET_FOOTERS });
-
-  return result.data.allFooters;  
-
-}
-
-async function getAllEmailSmsSignupContent(context){
-
-  const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
-  const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query: GET_EMAIL_SMS_SIGNUP_CONTENT });
-
-  return result.data.allEmailSmsSignupContent[0];  
-
-}
-
 export const loader = async ({context}) => {
 
-  const allFooters = await getFooterData(context);
   const collection = await getCollectionProducts(context);
-  const emailSmsSignupContent = await getAllEmailSmsSignupContent(context);
+
+  const footers = await getCMSContent(context, GET_FOOTERS);
+  const emailSmsSignupContent = await getCMSContent(context, GET_EMAIL_SMS_SIGNUP_CONTENT);
 
   return { 
-    allFooters,
     collection,
+    footers,
     emailSmsSignupContent,
   };
 
@@ -62,11 +44,11 @@ export const loader = async ({context}) => {
 
 export default function Index() {
 
-  const { allFooters, collection, emailSmsSignupContent } = useLoaderData();
+  const { footers, collection, emailSmsSignupContent } = useLoaderData();
 
   return (
     <Layouts.MainNavFooter 
-      footers={allFooters} 
+      footers={footers} 
       productsList={collection} 
       emailSmsSignupContent={emailSmsSignupContent}
     >
