@@ -12,6 +12,7 @@ import {
  */
 export default {
   async fetch(request, env, executionContext) {
+    console.log(env);
     try {
       /**
        * Open a cache instance in the worker and a custom session instance.
