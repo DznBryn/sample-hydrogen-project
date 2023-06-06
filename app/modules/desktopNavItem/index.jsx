@@ -79,7 +79,7 @@ const DesktopHoverList = ({ linkList = [] }) => {
 
 const DesktopNavItem = ({ navItem = {}, itemId = '' }) => {
   const { megaMenuOverlay = null, megaMenuSplit = null, overlayNavLinks = [], carouselProductCollection = null } = navItem.dropdownOverlay || {};
-  const navStyle = (overlayNavLinks.length > 0) ? 'desktopNavItem relativeNav' : 'desktopNavItem';
+  const navStyle = (overlayNavLinks?.length > 0) ? 'desktopNavItem relativeNav' : 'desktopNavItem';
 
   return (
     <div
@@ -100,7 +100,7 @@ const DesktopNavItem = ({ navItem = {}, itemId = '' }) => {
       {carouselProductCollection && <NavCollectionCarousel collection={carouselProductCollection} navItem={navItem} />}
       {megaMenuSplit && <NavShopOverlaySplit megaMenuSplit={megaMenuSplit} />}
       {megaMenuOverlay && <NavShopOverlay megaMenuOverlay={megaMenuOverlay} />}
-      {(overlayNavLinks.length > 0) && <DesktopHoverList linkList={overlayNavLinks} />}
+      {(overlayNavLinks?.length > 0) && <DesktopHoverList linkList={overlayNavLinks} />}
     </div>
   );
 };

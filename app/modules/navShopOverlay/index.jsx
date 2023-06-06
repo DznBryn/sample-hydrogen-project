@@ -13,7 +13,7 @@ export const links = () => {
 const MenuImage = ({ ctaImage = { src: '', alt: '' }, cta, ctaUrl }) => (
   <div className={'sideImg'}>
     <div className={'menuImgWrap'}>
-      <img src={ctaImage.src} alt={ctaImage.alt} />
+      <img src={ctaImage.asset.url} />
       <Link className={'ctaLink'} to={ctaUrl} >{cta}</Link>
     </div>
   </div>

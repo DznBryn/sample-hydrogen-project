@@ -1,5 +1,4 @@
 import {useEffect } from 'react';
-import { useOutletContext } from '@remix-run/react';
 // import { useYotpoReviewsRefresh } from '@frontend-sdk/yotpo';
 import Listrack from '~/modules/listrack';
 import GladlySidekick from '~/modules/gladlySidekick';
@@ -9,6 +8,7 @@ import PDPSkeleton, { links as PDPSkeletonStyles } from '~/modules/pdpSkeleton';
 import EmailSmsSignup, { links as EmailSmsSignupStyles } from '~/modules/emailSmsSignup';
 
 import styles from './styles.css';
+import { useCustomerState } from '~/hooks/useCostumer';
 
 export const links = () => {
   return [
@@ -21,8 +21,7 @@ export const links = () => {
 
 const BodyBottom = ({emailSmsSignupContent, productList}) => {
 
-  const { customer } = useOutletContext();
-  const { id, email, phone } = customer;
+  const { id, email, phone } = useCustomerState;
 
   // useYotpoReviewsRefresh();
 

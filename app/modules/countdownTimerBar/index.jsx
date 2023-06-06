@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, Fragment } from 'react';
 import styles from './styles.css';
 
 export const links = () => {
@@ -129,15 +129,15 @@ const CountdownTimerBarView = ({ copy, timer, hideIt, bgColor, showIt }) => {
 
   const Copy = () => (
 
-    <div className={'cCopy'}>{copy}</div>
+    <div className={'copy'}>{copy}</div>
 
   );
 
   const Timer = () => (
 
-    <div className={'cTimer'}>
+    <div className={'timer'}>
       {
-        Object.keys(timer).map((value) => <div key={value}>
+        Object.keys(timer).map((value) => <Fragment key={value}>
 
           <div className={'group'}>
 
@@ -149,7 +149,7 @@ const CountdownTimerBarView = ({ copy, timer, hideIt, bgColor, showIt }) => {
 
           <div className={'divider'}>:</div>
 
-        </div>)
+        </Fragment>)
       }
     </div>
 
@@ -157,7 +157,7 @@ const CountdownTimerBarView = ({ copy, timer, hideIt, bgColor, showIt }) => {
 
   const CloseButton = () => (
 
-    <div className={'closeButton'} onClick={hideIt}>
+    <div className={'countDownTimerCloseButton'} onClick={hideIt}>
       <XIcon />
     </div>
 
@@ -167,7 +167,7 @@ const CountdownTimerBarView = ({ copy, timer, hideIt, bgColor, showIt }) => {
 
   return (
 
-    <div id="countdownClock" className={'container'} style={{ backgroundColor: bgColor, display: (showIt) ? 'flex' : 'none' }}>
+    <div id="countdownClock" className={'countdownTimerContainer'} style={{ backgroundColor: bgColor, display: (showIt) ? 'flex' : 'none' }}>
 
       <div className={'elementsWrapper'}>
         <Copy />

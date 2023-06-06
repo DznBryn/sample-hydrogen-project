@@ -9,10 +9,8 @@ export const links = () => {
   ];
 };
 
-import { annoucementTopBannerContentMock } from '~/utils/functions/mocks';
-
 const AnnouncementTopBanner = ({ content }) => {
-  const { message, available, background, closeButtonColor } = content || annoucementTopBannerContentMock;
+  const { messageRaw, available, background, closeButtonColor } = content;
   const [showBanner, setShowBanner] = useState(false);
 
   function removeBanner() {
@@ -39,7 +37,7 @@ const AnnouncementTopBanner = ({ content }) => {
 
   return (
     <div className={(showBanner ? 'bannerContainer' : 'hideBanner')} style={{ background }}>
-      <PortableText value={message}/>
+      <PortableText value={messageRaw}/>
       <span style={{ color: closeButtonColor }} onClick={removeBanner}>+</span>
     </div>
   );

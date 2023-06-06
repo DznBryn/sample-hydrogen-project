@@ -5,6 +5,8 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import { Link } from '@remix-run/react';
 import { getLoyaltyCustomerData, triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
 
+import {useCustomerActions, useCustomerState} from '~/hooks/useCostumer';
+
 import styles from './styles.css';
 
 export const links = () => {
@@ -14,16 +16,26 @@ export const links = () => {
   ];
 };
 
-const MyAccountDropdown = () => (getApiKeys().FEATURE_FLAGS.LOYALTY) ? <LoyaltyVersion /> : <CommomVersion />;
+const MyAccountDropdown = () => {
+
+  
+  
+  return (
+
+    (getApiKeys().FEATURE_FLAGS.LOYALTY) ? 
+      <LoyaltyVersion/> : 
+      <CommomVersion/>
+
+  );
+
+
+};
 
 const CommomVersion = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { isLoggedIn, firstName } = {isLoggedIn: false, firstName: 'Me'};
-  // const { isLoggedIn, firstName } = useCustomerState();
-  const { logout } = {logout: function(){}};
-  // const { logout } = useCustomerActions();
-  const logoutCall = async () => await logout();
+  const { firstName, isLoggedIn } = useCustomerState();
+  const { logout } = useCustomerActions();
 
   const Modal = () => {
 
@@ -36,13 +48,13 @@ const CommomVersion = () => {
 
       LoggedIn: () => <>
 
-        <div className={'content loggedIn navAccountMenuOld'}>
+        <div className={'content accDropdownloggedIn navAccountMenuOld'}>
           <a href="/account">My Account</a>
           <a href="https://returns.tula.com/">Returns & Exchanges</a>
           <a href="/pages/contact-us">Contact Us</a>
           <a href="/pages/faq">FAQs</a>
-          <span className={'signOut'} onClick={() => {
-            logoutCall();
+          <span className={'signOut'} onClick={async () => {
+            await logout();
             window.location.reload();
           }}>
             sign out
@@ -71,11 +83,11 @@ const CommomVersion = () => {
 
       <div className={'modalContainer noLoyalty'}>
 
-        <div className={'closeButton'}>
+        <div className={'accDropdownCloseButton'}>
           {(!isLoggedIn) && <div onClick={() => setIsModalOpen(!isModalOpen)}><Icons.X /></div>}
         </div>
 
-        <div className={'container'}>
+        <div className={'accDropDowncontainer'}>
           {isLoggedIn ? <Content.LoggedIn /> : <Content.LoggedOut />}
         </div>
 
@@ -102,17 +114,14 @@ const LoyaltyVersion = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [points, setPoints] = useState(null);
-  const { isLoggedIn, firstName, status, email, id } = {isLoggedIn: false, firstName: 'Me', status: 'loaded', email: 'me@me', id: '123'};
-  // const { isLoggedIn, firstName, status, email, id } = useCustomerState();
-  const { logout } = {logout: function(){}};
-  // const { logout } = useCustomerActions();
-  const logoutCall = async () => await logout();
+  const { firstName, email, id, isLoggedIn } = useCustomerState();
+  const { logout } = useCustomerActions();
 
   useEffect(() => {
 
-    if (status === 'loaded' || status === 'error') getCustomerData();
+    getCustomerData();
 
-  }, [status]);
+  }, []);
 
   async function getCustomerData() {
 
@@ -143,16 +152,16 @@ const LoyaltyVersion = () => {
 
       LoggedIn: () => <>
 
-        <div className={'content loggedIn'}>
+        <div className={'content accDropdownloggedIn'}>
           <p>Hi, {firstName}!</p>
           you have <b><SwellPointBalance /></b> points
         </div>
 
-        <div className={'cta loggedIn'}>
+        <div className={'cta accDropdownloggedIn'}>
           <Link to={'/account?c=rewards'}>Redeem Points</Link>
           <Link to={'/pages/upload-receipt'}>Upload a Receipt & Earn</Link>
-          <div className={'signOut'} onClick={() => {
-            logoutCall();
+          <div className={'signOut'} onClick={async () => {
+            await logout();
             window.location.reload();
           }}>
             sign out
@@ -189,7 +198,7 @@ const LoyaltyVersion = () => {
           <div onClick={() => setIsModalOpen(!isModalOpen)}><Icons.X /></div>
         </div>
 
-        <div className={'container'}>
+        <div className={'accDropDowncontainer'}>
           {isLoggedIn ? <Content.LoggedIn /> : <Content.LoggedOut />}
         </div>
 
@@ -201,7 +210,7 @@ const LoyaltyVersion = () => {
 
   const MyAccountButton = {
 
-    MyRewards: () => (status !== 'loading') && <>
+    MyRewards: () => <>
 
       <Icons.Star />
       My Rewards

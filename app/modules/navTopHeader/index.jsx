@@ -22,7 +22,7 @@ const NavTopHeader = ({ announcementHeader, announcementMessages }) => {
 
   return (
     <div
-      className={'container'}
+      className={'topHeaderContainer'}
       style={{ background: backgroundColorHex, color: fontColorHex }}
     >
       <div className={'wrapper'}>

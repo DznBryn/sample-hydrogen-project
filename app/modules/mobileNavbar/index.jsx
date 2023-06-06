@@ -144,7 +144,7 @@ const MobileNavbar = ({ content }) => {
                 onClick={() => onNavbarClick(idx)}
               >
                 {navItem.displayText}
-                {navItem.navLinks.length > 0 && (
+                {navItem.navLinks?.length > 0 && (
                   <span className={'mobileNavbarArrow'}>
                     {subItemsOpenId === idx ? <AngleUpIcon /> : <AngleDownIcon />}
                   </span>

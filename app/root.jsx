@@ -5,12 +5,11 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
 } from '@remix-run/react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
-// import { getCart } from './utils/graphql/shopify/queries/cart';
+import { getCart } from './utils/graphql/shopify/queries/cart';
 import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 
@@ -65,6 +64,7 @@ export const meta = () => ({
 export async function loader({ context }) {
 
   const customerAccessToken = await context.session.get('customerAccessToken');
+  const cart = await getCart(context);
 
   if (customerAccessToken) {
 
@@ -74,7 +74,8 @@ export async function loader({ context }) {
 
     return defer(
       {
-        customer
+        customer,
+        cart,
       },
       {
         headers: {
@@ -91,7 +92,8 @@ export async function loader({ context }) {
         firstName: '',
         email: '',
         phone: '',
-      }
+      },
+      cart,
     });
 
   }
@@ -99,8 +101,6 @@ export async function loader({ context }) {
 }
 
 export default function App() {
-
-  const { customer } = useLoaderData();
 
   const links = [
     {
@@ -128,7 +128,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet context={{ customer }} />
+        <Outlet/>
         <ScrollRestoration />
         <Scripts />
         {

@@ -31,17 +31,17 @@
   transition: all 1s;
 }
 
-.sliderWrap.visible .slider {
+.sliderWrap.visiblePanel .slider {
   right: 0;
 }
 
-.visible {
+.visiblePanel {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.3s linear;
 }
 
-.hidden {
+.hiddenPanel {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 0.3s, opacity 0.3s linear;

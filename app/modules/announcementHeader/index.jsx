@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { PortableText } from '@portabletext/react';
+import { PortableText } from '@portabletext/react';
 import ModalGeneric, { links as modalGenericStyles } from '~/modules/modalGeneric';
 import { Link } from '@remix-run/react';
 
@@ -17,17 +17,17 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
-    // announcementText = [],
+    announcementTextRaw = [],
     announcementUrl,
     emoji,
     shouldOpenModal,
     modalLinkText,
-    // modalContent,
+    modalContentRaw,
     shouldOpenLink,
     linkToGo,
   } = announcementMessages[index];
 
-  // const getFirstPromoRichText = (messages) => messages[0] ? [messages[0]] : [];
+  const getFirstPromoRichText = (messages) => messages[0] ? [messages[0]] : [];
 
   const nextMessage = () => {
     if (announcementMessages[index + 1]) setIndex(index + 1);
@@ -49,7 +49,7 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
     <>
       <div key={index} className={'messageBox'}>
         <a className={'messageLink'} style={{ fontColor: fontColor }} href={announcementUrl}>
-          {/* <PortableText value={getFirstPromoRichText(announcementText)} /> */}
+          <PortableText value={getFirstPromoRichText(announcementTextRaw)} />
           {emoji && (
             <img src={emoji.src} />
           )}
@@ -75,7 +75,7 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
       </div>
 
       <ModalGeneric isOpen={isModalOpen} handleClose={handleModal}>
-        {/* <PortableText value={modalContent} /> */}
+        <PortableText value={modalContentRaw} />
       </ModalGeneric>
     </>
   );

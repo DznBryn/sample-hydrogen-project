@@ -1,4 +1,4 @@
-.container {
+.topHeaderContainer {
   position: static;
   display: flex;
   justify-content: center;
@@ -24,27 +24,27 @@
   text-decoration: none;
 }
 
-.container .wrapper > :first-child,
-.container .wrapper > :last-child {
+.topHeaderContainer .wrapper > :first-child,
+.topHeaderContainer .wrapper > :last-child {
   display: none;
 }
 
 @media (min-width: 550px) {
-  .container .wrapper {
+  .topHeaderContainer .wrapper {
     padding: 0.5rem 1rem;
     font-size: 14px;
   }
 }
 @media (min-width: 769px) {
-  .container .wrapper {
+  .topHeaderContainer .wrapper {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 0.5rem 2rem;
     font-size: 14px;
   }
-  .container .wrapper > :first-child,
-  .container .wrapper > :last-child {
+  .topHeaderContainer .wrapper > :first-child,
+  .topHeaderContainer .wrapper > :last-child {
     display: block !important;
   }
 }

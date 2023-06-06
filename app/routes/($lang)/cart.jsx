@@ -124,7 +124,8 @@ export async function action({ request, context }) {
 }
 
 export async function loader({ context }) {
-  return await getCart(context);
+  const cart = await getCart(context);
+  return {cart};
 }
 
 export default function Cart() {
@@ -138,13 +139,13 @@ export default function Cart() {
     <div className="">
       <h2 className="">
         Your cart is empty
-      </h2 >
+      </h2>
       <Link
         to="/"
         className=""
       >
         Continue shopping
       </Link>
-    </div >
+    </div>
   );
 }
