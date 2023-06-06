@@ -12,7 +12,7 @@ export const links = () => {
   ];
 };
 
-const NavCollectionCarousel = ({ collection, navItem }) => {
+const NavCollectionCarousel = ({ /*collection,*/ navItem }) => {
   const carouselRef = useRef(null);
   const collectionRef = useRef(null);
   let isDown = false;
@@ -20,8 +20,6 @@ const NavCollectionCarousel = ({ collection, navItem }) => {
   let scrollLeft;
   let navPosition = 0;
   let carouselWidth = 0;
-
-  console.log('NavCollectionCarousel => ', collection);
 
   const setStyle = (position) => {
     document.querySelectorAll('.navCollectionWrap').forEach((item, index) => {
