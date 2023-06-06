@@ -102,7 +102,7 @@ const MainContent = () => {
         .then((res) => {
           setPoints(res.pointsBalance);
         })
-        .catch((err) => { throw new Error('Not able to get user data', err); });
+        .catch((err) => err );
 
     }
 
