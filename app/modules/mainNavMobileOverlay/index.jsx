@@ -103,7 +103,7 @@ const Navigation = ({ overlayItems }) => {
           <Link to={navLink.url} key={navLink.displayText}>
             <div className={'navGroupItem nav_click_hamburger_t2'} onClick={handleClickOnLink}>
               {navLink.displayText}
-              {navLink.calloutText && <span className={'callout'} style={{ color: (navLink.calloutFontColorHex) ? navLink.calloutFontColorHex : '' }}>{navLink.calloutText}</span>}
+              {navLink.calloutText && <span className={'callout'} style={{ color: (navLink?.calloutFontColorHex) ? navLink?.calloutFontColorHex : '' }}>{navLink.calloutText}</span>}
             </div>
           </Link>
 
@@ -116,7 +116,7 @@ const Navigation = ({ overlayItems }) => {
 
   const ButtonLabel = ({ navItem }) => (
 
-    <span className={'groupHeader'} style={{ color: (navItem.fontColorHex) ? navItem.fontColorHex : '' }}>
+    <span className={'groupHeader'} style={{ color: (navItem?.fontColorHex) ? navItem?.fontColorHex : undefined }}>
       {navItem.emoji && <img className={'emoji'} src={navItem.emoji.src} />}
       {navItem.displayText}
     </span>

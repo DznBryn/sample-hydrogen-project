@@ -298,7 +298,7 @@
 }
 
 .pointsDisplay {
-  margin-right: 3px;
+  margin: 2px 3px;
 }
 
 .rewardsBannerContainer > a > div:first-of-type {
@@ -470,7 +470,7 @@
   justify-content: space-between;
 }
 
-.welcomeButtonsWrap .welcomeButton p {
+.welcomeButtonsWrap .welcomeButton .pointsCopy {
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;

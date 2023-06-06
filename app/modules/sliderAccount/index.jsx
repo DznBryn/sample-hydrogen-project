@@ -102,7 +102,7 @@ const MainContent = () => {
         .then((res) => {
           setPoints(res.pointsBalance);
         })
-        .catch((err) => console.log('Not able to get user data', err));
+        .catch((err) => { throw new Error('Not able to get user data', err); });
 
     }
 
@@ -482,7 +482,7 @@ const MainContent = () => {
                 {data.icon}
               </div>
 
-              <p>{data.content}</p>
+              <div className={'pointsCopy'}>{data.content}</div>
 
             </Link>
 
@@ -499,7 +499,7 @@ const MainContent = () => {
                 <span>NEW!</span>
               </div>
 
-              <p>{icons['round_star']} <SwellPointBalance /> pts available!</p>
+              <div className={'pointsCopy'}>{icons['round_star']} <SwellPointBalance /> pts available!</div>
 
             </Link>
           )

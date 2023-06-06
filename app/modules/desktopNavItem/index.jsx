@@ -93,7 +93,7 @@ const DesktopNavItem = ({ navItem = {}, itemId = '' }) => {
       <Link
         className={'navLink'}
         to={navItem.linkUrl}
-        style={{ color: (navItem.fontColorHex) ? navItem.fontColorHex : '' }}
+        style={{ color: (navItem?.fontColorHex) ? navItem?.fontColorHex : undefined }}
       >
         {navItem.displayText}
       </Link>

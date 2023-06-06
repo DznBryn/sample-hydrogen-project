@@ -154,11 +154,11 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
     <div className={'signupWrap'}>
       <div className={'email'} >
         <div ref={headerBeforeEmailSubmit} className={'beforeEmailSubmit'}>
-          <PortableText value={communication.newsletterTextRaw} />
+          <PortableText value={communication?.newsletterTextRaw} />
         </div>
         <div ref={headerAfterEmailSubmit} className={'afterEmailSubmit'}>
-          <PortableText value={communication.newsletterTextAfterEmailSubmitRaw} />
-          <PortableText value={communication.newsletterSubtextAfterEmailSubmitRaw} />
+          <PortableText value={communication?.newsletterTextAfterEmailSubmitRaw} />
+          <PortableText value={communication?.newsletterSubtextAfterEmailSubmitRaw} />
         </div>
         <div className={'emailFormWrap'}>
           <form onSubmit={(e) => { e.preventDefault(); return false; }}>
@@ -188,9 +188,9 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
               {communication.newsletterButtonLabel}
             </button>
           </form>
-          <p className={'formFootnote'}>
-            <PortableText value={communication.newsletterFooterRaw} />
-          </p>
+          <div className={'formFootnote'}>
+            <PortableText value={communication?.newsletterFooterRaw} />
+          </div>
           <div className="submit_messages">
             <div className={'success_message hide'}><SuccessIcon />
               <h1>Thanks for signing up!</h1>
@@ -202,13 +202,13 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
       </div>
       <div className={'sms'} >
         <div className={'topText'}>
-          <PortableText value={communication.smsText1Raw} />
+          <PortableText value={communication?.smsText1Raw} />
         </div>
         <div className={'bottomText'}>
-          <PortableText value={communication.smsText2Raw} />
+          <PortableText value={communication?.smsText2Raw} />
         </div>
         <div className={'smsLegal'}>
-          <PortableText value={communication.smsFooterTextRaw} />
+          <PortableText value={communication?.smsFooterTextRaw} />
         </div>
       </div>
     </div>
