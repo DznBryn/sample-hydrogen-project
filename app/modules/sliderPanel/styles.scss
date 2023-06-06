@@ -4,7 +4,7 @@
 }
 
 .overlay {
-  background-color: rgba(0, 0, 0, .66);
+  background-color: rgba(0, 0, 0, 0.66);
   height: 100%;
   width: 100%;
 }
@@ -31,20 +31,20 @@
   transition: all 1s;
 }
 
-.sliderWrap.visible .slider {
+.sliderWrap.visiblePanel .slider {
   right: 0;
 }
 
-.visible {
+.visiblePanel {
   visibility: visible;
   opacity: 1;
-  transition: opacity .3s linear;
+  transition: opacity 0.3s linear;
 }
 
-.hidden {
+.hiddenPanel {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s .3s, opacity .3s linear;
+  transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
 
 @media only screen and (min-width: 768px) {
@@ -52,7 +52,6 @@
     /* background-color: rgba(0, 0, 0, .7); */
     height: 100vh;
   }
-
   .slider {
     width: 400px;
   }
