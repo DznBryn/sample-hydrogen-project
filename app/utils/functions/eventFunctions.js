@@ -1,4 +1,6 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import apolloClient from '~/utils/graphql/sanity/apolloClient';
+import { useCartState } from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US') ? 'afterpay' : 'klarna';
@@ -206,7 +208,7 @@ export function isInViewPort(element, callback) {
       (window.innerHeight || document.documentElement.clientHeight)
     ) {
       callback();
-      //return true;
+      return true;
     } else {
       return false;
     }
@@ -402,7 +404,7 @@ export function triggerAnalyticsProductClick(analytics) {
   }
 }
 
-export function triggerAnalyticsQuizEvents(eventType/*, quizID, quizType*/) {
+export function triggerAnalyticsQuizEvents(eventType, quizID, quizType) {
 
   const eventFormatted = (eventType) && (eventType.charAt(0).toUpperCase() + eventType.slice(1));
   const event = `skinQuiz${eventFormatted}`;
@@ -410,8 +412,8 @@ export function triggerAnalyticsQuizEvents(eventType/*, quizID, quizType*/) {
   if (window?.dataLayer) {
     window.dataLayer.push({
       event,
-      // quiz_id: quizID,
-      // quiz_type: quizType,
+      ['quiz_id']: quizID,
+      ['quiz_type']: quizType,
     });
   }
 
@@ -433,17 +435,17 @@ export function generateUUID() {
 
 export function getCartTotalForFreeShipping() {
 
-  // const { items, subtotalPrice } = useCartState();
-  // const giftCardID = getApiKeys().GIFT_CARD_ID;
-  // let totalPrice = (subtotalPrice / 100);
+  const { items, subtotalPrice } = useCartState();
+  const giftCardID = getApiKeys().GIFT_CARD_ID;
+  let totalPrice = (subtotalPrice / 100);
 
-  // items.forEach((item) => {
+  items.forEach((item) => {
 
-  //   if (item.id === giftCardID) totalPrice -= (item.price / 100);
+    if (item.id === giftCardID) totalPrice -= (item.price / 100);
 
-  // });
+  });
 
-  // return totalPrice;
+  return totalPrice;
 
 }
 
@@ -502,10 +504,6 @@ export function convertStorefrontIdToExternalId(str) {
 export function updateListrakCartGraphQL(items, token, cartLink, isAutoDelivery) {
   var _ltk = _ltk || null;
   if (typeof _ltk === 'object') {
-    // const variantInfo = items.map((item) => {
-    //   const curTotal = Number(item.variant.price).toFixed(2);
-    //   _ltk.SCA.AddItemWithLinks(item.variant.id, item.quantity, curTotal, item.title, item.variant.image.src, `http://www.tula.com/products/${item.variant.product.handle}?variant=${item.variant.product.id}`);
-    // });
     _ltk.SCA.Meta1 = token;
     _ltk.SCA.CartLink = encodeURI(JSON.stringify(cartLink).replace(/:/gi, '-')).replace(/,/gi, '%2C');
     if (isAutoDelivery) {
@@ -524,13 +522,28 @@ export function isAutoCartGraphQL(items) {
 }
 
 export function getCartTotalForFreeShippingGraphQL() {
-  // const { items, subtotalPrice } = useCartState();
-  // const giftCardID = getApiKeys().GIFT_CARD_ID;
-  // let totalPrice = Number(subtotalPrice);
-  // items.forEach((item) => {
-  //   if (convertStorefrontIdToExternalId(item.variant.product.id) === giftCardID) {
-  //     totalPrice -= Number(item.variant.price);
-  //   }
-  // });
-  // return totalPrice;
+  const { items, subtotalPrice } = useCartState();
+  const giftCardID = getApiKeys().GIFT_CARD_ID;
+  let totalPrice = Number(subtotalPrice);
+  items.forEach((item) => {
+    if (convertStorefrontIdToExternalId(item.variant.product.id) === giftCardID) {
+      totalPrice -= Number(item.variant.price);
+    }
+  });
+  return totalPrice;
+}
+
+export async function getCMSContent(context, query){
+
+  const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
+  const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query });
+  
+  return Object.values(result.data)[0];
+
+}
+
+export function getCMSDoc(content, docName){
+
+  return content.find(doc => doc.name === docName);
+
 }

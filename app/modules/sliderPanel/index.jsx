@@ -14,8 +14,8 @@ const SliderPanel = ({ children, id, overlayOn = true }) => {
 
   useEffect(() => {
     bindCustomEvent(sliderRef, 'data-slider-state', {
-      hidden: 'hidden',
-      visible: 'visible',
+      hidden: 'hiddenPanel',
+      visible: 'visiblePanel',
     });
   }, [sliderRef]);
 
@@ -35,7 +35,7 @@ const SliderPanel = ({ children, id, overlayOn = true }) => {
     <>
       <div
         id={id}
-        className='sliderWrap hidden'
+        className='sliderWrap hiddenPanel'
         data-slider-state="hide"
         ref={sliderRef}
       >

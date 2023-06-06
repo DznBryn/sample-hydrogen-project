@@ -1,11 +1,10 @@
 import { useLoaderData } from '@remix-run/react';
-import {flattenConnection} from '@shopify/hydrogen-react';
-import apolloClient from '~/utils/graphql/sanity/apolloClient';
-import { GET_FOOTERS, } from '~/utils/graphql/sanity/queries/footers';
-import { GET_EMAIL_SMS_SIGNUP_CONTENT } from '~/utils/graphql/sanity/queries/emailSmsSignupContent';
-import { PRODUCTS_QUERY } from '~/utils/graphql/shopify/queries/collections';
+import { getCMSContent } from '~/utils/functions/eventFunctions';
+import { getCollectionProducts } from '~/utils/graphql/shopify/queries/collections';
 import Layouts, { links as layoutsStyles } from '~/layouts';
 import Homepage, { links as homePageStyles } from '~/modules/homepage';
+
+import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER } from '~/utils/graphql/sanity/queries';
 
 export const links = () => {
   return [
@@ -14,61 +13,63 @@ export const links = () => {
   ];
 };
 
-async function getCollectionProducts(context){
-
-  const {collection} = await context.storefront.query(PRODUCTS_QUERY, {
-    variables: { handle: 'all' },
-  });
-
-  if (!collection) throw new Response(null, {status: 404});
-
-  return {
-    products: collection?.products ? flattenConnection(collection.products) : [],
-  };
-
-}
-
-async function getFooterData(context){
-
-  const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
-  const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query: GET_FOOTERS });
-
-  return result.data.allFooters;  
-
-}
-
-async function getAllEmailSmsSignupContent(context){
-
-  const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
-  const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query: GET_EMAIL_SMS_SIGNUP_CONTENT });
-
-  return result.data.allEmailSmsSignupContent[0];  
-
-}
-
 export const loader = async ({context}) => {
 
-  const allFooters = await getFooterData(context);
-  const collection = await getCollectionProducts(context);
-  const emailSmsSignupContent = await getAllEmailSmsSignupContent(context);
+  const collection = await getCollectionProducts(context, 'all');
+
+  const footers = await getCMSContent(context, GET_FOOTERS);
+  const emailSmsSignupContent = await getCMSContent(context, GET_EMAIL_SMS_SIGNUP_CONTENT);
+  const cartPageConfig = await getCMSContent(context, GET_CART_PAGE_CONFIG);
+  const announcementHeader = await getCMSContent(context, GET_ANNOUNCEMENT_HEADER);
+  const announcementMessages = await getCMSContent(context, GET_ANNOUNCEMENT_MESSAGES);
+  const mobileNavBar = await getCMSContent(context, GET_MOBILE_NAV_BAR);
+  const headerConfig = await getCMSContent(context, GET_HEADER_CONFIG);
+  const mobileNavFooterMainButton = await getCMSContent(context, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON);
+  const annoucementTopBanner = await getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER);
 
   return { 
-    allFooters,
     collection,
+    footers,
     emailSmsSignupContent,
+    cartPageConfig,
+    announcementHeader,
+    announcementMessages,
+    mobileNavBar,
+    headerConfig,
+    mobileNavFooterMainButton,
+    annoucementTopBanner,
   };
 
 };
 
 export default function Index() {
 
-  const { allFooters, collection, emailSmsSignupContent } = useLoaderData();
+  const { 
+    footers, 
+    collection, 
+    emailSmsSignupContent, 
+    cartPageConfig, 
+    announcementHeader,
+    announcementMessages,
+    mobileNavBar,
+    headerConfig,
+    mobileNavFooterMainButton,
+    annoucementTopBanner,
+  } = useLoaderData();
 
   return (
     <Layouts.MainNavFooter 
-      footers={allFooters} 
+      footers={footers} 
       productsList={collection} 
       emailSmsSignupContent={emailSmsSignupContent}
+      cartConfig={cartPageConfig}
+      announcementHeader={announcementHeader}
+      announcementMessages={announcementMessages}
+      mobileNavBar={mobileNavBar}
+      mobileOverlayNav={headerConfig}
+      mobileNavMainButton={mobileNavFooterMainButton}
+      annoucementTopBannerContent={annoucementTopBanner}
+      desktopHeaderNav={headerConfig}
     >
       <Homepage/>
     </Layouts.MainNavFooter>

@@ -1,0 +1,107 @@
+.countdownTimerContainer {
+  display: flex;
+  position: relative;
+  width: 100%;
+  color: white;
+  padding: 5px;
+}
+
+.countdownTimerContainer .elementsWrapper {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 11px;
+  align-items: center;
+}
+
+.countdownTimerContainer .elementsWrapper .copy {
+  font-weight: 800;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.countdownTimerContainer .elementsWrapper .timer {
+  display: flex;
+  gap: 5.5px;
+  min-width: 150px;
+}
+
+.countdownTimerContainer .elementsWrapper .timer .group {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 40.1px;
+  gap: 2px;
+}
+
+.countdownTimerContainer .elementsWrapper .timer .group>div {
+  background: rgba(255, 255, 255, 0.28);
+  border-radius: 1px;
+  font-size: 22px;
+  font-weight: 800;
+  padding: 4px 3px 0px;
+  min-width: 19.03px;
+  text-align: center;
+}
+
+.countdownTimerContainer .elementsWrapper .timer .group>span {
+  flex-grow: 1;
+  text-align: center;
+  font-weight: 800;
+  font-size: 10px;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.countdownTimerContainer .elementsWrapper .timer .divider {
+  height: fit-content;
+  padding-top: 6px;
+  opacity: 0.69;
+}
+
+.countdownTimerContainer .elementsWrapper .timer .divider:last-child {
+  display: none;
+}
+
+.countdownTimerContainer .countDownTimerCloseButton {
+  display: flex;
+  align-items: center;
+  padding: 0 35px;
+}
+
+.countdownTimerContainer .countDownTimerCloseButton svg {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+  .countdownTimerContainer .elementsWrapper {
+    gap: 17px;
+  }
+
+  .countdownTimerContainer .elementsWrapper .copy {
+    font-size: 12px;
+  }
+
+  .countdownTimerContainer .elementsWrapper .timer .group {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 37.7px;
+    gap: 2px;
+  }
+
+  .countdownTimerContainer .elementsWrapper .timer .group>div {
+    font-size: 20px;
+    padding: 4px 3px 0px;
+    min-width: 17.84px;
+  }
+
+  .countdownTimerContainer .elementsWrapper .timer .group>span {
+    font-size: 8px;
+  }
+
+  .countdownTimerContainer .countDownTimerCloseButton {
+    padding: 0 4px;
+  }
+
+}

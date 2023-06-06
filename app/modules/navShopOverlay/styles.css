@@ -1,0 +1,133 @@
+.navShopOverlay {
+  top: 88px;
+  left: 0px;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  background-color: #fff;
+  width: 100vw;
+  justify-content: center;
+}
+
+.menuLinks {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0;
+}
+
+.menuLinks .sectionList {
+  width: 180px;
+  margin-left: 50px;
+  position: relative;
+}
+
+.menuLinks .sectionList .linkItem {
+  list-style: none;
+  margin: 9px 0;
+}
+
+.menuLinks .sectionList .linkItem .link {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 12px;
+  color: #4C4E56;
+  text-decoration: none;
+}
+
+.menuLinks .sectionList .linkItem .link:hover {
+  color: #48C6D9;
+  text-decoration: underline;
+}
+
+.catLink {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.6px;
+  letter-spacing: 0.01em;
+  color: #4C4E56;
+  margin-bottom: 18px;
+}
+
+.seeLink {
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 12px;
+  text-decoration: none;
+  color: #4C4E56;
+}
+
+.menuBorder {
+  width: 1px;
+  height: 100%;
+  background-color: #E5E5E5;
+  position: absolute;
+  top: 0;
+  right: -10px;
+}
+
+.menuImgWrap {
+  position: relative;
+  margin: 15px 0;
+}
+
+.menuImgWrap img {
+  width: 160px;
+  height: 400px;
+}
+
+.ctaLink {
+  font-size: 14px;
+  font-weight: 800;
+  color: #48c6d9;
+  text-align: center;
+  text-decoration: none;
+  text-transform: capitalize;
+  position: absolute;
+  z-index: 1;
+  padding: 10px;
+  bottom: 20px;
+  background-color: #fff;
+  left: 20px;
+  right: 20px;
+  border-radius: 3px;
+}
+
+.ctaLink:hover {
+  background-color: #48c6d9;
+  color: #fff;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 0.1s, opacity 0.1s linear;
+}
+
+.callout {
+  margin-left: 5px;
+}
+
+@media only screen and (max-width: 1200px) and (min-width: 1025px) {
+  .sideImg {
+    display: none;
+  }
+}
+@media only screen and (max-width: 1025px) {
+  .navShopOverlay {
+    left: 0px;
+  }
+  .sideImg {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

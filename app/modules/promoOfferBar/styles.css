@@ -1,0 +1,86 @@
+.promoOfferBar {
+  top: 0;
+  z-index: 100000;
+  width: 100vw;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 37px;
+  position: relative;
+}
+
+.promoOfferBar p {
+  color: #fff;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.promoOfferBar :global(#close-promotionBar) {
+  margin: 12px;
+  font-size: 30px;
+  font-weight: 300;
+  transform: rotate(45deg);
+  border: none;
+  background: rgba(255, 255, 255, 0);
+  position: absolute;
+  top: -11px;
+  right: 55px;
+  cursor: pointer;
+  color: #fff;
+}
+
+.promoOfferBar :global(.hidden) {
+  display: none !important;
+}
+
+.promoBarCartAlert {
+  top: 123px;
+}
+
+@media all and (max-width: 768px) {
+  .promoOfferBar {
+    padding: 10px 25px 10px 20px;
+  }
+  .promoOfferBar p {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: left;
+  }
+  .promoOfferBar :global(#close-promotionBar),
+  .promoOfferBar :global(#expand-promotionBar) {
+    right: 0px;
+  }
+  .promoOfferBar .textWrapper {
+    height: 18px;
+    overflow: hidden;
+  }
+  .promoOfferBar :global(#expand-promotionBar) {
+    margin: 12px;
+    font-size: 22px;
+    font-weight: 300;
+    border: none;
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    top: -6px;
+    cursor: pointer;
+    color: #fff;
+  }
+  .promoOfferBar.expand,
+  .promoOfferBar .textWrapper.expand {
+    height: fit-content;
+    transition: 0.25s;
+  }
+  .promoBarCartAlert {
+    top: 91px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

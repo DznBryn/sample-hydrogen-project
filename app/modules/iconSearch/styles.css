@@ -1,0 +1,28 @@
+.icon_search a {
+  text-decoration: none;
+}
+
+.icon_search svg {
+  fill: #4c4e56;
+  fill: var(--color-primary-black);
+}
+
+.icon_search .svg_search {
+  height: 26px;
+  width: 26px;
+}
+
+@media only screen and (max-width: 480px) {
+  .icon_search .svg_search {
+    height: 20px;
+    width: 20px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .icon_search svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

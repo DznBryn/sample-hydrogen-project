@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
-import { getFormData, getLoyaltyCustomerData, triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
+import { getLoyaltyCustomerData, triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import SliderPanel, { switchSliderPanelVisibility, openedStateID, links as sliderPanelStyles } from '../sliderPanel';
 import LoadingSkeleton, { links as loadingSkeletonStyles } from '../loadingSkeleton';
-import { Link, useOutletContext } from '@remix-run/react';
+import { useCustomerActions, useCustomerState } from '~/hooks/useCostumer';
+import { Link } from '@remix-run/react';
 
 import styles from './styles.css';
 
@@ -51,10 +52,8 @@ const MainContent = () => {
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
-  const { customer } = useOutletContext();
-  const { id, firstName, email } = customer;
-  const isLoggedIn = Boolean(id);
-  const status = 'loaded';
+  const { id, firstName, email, isLoggedIn } = useCustomerState();
+  const { logout, login, register } = useCustomerActions();
 
   const forgotEmail = useRef(null);
   const errorElement = useRef(null);
@@ -75,14 +74,11 @@ const MainContent = () => {
 
   useEffect(() => {
 
-    if ((status === 'loaded' || status === 'error')) {
+    if (!initialized.current) init();
+    getCustomerData();
 
-      if (!initialized.current) init();
-      getCustomerData();
 
-    }
-
-  }, [status]);
+  }, []);
 
   /**/
 
@@ -229,54 +225,18 @@ const MainContent = () => {
 
     disableFormButton(event.target);
 
-    // const { errors } = await login({
-    //   email: signInEmail.current.value,
-    //   password: signInPassword.current.value,
-    // });
+    const email = signInEmail.current.value;
+    const password = signInPassword.current.value;
 
-    // if (!errors || errors.lenght === 0) {
-    //   changeMainContent('loading');
-    //   triggerAnalyticsLoyaltyEvents('Signin', { source: 'accountSlider' });
-    //   sessionStorage.setItem(openedStateID, curSliderPanelID);
-    //   window.location.reload();
-    // } else {
-    //   showInputError(signInPassword.current.parentElement, errors[0].message);
-    // }
+    const { errors } = await login(email, password);
 
-    async function login(email, password) {
-
-      try {
-
-        const res = await fetch('/account/login', {
-          method: 'POST',
-          body: getFormData({ email, password }),
-        });
-
-        if(res.ok){
-          return {success: true};
-        }else{
-          return {success: false, message: 'Account not found! Please try again or sign up.'} ;
-        }
-
-      } catch (error) {
-
-        return {
-          error: error.toString(),
-        };
-
-      }
-
-    }
-
-    const {success, message} = await login(signInEmail.current.value, signInPassword.current.value);
-
-    if (success) {
+    if (!errors || errors.lenght === 0) {
       changeMainContent('loading');
       triggerAnalyticsLoyaltyEvents('Signin', { source: 'accountSlider' });
       sessionStorage.setItem(openedStateID, curSliderPanelID);
       window.location.reload();
-    }else{
-      showInputError(signInPassword.current.parentElement, message);
+    } else {
+      showInputError(signInPassword.current.parentElement, errors[0].message);
     }
 
     enableFormButton(event.target);
@@ -286,19 +246,13 @@ const MainContent = () => {
 
   async function handleLogout() {
 
-    // const { errors } = await logout();
+    const { errors } = await logout();
 
-    // if (!errors || errors.length === 0) {
-    //   changeMainContent('loading');
-    //   sessionStorage.setItem(openedStateID, '0');
-    //   window.location.reload();
-    // }
-
-    await fetch('/account/logout', { method: 'POST' });
-
-    changeMainContent('loading');
-    sessionStorage.setItem(openedStateID, '0');
-    window.location.reload();
+    if (!errors || errors.length === 0) {
+      changeMainContent('loading');
+      sessionStorage.setItem(openedStateID, '0');
+      window.location.reload();
+    }
 
   }
 
@@ -322,7 +276,7 @@ const MainContent = () => {
 
     /** */
 
-    //TODO:
+    //TODO: !!!(should be implemented on HOOK as login, logout and reister )!!!!
 
     // const email = forgotEmail.current.value;
 
@@ -420,31 +374,6 @@ const MainContent = () => {
     //   }
 
     // }
-
-    async function register(email, password, firstName, lastName, acceptsMarketing) {
-
-      try {
-
-        const res = await fetch('/account/register', {
-          method: 'POST',
-          body: getFormData({ email, password, firstName, lastName, acceptsMarketing }),
-        });
-
-        if(res.ok){
-          return {success: true};
-        }else{
-          return {success: false, message: 'An account already exists with this email address. Sign in to your existing account or sign up with a different email.'} ;
-        }
-
-      } catch (error) {
-
-        return {
-          error: error.toString(),
-        };
-
-      }
-
-    }
 
     const {success, message} = await register(email, password, firstName, lastName, acceptsMarketing);
 

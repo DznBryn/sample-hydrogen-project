@@ -1,8 +1,7 @@
+import { getCMSDoc } from '~/utils/functions/eventFunctions';
 import SliderAccount, { links as sliderAccountStyles} from '~/modules/sliderAccount';
-import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
+import MainNav, { links as mainNavStyles } from '~/modules/mainNav';
 import Footer, { links as footerStyles } from '~/modules/footer';
-
-
 import BodyBottom, { links as BodyBottomStyles } from '~/modules/bodyBottom';
 
 export const links = () => {
@@ -10,31 +9,64 @@ export const links = () => {
     ...sliderAccountStyles(),
     ...BodyBottomStyles(),
     ...footerStyles(),
+    ...mainNavStyles(),
   ];
 };
 
-const MainNavFooter = ({ children, footers, productsList, emailSmsSignupContent }) => {
+const MainNavFooter = ({ 
+  children, 
+  footers, 
+  productsList, 
+  emailSmsSignupContent,
+  cartConfig,
+  announcementHeader,
+  announcementMessages,
+  mobileNavBar,
+  mobileOverlayNav,
+  mobileNavMainButton,
+  annoucementTopBannerContent,
+  desktopHeaderNav,
+}) => {
 
-  const desktopFooter = footers.find(doc => doc.name === 'Desktop');
-  const mobileFooter = footers.find(doc => doc.name === 'Mobile');
+  //getting specific docs
+  const desktopFooterData = getCMSDoc(footers, 'Desktop');
+  const mobileFooterData = getCMSDoc(footers, 'Mobile');
+  const emailSmsSignupData = getCMSDoc(emailSmsSignupContent, 'Content');
+  const cartConfigData = getCMSDoc(cartConfig, 'DefaultCart');
+  const announcementHeaderData = getCMSDoc(announcementHeader, 'Main Announcement');
+  const mobileNavbarData = getCMSDoc(mobileNavBar, 'Mobile');
+  const mobileOverlayNavData = getCMSDoc(mobileOverlayNav, 'Mobile Overlay Nav');
+  const mobileNavMainButtonData = getCMSDoc(mobileNavMainButton, 'Main Button');
+  const annoucementTopBannerContentData = getCMSDoc(annoucementTopBannerContent, 'rose glow');
+  const desktopHeaderNavData = getCMSDoc(desktopHeaderNav, 'Desktop Header Nav');
+
+  //getting all the docs
+  const announcementMessagesData = announcementMessages;
 
   return (
 
     <>
-      <button className="btn" onClick={() => switchSliderPanelVisibility('SliderAccount')}>
-        open slider account
-      </button>
       <br/>
 
       <h3>NavPlaceHolder</h3>
-      <h3>MainNav</h3>
+      <MainNav 
+        cartConfig={cartConfigData} 
+        announcementHeader={announcementHeaderData} 
+        announcementMessages={announcementMessagesData}
+        mobileNavbar={mobileNavbarData}
+        mobileOverlayNav={mobileOverlayNavData}
+        mobileNavMainButton={mobileNavMainButtonData}
+        annoucementTopBannerContent={annoucementTopBannerContentData}
+        desktopHeaderNav={desktopHeaderNavData}
+        products={productsList}
+      />
       <h3>SliderCart</h3>
       <SliderAccount/>
       {
         children
       }
-      <BodyBottom emailSmsSignupContent={emailSmsSignupContent} productList={productsList}/>
-      <Footer desktopFooter={desktopFooter} mobileFooter={mobileFooter}/>
+      <BodyBottom emailSmsSignupContent={emailSmsSignupData} productList={productsList}/>
+      <Footer desktopFooter={desktopFooterData} mobileFooter={mobileFooterData}/>
     </>
 
   );
