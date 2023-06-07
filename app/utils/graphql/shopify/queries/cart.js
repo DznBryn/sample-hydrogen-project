@@ -1,4 +1,4 @@
-import {json} from '@shopify/remix-oxygen';
+// import {json} from '@shopify/remix-oxygen';
 import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
 
 export async function getCart(context) {
@@ -15,7 +15,7 @@ export async function getCart(context) {
     })
     : null;
 
-  return json(cartData.cart);
+  return cartData.cart;
 }
 
 const CART_FRAGMENT = `#graphql
