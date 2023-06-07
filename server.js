@@ -12,7 +12,6 @@ import {
  */
 export default {
   async fetch(request, env, executionContext) {
-    console.log(env);
     try {
       /**
        * Open a cache instance in the worker and a custom session instance.
@@ -24,8 +23,7 @@ export default {
       const waitUntil = (p) => executionContext.waitUntil(p);
       const [cache, session] = await Promise.all([
         caches.open('hydrogen'),
-        HydrogenSession.init(request, ['9b6693cc-d3f8-43f8-a512-41f255f7a4fb']),
-        // HydrogenSession.init(request, [env.SESSION_SECRET]),
+        HydrogenSession.init(request, [env.SESSION_SECRET]),
       ]);
 
       /**
