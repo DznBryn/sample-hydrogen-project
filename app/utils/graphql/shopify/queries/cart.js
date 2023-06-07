@@ -2,20 +2,25 @@
 import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
 
 export async function getCart(context) {
-  const cartId = await context.session.get('cartId');
+  // const cartId = await context.session.get('cartId');
 
-  const cartData = cartId
-    ? await context.storefront.query(CART_QUERY, {
-      variables: {
-        cartId,
-        country: context.storefront?.i18n?.country,
-        language: context.storefront?.i18n?.language,
-      },
-      cache: context.storefront.CacheNone(),
-    })
-    : null;
+  // const cartData = cartId
+  //   ? await context.storefront.query(CART_QUERY, {
+  //     variables: {
+  //       cartId,
+  //       country: context.storefront?.i18n?.country,
+  //       language: context.storefront?.i18n?.language,
+  //     },
+  //     cache: context.storefront.CacheNone(),
+  //   })
+  //   : null;
 
-  return cartData.cart;
+  // return cartData.cart;
+
+  console.log(context);
+  console.log(context?.session);
+  console.log(context?.session?.get);
+  return {};
 }
 
 const CART_FRAGMENT = `#graphql

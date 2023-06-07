@@ -9,7 +9,7 @@ import {
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
-// import { getCart } from './utils/graphql/shopify/queries/cart';
+import { getCart } from './utils/graphql/shopify/queries/cart';
 import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 
@@ -38,9 +38,9 @@ export const meta = () => ({
 export async function loader({ context }) {
 
   const customerAccessToken = await context.session.get('customerAccessToken');
-  // const cart = await getCart(context);
+  const cart = await getCart(context);
 
-  // console.log(cart);
+  console.log(cart);
 
   if (customerAccessToken) {
 
