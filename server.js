@@ -53,6 +53,13 @@ export default {
 
       const response = await handleRequest(request);
 
+      console.log('waitUntil => ', waitUntil);
+      console.log('session => ', session);
+      console.log('storefront => ', storefront);
+      console.log('env => ', env);
+      console.log('request => ', request);
+      console.log('response => ', response);
+
       if (response.status === 404) {
         /**
          * Check for redirects only when there's a 404 from the app.
@@ -66,6 +73,7 @@ export default {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.error(error);
+      console.log('error => ', error);
       return new Response('An unexpected error occurred', {status: 500});
     }
   },
