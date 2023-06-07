@@ -9,7 +9,7 @@ import {
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
-// import { getCart } from './utils/graphql/shopify/queries/cart';
+import { getCart } from './utils/graphql/shopify/queries/cart';
 import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 
@@ -35,36 +35,12 @@ export const meta = () => ({
   description: 'Clean + effective probiotic skincare products made with superfoods.',
 });
 
-// const LAYOUT_QUERY = `#graphql
-//   query layout {
-//     shop {
-//       name
-//       description
-//     }
-//   }
-// `;
-
-// export async function loader({ context }) {
-//   const [customerAccessToken] = await Promise.all([
-//     context.session.get('customerAccessToken'),
-//   ]);
-
-//   console.log('SESSION:', context.session.session.data);
-
-//   const layout = await context.storefront.query(LAYOUT_QUERY);
-
-//   return defer({
-//     isLoggedIn: Boolean(customerAccessToken),
-//     selectedLocate: context?.storefront?.i18n,
-//     cart: getCart(context),
-//     layout
-//   });
-// }
-
 export async function loader({ context }) {
 
   const customerAccessToken = await context.session.get('customerAccessToken');
-  // const cart = await getCart(context);
+  const cart = await getCart(context);
+
+  console.log(cart);
 
   if (customerAccessToken) {
 
