@@ -2,7 +2,7 @@
 import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
 
 export async function getCart(context) {
-  // const cartId = await context.session.get('cartId');
+  const cartId = await context.session.get('cartId');
 
   // const cartData = cartId
   //   ? await context.storefront.query(CART_QUERY, {
@@ -17,9 +17,10 @@ export async function getCart(context) {
 
   // return cartData.cart;
 
-  console.log(context);
-  console.log(context?.session);
-  console.log(context?.session?.get);
+  console.log(cartId);
+  console.log(CART_QUERY);
+  console.log(context?.storefront?.query);
+  console.log(context?.storefront?.CacheNone);
   return {};
 }
 
