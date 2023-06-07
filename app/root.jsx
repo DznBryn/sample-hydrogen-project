@@ -37,9 +37,11 @@ export const meta = () => ({
 
 export async function loader({ context }) {
 
+  const cartId = await context.session.get('cartId');
   const customerAccessToken = await context.session.get('customerAccessToken');
-  const cart = await getCart(context);
+  const cart = (cartId) ? await getCart(context, cartId) : {};
 
+  console.log(cartId);
   console.log(cart);
 
   if (customerAccessToken) {
@@ -51,7 +53,7 @@ export async function loader({ context }) {
     return defer(
       {
         customer,
-        // cart,
+        cart,
       },
       {
         headers: {
@@ -69,7 +71,7 @@ export async function loader({ context }) {
         email: '',
         phone: '',
       },
-      // cart,
+      cart,
     });
 
   }

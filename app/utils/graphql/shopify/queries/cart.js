@@ -1,27 +1,18 @@
 // import {json} from '@shopify/remix-oxygen';
-import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
+import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from '../fragments';
 
-export async function getCart(context) {
-  const cartId = await context.session.get('cartId');
+export async function getCart(context, cartId) {
 
-  // const cartData = cartId
-  //   ? await context.storefront.query(CART_QUERY, {
-  //     variables: {
-  //       cartId,
-  //       country: context.storefront?.i18n?.country,
-  //       language: context.storefront?.i18n?.language,
-  //     },
-  //     cache: context.storefront.CacheNone(),
-  //   })
-  //   : null;
+  const cartData = await context.storefront.query(CART_QUERY, {
+    variables: {
+      cartId,
+      country: context.storefront?.i18n?.country,
+      language: context.storefront?.i18n?.language,
+    },
+    cache: context.storefront.CacheNone(),
+  });
 
-  // return cartData.cart;
-
-  console.log(cartId);
-  console.log(CART_QUERY);
-  console.log(context?.storefront?.query);
-  console.log(context?.storefront?.CacheNone);
-  return {};
+  return cartData.cart;
 }
 
 const CART_FRAGMENT = `#graphql
