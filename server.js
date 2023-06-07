@@ -53,10 +53,7 @@ export default {
 
       const response = await handleRequest(request);
 
-      console.log(session);
       console.log(storefront);
-      console.log(env);
-      console.log(request);
 
       if (response.status === 404) {
         /**
