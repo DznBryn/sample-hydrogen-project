@@ -1,4 +1,6 @@
-export async function login({ storefront }, { email, password }) {
+import {json} from '@shopify/remix-oxygen';
+
+export async function login({storefront}, {email, password}) {
   const data = await storefront.mutate(LOGIN_MUTATION, {
     variables: {
       input: {
@@ -18,7 +20,7 @@ export async function login({ storefront }, { email, password }) {
   );
 }
 
-export async function register({ storefront }, customerObj) {
+export async function register({storefront}, customerObj) {
   const data = await storefront.mutate(REGISTER_MUTATION, {
     variables: {
       input: {
@@ -39,8 +41,8 @@ export async function register({ storefront }, customerObj) {
 
 export async function activateAccount(
   id,
-  { session, storefront },
-  { password, verifyPassword },
+  {session, storefront},
+  {password, verifyPassword},
 ) {
   const data = await storefront.mutate(CUSTOMER_ACTIVATE_MUTATION, {
     variables: {
@@ -52,13 +54,40 @@ export async function activateAccount(
     },
   });
 
-  const { customerAccessToken } = data?.customerActivate?.customerAccessToken ?? {};
+  const {customerAccessToken} =
+    data?.customerActivate?.customerAccessToken ?? {};
 
   if (!customerAccessToken) {
     throw new Error(data?.customerActivate?.customerUserErrors.join(', '));
   }
 
   return session.set('customerAccessToken', customerAccessToken);
+}
+
+export async function recoverPassword({email}, context) {
+  if (!email || typeof email !== 'string') {
+    return json(
+      {
+        message: 'Please provide an email.',
+      },
+      {status: 400},
+    );
+  }
+
+  try {
+    await context.storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
+      variables: {email},
+    });
+
+    return json({resetRequested: true});
+  } catch (error) {
+    return (
+      {
+        message: 'Something went wrong. Please try again later.',
+      },
+      {status: 400}
+    );
+  }
 }
 
 const LOGIN_MUTATION = `#graphql
@@ -100,6 +129,18 @@ const CUSTOMER_ACTIVATE_MUTATION = `#graphql
         accessToken
         expiresAt
       }
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`;
+
+const CUSTOMER_RECOVER_MUTATION = `#graphql
+  mutation customerRecover($email: String!) {
+    customerRecover(email: $email) {
       customerUserErrors {
         code
         field
