@@ -104,7 +104,7 @@ const Search = ({ searchConfig }) => {
       </div>
       <div className={'searchTrendingWrap'}>
         <div className={'searchTrending'}>
-          {config.searchTags.map((tag) => {
+          {config?.searchTags?.map((tag) => {
             return <div className={'searchTag'} key={tag}>
               <a href={'/search?query=' + tag}>{tag}</a>
             </div>;
@@ -115,7 +115,7 @@ const Search = ({ searchConfig }) => {
         Trending Products
       </div>
       <div className={'searchTrendingProducts'}>
-        {config.searchProducts.map((product, index) => {
+        {config?.searchProducts?.map((product, index) => {
           return (<SearchProduct {...product} key={index}/>);
         })}
       </div>

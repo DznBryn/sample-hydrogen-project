@@ -1,4 +1,4 @@
-import {json} from '@shopify/remix-oxygen';
+import {json, redirect} from '@shopify/remix-oxygen';
 
 export async function login({storefront}, {email, password}) {
   const data = await storefront.mutate(LOGIN_MUTATION, {
@@ -90,6 +90,51 @@ export async function recoverPassword({email}, context) {
   }
 }
 
+export async function resetPassword ({id, lang, password, resetToken}, context){
+  const {session, storefront} = context;
+  try {
+    const data = await storefront.mutate(CUSTOMER_RESET_MUTATION, {
+      variables: {
+        id: `gid://shopify/Customer/${id}`,
+        input: {
+          password,
+          resetToken,
+        },
+      },
+    });
+
+    const {accessToken} = data?.customerReset?.customerAccessToken ?? {};
+
+    if (!accessToken) {
+      throw new Error(data?.customerReset?.customerUserErrors.join(', '));
+    }
+
+    session.set('customerAccessToken', accessToken);
+
+    return redirect(lang ? `${lang}/account` : '/account', {
+      headers: {
+        'Set-Cookie': await session.commit(),
+      },
+    });
+  } catch (error) {
+    if (storefront.isApiError(error)) {
+      return json(
+        {
+          message: 'Something went wrong. Please try again later.',
+        },
+        {status: 400},
+      );
+    }
+
+    return json(
+      {
+        message: 'Sorry. We could not update your password.',
+      },
+      {status: 400},
+    );
+  }
+}
+
 const LOGIN_MUTATION = `#graphql
   mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!){
     customerAccessTokenCreate(input: $input){
@@ -141,6 +186,22 @@ const CUSTOMER_ACTIVATE_MUTATION = `#graphql
 const CUSTOMER_RECOVER_MUTATION = `#graphql
   mutation customerRecover($email: String!) {
     customerRecover(email: $email) {
+      customerUserErrors {
+        code
+        field
+        message
+      }
+    }
+  }
+`;
+
+const CUSTOMER_RESET_MUTATION = `#graphql
+  mutation customerReset($id: ID!, $input: CustomerResetInput!) {
+    customerReset(id: $id, input: $input) {
+      customerAccessToken {
+        accessToken
+        expiresAt
+      }
       customerUserErrors {
         code
         field
