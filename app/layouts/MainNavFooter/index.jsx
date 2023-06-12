@@ -3,6 +3,7 @@ import SliderAccount, { links as sliderAccountStyles} from '~/modules/sliderAcco
 import MainNav, { links as mainNavStyles } from '~/modules/mainNav';
 import Footer, { links as footerStyles } from '~/modules/footer';
 import BodyBottom, { links as BodyBottomStyles } from '~/modules/bodyBottom';
+import NavPlaceholder, { links as NavPlaceholderStyles } from '~/modules/navPlaceholder';
 
 export const links = () => {
   return [
@@ -10,6 +11,7 @@ export const links = () => {
     ...BodyBottomStyles(),
     ...footerStyles(),
     ...mainNavStyles(),
+    ...NavPlaceholderStyles(),
   ];
 };
 
@@ -26,6 +28,8 @@ const MainNavFooter = ({
   mobileNavMainButton,
   annoucementTopBannerContent,
   desktopHeaderNav,
+  siteWideSettings,
+  searchConfig,
 }) => {
 
   //getting specific docs
@@ -39,6 +43,8 @@ const MainNavFooter = ({
   const mobileNavMainButtonData = getCMSDoc(mobileNavMainButton, 'Main Button');
   const annoucementTopBannerContentData = getCMSDoc(annoucementTopBannerContent, 'rose glow');
   const desktopHeaderNavData = getCMSDoc(desktopHeaderNav, 'Desktop Header Nav');
+  const siteWideSettingsData = getCMSDoc(siteWideSettings, 'Black Friday');
+  const searchConfigData = getCMSDoc(searchConfig, 'Default');
 
   //getting all the docs
   const announcementMessagesData = announcementMessages;
@@ -46,9 +52,7 @@ const MainNavFooter = ({
   return (
 
     <>
-      <br/>
-
-      <h3>NavPlaceHolder</h3>
+      <NavPlaceholder siteWideSettings={siteWideSettingsData} searchConfig={searchConfigData}/>
       <MainNav 
         cartConfig={cartConfigData} 
         announcementHeader={announcementHeaderData} 
@@ -68,7 +72,7 @@ const MainNavFooter = ({
       <BodyBottom emailSmsSignupContent={emailSmsSignupData} productList={productsList}/>
       <Footer desktopFooter={desktopFooterData} mobileFooter={mobileFooterData}/>
     </>
-
+    
   );
 
 };
