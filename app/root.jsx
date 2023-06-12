@@ -41,9 +41,6 @@ export async function loader({ context }) {
   const customerAccessToken = await context.session.get('customerAccessToken');
   const cart = (cartId) ? await getCart(context, cartId) : {};
 
-  console.log(cartId);
-  console.log(cart);
-
   if (customerAccessToken) {
 
     const customer = await getCustomer(context, customerAccessToken);

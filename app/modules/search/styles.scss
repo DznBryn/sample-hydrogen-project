@@ -1,0 +1,158 @@
+.searchOverlay {
+  background-color: rgba(0, 0, 0, .35);
+  height: 100%;
+  width: 100vw;
+  top: 36px;
+  position: fixed;
+  z-index: 100000;
+}
+
+.searchNav {
+  background-color: #f5f5f5;
+  width: 100%;
+  max-width: 1140px;
+  position: fixed;
+  z-index: 100002;
+  left: 0;
+  right: 0;
+  margin: 0px auto;
+}
+
+.searchForm {
+  background-color: #fff;
+  display: flex;
+  padding: 0px 20px;
+  width: 100%;
+}
+
+.searchIcon {
+  margin: 15px 10px;
+  cursor: pointer;
+}
+
+.searchInput {
+  border: none;
+  font-size: 12px;
+  line-height: 26px;
+  width: 90%;
+}
+
+.searchInput:focus {
+  color: var(--color-primary-black);
+  font-size: 14px;
+  line-height: 26px;
+}
+
+.searchClose {
+  cursor: pointer;
+  margin: 15px;
+}
+
+.searchHeaders {
+  color: var(--color-primary-black);
+  font-size: 14px;
+  font-weight: 800;
+  padding: 20px 15px 10px;
+}
+
+.searchTrendingWrap {
+  width: 100%;
+  overflow-x: scroll;
+  padding: 0px 15px;
+}
+
+.searchTrending {
+  display: flex;
+  width: fit-content;
+}
+
+.searchTag {
+  background-color: #D7F0F4;
+  border-radius: 42px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 29px;
+  margin-right: 5px;
+  text-align: center;
+  width: 80px;
+  height: 25px;
+}
+
+.searchTag a {
+  text-decoration: none;
+}
+
+.searchTrendingProducts {
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+}
+
+.searchProduct {
+  background-color: #FFF;
+  border: 1px solid #EEE;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.productLink {
+  color: var(--color-primary-black);
+  display: flex;
+  text-decoration: none;
+}
+
+.productInfo {
+  margin: auto 10px;
+}
+
+.productAlt {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 18px;
+}
+
+.productName {
+  font-size: 14px;
+}
+
+.visibleSearch {
+  /* visibility: visible;
+  opacity: 1; */
+  transition: all .3s linear;
+  top: 0px;
+}
+
+.hiddenSearch {
+  /* visibility: hidden;
+  opacity: 0; */
+  transition: all .3s linear;
+  top: -810px;
+}
+
+@media only screen and (min-width: 768px) {
+  .visibleSearch {
+    top: 35px;
+  }
+
+  .hiddenSearch {
+    top: -400px;
+    transition: all .8s linear;
+  }
+
+  /* .search {
+    top: 93px;
+  } */
+  .searchNav {
+    margin: 0px auto;
+  }
+
+  .searchTrendingProducts {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .searchProduct {
+    flex-basis: 32.5%;
+  }
+}

@@ -4,7 +4,7 @@ import { getCollectionProducts } from '~/utils/graphql/shopify/queries/collectio
 import Layouts, { links as layoutsStyles } from '~/layouts';
 import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
-import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER } from '~/utils/graphql/sanity/queries';
+import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER, GET_SITE_WIDE_SETTINGS, GET_SEARCH_CONFIG } from '~/utils/graphql/sanity/queries';
 
 export const links = () => {
   return [
@@ -26,6 +26,8 @@ export const loader = async ({context}) => {
   const headerConfig = await getCMSContent(context, GET_HEADER_CONFIG);
   const mobileNavFooterMainButton = await getCMSContent(context, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON);
   const annoucementTopBanner = await getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER);
+  const siteWideSettings = await getCMSContent(context, GET_SITE_WIDE_SETTINGS);
+  const searchConfig = await getCMSContent(context, GET_SEARCH_CONFIG);
 
   return { 
     collection,
@@ -38,6 +40,8 @@ export const loader = async ({context}) => {
     headerConfig,
     mobileNavFooterMainButton,
     annoucementTopBanner,
+    siteWideSettings,
+    searchConfig,
   };
 
 };
@@ -55,6 +59,8 @@ export default function Index() {
     headerConfig,
     mobileNavFooterMainButton,
     annoucementTopBanner,
+    siteWideSettings,
+    searchConfig,
   } = useLoaderData();
 
   return (
@@ -70,6 +76,8 @@ export default function Index() {
       mobileNavMainButton={mobileNavFooterMainButton}
       annoucementTopBannerContent={annoucementTopBanner}
       desktopHeaderNav={headerConfig}
+      siteWideSettings={siteWideSettings}
+      searchConfig={searchConfig}
     >
       <Homepage/>
     </Layouts.MainNavFooter>

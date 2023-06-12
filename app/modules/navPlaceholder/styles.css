@@ -1,0 +1,34 @@
+.navPlaceholder {
+  height: 55px;
+  width: 100vw;
+  position: relative;
+  margin-bottom: 100vh;
+}
+
+.confirmationWrap {
+  position: absolute;
+  text-align: center;
+  bottom: -46px;
+  width: 100vw;
+  background-color: rgb(215, 240, 244);
+  transition: all 0.8s ease-in-out;
+  height: 0px;
+  display: none;
+}
+
+.confirmationWrap.active {
+  display: block;
+  padding: 15px;
+  height: 48px;
+}
+
+@media all and (max-width: 768px) {
+  .navPlaceholder {
+    height: 50px;
+  }
+  .navPlaceholder:global(.mobileSubNavActive) {
+    padding-bottom: 92px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

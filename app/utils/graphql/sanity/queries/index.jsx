@@ -395,3 +395,105 @@ export const GET_ANNOUNCEMENT_TOP_BANNER = gql`
     }
   }
 `;
+
+export const GET_SITE_WIDE_SETTINGS = gql`
+  query GetAllSiteWideSettings {
+    allSiteWideSettings {
+      _id
+      name
+      promoDiscountMessage
+      promoDiscount
+      excludeList
+    }
+  }
+`;
+
+export const GET_SEARCH_CONFIG = gql`
+  query GetAllSearchConfig {
+    allSearchConfig {
+      _id
+      name
+      searchTags
+      searchProducts{
+        name
+        richRaw
+        alt_title
+        reviews_average
+        reviews_count
+        shouldShowOOSForm
+        ingredients_list
+        full_ingredients_list
+        productPromos{
+          name
+          promoMessage
+          discount
+          variantIds
+          showPromo
+        }
+        recommendedSellingPlan
+        sales_rank
+        whatItDoes
+        keyIngredients
+        finish
+        tabs{
+          name
+          tabName
+          button{
+            name
+            showButton
+            text
+            buttonOutlineStyle
+            slideContent{
+              name
+              title
+              contentRaw
+            }
+          }
+          contentBlock{
+            name
+            title
+            contents{
+              name
+              headerRaw
+              image{
+                asset{
+                  _id
+                  url
+                }
+              }
+              subtitle
+              body
+              htmlSubtitleRaw
+              htmlBodyRaw
+            }
+          }
+          useBackgroundGradient
+        }
+        certifiedBadges{
+          name
+          badges{
+            name
+            image{
+              asset{
+                _id
+                url
+              }
+            }
+            title
+          }
+        }
+        description_WithPriority
+        benefits_WithPriority
+        gallery_WithPriority{
+          asset{
+            _id
+            url
+          }
+        }
+        exclusiveAtcColor
+        exclusiveTextColor
+        productId
+      }
+    }
+  }
+`;
