@@ -542,6 +542,23 @@ export async function getCMSContent(context, query){
 
 }
 
+export async function getGroupOfCMSContent(context, queries = []){
+
+  const promises = queries.map(querie => getCMSContent(context, querie));
+  const values = await Promise.all(promises);
+  const result = values.reduce((accumulator, curValue) => {
+
+    const contentTypeName = (curValue[0].__typename);
+    accumulator[contentTypeName] = curValue;
+
+    return accumulator;
+
+  }, {});
+
+  return result;
+
+}
+
 export function getCMSDoc(content, docName){
 
   return content.find(doc => doc.name === docName);

@@ -25,8 +25,8 @@ export const meta = () => {
   };
 };
 export default function Recover() {
-  const { data } = useLoaderData()
-  console.log("Recover data:", data)
+  const { data } = useLoaderData();
+  console.log('Recover data:', data);
   return (
     <Form
       method="post"
