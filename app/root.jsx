@@ -41,37 +41,32 @@ export async function loader({ context }) {
   const customerAccessToken = await context.session.get('customerAccessToken');
   const cart = (cartId) ? await getCart(context, cartId) : {};
 
+  let customer = {
+    id: '',
+    firstName: '',
+    email: '',
+    phone: '',
+  };
+
   if (customerAccessToken) {
 
-    const customer = await getCustomer(context, customerAccessToken);
+    customer = await getCustomer(context, customerAccessToken);
     customer.addresses = flattenConnection(customer.addresses);
     customer.orders = flattenConnection(customer.orders);
 
-    return defer(
-      {
-        customer,
-        cart,
-      },
-      {
-        headers: {
-          'Cache-Control': generateCacheControlHeader(CacheShort())
-        }
-      }
-    );
-
-  } else {
-
-    return ({
-      customer: {
-        id: '',
-        firstName: '',
-        email: '',
-        phone: '',
-      },
-      cart,
-    });
-
   }
+
+  return defer(
+    {
+      customer,
+      cart,
+    },
+    {
+      headers: {
+        'Cache-Control': generateCacheControlHeader(CacheShort())
+      }
+    }
+  );
 
 }
 
