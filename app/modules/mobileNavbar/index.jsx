@@ -119,7 +119,7 @@ const MobileNavbar = ({ content }) => {
   };
 
   function sortContentByOrder(navbarContent) {
-    const sortedContent = navbarContent.sort((a, b) => a.order - b.order);
+    const sortedContent = [...navbarContent].sort((a, b) => a.order - b.order);
     return sortedContent;
 
   }

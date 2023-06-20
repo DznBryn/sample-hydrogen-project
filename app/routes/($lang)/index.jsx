@@ -1,9 +1,6 @@
-import { useLoaderData } from '@remix-run/react';
+import { useMatches } from '@remix-run/react';
 import Layouts, { links as layoutsStyles } from '~/layouts';
 import Homepage, { links as homePageStyles } from '~/modules/homepage';
-import { getGroupOfCMSContent } from '~/utils/functions/eventFunctions';
-import { getCollectionProducts } from '~/utils/graphql/shopify/queries/collections';
-import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER, GET_SITE_WIDE_SETTINGS, GET_SEARCH_CONFIG } from '~/utils/graphql/sanity/queries';
 
 export const links = () => {
   return [
@@ -12,33 +9,10 @@ export const links = () => {
   ];
 };
 
-export const loader = async ({context}) => {
-
-  const queries = [
-    GET_FOOTERS, 
-    GET_EMAIL_SMS_SIGNUP_CONTENT, 
-    GET_CART_PAGE_CONFIG, 
-    GET_ANNOUNCEMENT_HEADER, 
-    GET_ANNOUNCEMENT_MESSAGES, 
-    GET_MOBILE_NAV_BAR, 
-    GET_HEADER_CONFIG, 
-    GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, 
-    GET_ANNOUNCEMENT_TOP_BANNER, 
-    GET_SITE_WIDE_SETTINGS, 
-    GET_SEARCH_CONFIG
-  ];
-  
-  const contents = await getGroupOfCMSContent(context, queries);
-  const collection = await getCollectionProducts(context, 'all');
-  
-  return {
-    ...contents,
-    collection
-  };
-
-};
-
 export default function Index() {
+
+  const [root] = useMatches();
+  const CMSData = root.data.globalCMSData.mainNavFooter;
 
   const { 
     Footers, 
@@ -52,13 +26,13 @@ export default function Index() {
     AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
-    Collection, 
-  } = useLoaderData();
+    collection, 
+  } = CMSData;
 
   return (
     <Layouts.MainNavFooter 
       footers={Footers} 
-      productsList={Collection} 
+      productsList={collection} 
       emailSmsSignupContent={EmailSmsSignupContent}
       cartConfig={CartPageConfig}
       announcementHeader={AnnouncementHeaders}

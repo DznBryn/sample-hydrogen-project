@@ -1,5 +1,8 @@
 import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
+import { getCart } from '~/utils/graphql/shopify/queries/cart';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
+import { flattenConnection } from '@shopify/hydrogen';
 import { useCartState } from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 
@@ -533,6 +536,10 @@ export function getCartTotalForFreeShippingGraphQL() {
   return totalPrice;
 }
 
+/**
+ * CMS functions
+ */
+
 export async function getCMSContent(context, query){
 
   const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
@@ -562,5 +569,43 @@ export async function getGroupOfCMSContent(context, queries = []){
 export function getCMSDoc(content, docName){
 
   return content.find(doc => doc.name === docName);
+
+}
+
+/**
+ * Shopify data functions
+ */
+
+
+
+export async function getCustomerData(context){
+
+  let customer = {
+    id: '',
+    firstName: '',
+    email: '',
+    phone: '',
+  };
+  
+  const customerAccessToken = await context.session.get('customerAccessToken');
+
+  if (customerAccessToken) {
+  
+    customer = await getCustomer(context, customerAccessToken);
+    customer.addresses = flattenConnection(customer.addresses);
+    customer.orders = flattenConnection(customer.orders);
+
+  }
+
+  return customer;
+
+}
+
+export async function getCartData(context){
+
+  const cartId = await context.session.get('cartId');
+  const cart = (cartId) ? await getCart(context, cartId) : {};
+
+  return cart;
 
 }
