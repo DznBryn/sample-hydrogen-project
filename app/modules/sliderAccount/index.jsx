@@ -51,8 +51,8 @@ const SliderAccount = () => {
 };
 
 const MainContent = () => {
-  const fetcher = useFetcher();
-  const forgotPasswordRef = useRef(null);
+  const recoverPassword = useFetcher();
+  const recoverPasswordRef = useRef(null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
@@ -85,26 +85,25 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    console.log('Show me fetcher', fetcher, forgotPasswordRef.current);
-    if (forgotPasswordRef.current) {
-      if (fetcher.state === 'submitting') {
-        forgotPasswordRef.current.disabled = true;
-        forgotPasswordRef.current.classList.add('disabledButton');
+    if (recoverPasswordRef.current) {
+      if (recoverPassword.state === 'submitting') {
+        recoverPasswordRef.current.disabled = true;
+        recoverPasswordRef.current.classList.add('disabledButton');
       } else {
-        forgotPasswordRef.current.disabled = false;
-        forgotPasswordRef.current.classList.remove('disabledButton');
+        recoverPasswordRef.current.disabled = false;
+        recoverPasswordRef.current.classList.remove('disabledButton');
       }
 
-      if (fetcher.data?.status === 200) {
+      if (recoverPassword.data?.status === 200) {
         changeMainContent('checkInbox');
       }
-      if ((fetcher.data?.status === 400 || fetcher.data?.status === 500)) {
-        showInputError(forgotEmail.current, fetcher.data.message);
+      if ((recoverPassword.data?.status === 400 || recoverPassword.data?.status === 500)) {
+        showInputError(forgotEmail.current, recoverPassword.data.message);
       }
 
     }
     return;
-  }, [fetcher.state]);
+  }, [recoverPassword.state]);
   /**/
 
   function init() {
@@ -208,7 +207,6 @@ const MainContent = () => {
   }
 
   function disableFormButton(form) {
-    console.log('disableFormButton', form);
     const button = form;
 
     button.disabled = true;
@@ -281,66 +279,6 @@ const MainContent = () => {
 
   }
 
-  async function handleRecoveryPassword(event) {
-
-    event.preventDefault();
-
-    //OLD:
-
-    const email = forgotEmail.current.value;
-
-    disableFormButton(event.target);
-
-    const data = await recoverPassword({ email }, context);
-    // console.log("Show DATA", data)
-    // if (!errors || errors.length === 0) {
-    //   changeMainContent('checkInbox');
-    // } else {
-    //   showInputError(forgotEmail.current, errors[0].message);
-    // }
-
-    /** */
-
-    //TODO: !!!(should be implemented on HOOK as login, logout and reister )!!!!
-
-    // const email = forgotEmail.current.value;
-
-    // async function resetPassword(email) {
-
-    //   try {
-
-    //     const res = await fetch('/account/reset', {
-    //       method: 'POST',
-    //       body: getFormData({ email }),
-    //     });
-
-    //     if(res.ok){
-    //       return {success: true};
-    //     }else{
-    //       return {success: false, message: 'Account not found! Please try again or sign up.'} ;
-    //     }
-
-    //   } catch (error) {
-
-    //     return {
-    //       error: error.toString(),
-    //     };
-
-    //   }
-
-    // }
-
-    // const {success, message} = await resetPassword(email);
-
-    // if (success) {
-    //   changeMainContent('checkInbox');
-    // }else{
-    //   showInputError(forgotEmail.current, message);
-    // }
-
-    enableFormButton(event.target);
-
-  }
 
   async function handleCreateAccount(event) {
 
@@ -635,11 +573,11 @@ const MainContent = () => {
         <p>Enter your email and we will send you a password reset link to your inbox.</p>
       </div>
 
-      <fetcher.Form action="/" method="post" className={'form'}>
+      <recoverPassword.Form action="/" method="post" className={'form'}>
         <input className={'input'} id="forgotEmail" name="forgotEmail" ref={forgotEmail} type="email" placeholder="Email" />
-        <button type="submit" ref={forgotPasswordRef} className={'button'}>send</button>
+        <button type="submit" ref={recoverPasswordRef} className={'button'}>send</button>
         <div className={'subText'} onClick={() => changeMainContent('signIn')}>Go back to login</div>
-      </fetcher.Form>
+      </recoverPassword.Form>
 
       <Links />
 

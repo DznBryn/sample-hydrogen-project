@@ -65,13 +65,6 @@ export async function activateAccount(
 }
 
 export async function recoverPassword(email, {storefront}) {
-  if (!email || typeof email !== 'string') {
-    return json({
-      message: 'Please provide an email.',
-      status: 400,
-    });
-  }
-
   try {
     await storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
       variables: {email},
