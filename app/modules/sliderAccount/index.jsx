@@ -4,9 +4,12 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import SliderPanel, { switchSliderPanelVisibility, openedStateID, links as sliderPanelStyles } from '../sliderPanel';
 import LoadingSkeleton, { links as loadingSkeletonStyles } from '../loadingSkeleton';
 import { useCustomerActions, useCustomerState } from '~/hooks/useCostumer';
-import { Link } from '@remix-run/react';
+import { Link, useFetcher } from '@remix-run/react';
 
 import styles from './styles.css';
+import { recoverPassword } from '~/utils/graphql/shopify/mutations/customer';
+
+
 
 export const links = () => {
   return [
@@ -48,7 +51,8 @@ const SliderAccount = () => {
 };
 
 const MainContent = () => {
-
+  const fetcher = useFetcher();
+  const forgotPasswordRef = useRef(null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
@@ -80,6 +84,27 @@ const MainContent = () => {
 
   }, []);
 
+  useEffect(() => {
+    console.log('Show me fetcher', fetcher, forgotPasswordRef.current);
+    if (forgotPasswordRef.current) {
+      if (fetcher.state === 'submitting') {
+        forgotPasswordRef.current.disabled = true;
+        forgotPasswordRef.current.classList.add('disabledButton');
+      } else {
+        forgotPasswordRef.current.disabled = false;
+        forgotPasswordRef.current.classList.remove('disabledButton');
+      }
+
+      if (fetcher.data?.status === 200) {
+        changeMainContent('checkInbox');
+      }
+      if ((fetcher.data?.status === 400 || fetcher.data?.status === 500)) {
+        showInputError(forgotEmail.current, fetcher.data.message);
+      }
+
+    }
+    return;
+  }, [fetcher.state]);
   /**/
 
   function init() {
@@ -102,7 +127,7 @@ const MainContent = () => {
         .then((res) => {
           setPoints(res.pointsBalance);
         })
-        .catch((err) => err );
+        .catch((err) => err);
 
     }
 
@@ -183,8 +208,8 @@ const MainContent = () => {
   }
 
   function disableFormButton(form) {
-
-    const button = form[form.length - 1];
+    console.log('disableFormButton', form);
+    const button = form;
 
     button.disabled = true;
     button.classList.add('disabledButton');
@@ -262,12 +287,12 @@ const MainContent = () => {
 
     //OLD:
 
-    // const email = forgotEmail.current.value;
+    const email = forgotEmail.current.value;
 
-    // disableFormButton(event.target);
+    disableFormButton(event.target);
 
-    // const { errors } = await recoverPassword(email);
-
+    const data = await recoverPassword({ email }, context);
+    // console.log("Show DATA", data)
     // if (!errors || errors.length === 0) {
     //   changeMainContent('checkInbox');
     // } else {
@@ -375,12 +400,12 @@ const MainContent = () => {
 
     // }
 
-    const {success, message} = await register(email, password, firstName, lastName, acceptsMarketing);
+    const { success, message } = await register(email, password, firstName, lastName, acceptsMarketing);
 
     if (success) {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', { 'userAcceptsMarketing': acceptsMarketing.toString() });
       changeMainContent('createAccountSuccess');
-    }else{
+    } else {
       showInputError(createAccountMail.current, message);
     }
 
@@ -610,11 +635,11 @@ const MainContent = () => {
         <p>Enter your email and we will send you a password reset link to your inbox.</p>
       </div>
 
-      <form className={'form'} onSubmit={handleRecoveryPassword.bind(this)}>
+      <fetcher.Form action="/" method="post" className={'form'}>
         <input className={'input'} id="forgotEmail" name="forgotEmail" ref={forgotEmail} type="email" placeholder="Email" />
-        <button className={'button'}>send</button>
+        <button type="submit" ref={forgotPasswordRef} className={'button'}>send</button>
         <div className={'subText'} onClick={() => changeMainContent('signIn')}>Go back to login</div>
-      </form>
+      </fetcher.Form>
 
       <Links />
 
