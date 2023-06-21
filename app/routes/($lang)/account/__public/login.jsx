@@ -1,3 +1,4 @@
+import Layouts from '~/layouts';
 import { Form, Link, useActionData } from '@remix-run/react';
 import { json, redirect } from '@shopify/remix-oxygen';
 import { login } from '~/utils/graphql/shopify/mutations/customer';
@@ -47,7 +48,7 @@ export default function LoginPage() {
   const actionData = useActionData();
   console.log('Your response from Form data:', actionData);
   return (
-    <div>
+    <Layouts.MainNavFooter>
       <h1>Login</h1>
       <Form
         method='post'
@@ -62,7 +63,7 @@ export default function LoginPage() {
           required
           placeholder="Email address"
           aria-label="Email address"
-          autoFocus   
+          autoFocus
         />
         <input
           id="password"
@@ -81,8 +82,8 @@ export default function LoginPage() {
           Login
         </button>
       </Form>
-      <br/>
+      <br />
       <Link to={'/account/register'}>sign up</Link>
-    </div>
+    </Layouts.MainNavFooter>
   );
 }

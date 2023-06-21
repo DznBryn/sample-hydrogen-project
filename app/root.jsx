@@ -1,12 +1,13 @@
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
+import { getMainNavFooterCMSData } from './layouts/MainNavFooter';
 import { CacheShort, generateCacheControlHeader } from '@shopify/hydrogen';
 import { getCartData, getCustomerData } from './utils/functions/eventFunctions';
 import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-import { getGroupOfCMSContent } from '~/utils/functions/eventFunctions';
-import { getCollectionProducts } from '~/utils/graphql/shopify/queries/collections';
-import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER, GET_SITE_WIDE_SETTINGS, GET_SEARCH_CONFIG } from '~/utils/graphql/sanity/queries';
+
+import { links as layoutsStyles } from '~/layouts';
+
 
 export const links = () => {
   return [
@@ -14,6 +15,7 @@ export const links = () => {
     { rel: 'preconnect', href: 'https://cdn.shopify.com' },
     { rel: 'preconnect', href: 'https://shop.app' },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
+    ...layoutsStyles().mainNavFooterStyles,
   ];
 };
 
@@ -24,40 +26,14 @@ export const meta = () => ({
   description: 'Clean + effective probiotic skincare products made with superfoods.',
 });
 
-async function getMainNavFooterCMSData(context){
-
-  const queries = [
-    GET_FOOTERS, 
-    GET_EMAIL_SMS_SIGNUP_CONTENT, 
-    GET_CART_PAGE_CONFIG, 
-    GET_ANNOUNCEMENT_HEADER, 
-    GET_ANNOUNCEMENT_MESSAGES, 
-    GET_MOBILE_NAV_BAR, 
-    GET_HEADER_CONFIG, 
-    GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, 
-    GET_ANNOUNCEMENT_TOP_BANNER, 
-    GET_SITE_WIDE_SETTINGS, 
-    GET_SEARCH_CONFIG
-  ];
-
-  const contents = await getGroupOfCMSContent(context, queries);
-  const collection = await getCollectionProducts(context, 'all');
-  
-  return {
-    ...contents,
-    collection
-  };
-
-}
-
 export async function loader({ context }) {
 
-  const globalCMSData = {};
   const cart = await getCartData(context);
   const customer = await getCustomerData(context);
-
-  globalCMSData.mainNavFooter = await getMainNavFooterCMSData(context);
-
+  
+  const globalCMSData = {
+    mainNavFooter: await getMainNavFooterCMSData(context),
+  };
 
   return defer(
     {

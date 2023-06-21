@@ -2,6 +2,7 @@ import { Form, useLoaderData } from '@remix-run/react';
 import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
 import { defer, redirect } from '@shopify/remix-oxygen';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
+import Layouts from '~/layouts';
 
 export async function loader({ request, context, params }) {
   const { pathname } = new URL(request.url);
@@ -35,12 +36,16 @@ export default function AccountPage() {
   const { header, customer } = useLoaderData();
   console.log('Customer:', customer);
   return (
-    <div>
+
+    <Layouts.MainNavFooter>
+
       <h1>{header}</h1>
       <Form method='post' action='/account/logout'>
         <button type='submit'>logout</button>
       </Form>
       <pre>{JSON.stringify(customer, null, 2)}</pre>
-    </div>
+
+    </Layouts.MainNavFooter>
+    
   );
 }
