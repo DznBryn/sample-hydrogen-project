@@ -9,15 +9,16 @@ export async function login({storefront}, {email, password}) {
       },
     },
   });
-
+  
   if (data?.customerAccessTokenCreate?.customerAccessToken?.accessToken) {
     return data?.customerAccessTokenCreate?.customerAccessToken?.accessToken;
   }
-
-  // Should change this error handle?
-  throw new Error(
-    data?.customerAccessTokenCreate?.customerUserErrors.join(', '),
-  );
+  if (data?.customerAccessTokenCreate?.customerUserErrors) {
+    return json({
+      messages: data?.customerAccessTokenCreate?.customerUserErrors,
+      status: 401,
+    });
+  }
 }
 
 export async function register({storefront}, customerObj) {

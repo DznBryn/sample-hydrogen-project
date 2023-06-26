@@ -7,7 +7,6 @@ import { useCustomerActions, useCustomerState } from '~/hooks/useCostumer';
 import { Link, useFetcher } from '@remix-run/react';
 
 import styles from './styles.css';
-import { recoverPassword } from '~/utils/graphql/shopify/mutations/customer';
 
 
 
@@ -51,13 +50,15 @@ const SliderAccount = () => {
 };
 
 const MainContent = () => {
+  const login = useFetcher();
+  const loginButtonRef = useRef(null);
   const recoverPassword = useFetcher();
-  const recoverPasswordRef = useRef(null);
+  const recoverPasswordButtonRef = useRef(null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
   const { id, firstName, email, isLoggedIn } = useCustomerState();
-  const { logout, login, register } = useCustomerActions();
+  const { logout, register } = useCustomerActions();
 
   const forgotEmail = useRef(null);
   const errorElement = useRef(null);
@@ -77,21 +78,46 @@ const MainContent = () => {
   const initialized = useRef(false);
 
   useEffect(() => {
-
     if (!initialized.current) init();
     getCustomerData();
-
-
   }, []);
 
   useEffect(() => {
-    if (recoverPasswordRef.current) {
-      if (recoverPassword.state === 'submitting') {
-        recoverPasswordRef.current.disabled = true;
-        recoverPasswordRef.current.classList.add('disabledButton');
+    if (loginButtonRef.current) {
+      if (login.state === 'submitting' || login.state === 'loading') {
+        loginButtonRef.current.disabled = true;
+        loginButtonRef.current.classList.add('disabledButton');
       } else {
-        recoverPasswordRef.current.disabled = false;
-        recoverPasswordRef.current.classList.remove('disabledButton');
+        loginButtonRef.current.disabled = false;
+        loginButtonRef.current.classList.remove('disabledButton');
+      }
+      if (login.data?.status === 401) {
+        removeErrorMessage();
+        errorElement.current = document.createElement('span');
+        errorElement.current.classList.add('errorMessage');
+        errorElement.current.innerHTML = login.data?.messages?.[0]?.message;
+        return signInPassword.current.parentElement.after(errorElement.current);
+      }
+      if ((login.data?.status === 400 || login.data?.status === 500)) {
+        removeErrorMessage();
+        errorElement.current = document.createElement('span');
+        errorElement.current.classList.add('errorMessage');
+        errorElement.current.innerHTML = login.data?.message;
+        return signInPassword.current.parentElement.after(errorElement.current);
+      }
+      changeMainContent((isLoggedIn) ? 'welcomeBack' : 'signIn');
+    }
+
+  }, [login.state]);
+
+  useEffect(() => {
+    if (recoverPasswordButtonRef.current) {
+      if (recoverPassword.state === 'submitting') {
+        recoverPasswordButtonRef.current.disabled = true;
+        recoverPasswordButtonRef.current.classList.add('disabledButton');
+      } else {
+        recoverPasswordButtonRef.current.disabled = false;
+        recoverPasswordButtonRef.current.classList.remove('disabledButton');
       }
 
       if (recoverPassword.data?.status === 200) {
@@ -237,35 +263,6 @@ const MainContent = () => {
 
   /**/
 
-  async function handleLogin(event) {
-
-    event.preventDefault();
-
-    if (signInPassword.current.value === '') {
-      showInputError(signInPassword.current.parentElement, 'Please enter a password');
-      return;
-    }
-
-    disableFormButton(event.target);
-
-    const email = signInEmail.current.value;
-    const password = signInPassword.current.value;
-
-    const { errors } = await login(email, password);
-
-    if (!errors || errors.lenght === 0) {
-      changeMainContent('loading');
-      triggerAnalyticsLoyaltyEvents('Signin', { source: 'accountSlider' });
-      sessionStorage.setItem(openedStateID, curSliderPanelID);
-      window.location.reload();
-    } else {
-      showInputError(signInPassword.current.parentElement, errors[0].message);
-    }
-
-    enableFormButton(event.target);
-
-
-  }
 
   async function handleLogout() {
 
@@ -514,7 +511,7 @@ const MainContent = () => {
 
       <div className={'header'}>welcome!</div>
 
-      <form className={'form'} onSubmit={handleLogin.bind(this)}>
+      <login.Form action="/" method="post" className={'form'}>
 
         <input className={'input'} key={'siginEmail'} id="signInEmail" name="signInEmail" ref={signInEmail} type="email" placeholder="Email" /> {/**/}
 
@@ -523,11 +520,11 @@ const MainContent = () => {
           <span onClick={tooglePasswordType.bind(this, signInPassword)}>show</span>
         </div>
 
-        <button type="submit" className={'button'}>sign in</button>
+        <button type="submit" ref={loginButtonRef} className={'button'}>sign in</button>
 
         <div className={'subText'} onClick={() => changeMainContent('forgotPassword')}>Forgot Your Password?</div>
 
-      </form>
+      </login.Form>
 
 
       {
@@ -575,7 +572,7 @@ const MainContent = () => {
 
       <recoverPassword.Form action="/" method="post" className={'form'}>
         <input className={'input'} id="forgotEmail" name="forgotEmail" ref={forgotEmail} type="email" placeholder="Email" />
-        <button type="submit" ref={recoverPasswordRef} className={'button'}>send</button>
+        <button type="submit" ref={recoverPasswordButtonRef} className={'button'}>send</button>
         <div className={'subText'} onClick={() => changeMainContent('signIn')}>Go back to login</div>
       </recoverPassword.Form>
 
