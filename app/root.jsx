@@ -1,30 +1,21 @@
-import {
-  Link,
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from '@remix-run/react';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
-import { getCart } from './utils/graphql/shopify/queries/cart';
-import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
-import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
+import { getMainNavFooterCMSData } from './layouts/MainNavFooter';
+import { CacheShort, generateCacheControlHeader } from '@shopify/hydrogen';
+import { getCartData, getCustomerData } from './utils/functions/eventFunctions';
+import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+
+import { links as layoutsStyles } from '~/layouts';
+
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
+    { rel: 'preconnect', href: 'https://cdn.shopify.com' },
+    { rel: 'preconnect', href: 'https://shop.app' },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
+    ...layoutsStyles().mainNavFooterStyles,
   ];
 };
 
@@ -37,41 +28,25 @@ export const meta = () => ({
 
 export async function loader({ context }) {
 
-  const cartId = await context.session.get('cartId');
-  const customerAccessToken = await context.session.get('customerAccessToken');
-  const cart = (cartId) ? await getCart(context, cartId) : {};
+  const cart = await getCartData(context);
+  const customer = await getCustomerData(context);
+  
+  const globalCMSData = {
+    mainNavFooter: await getMainNavFooterCMSData(context),
+  };
 
-  if (customerAccessToken) {
-
-    const customer = await getCustomer(context, customerAccessToken);
-    customer.addresses = flattenConnection(customer.addresses);
-    customer.orders = flattenConnection(customer.orders);
-
-    return defer(
-      {
-        customer,
-        cart,
-      },
-      {
-        headers: {
-          'Cache-Control': generateCacheControlHeader(CacheShort())
-        }
-      }
-    );
-
-  } else {
-
-    return ({
-      customer: {
-        id: '',
-        firstName: '',
-        email: '',
-        phone: '',
-      },
+  return defer(
+    {
+      customer,
       cart,
-    });
-
-  }
+      globalCMSData,
+    },
+    {
+      headers: {
+        'Cache-Control': generateCacheControlHeader(CacheShort())
+      }
+    }
+  );
 
 }
 

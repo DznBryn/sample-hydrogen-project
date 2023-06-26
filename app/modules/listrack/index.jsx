@@ -9,7 +9,8 @@ const Listrack = ({ productList }) => {
     const triggerListrak = () => {
 
       window._ltk.Signup.New('Footer', 'email_signup_new', window._ltk.Signup.TYPE.CLICK, 'FooterNewsletterSubmit', 'channel');
-      window._ltk.OnsiteContent?.reload();
+      
+      if(typeof window._ltk.OnsiteContent?.reload === 'function') window._ltk.OnsiteContent?.reload();
 
       if (window.location.href.includes('/products/')) {
 
