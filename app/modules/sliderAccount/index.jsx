@@ -4,9 +4,11 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import SliderPanel, { switchSliderPanelVisibility, openedStateID, links as sliderPanelStyles } from '../sliderPanel';
 import LoadingSkeleton, { links as loadingSkeletonStyles } from '../loadingSkeleton';
 import { useCustomerActions, useCustomerState } from '~/hooks/useCostumer';
-import { Link } from '@remix-run/react';
+import { Link, useFetcher } from '@remix-run/react';
 
 import styles from './styles.css';
+
+
 
 export const links = () => {
   return [
@@ -48,12 +50,15 @@ const SliderAccount = () => {
 };
 
 const MainContent = () => {
-
+  const login = useFetcher();
+  const loginButtonRef = useRef(null);
+  const recoverPassword = useFetcher();
+  const recoverPasswordButtonRef = useRef(null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
   const { id, firstName, email, isLoggedIn } = useCustomerState();
-  const { logout, login, register } = useCustomerActions();
+  const { logout, register } = useCustomerActions();
 
   const forgotEmail = useRef(null);
   const errorElement = useRef(null);
@@ -73,13 +78,58 @@ const MainContent = () => {
   const initialized = useRef(false);
 
   useEffect(() => {
-
     if (!initialized.current) init();
     getCustomerData();
-
-
   }, []);
 
+  useEffect(() => {
+    if (loginButtonRef.current) {
+      if (login.state === 'submitting' || login.state === 'loading') {
+        loginButtonRef.current.disabled = true;
+        loginButtonRef.current.classList.add('disabledButton');
+      } else {
+        loginButtonRef.current.disabled = false;
+        loginButtonRef.current.classList.remove('disabledButton');
+      }
+      if (login.data?.status === 401) {
+        removeErrorMessage();
+        errorElement.current = document.createElement('span');
+        errorElement.current.classList.add('errorMessage');
+        errorElement.current.innerHTML = login.data?.messages?.[0]?.message;
+        return signInPassword.current.parentElement.after(errorElement.current);
+      }
+      if ((login.data?.status === 400 || login.data?.status === 500)) {
+        removeErrorMessage();
+        errorElement.current = document.createElement('span');
+        errorElement.current.classList.add('errorMessage');
+        errorElement.current.innerHTML = login.data?.message;
+        return signInPassword.current.parentElement.after(errorElement.current);
+      }
+      changeMainContent((isLoggedIn) ? 'welcomeBack' : 'signIn');
+    }
+
+  }, [login.state]);
+
+  useEffect(() => {
+    if (recoverPasswordButtonRef.current) {
+      if (recoverPassword.state === 'submitting') {
+        recoverPasswordButtonRef.current.disabled = true;
+        recoverPasswordButtonRef.current.classList.add('disabledButton');
+      } else {
+        recoverPasswordButtonRef.current.disabled = false;
+        recoverPasswordButtonRef.current.classList.remove('disabledButton');
+      }
+
+      if (recoverPassword.data?.status === 200) {
+        changeMainContent('checkInbox');
+      }
+      if ((recoverPassword.data?.status === 400 || recoverPassword.data?.status === 500)) {
+        showInputError(forgotEmail.current, recoverPassword.data.message);
+      }
+
+    }
+    return;
+  }, [recoverPassword.state]);
   /**/
 
   function init() {
@@ -102,7 +152,7 @@ const MainContent = () => {
         .then((res) => {
           setPoints(res.pointsBalance);
         })
-        .catch((err) => err );
+        .catch((err) => err);
 
     }
 
@@ -183,8 +233,7 @@ const MainContent = () => {
   }
 
   function disableFormButton(form) {
-
-    const button = form[form.length - 1];
+    const button = form;
 
     button.disabled = true;
     button.classList.add('disabledButton');
@@ -214,35 +263,6 @@ const MainContent = () => {
 
   /**/
 
-  async function handleLogin(event) {
-
-    event.preventDefault();
-
-    if (signInPassword.current.value === '') {
-      showInputError(signInPassword.current.parentElement, 'Please enter a password');
-      return;
-    }
-
-    disableFormButton(event.target);
-
-    const email = signInEmail.current.value;
-    const password = signInPassword.current.value;
-
-    const { errors } = await login(email, password);
-
-    if (!errors || errors.lenght === 0) {
-      changeMainContent('loading');
-      triggerAnalyticsLoyaltyEvents('Signin', { source: 'accountSlider' });
-      sessionStorage.setItem(openedStateID, curSliderPanelID);
-      window.location.reload();
-    } else {
-      showInputError(signInPassword.current.parentElement, errors[0].message);
-    }
-
-    enableFormButton(event.target);
-
-
-  }
 
   async function handleLogout() {
 
@@ -256,66 +276,6 @@ const MainContent = () => {
 
   }
 
-  async function handleRecoveryPassword(event) {
-
-    event.preventDefault();
-
-    //OLD:
-
-    // const email = forgotEmail.current.value;
-
-    // disableFormButton(event.target);
-
-    // const { errors } = await recoverPassword(email);
-
-    // if (!errors || errors.length === 0) {
-    //   changeMainContent('checkInbox');
-    // } else {
-    //   showInputError(forgotEmail.current, errors[0].message);
-    // }
-
-    /** */
-
-    //TODO: !!!(should be implemented on HOOK as login, logout and reister )!!!!
-
-    // const email = forgotEmail.current.value;
-
-    // async function resetPassword(email) {
-
-    //   try {
-
-    //     const res = await fetch('/account/reset', {
-    //       method: 'POST',
-    //       body: getFormData({ email }),
-    //     });
-
-    //     if(res.ok){
-    //       return {success: true};
-    //     }else{
-    //       return {success: false, message: 'Account not found! Please try again or sign up.'} ;
-    //     }
-
-    //   } catch (error) {
-
-    //     return {
-    //       error: error.toString(),
-    //     };
-
-    //   }
-
-    // }
-
-    // const {success, message} = await resetPassword(email);
-
-    // if (success) {
-    //   changeMainContent('checkInbox');
-    // }else{
-    //   showInputError(forgotEmail.current, message);
-    // }
-
-    enableFormButton(event.target);
-
-  }
 
   async function handleCreateAccount(event) {
 
@@ -375,12 +335,12 @@ const MainContent = () => {
 
     // }
 
-    const {success, message} = await register(email, password, firstName, lastName, acceptsMarketing);
+    const { success, message } = await register(email, password, firstName, lastName, acceptsMarketing);
 
     if (success) {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', { 'userAcceptsMarketing': acceptsMarketing.toString() });
       changeMainContent('createAccountSuccess');
-    }else{
+    } else {
       showInputError(createAccountMail.current, message);
     }
 
@@ -551,7 +511,7 @@ const MainContent = () => {
 
       <div className={'header'}>welcome!</div>
 
-      <form className={'form'} onSubmit={handleLogin.bind(this)}>
+      <login.Form action="/" method="post" className={'form'}>
 
         <input className={'input'} key={'siginEmail'} id="signInEmail" name="signInEmail" ref={signInEmail} type="email" placeholder="Email" /> {/**/}
 
@@ -560,11 +520,11 @@ const MainContent = () => {
           <span onClick={tooglePasswordType.bind(this, signInPassword)}>show</span>
         </div>
 
-        <button type="submit" className={'button'}>sign in</button>
+        <button type="submit" ref={loginButtonRef} className={'button'}>sign in</button>
 
         <div className={'subText'} onClick={() => changeMainContent('forgotPassword')}>Forgot Your Password?</div>
 
-      </form>
+      </login.Form>
 
 
       {
@@ -610,11 +570,11 @@ const MainContent = () => {
         <p>Enter your email and we will send you a password reset link to your inbox.</p>
       </div>
 
-      <form className={'form'} onSubmit={handleRecoveryPassword.bind(this)}>
+      <recoverPassword.Form action="/" method="post" className={'form'}>
         <input className={'input'} id="forgotEmail" name="forgotEmail" ref={forgotEmail} type="email" placeholder="Email" />
-        <button className={'button'}>send</button>
+        <button type="submit" ref={recoverPasswordButtonRef} className={'button'}>send</button>
         <div className={'subText'} onClick={() => changeMainContent('signIn')}>Go back to login</div>
-      </form>
+      </recoverPassword.Form>
 
       <Links />
 

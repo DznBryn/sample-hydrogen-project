@@ -9,15 +9,16 @@ export async function login({storefront}, {email, password}) {
       },
     },
   });
-
+  
   if (data?.customerAccessTokenCreate?.customerAccessToken?.accessToken) {
     return data?.customerAccessTokenCreate?.customerAccessToken?.accessToken;
   }
-
-  // Should change this error handle?
-  throw new Error(
-    data?.customerAccessTokenCreate?.customerUserErrors.join(', '),
-  );
+  if (data?.customerAccessTokenCreate?.customerUserErrors) {
+    return json({
+      messages: data?.customerAccessTokenCreate?.customerUserErrors,
+      status: 401,
+    });
+  }
 }
 
 export async function register({storefront}, customerObj) {
@@ -64,33 +65,22 @@ export async function activateAccount(
   return session.set('customerAccessToken', customerAccessToken);
 }
 
-export async function recoverPassword({email}, context) {
-  if (!email || typeof email !== 'string') {
-    return json(
-      {
-        message: 'Please provide an email.',
-      },
-      {status: 400},
-    );
-  }
-
+export async function recoverPassword(email, {storefront}) {
   try {
-    await context.storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
+    await storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
       variables: {email},
     });
-
     return json({resetRequested: true});
   } catch (error) {
-    return (
-      {
-        message: 'Something went wrong. Please try again later.',
-      },
-      {status: 400}
-    );
+    console.log(error);
+    return {
+      message: 'Something went wrong. Please try again later.',
+      status: 500,
+    };
   }
 }
 
-export async function resetPassword ({id, lang, password, resetToken}, context){
+export async function resetPassword({id, lang, password, resetToken}, context) {
   const {session, storefront} = context;
   try {
     const data = await storefront.mutate(CUSTOMER_RESET_MUTATION, {
