@@ -10,24 +10,29 @@ export const links = () => {
 };
 
 const NavCollectionProductCard = ({ product = {} }) => {
-  const thumbnail = product.thumbnail;
+  const thumbnail = product.images.nodes[0];
+  // const thumbnail = product.thumbnail;
   const metafields = getMetafields(product.metafields);
   return (
     <div className={'productWrap'}>
       <Link
         className={'productLink'}
-        to={'/products/' + product.slug}
+        to={'/products/' + product.handle}
+        // to={'/products/' + product.slug}
         draggable="false">
         <img
-          src={thumbnail?.src}
-          alt={thumbnail?.alt}
+          src={thumbnail?.url}
+          alt={thumbnail?.altText}
+          // src={thumbnail?.src}
+          // alt={thumbnail?.alt}
           className={'productImg'}
           draggable="false" />
       </Link>
       {metafields.alt_title !== undefined &&
         <Link
           className={'productLink'}
-          to={'/products/' + product.slug}
+          to={'/products/' + product.handle}
+          // to={'/products/' + product.slug}
           draggable="false">
           <div className={'productAlt'}>
             {metafields.alt_title}
@@ -36,10 +41,12 @@ const NavCollectionProductCard = ({ product = {} }) => {
       }
       <Link
         className={'productLink'}
-        to={'/products/' + product.slug}
+        to={'/products/' + product.handle}
+        // to={'/products/' + product.slug}
         draggable="false">
         <div className={'productName'}>
-          {product.name}
+          {/* {product.name} */}
+          {product.title}
         </div>
       </Link>
     </div>

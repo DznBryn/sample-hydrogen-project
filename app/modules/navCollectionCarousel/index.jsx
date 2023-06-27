@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { Link } from '@remix-run/react';
-import /*NavCollectionProductCard,*/ { links as navCollectionProductCardStyles } from '~/modules/navCollectionProductCard';
+import { Link, useFetcher } from '@remix-run/react';
+import NavCollectionProductCard, { links as navCollectionProductCardStyles } from '~/modules/navCollectionProductCard';
 import { bindCustomEvent } from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
@@ -12,14 +12,37 @@ export const links = () => {
   ];
 };
 
-const NavCollectionCarousel = ({ /*collection,*/ navItem }) => {
+const NavCollectionCarousel = ({ collection, navItem }) => {
   const carouselRef = useRef(null);
   const collectionRef = useRef(null);
+  const collectionDetails = useFetcher();
   let isDown = false;
   let startX;
   let scrollLeft;
   let navPosition = 0;
   let carouselWidth = 0;
+
+
+  useEffect(() => {
+    
+    if(collection.collectionId){
+    
+      loadCollection(collection.collectionId);
+    
+    }
+    
+
+  }, []);
+
+  function loadCollection(handle){
+
+    if (collectionDetails.state === 'idle' && collectionDetails.data === undefined) {
+
+      collectionDetails.load(`/collections/${handle}`);
+      
+    }
+
+  }
 
   const setStyle = (position) => {
     document.querySelectorAll('.navCollectionWrap').forEach((item, index) => {
@@ -104,9 +127,9 @@ const NavCollectionCarousel = ({ /*collection,*/ navItem }) => {
           style={{ transform: 'translateX(0px)' }}
           ref={carouselRef}
         >
-          {/* {collection?.products.map((product, idx) => {
+          {(collectionDetails.data) && collectionDetails.data.collection.products.map((product, idx) => {
             return <NavCollectionProductCard key={idx} product={product} />;
-          })} */}
+          })}
         </div>
       </div>
       <div className={'rightArrow'} onClick={goRight}>
