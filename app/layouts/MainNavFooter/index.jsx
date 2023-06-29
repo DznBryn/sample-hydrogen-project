@@ -61,7 +61,7 @@ const MainNavFooter = ({children}) => {
         products={collection}
       />
 
-      <h3>SliderCart</h3>
+      {/* <h3>SliderCart</h3> */}
 
       <SliderAccount/>
 

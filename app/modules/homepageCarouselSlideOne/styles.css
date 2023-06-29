@@ -1,0 +1,182 @@
+.hpVideo {
+  width: 100%;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.hpVideo > div {
+  height: 100%;
+  width: 100%;
+}
+
+.hpVideo p {
+  font-size: 21px;
+  line-height: 26px;
+  letter-spacing: 0em;
+  text-align: center;
+  margin: 0 50px 50px;
+  font-weight: 500;
+}
+
+.slideWrapper a,
+.slideOneWrapper a {
+  text-decoration: none;
+  height: 100%;
+}
+
+.hpVideo .left {
+  height: 100%;
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F1F1F1;
+  color: #4C4E56;
+}
+
+.hpVideo .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 66.66%;
+  color: #fff;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.hpVideo .eyebrow {
+  font-size: 18px;
+  line-height: 38px;
+  margin-bottom: 18px;
+  letter-spacing: 3px;
+}
+
+.hpVideo h1 {
+  color: inherit;
+  font-size: 30px;
+  line-height: 38px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.hpVideo h2 {
+  color: inherit;
+  font-size: 21px;
+  font-weight: 800;
+  line-height: 26px;
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 0 24px;
+}
+
+.hpVideo h1,
+.hpVideo h2 {
+  max-width: 450px;
+}
+
+.hpVideo Video,
+.hpVideo ResponsiveImage {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.hpVideo .slide {
+  width: 100vw !important;
+}
+
+.desktop {
+  display: flex !important;
+}
+
+.mobile {
+  display: none !important;
+}
+
+.hpVideo .left .btn {
+  width: min-content;
+  height: 48px;
+  font-size: 18px;
+  line-height: 18px;
+  border-radius: 3px;
+  padding: 15px 34px;
+}
+
+@media all and (max-width: 768px) {
+  .desktop {
+    display: none !important;
+  }
+  .mobile {
+    display: flex !important;
+  }
+  .slideOneWrapper,
+  .slideWrapper {
+    height: 100%;
+  }
+  .hpVideo {
+    flex-direction: column-reverse;
+    height: 100%;
+    margin-top: 0px;
+  }
+  .hpVideo .right {
+    height: 330px;
+    background-color: #48C6D9;
+  }
+  .hpVideo .left {
+    height: fit-content;
+    background: #F1F1F1;
+    padding: 18px 5px 27px;
+    flex-grow: 1;
+  }
+  .hpVideo .left,
+  .hpVideo .right {
+    width: 100vw;
+  }
+  .hpVideo .eyebrow {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 38px;
+    letter-spacing: 0px;
+    text-align: center;
+  }
+  .hpVideo h1 {
+    font-size: 24px;
+    line-height: 28.58px;
+    font-weight: 900;
+    letter-spacing: -0.4px;
+    text-align: center;
+    max-width: 87.2%;
+  }
+  .hpVideo h2 {
+    font-size: 16px;
+    line-height: 19.2px;
+    font-weight: 400;
+    text-align: center;
+  }
+  .hpVideo p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0em;
+    text-align: center;
+    margin: 0 0 17px;
+    max-width: 87.2%;
+  }
+  .hpVideo .left .btn {
+    width: 150px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
