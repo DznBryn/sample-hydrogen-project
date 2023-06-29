@@ -16,7 +16,7 @@
   font-weight: 300;
   letter-spacing: 0;
   line-height: 24px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .myAccountButton {
@@ -39,7 +39,7 @@
 
 .pill {
   display: flex;
-  color: white;
+  color: #fff;
   background: #8ad1e1;
   border-radius: 5px;
   font-size: 12px;
@@ -58,7 +58,7 @@
 
 .modalContainer {
   width: 234px;
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2509803922);
   border-radius: 3px;
   position: absolute;
   z-index: 3;
@@ -69,21 +69,20 @@
   width: 100%;
   height: 94px;
   background-size: cover;
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/OnPaste.20230125-140449.png?v=1674666314");
+  background-image: url(https://cdn.shopify.com/s/files/1/1736/9637/files/OnPaste.20230125-140449.png?v=1674666314);
   display: flex;
   flex-direction: row-reverse;
   padding: 8px;
-  background-color: white;
+  background-color: #fff;
 }
 
 .accDropdownCloseButton {
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
-  padding: 8px;
-  padding-bottom: 0;
+  padding: 8px 8px 0;
   min-height: 15px;
-  background-color: white;
+  background-color: #fff;
 }
 
 .accDropdownCloseButton svg {
@@ -97,8 +96,8 @@
 
 .accDropDowncontainer {
   width: 100%;
-  padding: 26px 15px 20px 15px;
-  background-color: white;
+  padding: 26px 15px 20px;
+  background-color: #fff;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -109,18 +108,18 @@
 }
 
 .noLoyalty .signOut {
-  color: #47C6D9;
+  color: #47c6d9;
   font-weight: 500;
 }
 
 .content {
   font-weight: 400;
   font-size: 13px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .content > p {
-  color: #47C6D9;
+  color: #47c6d9;
   font-weight: 900;
   font-size: 18px;
   margin-bottom: 8px;
@@ -153,14 +152,14 @@
 .cta > div:nth-child(1),
 .cta > a:nth-child(1) {
   padding: 6px 19px;
-  color: white;
+  color: #fff;
   background: #47C6D9;
 }
 
 .cta > div:nth-child(2),
 .cta > a:nth-child(2) {
   padding: 5px 18px;
-  color: #47C6D9;
+  color: #47c6d9;
   border: 1px solid #47C6D9;
 }
 
