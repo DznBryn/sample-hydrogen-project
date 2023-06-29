@@ -497,3 +497,56 @@ export const GET_SEARCH_CONFIG = gql`
     }
   }
 `;
+
+export const GET_CAROUSEL_SLIDES_GROUP = gql`
+  query GetAllCarouselSlidesGroup {
+    allCarouselSlidesGroup {
+      _id
+      name
+      slides{
+        _id
+        name
+        fullWidth
+        fullWidthMobileImage{
+          asset{
+            _id
+            url
+          }
+        }
+        slideBGColorHex
+        slideEyebrowFontColorHex
+        slideEyebrowText
+        slideHeaderFontColorHex
+        slideHeader
+        slideCopyFontColorHex
+        slideCopyRaw
+        slideCtaFontColorHex
+        slideCta
+        slideCtaBGColorHex
+        slideCtaLink
+        slideImage{
+          asset{
+            _id
+            url
+          }
+        }
+        slideImageMobile{
+          asset{
+            _id
+            url
+          }
+        }
+        videoSlideHeader
+        videoSlideCopy
+        videoSlideCta
+        videoSlideCtaLink
+        video{
+          asset{
+            _id
+            url
+          }
+        }
+      }
+    }
+  }
+`;

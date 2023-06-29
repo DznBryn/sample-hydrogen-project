@@ -4,6 +4,9 @@ import Layouts from '~/layouts';
 import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
 import { SIGN_IN_EMAIL, SIGN_IN_PASSWORD, FORGOT_EMAIL } from '~/utils/constants';
+import { getCMSContent, getCMSDoc } from '~/utils/functions/eventFunctions';
+import { GET_CAROUSEL_SLIDES_GROUP } from '~/utils/graphql/sanity/queries';
+import { useLoaderData } from '@remix-run/react';
 
 export const links = () => homePageStyles();
 
@@ -19,7 +22,7 @@ export const action = async ({ request, context }) => {
     const password = formData.get(SIGN_IN_PASSWORD);
     const customerAccessToken = await login(context, { email, password });
     context.session.set('customerAccessToken', customerAccessToken);
-    console.log(request.url.pathname)
+    
     return redirect('/', {
       headers: {
         'Set-Cookie': await context.session.commit()
@@ -47,11 +50,23 @@ export const action = async ({ request, context }) => {
 
 };
 
+export async function loader({context}) {
+
+  const carouselSlidesGroup = await getCMSContent(context, GET_CAROUSEL_SLIDES_GROUP);
+
+  return {
+    carouselSlidesGroup,
+  };
+
+}
+
 export default function Index() {
+
+  const { carouselSlidesGroup } = useLoaderData();
 
   return (
     <Layouts.MainNavFooter>
-      <Homepage />
+      <Homepage carouselSlidesGroup={getCMSDoc(carouselSlidesGroup, 'Homepage')}/>
     </Layouts.MainNavFooter>
   );
 }

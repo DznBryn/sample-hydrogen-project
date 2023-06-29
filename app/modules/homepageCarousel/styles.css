@@ -1,0 +1,144 @@
+.hpCarouselWrapper {
+  width: 100vw;
+  overflow: hidden !important;
+  margin: 0 auto 38px;
+  position: relative;
+}
+
+.swiper {
+  height: 70vh;
+  width: 100%;
+}
+
+.swiper .swiper-button-prev {
+  top: 450px;
+}
+
+.swiper .swiper-button-next {
+  top: 450px;
+  right: 25px;
+}
+
+.swiper .swiper-pagination-bullet {
+  background: #fff;
+  opacity: 1;
+}
+
+.swiper .swiper-pagination-bullet-active {
+  background: #48C6D9;
+}
+
+/* .hpCarouselWrapper div {
+  height: 42.8vw;
+} */
+.hpVideo {
+  width: 100%;
+  height: 42.8vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.hpVideo > div {
+  height: 100%;
+  width: 100%;
+}
+
+.hpVideo .left {
+  height: 100%;
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F1F1F1;
+  color: #4C4E56;
+}
+
+.hpVideo .right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 66.66%;
+  background-color: #48C6D9;
+  color: #fff;
+}
+
+.hpVideo h1 {
+  color: inherit;
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.hpVideo h2 {
+  color: inherit;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 38.72px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.hpVideo .slide {
+  width: 100vw !important;
+}
+
+@media all and (max-width: 768px) {
+  .hpCarouselWrapper {
+    margin-top: 35px;
+  }
+  .hpVideo {
+    flex-direction: column-reverse;
+    height: initial;
+    margin-top: 70px;
+  }
+  .swiper {
+    height: 625px;
+    width: 100%;
+  }
+  .swiper .swiper-pagination {
+    bottom: -100px;
+  }
+  .swiper .swiper-pagination {
+    bottom: 5px;
+  }
+  .hpVideo Video,
+  .hpVideo ResponsiveImage {
+    height: 563px;
+  }
+  .hpVideo .right {
+    height: 330px;
+    background-color: #48C6D9;
+  }
+  .hpVideo .left {
+    height: fit-content;
+    background: #F1F1F1;
+    padding: 18px 48px 27px;
+    flex-grow: 1;
+  }
+  .hpVideo .left,
+  .hpVideo .right {
+    width: 100vw;
+  }
+  .hpVideo h1 {
+    font-size: 24px;
+    line-height: 28.58px;
+    font-weight: 900;
+    letter-spacing: -0.4px;
+    text-align: center;
+  }
+  .hpVideo h2 {
+    font-size: 16px;
+    line-height: 19.2px;
+    font-weight: 400;
+    text-align: center;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
