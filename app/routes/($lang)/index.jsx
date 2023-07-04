@@ -5,7 +5,7 @@ import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
 import { SIGN_IN_EMAIL, SIGN_IN_PASSWORD, FORGOT_EMAIL } from '~/utils/constants';
 import { getCMSContent, getCMSDoc } from '~/utils/functions/eventFunctions';
-import { GET_CAROUSEL_SLIDES_GROUP } from '~/utils/graphql/sanity/queries';
+import { GET_CAROUSEL_SLIDES_GROUP, GET_HOME_PAGE_RECOMMENDATIONS } from '~/utils/graphql/sanity/queries';
 import { useLoaderData } from '@remix-run/react';
 
 export const links = () => homePageStyles();
@@ -53,20 +53,28 @@ export const action = async ({ request, context }) => {
 export async function loader({context}) {
 
   const carouselSlidesGroup = await getCMSContent(context, GET_CAROUSEL_SLIDES_GROUP);
+  const hpRecs = await getCMSContent(context, GET_HOME_PAGE_RECOMMENDATIONS);
 
   return {
     carouselSlidesGroup,
+    hpRecs,
   };
 
 }
 
 export default function Index() {
 
-  const { carouselSlidesGroup } = useLoaderData();
+  const { 
+    carouselSlidesGroup,
+    hpRecs,
+  } = useLoaderData();
 
   return (
     <Layouts.MainNavFooter>
-      <Homepage carouselSlidesGroup={getCMSDoc(carouselSlidesGroup, 'Homepage')}/>
+      <Homepage 
+        carouselSlidesGroup={getCMSDoc(carouselSlidesGroup, 'Homepage')}
+        hpRecs={getCMSDoc(hpRecs, 'HomepageRecommendationsSection')}
+      />
     </Layouts.MainNavFooter>
   );
 }
