@@ -1,0 +1,101 @@
+.homepageRecProducts {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 1140px;
+  width: 100%;
+}
+
+.homepageRecProductCard {
+  height: 440px;
+  width: 205px;
+  margin-bottom: 93px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.homepageRecProducts a {
+  text-decoration: none;
+}
+
+.homepageRecProductCard .imgPlaceholder {
+  background: #C9C9C9;
+  height: 255px;
+  width: 205px;
+  object-fit: cover;
+}
+
+.homepageRecProductCard h4 {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 800;
+  margin-top: 5px;
+}
+
+.homepageRecProductCard h5 {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+.homepageRecProducts .stars {
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.homepageRecProducts .stars span {
+  color: #fcd202;
+  margin-right: 0.5em;
+  font-size: 1.2em;
+}
+
+.homepageRecProductCard .price {
+  font-size: 14px;
+  line-height: 18px;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.homepageRecProductCard button {
+  width: 130px;
+  height: 37px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #48C6D9;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 18px;
+  border: none;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.homepageRecProductCard button:hover {
+  opacity: 0.7;
+}
+
+.hidden {
+  display: none;
+}
+
+@media all and (max-width: 768px) {
+  .homepageRecProducts {
+    overflow: scroll;
+  }
+  .homepageRecProductCard {
+    height: 398px;
+    width: 201px;
+    margin-right: 16px;
+    margin-bottom: 48px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

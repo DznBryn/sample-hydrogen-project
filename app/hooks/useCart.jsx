@@ -30,7 +30,7 @@ export function useCartState() {
 
   }
 
-  function getCurrencyCode(){
+  function getCurrencyCode() {
 
     return (cost) ? cost.subtotalAmount.currencyCode : '';
 
@@ -43,6 +43,66 @@ export function useCartState() {
     subtotalPrice: getSubtotalPrice(),
     currencyCode: getCurrencyCode(),
     checkoutUrl,
+  };
+
+}
+
+export function useCartActions() {
+
+  //TODO
+
+  const addItems = (items) => {
+
+    if (Array.isArray([])) {
+
+      console.log('itens is array');
+
+    } else {
+
+      console.log('itens is object');
+
+    }
+
+    console.log('addItems => ', items);
+
+  };
+
+  const updateItems = (items) => {
+
+    if (Array.isArray([])) {
+
+      console.log('itens is array');
+
+    } else {
+
+      console.log('itens is object');
+
+    }
+
+    console.log('updateItems => ', items);
+
+  };
+
+  const removeItems = (items) => {
+
+    if (Array.isArray([])) {
+
+      console.log('itens is array');
+
+    } else {
+
+      console.log('itens is object');
+
+    }
+
+    console.log('removeItems => ', items);
+
+  };
+
+  return {
+    addItems,
+    updateItems,
+    removeItems,
   };
 
 }

@@ -1,0 +1,71 @@
+.tabWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 65px auto 38px;
+  padding-bottom: 0px;
+  border-bottom: 0.5px solid #636363;
+}
+
+.recommendationTab {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0.01em;
+  color: #C9C9C9;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.recommendationTab:hover {
+  opacity: 0.7;
+}
+
+.recommendationTab.activeTab {
+  color: #4C4E56;
+  padding-bottom: 15px;
+  border-bottom: 4px solid #4C4E56;
+}
+
+.recommendationTab a,
+.recommendationTab a:visited,
+.recommendationTab a:focus,
+.recommendationTab a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.recommendationTab a:hover {
+  color: #4C4E56;
+}
+
+.hpRecProducts {
+  margin: 38px 0 93px;
+}
+
+.emoji {
+  height: 20px;
+  margin: 0 3px;
+}
+
+@media all and (max-width: 768px) {
+  .recommendationTab {
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 28px;
+    white-space: nowrap;
+    margin-right: 25px;
+  }
+  .emoji {
+    height: 14px;
+    margin: -2px 3px;
+  }
+  .tabWrapper {
+    overflow: scroll;
+    max-width: 100vw;
+    margin: 32px auto 3px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { Link, useFetcher } from '@remix-run/react';
+import { Link } from '@remix-run/react';
+import { useCollection } from '~/hooks/useCollection';
 import NavCollectionProductCard, { links as navCollectionProductCardStyles } from '~/modules/navCollectionProductCard';
 import { bindCustomEvent } from '~/utils/functions/eventFunctions';
 
@@ -15,34 +16,13 @@ export const links = () => {
 const NavCollectionCarousel = ({ collection, navItem }) => {
   const carouselRef = useRef(null);
   const collectionRef = useRef(null);
-  const collectionDetails = useFetcher();
+  const {state, products} = useCollection(collection.collectionId);
+
   let isDown = false;
   let startX;
   let scrollLeft;
   let navPosition = 0;
   let carouselWidth = 0;
-
-
-  useEffect(() => {
-    
-    if(collection.collectionId){
-    
-      loadCollection(collection.collectionId);
-    
-    }
-    
-
-  }, []);
-
-  function loadCollection(handle){
-
-    if (collectionDetails.state === 'idle' && collectionDetails.data === undefined) {
-
-      collectionDetails.load(`/collections/${handle}`);
-      
-    }
-
-  }
 
   const setStyle = (position) => {
     document.querySelectorAll('.navCollectionWrap').forEach((item, index) => {
@@ -127,7 +107,7 @@ const NavCollectionCarousel = ({ collection, navItem }) => {
           style={{ transform: 'translateX(0px)' }}
           ref={carouselRef}
         >
-          {(collectionDetails.data) && collectionDetails.data.collection.products.map((product, idx) => {
+          {(state === 'loaded') && products.map((product, idx) => {
             return <NavCollectionProductCard key={idx} product={product} />;
           })}
         </div>

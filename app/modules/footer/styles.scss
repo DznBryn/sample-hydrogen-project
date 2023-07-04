@@ -97,7 +97,7 @@
   background-color: #fff;
 }
 
-.fixedWidthPage {
+.footerWrap .fixedWidthPage {
   display: flex;
   justify-content: space-between;
   max-width: 1140px;
@@ -162,7 +162,7 @@
     align-content: flex-start;
   }
 
-  .fixedWidthPage {
+  .footerWrap .fixedWidthPage {
     padding: 50px 150px;
     flex-direction: inherit;
     flex-wrap: wrap;
@@ -222,7 +222,7 @@
     /* float: left; */
   }
 
-  .fixedWidthPage {
+  .footerWrap .fixedWidthPage {
     padding: 65px 0 65px;
     flex-wrap: wrap;
     flex-direction: inherit;
