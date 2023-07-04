@@ -550,3 +550,96 @@ export const GET_CAROUSEL_SLIDES_GROUP = gql`
     }
   }
 `;
+
+export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
+  query GetAllHomePageRecommendations {
+    allHomepageRecommendations {
+      _id
+      name
+      collectionOne{
+        name
+        promoPosition1
+        promoOneLink
+        promoPosition2
+        promoTwoLink
+        promoPosition3
+        promoThreeLink
+        additionalProductsTitle
+        additionalProducts
+        showCompareButton
+        fireworkStoryPosition
+        collectionId
+      }
+      collectionOneFontColorHex
+      collectionOneEmoji{
+        asset{
+          _id
+          url
+        }
+      }
+      collectionTwo{
+        name
+        promoPosition1
+        promoOneLink
+        promoPosition2
+        promoTwoLink
+        promoPosition3
+        promoThreeLink
+        additionalProductsTitle
+        additionalProducts
+        showCompareButton
+        fireworkStoryPosition
+        collectionId
+      }
+      collectionTwoFontColorHex
+      collectionTwoEmoji{
+        asset{
+          _id
+          url
+        }
+      }
+      collectionThree{
+        name
+        promoPosition1
+        promoOneLink
+        promoPosition2
+        promoTwoLink
+        promoPosition3
+        promoThreeLink
+        additionalProductsTitle
+        additionalProducts
+        showCompareButton
+        fireworkStoryPosition
+        collectionId
+      }
+      collectionThreeFontColorHex
+      collectionThreeEmoji{
+        asset{
+          _id
+          url
+        }
+      }
+      collectionFour{
+        name
+        promoPosition1
+        promoOneLink
+        promoPosition2
+        promoTwoLink
+        promoPosition3
+        promoThreeLink
+        additionalProductsTitle
+        additionalProducts
+        showCompareButton
+        fireworkStoryPosition
+        collectionId
+      }
+      collectionFourFontColorHex
+      collectionFourEmoji{
+        asset{
+          _id
+          url
+        }
+      }
+    }
+  }
+`;

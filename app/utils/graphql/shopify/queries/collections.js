@@ -33,10 +33,11 @@ export const PRODUCTS_QUERY = `#graphql
     title
     products(first: 20){
       nodes {
-         id
+        id
         title
         handle
         tags
+        productType
         images(first: 2) {
           nodes {
             id
@@ -44,6 +45,18 @@ export const PRODUCTS_QUERY = `#graphql
             altText
             height
             width
+          }
+        }
+        variants(first: 10){
+          nodes {
+            id
+            price{
+              amount
+            }
+            compareAtPrice{
+              amount
+            }
+            quantityAvailable
           }
         }
 				priceRange{
