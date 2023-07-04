@@ -643,3 +643,20 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
     }
   }
 `;
+
+export const GET_HOMEPAGE_SHOP_BY_CONCERN = gql`
+  query GetAllHomepageShopByConcern {
+    allHomepageShopByConcern {
+      _id
+      name
+      collectionLink
+      concernImage{
+        asset{
+          _id
+          url
+        }
+      }
+      linkText
+    }
+  }
+`;
