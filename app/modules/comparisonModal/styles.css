@@ -1,0 +1,131 @@
+.comparisonModal {
+  position: fixed;
+  bottom: 0;
+  background: #E9FAFC;
+  width: 100%;
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+  z-index: 98;
+  --product-preview-width: 80px;
+  --product-preview-height: 80px;
+}
+
+.comparisonWrapper {
+  display: flex;
+  gap: 64px;
+  align-items: center;
+}
+
+.previewWrapper {
+  display: flex;
+  gap: 17px;
+  justify-content: center;
+}
+
+.previewWrapper .empty {
+  background-color: white;
+}
+
+.productPreview {
+  width: var(--product-preview-width);
+  height: var(--product-preview-height);
+  background: #f8f8f8;
+  display: flex;
+  justify-content: center;
+}
+
+.productPreview .remove {
+  width: 15px;
+  height: 15px;
+  color: white;
+  background: #A1A1A1;
+  border-radius: 100%;
+  font-size: 10px;
+  padding: 2.4px 4px;
+  margin-top: -3.5px;
+  margin-left: 70px;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+  text-align: center;
+}
+
+.productPreview img {
+  max-width: var(--product-preview-width);
+  max-height: var(--product-preview-height);
+  position: absolute;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  width: 234px;
+}
+
+.buttons .compare {
+  background: #48C6D9;
+  border-radius: 3px;
+  font-weight: 800;
+  font-size: 14px;
+  text-align: center;
+  color: #FFFFFF;
+  padding: 9px;
+  text-decoration: none;
+}
+
+.buttons .compare.disabled {
+  cursor: default;
+}
+
+.buttons .cancel {
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  text-decoration-line: underline;
+  color: #565656;
+  cursor: pointer;
+}
+
+.loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader p {
+  width: 30%;
+  height: 70%;
+  border-radius: 10%;
+  background: linear-gradient(-90deg, #efefef 0%, #fcfcfc 50%, #efefef 100%);
+  background-size: 400% 400%;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -135% 0%;
+  }
+}
+@media only screen and (max-width: 550px) {
+  .comparisonModal {
+    padding: 22px 17px;
+  }
+  .comparisonWrapper {
+    gap: 12px;
+    flex-direction: column;
+    width: 100%;
+  }
+  .previewWrapper {
+    gap: 12px;
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
