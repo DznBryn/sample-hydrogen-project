@@ -691,3 +691,29 @@ export const GET_HOMEPAGE_WHY_PROBIOTICS = gql`
     }
   }
 `;
+
+export const GET_HOMEPAGE_SKIN_QUIZ = gql`
+  query GetAllHomepageSkinQuiz {
+    allHomepageSkinQuiz {
+      _id
+      name
+      grayText
+      boldHeader
+      sectionCopy
+      buttonText
+      buttonUrl
+      bigImage{
+        asset{
+          _id
+          url
+        }
+      }
+      smallImage{
+        asset{
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
