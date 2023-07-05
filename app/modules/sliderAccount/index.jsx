@@ -8,8 +8,6 @@ import { Link, useFetcher } from '@remix-run/react';
 
 import styles from './styles.css';
 
-
-
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
