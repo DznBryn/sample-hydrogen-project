@@ -660,3 +660,34 @@ export const GET_HOMEPAGE_SHOP_BY_CONCERN = gql`
     }
   }
 `;
+
+export const GET_HOMEPAGE_WHY_PROBIOTICS = gql`
+  query GetAllHomepageWhyProbiotics {
+    allHomepageWhyProbiotics {
+      _id
+      name
+      header
+      sectionCopy
+      subheaderOne
+      subtextOne
+      subheaderTwo
+      subtextTwo
+      subheaderThree
+      subtextThree
+      buttonText
+      buttonUrl
+      bigImage{
+        asset{
+          _id
+          url
+        }
+      }
+      smallImage{
+        asset{
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
