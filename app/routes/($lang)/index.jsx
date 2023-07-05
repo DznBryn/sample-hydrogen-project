@@ -5,7 +5,7 @@ import Homepage, { links as homePageStyles } from '~/modules/homepage';
 
 import { SIGN_IN_EMAIL, SIGN_IN_PASSWORD, FORGOT_EMAIL } from '~/utils/constants';
 import { getCMSContent, getCMSDoc } from '~/utils/functions/eventFunctions';
-import { GET_CAROUSEL_SLIDES_GROUP, GET_HOMEPAGE_SHOP_BY_CONCERN, GET_HOME_PAGE_RECOMMENDATIONS } from '~/utils/graphql/sanity/queries';
+import { GET_CAROUSEL_SLIDES_GROUP, GET_HOMEPAGE_SHOP_BY_CONCERN, GET_HOME_PAGE_RECOMMENDATIONS, GET_HOMEPAGE_WHY_PROBIOTICS } from '~/utils/graphql/sanity/queries';
 import { useLoaderData } from '@remix-run/react';
 
 export const links = () => homePageStyles();
@@ -55,11 +55,13 @@ export async function loader({context}) {
   const carouselSlidesGroup = await getCMSContent(context, GET_CAROUSEL_SLIDES_GROUP);
   const hpRecs = await getCMSContent(context, GET_HOME_PAGE_RECOMMENDATIONS);
   const concerns = await getCMSContent(context, GET_HOMEPAGE_SHOP_BY_CONCERN);
+  const homepageWhyProbioticsContent = await getCMSContent(context, GET_HOMEPAGE_WHY_PROBIOTICS);
 
   return {
     carouselSlidesGroup,
     hpRecs,
     concerns,
+    homepageWhyProbioticsContent,
   };
 
 }
@@ -70,6 +72,7 @@ export default function Index() {
     carouselSlidesGroup,
     hpRecs,
     concerns,
+    homepageWhyProbioticsContent,
   } = useLoaderData();
 
   return (
@@ -78,6 +81,7 @@ export default function Index() {
         carouselSlidesGroup={getCMSDoc(carouselSlidesGroup, 'Homepage')}
         hpRecs={getCMSDoc(hpRecs, 'HomepageRecommendationsSection')}
         concerns={concerns}
+        homepageWhyProbioticsContent={getCMSDoc(homepageWhyProbioticsContent, 'Why Probiotics Content')}
       />
     </Layouts.MainNavFooter>
   );
