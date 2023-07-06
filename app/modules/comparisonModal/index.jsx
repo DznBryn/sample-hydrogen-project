@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { mockCollection } from '~/utils/functions/plpFunctionsAndSupplies';
 import classNames from 'classnames';
 import { Link } from '@remix-run/react';
-// import useStore from 'frontend-store'; //TODO
+import { useComparisonModalStore } from '~/hooks/useStore'; 
 
 import styles from './styles.css';
 
@@ -19,8 +19,7 @@ const MINIMUN_OF_PRODUCTS = 2;
 
 const ComparisonModal = ({ collection = mockCollection }) => {
 
-  const [store, setStore] = {store: {}, useStore: []}; //TODO
-  // const [store, setStore] = useStore();
+  const {store, setStore} = useComparisonModalStore();
   STORE = store, SET_STORE = setStore;
 
   const { products } = collection;
@@ -29,6 +28,7 @@ const ComparisonModal = ({ collection = mockCollection }) => {
   useEffect(() => {
 
     setStore({ ...store, PLP: { tulacp: '[]', showModal: false, disableAllCheckbox: false } });
+    window.setStore = setStore;
 
   }, []);
 
