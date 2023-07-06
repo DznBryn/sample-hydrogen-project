@@ -1,4 +1,4 @@
-import { useMatches } from '@remix-run/react';
+import { useFetcher, useMatches } from '@remix-run/react';
 import { flattenConnection } from '@shopify/hydrogen';
 
 export function useCartState() {
@@ -48,22 +48,14 @@ export function useCartState() {
 }
 
 export function useCartActions() {
-
+  
   //TODO
 
   const addItems = (items) => {
-
-    if (Array.isArray([])) {
-
-      console.log('itens is array');
-
-    } else {
-
-      console.log('itens is object');
-
-    }
-
     console.log('addItems => ', items);
+    const fetcher = useFetcher();
+    return items.map(item => fetcher.submit(item, { method: 'POST', action: '/cart' }));
+    
 
   };
 
