@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router';
 import { PRODUCT_QUERY } from '~/utils/graphql/shopify/queries/collections';
 import { json } from '@shopify/remix-oxygen';
 import { useFetcher, useMatches } from '@remix-run/react';
-import { useCartActions, useCartState } from '../../../hooks/useCart';
+import { useCartActions } from '../../../hooks/useCart';
 import AddToCartButton, { links as addToCartStyles } from '~/modules/global/AddToCart/AddToCart';
 
 export const links = () => {
@@ -45,7 +45,7 @@ export default function PDP() {
 
   const addToCartProps = {
     lineItem: { slug: product.handle, variantId: product.variants[0].id }
-  }
+  };
   return product ? (
     <div className="outline outline-2 outline-blue-300 p-4 my-2">
       <summary>

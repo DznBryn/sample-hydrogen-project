@@ -5,7 +5,7 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import { comparisonUtils } from '../comparisonModal';
 import { Link } from '@remix-run/react';
 import classNames from 'classnames';
-// import useStore from 'frontend-store'; TODO
+import { useComparisonModalStore } from '~/hooks/useStore';
 
 import styles from './styles.css';
 
@@ -17,200 +17,6 @@ export const links = () => {
 };
 
 let sitewide = false;
-
-const mockProduct = {
-  altTitle: 'ageless skin begins here',
-  _id: 'd94285b4-fc7e-488a-918a-cfe57e155a94',
-  availableForSale: true,
-  descriptionHtml:
-		'<meta charset="utf-8"><meta charset="utf-8"><span>This effective yet gentle foam cleanser is where clear skin begins. 2% salicylic acid provides major acne-clearing power, while superfood licorice helps brighten the look of past blemish marks. Alcohol and fragrance-free, this cleanser treats regular or occasional breakouts, leaving skin looking soft &amp; glowing.</span>',
-  maxPrice: 34,
-  media: [
-    {
-      Type: 'MediaImage',
-      _id: '9d390549-1f28-4850-9f86-1fbfc3233f2d',
-      details: {
-        _type: 'image',
-        alt: 'Acne Foam Cleanser - tula-devstore',
-        height: 1272,
-        mimeType: 'image/png',
-        name: 'tula-skincare-pdp-keepItClear_01.png',
-        size: 198530,
-        src: 'https://cdn.shopify.com/s/files/1/1736/9637/files/1_24-7-Moisture_Regular_TulaUS_PackagingSwatch.jpg?v=1651726771',
-        storageID: 'a6668e41-ecf6-448b-ace1-005ee92ca7de',
-        width: 1024,
-      },
-      externalId: 2917078958139,
-      fileName: 'tula-skincare-pdp-keepItClear_01.png',
-      storefrontId: 'gid://shopify/MediaImage/2917078958139',
-    },
-    {
-      Type: 'MediaImage',
-      _id: 'a4732691-b805-4e52-83df-65afa20bcbc2',
-      details: {
-        _type: 'image',
-        alt: 'Acne Foam Cleanser - tula-devstore',
-        height: 1272,
-        mimeType: 'image/png',
-        name: 'tula-skincare-pdp-keepItClear_02.png',
-        size: 249410,
-        src: 'https://f.shgcdn.com/8722ee95-6b8d-4c69-9276-b611fb371985/',
-        storageID: '8722ee95-6b8d-4c69-9276-b611fb371985',
-        width: 1024,
-      },
-      externalId: 2917078990907,
-      fileName: 'tula-skincare-pdp-keepItClear_02.png',
-      storefrontId: 'gid://shopify/MediaImage/2917078990907',
-    },
-    {
-      Type: 'MediaImage',
-      _id: '88bc6dc0-e952-4fc3-8e4e-b985907c11c0',
-      details: {
-        _type: 'image',
-        alt: 'Acne Foam Cleanser - tula-devstore',
-        height: 1272,
-        mimeType: 'image/jpeg',
-        name: 'tula_skincare-pdp-keepItClear_06-min.jpg',
-        size: 82132,
-        src: 'https://f.shgcdn.com/058edb43-624f-48cf-be0d-c47d4c055628/',
-        storageID: '058edb43-624f-48cf-be0d-c47d4c055628',
-        width: 1024,
-      },
-      externalId: 2917079023675,
-      fileName: 'tula_skincare-pdp-keepItClear_06-min.jpg',
-      storefrontId: 'gid://shopify/MediaImage/2917079023675',
-    },
-    {
-      Type: 'MediaImage',
-      _id: '854dc882-a5b4-4fe5-a48a-269357bd36a8',
-      details: {
-        _type: 'image',
-        alt: 'Acne Foam Cleanser - tula-devstore',
-        height: 1272,
-        mimeType: 'image/jpeg',
-        name: 'tula_skincare-pdp-keepItClear_04-min.jpg',
-        size: 70669,
-        src: 'https://f.shgcdn.com/72293855-a1c9-44f1-8939-45cdbe4c727a/',
-        storageID: '72293855-a1c9-44f1-8939-45cdbe4c727a',
-        width: 1024,
-      },
-      externalId: 2917079056443,
-      fileName: 'tula_skincare-pdp-keepItClear_04-min.jpg',
-      storefrontId: 'gid://shopify/MediaImage/2917079056443',
-    },
-    {
-      Type: 'MediaImage',
-      _id: '8de0526d-8ddd-4427-b9c1-38c53a452dd7',
-      details: {
-        _type: 'image',
-        alt: 'Acne Foam Cleanser - tula-devstore',
-        height: 1272,
-        mimeType: 'image/jpeg',
-        name: 'tula_skincare-pdp-keepItClear_03-min.jpg',
-        size: 140127,
-        src: 'https://f.shgcdn.com/6c59a7b7-1605-418f-a4e0-386e6caa4e1c/',
-        storageID: '6c59a7b7-1605-418f-a4e0-386e6caa4e1c',
-        width: 1024,
-      },
-      externalId: 2917079089211,
-      fileName: 'tula_skincare-pdp-keepItClear_03-min.jpg',
-      storefrontId: 'gid://shopify/MediaImage/2917079089211',
-    },
-  ],
-  minPrice: 34,
-  name: 'Level 1 Firming & Smoothing Discovery Kit (trial size)',
-  options: [
-    {
-      _id: '50407bff-825e-4065-929f-b9545da1f25f',
-      externalId: 5440486178875,
-      name: 'Size',
-      position: 1,
-      storefrontId: 'gid://shopify/ProductOption/5440486178875',
-      values: [
-        {
-          _id: '40221d1e-a409-4677-910b-932e1cfbdd72',
-          name: 'Size',
-          storefrontId: 'gid://shopify/ProductOption/5440486178875/1.5 oz',
-          value: '1.5 oz',
-        },
-        {
-          _id: 'db876249-a983-4379-a68a-7b29943539e8',
-          name: 'Size',
-          storefrontId: 'gid://shopify/ProductOption/5440486178875/3.7 oz',
-          value: '3.7 oz',
-        },
-      ],
-    },
-  ],
-  slug: 'acne-foam-cleanser',
-  tags: [
-    'Badge:new',
-    'Concern - Acne',
-    'concern - acne & blemish control',
-    'Concern - Blemish Control',
-    'new',
-    'oily-skin',
-    'Type - Cleansers',
-    'Type - Normal',
-    'Type - Oily',
-    'no-promo',
-    'Badge:holiday'
-  ],
-  variants: [
-    {
-      _id: 'd239f96a-233d-4b58-a582-d95cd3413aab',
-      availableForSale: true,
-      externalId: 31508852277294,
-      name: '1.5 oz',
-      originalPrice: 0,
-      position: 1,
-      price: 44,
-      quantity: 41395,
-      selectedOptions: [
-        {
-          _id: '40221d1e-a409-4677-910b-932e1cfbdd72',
-          name: 'Size',
-          storefrontId: 'gid://shopify/ProductOption/5440486178875/1.5 oz',
-          value: '1.5 oz',
-        },
-      ],
-      sku: '1031-1',
-      storefrontId:
-				'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMTUwODg1MjI3NzI5NA==',
-      tracksInventory: true,
-    },
-    {
-      _id: '98310e4b-ca31-47c8-9916-5244f98a0a33',
-      availableForSale: false,
-      externalId: 31508852310062,
-      name: '3.7 oz',
-      originalPrice: 0,
-      position: 2,
-      price: 34,
-      quantity: 1,
-      selectedOptions: [
-        {
-          _id: 'db876249-a983-4379-a68a-7b29943539e8',
-          name: 'Size',
-          storefrontId: 'gid://shopify/ProductOption/5440486178875/3.7 oz',
-          value: '3.7 oz',
-        },
-      ],
-      sku: '1031-2',
-      storefrontId:
-				'Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMTUwODg1MjMxMDA2Mg==',
-      tracksInventory: true,
-    },
-  ],
-
-  productPromos: {
-    name: 'Product promo A',
-    productPromoMessage: 'Product-level promo A (40%)',
-    showPromo: true,
-    discount: 40,
-    _id: 'f9389806-e9f1-4cef-b020-839655bef2c9',
-  },
-};
 
 const getLinkToObj = (slug, product) => { return { pathname: `/products/${slug}`, state: { product: product } }; };
 
@@ -236,7 +42,7 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
 
 };
 
-const PLPProductBox2 = ({ product = mockProduct, analytics, compareButtonConfig = {showIt: false}, ctaOpensBlank = false }) => {
+const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: false}, ctaOpensBlank = false }) => {
 
   const { images, variants = [], title, productPromos = null, slug, name} = product;
   const media = images.nodes;
@@ -470,7 +276,7 @@ export default PLPProductBox2;
  */
 
 
-const PLPBadges = ({ product = mockProduct }) => {
+const PLPBadges = ({ product }) => {
 
   const { variants, tags } = product;
 
@@ -584,8 +390,7 @@ const PLPBadges = ({ product = mockProduct }) => {
 
 const ComparisonCheckbox = ({slug}) => {
 
-  const [store] = {store: {}};
-  // const [store] = useStore(); //TODO
+  const {store} = useComparisonModalStore();
   const checkInputRef = useRef(null);
 
   useEffect(() => {
