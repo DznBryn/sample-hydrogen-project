@@ -717,3 +717,35 @@ export const GET_HOMEPAGE_SKIN_QUIZ = gql`
     }
   }
 `;
+
+export const GET_HOMEPAGE_COLLECTION_CALLOUT = gql`
+  query GetAllHomepageCollectionCallout {
+    allHomepageCollectionCallout {
+      _id
+      name
+      grayText
+      boldHeader
+      sectionCopy
+      buttonText
+      buttonUrl
+      bigImage{
+        asset{
+          _id
+          url
+        }
+      }
+      smallImage{
+        asset{
+          _id
+          url
+        }
+      }
+      mobileImage{
+        asset{
+          _id
+          url
+        }
+      }
+    }
+  }
+`;

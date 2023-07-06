@@ -16,30 +16,30 @@ const HomepageWhyProbiotics = ({ homepageWhyProbioticsContent }) => {
     window.addEventListener('scroll', () => {
 
       isInViewPort(document.querySelector('.homepageWhyProbiotics'), () => {
-        document.querySelector('.fadeInOne').classList.add('fadedIn');
+        document.querySelector('.homepageWhyProbiotics .fadeInOne').classList.add('fadedIn');
         setTimeout(() => {
-          document.querySelector('.fadeInTwo').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInTwo').classList.add('fadedIn');
         }, 400);
         setTimeout(() => {
-          document.querySelector('.fadeInThree').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInThree').classList.add('fadedIn');
         }, 600);
         setTimeout(() => {
-          document.querySelector('.fadeInFour').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInFour').classList.add('fadedIn');
         }, 800);
         setTimeout(() => {
-          document.querySelector('.fadeInFive').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInFive').classList.add('fadedIn');
         }, 1000);
         setTimeout(() => {
-          document.querySelector('.fadeInSix').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInSix').classList.add('fadedIn');
         }, 1200);
         setTimeout(() => {
-          document.querySelector('.fadeInSeven').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInSeven').classList.add('fadedIn');
         }, 1400);
         setTimeout(() => {
-          document.querySelector('.fadeInEight').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInEight').classList.add('fadedIn');
         }, 1600);
         setTimeout(() => {
-          document.querySelector('.fadeInNine').classList.add('fadedIn');
+          document.querySelector('.homepageWhyProbiotics .fadeInNine').classList.add('fadedIn');
         }, 1800);
       });
 
