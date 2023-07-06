@@ -1,0 +1,167 @@
+/* Fade Transitions */
+.fadeIn,
+.fadeInOne,
+.fadeInTwo,
+.fadeInThree,
+.fadeInFour {
+  border: 0px solid rgba(255, 255, 255, 0);
+  opacity: 0;
+  margin-top: 1.5em;
+}
+
+.fadedIn {
+  transition-delay: 1s;
+  transition: 1s all ease-in;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.homepageWhyProbiotics {
+  width: 100%;
+  height: 665px;
+  display: flex;
+  flex-direction: row;
+  margin: 96px 0 145px;
+}
+
+.homepageWhyProbiotics a,
+.homepageWhyProbiotics a:hover,
+.homepageWhyProbiotics a:focus,
+.homepageWhyProbiotics a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+.homepageWhyProbiotics .section {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-top: 7em;
+}
+
+.homepageWhyProbiotics .section.left {
+  width: 50%;
+  position: relative;
+}
+
+.homepageWhyProbiotics .section.right h2 {
+  font-size: 32px;
+  line-height: 42px;
+  color: inherit;
+  font-weight: 900;
+  margin-bottom: 28px;
+}
+
+.homepageWhyProbiotics .section.right h3 {
+  font-size: 18px;
+  line-height: 24.6px;
+  color: inherit;
+  font-weight: 800;
+  color: #48c6d9;
+}
+
+.homepageWhyProbiotics .section.right p {
+  font-size: 18px;
+  line-height: 30.6px;
+  color: inherit;
+  font-weight: 400;
+  margin-bottom: 1.5em;
+}
+
+.homepageWhyProbiotics .section.right {
+  width: 50%;
+  position: relative;
+  padding-left: 77px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  color: var(--color-primary-black);
+}
+
+.homepageWhyProbiotics .section.left .bigImg {
+  height: 665px;
+  width: 480px;
+  left: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.homepageWhyProbiotics .section.left .smallImg {
+  height: 250px;
+  width: 250px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.homepageWhyProbiotics .section.right .btn {
+  margin: 1em 0;
+}
+
+.desktop {
+  display: block;
+}
+
+.mobile {
+  display: none;
+}
+
+.homepageWhyProbiotics .btn {
+  width: 165px;
+  height: 48px;
+  border-radius: 3px;
+}
+
+@media all and (max-width: 768px) {
+  .homepageWhyProbiotics {
+    flex-direction: column;
+    margin: 35px 0;
+    height: fit-content;
+    margin-bottom: 51px;
+  }
+  .homepageWhyProbiotics .smallImg {
+    display: none;
+  }
+  .homepageWhyProbiotics .section.left,
+  .homepageWhyProbiotics .section.right {
+    width: calc(100vw - 28px);
+    padding: 0 14px;
+    margin: 0 auto;
+  }
+  .bigImg.mobile {
+    overflow: hidden;
+    object-fit: cover;
+    height: 225px;
+    width: 100vw;
+    object-position: center 4%;
+  }
+  .homepageWhyProbiotics .section.right h2 {
+    font-size: 24px;
+    line-height: 32.78px;
+    width: calc(100% - 50px);
+  }
+  .homepageWhyProbiotics .section.right h3 {
+    font-size: 18px;
+    line-height: 24.59px;
+    font-weight: 800;
+  }
+  .homepageWhyProbiotics .section.right p {
+    font-size: 16px;
+    line-height: 21.86px;
+  }
+  .desktop {
+    display: none;
+  }
+  .mobile {
+    display: block;
+  }
+  .homepageWhyProbiotics .btn {
+    width: 123px;
+    height: 36px;
+    font-size: 14px;
+    line-height: 18px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
