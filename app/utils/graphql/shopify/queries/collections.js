@@ -56,7 +56,8 @@ export const PRODUCTS_QUERY = `#graphql
             compareAtPrice{
               amount
             }
-            quantityAvailable
+            quantityAvailable,
+            availableForSale,
           }
         }
 				priceRange{
