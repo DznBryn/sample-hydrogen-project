@@ -68,7 +68,7 @@ export default function AddToCartButton({
 
   const mapStateToButton = {
     [IDLE]: <addToCart.Form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
+      <input type="hidden" name="cartAction" value={lineItem?.action ?? 'ADD_TO_CART'} />
       <input
         type="hidden"
         name="countryCode"

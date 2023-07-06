@@ -40,8 +40,6 @@ export const loader = async ({ params, context }) => {
 
 export default function PDP() {
   const { handle, product } = useLoaderData();
-  const { addItems } = useCartActions();
-  const handleAddToCart = (lines) => addItems(lines);
 
   const addToCartProps = {
     lineItem: { slug: product.handle, variantId: product.variants[0].id }
@@ -53,7 +51,6 @@ export default function PDP() {
       </summary>
       <div>
         <AddToCartButton {...addToCartProps}/>
-        <button onClick={() => handleAddToCart([{ merchandiseId: product.variants[0].id, quantity: 1 }])}>click</button>
         <ProductForm variantId={product.variants[0].id} />
       </div>
       <pre>{JSON.stringify(product, null, 2)}</pre>
