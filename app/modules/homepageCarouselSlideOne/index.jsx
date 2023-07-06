@@ -1,4 +1,5 @@
 import { Link } from '@remix-run/react';
+import PortableTextCustom from '../portableTextCustom';
 
 import styles from './styles.css';
 
@@ -20,7 +21,9 @@ const HomepageCarouselSlideOne = ({ slideContent }) => {
                 style={{ color: slideContent.slideHeaderFontColorHex }}
               >{slideContent.slideHeader}</h1>
 
-              <p style={{ color: slideContent.slideCopyFontColorHex }} dangerouslySetInnerHTML={{ __html: slideContent.slideCopyRaw[0].children[0].text }} />
+              <p style={{ color: slideContent.slideCopyFontColorHex }}>
+                <PortableTextCustom value={slideContent.slideCopyRaw}/>
+              </p>
                 
               <button
                 className={'btn'}
