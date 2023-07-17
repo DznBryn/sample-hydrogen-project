@@ -216,7 +216,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
   return (
 
-    <div className={'plpWrapper'} id={`product-${product?.handle ? product.handle : slug}`}>
+    <div className={'plpWrapperProductBox'} id={`product-${product?.handle ? product.handle : slug}`}>
 
       <div className='container'>
 
@@ -303,7 +303,7 @@ const PLPBadges = ({ product }) => {
       return classNames.bind(styles)('roseGlowBadgeContainer', customClass);
     }
 
-    return classNames.bind(styles)('tag', customClass);
+    return classNames.bind(styles)('tagProductBox', customClass);
   }
 	
   const Badge = () => {
@@ -347,7 +347,7 @@ const PLPBadges = ({ product }) => {
 
       let customClass = buildCustomClass(customBadge);
 
-      return customBadge ? <span className={`tag ${customClass}`}>{customBadge}</span> : null;
+      return customBadge ? <span className={`tagProductBox ${customClass}`}>{customBadge}</span> : null;
 
     }
 
@@ -371,7 +371,7 @@ const PLPBadges = ({ product }) => {
     );
 
     return (
-      <div className={'tag holidayBadgeContainer'}>
+      <div className={'tagProductBox holidayBadgeContainer'}>
         <HolidayIcon/>
         <span>Holiday</span>
       </div>
@@ -380,9 +380,9 @@ const PLPBadges = ({ product }) => {
 
   return (
 
-    <div className={'badgeContainer'}>
+    <div className={'badgeContainerProductBox'}>
 
-      { (showSaveBadge) && <span className={'tag saveTag'}>{`save ${savePorcentage}%`}</span> }
+      { (showSaveBadge) && <span className={'tagProductBox saveTag'}>{`save ${savePorcentage}%`}</span> }
       {showHolidayBadge ? <HolidayBadge /> : <Badge product={product} />}
 
     </div>

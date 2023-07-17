@@ -48,7 +48,7 @@ const Button = ({ product, ...rest }) => {
     out: (
       <Link
         to={{
-          pathname: `/products/${product.slug}`,
+          pathname: `/products/${product.handle}`,
           state: { product: product },
         }}
         {...rest}
@@ -67,13 +67,14 @@ const Button = ({ product, ...rest }) => {
           isGated={product?.isGated}
           {...rest} 
         />
+        <></>
       </div>
     ),
 
     view: (
       <Link
         to={{
-          pathname: `/products/${product.slug}`,
+          pathname: `/products/${product.handle}`,
           state: { product: product },
         }}
         {...rest}
@@ -94,7 +95,8 @@ let sitewide = false;
 
 const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButtonConfig, ...rest }) => {
   const [forceChange, setForceChange] = useState(false);
-  const { media = [], name, variants = [] } = product;
+  const { media = [], name } = product;
+  const variants = product.variants.nodes;
 
   is2Columns = is2Columns || false;
 
@@ -315,7 +317,7 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
 
   return is2Columns || window?.innerWidth > 500 ? (
     <div
-      className={'plpWrapper'}
+      className={'plpWrapperHorizontalProductBox'}
       id={`product-${product?.handle ? product.handle : product.slug}`}
     >
       <Product product={product} analytics={analytics} key={product._id} compareButtonConfig={compareButtonConfig}/>
@@ -331,7 +333,7 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
             <PLPBadges product={product} />
             <Link
               to={{
-                pathname: `/products/${product.slug}`,
+                pathname: `/products/${product.handle}`,
                 state: { product: product },
               }}
               className="horizontal_imageContainer"
@@ -369,7 +371,7 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
             )}
             <Link
               to={{
-                pathname: `/products/${product.slug}`,
+                pathname: `/products/${product.handle}`,
                 state: { product: product },
               }}
               className="horizontal_title"

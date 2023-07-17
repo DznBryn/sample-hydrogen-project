@@ -751,8 +751,8 @@ export const GET_HOMEPAGE_COLLECTION_CALLOUT = gql`
 `;
 
 export const GET_PLP_FILTER_MENU = gql`
-  query GetAllPLPFilterMenu {
-    allPLPFilterMenu {
+  query GetAllPlpFilterMenu {
+    allPlpFilterMenu {
       _id
       name
       type

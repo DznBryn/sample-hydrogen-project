@@ -20,7 +20,7 @@ const classes = {
 
 const FilterTags = ({ title, onClick }) => {
   return (
-    <li className={'tag'}>
+    <li className={'tagFilter'}>
       {title}{' '}
       <span onClick={onClick} className={'close__tag'}>
         +

@@ -69,7 +69,7 @@ export const PDPBadges = ({ productDetails = [], selectedVariant }) => {
 
   return (
     (badgeTags.length > 0 || showTheBadge || showHolidayBadge || roseGlowTagsFromShopify.length > 0) && (
-      <div className={'container'}>
+      <div className={'badgeContainer2'}>
 
         {showHolidayBadge && <HolidayBadge />}
 

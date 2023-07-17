@@ -6,7 +6,7 @@ import { triggerAnalyticsOnScroll } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from '../plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from '../genericRecommendedProducts';
 import Banner, { links as plpBannerStyles } from '../plpBanner';
-import Title from '../plpTitle';
+import Title, { links as titleStyles } from '../plpTitle';
 import FireWorkPLPCarousel, { links as fireWorkCarouselStyles } from '../fireWorkCarousel';
 import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../plpHorizontalProductBox';
 import ComparisonModal, { links as comparisonModalStyles } from '../comparisonModal';
@@ -22,17 +22,18 @@ export const links = () => {
     ...fireWorkCarouselStyles(),
     ...plpHorizontalProductBoxStyles(),
     ...comparisonModalStyles(),
+    ...titleStyles(),
   ];
 };
 
 // import { useYotpoReviewsRefresh } from '@frontend-sdk/yotpo';
 
-const PLP = ({ collection, sortOptions, filtersOptions, isInfluencerPage = false, cartConfig }) => {
+const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig }) => {
 
   // useYotpoReviewsRefresh();
 
+  const sortOptions = mockSortOptions;
   collection = collection || mockCollection;
-  sortOptions = sortOptions || mockSortOptions;
   filtersOptions = filtersOptions || mockFilterOptions;
 
   const currentFiltersConfig = useRef({});
@@ -62,17 +63,17 @@ const PLP = ({ collection, sortOptions, filtersOptions, isInfluencerPage = false
               actionField: { list: `${collection.name}` },
               products: [
                 {
-                  name: product.name,
-                  id: product.externalId,
-                  price: product.minPrice.toFixed(2),
-                  category: product.type,
+                  name: product?.title,
+                  id: product?.id,
+                  price: parseInt(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
+                  category: product?.productType,
                   variant: '',
                   position: index,
                 },
               ],
             },
           }}
-          key={product._id}
+          key={product.id}
         />
       )) : null;
 
@@ -135,7 +136,6 @@ const PLP = ({ collection, sortOptions, filtersOptions, isInfluencerPage = false
 
   // Analytics stuff
   const PLPContainer = useRef(null);
-  //  window.dataLayer = []
   // Analytics stuff
   useEffect(() => {
     triggerAnalyticsOnScroll(
@@ -154,7 +154,6 @@ const PLP = ({ collection, sortOptions, filtersOptions, isInfluencerPage = false
   // effect to adjust grid when resize
   useEffect(() => {
     previousState.current = state;
-    console.log('%c useEffect counter ', 'background-color: #47C6D9; color: #fff', window?.innerWidth && window?.innerWidth);
 
     const handleResize = () => {
       setSize({
@@ -234,7 +233,7 @@ const PLP = ({ collection, sortOptions, filtersOptions, isInfluencerPage = false
   }
 
   const titleContent = {
-    title: collection.name,
+    title: collection.title,
     subTitle: metafields?.find((meta) => meta.key === 'sub_title')?.value || '',
   };
 

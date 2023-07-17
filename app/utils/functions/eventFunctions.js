@@ -264,15 +264,14 @@ export function triggerAnalyticsOnScroll(
     rect.childNodes.forEach((node, index) => {
       if (node.id && isElementInView(node)) {
         const productId = node.id.replace('product-', '');
-
-        const prod = filteredProducts.find((item) => item.slug === productId);
-        if (!inViewItems.find((viewItem) => viewItem.id === prod.externalId)) {
+        const prod = filteredProducts.find((item) => item.handle === productId);
+        if (!inViewItems.find((viewItem) => viewItem.id === window.btoa(prod?.id))) {
           return inViewItems.push({
-            name: `${prod.name}`,
-            id: `${prod.externalId}`,
-            price: prod.minPrice.toFixed(2),
+            name: `${prod?.title}`,
+            id: `${window.btoa(prod?.id)}`,
+            price: parseInt(prod?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
             brand: 'TULA SkinCare',
-            category: `${prod.type}`,
+            category: `${prod?.productType}`,
             list: `${collection}`,
             position: index,
           });
