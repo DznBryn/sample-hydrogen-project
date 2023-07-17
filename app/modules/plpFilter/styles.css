@@ -4,9 +4,7 @@
   flex-direction: column;
   position: relative;
   z-index: 9999;
-
   width: 100%;
-
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -140,31 +138,26 @@
     right: 0;
     max-width: 1130px;
   }
-
   .filter__opened {
     position: relative;
     top: 0;
     z-index: 9999;
   }
-
   .productsQuantity {
     align-self: center;
     margin-right: 5px;
     display: block;
   }
-
   .filteresQuantity {
     align-self: center;
     font-weight: 400;
     font-size: 14px;
     letter-spacing: 2px;
   }
-
   .box__wrapper {
     justify-content: flex-end;
     margin-bottom: 4px;
   }
-
   .box__container {
     max-width: 161px;
     border: 1px solid var(--color-secondary-pink);
@@ -172,16 +165,15 @@
     justify-content: space-between;
     text-transform: lowercase;
   }
-
   .arrow {
     margin-left: auto;
   }
-
   .tags_list {
     width: 100%;
   }
-
   .mobileProductCounts {
     display: none;
   }
 }
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,0 +1,13 @@
+.fireWorkPLPCarousel {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto 50px;
+}
+
+@media all and (max-width: 768px) {
+  .fireWorkPLPCarousel {
+    width: 100%;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
