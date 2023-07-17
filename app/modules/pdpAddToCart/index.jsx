@@ -21,8 +21,8 @@ export default function PDPAddToCart({
   addItem,
   classes = [],
   forceSoldOut = false,
-  analytics = null,
-  onClick = null,
+  // analytics = null,
+  // onClick = null,
   displayPrice,
   exclusiveProductAtcColor,
   exclusiveProductTextColor,
@@ -80,7 +80,7 @@ export default function PDPAddToCart({
           style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
           type="submit"
           disabled={addToCart?.state === 'submitting'}
-          >
+        >
           <span>
             {displayPrice === true ? `Add To Cart - ${3400 / 100}` : 'Add To Cart'}
           </span>
@@ -116,7 +116,7 @@ export default function PDPAddToCart({
     [LOCKED]: <div className={'addToCart__container'}>
       <button
         className={`${classes.join(' ')} add_to_cart ${exclusiveProductAtcColor && atcStylesForExclusiveProducts
-          } `}
+        } `}
         style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
         onClick={() => switchSliderPanelVisibility('SliderAccount')}
       >

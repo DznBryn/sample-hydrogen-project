@@ -24,8 +24,8 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
   const { variants, tags, slug } = product;
   const hasVariants = variants?.length > 1;
   
-  const outOfStock = (!hasVariants) && (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') || variants[0]?.quantityAvailable < 1);
-  const addItem = (outOfStock) ? {} : {variantId: window.btoa(variants[0]?.externalId), quantity: 1, ['selling_plan_id']: 0, product};
+  // const outOfStock = (!hasVariants) && (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') || variants[0]?.quantityAvailable < 1);
+  // const addItem = (outOfStock) ? {} : {variantId: window.btoa(variants[0]?.externalId), quantity: 1, ['selling_plan_id']: 0, product};
   const forceSoldOut = (product && tags.includes('force_sold_out'));
   
   return (hasVariants) 

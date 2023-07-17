@@ -4,7 +4,7 @@ import { useLoaderData } from 'react-router';
 import { PRODUCT_QUERY } from '~/utils/graphql/shopify/queries/collections';
 import { json } from '@shopify/remix-oxygen';
 import { useFetcher, useMatches } from '@remix-run/react';
-import { useCartActions } from '../../../hooks/useCart';
+// import { useCartActions } from '../../../hooks/useCart';
 import AddToCartButton, { links as addToCartStyles } from '~/modules/global/AddToCart/AddToCart';
 
 export const links = () => {
