@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import classNames from 'classnames';
 import getApiKeys from '~/utils/functions/getApiKeys';
 
 import styles from './styles.css';
@@ -127,7 +126,7 @@ const HolidayBadge = () => {
 };
 
 const SavingsBadges = ({ message = 'Save 40%', type = 'savings', smallStyleOnMobile }) => {
-  const badgesStyle = classNames(
+  const badgesStyle = classnames(
     'badgeContainer',
     smallStyleOnMobile && 'smallBadgeOnMobile',
   );
