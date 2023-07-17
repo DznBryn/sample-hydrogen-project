@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 import { Padlock } from '../icons';
 import styles from './styles.css';
-import { useInventory } from '~/hooks/useInventory';
+// import { useInventory } from '~/hooks/useInventory';
 import { useCustomerState } from '~/hooks/useCostumer';
 
 export const links = () => {
@@ -32,7 +32,10 @@ export default function PDPAddToCart({
   const [root] = useMatches();
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
-  const { quantity, availableForSale } = useInventory({ id: addItem?.variantId, slug: addItem?.slug });
+
+  // const { quantity, availableForSale } = useInventory({ id: addItem?.variantId, slug: addItem?.slug }); //identify re-render on PLP
+  const quantity = 0, availableForSale = false; //mock
+
   const { isLoggedIn } = useCustomerState;
   const [buttonState, setButtonState] = useState(IDLE);
   const loadingBtnStylesForExclusiveProducts = {
