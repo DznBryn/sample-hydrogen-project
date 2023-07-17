@@ -225,7 +225,7 @@ const IconClose = ({ color = '#4c4e56' }) => {
   );
 };
 
-const IconArrow = ({color = '#4c4e56', position = 'up', size = '8px'}) => {
+export const IconArrow = ({color = '#4c4e56', position = 'up', size = '8px'}) => {
   return (
     <svg className={ position === 'down' ? 'position_down' : position === 'left' ? 'position_left' : position === 'right' ? 'position_right' : 'position_up' } width={size} height={size} viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg"><title>Arrow Icon</title>
       <path d="M3.8578 0.421066C3.72932 0.424113 3.60592 0.474894 3.51249 0.56326L0.262493 3.68326C0.0563258 3.88334 0.0502284 4.2124 0.249289 4.41959C0.448865 4.62679 0.777921 4.63338 0.985623 4.43483L3.87409 1.66011L6.76256 4.43483C6.97026 4.63338 7.29983 4.62679 7.49889 4.41959C7.69796 4.2124 7.69237 3.88334 7.48569 3.68326L4.23569 0.56326C4.13413 0.466775 3.99804 0.415489 3.85789 0.421066L3.8578 0.421066Z" fill={color}/>
