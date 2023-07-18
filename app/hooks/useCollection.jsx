@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
-import { useFetcher } from '@remix-run/react';
+import { useEffect, useMemo } from 'react';
+import { useFetcher, useMatches } from '@remix-run/react';
+import { getCollectionProductsWithCMSData } from '~/utils/functions/eventFunctions';
 
 export function useCollection(slug) {
+
+  const [root] = useMatches();
+  const productsCMSData = root.data.globalCMSData.products;
 
   const fetcher = useFetcher();
   const {state, data} = fetcher;
@@ -28,10 +32,15 @@ export function useCollection(slug) {
 
   }
 
+  const collectionWithCMSData = useMemo (
+    () => getCollectionProductsWithCMSData(fetcher.data?.collection, productsCMSData),
+    [fetcher.data?.collection, productsCMSData]
+  );
+
   return {
     state: getState(),
-    products: fetcher.data?.collection?.products,
-    title: fetcher.data?.collection?.title,
+    products: collectionWithCMSData?.products,
+    title: collectionWithCMSData?.title,
     slug: fetcher.data?.handle,
   };
 
