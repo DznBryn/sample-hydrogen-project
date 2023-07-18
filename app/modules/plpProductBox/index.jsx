@@ -46,9 +46,9 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
 
 const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: false}, ctaOpensBlank = false }) => {
 
-  const { images, variants = [], title, productPromos = null, slug, name} = product;
+  const { images, variants = [], productPromos = null, slug, title} = product;
   const media = images.nodes;
-  const altTitle = title;
+  const altTitle = product?.alt_title || '';
 
   const [forceChange, setForceChange] = useState(false);
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
@@ -71,9 +71,9 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
   function getPrice(){
 
-    const hasVariants = variants.length > 1;
-    const price = variants[0].price.amount;
-    const gotDifferentPrices = !(variants.every((value) => value.price.amount === price));
+    const hasVariants = variants.nodes.length > 1;
+    const price = parseFloat(variants.nodes[0].price.amount);
+    const gotDifferentPrices = !(variants.nodes.every((value) => value.price.amount === price));
     const productPrice = price.toString().includes('.') ? price.toFixed(2) : price;
 
     return getCurrency() + ((hasVariants && gotDifferentPrices) ? getRangePrice() : productPrice);
@@ -82,19 +82,19 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
   function getRangePrice() { 
 		
-    return `${Math.min(...variants.map((variant) => variant.price))}+`;
+    return `${Math.min(...variants.nodes.map((variant) => variant.price))}+`;
 
   }
 
   const getPromoPrice = () => {
 
     let newPrice = 0;
-    const price = parseInt(variants.nodes[0]?.price?.amount);
-    const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+    const price = parseFloat(variants.nodes[0]?.price?.amount);
+    const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
     const getPriceToShow = () => getCurrency() + (newPrice % 1 !== 0 ? newPrice.toFixed(2) : newPrice);
     const getPriceWithDiscounts = (from) => ( Number(price) - (Number(from) / 100) * Number(price) );
 
-    if (variants.length > 1 && price !== variants[variants.length - 1].price) {
+    if (variants.nodes.length > 1 && price !== variants.nodes[variants.nodes.length - 1].price) {
 
       if (productPromos && productPromos?.name && productPromos.showPromo) {
 
@@ -127,8 +127,8 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
   const getStrikethroughPrice = () => {
 
     let newPrice = 0;
-    const price = parseInt(variants.nodes[0]?.price?.amount);
-    const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+    const price = parseFloat(variants.nodes[0]?.price?.amount);
+    const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
     const getPriceToShow = () => getCurrency() + (newPrice % 1 !== 0 ? newPrice.toFixed(2) : newPrice);
 
     if (variants.length > 1 && price !== variants[variants.length - 1].price) {
@@ -161,8 +161,8 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
   const PriceComp = () => {
 
-    const price = parseInt(variants.nodes[0]?.price?.amount);
-    const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+    const price = parseFloat(variants.nodes[0]?.price?.amount);
+    const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
 
     const originalPriceHigher = originalPrice > price;
     const noPromoPrice = (sitewide === false && !product?.productPromos?.showPromo) || noPromo || (sitewide?.excludeList?.includes(product.externalId)) ;
@@ -234,7 +234,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
           </Link>
 
           <Link className='subTitle' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
-            {name}
+            {title}
           </Link>
 
           <div className='reviewRates2'>
@@ -282,8 +282,8 @@ const PLPBadges = ({ product }) => {
 
   const { variants, tags } = product;
 
-  const price = parseInt(variants.nodes[0]?.price?.amount);
-  const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+  const price = parseFloat(variants.nodes[0]?.price?.amount);
+  const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
 
   if (product?.exclusiveTextColor) {
     return null;
