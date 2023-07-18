@@ -1,4 +1,4 @@
-import {useState, useEffect, useLayoutEffect, useReducer, useRef,} from 'react';
+import {useState, useEffect, useReducer, useRef,} from 'react';
 import classnames from 'classnames';
 import {mockCollection, mockFilterOptions, mockSortOptions, getBanners, sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll } from '~/utils/functions/eventFunctions';
@@ -44,7 +44,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   );
 
   const products = collection ? filterHiddenProductsByTag(collection.products) : [];
-  const { metafields = [], slug } = collection;
+  const { metafields = [], handle: slug } = collection;
   const banners = getBanners(metafields);
   const [size, setSize] = useState({
     width: undefined,
@@ -146,7 +146,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   }, []);
 
   // effect to update collection after sorted
-  useLayoutEffect(() => {
+  useEffect(() => {
     const filtersConfig = Object.keys(currentFiltersConfig.current).length <= 0 ? intialState : currentFiltersConfig.current;
     setFilteredProducts(sortProducts(sortedBy, null, filterProducts(products, filtersConfig)));
   }, [sortedBy]);
@@ -234,7 +234,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 
   const titleContent = {
     title: collection.title,
-    subTitle: metafields?.find((meta) => meta.key === 'sub_title')?.value || '',
+    subTitle: 'show sub_title metafield here'//metafields?.find((meta) => meta.key === 'sub_title')?.value || '',
   };
 
   const closeModal = () => {
