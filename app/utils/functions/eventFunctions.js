@@ -269,7 +269,7 @@ export function triggerAnalyticsOnScroll(
           return inViewItems.push({
             name: `${prod?.title}`,
             id: `${window.btoa(prod?.id)}`,
-            price: parseInt(prod?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
+            price: parseFloat(prod?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
             brand: 'TULA SkinCare',
             category: `${prod?.productType}`,
             list: `${collection}`,
@@ -305,11 +305,11 @@ export function triggerAnalyticsOnScroll(
               )
             ) {
               return newInViewItems.push({
-                name: `${prod.name}`,
-                id: `${prod.externalId}`,
-                price: prod.minPrice.toFixed(2),
+                name: `${prod?.title}`,
+                id: `${window.btoa(prod?.id)}`,
+                price: parseFloat(prod?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
                 brand: 'TULA SkinCare',
-                category: `${prod.type}`,
+                category: `${prod?.productType}`,
                 list: `${collection}`,
                 position: index,
               });
