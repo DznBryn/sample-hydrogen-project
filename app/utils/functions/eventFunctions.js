@@ -539,16 +539,16 @@ export function getCartTotalForFreeShippingGraphQL() {
  * CMS functions
  */
 
-export async function getCMSContent(context, query){
+export async function getCMSContent(context, query) {
 
   const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
   const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query });
-  
+
   return Object.values(result.data)[0];
 
 }
 
-export async function getGroupOfCMSContent(context, queries = []){
+export async function getGroupOfCMSContent(context, queries = []) {
 
   const promises = queries.map(querie => getCMSContent(context, querie));
   const values = await Promise.all(promises);
@@ -565,7 +565,7 @@ export async function getGroupOfCMSContent(context, queries = []){
 
 }
 
-export function getCMSDoc(content, docName){
+export function getCMSDoc(content, docName) {
 
   return content.find(doc => doc.name === docName);
 
@@ -577,7 +577,7 @@ export function getCMSDoc(content, docName){
 
 
 
-export async function getCustomerData(context){
+export async function getCustomerData(context) {
 
   let customer = {
     id: '',
@@ -585,11 +585,11 @@ export async function getCustomerData(context){
     email: '',
     phone: '',
   };
-  
+
   const customerAccessToken = await context.session.get('customerAccessToken');
 
   if (customerAccessToken) {
-  
+
     customer = await getCustomer(context, customerAccessToken);
     customer.addresses = flattenConnection(customer.addresses);
     customer.orders = flattenConnection(customer.orders);
@@ -600,11 +600,34 @@ export async function getCustomerData(context){
 
 }
 
-export async function getCartData(context){
+export async function getCartData(context) {
 
   const cartId = await context.session.get('cartId');
   const cart = (cartId) ? await getCart(context, cartId) : {};
 
   return cart;
+
+}
+
+export function getCollectionProductsWithCMSData(collection, productsCMSData) {
+
+  const collectionCopy = { ...collection };
+
+  if (collectionCopy?.products) {
+
+    collectionCopy.products = collectionCopy?.products.map(product => {
+
+      const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
+      return { ...product, ...CMSData[0] };
+
+    });
+
+    return collectionCopy;
+
+  } else {
+
+    return [];
+
+  }
 
 }

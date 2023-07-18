@@ -1,5 +1,4 @@
 import { Link } from '@remix-run/react';
-import { getMetafields } from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 
@@ -12,13 +11,11 @@ export const links = () => {
 const NavCollectionProductCard = ({ product = {} }) => {
   const thumbnail = product.images.nodes[0];
   // const thumbnail = product.thumbnail;
-  const metafields = getMetafields(product.metafields);
   return (
     <div className={'productWrap'}>
       <Link
         className={'productLink'}
         to={'/products/' + product.handle}
-        // to={'/products/' + product.slug}
         draggable="false">
         <img
           src={thumbnail?.url}
@@ -28,24 +25,21 @@ const NavCollectionProductCard = ({ product = {} }) => {
           className={'productImg'}
           draggable="false" />
       </Link>
-      {metafields.alt_title !== undefined &&
+      {product.alt_title !== undefined &&
         <Link
           className={'productLink'}
           to={'/products/' + product.handle}
-          // to={'/products/' + product.slug}
           draggable="false">
           <div className={'productAlt'}>
-            {metafields.alt_title}
+            {product.alt_title}
           </div>
         </Link>
       }
       <Link
         className={'productLink'}
         to={'/products/' + product.handle}
-        // to={'/products/' + product.slug}
         draggable="false">
         <div className={'productName'}>
-          {/* {product.name} */}
           {product.title}
         </div>
       </Link>
