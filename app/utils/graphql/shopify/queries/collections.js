@@ -31,14 +31,15 @@ export const PRODUCTS_QUERY = `#graphql
   query Collection($handle: String!) {
   collection(handle: $handle){
     title
-    products(first: 20){
+    products(first: 250){
       nodes {
         id
         title
         handle
         tags
         productType
-        images(first: 250) {
+        createdAt
+        images(first: 2) {
           nodes {
             id
             url
