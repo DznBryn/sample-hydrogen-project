@@ -38,7 +38,7 @@ export const PRODUCTS_QUERY = `#graphql
         handle
         tags
         productType
-        images(first: 2) {
+        images(first: 250) {
           nodes {
             id
             url
