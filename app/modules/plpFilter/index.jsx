@@ -14,8 +14,8 @@ export const links = () => {
 
 const classes = {
   ['box__filter']: classnames('box__container isFilter'),
-  ['arrow__opened']: classnames('arrow opened'),
-  ['filter__opened']: classnames('container filter__opened'),
+  ['arrow__opened']: classnames('filterArrow opened'),
+  ['filter__opened']: classnames('filterContainer filter__opened'),
 };
 
 const FilterTags = ({ title, onClick }) => {
@@ -53,7 +53,7 @@ const FilterBox = ({
           }
           <span
             className={
-              toggle && type === 'filter' ? classes.arrow__opened : 'arrow'
+              toggle && type === 'filter' ? classes.arrow__opened : 'filterArrow'
             }
           >
             <IconArrow />
@@ -65,7 +65,7 @@ const FilterBox = ({
           <strong>{sortedBy}</strong>
           <span
             className={
-              toggle && type === 'sort' ? classes.arrow__opened : 'arrow'
+              toggle && type === 'sort' ? classes.arrow__opened : 'filterArrow'
             }
           >
             <IconArrow />
@@ -91,7 +91,7 @@ const PLPFilter = ({
 }) => {
   const [sortedBy, setSortedBy] = useState('featured ');
   const [type, setType] = useState('');
-  const [store, setStore] = useStore();
+  const {store, setStore} = useStore();
   sorted = sorted || sortedBy;
   getSortedBy = getSortedBy || setSortedBy;
   collectionQuantity = collectionQuantity || 0;
@@ -150,7 +150,7 @@ const PLPFilter = ({
   };
 
   return (
-    <div className={visible ? classes.filter__opened : 'container'}>
+    <div className={visible ? classes.filter__opened : 'filterContainer'}>
       <div className={'box__wrapper'}>
         <h5 className={'productsQuantity'}>
           {collectionQuantity} Products

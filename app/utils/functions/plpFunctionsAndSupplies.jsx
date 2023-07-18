@@ -105,15 +105,15 @@ export function sortProducts(sortType, products, filteredProducts) {
 
   const sort = {
     'new': () => sendOOSToEnd(clonedObjArray.sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt)).reverse()),
-    'price lo-hi': () => sendOOSToEnd(clonedObjArray.sort((a, b) => a.minPrice - b.minPrice)),
-    'price hi-lo': () => sendOOSToEnd(clonedObjArray.sort((a, b) => a.minPrice - b.minPrice).reverse()),
+    'price lo-hi': () => sendOOSToEnd(clonedObjArray.sort((a, b) => getMinPrice(a) - getMinPrice(b))),
+    'price hi-lo': () => sendOOSToEnd(clonedObjArray.sort((a, b) => getMinPrice(a) - getMinPrice(b)).reverse()),
     'featured': () => sendOOSToEnd(clonedObjArray),
     'bestselling': () => sendOOSToEnd(clonedObjArray.sort((a, b) => {
 
-      if (!a.salesRank) a.salesRank = Math.max() * -1;
-      if (!b.salesRank) b.salesRank = Math.max() * -1;
+      if (!a['sales_rank']) a['sales_rank'] = Math.max() * -1;
+      if (!b['sales_rank']) b['sales_rank'] = Math.max() * -1;
 
-      return a.salesRank - b.salesRank;
+      return a['sales_rank'] - b['sales_rank'];
 
     }))
   };
@@ -136,6 +136,12 @@ export function sortProducts(sortType, products, filteredProducts) {
     });
 
     return copyOfproducts;
+
+  }
+
+  function getMinPrice(product){
+
+    return parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2);
 
   }
 

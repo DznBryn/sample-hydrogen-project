@@ -1,8 +1,7 @@
-import {useState, useEffect, useReducer, useRef,} from 'react';
+import {useState, useEffect, useLayoutEffect, useReducer, useRef,} from 'react';
 import classnames from 'classnames';
 import {mockCollection, mockFilterOptions, mockSortOptions, getBanners, sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll } from '~/utils/functions/eventFunctions';
-
 import Filter, { links as filterStyles } from '../plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from '../genericRecommendedProducts';
 import Banner, { links as plpBannerStyles } from '../plpBanner';
@@ -65,7 +64,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
                 {
                   name: product?.title,
                   id: product?.id,
-                  price: parseInt(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
+                  price: parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
                   category: product?.productType,
                   variant: '',
                   position: index,
@@ -146,7 +145,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   }, []);
 
   // effect to update collection after sorted
-  useEffect(() => {
+  useLayoutEffect(() => {
     const filtersConfig = Object.keys(currentFiltersConfig.current).length <= 0 ? intialState : currentFiltersConfig.current;
     setFilteredProducts(sortProducts(sortedBy, null, filterProducts(products, filtersConfig)));
   }, [sortedBy]);

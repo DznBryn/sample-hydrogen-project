@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { useStore } from '~/hooks/useStore';
 import classnames from 'classnames';
 
-import FilterButton from '../plpFilterButton';
+import FilterButton, { links as filterButtonStyles} from '../plpFilterButton';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...filterButtonStyles(),
   ];
 };
 
@@ -132,7 +133,7 @@ const FilterCardInput = ({
 };
 
 const FilterModal = ({ options, type, toggle, getSorted, state, dispatch }) => {
-  const [store] = useStore();
+  const {store} = useStore();
   options = options || mockFilterOptions;
   type = type || 'filter';
   state = state || [];

@@ -1,5 +1,5 @@
 /* full component container */
-.container {
+.filterContainer {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -49,7 +49,7 @@
   flex: 1;
 }
 
-.arrow {
+.filterArrow {
   transform: rotate(180deg);
   margin-left: 3px;
   display: flex;
@@ -134,7 +134,7 @@
 }
 
 @media all and (min-width: 768px) {
-  .container {
+  .filterContainer {
     margin: 0 auto;
     left: 0;
     right: 0;
@@ -173,7 +173,7 @@
     text-transform: lowercase;
   }
 
-  .arrow {
+  .filterArrow {
     margin-left: auto;
   }
 
