@@ -27,6 +27,7 @@ export const loader = async ({ params, context }) => {
     cartPageConfig,
     filtersOptions,
     collection: {
+      handle,
       title: collection?.title ?? '',
       products: collection?.products
         ? flattenConnection(collection.products)
@@ -37,7 +38,6 @@ export const loader = async ({ params, context }) => {
 };
 export default function PLPPage() {
   const { 
-    // handle, 
     cartPageConfig,
     filtersOptions,
     collection, 
@@ -46,18 +46,6 @@ export default function PLPPage() {
   return (
     
     <Layouts.MainNavFooter>
-      {/* {
-        collection.title !== '' ? (
-          <>
-            <summary>
-              Collection: {collection.title} ({handle})
-            </summary>
-            <pre>{JSON.stringify(collection.products, null, 2)}</pre>
-          </>
-        ) : (
-          <>Collection not found</>
-        )
-      } */}
       <PLP
         collection={collection}
         filtersOptions={filtersOptions}
