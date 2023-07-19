@@ -1,6 +1,6 @@
 import {useState, useEffect, useReducer, useRef,} from 'react';
 import classnames from 'classnames';
-import {mockCollection, mockFilterOptions, mockSortOptions, getBanners, sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
+import {mockCollection, mockFilterOptions, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from '../plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from '../genericRecommendedProducts';
@@ -43,8 +43,11 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   );
 
   const products = collection ? filterHiddenProductsByTag(collection.products) : [];
-  const { metafields = [], handle: slug } = collection;
-  const banners = getBanners(metafields);
+  const { handle: slug } = collection;
+  // const { metafields = [], handle: slug } = collection;
+  // const banners = getBanners(metafields); //we need to get banners from metafield 
+  const banners = bannersMock; 
+
   const [size, setSize] = useState({
     width: undefined,
     height: undefined,
@@ -319,13 +322,14 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
                     key={idx}
                     style={bannersPositions[`pos${idx + 1}`]}
                   />
-                ); })}
+                ); })
+          }
           <Collection products={filteredProducts} collection={collection} />
         </div>
         {BestSellerProductRecommendation()}
         {
           isInfluencerPage === false ?
-            <FireWorkPLPCarousel collectionSlug={collection.slug} />
+            <FireWorkPLPCarousel collectionSlug={collection.handle} />
             : null
         }
         <p className={'description'}>{collection.description}</p>
@@ -374,3 +378,168 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 };
 
 export default PLP;
+
+//we need to get BANNERS FROM METAFIELDS
+
+const bannersMock = [
+  [
+    'promo-1',
+    [
+      {
+        'namespace': 'promo-1.promo-boxes',
+        'value': 'none',
+        'key': 'promo-box-type',
+        'storefrontId': 'gid://shopify/Metafield/21326974025774',
+        '_id': '45360311-e5a1-43e5-b615-94b21158bf9d'
+      },
+      {
+        'namespace': 'promo-1.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/071923PH2PLPGoldEyeBalmmobile-1689361842723.jpg',
+        'key': 'promo-box-image-mobile',
+        'storefrontId': 'gid://shopify/Metafield/21326974484526',
+        '_id': '010e92c8-25a8-4600-9767-1fe2a7b49fb2'
+      },
+      {
+        'namespace': 'promo-1.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/071923PH2PLPGoldEyeBalmdesktop-1689361842693.png',
+        'key': 'promo-box-image-desktop',
+        'storefrontId': 'gid://shopify/Metafield/21326974550062',
+        '_id': 'f426f466-d0fb-4271-88e1-ce03871c072b'
+      },
+      {
+        'namespace': 'promo-1.promo-boxes',
+        'value': 'false',
+        'key': 'promo-box-link-target',
+        'storefrontId': 'gid://shopify/Metafield/21326974582830',
+        '_id': '41462655-cfed-4863-b47a-05ce4d27165a'
+      },
+      {
+        'namespace': 'promo-1.promo-boxes',
+        'value': '/products/gold-glow-get-it',
+        'key': 'promo-box-url',
+        'storefrontId': 'gid://shopify/Metafield/21326974615598',
+        '_id': '67ee9831-bfb1-467c-a2fb-f4ff8817d3cb'
+      }
+    ]
+  ],
+  [
+    'promo-3',
+    [
+      {
+        'namespace': 'promo-3.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/060123PH1PLPPrimerUsageUSAmobile-1688055263966.jpg',
+        'key': 'promo-box-image-mobile',
+        'storefrontId': 'gid://shopify/Metafield/21326974156846',
+        '_id': 'c8b03c8c-220b-4776-9306-1e2aa105c65c'
+      },
+      {
+        'namespace': 'promo-3.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/060123PH1PLPPrimerUsageUSAdesktop-1688055263917.png',
+        'key': 'promo-box-image-desktop',
+        'storefrontId': 'gid://shopify/Metafield/21326974189614',
+        '_id': 'c2e1def4-6be0-4e7c-9eaf-c032466ad5d9'
+      },
+      {
+        'namespace': 'promo-3.promo-boxes',
+        'value': 'false',
+        'key': 'promo-box-link-target',
+        'storefrontId': 'gid://shopify/Metafield/21326974222382',
+        '_id': '705bdd31-5d2a-4dc3-b258-e78528ee168a'
+      },
+      {
+        'namespace': 'promo-3.promo-boxes',
+        'value': '/products/filter-primer-tinted-blurring-primer?internal_source=plp_dnusage',
+        'key': 'promo-box-url',
+        'storefrontId': 'gid://shopify/Metafield/21326974255150',
+        '_id': '1ce986a8-7c28-45d4-94e6-906eaefff8d1'
+      },
+      {
+        'namespace': 'promo-3.promo-boxes',
+        'value': 'none',
+        'key': 'promo-box-type',
+        'storefrontId': 'gid://shopify/Metafield/21326974287918',
+        '_id': 'd7baa60a-d6cf-4e21-ad8e-305e001b9174'
+      }
+    ]
+  ],
+  [
+    'promo-2',
+    [
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': '/products/hydrating-day-night-cream?internal_source=plp_eg247',
+        'key': 'promo-box-url',
+        'storefrontId': 'gid://shopify/Metafield/21326974320686',
+        '_id': 'b573180f-9354-4052-9f35-c9c746e7cd8e'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/090122SITEPLPEVERGREEN247DAYANDNIGHTCREAMMOBILE-750x420-1662152903487.jpg',
+        'key': 'promo-box-image-mobile',
+        'storefrontId': 'gid://shopify/Metafield/21326974353454',
+        '_id': 'e11a7bb7-2727-47eb-a910-9485d7c531f1'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/090122SITEPLPEVERGREEN247DAYANDNIGHTCREAMDESKTOP-520x926-1662152903482.jpg',
+        'key': 'promo-box-image-desktop',
+        'storefrontId': 'gid://shopify/Metafield/21326974386222',
+        '_id': '7ab1ffe5-ff05-4105-b682-c19da8376ee5'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'false',
+        'key': 'promo-box-link-target',
+        'storefrontId': 'gid://shopify/Metafield/21326974418990',
+        '_id': '199db859-8749-42cb-ba38-57fe1f33ec14'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'type-1',
+        'key': 'promo-box-type',
+        'storefrontId': 'gid://shopify/Metafield/21326974451758',
+        '_id': 'a192fe4f-aa9a-465e-9507-65095405f177'
+      }
+    ]
+  ],
+  [
+    'promo-4',
+    [
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': '/products/hydrating-day-night-cream?internal_source=plp_eg247',
+        'key': 'promo-box-url',
+        'storefrontId': 'gid://shopify/Metafield/21326974320686',
+        '_id': 'b573180f-9354-4052-9f35-c9c746e7cd8e'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/090122SITEPLPEVERGREEN247DAYANDNIGHTCREAMMOBILE-750x420-1662152903487.jpg',
+        'key': 'promo-box-image-mobile',
+        'storefrontId': 'gid://shopify/Metafield/21326974353454',
+        '_id': 'e11a7bb7-2727-47eb-a910-9485d7c531f1'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/090122SITEPLPEVERGREEN247DAYANDNIGHTCREAMDESKTOP-520x926-1662152903482.jpg',
+        'key': 'promo-box-image-desktop',
+        'storefrontId': 'gid://shopify/Metafield/21326974386222',
+        '_id': '7ab1ffe5-ff05-4105-b682-c19da8376ee5'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'false',
+        'key': 'promo-box-link-target',
+        'storefrontId': 'gid://shopify/Metafield/21326974418990',
+        '_id': '199db859-8749-42cb-ba38-57fe1f33ec14'
+      },
+      {
+        'namespace': 'promo-2.promo-boxes',
+        'value': 'type-1',
+        'key': 'promo-box-type',
+        'storefrontId': 'gid://shopify/Metafield/21326974451758',
+        '_id': 'a192fe4f-aa9a-465e-9507-65095405f177'
+      }
+    ]
+  ],
+];
