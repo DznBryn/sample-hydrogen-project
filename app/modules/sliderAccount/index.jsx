@@ -614,7 +614,7 @@ const MainContent = () => {
             <div className={'checkInput'}>
               <label>
                 <input type="checkbox" ref={createAccountCheck} />
-                <div className={'checkmark'}></div>
+                <div className={'checkmarkSliderAccount'}></div>
                 Email me with news and offers. You may opt out anytime.
               </label>
             </div>
