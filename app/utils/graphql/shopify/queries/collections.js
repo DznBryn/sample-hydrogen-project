@@ -70,6 +70,7 @@ export const PRODUCTS_QUERY = `#graphql
           }
         }
         availableForSale
+        totalInventory
       }
     }
   }
@@ -83,6 +84,7 @@ export const PRODUCT_QUERY = `#graphql
     id
     title
     availableForSale
+    quantityAvailable
     description
     descriptionHtml
     handle
