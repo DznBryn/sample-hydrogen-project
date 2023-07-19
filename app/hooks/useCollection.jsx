@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { useFetcher, useMatches } from '@remix-run/react';
-import { getCollectionProductsWithCMSData } from '~/utils/functions/eventFunctions';
+import { getCollectionWithCMSData } from '~/utils/functions/eventFunctions';
 
 export function useCollection(slug) {
 
@@ -33,7 +33,7 @@ export function useCollection(slug) {
   }
 
   const collectionWithCMSData = useMemo (
-    () => getCollectionProductsWithCMSData(fetcher.data?.collection, productsCMSData),
+    () => getCollectionWithCMSData(fetcher.data?.collection, productsCMSData),
     [fetcher.data?.collection, productsCMSData]
   );
 

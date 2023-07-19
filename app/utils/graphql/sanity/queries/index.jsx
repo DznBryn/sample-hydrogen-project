@@ -846,3 +846,22 @@ export const GET_PRODUCTS = gql`
     }
   }
 `;
+
+export const GET_PRODUCT_COLLECTIONS = gql`
+  query GetAllProductCollections {
+    allProductCollections{
+      name
+      promoPosition1
+      promoOneLink
+      promoPosition2
+      promoTwoLink
+      promoPosition3
+      promoThreeLink
+      additionalProductsTitle
+      additionalProducts
+      showCompareButton
+      fireworkStoryPosition
+      collectionId
+    }
+  }
+`;

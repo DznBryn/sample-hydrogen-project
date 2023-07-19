@@ -2,10 +2,10 @@ import Layouts from '~/layouts';
 import { flattenConnection } from '@shopify/hydrogen-react';
 import { useLoaderData } from 'react-router';
 import { PRODUCTS_QUERY } from '~/utils/graphql/shopify/queries/collections';
-import { GET_CART_PAGE_CONFIG, GET_PLP_FILTER_MENU } from '~/utils/graphql/sanity/queries';
+import { GET_CART_PAGE_CONFIG, GET_PLP_FILTER_MENU, GET_PRODUCT_COLLECTIONS } from '~/utils/graphql/sanity/queries';
 import { json } from '@shopify/remix-oxygen';
 import PLP, { links as plpStyles } from '../../../modules/plp';
-import { getCMSContent, getCMSDoc, getCollectionProductsWithCMSData } from '~/utils/functions/eventFunctions';
+import { getCMSContent, getCMSDoc, getCollectionWithCMSData } from '~/utils/functions/eventFunctions';
 import { useMatches } from '@remix-run/react';
 import { useMemo } from 'react';
 
@@ -23,11 +23,12 @@ export const loader = async ({ params, context }) => {
 
   const cartPageConfig = await getCMSContent(context, GET_CART_PAGE_CONFIG);
   const filtersOptions = await getCMSContent(context, GET_PLP_FILTER_MENU);
+  const collectionsCMSData = await getCMSContent(context, GET_PRODUCT_COLLECTIONS);
 
   return json({
-    // handle,
     cartPageConfig,
     filtersOptions,
+    collectionsCMSData,
     collection: {
       handle,
       title: collection?.title ?? '',
@@ -46,11 +47,12 @@ export default function PLPPage() {
   const {
     cartPageConfig,
     filtersOptions,
+    collectionsCMSData,
     collection,
   } = useLoaderData();
 
   const collectionWithCMSData = useMemo (
-    () => getCollectionProductsWithCMSData(collection, productsCMSData),
+    () => getCollectionWithCMSData(collection, productsCMSData, collectionsCMSData),
     [collection, productsCMSData]
   );
 

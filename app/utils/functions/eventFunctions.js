@@ -574,11 +574,35 @@ export function getCMSDoc(content, docName) {
 
 }
 
+export function getCollectionWithCMSData(collection, productsCMSData, collectionsCMSData) {
+
+  let collectionCopy = { ...collection };
+
+  if(collectionsCMSData){
+
+    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.name))[0];
+    if(collectionCMSDoc) collectionCopy = { ...collectionCMSDoc, ...collection };
+
+  }
+
+  if (collectionCopy?.products) {
+
+    collectionCopy.products = collectionCopy?.products.map(product => {
+
+      const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
+      return { ...product, ...CMSData[0] };
+
+    });
+
+  }
+
+  return collectionCopy;
+
+}
+
 /**
  * Shopify data functions
  */
-
-
 
 export async function getCustomerData(context) {
 
@@ -609,28 +633,5 @@ export async function getCartData(context) {
   const cart = (cartId) ? await getCart(context, cartId) : {};
 
   return cart;
-
-}
-
-export function getCollectionProductsWithCMSData(collection, productsCMSData) {
-
-  const collectionCopy = { ...collection };
-
-  if (collectionCopy?.products) {
-
-    collectionCopy.products = collectionCopy?.products.map(product => {
-
-      const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
-      return { ...product, ...CMSData[0] };
-
-    });
-
-    return collectionCopy;
-
-  } else {
-
-    return [];
-
-  }
 
 }
