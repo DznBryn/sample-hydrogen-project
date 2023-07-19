@@ -29,17 +29,7 @@
   transition: all 0.25s ease;
 }
 
-.addToCart__container .add_to_cart:hover {
-  color: #47c6d9;
-  color: var(--color-primary);
-  background-color: #fff;
-  background-color: var(--color-secondary-white);
-  border: 2px solid #47c6d9;
-  border: 2px solid var(--color-primary);
-}
-
-.addToCart__container .add_to_cart.disabled,
-.addToCart__container .add_to_cart.disabled:hover {
+.addToCart__container .add_to_cart.disabled {
   background-color: #c4c4c4;
   color: #fff;
   color: var(--color-secondary-white);
@@ -61,12 +51,6 @@
   display: flex;
   gap: 12px;
   text-transform: capitalize;
-}
-
-.addToCart__container .exclusive:hover,
-.addToCart__container .plpExclusive:hover {
-  color: #fff !important;
-  border: none !important;
 }
 
 @media (min-width: 550px) {

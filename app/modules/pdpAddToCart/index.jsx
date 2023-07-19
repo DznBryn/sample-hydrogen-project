@@ -28,13 +28,12 @@ export default function PDPAddToCart({
   exclusiveProductTextColor,
   isGated = false,
   fromPLP = false,
+  quantity,
+  availableForSale,
 }) {
   const [root] = useMatches();
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
-
-  // const { quantity, availableForSale } = useInventory({ id: addItem?.variantId, slug: addItem?.slug }); //identify re-render on PLP
-  const quantity = 0, availableForSale = false; //mock
 
   const { isLoggedIn } = useCustomerState;
   const [buttonState, setButtonState] = useState(IDLE);
@@ -78,7 +77,7 @@ export default function PDPAddToCart({
       <input type="hidden" name="lines" value={JSON.stringify(lineItems)} />
       <div className="addToCart__container">
         <button
-          className={`${classes.join(' ')}add_to_cart${exclusiveProductAtcColor ? atcStylesForExclusiveProducts
+          className={`${classes.join(' ')} add_to_cart ${exclusiveProductAtcColor ? atcStylesForExclusiveProducts
             : ''}`}
           style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
           type="submit"

@@ -22,7 +22,7 @@ const getLinkToObj = (slug, product) => { return { pathname: `/products/${slug}`
 
 const Button = ({ product, opensBlank = false, ...rest }) => {
   const { variants, tags, handle: slug } = product;
-  const hasVariants = variants?.length > 1;
+  const hasVariants = variants?.nodes.length > 1;
   const forceSoldOut = (product && tags.includes('force_sold_out'));
   
   return (hasVariants) 
@@ -38,6 +38,8 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
       exclusiveProductTextColor={product?.exclusiveTextColor}
       isGated={product?.isGated}
       fromPLP
+      quantity={product?.totalInventory}
+      availableForSale={product?.availableForSale}
       {...rest}/>;
 };
 
@@ -78,8 +80,8 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
   }
 
   function getRangePrice() { 
-		
-    return `${Math.min(...variants.nodes.map((variant) => variant.price))}+`;
+    
+    return `${Math.min(...variants.nodes.map((variant) => variant.price.amount))}+`;
 
   }
 

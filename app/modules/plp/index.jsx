@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useReducer, useRef,} from 'react';
+import {useState, useEffect, useReducer, useRef,} from 'react';
 import classnames from 'classnames';
 import {mockCollection, mockFilterOptions, mockSortOptions, getBanners, sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
@@ -11,8 +11,6 @@ import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../pl
 import ComparisonModal, { links as comparisonModalStyles } from '../comparisonModal';
 
 import styles from './styles.css';
-
-
 
 export const links = () => {
   return [
@@ -53,7 +51,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   });
 
   const Collection = ({ products, collection }) =>
-    products !== []
+    products.length > 0
       ? products.map((product, index) => (
         <HorizontalProduct
           is2Columns={true}

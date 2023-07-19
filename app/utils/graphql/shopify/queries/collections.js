@@ -84,7 +84,6 @@ export const PRODUCT_QUERY = `#graphql
     id
     title
     availableForSale
-    quantityAvailable
     description
     descriptionHtml
     handle
