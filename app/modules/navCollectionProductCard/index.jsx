@@ -20,12 +20,10 @@ const NavCollectionProductCard = ({ product = {} }) => {
         <img
           src={thumbnail?.url}
           alt={thumbnail?.altText}
-          // src={thumbnail?.src}
-          // alt={thumbnail?.alt}
           className={'productImg'}
           draggable="false" />
       </Link>
-      {product.alt_title !== undefined &&
+      {/* {product.alt_title !== undefined &&
         <Link
           className={'productLink'}
           to={'/products/' + product.handle}
@@ -34,12 +32,12 @@ const NavCollectionProductCard = ({ product = {} }) => {
             {product.alt_title}
           </div>
         </Link>
-      }
+      } */}
       <Link
         className={'productLink'}
         to={'/products/' + product.handle}
         draggable="false">
-        <div className={'productName'}>
+        <div className={'navCollectionProductCardProductName'}>
           {product.title}
         </div>
       </Link>
