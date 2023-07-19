@@ -21,11 +21,8 @@ let sitewide = false;
 const getLinkToObj = (slug, product) => { return { pathname: `/products/${slug}`, state: { product: product } }; };
 
 const Button = ({ product, opensBlank = false, ...rest }) => {
-  const { variants, tags, slug } = product;
+  const { variants, tags, handle: slug } = product;
   const hasVariants = variants?.length > 1;
-  
-  // const outOfStock = (!hasVariants) && (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') || variants[0]?.quantityAvailable < 1);
-  // const addItem = (outOfStock) ? {} : {variantId: window.btoa(variants[0]?.externalId), quantity: 1, ['selling_plan_id']: 0, product};
   const forceSoldOut = (product && tags.includes('force_sold_out'));
   
   return (hasVariants) 
@@ -46,7 +43,7 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
 
 const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: false}, ctaOpensBlank = false }) => {
 
-  const { images, variants = [], productPromos = null, slug, title} = product;
+  const { images, variants = [], productPromos = null, handle: slug, title} = product;
   const media = images.nodes;
   const altTitle = product?.alt_title || '';
 
