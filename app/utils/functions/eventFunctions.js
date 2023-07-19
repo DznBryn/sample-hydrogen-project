@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 import { getCart } from '~/utils/graphql/shopify/queries/cart';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
@@ -7,6 +7,9 @@ import { useCartState } from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US') ? 'afterpay' : 'klarna';
+
+const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+export const useLayoutEffect = canUseDOM ? React.useLayoutEffect : () => {};
 
 export function bindCustomEvent(ref, dataAttr, styles) {
   ref.current.addEventListener('data-change', (e) => {

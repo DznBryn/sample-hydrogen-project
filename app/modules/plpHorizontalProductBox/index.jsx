@@ -1,5 +1,5 @@
-import { useState, useLayoutEffect, useEffect } from 'react';
-import { getCurrency } from '~/utils/functions/eventFunctions';
+import { useState, useEffect } from 'react';
+import { getCurrency, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import { Link } from '@remix-run/react';
 import PDPAddToCart, { links as pdpAddToCartStyles } from '../pdpAddToCart';
 import PLPBadges, { links as plpBadgesStyles } from '../plpBadges';

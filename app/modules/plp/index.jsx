@@ -1,7 +1,7 @@
-import {useState, useEffect, useLayoutEffect, useReducer, useRef,} from 'react';
+import React, {useState, useEffect, useReducer, useRef,} from 'react';
 import classnames from 'classnames';
 import {mockCollection, mockFilterOptions, mockSortOptions, getBanners, sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
-import { triggerAnalyticsOnScroll } from '~/utils/functions/eventFunctions';
+import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from '../plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from '../genericRecommendedProducts';
 import Banner, { links as plpBannerStyles } from '../plpBanner';
@@ -11,6 +11,8 @@ import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../pl
 import ComparisonModal, { links as comparisonModalStyles } from '../comparisonModal';
 
 import styles from './styles.css';
+
+
 
 export const links = () => {
   return [
