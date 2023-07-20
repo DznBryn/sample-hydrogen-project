@@ -140,6 +140,7 @@ const PLPFilter = ({
 
   // function to get sort option
   const getSorted = (sort) => {
+    dispatch({ type: 'apply' });
     if (sort !== sorted) {
       getSortedBy(sort);
     }
