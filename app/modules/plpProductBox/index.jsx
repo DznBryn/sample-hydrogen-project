@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { triggerAnalyticsProductClick, getCurrency } from '~/utils/functions/eventFunctions';
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../pdpAddToCart';
 import getApiKeys from '~/utils/functions/getApiKeys';
@@ -49,7 +49,6 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
   const media = images.nodes;
   const altTitle = product?.alt_title || '';
 
-  const [forceChange, setForceChange] = useState(false);
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
 
   // const mainImg = getResponsiveImageSrc(media[0]?.details.src, { width: media[0]?.details.width });
@@ -64,8 +63,6 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
       sitewide = JSON.parse(window.localStorage.getItem('tulaSitewide'));
 
     }
-
-    setForceChange(true);
   });
 
   function getPrice(){
@@ -240,7 +237,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
             <div className='yotpo bottomLine' style={{ pointerEvents: 'none' }} data-product-id={product?.externalId}></div>
           </div>
 
-          { forceChange && <PriceComp /> }
+          <PriceComp />
 
           <PromoComp product={product} sitewide={sitewide} /> 
 
