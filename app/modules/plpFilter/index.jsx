@@ -184,7 +184,7 @@ const PLPFilter = ({
         />
       )}
       <div className={'filterSettings'}>
-        {!visible && filtersQuantity > 0 && (
+        {filtersQuantity > 0 && (
 
           <ul id="tags_list" className={'tags_list'}>
 
