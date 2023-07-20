@@ -2,9 +2,10 @@ import { useFetcher, useMatches } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 import { Padlock } from '../icons';
-import styles from './styles.css';
-// import { useInventory } from '~/hooks/useInventory';
 import { useCustomerState } from '~/hooks/useCostumer';
+import { createCustomEvent } from '~/utils/functions/eventFunctions';
+
+import styles from './styles.css';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -57,11 +58,30 @@ export default function PDPAddToCart({
     } else if (addToCart?.type && addToCart?.type === 'done' && addToCart?.data?.errors?.length > 0) {
       setButtonState(ERROR);
     } else if (quantity > 0 && availableForSale && buttonState !== IDLE) {
+      if(addToCart.data && addToCart.type === 'done'){
+        dispatchAlertEvent();
+      }
       setButtonState(IDLE);
     }
 
     return () => { };
   }, [quantity, isLoggedIn, addToCart.state]);
+
+  function dispatchAlertEvent() {
+
+    const alertEvent = createCustomEvent();
+
+    if (document.querySelector('[data-alert-state]').getAttribute('data-alert-state') === 'hide') {
+      document.querySelector('[data-alert-state]').setAttribute('data-alert-state', 'show');
+      document.querySelector('[data-alert-state]').dispatchEvent(alertEvent);
+
+      setTimeout(() => {
+        document.querySelector('[data-alert-state]').setAttribute('data-alert-state', 'hide');
+        document.querySelector('[data-alert-state]').dispatchEvent(alertEvent);
+      }, 4000);
+    }
+
+  }
 
 
   const clearError = () => setButtonState(IDLE);
