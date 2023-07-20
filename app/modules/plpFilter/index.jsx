@@ -86,19 +86,17 @@ const PLPFilter = ({
   state,
   dispatch,
   filtersQuantity,
-  visible,
-  setVisible,
 }) => {
   const [sortedBy, setSortedBy] = useState('featured ');
   const [type, setType] = useState('');
   const {store, setStore} = useStore();
+  const [visible, setVisible] = useState(false);
   sorted = sorted || sortedBy;
   getSortedBy = getSortedBy || setSortedBy;
   collectionQuantity = collectionQuantity || 0;
   sortOptions = sortOptions || mockSortOptions;
   filtersOptions = filtersOptions || mockFilterOptions;
   dispatch = dispatch || (() => {});
-  setVisible = setVisible || (() => {});
   state = state || [];
 
   filtersQuantity = filtersQuantity || 0;
@@ -136,7 +134,6 @@ const PLPFilter = ({
 
   // function to alternate modal show/hide
   const toggleModal = (type) => {
-    dispatch({ type: 'apply' });
     setType(type);
     setVisible(!visible);
   };

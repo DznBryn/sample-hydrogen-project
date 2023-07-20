@@ -79,9 +79,6 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
         />
       )) : null;
 
-  // filter modal state
-  const [visible, setVisible] = useState(false);
-
   // Currently displayed collection
   const [filteredProducts, setFilteredProducts] = useState(products);
 
@@ -239,11 +236,6 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     subTitle: 'show sub_title metafield here'//metafields?.find((meta) => meta.key === 'sub_title')?.value || '',
   };
 
-  const closeModal = () => {
-    dispatch({ type: 'apply' }); // function to update the collection after modal is closed
-    setVisible(false);
-  };
-
   const BestSellerProductRecommendation = () => {
     const isShortPLP = products?.length <= 10;
 
@@ -282,15 +274,6 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   return filteredProducts.length > 0 ? (
     <div className={'plpWrapper minHeight'} >
       <section id="section" className={isInfluencerPage ? 'influencerContainer' : 'plpContainer'}>
-        {visible && (
-          <div
-            onClick={() => closeModal()}
-            style={{ height: size.height, width: size.width }}
-            className={'modal__background'}
-          />
-        )}
-
-
         {!isInfluencerPage && (
           <Title title={titleContent} showAfterpay={cartConfig.showAfterpay}/>
         )}
@@ -302,15 +285,9 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
             sortOptions={sortOptions}
             filtersOptions={filtersOptions}
             filtersQuantity={filtersQuantityCalculation(state)}
-            collectionQuantity={
-              visible
-                ? filterProducts(products, state).length
-                : filteredProducts.length
-            }
+            collectionQuantity={filteredProducts.length}
             state={state}
             dispatch={dispatch}
-            setVisible={setVisible}
-            visible={visible}
           />
         )}
 
@@ -339,14 +316,6 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     </div>
   ) : (
     <section id="section" className={isInfluencerPage ? 'influencerContainer' : 'plpContainer'}>
-      {visible && (
-        <div
-          onClick={() => closeModal()}
-          style={{ height: size.height, width: size.width }}
-          className={'modal__background'}
-        />
-      )}
-
       {!isInfluencerPage && (
         <Title title={titleContent} showAfterpay={cartConfig.showAfterpay}/>
       )}
@@ -358,15 +327,9 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
           sortOptions={sortOptions}
           filtersOptions={filtersOptions}
           filtersQuantity={filtersQuantityCalculation(state)}
-          collectionQuantity={
-            visible
-              ? filterProducts(products, state).length
-              : filteredProducts.length
-          }
+          collectionQuantity={filteredProducts.length}
           state={state}
           dispatch={dispatch}
-          setVisible={setVisible}
-          visible={visible}
         />
       )}
 
