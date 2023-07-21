@@ -77,15 +77,6 @@ const NavPlaceholder = ({ searchConfig, siteWideSettings }) => {
   }, [confirmationText]);
 
   useEffect(() => {
-    const minHeight = document.querySelectorAll('.minHeight')?.length > 0;
-    const navPlaceholder = document.getElementById('navPlaceholder');
-
-    const interval = setInterval(() => {
-      if (minHeight === true) {
-        navPlaceholder.style.marginBottom = '0';
-        clearInterval(interval);
-      }
-    }, 1000);
 
     appendYotpoScript();
 
