@@ -186,7 +186,7 @@ export function prepProduct(product) {
 
   const preppedProduct = product;
   preppedProduct.media = [];
-  product.images.map((image) => {
+  product.images.nodes.map((image) => {
     return preppedProduct.media.push({ details: { src: image } });
   });
   preppedProduct.externalId = product.id;

@@ -865,3 +865,13 @@ export const GET_PRODUCT_COLLECTIONS = gql`
     }
   }
 `;
+
+export const GET_LISTRAK_REC = gql`
+  query GetAllListrakRec {
+    allListrakRec{
+      name
+      listrakId
+      title
+    }
+  }
+`;
