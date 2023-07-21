@@ -17,7 +17,6 @@ export const links = () => {
 };
 
 const handleMouseEnter = (e, itemId) => {
-  console.log('handleMouseEnter');
   const dataHoverEvent = createCustomEvent();
   for (let it = 0; it < e.currentTarget.children.length; it++) {
     const parentElement = e.currentTarget.children[it].parentElement.id;
