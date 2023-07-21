@@ -220,7 +220,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
         <Link className='imageContainer' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
           <img className='productImage' src={mainImg} alt={media[0]?.altText} />
-          <img className='productImage dinamicImage' src={secImg} alt={media[1]?.altText}/>
+          <img className='productImage dinamicImage' src={secImg || mainImg} alt={media[1]?.altText}/>
         </Link>
 
         <div className='infoContainer'>
