@@ -9,7 +9,10 @@ export async function login({storefront}, {email, password}) {
       },
     },
   });
-  
+  console.log(
+    'Show data=====>>>',
+    {email, password, c: data?.customerAccessTokenCreate}
+  );
   if (data?.customerAccessTokenCreate?.customerAccessToken?.accessToken) {
     return data?.customerAccessTokenCreate?.customerAccessToken?.accessToken;
   }

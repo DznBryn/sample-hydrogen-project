@@ -32,13 +32,19 @@ export async function cartRemoveItems({cartId, lineIds, storefront}) {
 }
 
 export async function cartUpdate({cartId, lines, storefront}) {
-  const {cartLinesUpdate} = await storefront.mutate(LINES_CART_FRAGMENT, {
-    variables: {
-      cartId,
-      lines,
+  const {cartLinesUpdate} = await storefront.mutate(
+    UPDATE_LINE_ITEMS_MUTATION,
+    {
+      variables: {
+        cartId,
+        lines,
+      },
     },
+  );
+  console.log('CARTUPdate', {
+    cartId,
+    lines,
   });
-
   if (!cartLinesUpdate) {
     throw new Error('No data returned from update line items mutation');
   }

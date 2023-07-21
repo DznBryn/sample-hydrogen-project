@@ -66,7 +66,7 @@ export default function PDPAddToCart({
 
   const mapStateToButton = {
     [IDLE]: <addToCart.Form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value={addItem?.action ?? 'ADD_TO_CART'} />
+      <input type="hidden" name="cartAction" value={addItem?.action ?? 'UPDATE_CART'} />
       <input
         type="hidden"
         name="countryCode"
@@ -80,7 +80,7 @@ export default function PDPAddToCart({
           style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
           type="submit"
           disabled={addToCart?.state === 'submitting'}
-          >
+        >
           <span>
             {displayPrice === true ? `Add To Cart - ${3400 / 100}` : 'Add To Cart'}
           </span>
@@ -116,7 +116,7 @@ export default function PDPAddToCart({
     [LOCKED]: <div className={'addToCart__container'}>
       <button
         className={`${classes.join(' ')} add_to_cart ${exclusiveProductAtcColor && atcStylesForExclusiveProducts
-          } `}
+        } `}
         style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
         onClick={() => switchSliderPanelVisibility('SliderAccount')}
       >

@@ -30,7 +30,7 @@ export async function loader({ context }) {
 
   const cart = await getCartData(context);
   const customer = await getCustomerData(context);
-  
+  // console.log('customer:', customer);
   const globalCMSData = {
     mainNavFooter: await getMainNavFooterCMSData(context),
   };

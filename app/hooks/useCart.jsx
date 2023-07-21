@@ -7,7 +7,7 @@ export function useCartState() {
 
   const { id, checkoutUrl, totalQuantity, lines, cost } = root.data.cart;
   const items = lines ? flattenConnection(lines) : [];
-
+ 
   function getItems() {
 
     return items.map(item => {
@@ -16,8 +16,14 @@ export function useCartState() {
 
       return {
         id: merchandise.product.id.split('Product/')[1],
+        ['line_item_id']: item.id,
+        merchandiseId: merchandise.id,
         ['variant_id']: merchandise.id.split('ProductVariant/')[1],
+        title: `${merchandise.product.title} - ${merchandise.title}`,
+        handle: merchandise.product.handle,
         quantity,
+        image: merchandise.image,
+        cost: item.cost,
       };
 
     });
@@ -35,13 +41,16 @@ export function useCartState() {
     return (cost) ? cost.subtotalAmount.currencyCode : '';
 
   }
-
+  // console.log({ items })
   return {
     id,
     items: getItems(),
     totalQuantity,
     subtotalPrice: getSubtotalPrice(),
     currencyCode: getCurrencyCode(),
+    inventory: {
+      status: ''
+    },
     checkoutUrl,
   };
 
@@ -60,6 +69,7 @@ export function useCartActions() {
   };
 
   const updateItems = (items) => {
+
 
     if (Array.isArray([])) {
 
