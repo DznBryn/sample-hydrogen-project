@@ -54,7 +54,7 @@
   background: rgb(215, 240, 244);
 }
 
-.optionSelected .arrow {
+.optionSelected .arrowSiteSwitcher {
   transform: scale(1.5, 0.6);
 }
 
