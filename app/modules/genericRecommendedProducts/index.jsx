@@ -1,6 +1,8 @@
 import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../plpHorizontalProductBox';
+import { useCollection } from '~/hooks/useCollection';
 
 import styles from './styles.css';
+import { useEffect, useState } from 'react';
 
 export const links = () => {
   return [
@@ -9,28 +11,43 @@ export const links = () => {
   ];
 };
 
-const GenericRecommendedProducts = ({ title, products = []}) => {
-  const firstProductsRow = products.slice(0, 2);
-  const secondProductsRow = products.slice(2, 4);
+const GenericRecommendedProducts = ({ title, productsSlugs = [] }) => {
 
-  const allProducts = [firstProductsRow, secondProductsRow];
+  const { state, products } = useCollection('all');
+  const [recProducts, setRecProducts] = useState([]);
 
-  return(
-    <div className={'container'}>
-      <div className={'header'}>
-        <h2>{title}</h2>
+  useEffect(() => {
+
+    if (state === 'loaded') {
+
+      const allProducts = productsSlugs.map((slug) => {
+        return products.filter(product => product.handle === slug)[0];
+      });
+
+      setRecProducts([allProducts.slice(0, 2), allProducts.slice(2, 4)]);
+
+    }
+
+
+  }, [state]);
+
+  return (
+    (recProducts.length > 0) ? (
+      <div className={'container'}>
+        <div className={'header'}>
+          <h2>{title}</h2>
+        </div>
+        <div className={'content'}>
+          {recProducts.map((row, idx) => (
+            <div key={idx} className={'productsWrapper'}>
+              {row.map((product, idx) =>
+                <HorizontalProduct key={idx} is2Columns={true} product={product} />
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-
-      <div className={'content'}>
-        {allProducts.map((row, idx) => (
-          <div key={idx} className={'productsWrapper'}>
-            {row.map((product, idx) => 
-              <HorizontalProduct key={idx} is2Columns={true} product={product} />
-            )}
-          </div>
-        ))}       
-      </div>
-    </div>
+    ) : <></>
   );
 };
 

@@ -186,7 +186,7 @@ export function prepProduct(product) {
 
   const preppedProduct = product;
   preppedProduct.media = [];
-  product.images.map((image) => {
+  product.images.nodes.map((image) => {
     return preppedProduct.media.push({ details: { src: image } });
   });
   preppedProduct.externalId = product.id;
@@ -580,7 +580,7 @@ export function getCollectionWithCMSData(collection, productsCMSData, collection
 
   if(collectionsCMSData){
 
-    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.name))[0];
+    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.collectionId))[0];
     if(collectionCMSDoc) collectionCopy = { ...collectionCMSDoc, ...collection };
 
   }

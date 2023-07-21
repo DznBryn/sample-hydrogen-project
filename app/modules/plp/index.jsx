@@ -245,7 +245,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
       if (additionalProducts?.length === 4) {
         const title = collection.additionalProductsTitle || 'while you\'re here, check out these best sellers';
 
-        return <GenericRecommendedProducts title={title} products={additionalProducts} />;
+        return <GenericRecommendedProducts title={title} productsSlugs={additionalProducts} />;
       }
     }
 
