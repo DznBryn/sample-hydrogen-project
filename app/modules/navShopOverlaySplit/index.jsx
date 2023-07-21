@@ -35,7 +35,7 @@ const NavShopOverlaySplit = ({ megaMenuSplit = {} }) => {
   }));
 
   return (
-    <div className={'navShopOverlay hidden'} ref={shopOverlayRef} data-hover-state="hide">
+    <div className={'navShopOverlaySplit hidden'} ref={shopOverlayRef} data-hover-state="hide">
       <div className={'sectionWrapper'}>
         <div className={'sectionLeft'}>
           <Link className={'featuredLink'} to={`/collections/${megaMenuSplit.imageCollectionLink.slug}`}>

@@ -100,13 +100,13 @@
   color: #fff;
 }
 
-.visible {
+.navShopOverlayVisible {
   visibility: visible;
   opacity: 1;
   transition: opacity .3s linear;
 }
 
-.hidden {
+.navShopOverlayHidden {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s .1s, opacity .1s linear;

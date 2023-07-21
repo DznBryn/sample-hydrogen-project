@@ -17,6 +17,7 @@ export const links = () => {
 };
 
 const handleMouseEnter = (e, itemId) => {
+  console.log('handleMouseEnter');
   const dataHoverEvent = createCustomEvent();
   for (let it = 0; it < e.currentTarget.children.length; it++) {
     const parentElement = e.currentTarget.children[it].parentElement.id;
@@ -42,13 +43,13 @@ const handleMouseLeave = (e) => {
 
 const handleTouch = (e) => {
   for (let it = 0; it < e.currentTarget.children.length; it++) {
-    if (e.currentTarget.children[it].classList.contains('visible')) {
-      e.currentTarget.children[it].classList.remove('visible');
-      e.currentTarget.children[it].classList.add('hidden');
+    if (e.currentTarget.children[it].classList.contains('desktopNavItemVisible')) {
+      e.currentTarget.children[it].classList.remove('desktopNavItemVisible');
+      e.currentTarget.children[it].classList.add('desktopNavItemHidden');
     } else {
-      if (e.currentTarget.children[it].classList.contains('hidden')) {
-        e.currentTarget.children[it].classList.remove('hidden');
-        e.currentTarget.children[it].classList.add('visible');
+      if (e.currentTarget.children[it].classList.contains('desktopNavItemHidden')) {
+        e.currentTarget.children[it].classList.remove('desktopNavItemHidden');
+        e.currentTarget.children[it].classList.add('desktopNavItemVisible');
       }
     }
   }
@@ -58,12 +59,12 @@ const DesktopHoverList = ({ linkList = [] }) => {
   const dropDownRef = useRef(null);
 
   useEffect(() => bindCustomEvent(dropDownRef, 'data-hover-state', {
-    hidden: 'hidden',
-    visible: 'visible',
+    hidden: 'desktopNavItemHidden',
+    visible: 'desktopNavItemVisible',
   }));
 
   return (
-    <div className={'desktopHoverWrap hidden'} ref={dropDownRef} data-hover-state="hide">
+    <div className={'desktopHoverWrap desktopNavItemHidden'} ref={dropDownRef} data-hover-state="hide">
       {linkList.map((navLink = {}) => (
         <Link
           key={navLink._id}

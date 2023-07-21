@@ -52,13 +52,13 @@
   text-align: left;
 }
 
-.visible {
+.desktopNavItemVisible {
   visibility: visible;
   opacity: 1;
   transition: opacity 0.3s linear;
 }
 
-.hidden {
+.desktopNavItemHidden {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 0.1s, opacity 0.1s linear;

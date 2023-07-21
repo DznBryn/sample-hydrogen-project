@@ -46,11 +46,11 @@ const MenuLinks = ({ menuLinks = [] }) => (
 const NavShopOverlay = ({ megaMenuOverlay = {} }) => {
   const shopOverlayRef = useRef(null);
   useEffect(() => bindCustomEvent(shopOverlayRef, 'data-hover-state', {
-    hidden: 'hidden',
-    visible: 'visible'
+    hidden: 'navShopOverlayHidden',
+    visible: 'navShopOverlayVisible'
   }));
   return (
-    <div className={'navShopOverlay hidden mainNavMegaMenu'} ref={shopOverlayRef} data-hover-state="hide">
+    <div className={'navShopOverlay navShopOverlayHidden mainNavMegaMenu'} ref={shopOverlayRef} data-hover-state="hide">
       <MenuImage
         ctaImage={megaMenuOverlay.leftBackgroundMedia}
         cta={megaMenuOverlay.leftCta}
