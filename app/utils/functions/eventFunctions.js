@@ -299,7 +299,7 @@ export function triggerAnalyticsOnScroll(
           if (node.id && isElementInView(node)) {
             const productId = node.id.replace('product-', '');
             const prod = filteredProducts.find(
-              (item) => item.slug === productId
+              (item) => item.handle === productId
             );
             if (
               !inViewItems.find(
