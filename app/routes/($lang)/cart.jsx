@@ -19,11 +19,11 @@ export async function action({ request, context }) {
 
   const cartAction = formData.get('cartAction');
   const countryCode = formData?.get('countryCode') ?? null;
-  
-  if(!cartAction || cartAction === '') {
+
+  if (!cartAction || cartAction === '') {
     return json({ message: 'Cart action not found' }, { status: 400 });
   }
-  
+
   if (cartAction === 'ADD_TO_CART') {
     const lines = formData.get('lines') ? JSON.parse(String(formData.get('lines')))
       : [];
@@ -41,6 +41,7 @@ export async function action({ request, context }) {
       });
     }
     cartId = result?.cart?.id;
+
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
@@ -125,7 +126,7 @@ export async function action({ request, context }) {
 
 export async function loader({ context }) {
   const cart = await getCart(context);
-  return {cart};
+  return { cart };
 }
 
 export default function Cart() {

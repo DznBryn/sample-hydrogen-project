@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { triggerAnalyticsProductClick, getCurrency } from '~/utils/functions/eventFunctions';
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../pdpAddToCart';
 import getApiKeys from '~/utils/functions/getApiKeys';
@@ -21,11 +21,8 @@ let sitewide = false;
 const getLinkToObj = (slug, product) => { return { pathname: `/products/${slug}`, state: { product: product } }; };
 
 const Button = ({ product, opensBlank = false, ...rest }) => {
-  const { variants, tags, slug } = product;
-  const hasVariants = variants?.length > 1;
-  
-  const outOfStock = (!hasVariants) && (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') || variants[0]?.quantityAvailable < 1);
-  const addItem = (outOfStock) ? {} : {variantId: window.btoa(variants[0]?.externalId), quantity: 1, ['selling_plan_id']: 0, product};
+  const { variants, tags, handle: slug } = product;
+  const hasVariants = variants?.nodes.length > 1;
   const forceSoldOut = (product && tags.includes('force_sold_out'));
   
   return (hasVariants) 
@@ -41,16 +38,17 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
       exclusiveProductTextColor={product?.exclusiveTextColor}
       isGated={product?.isGated}
       fromPLP
+      quantity={product?.totalInventory}
+      availableForSale={product?.availableForSale}
       {...rest}/>;
 };
 
 const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: false}, ctaOpensBlank = false }) => {
 
-  const { images, variants = [], title, productPromos = null, slug, name} = product;
+  const { images, variants = [], productPromos = null, handle: slug, title} = product;
   const media = images.nodes;
-  const altTitle = title;
+  const altTitle = product?.alt_title || '';
 
-  const [forceChange, setForceChange] = useState(false);
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
 
   // const mainImg = getResponsiveImageSrc(media[0]?.details.src, { width: media[0]?.details.width });
@@ -65,15 +63,13 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
       sitewide = JSON.parse(window.localStorage.getItem('tulaSitewide'));
 
     }
-
-    setForceChange(true);
   });
 
   function getPrice(){
 
-    const hasVariants = variants.length > 1;
-    const price = variants[0].price.amount;
-    const gotDifferentPrices = !(variants.every((value) => value.price.amount === price));
+    const hasVariants = variants.nodes.length > 1;
+    const price = parseFloat(variants.nodes[0].price.amount);
+    const gotDifferentPrices = !(variants.nodes.every((value) => value.price.amount === price));
     const productPrice = price.toString().includes('.') ? price.toFixed(2) : price;
 
     return getCurrency() + ((hasVariants && gotDifferentPrices) ? getRangePrice() : productPrice);
@@ -81,20 +77,20 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
   }
 
   function getRangePrice() { 
-		
-    return `${Math.min(...variants.map((variant) => variant.price))}+`;
+    
+    return `${Math.min(...variants.nodes.map((variant) => variant.price.amount))}+`;
 
   }
 
   const getPromoPrice = () => {
 
     let newPrice = 0;
-    const price = parseInt(variants.nodes[0]?.price?.amount);
-    const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+    const price = parseFloat(variants.nodes[0]?.price?.amount);
+    const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
     const getPriceToShow = () => getCurrency() + (newPrice % 1 !== 0 ? newPrice.toFixed(2) : newPrice);
     const getPriceWithDiscounts = (from) => ( Number(price) - (Number(from) / 100) * Number(price) );
 
-    if (variants.length > 1 && price !== variants[variants.length - 1].price) {
+    if (variants.nodes.length > 1 && price !== variants.nodes[variants.nodes.length - 1].price) {
 
       if (productPromos && productPromos?.name && productPromos.showPromo) {
 
@@ -127,8 +123,8 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
   const getStrikethroughPrice = () => {
 
     let newPrice = 0;
-    const price = parseInt(variants.nodes[0]?.price?.amount);
-    const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+    const price = parseFloat(variants.nodes[0]?.price?.amount);
+    const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
     const getPriceToShow = () => getCurrency() + (newPrice % 1 !== 0 ? newPrice.toFixed(2) : newPrice);
 
     if (variants.length > 1 && price !== variants[variants.length - 1].price) {
@@ -161,8 +157,8 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
   const PriceComp = () => {
 
-    const price = parseInt(variants.nodes[0]?.price?.amount);
-    const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+    const price = parseFloat(variants.nodes[0]?.price?.amount);
+    const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
 
     const originalPriceHigher = originalPrice > price;
     const noPromoPrice = (sitewide === false && !product?.productPromos?.showPromo) || noPromo || (sitewide?.excludeList?.includes(product.externalId)) ;
@@ -216,7 +212,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
   return (
 
-    <div className={'plpWrapper'} id={`product-${product?.handle ? product.handle : slug}`}>
+    <div className={'plpWrapperProductBox'} id={`product-${product?.handle ? product.handle : slug}`}>
 
       <div className='container'>
 
@@ -224,7 +220,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
         <Link className='imageContainer' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
           <img className='productImage' src={mainImg} alt={media[0]?.altText} />
-          <img className='productImage dinamicImage' src={secImg} alt={media[1]?.altText}/>
+          <img className='productImage dinamicImage' src={secImg || mainImg} alt={media[1]?.altText}/>
         </Link>
 
         <div className='infoContainer'>
@@ -234,14 +230,14 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
           </Link>
 
           <Link className='subTitle' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
-            {name}
+            {title}
           </Link>
 
           <div className='reviewRates2'>
             <div className='yotpo bottomLine' style={{ pointerEvents: 'none' }} data-product-id={product?.externalId}></div>
           </div>
 
-          { forceChange && <PriceComp /> }
+          <PriceComp />
 
           <PromoComp product={product} sitewide={sitewide} /> 
 
@@ -282,8 +278,8 @@ const PLPBadges = ({ product }) => {
 
   const { variants, tags } = product;
 
-  const price = parseInt(variants.nodes[0]?.price?.amount);
-  const originalPrice = parseInt(variants.nodes[0]?.compareAtPrice?.amount);
+  const price = parseFloat(variants.nodes[0]?.price?.amount);
+  const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
 
   if (product?.exclusiveTextColor) {
     return null;
@@ -303,7 +299,7 @@ const PLPBadges = ({ product }) => {
       return classNames.bind(styles)('roseGlowBadgeContainer', customClass);
     }
 
-    return classNames.bind(styles)('tag', customClass);
+    return classNames.bind(styles)('tagProductBox', customClass);
   }
 	
   const Badge = () => {
@@ -347,7 +343,7 @@ const PLPBadges = ({ product }) => {
 
       let customClass = buildCustomClass(customBadge);
 
-      return customBadge ? <span className={`tag ${customClass}`}>{customBadge}</span> : null;
+      return customBadge ? <span className={`tagProductBox ${customClass}`}>{customBadge}</span> : null;
 
     }
 
@@ -371,7 +367,7 @@ const PLPBadges = ({ product }) => {
     );
 
     return (
-      <div className={'tag holidayBadgeContainer'}>
+      <div className={'tagProductBox holidayBadgeContainer'}>
         <HolidayIcon/>
         <span>Holiday</span>
       </div>
@@ -380,9 +376,9 @@ const PLPBadges = ({ product }) => {
 
   return (
 
-    <div className={'badgeContainer'}>
+    <div className={'badgeContainerProductBox'}>
 
-      { (showSaveBadge) && <span className={'tag saveTag'}>{`save ${savePorcentage}%`}</span> }
+      { (showSaveBadge) && <span className={'tagProductBox saveTag'}>{`save ${savePorcentage}%`}</span> }
       {showHolidayBadge ? <HolidayBadge /> : <Badge product={product} />}
 
     </div>

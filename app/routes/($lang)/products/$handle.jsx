@@ -4,14 +4,8 @@ import { useLoaderData } from 'react-router';
 import { PRODUCT_QUERY } from '~/utils/graphql/shopify/queries/collections';
 import { json } from '@shopify/remix-oxygen';
 import { useFetcher, useMatches } from '@remix-run/react';
-import { useCartActions } from '../../../hooks/useCart';
-import AddToCartButton, { links as addToCartStyles } from '~/modules/global/AddToCart/AddToCart';
+// import { useCartActions } from '../../../hooks/useCart';
 
-export const links = () => {
-  return [
-    ...addToCartStyles()
-  ];
-};
 export const loader = async ({ params, context }) => {
   const { handle } = params;
   const { product } = await context.storefront.query(PRODUCT_QUERY, {
@@ -40,17 +34,12 @@ export const loader = async ({ params, context }) => {
 
 export default function PDP() {
   const { handle, product } = useLoaderData();
-
-  const addToCartProps = {
-    lineItem: { slug: product.handle, variantId: product.variants[0].id }
-  };
   return product ? (
     <div className="outline outline-2 outline-blue-300 p-4 my-2">
       <summary>
         Collection: {product?.title ?? ''} ({handle})
       </summary>
       <div>
-        <AddToCartButton {...addToCartProps}/>
         <ProductForm variantId={product.variants[0].id} />
       </div>
       <pre>{JSON.stringify(product, null, 2)}</pre>

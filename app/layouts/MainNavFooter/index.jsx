@@ -4,11 +4,10 @@ import Footer, { links as footerStyles } from '~/modules/footer';
 import BodyBottom, { links as BodyBottomStyles } from '~/modules/bodyBottom';
 import NavPlaceholder, { links as NavPlaceholderStyles } from '~/modules/navPlaceholder';
 import { useMatches } from '@remix-run/react';
-
-import { getCMSDoc } from '~/utils/functions/eventFunctions';
-import { getGroupOfCMSContent } from '~/utils/functions/eventFunctions';
+import { getGroupOfCMSContent, getCMSDoc, getCollectionWithCMSData } from '~/utils/functions/eventFunctions';
 import { getCollectionProducts } from '~/utils/graphql/shopify/queries/collections';
 import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER, GET_SITE_WIDE_SETTINGS, GET_SEARCH_CONFIG } from '~/utils/graphql/sanity/queries';
+import { useMemo } from 'react';
 
 export const links = () => {
   return [
@@ -24,6 +23,7 @@ const MainNavFooter = ({children}) => {
 
   const [root] = useMatches();
   const CMSData = root.data.globalCMSData.mainNavFooter;
+  const productsCMSData = root.data.globalCMSData.products;
 
   const { 
     Footers, 
@@ -39,6 +39,11 @@ const MainNavFooter = ({children}) => {
     SearchConfig,
     collection, 
   } = CMSData;
+
+  const collectionWithCMSData = useMemo (
+    () => getCollectionWithCMSData(collection, productsCMSData),
+    [collection, productsCMSData]
+  );
 
   return (
 
@@ -58,7 +63,7 @@ const MainNavFooter = ({children}) => {
         mobileNavMainButton={getCMSDoc(MobileNavFooterMainButton, 'Main Button')}
         annoucementTopBannerContent={getCMSDoc(AnnouncementTopBanner, 'rose glow')}
         desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
-        products={collection}
+        products={collectionWithCMSData}
       />
 
       {/* <h3>SliderCart</h3> */}

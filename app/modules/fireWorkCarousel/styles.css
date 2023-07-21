@@ -1,0 +1,14 @@
+.fwCarouselWrapper {
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+@media all and (max-width: 768px) {
+  .fwCarouselWrapper {
+    width: calc(100% - 22px);
+    margin-right: 0px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

@@ -1,10 +1,11 @@
 import { useFetcher, useMatches } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 import { Padlock } from '../icons';
-import styles from './styles.css';
-import { useInventory } from '~/hooks/useInventory';
 import { useCustomerState } from '~/hooks/useCostumer';
+import { createCustomEvent, useLayoutEffect } from '~/utils/functions/eventFunctions';
+
+import styles from './styles.css';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -21,18 +22,20 @@ export default function PDPAddToCart({
   addItem,
   classes = [],
   forceSoldOut = false,
-  analytics = null,
-  onClick = null,
+  // analytics = null,
+  // onClick = null,
   displayPrice,
   exclusiveProductAtcColor,
   exclusiveProductTextColor,
   isGated = false,
   fromPLP = false,
+  quantity,
+  availableForSale,
 }) {
   const [root] = useMatches();
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
-  const { quantity, availableForSale } = useInventory({ id: addItem?.variantId, slug: addItem?.slug });
+
   const { isLoggedIn } = useCustomerState;
   const [buttonState, setButtonState] = useState(IDLE);
   const loadingBtnStylesForExclusiveProducts = {
@@ -43,7 +46,7 @@ export default function PDPAddToCart({
   const atcStylesForExclusiveProducts = fromPLP ? 'plpExclusive' : 'exclusive';
   const lineItems = [{ merchandiseId: addItem?.variantId, quantity: 1 }];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (quantity === 0 || !availableForSale || forceSoldOut) {
       setButtonState(SOLD_OUT);
     } else if (isGated && !isLoggedIn) {
@@ -55,12 +58,30 @@ export default function PDPAddToCart({
     } else if (addToCart?.type && addToCart?.type === 'done' && addToCart?.data?.errors?.length > 0) {
       setButtonState(ERROR);
     } else if (quantity > 0 && availableForSale && buttonState !== IDLE) {
+      if(addToCart.data && addToCart.type === 'done'){
+        dispatchAlertEvent();
+      }
       setButtonState(IDLE);
     }
 
     return () => { };
   }, [quantity, isLoggedIn, addToCart.state]);
 
+  function dispatchAlertEvent() {
+
+    const alertEvent = createCustomEvent();
+
+    if (document.querySelector('[data-alert-state]').getAttribute('data-alert-state') === 'hide') {
+      document.querySelector('[data-alert-state]').setAttribute('data-alert-state', 'show');
+      document.querySelector('[data-alert-state]').dispatchEvent(alertEvent);
+
+      setTimeout(() => {
+        document.querySelector('[data-alert-state]').setAttribute('data-alert-state', 'hide');
+        document.querySelector('[data-alert-state]').dispatchEvent(alertEvent);
+      }, 4000);
+    }
+
+  }
 
   const clearError = () => setButtonState(IDLE);
 
@@ -75,12 +96,12 @@ export default function PDPAddToCart({
       <input type="hidden" name="lines" value={JSON.stringify(lineItems)} />
       <div className="addToCart__container">
         <button
-          className={`${classes.join(' ')}add_to_cart${exclusiveProductAtcColor ? atcStylesForExclusiveProducts
+          className={`${classes.join(' ')} add_to_cart ${exclusiveProductAtcColor ? atcStylesForExclusiveProducts
             : ''}`}
           style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
           type="submit"
           disabled={addToCart?.state === 'submitting'}
-          >
+        >
           <span>
             {displayPrice === true ? `Add To Cart - ${3400 / 100}` : 'Add To Cart'}
           </span>
@@ -116,7 +137,7 @@ export default function PDPAddToCart({
     [LOCKED]: <div className={'addToCart__container'}>
       <button
         className={`${classes.join(' ')} add_to_cart ${exclusiveProductAtcColor && atcStylesForExclusiveProducts
-          } `}
+        } `}
         style={{ background: fromPLP ? '#48c6d9' : exclusiveProductAtcColor }}
         onClick={() => switchSliderPanelVisibility('SliderAccount')}
       >
@@ -126,6 +147,7 @@ export default function PDPAddToCart({
       </button>
     </div>
   };
+  
   return buttonState === SOLD_OUT || buttonState === SELECT_SHADE ? mapStateToButton[SOLD_OUT] : mapStateToButton[buttonState];
 
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 import { getCart } from '~/utils/graphql/shopify/queries/cart';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
@@ -7,6 +7,9 @@ import { useCartState } from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US') ? 'afterpay' : 'klarna';
+
+const canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+export const useLayoutEffect = canUseDOM ? React.useLayoutEffect : () => {};
 
 export function bindCustomEvent(ref, dataAttr, styles) {
   ref.current.addEventListener('data-change', (e) => {
@@ -264,15 +267,14 @@ export function triggerAnalyticsOnScroll(
     rect.childNodes.forEach((node, index) => {
       if (node.id && isElementInView(node)) {
         const productId = node.id.replace('product-', '');
-
-        const prod = filteredProducts.find((item) => item.slug === productId);
-        if (!inViewItems.find((viewItem) => viewItem.id === prod.externalId)) {
+        const prod = filteredProducts.find((item) => item.handle === productId);
+        if (!inViewItems.find((viewItem) => viewItem.id === window.btoa(prod?.id))) {
           return inViewItems.push({
-            name: `${prod.name}`,
-            id: `${prod.externalId}`,
-            price: prod.minPrice.toFixed(2),
+            name: `${prod?.title}`,
+            id: `${window.btoa(prod?.id)}`,
+            price: parseFloat(prod?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
             brand: 'TULA SkinCare',
-            category: `${prod.type}`,
+            category: `${prod?.productType}`,
             list: `${collection}`,
             position: index,
           });
@@ -297,7 +299,7 @@ export function triggerAnalyticsOnScroll(
           if (node.id && isElementInView(node)) {
             const productId = node.id.replace('product-', '');
             const prod = filteredProducts.find(
-              (item) => item.slug === productId
+              (item) => item.handle === productId
             );
             if (
               !inViewItems.find(
@@ -306,11 +308,11 @@ export function triggerAnalyticsOnScroll(
               )
             ) {
               return newInViewItems.push({
-                name: `${prod.name}`,
-                id: `${prod.externalId}`,
-                price: prod.minPrice.toFixed(2),
+                name: `${prod?.title}`,
+                id: `${window.btoa(prod?.id)}`,
+                price: parseFloat(prod?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
                 brand: 'TULA SkinCare',
-                category: `${prod.type}`,
+                category: `${prod?.productType}`,
                 list: `${collection}`,
                 position: index,
               });
@@ -540,16 +542,16 @@ export function getCartTotalForFreeShippingGraphQL() {
  * CMS functions
  */
 
-export async function getCMSContent(context, query){
+export async function getCMSContent(context, query) {
 
   const { SANITY_DATASET_DOMAIN, SANITY_API_TOKEN } = context.env;
   const result = await apolloClient(SANITY_DATASET_DOMAIN, SANITY_API_TOKEN).query({ query });
-  
+
   return Object.values(result.data)[0];
 
 }
 
-export async function getGroupOfCMSContent(context, queries = []){
+export async function getGroupOfCMSContent(context, queries = []) {
 
   const promises = queries.map(querie => getCMSContent(context, querie));
   const values = await Promise.all(promises);
@@ -566,9 +568,35 @@ export async function getGroupOfCMSContent(context, queries = []){
 
 }
 
-export function getCMSDoc(content, docName){
+export function getCMSDoc(content, docName) {
 
   return content.find(doc => doc.name === docName);
+
+}
+
+export function getCollectionWithCMSData(collection, productsCMSData, collectionsCMSData) {
+
+  let collectionCopy = { ...collection };
+
+  if(collectionsCMSData){
+
+    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.name))[0];
+    if(collectionCMSDoc) collectionCopy = { ...collectionCMSDoc, ...collection };
+
+  }
+
+  if (collectionCopy?.products) {
+
+    collectionCopy.products = collectionCopy?.products.map(product => {
+
+      const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
+      return { ...product, ...CMSData[0] };
+
+    });
+
+  }
+
+  return collectionCopy;
 
 }
 
@@ -576,9 +604,7 @@ export function getCMSDoc(content, docName){
  * Shopify data functions
  */
 
-
-
-export async function getCustomerData(context){
+export async function getCustomerData(context) {
 
   let customer = {
     id: '',
@@ -586,11 +612,11 @@ export async function getCustomerData(context){
     email: '',
     phone: '',
   };
-  
+
   const customerAccessToken = await context.session.get('customerAccessToken');
 
   if (customerAccessToken) {
-  
+
     customer = await getCustomer(context, customerAccessToken);
     customer.addresses = flattenConnection(customer.addresses);
     customer.orders = flattenConnection(customer.orders);
@@ -601,7 +627,7 @@ export async function getCustomerData(context){
 
 }
 
-export async function getCartData(context){
+export async function getCartData(context) {
 
   const cartId = await context.session.get('cartId');
   const cart = (cartId) ? await getCart(context, cartId) : {};

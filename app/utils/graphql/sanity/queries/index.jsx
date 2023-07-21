@@ -749,3 +749,119 @@ export const GET_HOMEPAGE_COLLECTION_CALLOUT = gql`
     }
   }
 `;
+
+export const GET_PLP_FILTER_MENU = gql`
+  query GetAllPlpFilterMenu {
+    allPlpFilterMenu {
+      _id
+      name
+      type
+      input
+      children
+    }
+  }
+`;
+
+export const GET_PRODUCTS = gql`
+  query GetAllProducts {
+    allProducts{
+      name
+      richRaw
+      alt_title
+      reviews_average
+      reviews_count
+      shouldShowOOSForm
+      ingredients_list
+      full_ingredients_list
+      productPromos{
+        name
+        promoMessage
+        discount
+        variantIds
+        showPromo
+      }
+      recommendedSellingPlan
+      sales_rank
+      whatItDoes
+      keyIngredients
+      finish
+      tabs{
+        name
+        tabName
+        button{
+          name
+          showButton
+          text
+          buttonOutlineStyle
+          slideContent{
+            name
+            title
+            contentRaw
+          }
+        }
+        contentBlock{
+          name
+          title
+          contents{
+            name
+            headerRaw
+            image{
+              asset{
+                _id
+                url
+              }
+            }
+            subtitle
+            body
+            htmlSubtitleRaw
+            htmlBodyRaw
+          }
+        }
+        useBackgroundGradient
+      }
+      certifiedBadges{
+        name
+        badges{
+          name
+          image{
+            asset{
+              _id
+              url
+            }
+          }
+          title
+        }
+      }
+      description_WithPriority
+      benefits_WithPriority
+      gallery_WithPriority{
+        asset{
+          _id
+          url
+        }
+      }
+      exclusiveAtcColor
+      exclusiveTextColor
+      productId
+    }
+  }
+`;
+
+export const GET_PRODUCT_COLLECTIONS = gql`
+  query GetAllProductCollections {
+    allProductCollections{
+      name
+      promoPosition1
+      promoOneLink
+      promoPosition2
+      promoTwoLink
+      promoPosition3
+      promoThreeLink
+      additionalProductsTitle
+      additionalProducts
+      showCompareButton
+      fireworkStoryPosition
+      collectionId
+    }
+  }
+`;
