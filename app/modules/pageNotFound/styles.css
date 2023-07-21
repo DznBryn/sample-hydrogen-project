@@ -1,0 +1,84 @@
+.pageNotFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 640px;
+  margin: 60px auto 30px;
+}
+
+.pageNotFound h2 {
+  display: block;
+  font-family: Lato-Tula, sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin: 0 0 0.5em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.pageNotFound h4 {
+  font-size: 16px;
+  line-height: 26px;
+  color: #4c4e56;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+.searchForm {
+  display: flex;
+  width: 100%;
+}
+
+.searchInput {
+  border: 1px solid #c9cacc;
+  width: 100%;
+  margin-bottom: 20px;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 6px 10px 8px;
+  border-radius: 0;
+  height: 42px;
+  font-family: Lato-Tula, sans-serif;
+  font-size: 16px;
+  line-height: 26px;
+  color: #4c4e56;
+  font-weight: 300;
+  letter-spacing: 1px;
+  background-color: #fff;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+.searchButton {
+  display: flex;
+  background-color: #fff;
+  height: 42px;
+  color: #48c6d9;
+  line-height: 26px;
+  padding: 7px 15px;
+  border: 1px solid #c9cacc;
+  border-left: 0;
+  transition: background 0.3s, color 0.3s, border ease-in-out;
+}
+
+.searchButton:hover {
+  background-color: #48c6d9;
+  color: #fff;
+}
+
+.searchButton:hover .icon {
+  fill: #fff;
+}
+
+.icon {
+  margin-right: 9px;
+  margin-top: 4px;
+  fill: #48c6d9;
+}
+
+/*# sourceMappingURL=styles.css.map */
