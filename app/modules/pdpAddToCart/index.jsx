@@ -1,9 +1,9 @@
 import { useFetcher, useMatches } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 import { Padlock } from '../icons';
 import { useCustomerState } from '~/hooks/useCostumer';
-import { createCustomEvent } from '~/utils/functions/eventFunctions';
+import { createCustomEvent, useLayoutEffect } from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 
@@ -46,7 +46,7 @@ export default function PDPAddToCart({
   const atcStylesForExclusiveProducts = fromPLP ? 'plpExclusive' : 'exclusive';
   const lineItems = [{ merchandiseId: addItem?.variantId, quantity: 1 }];
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (quantity === 0 || !availableForSale || forceSoldOut) {
       setButtonState(SOLD_OUT);
     } else if (isGated && !isLoggedIn) {
@@ -82,7 +82,6 @@ export default function PDPAddToCart({
     }
 
   }
-
 
   const clearError = () => setButtonState(IDLE);
 
@@ -148,6 +147,7 @@ export default function PDPAddToCart({
       </button>
     </div>
   };
+  
   return buttonState === SOLD_OUT || buttonState === SELECT_SHADE ? mapStateToButton[SOLD_OUT] : mapStateToButton[buttonState];
 
 }
