@@ -294,7 +294,8 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
         <div className={collectionContainerStyle} ref={PLPContainer}>
           {bannersPositions &&
                 banners.map((banner, idx) => { return(
-                  (Object.prototype.hasOwnProperty.call(bannersPositions, `pos${idx + 1}`)) && <Banner
+                  (Object.prototype.hasOwnProperty.call(bannersPositions, `pos${idx + 1}`) && bannersPositions[`pos${idx + 1}`].pos <= (filteredProducts.length + 1)) 
+                  && <Banner
                     banner={banner}
                     key={idx}
                     style={bannersPositions[`pos${idx + 1}`]}

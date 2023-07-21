@@ -365,8 +365,8 @@ export function newChangeBannersPositions(size, pos, collectionSize) {
       isMobile = (position === 'pos4') ? false : isMobile;
 
       newObj[position] = {
-        gridArea: `${isMobile ? mobileRow : row} / ${isMobile ? 1 : colStart
-        } / ${isMobile ? mobileRow : row} / ${isMobile ? 'span 2' : 'span 1'}`,
+        gridArea: `${isMobile ? mobileRow : row} / ${isMobile ? 1 : colStart} / ${isMobile ? mobileRow : row} / ${isMobile ? 'span 2' : 'span 1'}`,
+        pos: pos[position],
       };
     }
     return newObj;
