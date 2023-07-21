@@ -580,7 +580,7 @@ export function getCollectionWithCMSData(collection, productsCMSData, collection
 
   if(collectionsCMSData){
 
-    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.name))[0];
+    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.collectionId))[0];
     if(collectionCMSDoc) collectionCopy = { ...collectionCMSDoc, ...collection };
 
   }
