@@ -514,7 +514,7 @@ const MainContent = () => {
         <input className={'input'} key={'siginEmail'} id="signInEmail" name="signInEmail" ref={signInEmail} type="email" placeholder="Email" /> {/**/}
 
         <div className={'input'}>
-          <input className={'passwordInput'} id="signInPassword" name="signInPassword" ref={signInPassword} type="password" placeholder="Password" /> {/**/}
+          <input className={'passwordInput'} id="signInPassword" name="signInPassword" ref={signInPassword} type="password" placeholder="Password" autoComplete="on"/> {/**/}
           <span onClick={tooglePasswordType.bind(this, signInPassword)}>show</span>
         </div>
 
@@ -605,7 +605,7 @@ const MainContent = () => {
         <input className={'input'} id="createAccountLastName" name="createAccountLastName" ref={createAccountLastName} type="text" placeholder="Last Name*" />
         <input className={'input'} id="createAccountMail" name="createAccountMail" ref={createAccountMail} type="email" placeholder="Email*" />
         <div className={'input'}>
-          <input className={'passwordInput'} id="createAccountPassword" name="createAccountPassword" ref={createAccountPassword} type="password" placeholder="Password*" />
+          <input className={'passwordInput'} id="createAccountPassword" name="createAccountPassword" ref={createAccountPassword} type="password" placeholder="Password*" autoComplete="on"/>
           <span onClick={tooglePasswordType.bind(this, createAccountPassword)}>show</span>
         </div>
         <span ref={passwordInfo}>Password must be at least 5 characters</span>
