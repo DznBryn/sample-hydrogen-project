@@ -159,9 +159,9 @@ const MobileNavbar = ({ content }) => {
             {navbarContent[subItemsOpenId].navLinks?.map((subItem, idx) => (
               <a href={subItem.url} className={'mobileLink'} key={subItem.displayText}>
                 <div key={idx} className={'mobileSubNavItem'}>
-                  <img src={subItem.thumbnail ? subItem.thumbnail.src : defaultThumbnail} className={'mobileSubNavImage'} />
+                  <img src={subItem.thumbnail ? subItem.thumbnail.asset.url : defaultThumbnail} className={'mobileSubNavImage'} />
                   <span style={subItem.fontColorHex ? { color: subItem.fontColorHex } : {}}>
-                    {subItem.emoji && <img className={'emoji'} src={subItem.emoji.src} />}
+                    {subItem.emoji && <img className={'emoji'} src={subItem.emoji.asset.url} />}
                     {subItem.displayText.toLowerCase()}</span>
                   {subItem.calloutText && (
                     <span style={{ color: subItem.calloutFontColorHex }}>
