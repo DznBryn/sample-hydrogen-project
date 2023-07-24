@@ -94,6 +94,7 @@
 
 .addItem {
   display: flex;
+  gap: 5px;
   font-style: normal;
   font-weight: 900;
   font-size: 15px;

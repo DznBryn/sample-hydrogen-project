@@ -20,7 +20,7 @@ const SiteSwitcher = ({ isMobile }) => {
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
 
   const arrowFlipStyle = classNames.bind(styles)(
-    'arrow',
+    'arrowSiteSwitcher',
     isOptionsOpened && 'flipArrow'
   );
   const responsiveStyle = classNames.bind(styles)(

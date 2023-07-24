@@ -3,10 +3,11 @@ import favicon from '../public/favicon.ico';
 import { defer } from '@shopify/remix-oxygen';
 import { getMainNavFooterCMSData } from './layouts/MainNavFooter';
 import { CacheShort, generateCacheControlHeader } from '@shopify/hydrogen';
-import { getCartData, getCustomerData } from './utils/functions/eventFunctions';
+import { getCMSContent, getCartData, getCustomerData } from './utils/functions/eventFunctions';
 import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 
 import { links as layoutsStyles } from '~/layouts';
+import { GET_PRODUCTS } from './utils/graphql/sanity/queries';
 
 
 export const links = () => {
@@ -33,6 +34,7 @@ export async function loader({ context }) {
   // console.log('customer:', customer);
   const globalCMSData = {
     mainNavFooter: await getMainNavFooterCMSData(context),
+    products: await getCMSContent(context, GET_PRODUCTS),
   };
 
   return defer(

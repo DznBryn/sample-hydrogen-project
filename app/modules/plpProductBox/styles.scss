@@ -1,4 +1,4 @@
-.plpWrapper .container {
+.plpWrapperProductBox .container {
   width: 270px;
   height: auto !important;
   display: flex;
@@ -10,7 +10,7 @@
   padding: 0 3px;
 }
 
-.plpWrapper .container .imageContainer {
+.plpWrapperProductBox .container .imageContainer {
   position: relative;
   width: 100%;
   border-radius: 3px;
@@ -19,7 +19,7 @@
   max-height: 328px;
 }
 
-.plpWrapper .container .imageContainer .productImage {
+.plpWrapperProductBox .container .imageContainer .productImage {
   width: 100%;
   height: 100%;
   top: 0px;
@@ -30,23 +30,23 @@
   grid-area: 1 / 1;
 }
 
-.plpWrapper .container .imageContainer .dinamicImage {
+.plpWrapperProductBox .container .imageContainer .dinamicImage {
   opacity: 0;
   transition: opacity .3s;
 }
 
-.plpWrapper .container:hover .dinamicImage {
+.plpWrapperProductBox .container:hover .dinamicImage {
   opacity: 1 !important;
 }
 
-.plpWrapper .container:hover .productImage {
+.plpWrapperProductBox .container:hover .productImage {
   opacity: 0;
 }
 
 
 /* info */
 
-.plpWrapper .container .infoContainer {
+.plpWrapperProductBox .container .infoContainer {
   width: 100%;
   /* height: 102px; */
   height: 125px;
@@ -56,7 +56,7 @@
   align-items: center;
 }
 
-.plpWrapper .container .infoContainer .title {
+.plpWrapperProductBox .container .infoContainer .title {
   width: 100%;
   text-decoration: none;
   font-weight: 600;
@@ -69,7 +69,7 @@
   text-transform: lowercase;
 }
 
-.plpWrapper .container .infoContainer .subTitle {
+.plpWrapperProductBox .container .infoContainer .subTitle {
   font-weight: 400;
   font-size: 16px;
   line-height: 21px;
@@ -78,13 +78,13 @@
   text-decoration: none;
 }
 
-.plpWrapper .container .infoContainer .reviewRates2 {
+.plpWrapperProductBox .container .infoContainer .reviewRates2 {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.plpWrapper .container .infoContainer .value {
+.plpWrapperProductBox .container .infoContainer .value {
   text-align: center;
   width: 100%;
   font-weight: 900;
@@ -93,11 +93,11 @@
   line-height: 18px;
 }
 
-.plpWrapper .container .infoContainer .value.promo {
+.plpWrapperProductBox .container .infoContainer .value.promo {
   color: #FF5483;
 }
 
-.plpWrapper .promoText {
+.plpWrapperProductBox .promoText {
   color: #FF5483;
   font-weight: 900;
   font-size: 14px;
@@ -106,7 +106,7 @@
   text-align: center;
 }
 
-.plpWrapper .container .infoContainer .value.strikethrough {
+.plpWrapperProductBox .container .infoContainer .value.strikethrough {
   color: #C6C6C6;
   text-decoration: line-through;
 }
@@ -117,7 +117,7 @@
   margin-bottom: .5em;
 }
 
-.plpWrapper .compared_price {
+.plpWrapperProductBox .compared_price {
   font-weight: 300;
   font-size: 14px;
   color: var(--color-primary-black);
@@ -125,11 +125,11 @@
   margin-bottom: 0;
 }
 
-.plpWrapper .compared_price span {
+.plpWrapperProductBox .compared_price span {
   letter-spacing: 0.5px;
 }
 
-.plpWrapper .container .ctaContainer {
+.plpWrapperProductBox .container .ctaContainer {
   width: 100%;
   padding: 0 18px;
   font-size: 14px;
@@ -138,8 +138,8 @@
   line-height: 18px;
 }
 
-.plpWrapper .container .add_to_cart,
-.plpWrapper .container .productButton {
+.plpWrapperProductBox .container .add_to_cart,
+.plpWrapperProductBox .container .productButton {
   height: 37px;
   border-radius: 3px;
   display: flex;
@@ -158,7 +158,7 @@
 
 }
 
-.plpWrapper .container .add_to_cart.disabled {
+.plpWrapperProductBox .container .add_to_cart.disabled {
   background-color: #c9c9c9;
   border-color: #c9c9c9;
   cursor: default;
@@ -167,14 +167,14 @@
 
 
 
-.plpWrapper .container .compareButton {
+.plpWrapperProductBox .container .compareButton {
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 10px 0;
 }
 
-.plpWrapper .container .compareButton .compareCheckbox {
+.plpWrapperProductBox .container .compareButton .compareCheckbox {
   display: flex;
   gap: 5px;
   font-weight: 800;
@@ -184,27 +184,27 @@
   cursor: pointer;
 }
 
-.plpWrapper .container .compareButton .compareCheckbox.disabled {
+.plpWrapperProductBox .container .compareButton .compareCheckbox.disabled {
   color: #c9c9c9;
   cursor: default;
 }
 
-.plpWrapper .container .compareButton .compareCheckbox .checkmark {
+.plpWrapperProductBox .container .compareButton .compareCheckbox .checkmark {
   height: 15px;
   width: 15px;
   border: solid 2px #48C6D9;
 }
 
-.plpWrapper .container .compareButton .compareCheckbox.disabled .checkmark,
-.plpWrapper .container .compareButton .compareCheckbox.disabled .checkmark:after {
+.plpWrapperProductBox .container .compareButton .compareCheckbox.disabled .checkmark,
+.plpWrapperProductBox .container .compareButton .compareCheckbox.disabled .checkmark:after {
   border-color: #c9c9c9;
 }
 
-.plpWrapper .container .compareButton .compareCheckbox input {
+.plpWrapperProductBox .container .compareButton .compareCheckbox input {
   display: none;
 }
 
-.plpWrapper .container .compareButton .compareCheckbox .checkmark:after {
+.plpWrapperProductBox .container .compareButton .compareCheckbox .checkmark:after {
   content: "";
   display: none;
   width: 3px;
@@ -217,11 +217,11 @@
   transform: rotate(45deg);
 }
 
-.plpWrapper .container .compareButton .compareCheckbox input:checked~.checkmark:after {
+.plpWrapperProductBox .container .compareButton .compareCheckbox input:checked~.checkmark:after {
   display: block;
 }
 
-.badgeContainer {
+.badgeContainerProductBox {
   width: 100%;
   display: flex;
   flex-direction: row-reverse;
@@ -230,7 +230,7 @@
   padding: 9px;
 }
 
-.tag {
+.tagProductBox {
   background-color: #48C6D9;
   color: #fff;
   text-transform: uppercase;
@@ -277,70 +277,70 @@
 
 @media only screen and (max-width: 550px) {
 
-  .plpWrapper :global(.container) {
+  .plpWrapperProductBox :global(.container) {
     width: 175px;
   }
 
-  .plpWrapper .container .imageContainer {
+  .plpWrapperProductBox .container .imageContainer {
     width: auto !important;
     height: auto !important;
   }
 
-  .plpWrapper .container .infoContainer .title {
+  .plpWrapperProductBox .container .infoContainer .title {
     font-size: 12px;
   }
 
-  .plpWrapper .container .infoContainer .subTitle {
+  .plpWrapperProductBox .container .infoContainer .subTitle {
     font-size: 13px;
     line-height: 18px;
   }
 
-  .plpWrapper .container .infoContainer .value {
+  .plpWrapperProductBox .container .infoContainer .value {
     font-size: 14px;
   }
 
-  .plpWrapper .container .ctaContainer {
+  .plpWrapperProductBox .container .ctaContainer {
     padding: 0 28px;
   }
 
-  .plpWrapper .container:hover .dinamicImage {
+  .plpWrapperProductBox .container:hover .dinamicImage {
     opacity: 0 !important;
   }
 
-  .plpWrapper .container:hover .productImage {
+  .plpWrapperProductBox .container:hover .productImage {
     opacity: 1;
   }
 
-  .plpWrapper .promoText {
+  .plpWrapperProductBox .promoText {
     font-size: 13px;
   }
 
-  .tag,
+  .tagProductBox,
   .roseGlowBadgeContainer {
     font-size: 9px;
     padding: 4px 6px 2px;
     font-weight: 600;
   }
 
-  .plpWrapper .container .cta,
-  .plpWrapper .container .productButton,
+  .plpWrapperProductBox .container .cta,
+  .plpWrapperProductBox .container .productButton,
   .addToCartContainer .add_to_cart {
     font-weight: 700;
   }
 
-  .plpWrapper .container .compareButton .compareCheckbox {
+  .plpWrapperProductBox .container .compareButton .compareCheckbox {
     font-size: 13px;
     padding-bottom: 0px;
     line-height: 13px
   }
 
-  .plpWrapper .container .compareButton .compareCheckbox .checkmark {
+  .plpWrapperProductBox .container .compareButton .compareCheckbox .checkmark {
     height: 12px;
     width: 12px;
     border: solid 1px #48C6D9;
   }
 
-  .plpWrapper .container .compareButton .compareCheckbox .checkmark:after {
+  .plpWrapperProductBox .container .compareButton .compareCheckbox .checkmark:after {
     width: 2px;
     height: 6px;
     margin-left: 3px;

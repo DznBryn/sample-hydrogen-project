@@ -1,4 +1,4 @@
-.navShopOverlay {
+.navShopOverlaySplit {
   top: 92px;
   left: 0px;
   display: flex;
@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-.navShopOverlay .sectionWrapper {
+.navShopOverlaySplit .sectionWrapper {
   display: flex;
   flex-direction: row;
   margin: 0 auto;
@@ -18,19 +18,19 @@
   max-width: 1060px;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft,
-.navShopOverlay .sectionWrapper .sectionRight {
+.navShopOverlaySplit .sectionWrapper .sectionLeft,
+.navShopOverlaySplit .sectionWrapper .sectionRight {
   display: flex;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft {
+.navShopOverlaySplit .sectionWrapper .sectionLeft {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   width: 30%;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft .featuredLink {
+.navShopOverlaySplit .sectionWrapper .sectionLeft .featuredLink {
   font-size: 21px;
   font-style: normal;
   font-weight: 800;
@@ -44,7 +44,7 @@
   justify-content: flex-start;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft .menuLinks a {
+.navShopOverlaySplit .sectionWrapper .sectionLeft .menuLinks a {
   font-size: 21px;
   font-style: normal;
   font-weight: 800;
@@ -55,30 +55,30 @@
   color: #4C4E56;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft .menuLinks {
+.navShopOverlaySplit .sectionWrapper .sectionLeft .menuLinks {
   width: 200px;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft .featuredLink,
-.navShopOverlay .sectionWrapper .sectionLeft .menuLinks > div {
+.navShopOverlaySplit .sectionWrapper .sectionLeft .featuredLink,
+.navShopOverlaySplit .sectionWrapper .sectionLeft .menuLinks > div {
   margin-bottom: 32px;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft .menuLinks > div:last-child {
+.navShopOverlaySplit .sectionWrapper .sectionLeft .menuLinks > div:last-child {
   margin-bottom: 0;
 }
 
-.navShopOverlay .sectionWrapper .sectionRight .imageBlock a {
+.navShopOverlaySplit .sectionWrapper .sectionRight .imageBlock a {
   text-decoration: none;
 }
 
-.navShopOverlay .sectionWrapper .sectionRight a {
+.navShopOverlaySplit .sectionWrapper .sectionRight a {
   width: 100%;
   max-width: 700px;
   text-decoration: none;
 }
 
-.navShopOverlay .sectionWrapper .sectionRight .imageBlock h2 {
+.navShopOverlaySplit .sectionWrapper .sectionRight .imageBlock h2 {
   font-size: 28px;
   font-style: normal;
   font-weight: 900;
@@ -90,7 +90,7 @@
   color: #fff;
 }
 
-.navShopOverlay .sectionWrapper .sectionRight {
+.navShopOverlaySplit .sectionWrapper .sectionRight {
   width: 100%;
   max-width: 685px;
   margin-right: 15px;
@@ -98,7 +98,7 @@
   align-items: center;
 }
 
-.navShopOverlay .sectionWrapper .sectionRight .imageBlock p {
+.navShopOverlaySplit .sectionWrapper .sectionRight .imageBlock p {
   font-size: 16px;
   font-style: normal;
   font-weight: 800;
@@ -109,7 +109,7 @@
   color: #fff;
 }
 
-.navShopOverlay .sectionWrapper .sectionLeft .menuLinks {
+.navShopOverlaySplit .sectionWrapper .sectionLeft .menuLinks {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -232,7 +232,7 @@
   }
 }
 @media only screen and (max-width: 1025px) {
-  .navShopOverlay {
+  .navShopOverlaySplit {
     left: 0px;
   }
   .sideImg {

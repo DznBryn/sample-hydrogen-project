@@ -1,0 +1,38 @@
+.listrakRecWrap {
+  margin: 0 auto;
+  max-width: 1140px;
+  padding: 30px;
+}
+
+.listrackWrap {
+  height: 0px;
+  overflow: hidden;
+}
+
+.listHeader {
+  border-bottom: 0.5px solid #FF5483;
+  padding-bottom: 25px;
+  margin-bottom: 20px;
+}
+
+.listHeader h2 {
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 28px;
+}
+
+.listProducts {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 1024px) {
+  .listrakRecWrap {
+    width: 100vw;
+  }
+  .listProducts {
+    overflow-x: scroll;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

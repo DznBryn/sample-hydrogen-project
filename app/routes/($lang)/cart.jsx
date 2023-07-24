@@ -22,6 +22,8 @@ export async function action({ request, context }) {
   const countryCode = formData?.get('countryCode') ?? null;
 
   if (!cartAction || cartAction === '') {
+
+  if (!cartAction || cartAction === '') {
     return json({ message: 'Cart action not found' }, { status: 400 });
   }
 
@@ -45,6 +47,7 @@ export async function action({ request, context }) {
       });
     }
     cartId = result?.cart?.id;
+
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {

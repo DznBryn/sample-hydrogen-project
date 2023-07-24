@@ -77,20 +77,8 @@ const NavPlaceholder = ({ searchConfig, siteWideSettings }) => {
   }, [confirmationText]);
 
   useEffect(() => {
-    const minHeight = document.querySelectorAll('.minHeight')?.length > 0;
-    const navPlaceholder = document.getElementById('navPlaceholder');
 
-    const interval = setInterval(() => {
-      if (minHeight === true) {
-        navPlaceholder.style.marginBottom = '0';
-        clearInterval(interval);
-      }
-    }, 1000);
-
-    if (!window.yotpo) {
-      appendScript(`https://cdn-loyalty.yotpo.com/loader/${getApiKeys().YOTPO_LOYALTY_GUID}.js`, '', true, () => { }, true)?.then(() => { });
-      appendScript(`https://cdn-widgetsrepository.yotpo.com/v1/loader/${getApiKeys().YOTPO_LOYALTY_GUID}`, '', true, () => { }, true)?.then(() => { });
-    }
+    appendYotpoScript();
 
     if (window.Glady) {
       window.Glady.init({
@@ -118,6 +106,19 @@ const NavPlaceholder = ({ searchConfig, siteWideSettings }) => {
     }
 
   });
+
+  function appendYotpoScript(){
+
+    const loaderSrc = `https://cdn-loyalty.yotpo.com/loader/${getApiKeys().YOTPO_LOYALTY_GUID}.js`;
+    const widgetSrc = `https://cdn-widgetsrepository.yotpo.com/v1/loader/${getApiKeys().YOTPO_LOYALTY_GUID}`;
+
+    if (document.querySelector(`[src="${loaderSrc}"]`) === null) {
+
+      appendScript(loaderSrc, '', true, () => { }, true)?.then(() => { });
+      appendScript(widgetSrc, '', true, () => { }, true)?.then(() => { });
+    }
+
+  }
 
   // const appKey = getApiKeys().YOTPO_KEY;
   // useYotpoReviews(appKey);

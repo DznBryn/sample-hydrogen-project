@@ -214,6 +214,7 @@
     /* float: left; */
     margin: 0 115px 0 0;
     order: inherit;
+    z-index: 2;
   }
 
   .footerCol2 {
@@ -233,6 +234,7 @@
     margin-top: 20px;
     display: block;
     clear: both;
+    z-index: 1;
   }
 }
 
@@ -256,6 +258,7 @@
 
   .switcherOnMobile {
     display: inherit;
+    z-index: 3;
   }
 
   .switcherOnDesktop {

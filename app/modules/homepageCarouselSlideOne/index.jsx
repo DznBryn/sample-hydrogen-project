@@ -21,9 +21,9 @@ const HomepageCarouselSlideOne = ({ slideContent }) => {
                 style={{ color: slideContent.slideHeaderFontColorHex }}
               >{slideContent.slideHeader}</h1>
 
-              <p style={{ color: slideContent.slideCopyFontColorHex }}>
+              <div style={{ color: slideContent.slideCopyFontColorHex }}>
                 <PortableTextCustom value={slideContent.slideCopyRaw}/>
-              </p>
+              </div>
                 
               <button
                 className={'btn'}

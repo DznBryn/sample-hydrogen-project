@@ -1,0 +1,175 @@
+.badgeContainer {
+  display: flex;
+  background-color: #ff5483;
+  background-color: var(--color-secondary-pink);
+  width: fit-content;
+  min-width: fit-content;
+  max-width: 100px;
+  font-size: 11px;
+  color: white;
+  font-weight: 500;
+  font-style: normal;
+  text-align: center;
+  border-radius: 2.3px;
+  padding: 2px 10px 0px;
+  text-transform: uppercase;
+  height: 19px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.4em;
+}
+
+.badgeContainer2 {
+  display: flex;
+  margin-left: 0.5em;
+  justify-content: center;
+  align-items: center;
+}
+
+.primary {
+  background-color: #47c6d9;
+  background-color: var(--color-primary);
+}
+
+.badgeContainer2 div,
+.badgeContainer div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 19px;
+  padding: 2px 10px 0px;
+  left: 835px;
+  top: 220px;
+  background-color: #47c6d9;
+  background-color: var(--color-primary);
+  border-radius: 2.3px;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.4em;
+}
+
+.certifiedBadge {
+  display: flex;
+  align-items: center;
+  justify-content: initial;
+  width: 157px;
+  height: 24px;
+  border-radius: 41px;
+}
+
+.certifiedBadgeLabel {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 172.1%;
+  color: #4c4e56;
+}
+
+.certifiedBadgeIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.holidayBadgeContainer {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: center !important;
+  align-items: center !important;
+  background-color: #EF0000 !important;
+  width: fit-content !important;
+  max-width: 100px !important;
+  font-size: 11px !important;
+  color: white !important;
+  font-weight: 500 !important;
+  font-style: normal !important;
+  border-radius: 2.3px !important;
+  padding-inline: 10px !important;
+  text-transform: uppercase !important;
+  height: 19px !important;
+  gap: 6px !important;
+}
+
+.holidayBadgeContainer svg {
+  height: 12px;
+  width: 12px;
+  margin-top: -2px;
+}
+
+.exclusiveMemberBadgeContainer {
+  width: 129px;
+  height: 19px;
+  background: linear-gradient(115.54deg, rgba(51, 165, 190, 0.42) 3.13%, rgba(102, 81, 221, 0.42) 102.45%);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exclusiveMemberBadgeContainer p {
+  font-weight: 800;
+  font-size: 11px;
+  line-height: 15px;
+  color: #fff;
+  margin-top: 1px;
+}
+
+@media (max-width: 550px) {
+  /*2-columns*/
+  .badgeContainer {
+    /* display: none; */
+    gap: 7.8px;
+    justify-content: center;
+    /* margin-inline: 8px; */
+    justify-content: flex-start;
+    padding-bottom: 0;
+  }
+  /* .container {
+    display: none;
+  } */
+  .certifiedBadge {
+    display: flex;
+    align-items: center;
+    justify-content: initial;
+    width: 150px;
+    height: 24px;
+    border-radius: 41px;
+  }
+  .certifiedBadgeLabel {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 172.1%;
+    color: #4c4e56;
+  }
+  .smallBadgeOnMobile {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 5px 10px 3px !important;
+  }
+}
+.roseGlowBadgeContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 19px;
+  padding: 2px 10px 0px;
+  left: 835px;
+  top: 220px;
+  background: linear-gradient(90deg, #AF075A 0%, #F377BA 50.52%, #FFCDE7 100%);
+  box-shadow: 0px 0px 10.5308px rgba(0, 0, 0, 0.05);
+  border-radius: 2.3px;
+  font-weight: bold;
+  font-size: 11px;
+  line-height: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  align-items: center;
+  margin-right: 0.4em;
+}
+
+/*# sourceMappingURL=styles.css.map */

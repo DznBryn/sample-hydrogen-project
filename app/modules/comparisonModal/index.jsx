@@ -53,10 +53,10 @@ const ComparisonModal = ({ collection = mockCollection }) => {
 
   function getImagesSrc(slug) {
 
-    const product = products.filter(data => data.slug === slug)[0];
-    const media = product?.media;
+    const product = products.filter(data => data.handle === slug)[0];
+    const media = product?.images?.nodes;
 
-    return [media[0].details.src, media[1].details.src];
+    return [media[0].url, media[1].url];
 
   }
 
@@ -68,7 +68,7 @@ const ComparisonModal = ({ collection = mockCollection }) => {
     for (let i = 0; i < PRODUCTS_LIMIT; i++) {
 
       const slug = getSavedData()[i];
-      const containerClass = classNames(styles.productPreview, (slug) ? '' : styles.empty);
+      const containerClass = classNames('productPreview', (slug) ? '' : 'empty');
 
       elements.push(<div className={containerClass}>
 
@@ -76,8 +76,8 @@ const ComparisonModal = ({ collection = mockCollection }) => {
 
           (slug) && <>
             <div className={'remove'} onClick={() => removeItem(slug)}>X</div>
-            <img src={getImagesSrc(slug)[0]} alt={getImagesSrc(slug)[1]} />
             <div className={'loader'}><p></p></div>
+            <img src={getImagesSrc(slug)[0]} alt={getImagesSrc(slug)[1]} />
           </>
 
         }
