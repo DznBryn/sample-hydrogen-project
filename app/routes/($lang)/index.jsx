@@ -21,8 +21,8 @@ export const action = async ({ request, context }) => {
     const email = formData.get(SIGN_IN_EMAIL);
     const password = formData.get(SIGN_IN_PASSWORD);
     const customerAccessToken = await login(context, { email, password });
-    context.session.set('customerAccessToken', customerAccessToken);
-    
+    context.session.set('customerAccessToken home', customerAccessToken);
+    // console.log('customerAccessToken:', customerAccessToken);
     return redirect('/', {
       headers: {
         'Set-Cookie': await context.session.commit()

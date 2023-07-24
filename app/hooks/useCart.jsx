@@ -16,8 +16,14 @@ export function useCartState() {
 
       return {
         id: merchandise.product.id.split('Product/')[1],
+        ['line_item_id']: item.id,
+        merchandiseId: merchandise.id,
         ['variant_id']: merchandise.id.split('ProductVariant/')[1],
+        title: `${merchandise.product.title} - ${merchandise.title}`,
+        handle: merchandise.product.handle,
         quantity,
+        image: merchandise.image,
+        cost: item.cost,
       };
 
     });
@@ -25,69 +31,55 @@ export function useCartState() {
   }
 
   function getSubtotalPrice() {
-
     return (cost) ? (parseFloat(cost?.subtotalAmount?.amount)).toFixed(2).replace('.', '') : '';
-
   }
 
   function getCurrencyCode() {
-
     return (cost) ? cost.subtotalAmount.currencyCode : '';
-
   }
-
+ 
   return {
     id,
     items: getItems(),
     totalQuantity,
     subtotalPrice: getSubtotalPrice(),
     currencyCode: getCurrencyCode(),
+    inventory: {
+      status: ''
+    },
     checkoutUrl,
   };
 
 }
 
 export function useCartActions() {
-  
-  //TODO
-
+  const fetcher = useFetcher();
+ 
   const addItems = (items) => {
-    console.log('addItems => ', items);
-    const fetcher = useFetcher();
     return items.map(item => fetcher.submit(item, { method: 'POST', action: '/cart' }));
-    
-
   };
 
-  const updateItems = (items) => {
+  const updateItems = async (items) => {
+    const formData = new FormData();
+    formData.set('lines', JSON.stringify([items]));
+    formData.set('cartAction', 'UPDATE_CART');
 
-    if (Array.isArray([])) {
-
-      console.log('itens is array');
-
-    } else {
-
-      console.log('itens is object');
-
-    }
-
-    console.log('updateItems => ', items);
-
+    return fetch('/cart', {
+      method: 'POST',
+      body: formData,
+    }).then(res => res).catch(error => console.log(error));
   };
 
-  const removeItems = (items) => {
+  const removeItems = (ids) => {
 
-    if (Array.isArray([])) {
+    const formData = new FormData();
+    formData.set('linesIds', JSON.stringify(ids));
+    formData.set('cartAction', 'REMOVE_FROM_CART');
 
-      console.log('itens is array');
-
-    } else {
-
-      console.log('itens is object');
-
-    }
-
-    console.log('removeItems => ', items);
+    return fetch('/cart', {
+      method: 'POST',
+      body: formData,
+    }).then(res => res).catch(error => console.log(error));
 
   };
 

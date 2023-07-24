@@ -1,4 +1,5 @@
 import SliderAccount, { links as sliderAccountStyles} from '~/modules/sliderAccount';
+import SliderCart, { links as sliderCartStyles} from '~/modules/sliderCart';
 import MainNav, { links as mainNavStyles } from '~/modules/mainNav';
 import Footer, { links as footerStyles } from '~/modules/footer';
 import BodyBottom, { links as BodyBottomStyles } from '~/modules/bodyBottom';
@@ -12,6 +13,7 @@ import { useMemo } from 'react';
 export const links = () => {
   return [
     ...sliderAccountStyles(),
+    ...sliderCartStyles(),
     ...BodyBottomStyles(),
     ...footerStyles(),
     ...mainNavStyles(),
@@ -68,6 +70,7 @@ const MainNavFooter = ({children}) => {
 
       {/* <h3>SliderCart</h3> */}
 
+      <SliderCart/>
       <SliderAccount/>
 
       { children }

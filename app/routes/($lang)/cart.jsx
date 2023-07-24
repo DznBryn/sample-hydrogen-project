@@ -1,5 +1,6 @@
-import { Link, useLoaderData } from '@remix-run/react';
+import { Link, useFetcher, useLoaderData } from '@remix-run/react';
 import { json } from '@shopify/remix-oxygen';
+import { useEffect } from 'react';
 import { cartAddItems, cartCreate, cartRemoveItems, cartUpdate, cartUpdateCustomerIdentity } from '~/utils/graphql/shopify/mutations/cart';
 import { getCart } from '~/utils/graphql/shopify/queries/cart';
 
@@ -28,6 +29,7 @@ export async function action({ request, context }) {
     const lines = formData.get('lines') ? JSON.parse(String(formData.get('lines')))
       : [];
 
+    // console.log('LINES:', lines);
     if (!cartId) {
       result = await cartCreate({
         input: countryCode ? { lines, buyerIdentity: { countryCode } } : { lines },
@@ -45,10 +47,10 @@ export async function action({ request, context }) {
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
+    console.log("Remove", formData.get('linesIds'))
     const lineIds = formData.get('linesIds')
       ? JSON.parse(String(formData.get('linesIds')))
       : [];
-
     if (!lineIds.length) {
       throw new Error('No line items to remove');
     }
@@ -64,7 +66,6 @@ export async function action({ request, context }) {
 
   if (cartAction === 'UPDATE_CART') {
     const updatesLines = formData.get('lines') ? JSON.parse(String(formData.get('lines'))) : [];
-
     if (updatesLines.length === 0) {
       return json({ message: 'No lines to update' }, { status: 400 });
     }
@@ -148,5 +149,30 @@ export default function Cart() {
         Continue shopping
       </Link>
     </div>
+  );
+}
+
+export function UpdateCartButton({ children, lines }) {
+  const fetcher = useFetcher();
+  useEffect(() => {
+    console.log(fetcher.state)
+    if (fetcher.state === 'submitting') {
+      console.log(fetcher)
+    }
+  }, [fetcher.state])
+  return (
+    <fetcher.Form action="/cart" method="post">
+      <input type="hidden" name="cartAction" value={'UPDATE_CART'} />
+      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
+      <button
+        className="plus"
+        name="increase-quantity"
+        type='submit'
+        aria-label="Increase quantity"
+      >
+        <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Increase Quantity </span>
+        <span style={{ display: 'none' }} className="ae-compliance-indent">  </span>
+      </button>
+    </fetcher.Form>
   );
 }

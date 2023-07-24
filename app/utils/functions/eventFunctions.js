@@ -614,10 +614,11 @@ export async function getCustomerData(context) {
   };
 
   const customerAccessToken = await context.session.get('customerAccessToken');
-
+console.log('customerAccessToken', customerAccessToken);
   if (customerAccessToken) {
 
     customer = await getCustomer(context, customerAccessToken);
+
     customer.addresses = flattenConnection(customer.addresses);
     customer.orders = flattenConnection(customer.orders);
 
