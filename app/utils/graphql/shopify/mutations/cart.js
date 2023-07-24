@@ -41,10 +41,7 @@ export async function cartUpdate({cartId, lines, storefront}) {
       },
     },
   );
-  console.log('CARTUPdate', {
-    cartId,
-    lines,
-  });
+  
   if (!cartLinesUpdate) {
     throw new Error('No data returned from update line items mutation');
   }
@@ -144,6 +141,8 @@ export const REMOVE_LINE_ITEMS_MUTATION = `#graphql
       }
     }
   }
+  ${LINES_CART_FRAGMENT}
+  ${USER_ERROR_FRAGMENT}
 `;
 
 export const UPDATE_LINE_ITEMS_MUTATION = `#graphql

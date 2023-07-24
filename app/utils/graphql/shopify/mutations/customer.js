@@ -9,10 +9,7 @@ export async function login({storefront}, {email, password}) {
       },
     },
   });
-  console.log(
-    'Show data=====>>>',
-    {email, password, c: data?.customerAccessTokenCreate}
-  );
+
   if (data?.customerAccessTokenCreate?.customerAccessToken?.accessToken) {
     return data?.customerAccessTokenCreate?.customerAccessToken?.accessToken;
   }
@@ -36,9 +33,8 @@ export async function register({storefront}, customerObj) {
       },
     },
   });
-  console.log('Show data', customerObj.acceptsMarketing);
+
   if (!data?.customerCreate?.customer?.id) {
-    console.log(data?.customerCreate?.customerUserErrors);
     throw new Error(data?.customerCreate?.customerUserErrors.join(', '));
   }
 }
@@ -75,7 +71,6 @@ export async function recoverPassword(email, {storefront}) {
     });
     return json({resetRequested: true});
   } catch (error) {
-    console.log(error);
     return {
       message: 'Something went wrong. Please try again later.',
       status: 500,

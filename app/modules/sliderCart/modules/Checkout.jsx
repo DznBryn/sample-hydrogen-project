@@ -2,7 +2,7 @@ import { getCurrency } from '../../../utils/functions/eventFunctions';
 import getApiKeys from '../../../utils/functions/getApiKeys';
 
 const Checkout = ({ message, url, cart = null, valueToSubtract = null }) => {
-  const subtotalPrice = Number(cart?.subtotalPrice).toFixed(2);
+  const subtotalPrice = Number(cart?.subtotalPrice/100).toFixed(2);
   return (
     <div className={cart !== null ? 'checkout' : 'emptyCheckout'}>
       {cart !== null && (
@@ -10,7 +10,7 @@ const Checkout = ({ message, url, cart = null, valueToSubtract = null }) => {
           <h2>Subtotal</h2>
           <h2>
             {valueToSubtract
-              ? getCurrency() + (subtotalPrice - valueToSubtract).toFixed(2)
+              ? getCurrency() + (subtotalPrice - valueToSubtract)
               : getCurrency() + subtotalPrice}
           </h2>
         </div>

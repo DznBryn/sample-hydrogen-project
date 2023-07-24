@@ -683,7 +683,7 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
       </div>
     );
   };
-// console.log({Cart: cart})
+
   return (
     <div
       className={'sliderCartWrap hidden'}

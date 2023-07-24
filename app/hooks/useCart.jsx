@@ -7,7 +7,7 @@ export function useCartState() {
 
   const { id, checkoutUrl, totalQuantity, lines, cost } = root.data.cart;
   const items = lines ? flattenConnection(lines) : [];
- 
+
   function getItems() {
 
     return items.map(item => {
@@ -31,17 +31,13 @@ export function useCartState() {
   }
 
   function getSubtotalPrice() {
-
     return (cost) ? (parseFloat(cost?.subtotalAmount?.amount)).toFixed(2).replace('.', '') : '';
-
   }
 
   function getCurrencyCode() {
-
     return (cost) ? cost.subtotalAmount.currencyCode : '';
-
   }
-  // console.log({ items })
+ 
   return {
     id,
     items: getItems(),
@@ -57,47 +53,33 @@ export function useCartState() {
 }
 
 export function useCartActions() {
-  
-  //TODO
-
+  const fetcher = useFetcher();
+ 
   const addItems = (items) => {
-    console.log('addItems => ', items);
-    const fetcher = useFetcher();
     return items.map(item => fetcher.submit(item, { method: 'POST', action: '/cart' }));
-    
-
   };
 
-  const updateItems = (items) => {
+  const updateItems = async (items) => {
+    const formData = new FormData();
+    formData.set('lines', JSON.stringify([items]));
+    formData.set('cartAction', 'UPDATE_CART');
 
-
-    if (Array.isArray([])) {
-
-      console.log('itens is array');
-
-    } else {
-
-      console.log('itens is object');
-
-    }
-
-    console.log('updateItems => ', items);
-
+    return fetch('/cart', {
+      method: 'POST',
+      body: formData,
+    }).then(res => res).catch(error => console.log(error));
   };
 
-  const removeItems = (items) => {
+  const removeItems = (ids) => {
 
-    if (Array.isArray([])) {
+    const formData = new FormData();
+    formData.set('linesIds', JSON.stringify(ids));
+    formData.set('cartAction', 'REMOVE_FROM_CART');
 
-      console.log('itens is array');
-
-    } else {
-
-      console.log('itens is object');
-
-    }
-
-    console.log('removeItems => ', items);
+    return fetch('/cart', {
+      method: 'POST',
+      body: formData,
+    }).then(res => res).catch(error => console.log(error));
 
   };
 

@@ -31,7 +31,7 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
 
   const changeCartQty = async (qty) => {
     try {
-      await updateItems({ id: item.id, quantity: qty });
+      await updateItems({ id: item.line_item_id, quantity: qty });
     } catch (e) {
       console.log(e);
     }
@@ -40,26 +40,22 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
     const curQty = parseInt(inputQtyRef.current.value);
     if (curQty < 5) {
       inputQtyRef.current.value = curQty + 1;
-      changeCartQty(curQty + 1);
+      return changeCartQty(curQty + 1);
     }
   };
   const handleSub = () => {
     const curQty = parseInt(inputQtyRef.current.value);
     if (curQty !== 1) {
       inputQtyRef.current.value = curQty - 1;
-      changeCartQty(curQty - 1);
+      return changeCartQty(curQty - 1);
     }
   };
   const handleDelete = async () => {
 
-    const itemsToRemove = [item.id];
-
+    const itemsToRemove = [item.line_item_id];
     // if (carbonOffsetIsOnCart && items.length === 2){
-
     //   itemsToRemove.push(carbonOffsetVariant);
-
     // }
-    getCurrency;
 
     await removeItems(itemsToRemove);
 
@@ -113,10 +109,6 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
     return dropdownValue || (itemCurrentSellingPlan || defaultSellingPlan);
 
   }
-
-  useEffect(() => {
-    console.log('UpdateCart', updateCartItemRef);
-  }, []);
 
   // useEffect(() => {
   //   if (window.localStorage.getItem('tulaSitewide') !== null) {
@@ -190,7 +182,6 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
     </div>
   );
 
-  // console.log('GET ITEM', { item });
   const RegularProduct = () => (
     <div className={'sliderCartProduct'}>
       <div className={'productImage'}>
@@ -212,67 +203,18 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
               <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Reduce Quantity </span>
               <span style={{ display: 'none' }} className="ae-compliance-indent"> {item?.title}  </span>
             </button>
-            <input type="text" value={item?.quantity} min="0" ref={inputQtyRef} readOnly="readonly" name="updates[33187716673:307c12b24eaffc6df04a594677e63385]" className="product-quantity" id="quantity" aria-label="Quantity" />
+            <input type="text" value={item?.quantity} min="0" ref={inputQtyRef} readOnly="readonly" name="updates[33187716673:307c12b24eaffc6df04a594677e63385]" className="product-quantity" id={`quantity--${item.id}`} aria-label="Quantity" />
             <button type="button" className={'plus'} onClick={handleAdd}>
               <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Increase Quantity </span>
               <span style={{ display: 'none' }} className="ae-compliance-indent"> {item?.title}  </span>
             </button>
-            {/* <button type="button" className={'plus'} onClick={
-              async () => {
-                return await fetcher.submit({
-                  cartAction: 'UPDATE_CART',
-                  lines: [{
-                    id: item.line_item_id,
-                    quantity: item?.quantity ? item.quantity + 1 : 1,
-                    merchandiseId: item.merchandiseId
-                  }]
-                }, { method: 'post', action: '/cart' });
-              }
-            }>
-              <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Increase Quantity </span>
-              <span style={{<updateCartItem.Form ref={updateCartItemRef} action="/cart" method="post">
-              
-              <input type="hidden" name="lines" value={JSON.stringify([
-                {
-                  id: item.line_item_id,
-                  quantity: item.quantity + 1,
-                }
-              ])} />
-              <button
-                className="plus"
-                onClick={()=> console.log("Clicked")}
-                name="increase-quantity"
-                type='submit'
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </updateCartItem.Form> display: 'none' }} className="ae-compliance-indent"> {item?.title}  </span>
-            </button> */}
-            {/*  */}
-            {/* <UpdateCartButton lines={[{
-              id: 'gid://shopify/CartLine/186689aa-e602-4bd4-a042-959faadaa4d9?cart=c1-caef37a020ba52704880c3dea2688eae',
-              quantity: 1
-            }]} /> */}
-            {/* <updateCartItem.Form action="/cart" method="post">
-              <input type="hidden" name="cartAction" value={'UPDATE_CART'} />
-              <input type="hidden" name="lines" value={JSON.stringify([{
-                id: item.line_item_id,
-                quantity: item?.quantity ? item.quantity + 1 : 1
-              }])} />
-
-              <button type="submit" className={'plus'}>
-                <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Increase Quantity </span>
-                <span style={{ display: 'none' }} className="ae-compliance-indent"> {item?.title}  </span>
-              </button>
-
-            </updateCartItem.Form> */}
             <div className={'productTotal'}>
-              {forceChange && (<h6>{getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}</h6>
-              // <Price
-              //   isSellingPlan={isSellingPlan}
-              //   item={item}
-              //   promo={promo} />
+              <h6>{getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}</h6>
+              {forceChange && (<></>
+                // <Price
+                //   isSellingPlan={isSellingPlan}
+                //   item={item}
+                //   promo={promo} />
               )}
             </div>
           </div>

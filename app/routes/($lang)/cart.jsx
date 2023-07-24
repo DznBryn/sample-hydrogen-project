@@ -22,12 +22,8 @@ export async function action({ request, context }) {
   const countryCode = formData?.get('countryCode') ?? null;
 
   if (!cartAction || cartAction === '') {
-
-  if (!cartAction || cartAction === '') {
     return json({ message: 'Cart action not found' }, { status: 400 });
   }
-
-  console.log("Updatesss", formData.get('lines'))
 
   if (cartAction === 'ADD_TO_CART') {
     const lines = formData.get('lines') ? JSON.parse(String(formData.get('lines')))
@@ -51,10 +47,10 @@ export async function action({ request, context }) {
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
+    console.log("Remove", formData.get('linesIds'))
     const lineIds = formData.get('linesIds')
       ? JSON.parse(String(formData.get('linesIds')))
       : [];
-
     if (!lineIds.length) {
       throw new Error('No line items to remove');
     }
@@ -70,7 +66,6 @@ export async function action({ request, context }) {
 
   if (cartAction === 'UPDATE_CART') {
     const updatesLines = formData.get('lines') ? JSON.parse(String(formData.get('lines'))) : [];
-    // console.log("Updatesss", updatesLines)
     if (updatesLines.length === 0) {
       return json({ message: 'No lines to update' }, { status: 400 });
     }
@@ -175,7 +170,8 @@ export function UpdateCartButton({ children, lines }) {
         type='submit'
         aria-label="Increase quantity"
       >
-        +
+        <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Increase Quantity </span>
+        <span style={{ display: 'none' }} className="ae-compliance-indent">  </span>
       </button>
     </fetcher.Form>
   );
