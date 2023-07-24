@@ -87,7 +87,7 @@ export default function PDPAddToCart({
 
   const mapStateToButton = {
     [IDLE]: <addToCart.Form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value={addItem?.action ?? 'UPDATE_CART'} />
+      <input type="hidden" name="cartAction" value={addItem?.action ?? 'ADD_TO_CART'} />
       <input
         type="hidden"
         name="countryCode"
