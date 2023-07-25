@@ -214,7 +214,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
     <div className={'plpWrapperProductBox'} id={`product-${product?.handle ? product.handle : slug}`}>
 
-      <div className='container'>
+      <div className='plpProductBoxcontainer'>
 
         <PLPBadges product={product} sitewide={sitewide} noPromo={noPromo}/>
 

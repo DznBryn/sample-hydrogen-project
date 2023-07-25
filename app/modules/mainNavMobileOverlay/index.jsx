@@ -30,9 +30,9 @@ const MainNavMobileOverlay = ({ mobileOverlayItems, mobileNavMainButton }) => {
 
       <FooterButtons />
 
-      <Link to={mobileNavMainButton.linkURL} id={'footer'} onClick={() => { (getApiKeys().FEATURE_FLAGS.LOYALTY) && triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'mobileBanner' }); }} style={((getApiKeys().FEATURE_FLAGS.LOYALTY)) ? { backgroundImage: 'url(' + mobileNavMainButton.imageBackground.src + ')' } : {}}>
+      <Link to={mobileNavMainButton.linkURL} id={'footer'} onClick={() => { (getApiKeys().FEATURE_FLAGS.LOYALTY) && triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'mobileBanner' }); }} style={((getApiKeys().FEATURE_FLAGS.LOYALTY)) ? { backgroundImage: 'url(' + mobileNavMainButton.imageBackground.asset.url + ')' } : {}}>
 
-        <div className={['content', ((getApiKeys().FEATURE_FLAGS.LOYALTY) ? styles.whiteColor : '')].join(' ')} onClick={handleClickOnLink}>
+        <div className={['content', ((getApiKeys().FEATURE_FLAGS.LOYALTY) ? 'whiteColor' : '')].join(' ')} onClick={handleClickOnLink}>
           <p className={(getApiKeys().FEATURE_FLAGS.LOYALTY) && 'whiteColor'}>{mobileNavMainButton.header}</p>
           {mobileNavMainButton.contentText}
         </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import {updateElemsPositionOnBannerClose} from '../mainNav';
 import {PortableText} from '@portabletext/react';
 
 import styles from './styles.css';
@@ -17,6 +18,12 @@ const AnnouncementTopBanner = ({ content }) => {
     setShowBanner(false);
     window?.sessionStorage.setItem('annoucementBannerVisibility', false);
   }
+
+  useEffect(() => {
+
+    if(showBanner === false) updateElemsPositionOnBannerClose();
+
+  }, [showBanner]);
 
   useEffect(() => {
 

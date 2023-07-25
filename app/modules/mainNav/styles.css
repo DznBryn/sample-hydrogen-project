@@ -82,7 +82,7 @@
   opacity: 1;
 }
 
-.menu.opened svg {
+.menu.menuOverlayOpened svg {
   opacity: 0;
   transition: all 0.25s;
 }
@@ -144,11 +144,11 @@
     transform: rotate(135deg);
     opacity: 0;
   }
-  .menu.opened .closeBtn {
+  .menu.menuOverlayOpened .closeBtn {
     opacity: 1;
     transition: all 0.25s;
   }
-  .opened svg {
+  .menuOverlayOpened svg {
     height: 29px !important;
   }
   .menu svg {
@@ -173,17 +173,17 @@
     stroke-dasharray: 60 207;
     stroke-width: 5;
   }
-  .opened .line1 {
+  .menuOverlayOpened .line1 {
     stroke-dasharray: 90 207;
     stroke-dashoffset: -134;
     stroke-width: 5;
   }
-  .opened .line2 {
+  .menuOverlayOpened .line2 {
     stroke-dasharray: 1 60;
     stroke-dashoffset: -30;
     stroke-width: 5;
   }
-  .opened .line3 {
+  .menuOverlayOpened .line3 {
     stroke-dasharray: 90 207;
     stroke-dashoffset: -134;
     stroke-width: 5;

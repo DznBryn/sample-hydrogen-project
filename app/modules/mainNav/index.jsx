@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { createCustomEvent } from '~/utils/functions/eventFunctions';
 import DesktopNavItem, { links as desktopNavItemStyles } from '~/modules/desktopNavItem';
 import HeaderIcons, { links as headerIconsStyles } from '~/modules/headerIcons';
@@ -37,13 +37,13 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
   const handleClick = (e) => {
     const dataEvent = createCustomEvent();
     if (document.querySelector('[data-visible-state]').getAttribute('data-visible-state') === 'show') {
-      e.currentTarget.parentElement.classList.remove('opened');
+      e.currentTarget.parentElement.classList.remove('menuOverlayOpened');
       document.querySelector('html').classList.remove('bodyWrap');
       document.querySelector('[data-visible-state]').setAttribute('data-visible-state', 'hide');
       document.querySelector('[data-visible-state]').dispatchEvent(dataEvent);
       mainContainer.current.style.zIndex = '10000';
     } else {
-      e.currentTarget.parentElement.classList.add('opened');
+      e.currentTarget.parentElement.classList.add('menuOverlayOpened');
       document.querySelector('html').classList.add('bodyWrap');
       document.querySelector('[data-visible-state]').setAttribute('data-visible-state', 'show');
       document.querySelector('[data-visible-state]').dispatchEvent(dataEvent);
@@ -51,22 +51,27 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
     }
   };
 
-  const [topPosition, setTopPosition] = useState({
-    top: 0
-  });
-
   useEffect(() => {
-    // Initial navPlaceholder height onLoad
-    if (document && document.getElementById('navPlaceholder') && document.getElementById('promoBannersWrap')) {
-      let topValue = document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + 87;
-      document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + 87 + 'px';
-      topPosition.top !== topValue && setTopPosition({ ...topPosition, top: topValue });
+    // Initialize navPlaceholder height onLoad
+    if (document) {
+      const promoWrapperCheck = document.querySelectorAll('#promoBannersWrap').length > 0;
+      const promoWrapperCheckInterval = setInterval(() => {
+        if (promoWrapperCheck === true) {
+          document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + document.querySelector('.mainNav').offsetHeight + 'px';
+          document.getElementById('mobileOverlayWrapper').style.marginTop = document.getElementById('promoBannersWrap').offsetHeight + 36 + 'px';
+          document.querySelector('.mainNavMegaMenu').style.top = document.querySelector('.mainNav').offsetHeight + 'px';
+          document.querySelectorAll('.navDropDown')[0].style.top = document.querySelector('.mainNav').offsetHeight + 'px';
+          document.querySelectorAll('.navDropDown')[1].style.top = document.querySelector('.mainNav').offsetHeight + 'px';
+          clearInterval(promoWrapperCheckInterval);
+        }
+      }, 1000);
+
       // Add classname "close-promotional-banner" to any "close" buttons on promo bars we're adding in
       let banners = document.querySelectorAll('.close-promotional-banner');
       for (let i = 0; i < banners.length; i++) {
         banners[i].addEventListener('click', function () {
           banners[i].parentElement.style.display = 'none';
-          document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + 87 + 'px';
+          updateElemsPositionOnBannerClose();
         });
       }
 
@@ -74,7 +79,7 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
       anchor.forEach(el => el.target = '_self');
     }
 
-  }, [topPosition.top]);
+  }, []);
 
   return (
     <section className={'mainNav'} ref={mainContainer}>
@@ -126,6 +131,18 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
 
     </section>
   );
+};
+
+export const updateElemsPositionOnBannerClose = () => {
+  document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + document.querySelector('.mainNav').offsetHeight + 'px';
+  console.log(document.getElementById('promoBannersWrap'));
+  console.log(document.getElementById('promoBannersWrap').offsetHeight);
+  document.getElementById('mobileOverlayWrapper').style.marginTop = document.getElementById('promoBannersWrap').offsetHeight + 36 + 'px';
+  let navDropDown = document.querySelectorAll('.navDropDown');
+  for (let j = 0; j < navDropDown.length; j++) {
+    navDropDown[j].style.top = document.querySelector('.mainNav').offsetHeight + 'px';
+  }
+  document.querySelector('.mainNavMegaMenu').style.top = document.querySelector('.mainNav').offsetHeight + 'px';
 };
 
 const HamburguerIcon = () => <svg width={21} height={16} viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1={0.75} y1={1.25} x2={15.75} y2={1.25} stroke="#4C4E56" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><line x1={0.75} y1={11.25} x2={15.75} y2={11.25} stroke="#4C4E56" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /><line x1={0.75} y1={6.25} x2={15.75} y2={6.25} stroke="#4C4E56" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" /></svg>;
