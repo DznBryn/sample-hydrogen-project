@@ -90,9 +90,6 @@
 }
 
 @media all and (max-width: 768px) {
-  .hpCarouselWrapper {
-    margin-top: 35px;
-  }
   .hpVideo {
     flex-direction: column-reverse;
     height: initial;

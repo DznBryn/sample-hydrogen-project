@@ -25,7 +25,7 @@
   .navPlaceholder {
     height: 50px;
   }
-  .navPlaceholder:global(.mobileSubNavActive) {
+  .navPlaceholder .mobileSubNavActive {
     padding-bottom: 92px;
   }
 }
