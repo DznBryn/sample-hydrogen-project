@@ -57,7 +57,7 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
       const promoWrapperCheck = document.querySelectorAll('#promoBannersWrap').length > 0;
       const promoWrapperCheckInterval = setInterval(() => {
         if (promoWrapperCheck === true) {
-          document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + document.querySelector('.mainNav').offsetHeight + 'px';
+          document.getElementById('navPlaceholder').style.height = document.querySelector('.mainNav').offsetHeight + 'px';
           document.getElementById('mobileOverlayWrapper').style.marginTop = document.getElementById('promoBannersWrap').offsetHeight + 36 + 'px';
           document.querySelector('.mainNavMegaMenu').style.top = document.querySelector('.mainNav').offsetHeight + 'px';
           document.querySelectorAll('.navDropDown')[0].style.top = document.querySelector('.mainNav').offsetHeight + 'px';
@@ -134,9 +134,7 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
 };
 
 export const updateElemsPositionOnBannerClose = () => {
-  document.getElementById('navPlaceholder').style.height = document.getElementById('promoBannersWrap').offsetHeight + document.querySelector('.mainNav').offsetHeight + 'px';
-  console.log(document.getElementById('promoBannersWrap'));
-  console.log(document.getElementById('promoBannersWrap').offsetHeight);
+  document.getElementById('navPlaceholder').style.height = document.querySelector('.mainNav').offsetHeight + 'px';
   document.getElementById('mobileOverlayWrapper').style.marginTop = document.getElementById('promoBannersWrap').offsetHeight + 36 + 'px';
   let navDropDown = document.querySelectorAll('.navDropDown');
   for (let j = 0; j < navDropDown.length; j++) {

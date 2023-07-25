@@ -47,7 +47,7 @@ export async function action({ request, context }) {
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
-    console.log("Remove", formData.get('linesIds'))
+    console.log('Remove', formData.get('linesIds'));
     const lineIds = formData.get('linesIds')
       ? JSON.parse(String(formData.get('linesIds')))
       : [];
@@ -152,14 +152,14 @@ export default function Cart() {
   );
 }
 
-export function UpdateCartButton({ children, lines }) {
+export function UpdateCartButton({ /*children,*/ lines }) {
   const fetcher = useFetcher();
   useEffect(() => {
-    console.log(fetcher.state)
+    console.log(fetcher.state);
     if (fetcher.state === 'submitting') {
-      console.log(fetcher)
+      console.log(fetcher);
     }
-  }, [fetcher.state])
+  }, [fetcher.state]);
   return (
     <fetcher.Form action="/cart" method="post">
       <input type="hidden" name="cartAction" value={'UPDATE_CART'} />

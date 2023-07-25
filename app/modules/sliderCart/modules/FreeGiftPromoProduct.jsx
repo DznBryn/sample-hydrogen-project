@@ -4,11 +4,11 @@ import { getCurrency } from '../../../utils/functions/eventFunctions';
 const FreeGiftPromoProduct = ({
   product,
   isMystery,
-  anonymousImageSrc,
+  // anonymousImageSrc,
   active,
   productPrice,
 }) => {
-  const IMG_SRC = isMystery ? anonymousImageSrc : product.media[0].details.src;
+  // const IMG_SRC = isMystery ? anonymousImageSrc : product.media[0].details.src;
   
   return (
     <div

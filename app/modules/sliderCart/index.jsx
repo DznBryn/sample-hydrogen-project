@@ -30,7 +30,7 @@ import styles from './styles.css';
 import ProgressBar from './modules/ProgressBar';
 import Checkout from './modules/Checkout';
 import LoyaltyTooltipModal from './modules/LoyaltyTooltipModal';
-import FreeGiftPromoProduct from './modules/FreeGiftPromoProduct';
+// import FreeGiftPromoProduct from './modules/FreeGiftPromoProduct';
 import { GearIcon } from '../icons/index';
 import { mockCartConfig, mockProductRecs } from '../../utils/functions/mocks';
 
@@ -91,8 +91,10 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
 
   const [rewardsPoints, setRewardsPoints] = React.useState(totalCart);
+  console.log(rewardsPoints);
 
-  const { id, isLoggedIn, firstName, email, status } = useCustomerState();
+  const { id, isLoggedIn, email, status } = useCustomerState();
+  // const { id, isLoggedIn, firstName, email, status } = useCustomerState();
 
   const addAutoDeliveryItemsToLocalStorage = useCallback(() => {
     if (
@@ -255,7 +257,7 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
     );
 
     return ITEMS_WITH_NO_GWP.every((product) =>
-      GIFT_CARDS_VARIANTS_IDS.some((id) => id == product.variant_id),
+      GIFT_CARDS_VARIANTS_IDS.some((id) => id === product.variant_id),
     );
   }
 
@@ -305,7 +307,7 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
     return true;
   });
 
-  const handleClick = (e) => {
+  const handleClick = () => {
     const sliderEvent = createCustomEvent();
     if (cartRef.current.getAttribute('data-slider-state') === 'show') {
       document.querySelector('html').classList.remove('bodyWrap');
@@ -471,12 +473,12 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
   };
 
   const ItemsList = () => {
-    const getRecItemsLimit = () => {
-      if (items.length === 2) return 2;
-      if (items.length === 3) return 1;
-      if (items.length > 4) return 0;
-      return 3;
-    };
+    // const getRecItemsLimit = () => {
+    //   if (items.length === 2) return 2;
+    //   if (items.length === 3) return 1;
+    //   if (items.length > 4) return 0;
+    //   return 3;
+    // };
 
     const filteredItems = {
       noAD:
@@ -494,32 +496,32 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
           : items.filter((data) => data.selling_plan_allocation),
     };
 
-    const shouldActivateFreeGift = () => {
-      let cartTotal =
-        apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
-      if (!cartConfig.freeGiftPromoCombineAD) {
-        cartTotal =
-          apiType === 'graphql'
-            ? cart.items
-              .filter(
-                (item) =>
-                  !item.customAttributes.some(
-                    (el) => el.key === 'selling_plan',
-                  ),
-              )
-              .reduce(
-                (total, value) => (total += Number(value.variant.price)),
-                0,
-              )
-            : cart.items
-              .filter((item) => item.selling_plan_allocation === undefined)
-              .reduce(
-                (total, value) => (total += value.final_line_price / 100),
-                0,
-              );
-      }
-      return cartTotal >= cartConfig.freeGiftPromoThreshold;
-    };
+    // const shouldActivateFreeGift = () => {
+    //   let cartTotal =
+    //     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
+    //   if (!cartConfig.freeGiftPromoCombineAD) {
+    //     cartTotal =
+    //       apiType === 'graphql'
+    //         ? cart.items
+    //           .filter(
+    //             (item) =>
+    //               !item.customAttributes.some(
+    //                 (el) => el.key === 'selling_plan',
+    //               ),
+    //           )
+    //           .reduce(
+    //             (total, value) => (total += Number(value.variant.price)),
+    //             0,
+    //           )
+    //         : cart.items
+    //           .filter((item) => item.selling_plan_allocation === undefined)
+    //           .reduce(
+    //             (total, value) => (total += value.final_line_price / 100),
+    //             0,
+    //           );
+    //   }
+    //   return cartTotal >= cartConfig.freeGiftPromoThreshold;
+    // };
 
     /**
      * this code bellow is the code for Loyalty products
@@ -553,7 +555,7 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
             {filteredItems.withAD.length > 0 && (
               <p>Your auto-delivery items:</p>
             )}
-            {filteredItems.withAD.map((item) => {
+            {filteredItems.withAD.forEach((item) => {
               const product =
                 apiType === 'graphql'
                   ? products?.products?.filter(
@@ -600,9 +602,9 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
           <div>
             {filteredItems.noAD.length > 0 &&
               filteredItems.withAD.length > 0 && (
-                <p>Your one-time purchase items:</p>
-              )}
-            {filteredItems.noAD.map((item) => {
+              <p>Your one-time purchase items:</p>
+            )}
+            {filteredItems.noAD.forEach((item) => {
               const product =
                 apiType === 'graphql'
                   ? products?.products?.filter(
