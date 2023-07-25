@@ -919,7 +919,7 @@ export const mockProductRecs = {
           _id: '0c061f6d-f7c7-4ecf-b242-e6b8d6503129',
           key: 'how_to_use_text',
           value:
-            "<p>Apply as your eye care step after you moisturize. Can be applied 360 degrees around the eye and on the orbital bone for a brighter appearance. Can also be used as a highlighter on the cheekbones, cupid's bow, nose, and anywhere else you want a glow effect.</p><p>Due to the unique balm texture of this product, you can re-apply throughout the day to energize and brighten the eye area.</p><p>Designed to be applied under or on top of makeup for an instant pick-me-up.</p>",
+            '<p>Apply as your eye care step after you moisturize. Can be applied 360 degrees around the eye and on the orbital bone for a brighter appearance. Can also be used as a highlighter on the cheekbones, cupid\'s bow, nose, and anywhere else you want a glow effect.</p><p>Due to the unique balm texture of this product, you can re-apply throughout the day to energize and brighten the eye area.</p><p>Designed to be applied under or on top of makeup for an instant pick-me-up.</p>',
         },
         {
           _id: 'a8a31201-c4cd-4bc8-a11a-0d18d74ed256',
@@ -1655,7 +1655,7 @@ export const mockProductRecs = {
           _id: '7e80e253-6e68-4407-91f3-7971e608d1a7',
           key: 'how_to_use_text',
           value:
-            "<p>Apply as your eye care step after you moisturizer. Can be applied 360 degrees around the eye and on the orbital bone for a brighter appearance. Can also be used as a highlighter on the cheekbones, cupid's bow, nose, and anywhere else you want a glow effect.</p><p>Due to the unique balm texture of this product, you can re-apply throughout the day to energize and brighten the eye area.</p><p>Designed to be applied under or on top of makeup for an instant pick-me-up.</p>",
+            '<p>Apply as your eye care step after you moisturizer. Can be applied 360 degrees around the eye and on the orbital bone for a brighter appearance. Can also be used as a highlighter on the cheekbones, cupid\'s bow, nose, and anywhere else you want a glow effect.</p><p>Due to the unique balm texture of this product, you can re-apply throughout the day to energize and brighten the eye area.</p><p>Designed to be applied under or on top of makeup for an instant pick-me-up.</p>',
         },
         {
           _id: '8414f87a-4bfc-4255-84d5-d22666b55616',

@@ -19,7 +19,7 @@ const SliderCartRec = ({ productRecs, limit, gwpProductId }) => {
         {productRecs?.productList?.filter((product) => (product.externalId !== gwpProductId))
           .map((product, index) => {
             if (index < limit) {
-              const addItem = { variantId: product.variants[0].externalId, quantity: 1, selling_plan_id: 0, product };
+              const addItem = { variantId: product.variants[0].externalId, quantity: 1, /*selling_plan_id: 0,*/ product };
               return (
                 <div key={index} className={styles.product}>
                   <a href={'/products/' + product.slug}>

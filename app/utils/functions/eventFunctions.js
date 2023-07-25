@@ -614,7 +614,7 @@ export async function getCustomerData(context) {
   };
 
   const customerAccessToken = await context.session.get('customerAccessToken');
-console.log('customerAccessToken', customerAccessToken);
+  console.log('customerAccessToken', customerAccessToken);
   if (customerAccessToken) {
 
     customer = await getCustomer(context, customerAccessToken);

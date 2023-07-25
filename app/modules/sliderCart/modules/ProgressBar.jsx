@@ -7,7 +7,7 @@ import {
   getCartTotalForFreeShipping,
   getCartTotalForFreeShippingGraphQL,
 } from '../../../utils/functions/eventFunctions';
-import {isFreeGitPromoActivate} from '../utils'
+import {isFreeGitPromoActivate} from '../utils';
 const apiType = getApiKeys().API_TYPE;
 let initState = 0;
 
@@ -136,4 +136,4 @@ const ProgressBar = ({ cart, cartConfig }) => {
   );
 };
 
-export default ProgressBar
+export default ProgressBar;

@@ -1,33 +1,33 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Link, useFetcher } from '@remix-run/react';
-import { useCartActions, useCartState } from '../../../hooks/useCart';
+import { /*useEffect,*/ useRef/*, useState*/ } from 'react';
+import { Link/*, useFetcher*/ } from '@remix-run/react';
+import { useCartActions/*, useCartState*/ } from '../../../hooks/useCart';
 import { getCurrency } from '../../../utils/functions/eventFunctions';
-import getApiKeys from '../../../utils/functions/getApiKeys';
+// import getApiKeys from '../../../utils/functions/getApiKeys';
 
 import styles from './styles.css';
-import { UpdateCartButton } from '~/routes/($lang)/cart';
+// import { UpdateCartButton } from '~/routes/($lang)/cart';
 
-let sitewide = false;
+// let sitewide = false;
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles }
   ];
 };
-const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSliderCartLoading, product }) => {
+const SliderCartProductBox = ({ item = {}, /*promo,*/ cartPageConfig = {}/*, setSliderCartLoading, product*/ }) => {
 
-  const inputQtyRef = React.useRef();
-  const { items } = useCartState();
-  const updateCartItem = useFetcher();
-  const updateCartItemRef = useRef(null);
-  const { updateItems, removeItems, addItems } = useCartActions();
-  const [forceChange, setForceChange] = useState(false);
-  const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
+  const inputQtyRef = useRef();
+  // const { items } = useCartState();
+  // const updateCartItem = useFetcher();
+  // const updateCartItemRef = useRef(null);
+  const { updateItems, removeItems/*, addItems*/ } = useCartActions();
+  // const [forceChange, setForceChange] = useState(false);
+  // const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
   // const carbonOffsetIsOnCart = items.filter(item => convertStorefrontIdToExternalId(item?.variant?.product?.id) === carbonOffsetVariant)[0]; 
   let sellingPlanName = '';
   let isSellingPlan = false;
-  let isLoyaltyRedeem = false;
-  const sellingPlansDropdown = React.useRef(null);
-  const switcherInput = React.useRef(null);
+  // let isLoyaltyRedeem = false;
+  // const sellingPlansDropdown = React.useRef(null);
+  // const switcherInput = React.useRef(null);
 
   const changeCartQty = async (qty) => {
     try {
@@ -62,7 +62,7 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
   };
 
   if (item?.customAttributes?.some((atribute) => atribute.key === 'loyalty_redeem')) {
-    isLoyaltyRedeem = true;
+    // isLoyaltyRedeem = true;
   }
 
   if (item?.customAttributes?.some((atribute) => atribute.key === 'selling_plan')) {
@@ -76,39 +76,39 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
     }
   }
 
-  async function switchProductAD(e) {
+  // async function switchProductAD(e) {
 
-    const changeToAD = switcherInput.current.checked;
+  //   const changeToAD = switcherInput.current.checked;
 
-    const itemToAdd = {
-      id: item.variant.id,
-      quantity: parseInt(inputQtyRef.current.value),
-    };
+  //   const itemToAdd = {
+  //     id: item.variant.id,
+  //     quantity: parseInt(inputQtyRef.current.value),
+  //   };
 
-    if (changeToAD) itemToAdd.customAttributes = [{ key: 'selling_plan', value: String(getCurSellingPlan()) }];
+  //   if (changeToAD) itemToAdd.customAttributes = [{ key: 'selling_plan', value: String(getCurSellingPlan()) }];
 
-    setSliderCartLoading(true);
+  //   setSliderCartLoading(true);
 
-    await handleDelete();
-    await addItems(itemToAdd);
+  //   await handleDelete();
+  //   await addItems(itemToAdd);
 
-    setSliderCartLoading(false);
+  //   setSliderCartLoading(false);
 
-  }
+  // }
 
-  function getCurSellingPlan() {
+  // function getCurSellingPlan() {
 
-    const recommendedSellingPlan = item?.customAttributes.find((el) => el?.key === 'selling_plan') && Number(item?.customAttributes.find((el) => el?.key === 'selling_plan')?.value); // ###
-    const hasRecommendedSellingPlan = (recommendedSellingPlan !== undefined) && (recommendedSellingPlan !== 0);
+  //   const recommendedSellingPlan = item?.customAttributes.find((el) => el?.key === 'selling_plan') && Number(item?.customAttributes.find((el) => el?.key === 'selling_plan')?.value); // ###
+  //   const hasRecommendedSellingPlan = (recommendedSellingPlan !== undefined) && (recommendedSellingPlan !== 0);
 
-    const itemCurrentSellingPlan = Number(item?.customAttributes.find((el) => el?.key === 'selling_plan')?.value);
-    const dropdownValue = parseInt(sellingPlansDropdown?.current?.value);
+  //   const itemCurrentSellingPlan = Number(item?.customAttributes.find((el) => el?.key === 'selling_plan')?.value);
+  //   const dropdownValue = parseInt(sellingPlansDropdown?.current?.value);
 
-    const defaultSellingPlan = cartPageConfig.sellingPlans[(hasRecommendedSellingPlan) ? (recommendedSellingPlan) : 0]?.sellingPlanID;
+  //   const defaultSellingPlan = cartPageConfig.sellingPlans[(hasRecommendedSellingPlan) ? (recommendedSellingPlan) : 0]?.sellingPlanID;
 
-    return dropdownValue || (itemCurrentSellingPlan || defaultSellingPlan);
+  //   return dropdownValue || (itemCurrentSellingPlan || defaultSellingPlan);
 
-  }
+  // }
 
   // useEffect(() => {
   //   if (window.localStorage.getItem('tulaSitewide') !== null) {
@@ -210,12 +210,12 @@ const SliderCartProductBox = ({ item = {}, promo, cartPageConfig = {}, setSlider
             </button>
             <div className={'productTotal'}>
               <h6>{getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}</h6>
-              {forceChange && (<></>
+              {/* {forceChange && (<></>
                 // <Price
                 //   isSellingPlan={isSellingPlan}
                 //   item={item}
                 //   promo={promo} />
-              )}
+              )} */}
             </div>
           </div>
         </div>
