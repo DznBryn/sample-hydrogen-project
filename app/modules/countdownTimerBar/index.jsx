@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
+import {updateElemsPositionOnBannerClose} from '../mainNav';
 import styles from './styles.css';
 
 export const links = () => {
@@ -28,6 +29,12 @@ const CountdownTimerBar = ({ enable, deadline, copy, bgColor }) => {
     }
 
   }, []);
+
+  useEffect(() => {
+
+    if(showIt === false) updateElemsPositionOnBannerClose();
+
+  }, [showIt]);
 
   /**/
 
