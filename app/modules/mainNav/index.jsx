@@ -59,9 +59,9 @@ const MainNav = ({ desktopHeaderNav, mobileOverlayNav, mobileNavbar, announcemen
         if (promoWrapperCheck === true) {
           document.getElementById('navPlaceholder').style.height = document.querySelector('.mainNav').offsetHeight + 'px';
           document.getElementById('mobileOverlayWrapper').style.marginTop = document.getElementById('promoBannersWrap').offsetHeight + 36 + 'px';
-          document.querySelector('.mainNavMegaMenu').style.top = document.querySelector('.mainNav').offsetHeight + 'px';
-          document.querySelectorAll('.navDropDown')[0].style.top = document.querySelector('.mainNav').offsetHeight + 'px';
-          document.querySelectorAll('.navDropDown')[1].style.top = document.querySelector('.mainNav').offsetHeight + 'px';
+          document.querySelector('.mainNavMegaMenu').style.top = document.querySelector('.mainNavWrap').offsetHeight + 'px';
+          document.querySelectorAll('.navDropDown')[0].style.top = document.querySelector('.mainNavWrap').offsetHeight + 'px';
+          document.querySelectorAll('.navDropDown')[1].style.top = document.querySelector('.mainNavWrap').offsetHeight + 'px';
           clearInterval(promoWrapperCheckInterval);
         }
       }, 1000);
