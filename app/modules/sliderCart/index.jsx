@@ -90,8 +90,8 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
   const totalCart =
     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
 
-  const [rewardsPoints, setRewardsPoints] = React.useState(totalCart);
-  console.log(rewardsPoints);
+  // const [rewardsPoints, setRewardsPoints] = React.useState(totalCart);
+  const setRewardsPoints = () => {}; //mock
 
   const { id, isLoggedIn, email, status } = useCustomerState();
   // const { id, isLoggedIn, firstName, email, status } = useCustomerState();
