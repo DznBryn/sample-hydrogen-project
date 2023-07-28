@@ -1,10 +1,12 @@
+import { useEffect, useMemo } from 'react';
 import { useCollection } from '~/hooks/useCollection';
 import ListrakRec, { links as listrakRecStyles } from '../listrakRec';
 import ProductBoxLoading, { links as productBoxLoadingStyles } from '../productBoxLoading';
 import PLPProductBox, { links as plpProductBoxStyles } from '../plpProductBox';
 
+import { useSearch } from '~/hooks/useSearch';
+
 import styles from './styles.css';
-import { useEffect, useState } from 'react';
 
 export const links = () => {
   return [
@@ -15,55 +17,31 @@ export const links = () => {
   ];
 };
 
-let results = [];
-
-const SearchPage = ({ listrak, searchQuery }) => {
+const SearchPage = ({ listrak, searchQuery, algoliaKeys }) => {
 
   // useYotpoReviewsRefresh();
 
   const { state, products: allProducts } = useCollection('all');
-  const [searchState, setSearchState] = useState('idle');
+  const { search, status, hits } = useSearch(algoliaKeys);
+  
+  const results = useMemo(
+    () => (getResults() || []),
+    [hits, state]
+  );
 
   useEffect(() => {
 
-    if (state === 'loaded') {
+    if (status === 'idle' && searchQuery !== '') search(searchQuery);
 
-      if (searchState === 'idle' && results.length === 0) {
+  }, [status]);
 
-        if (searchQuery !== '') {
-          setSearchState('searching');
-          search(searchQuery);
-        }
+  function getResults(){
 
-      }
+    if (hits.length > 0 && state === 'loaded'){
 
-    }
-
-  }, [state]);
-
-  function search(searchQuery) {
-
-    results = allProducts.filter((product) => (
-      testSearch(product.title) ||
-      testSearch(product?.alt_title) ||
-      testSearch(product?.tags)
-    ));
-
-    setSearchState('done');
-
-    function testSearch(data) {
-
-      const regex = new RegExp(searchQuery, 'i');
-
-      if (Array.isArray(data)) {
-
-        return data.find(value => regex.test(value));
-
-      } else {
-
-        return regex.test(data);
-
-      }
+      const titles = hits.map((hit) => hit.title);
+      
+      return allProducts.filter((product) => (titles.indexOf(product.title) !== -1));
 
     }
 
@@ -73,7 +51,10 @@ const SearchPage = ({ listrak, searchQuery }) => {
 
     <div className={'searchPage'}>
       {
-        (searchState === 'idle') &&
+        (
+          (status === 'searching') || 
+          (status === 'completed' && hits.length > 0 && results.length === 0)
+        ) &&
         <div className={'searchPageProducts'}>
           {
             Array.from(Array(4), (value, index) => <ProductBoxLoading key={index} />)
@@ -82,17 +63,20 @@ const SearchPage = ({ listrak, searchQuery }) => {
       }
 
       {
-        (searchState === 'done' && results.length === 0) &&
+        (
+          (searchQuery === '') ||
+          (status === 'completed' && hits.length === 0)
+        ) &&
         <div className={'searchTitle'}>
           <h1>
-            Your search for  <strong>&quot;{searchQuery}&quot;</strong> did not yield any results.
+            Your search for <strong>&quot;{searchQuery}&quot;</strong> did not yield any results.
           </h1>
           <ListrakRec listrak={listrak} />
         </div>
       }
 
       {
-        (searchState === 'done' && results.length > 0) &&
+        (status === 'completed' && hits.length > 0 && results.length > 0) &&
         <>
           <div className={'searchTitle'}>
             <h1>

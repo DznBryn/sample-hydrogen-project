@@ -14,15 +14,23 @@ export const meta = () => {
 };
 
 export async function loader({ context, request }) {
+  
+  const { ALGOLIA_WRITE_API_KEY } = context.env;
 
   const url = new URL(request.url);
   const query = url.searchParams.get('query');
+
+  const algoliaKeys = {
+    appID: 'YQP7IIXNMT',
+    writeAPIKey: ALGOLIA_WRITE_API_KEY,
+  };
 
   const listrakRec = await getCMSContent(context, GET_LISTRAK_REC);
 
   return {
     query,
     listrakRec,
+    algoliaKeys,
   };
 
 }
@@ -32,6 +40,7 @@ export default function SearchFullPage() {
   const { 
     query,
     listrakRec,
+    algoliaKeys,
   } = useLoaderData();
 
   return (
@@ -39,6 +48,7 @@ export default function SearchFullPage() {
       <SearchPage 
         searchQuery={query}
         listrak={getCMSDoc(listrakRec, 'Search')}
+        algoliaKeys={algoliaKeys}
       />
     </Layouts.MainNavFooter>
   );
