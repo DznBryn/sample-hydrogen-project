@@ -1,5 +1,6 @@
 import styles from './styles/app.css';
 import favicon from '../public/favicon.ico';
+import PageMeta from './modules/pageMeta';
 import { defer } from '@shopify/remix-oxygen';
 import { getMainNavFooterCMSData } from './layouts/MainNavFooter';
 import { CacheShort, generateCacheControlHeader } from '@shopify/hydrogen';
@@ -31,7 +32,6 @@ export async function loader({ context }) {
 
   const cart = await getCartData(context);
   const customer = await getCustomerData(context);
-  // console.log('customer:', customer);
   const globalCMSData = {
     mainNavFooter: await getMainNavFooterCMSData(context),
     products: await getCMSContent(context, GET_PRODUCTS),
@@ -78,9 +78,10 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <PageMeta/>
       </head>
       <body>
-        <Outlet/>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
         {
@@ -90,3 +91,4 @@ export default function App() {
     </html>
   );
 }
+
