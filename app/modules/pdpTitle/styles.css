@@ -1,0 +1,33 @@
+.pdpTitle_container {
+  margin-top: 1em;
+  width: 100%;
+  padding: 0.5em 0;
+}
+
+.pdpTitle {
+  text-align: left;
+}
+
+.pdpSub_title {
+  color: #47C6D9;
+  font-weight: 800;
+  text-align: left;
+  margin-bottom: 0.15em;
+}
+
+@media (min-width: 768px) {
+  .pdpTitle_container {
+    margin-top: 0;
+    padding: 0.5em 0;
+  }
+  .pdpTitle {
+    text-align: left;
+    font-size: 24px;
+  }
+  .pdpSub_title {
+    text-align: left;
+    margin-bottom: 0.15em;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
