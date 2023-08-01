@@ -1,6 +1,6 @@
 import { useEffect, useRef, useLayoutEffect } from 'react';
 import { useStore } from '~/hooks/useStore';
-import SavingsBadges from '../badges';
+import SavingsBadges, { links as badgesStyles } from '../badges';
 import classnames from 'classnames';
 
 import styles from './styles.css';
@@ -8,6 +8,7 @@ import styles from './styles.css';
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...badgesStyles(),
   ];
 };
 
