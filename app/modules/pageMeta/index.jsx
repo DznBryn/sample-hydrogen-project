@@ -64,8 +64,6 @@ const PageMeta = () => {
           : null
       }
 
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-
       {/* 
         url.includes('/pages/why-tula') ?
           <link rel="canonical" href="https://www.tula.com/pages/why-tula" key="canonicalURL" />
@@ -77,7 +75,7 @@ const PageMeta = () => {
         getApiKeys().ONE_TRUST ?
           <>
             <script type="text/javascript" src={getApiKeys().ONE_TRUST.OtAutoBlock}></script>
-            <script src={getApiKeys().ONE_TRUST.OtSDKStub} type="text/javascript" data-domain-script={getApiKeys().ONE_TRUST.domain_script} onLoad="OptanonWrapper()"></script>
+            <script src={getApiKeys().ONE_TRUST.OtSDKStub} type="text/javascript"></script>
           </>
           : null
       }
