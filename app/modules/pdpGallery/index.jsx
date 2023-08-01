@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
-import SwiperSlider from '../swiperSlider';
+import SwiperSlider, { links as swiperSliderStyles } from '../swiperSlider';
 import 'swiper/swiper-bundle.css';
-import PDPVideoModule from '../pdpVideoModule';
-import { PDPBadges } from '../badges';
+import PDPVideoModule, { links as pdpVideoModuleStyles } from '../pdpVideoModule';
+import { PDPBadges, links as badgesStyles } from '../badges';
 import { useStore } from '~/hooks/useStore';
 
 import styles from './styles.css';
@@ -10,6 +10,9 @@ import styles from './styles.css';
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...swiperSliderStyles(),
+    ...pdpVideoModuleStyles(),
+    ...badgesStyles(),
   ];
 };
 
