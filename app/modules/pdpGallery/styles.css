@@ -1,0 +1,133 @@
+.gallery {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #f8f8f8;
+}
+
+.gallery__container {
+  min-width: 300px;
+  min-height: 300px;
+  height: 123vw;
+  margin: 0 auto;
+  /* width: calc(100% - 60px); */
+  width: 100%;
+  overflow: visible;
+  border: 2px solid #f8f8f8;
+  display: flex;
+  align-items: flex-end;
+  position: relative;
+}
+
+.product__image_swiper {
+  border: 1px solid #f8f8f8;
+  margin-left: 0;
+}
+
+.product__image_swiper .hidePdpVideo {
+  border: 1px solid #f8f8f8;
+  margin-left: 0;
+}
+
+.product__image_swiper .swiper-button-prev,
+.product__image_swiper .swiper-button-next {
+  color: rgba(0, 0, 0, 0.2);
+  right: 10px;
+}
+
+.product__image_swiper .swiper-button-prev:after,
+.product__image_swiper .swiper-button-next:after {
+  font-size: 25px;
+}
+
+.product__image_swiper .swiper-pagination-bullet {
+  background: rgba(196, 196, 196, 0.5);
+}
+
+.product__image_swiper .swiper-pagination-bullet-active {
+  background-color: rgba(127, 127, 127, 0.5);
+}
+
+.product__image {
+  width: 100%;
+  height: 100%;
+}
+
+.video__thumbnail {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  bottom: 16px;
+  margin-left: 16px;
+  border-radius: 4.6px;
+  z-index: 2;
+}
+
+.video__thumbnail__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.icon__container {
+  height: 15px;
+  position: absolute;
+  z-index: 2;
+}
+
+.badgeContainer {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  padding: 11px 11px 0 0;
+}
+
+.video__thumbnail .hidePdpVideo {
+  display: none;
+  transition: 1s all ease-out;
+}
+
+@media screen and (min-width: 500px) {
+  .video__thumbnail .hidePdpVideo {
+    display: flex;
+    transition: 1s all ease-out;
+  }
+  .gallery {
+    width: 100%;
+    max-width: 420px;
+    height: 100%;
+  }
+  .product__image_swiper .swiper-button-prev,
+  .product__image_swiper .swiper-button-next {
+    right: 10px;
+  }
+  .gallery__container {
+    height: 510px;
+    width: 420px;
+    overflow: visible;
+  }
+  .video__thumbnail {
+    height: 67px;
+    width: 67px;
+    bottom: 0;
+    position: absolute;
+    right: 100%;
+  }
+  .product__image_swiper .hidePdpVideo {
+    margin-left: -4.5em;
+  }
+  .product__image_swiper .swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+  }
+  .badgeContainer {
+    display: none;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
