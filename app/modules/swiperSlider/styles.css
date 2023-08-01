@@ -1,0 +1,12 @@
+.swiper-wrapper {
+  width: auto;
+}
+
+.swiperSlide {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+}
+
+/*# sourceMappingURL=styles.css.map */
