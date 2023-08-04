@@ -214,7 +214,7 @@ const FilterModal = ({ options, type, toggle, getSorted, state, dispatch }) => {
 
 export default FilterModal;
 
-const IconClose = ({ color = '#4c4e56' }) => {
+export const IconClose = ({ color = '#4c4e56' }) => {
   return (
     <svg width="16" height="16" fill={color}>
       <title>Close Icon</title>
