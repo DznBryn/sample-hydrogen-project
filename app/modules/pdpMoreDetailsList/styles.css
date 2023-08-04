@@ -1,0 +1,35 @@
+.detailsListWrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.detailsListContainer {
+  width: 100%;
+  max-width: 600px;
+  height: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5em 0;
+}
+
+.detailsListText {
+  text-transform: lowercase;
+  font-weight: 800;
+  color: #c9c9c9;
+  cursor: pointer;
+}
+
+@media (min-width: 500px) {
+  .detailsListWrapper {
+    display: flex;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
