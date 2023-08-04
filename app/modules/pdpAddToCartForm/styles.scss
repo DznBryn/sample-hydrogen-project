@@ -1,0 +1,143 @@
+.atc__container {
+  width: 100%;
+  padding-bottom: .25em;
+}
+
+.ctaContainer {
+  position: relative;
+  width: 100%;
+}
+
+.quantity::-webkit-outer-spin-button,
+.quantity::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity {
+  -moz-appearance: textfield;
+  /* Firefox */
+}
+
+.container {
+  max-width: 768px;
+  display: grid;
+  margin: 14px 0 6px;
+  grid-template-columns: repeat(1, 1fr 4fr);
+  row-gap: 12px;
+}
+
+.quantity_container {
+  width: 95%;
+  padding: .25em;
+  border: 1px solid #4c4e564d;
+  border-radius: 3px;
+  background-color: var(--color-secondary-white);
+}
+
+.quantity {
+  color: #000;
+  font-weight: 400;
+  background-color: var(--color-secondary-white);
+  font-size: 14px;
+  text-align: center;
+  border: none;
+  padding: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.control_button {
+  width: 25%;
+  height: 100%;
+  border: 0;
+  background-color: var(--color-secondary-white);
+  color: #4C4E56;
+}
+
+/* Modal Learn More */
+.modal__container {
+  position: absolute;
+  transform: translateY(-110%);
+  background-color: var(--color-secondary-white);
+  padding: .5em .75em 1.5em;
+  max-width: 450px;
+  z-index: 99;
+  line-height: 20px;
+  box-shadow: 4px 4px 0 0 rgb(72 198 217 / 50%);
+  border: 1px solid var(--color-primary);
+  transition: all .45s;
+}
+
+.learn_more__text {
+  padding: .5em;
+}
+
+.close__container {
+  width: 100%;
+  padding: .5em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta__button {
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.formWrap {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  padding: 20px;
+  width: 100%
+}
+
+.openSFButton {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: capitalize;
+  border-radius: 3px;
+  font-family: Avenir LT Pro, sans-serif;
+
+  background-color: #47c6d9;
+  color: #fff;
+  width: 100%;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #47c6d9;
+
+  position: absolute;
+}
+
+.return__container {
+  width: 100%;
+  height: auto;
+  text-align: center;
+}
+
+.return__message {
+  display: block;
+  font-weight: 300px;
+  font-size: 11px;
+}
+
+@media(min-width: 768px) {
+  .atc__container {
+    border-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .hidden__col,
+  .return__container {
+    display: none;
+  }
+}
