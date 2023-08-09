@@ -52,33 +52,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     width: undefined,
     height: undefined,
   });
-
-  const Collection = ({ products, collection }) =>
-    products.length > 0
-      ? products.map((product, index) => (
-        <HorizontalProduct
-          is2Columns={true}
-          product={product}
-          compareButtonConfig={{showIt: collection.showCompareButton}}
-          analytics={{
-            click: {
-              actionField: { list: `${collection.name}` },
-              products: [
-                {
-                  name: product?.title,
-                  id: product?.id,
-                  price: parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
-                  category: product?.productType,
-                  variant: '',
-                  position: index,
-                },
-              ],
-            },
-          }}
-          key={product.id}
-        />
-      )) : null;
-
+    
   // Currently displayed collection
   const [filteredProducts, setFilteredProducts] = useState(products);
 
@@ -302,7 +276,32 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
                   />
                 ); })
           }
-          <Collection products={filteredProducts} collection={collection} />
+          {
+            filteredProducts.length > 0
+              ? products.map((product, index) => (
+                <HorizontalProduct
+                  is2Columns={true}
+                  product={product}
+                  compareButtonConfig={{ showIt: collection.showCompareButton }}
+                  analytics={{
+                    click: {
+                      actionField: { list: `${collection.name}` },
+                      products: [
+                        {
+                          name: product?.title,
+                          id: product?.id,
+                          price: parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
+                          category: product?.productType,
+                          variant: '',
+                          position: index,
+                        },
+                      ],
+                    },
+                  }}
+                  key={product.id}
+                />
+              )) : null
+          }
         </div>
         {BestSellerProductRecommendation()}
         {
