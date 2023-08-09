@@ -1,0 +1,27 @@
+.conditions_container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  color: #47C6D9;
+  color: var(--color-primary);
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.25px;
+  font-weight: 700;
+}
+
+@media screen and (max-width: 768px) {
+  .conditions_container {
+    order: 7;
+  }
+}
+.conditions_container b:first-of-type {
+  margin-right: 5px;
+  color: #4C4E56;
+}
+
+.condition_values {
+  margin-right: 3px;
+}
+
+/*# sourceMappingURL=styles.css.map */

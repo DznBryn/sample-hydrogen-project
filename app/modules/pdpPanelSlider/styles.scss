@@ -1,0 +1,64 @@
+.pdpPanelslider_wrapper {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+.pdpPanelslider_gradient {
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
+}
+
+.pdpPanelslider_container {
+  width: 100%;
+  height: 100%;
+  padding: 1.5em 0 3em;
+}
+
+.pdpPanelslider_header,
+.pdpPanelslider_body,
+.pdpPanelslider_footer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdpPanelslider_header {
+  padding: 1em 0;
+  margin-bottom: 1em;
+}
+
+.pdpPanelslider_header .pdpPanelslider_title {
+  font-weight: 800;
+  font-size: 21px;
+  text-transform: lowercase;
+  line-height: 0.55em;
+  border-bottom: 5px solid rgba(71, 198, 217, 0.5);
+}
+
+.pdpPanelslider_body {
+  flex-direction: column;
+}
+
+.pdpPanelslider_panel_title {
+  font-weight: 800;
+  font-size: 18px;
+  text-transform: captialize;
+  color: #47c6d9;
+  color: var(--color-primary);
+  margin-bottom: 1em;
+  /* Fred's change*/
+}
+
+.pdpPanelslider_footer .pdpPanelslider_btn {
+  max-width: fit-content;
+  padding: 0 1em;
+  text-transform: initial;
+}
+
+@media (min-width: 500px) {
+  .pdpPanelslider_header .pdpPanelslider_title {
+    font-size: 24px;
+  }
+}

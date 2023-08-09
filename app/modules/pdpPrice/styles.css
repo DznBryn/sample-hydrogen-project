@@ -1,0 +1,148 @@
+/* Product Price */
+.pdpPriceBadge {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.5em;
+}
+
+.price_container {
+  font-weight: 900;
+  /* margin: 1em 0; */
+}
+
+.m0 {
+  margin: 0;
+}
+
+.compared_price {
+  margin: 0 0.25em;
+  font-weight: 800;
+  font-size: 21px;
+  line-height: 22px;
+  color: #C6C6C6;
+  text-decoration: line-through;
+}
+
+.original_price {
+  margin: 0 0.25em;
+}
+
+.value_price {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.secondary {
+  margin-top: 0.5em;
+  font-weight: 800;
+  font-size: 21px;
+  line-height: 22px;
+  color: #FF5483;
+}
+
+.pdpPricePromo {
+  text-align: left;
+  font-size: 14px;
+  line-height: auto;
+}
+
+.stickyPromo__align {
+  text-align: left;
+}
+
+.afterpay {
+  width: 70px;
+  margin-right: 0.25em;
+}
+
+.stickyPromo {
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.afterpay {
+  padding: 6px;
+  width: 100%;
+  border-radius: 3px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.afterpay :global(afterpay-placement) {
+  --logo-badge-width: 70px;
+  font-weight: 400;
+}
+
+.hideAfterpay {
+  display: none;
+}
+
+.afterpay_text {
+  font-style: normal;
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 21px;
+  letter-spacing: 0.01em;
+  margin-right: 5px;
+}
+
+/* State CSS */
+.show_mobile {
+  display: block;
+}
+
+.show_tablet {
+  display: none;
+}
+
+.show_desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .pdpPriceBadge {
+    justify-content: flex-start;
+    margin-bottom: 1em;
+  }
+  .pdpPrice {
+    text-align: left;
+    font-size: 24px;
+  }
+  .compared_price {
+    margin: 0;
+  }
+  .afterpay {
+    justify-content: flex-start;
+    max-width: 400px;
+  }
+  .afterpay_text {
+    font-size: 14px;
+  }
+  .afterpay afterpay-placement {
+    --logo-badge-width: 80px;
+    font-size: 14px;
+  }
+  /* State CSS */
+  .show_mobile {
+    display: none;
+  }
+  .show_tablet {
+    display: block;
+  }
+}
+@media (min-width: 1024px) {
+  .pdpPricePromo {
+    text-align: left;
+    font-size: 16px;
+  }
+  /* State CSS */
+  .show_tablet {
+    display: none;
+  }
+  .show_desktop {
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

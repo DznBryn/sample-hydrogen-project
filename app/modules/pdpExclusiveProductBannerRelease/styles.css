@@ -1,0 +1,30 @@
+.bannerContainer {
+  display: flex;
+  height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  margin: 0;
+  padding-inline: 21px 17px;
+  order: -1;
+}
+
+.bannerContainer h1 {
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 28px;
+}
+
+@media (min-width: 768px) {
+  .bannerContainer {
+    height: 40px;
+    width: 237px;
+    padding-inline: 18px 16px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 7px rgba(0, 0, 0, 0.14);
+    margin: 30px auto 0;
+    order: 1;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
