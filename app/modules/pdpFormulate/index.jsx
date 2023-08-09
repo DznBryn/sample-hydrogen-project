@@ -1,5 +1,5 @@
-import PDPSliderPanel, { PDPPanelTitle, PDPSliderPanelTitle } from 'Components/PDPPanelSlider';
-import SliderPanel, { switchSliderPanelVisibility } from 'Components/SliderPanel';
+import PDPSliderPanel, { PDPPanelTitle, PDPSliderPanelTitle } from '../pdpPanelSlider';
+import SliderPanel, { switchSliderPanelVisibility } from '../sliderPanel';
 import classnames from 'classnames';
 
 import styles from './styles.css';
