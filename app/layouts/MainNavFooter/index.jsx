@@ -1,5 +1,5 @@
-import SliderAccount, { links as sliderAccountStyles} from '~/modules/sliderAccount';
-import SliderCart, { links as sliderCartStyles} from '~/modules/sliderCart';
+import SliderAccount, { links as sliderAccountStyles } from '~/modules/sliderAccount';
+import SliderCart, { links as sliderCartStyles } from '~/modules/sliderCart';
 import MainNav, { links as mainNavStyles } from '~/modules/mainNav';
 import Footer, { links as footerStyles } from '~/modules/footer';
 import BodyBottom, { links as BodyBottomStyles } from '~/modules/bodyBottom';
@@ -21,16 +21,16 @@ export const links = () => {
   ];
 };
 
-const MainNavFooter = ({children}) => {
+const MainNavFooter = ({ children }) => {
 
   const [root] = useMatches();
   const CMSData = root.data.globalCMSData.mainNavFooter;
   const productsCMSData = root.data.globalCMSData.products;
 
-  const { 
-    Footers, 
-    EmailSmsSignupContent, 
-    CartPageConfig, 
+  const {
+    Footers,
+    EmailSmsSignupContent,
+    CartPageConfig,
     AnnouncementHeaders,
     AnnouncementMessages,
     MobileNavbar,
@@ -39,10 +39,10 @@ const MainNavFooter = ({children}) => {
     AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
-    collection, 
+    collection,
   } = CMSData;
 
-  const collectionWithCMSData = useMemo (
+  const collectionWithCMSData = useMemo(
     () => getCollectionWithCMSData(collection, productsCMSData),
     [collection, productsCMSData]
   );
@@ -51,14 +51,14 @@ const MainNavFooter = ({children}) => {
 
     <>
 
-      <NavPlaceholder 
-        siteWideSettings={getCMSDoc(SiteWideSettings, 'Black Friday')} 
+      <NavPlaceholder
+        siteWideSettings={getCMSDoc(SiteWideSettings, 'Black Friday')}
         searchConfig={getCMSDoc(SearchConfig, 'Default')}
       />
 
-      <MainNav 
-        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')} 
-        announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')} 
+      <MainNav
+        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')}
         announcementMessages={AnnouncementMessages}
         mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
         mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
@@ -67,26 +67,26 @@ const MainNavFooter = ({children}) => {
         desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
         products={collectionWithCMSData}
       />
+      <SliderCart
+        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        products={collectionWithCMSData}
+      />
+      <SliderAccount />
 
-      {/* <h3>SliderCart</h3> */}
+      {children}
 
-      <SliderCart/>
-      <SliderAccount/>
-
-      { children }
-
-      <BodyBottom 
-        emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')} 
+      <BodyBottom
+        emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
         productList={collection}
       />
 
-      <Footer 
-        desktopFooter={getCMSDoc(Footers, 'Desktop')} 
+      <Footer
+        desktopFooter={getCMSDoc(Footers, 'Desktop')}
         mobileFooter={getCMSDoc(Footers, 'Mobile')}
       />
 
     </>
-    
+
   );
 
 };
@@ -97,25 +97,25 @@ export default MainNavFooter;
  * add query here to get content on globalCMSData obj;
  */
 
-export async function getMainNavFooterCMSData(context){
+export async function getMainNavFooterCMSData(context) {
 
   const queries = [
-    GET_FOOTERS, 
-    GET_EMAIL_SMS_SIGNUP_CONTENT, 
-    GET_CART_PAGE_CONFIG, 
-    GET_ANNOUNCEMENT_HEADER, 
-    GET_ANNOUNCEMENT_MESSAGES, 
-    GET_MOBILE_NAV_BAR, 
-    GET_HEADER_CONFIG, 
-    GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, 
-    GET_ANNOUNCEMENT_TOP_BANNER, 
-    GET_SITE_WIDE_SETTINGS, 
+    GET_FOOTERS,
+    GET_EMAIL_SMS_SIGNUP_CONTENT,
+    GET_CART_PAGE_CONFIG,
+    GET_ANNOUNCEMENT_HEADER,
+    GET_ANNOUNCEMENT_MESSAGES,
+    GET_MOBILE_NAV_BAR,
+    GET_HEADER_CONFIG,
+    GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
+    GET_ANNOUNCEMENT_TOP_BANNER,
+    GET_SITE_WIDE_SETTINGS,
     GET_SEARCH_CONFIG,
   ];
 
   const contents = await getGroupOfCMSContent(context, queries);
   const collection = await getCollectionProducts(context, 'all');
-  
+
   return {
     ...contents,
     collection

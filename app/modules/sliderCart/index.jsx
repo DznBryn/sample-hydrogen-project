@@ -46,7 +46,7 @@ const apiType = getApiKeys().API_TYPE;
 
 let prevState = null;
 
-const SliderCart = ({ cartPageConfig, productRecs, products }) => {
+const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
   const cartConfig = cartPageConfig?.emptyCartMessage
     ? cartPageConfig
     : mockCartConfig;
@@ -83,17 +83,15 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
         : product.variant_id) === GWP_PRODUCT_VARIANT_ID,
   );
 
-  const quantity = getTotalItemsOnCart();
-
   const MIN_POINTS_AMOUNT = 2000;
 
   const totalCart =
     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
 
   // const [rewardsPoints, setRewardsPoints] = React.useState(totalCart);
-  const setRewardsPoints = () => {}; //mock
+  const setRewardsPoints = () => { }; //mock
 
-  const { id, isLoggedIn, email, status } = useCustomerState();
+  const { id, email, status } = useCustomerState();
   // const { id, isLoggedIn, firstName, email, status } = useCustomerState();
 
   const addAutoDeliveryItemsToLocalStorage = useCallback(() => {
@@ -372,212 +370,308 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
     }
   }
 
-  const CartContent = () => {
-    const [showModal, setShowModal] = useState(false);
-
-    function toggleModal() {
-      setShowModal(!showModal);
-    }
-
-    const EmptyCart = () => (
-      <>
-        <div className={'cartHeader'}>
-          <div className={'cartHeader_title'}>
-            <p>{cartConfig.emptyCartMessage}</p>
-            {/* <RichText source={cartConfig.emptyCartMessage} /> */}
-          </div>
-          <div className={'cartClose} onClick={handleClick'}>
-            CLOSE
-          </div>
-        </div>
-
-        <div className={'emptyCart'}>
-          {getApiKeys().CURRENT_ENV.includes('US') && (
-            isLoggedIn
-            // <LoyaltyBanner loggedIn={isLoggedIn} isEmpty />
-          )
-
-            /* <SkinQuizCartBanner /> */
-          }
-        </div>
-
-        <SliderCartRec
-          productRecs={productRecList}
-          limit={1}
-          gwpProductId={cartConfig.freeGiftPromoProductExternalID}
-        />
-
-        <Checkout message="Start Shopping" url="/collections/all" />
-      </>
-    );
-
-    return items.length === 0 ? (
-      <EmptyCart />
-    ) : (
-      <>
-        <div className={'cartHeader'}>
-          <h3>{'My Cart (' + quantity + ')'}</h3>
-          <div className={'cartClose'} onClick={handleClick}>
-            CLOSE
-          </div>
-        </div>
-
-        {!hasOnlyGiftCards() && (
-          <ProgressBar cart={cart} cartConfig={cartConfig} />
-        )}
-
-        {cartConfig.showTemporaryWarn && (
-          <div
-            className={'temporaryWarn'}
-            style={{ marginTop: hasOnlyGiftCards() ? '20px' : '0' }}
-          >
-            <GearIcon />
-            <span>
-              {cartConfig.cartTemporaryWarn}
-              {/* <RichText source={cartConfig.cartTemporaryWarn} /> */}
-            </span>
-          </div>
-        )}
-        {getApiKeys().CURRENT_ENV.includes('US') && (
-          'LoyaltyBar'
-          // <LoyaltyBanner
-          //   loggedIn={isLoggedIn}
-          //   points={rewardsPoints}
-          //   isAbleToRedeem={isAbleToRedeem}
-          //   userName={firstName}
-          //   onClick={toggleModal}
-          // />
-        )}
-
-        <ItemsList />
-
-        <Checkout
-          cart={cart}
-          valueToSubtract={
-            carbonOffsetItem &&
-            (apiType === 'graphql'
-              ? Number(carbonOffsetItem.variant.price)
-              : carbonOffsetItem.line_price / 100)
-          }
-          message="Checkout"
-          url={cart?.checkoutUrl}
-        />
-
-        <LoyaltyTooltipModal
-          modalState={showModal}
-          toggleModal={toggleModal}
-          isAbleToRedeem={isAbleToRedeem}
-        />
-      </>
-    );
+  const cartContentProps = {
+    cart,
+    items,
+    cartConfig,
+    productRecs,
+    carbonOffsetItem,
+    quantity: getTotalItemsOnCart(),
+    hasOnlyGiftCards: () => hasOnlyGiftCards(),
+    handleClick: () => handleClick(),
+    setLoading: () => setLoading(),
+    isAbleToRedeem,
+    products,
+    GWP_PRODUCT_VARIANT_ID,
+    ...props
   };
 
-  const ItemsList = () => {
-    // const getRecItemsLimit = () => {
-    //   if (items.length === 2) return 2;
-    //   if (items.length === 3) return 1;
-    //   if (items.length > 4) return 0;
-    //   return 3;
-    // };
+  return (
+    <div
+      className={'sliderCartWrap hidden'}
+      data-slider-state="hide"
+      ref={cartRef}
+      onClick={handleClick}
+    >
+      <div
+        className={'sliderCart'}
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        {loading ? <SkeletonLoader /> : <CartContent {...cartContentProps} />}
+      </div>
+    </div>
+  );
+};
 
-    const filteredItems = {
-      noAD:
-        apiType === 'graphql'
-          ? items.filter(
-            (data) =>
-              !data.customAttributes.find((el) => el.key === 'selling_plan'),
-          )
-          : items.filter((data) => !data.selling_plan_allocation),
-      withAD:
-        apiType === 'graphql'
-          ? items.filter((data) =>
-            data.customAttributes.find((el) => el.key === 'selling_plan'),
-          )
-          : items.filter((data) => data.selling_plan_allocation),
-    };
+const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGiftCards, cart, handleClick, carbonOffsetItem, isAbleToRedeem, ...props }) => {
+  const [showModal, setShowModal] = useState(false);
+  const productRecList = productRecs?.productList
+    ? productRecs
+    : mockProductRecs;
+  const { isLoggedIn } = useCustomerState();
+  function toggleModal() {
+    setShowModal(!showModal);
+  }
 
-    // const shouldActivateFreeGift = () => {
-    //   let cartTotal =
-    //     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
-    //   if (!cartConfig.freeGiftPromoCombineAD) {
-    //     cartTotal =
-    //       apiType === 'graphql'
-    //         ? cart.items
-    //           .filter(
-    //             (item) =>
-    //               !item.customAttributes.some(
-    //                 (el) => el.key === 'selling_plan',
-    //               ),
-    //           )
-    //           .reduce(
-    //             (total, value) => (total += Number(value.variant.price)),
-    //             0,
-    //           )
-    //         : cart.items
-    //           .filter((item) => item.selling_plan_allocation === undefined)
-    //           .reduce(
-    //             (total, value) => (total += value.final_line_price / 100),
-    //             0,
-    //           );
-    //   }
-    //   return cartTotal >= cartConfig.freeGiftPromoThreshold;
-    // };
+  const EmptyCart = () => (
+    <>
+      <div className={'cartHeader'}>
+        <div className={'cartHeader_title'}>
+          <p>{cartConfig?.emptyCartMessage}</p>
+          {/* <RichText source={cartConfig?.emptyCartMessage} /> */}
+        </div>
+        <div className={'cartClose} onClick={handleClick'}>
+          CLOSE
+        </div>
+      </div>
 
-    /**
-     * this code bellow is the code for Loyalty products
-     * TODO => implement a method to add 'loyalty_redeem' at the redeemed product
-     */
-
-    const loyaltyProduct =
-      apiType === 'graphql'
-        ? items.find((item) =>
-          item.customAttributes.some((el) => el.key === 'loyalty_redeem'),
+      <div className={'emptyCart'}>
+        {getApiKeys().CURRENT_ENV.includes('US') && (
+          isLoggedIn
+          // <LoyaltyBanner loggedIn={isLoggedIn} isEmpty />
         )
-        : items.find((item) => item.loyalty_redeem);
 
-    // console.log("Items:", { filteredItems })
-    return (
-      <div className={'innerContent'}>
-        <div className={'itemsList'}>
-          <div>
-            {loyaltyProduct && <SliderCartProductBox
-              item={loyaltyProduct}
-              key={loyaltyProduct.id}
-              cartPageConfig={cartConfig}
-              setSliderCartLoading={setLoading}
-              product={
-                products?.products?.filter(
-                  (product) => product.externalId === loyaltyProduct.id,
-                )[0]
-              }
-            />
+          /* <SkinQuizCartBanner /> */
+        }
+      </div>
+
+      <SliderCartRec
+        productRecs={productRecList}
+        limit={1}
+        gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
+      />
+
+      <Checkout message="Start Shopping" url="/collections/all" />
+    </>
+  );
+
+  const itemsListProps = {
+    items,
+    cartConfig,
+    carbonOffsetItem,
+    ...props
+  };
+
+  return items.length === 0 ? (
+    <EmptyCart />
+  ) : (
+    <>
+      <div className={'cartHeader'}>
+        <h3>{'My Cart (' + quantity + ')'}</h3>
+        <div className={'cartClose'} onClick={handleClick}>
+          CLOSE
+        </div>
+      </div>
+
+      {!hasOnlyGiftCards() && (
+        <ProgressBar cart={cart} cartConfig={cartConfig} />
+      )}
+
+      {cartConfig?.showTemporaryWarn && (
+        <div
+          className={'temporaryWarn'}
+          style={{ marginTop: hasOnlyGiftCards() ? '20px' : '0' }}
+        >
+          <GearIcon />
+          <span>
+            {cartConfig?.cartTemporaryWarn}
+            {/* <RichText source={cartConfig?.cartTemporaryWarn} /> */}
+          </span>
+        </div>
+      )}
+      {getApiKeys().CURRENT_ENV.includes('US') && (
+        'LoyaltyBar'
+        // <LoyaltyBanner
+        //   loggedIn={isLoggedIn}
+        //   points={rewardsPoints}
+        //   isAbleToRedeem={isAbleToRedeem}
+        //   userName={firstName}
+        //   onClick={toggleModal}
+        // />
+      )}
+
+      <ItemsList {...itemsListProps} />
+
+      <Checkout
+        cart={cart}
+        valueToSubtract={
+          carbonOffsetItem &&
+          (apiType === 'graphql'
+            ? Number(carbonOffsetItem.variant.price)
+            : carbonOffsetItem.line_price / 100)
+        }
+        message="Checkout"
+        url={cart?.checkoutUrl}
+      />
+
+      <LoyaltyTooltipModal
+        modalState={showModal}
+        toggleModal={toggleModal}
+        isAbleToRedeem={isAbleToRedeem}
+      />
+    </>
+  );
+};
+
+const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
+  // const getRecItemsLimit = () => {
+  //   if (items.length === 2) return 2;
+  //   if (items.length === 3) return 1;
+  //   if (items.length > 4) return 0;
+  //   return 3;
+  // };
+
+  const filteredItems = {
+    noAD:
+      apiType === 'graphql'
+        ? items.filter(
+          (data) =>
+            !data.customAttributes.find((el) => el.key === 'selling_plan'),
+        )
+        : items.filter((data) => !data.selling_plan_allocation),
+    withAD:
+      apiType === 'graphql'
+        ? items.filter((data) =>
+          data.customAttributes.find((el) => el.key === 'selling_plan'),
+        )
+        : items.filter((data) => data.selling_plan_allocation),
+  };
+
+  // const shouldActivateFreeGift = () => {
+  //   let cartTotal =
+  //     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
+  //   if (!cartConfig?.freeGiftPromoCombineAD) {
+  //     cartTotal =
+  //       apiType === 'graphql'
+  //         ? cart.items
+  //           .filter(
+  //             (item) =>
+  //               !item.customAttributes.some(
+  //                 (el) => el.key === 'selling_plan',
+  //               ),
+  //           )
+  //           .reduce(
+  //             (total, value) => (total += Number(value.variant.price)),
+  //             0,
+  //           )
+  //         : cart.items
+  //           .filter((item) => item.selling_plan_allocation === undefined)
+  //           .reduce(
+  //             (total, value) => (total += value.final_line_price / 100),
+  //             0,
+  //           );
+  //   }
+  //   return cartTotal >= cartConfig?.freeGiftPromoThreshold;
+  // };
+
+  /**
+   * this code bellow is the code for Loyalty products
+   * TODO => implement a method to add 'loyalty_redeem' at the redeemed product
+   */
+
+  const loyaltyProduct =
+    apiType === 'graphql'
+      ? items.find((item) =>
+        item.customAttributes.some((el) => el.key === 'loyalty_redeem'),
+      )
+      : items.find((item) => item.loyalty_redeem);
+
+  return (
+    <div className={'innerContent'}>
+      <div className={'itemsList'}>
+        <div>
+          {loyaltyProduct && <SliderCartProductBox
+            item={loyaltyProduct}
+            key={loyaltyProduct.id}
+            cartPageConfig={cartConfig}
+            setSliderCartLoading={setLoading}
+            product={
+              products?.products?.filter(
+                (product) => product.externalId === loyaltyProduct.id,
+              )[0]
             }
-            {filteredItems.withAD.length > 0 && (
-              <p>Your auto-delivery items:</p>
-            )}
-            {filteredItems.withAD.forEach((item) => {
-              const product =
-                apiType === 'graphql'
-                  ? products?.products?.filter(
-                    (product) =>
-                      product.storefrontId === item.variant.product.id,
-                  )[0]
-                  : products?.products?.filter(
+          />
+          }
+          {filteredItems.withAD.length > 0 && (
+            <p>Your auto-delivery items:</p>
+          )}
+          {filteredItems.withAD.map((item) => {
+            const product =
+              apiType === 'graphql'
+                ? products?.products?.filter(
+                  (product) =>
+                    product.storefrontId === item.variant.product.id,
+                )[0]
+                : products?.products?.filter(
+                  (product) => product.externalId === item.product_id,
+                )[0];
+
+            const promo =
+              product &&
+                product.productPromos &&
+                product.productPromos.showPromo
+                ? product.productPromos
+                : false;
+
+            if (
+              item.id !== props?.carbonOffsetVariant &&
+              item.id !== props?.GWP_PRODUCT_VARIANT_ID
+            ) {
+              return (<SliderCartProductBox
+                item={{
+                  ...item,
+                  hasSellingPlans: product?.tags?.includes(
+                    'subscriptionEligibleTag',
+                  ),
+                  recommendedSellingPlan: product?.recommendedSellingPlan,
+                }}
+                key={item.id}
+                promo={promo}
+                cartPageConfig={cartConfig}
+                setSliderCartLoading={setLoading}
+                product={
+                  products?.products?.filter(
                     (product) => product.externalId === item.product_id,
-                  )[0];
+                  )[0]
+                }
+              />
+              );
+            } else {
+              return null;
+            }
+          })}
+        </div>
+        <div>
+          {filteredItems.noAD.length > 0 &&
+            filteredItems.withAD.length > 0 && (
+            <p>Your one-time purchase items:</p>
+          )}
+          {filteredItems.noAD.map((item) => {
+            const product =
+              apiType === 'graphql'
+                ? products?.products?.filter(
+                  (product) =>
+                    product.storefrontId === item.variant.product.id,
+                )[0]
+                : products?.products?.filter(
+                  (product) => product.externalId === item.product_id,
+                )[0];
 
-              const promo =
-                product &&
-                  product.productPromos &&
-                  product.productPromos.showPromo
-                  ? product.productPromos
-                  : false;
+            const promo =
+              product &&
+                product.productPromos &&
+                product.productPromos.showPromo
+                ? product.productPromos
+                : false;
 
-              if (
-                item.id !== carbonOffsetVariant &&
-                item.id !== GWP_PRODUCT_VARIANT_ID
-              ) {
-                return (<SliderCartProductBox
+            if (
+              item.id !== props?.carbonOffsetVariant &&
+              item.id !== props?.GWP_PRODUCT_VARIANT_ID
+            ) {
+              return (
+                <SliderCartProductBox
                   item={{
                     ...item,
                     hasSellingPlans: product?.tags?.includes(
@@ -595,76 +689,28 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
                     )[0]
                   }
                 />
-                );
-              }
-            })}
-          </div>
-          <div>
-            {filteredItems.noAD.length > 0 &&
-              filteredItems.withAD.length > 0 && (
-              <p>Your one-time purchase items:</p>
-            )}
-            {filteredItems.noAD.forEach((item) => {
-              const product =
-                apiType === 'graphql'
-                  ? products?.products?.filter(
-                    (product) =>
-                      product.storefrontId === item.variant.product.id,
-                  )[0]
-                  : products?.products?.filter(
-                    (product) => product.externalId === item.product_id,
-                  )[0];
-
-              const promo =
-                product &&
-                  product.productPromos &&
-                  product.productPromos.showPromo
-                  ? product.productPromos
-                  : false;
-
-              if (
-                item.id !== carbonOffsetVariant &&
-                item.id !== GWP_PRODUCT_VARIANT_ID
-              ) {
-                return (
-                  <SliderCartProductBox
-                    item={{
-                      ...item,
-                      hasSellingPlans: product?.tags?.includes(
-                        'subscriptionEligibleTag',
-                      ),
-                      recommendedSellingPlan: product?.recommendedSellingPlan,
-                    }}
-                    key={item.id}
-                    promo={promo}
-                    cartPageConfig={cartConfig}
-                    setSliderCartLoading={setLoading}
-                    product={
-                      products?.products?.filter(
-                        (product) => product.externalId === item.product_id,
-                      )[0]
-                    }
-                  />
-                );
-              }
-            })}
-          </div>
+              );
+            } else {
+              return null;
+            }
+          })}
         </div>
+      </div>
 
-        {/* {isFreeGitPromoActivate(cartConfig) &&
+      {/* {isFreeGitPromoActivate(cartConfig) &&
           !hasOnlyGiftCards() &&
           products.products
             .filter(
               (product) =>
                 product.externalId.toString() ===
-                cartConfig.freeGiftPromoProductExternalID,
+                cartConfig?.freeGiftPromoProductExternalID,
             )
             .map((data, index) => (
               <FreeGiftPromoProduct
                 key={index}
                 product={data}
-                isMystery={cartConfig.freeGiftPromoIsMisteryProductToggle}
-                anonymousImageSrc={cartConfig.freeGiftPromoMysteryImage.src}
+                isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
+                anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage.src}
                 productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
                 active={shouldActivateFreeGift()}
               />
@@ -673,7 +719,7 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
         <SliderCartRec
           productRecs={productRecList}
           limit={getRecItemsLimit()}
-          gwpProductId={cartConfig.freeGiftPromoProductExternalID}
+          gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
         />
 
         {getApiKeys().CURRENT_ENV.includes('US') && (
@@ -682,25 +728,6 @@ const SliderCart = ({ cartPageConfig, productRecs, products }) => {
             subscription
           </div>
         )} */}
-      </div>
-    );
-  };
-
-  return (
-    <div
-      className={'sliderCartWrap hidden'}
-      data-slider-state="hide"
-      ref={cartRef}
-      onClick={handleClick}
-    >
-      <div
-        className={'sliderCart'}
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-      >
-        {loading ? <SkeletonLoader /> : <CartContent />}
-      </div>
     </div>
   );
 };
