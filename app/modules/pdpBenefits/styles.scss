@@ -1,0 +1,99 @@
+.pdpBenefits_content {
+  width: 100%;
+  height: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+}
+
+.pdpBenefits_content_wrapper {
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pdpBenefits_content_container {
+  width: 100%;
+  height: 100%;
+  max-width: 350px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1em;
+}
+
+.pdpBenefits_content_image {
+  width: 50px;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.pdpBenefits_content_body {
+  width: 100%;
+  height: 100%;
+  margin-left: 1em;
+  font-size: 14px;
+  color: #4c4e56;
+}
+
+.pdpBenefits_panel_container {
+  padding: 1em;
+}
+
+.pdpBenefits_panel_body ul {
+  /* Fred's change*/
+  margin-left: 1em;
+}
+
+.pdpBenefits_panel_body {
+  /* Fred's change*/
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 25px;
+}
+
+#pdpBenefits_closeButton {
+  padding: 19px 24px 0px 24px;
+  text-align: right;
+}
+
+#pdpBenefits_closeButton span {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 28px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #4C4E56;
+}
+
+@media (min-width: 500px) {
+  .pdpBenefits_content {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .pdpBenefits_content_wrapper {
+    max-width: 350px;
+  }
+
+  .pdpBenefits_content_body {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 768px) {
+  .pdpBenefits_content_wrapper {
+    max-width: 400px;
+  }
+}
