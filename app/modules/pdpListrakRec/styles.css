@@ -1,0 +1,39 @@
+.listrakRecWrap {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1140px;
+}
+
+.listrakRecWrap :global(.title) {
+  display: none;
+}
+
+.listrackWrap {
+  height: 0px;
+  overflow: hidden;
+}
+
+.listrakRec {
+  padding: 3em 0;
+}
+
+.listProducts {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 1024px) {
+  .listrakRecWrap {
+    width: 100vw;
+  }
+  .listProducts {
+    overflow-x: scroll;
+  }
+}
+@media all and (max-width: 768px) {
+  .listHeader {
+    margin-bottom: 14px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
