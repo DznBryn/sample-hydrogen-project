@@ -40,7 +40,7 @@ const Content = ({ data }) => {
       <PDPSliderPanelTitle data={{ title: data?.title }} />
       <div className={'pdpFormulate_content'}>
         {data?.contents.map(ct => (
-          <div className={data?.contents.length !== 1 && 'pdpFormulate_content_wrapper'} key={data?.title}>
+          <div className={data?.contents.length !== 1 ? 'pdpFormulate_content_wrapper' : undefined} key={ct?.name}>
             <div className={data?.contents.length === 1 ? classnames('pdpFormulate_content_container', 'pdpFormulate_mWidth_100') : 'pdpFormulate_content_container'}>
               {ct?.header !== '' ? (
                 <div
@@ -70,7 +70,7 @@ const Content = ({ data }) => {
                       }}
                     />
                     : <span>{ct.subtitle}</span>}
-                  <p className={data?.contents.length === 1 && classnames('pdpFormulate_text_wTablet', 'pdpFormulate_text_center')}>{ct.body}</p>
+                  <p className={data?.contents.length === 1 ? classnames('pdpFormulate_text_wTablet', 'pdpFormulate_text_center') : undefined}>{ct.body}</p>
                 </div>
               )}
               {ct?.htmlBody !== '' && (

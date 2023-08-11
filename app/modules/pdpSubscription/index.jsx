@@ -193,7 +193,7 @@ const PDPSubscription = ({ classes, sellingPlans, autoDeliveryInfo }) => {
                 onClick={() => handleSellingOption(1, sellingPlanId.current.value)}
               >
                 {sellingPlans.SellingPlans.map(plan => (
-                  <option key={plan._id} value={plan.sellingPlanID}>
+                  <option key={plan.sellingPlanID} value={plan.sellingPlanID}>
                     {getSellingPlanName(plan)}
                   </option>
                 ))}

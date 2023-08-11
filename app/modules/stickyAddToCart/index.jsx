@@ -58,7 +58,7 @@ const StickyDesktop = ({ product, Component, PriceComponent, isScroll }) => (
       <p className={'product_title'}>
         {product?.title?.name || 'Product Title Here'}
       </p>
-      <p className={'product_price'}>{PriceComponent}</p>
+      <div className={'product_price'}>{PriceComponent}</div>
       <div className={'component_container'}>{Component}</div>
     </div>
   </div>

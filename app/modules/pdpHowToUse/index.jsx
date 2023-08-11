@@ -42,7 +42,7 @@ const Content = ({ data }) =>
       <div className={'pdpHowtoUse_content'}>
         {data?.contents.map(ct => (
           <React.Fragment key={data?.title}>
-            <div className={data?.contents.length !== 1 && styles.content_wrapper}>
+            <div className={data?.contents.length !== 1 ? 'content_wrapper' : undefined}>
               <div className={data?.contents.length === 1 ? classnames('pdpHowtoUse_content_container', 'pdpHowtoUse_mWidth_100') : 'pdpHowtoUse_content_container'}>
                 {ct?.header !== '' ? (
                   <div
@@ -63,7 +63,7 @@ const Content = ({ data }) =>
                 ) : null}
                 {ct?.body !== '' && (
                   <div className={'pdpHowtoUse_content_body'}>
-                    <p className={data?.contents.length === 1 && classnames('pdpHowtoUse_text_wTablet', 'pdpHowtoUse_text_center')}>{ct.body}</p>
+                    <p className={data?.contents.length === 1 ? classnames('pdpHowtoUse_text_wTablet', 'pdpHowtoUse_text_center') : undefined}>{ct.body}</p>
                   </div>
                 )}
               </div>

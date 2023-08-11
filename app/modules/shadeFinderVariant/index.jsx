@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useLayoutEffect } from '~/utils/functions/eventFunctions';
 import { useCartActions } from '~/hooks/useCart';
 import { useStore } from '~/hooks/useStore';
 

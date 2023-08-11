@@ -22,14 +22,15 @@ const PDPGallery = ({
   videos = null,
   details,
 }) => {
+
   const {store} = useStore();
   const defaultImages = productImages.filter(img => img?.details?.name?.includes('default')).length > 0 ?
     productImages.filter(img => img.details.name.includes('default'))
     : productImages;
   const [images, setImages] = useState(productImages);
   const [isFiltered, setIsFiltered] = useState(false);
-  const isShadeFinderRendering = variants?.some(variant => variant.name.split(' ')[1] === '30') ?? false;
-  const isConcealerFinderRendering = variants?.some(variant => variant.name.split(' ')[0] === 'shade') ?? false;
+  const isShadeFinderRendering = variants?.some(variant => variant.title.split(' ')[1] === '30') ?? false;
+  const isConcealerFinderRendering = variants?.some(variant => variant.title.split(' ')[0] === 'shade') ?? false;
   const haveSelectedVariant = !!store?.productPage?.selectedVariant ?? false;
 
   useEffect(() => {
@@ -83,11 +84,11 @@ const PDPGallery = ({
       let mergeImages = [];
 
       if (variant?.name) {
-        const getFirstItemFromVariantNameList = variant.name
+        const getFirstItemFromVariantNameList = variant.title
           .toLowerCase()
           .replace(' ', '')
           ?.split('-')[0];
-        const getSecondItemFromVariantNameList = variant.name.replace(' ', '')?.split('-')[1];
+        const getSecondItemFromVariantNameList = variant.title.replace(' ', '')?.split('-')[1];
 
         if (!getSecondItemFromVariantNameList) {
           setImages(defaultImages);
@@ -98,7 +99,7 @@ const PDPGallery = ({
 
             sizeColorCode = sizes[sizeIndex];
           } else {
-            const variantInit = variant.name.replace(' ', '')?.split('-')[1].toLowerCase().trim();
+            const variantInit = variant.title.replace(' ', '')?.split('-')[1].toLowerCase().trim();
 
             if (variantInit?.split(' / ')[1]) {
               colorCode = variantInit.split(' / ')[0].replace('/', '_').replace(' ', '_');

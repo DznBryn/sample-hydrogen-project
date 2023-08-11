@@ -412,7 +412,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
         {subscriptionEligibleTag.current ? (
           <PDPSubscription
             classes={'order_0'}
-            selling_plans={{
+            sellingPlans={{
               AutoDeliveryDiscount: details.selling_plans.autoDeliveryDiscount,
               AutoDeliveryMessage: details.selling_plans.autoDeliveryMessage,
               SellingPlans: details.selling_plans.sellingPlans,

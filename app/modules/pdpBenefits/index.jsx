@@ -15,7 +15,7 @@ const PDPBenefits = ({ data }) => {
   return (
     <PDPSliderPanel data={data} useGradient={data?.useBackgroundGradient ?? false}>
       {
-        data?.contentBlock && data.contentBlock.map((content = null) => content && <Content data={content} key={content?.title}/>)
+        data?.contentBlock && data.contentBlock.map((content = null) => content && <Content data={content} key={content.title}/>)
       }
       <SliderPanel id={`tab-${data?.tabName.replace(/\s/g, '')}`}>
         <div id={'pdpBenefits_closeButton'} onClick={() => switchSliderPanelVisibility(`tab-${data?.tabName.replace(/\s/g, '')}`)}><span>close</span></div>
@@ -36,10 +36,10 @@ const PDPBenefits = ({ data }) => {
 const Content = ({ data }) =>
   Boolean(data?.contents && data?.contents.length > 0) && (
     <>
-      <PDPSliderPanelTitle data={{ title: data?.title }} />
+      <PDPSliderPanelTitle data={{ title: data?.name }} />
       <div className={'pdpBenefits_content'}>
         {data?.contents.map(ct => (
-          <div className={'pdpBenefits_content_wrapper'} key={data.title}>
+          <div className={'pdpBenefits_content_wrapper'} key={ct.name}>
             <div className={'pdpBenefits_content_container'}>
               {ct?.header !== '' ? (
                 <div
