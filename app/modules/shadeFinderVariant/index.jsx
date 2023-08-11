@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { useCartActions } from 'frontend-checkout';
+import { useCartActions } from '~/hooks/useCart';
 import { useStore } from '~/hooks/useStore';
 
 import styles from './styles.css';

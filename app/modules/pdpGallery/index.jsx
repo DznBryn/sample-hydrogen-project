@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import SwiperSlider, { links as swiperSliderStyles } from '../swiperSlider';
+import SwiperSlider from '../swiperSlider';
 import 'swiper/swiper-bundle.css';
 import PDPVideoModule, { links as pdpVideoModuleStyles } from '../pdpVideoModule';
 import { PDPBadges, links as badgesStyles } from '../badges';
@@ -10,7 +10,6 @@ import styles from './styles.css';
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
-    ...swiperSliderStyles(),
     ...pdpVideoModuleStyles(),
     ...badgesStyles(),
   ];

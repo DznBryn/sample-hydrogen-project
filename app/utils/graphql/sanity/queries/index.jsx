@@ -875,3 +875,78 @@ export const GET_LISTRAK_REC = gql`
     }
   }
 `;
+
+export const GET_VARIANTS_OOS = gql`
+  query GetAllVariantsOOS {
+    allVariantsOOS{
+      name
+      storefrontId
+    }
+  }
+`;
+
+export const GET_IMAGES = gql`
+  query GetAllImages {
+    allImages{
+      name
+      alt
+      role
+      images{
+        asset{
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
+
+export const GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT = gql`
+  query GetAllExclusiveProductBannerReleaseContent {
+    allExclusiveProductBannerReleaseContent{
+      name
+      message
+      slug
+      messageColor
+      background
+      slugWhereItShouldAppear
+      available
+    }
+  }
+`;
+
+export const GET_CONCEALER_SHADE_IMAGES = gql`
+  query GetAllConcealerShadeImages {
+    allConcealerShadeImages{
+      name
+      desktop{
+        asset{
+          _id
+          url
+        }
+      }
+      mobile{
+        asset{
+          _id
+          url
+        }
+      }
+      mobileNoLabels{
+        asset{
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
+
+export const GET_AUTO_DELIVERY_INFO_MESSAGE = gql`
+  query GetAllAutoDeliveryInfoMessage {
+    allAutoDeliveryInfoMessage{
+      name
+      messageRaw
+      disableInfomessage
+    }
+  }
+`;
