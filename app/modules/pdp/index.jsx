@@ -236,24 +236,20 @@ const PDP = ({
 
     function getTabsSections() {
 
-      function getData(...keys) {
-
-        return product.tabs?.find(tab => {
-          let found = false;
-          keys.forEach(key => {
-            found = (tab.name.includes(key));
-          });
-          return found;
-        });
-
-      }
-
       return {
         list: ['Clinical Results', 'Benefits', 'ingredients', 'how to use', 'reviews'],
-        results: getData('Result', 'clinical'),
-        benefits: getData('Benefit'),
-        formulate: getData('Formulate', 'ingredients'),
-        howToUse: getData('HowToUse', 'how'),
+        results: product.tabs?.find(tab => {
+          return tab.name.includes('Result') || tab.name.toLowerCase().includes('clinical');
+        }),
+        benefits: product.tabs?.find(tab => {
+          return tab.name.includes('Benefit');
+        }),
+        formulate: product.tabs?.find(tab => {
+          return tab.name.includes('Formulate') || tab.name.toLowerCase().includes('ingredients');
+        }),
+        howToUse: product.tabs?.find(tab => {
+          return tab.name.includes('HowToUse') || tab.name.toLowerCase().includes('how');
+        }),
       };
 
     }
