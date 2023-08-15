@@ -10,7 +10,7 @@ const PDPExclusiveProductBannerRelease = ({ content }) => {
   const { message, slug, messageColor, background } = content;
 
   return (
-    <a className={'bannerContainer'} href={slug} style={{ background: background }}>
+    <a className={'ExclusiveBannerContainer'} href={slug} style={{ background: background }}>
       <h1 style={{ color: messageColor }}>{message}</h1>
       <Arrow color={messageColor} />
     </a>

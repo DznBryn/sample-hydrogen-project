@@ -1,4 +1,4 @@
-.bannerContainer {
+.ExclusiveBannerContainer {
   display: flex;
   height: 38px;
   align-items: center;
@@ -11,14 +11,14 @@
   order: -1;
 }
 
-.bannerContainer h1 {
+.ExclusiveBannerContainer h1 {
   font-weight: 900;
   font-size: 14px;
   line-height: 28px;
 }
 
 @media (min-width: 768px) {
-  .bannerContainer {
+  .ExclusiveBannerContainer {
     height: 40px;
     width: 237px;
     padding-inline: 18px 16px;
