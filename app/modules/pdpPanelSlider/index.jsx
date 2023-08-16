@@ -1,12 +1,13 @@
 import classnames from 'classnames';
 import { switchSliderPanelVisibility } from '../sliderPanel';
-import Button from '../button';
+import Button, { links as buttonStyles } from '../button';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    ...buttonStyles(),
   ];
 };
 
