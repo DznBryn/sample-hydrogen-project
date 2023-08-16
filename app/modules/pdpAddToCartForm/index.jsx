@@ -118,10 +118,12 @@ const PDPAddToCartForm = ({ classes, forceSoldOut, renderingShadeFinder, exclusi
                 ['selling_plan_id']: store?.productPage?.addToCart?.selling_plan_id && store?.productPage?.addToCart?.selling_plan_id !== 0 ? store.productPage.addToCart.selling_plan_id : null,
                 discount: store?.productPage?.addToCart?.discount ?? 0
               }
-            } forceSoldOut={forceSoldOut}
+            } 
+            forceSoldOut={forceSoldOut}
             exclusiveProductAtcColor={exclusiveProductAtcColor}
             exclusiveProductTextColor={exclusiveProductTextColor}
             isGated={isGated}
+            availableForSale={store?.product?.totalInventory > 0}
           />
 
         </div>

@@ -9,9 +9,9 @@ export const links = () => {
 
 const PDPConditions = ({ suitableFor }) => {
   return suitableFor && (
-    <p className={'conditions_container'}>
+    <p className={'pdp_conditions_container'}>
       <b>suitable for: </b>
-      {suitableFor.split(' ').map((value) => <span key={value} className={'condition_values'}>{value} </span>)}
+      {suitableFor.split(' ').map((value) => <span key={value} className={'pdp_condition_values'}>{value} </span>)}
     </p>
   ) || '';
 };

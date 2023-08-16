@@ -48,10 +48,10 @@ const ModalLearnMore = ({
 }) => {
   return (
     (showLearnMoreModal && (
-      <div className={styles.modal__container}>
-        <div className={styles.learn_more__container}>
-          <div className={styles.close__container}>
-            <div className={styles.close} onClick={() => setShowLearnMoreModal(false)}>
+      <div className={'pdpDetails_modal__container'}>
+        <div className={'learn_more__container'}>
+          <div className={'pdpDetails_close__container'}>
+            <div className={'close'} onClick={() => setShowLearnMoreModal(false)}>
               <IconClose />
             </div>
           </div>
@@ -67,6 +67,7 @@ const PDPReviews = ({ product }) => {
   return (
     <div className={'reviews_container'}>
       <div className="yotpo bottomLine" data-product-id={product?.externalId}></div>
+      defining reviews vendor 
     </div>
   );
 };
@@ -75,7 +76,7 @@ const PDPLearnMore = () => {
   const [showLearnMoreModal, setShowLearnMoreModal] = useState(false);
 
   return (
-    <div className={'afterpayContainer'}>
+    <div className={'pdpDetails_afterpayContainer'}>
       <ModalLearnMore
         showLearnMoreModal={showLearnMoreModal}
         setShowLearnMoreModal={setShowLearnMoreModal}
@@ -84,7 +85,7 @@ const PDPLearnMore = () => {
           If for any reason you aren’t satisfied with your products, we will happily accept your
           return of items purchased in the last 60 days*. Shipping is covered by us and we will
           offer you a prepaid shipping label. Learn more at our{' '}
-          <Link href={'https://returns.tula.com/'} className={styles.cta__button}>
+          <Link href={'https://returns.tula.com/'} className={'pdpDetails_cta__button'}>
             return center
           </Link>
           .
@@ -94,7 +95,7 @@ const PDPLearnMore = () => {
       <p className={'returns_text_desktop'}>
         <small>
           free 60-day returns.{' '}
-          <span className={'cta__button'} onClick={() => setShowLearnMoreModal(true)}>
+          <span className={'pdpDetails_cta__button'} onClick={() => setShowLearnMoreModal(true)}>
             Learn More
           </span>
         </small>
@@ -207,15 +208,15 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
     return selectedVariant !== 0
       ? {
         originalPrice:
-          details.variants?.find(variant => variant.externalId === selectedVariant)
+          details.variants?.find(variant => variant.id === selectedVariant)
             ?.originalPrice ?? 0,
         price:
-          details.variants.find(variant => variant.externalId === selectedVariant)?.price ?? 0,
+          details.variants.find(variant => variant.id === selectedVariant)?.price?.amount ?? 0,
         ...generatePriceConfigs(isStickyCta),
       }
       : {
         originalPrice: details.variants[0]?.originalPrice ?? 0,
-        price: details.variants[0]?.price ?? 0,
+        price: details.variants[0]?.price?.amount ?? 0,
         ...generatePriceConfigs(isStickyCta),
       };
   };
@@ -340,7 +341,6 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
 
   };
 
-
   return (
     (details && (
       <div className={'details_container'}>
@@ -395,7 +395,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
             <div className={'certifiedBadgesContainer'}>
               {certifiedBadges?.map((badge) => (
                 <CertifiedBadge style={{ gridColumn: singleColumnForCertifiedBadges ? 'span 2' : '' }}
-                  image={badge.image.src}
+                  image={badge.image.asset.url}
                   title={badge.title}
                   key={badge.title}
                 />
@@ -451,7 +451,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
               }
 
               <PDPAddToCart
-                classes={[styles.stickyAtc]}
+                classes={['stickyAtc']}
                 addItem={{
                   product: store?.product || {},
                   variantId: store?.productPage?.selectedVariant,

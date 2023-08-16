@@ -1,4 +1,4 @@
-.conditions_container {
+.pdp_conditions_container {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
@@ -12,16 +12,16 @@
 }
 
 @media screen and (max-width: 768px) {
-  .conditions_container {
+  .pdp_conditions_container {
     order: 7
   }
 }
 
-.conditions_container b:first-of-type {
+.pdp_conditions_container b:first-of-type {
   margin-right: 5px;
   color: #4C4E56;
 }
 
-.condition_values {
+.pdp_condition_values {
   margin-right: 3px;
 }

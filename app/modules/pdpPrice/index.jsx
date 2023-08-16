@@ -66,7 +66,7 @@ const PDPPrice = ({
       <h2 className={'price retail_price'}>
         {discount === 0 ? (
           tulaSiteWide.current?.promoDiscount &&
-            !tulaSiteWide.current?.excludeList?.includes(product.externalId) &&
+            !tulaSiteWide.current?.excludeList?.includes(product.id) &&
             !promos?.showPromo &&
             !tags.find((tag) => tag.toLowerCase() === 'no-promo') ? (
               <>
@@ -161,7 +161,7 @@ const PDPPrice = ({
     }
     return (discount === 0 ? (
       tulaSiteWide.current?.promoDiscount &&
-        !tulaSiteWide.current?.excludeList?.includes(product.externalId) &&
+        !tulaSiteWide.current?.excludeList?.includes(product.id) &&
         !promos?.showPromo &&
         !tags.find((tag) => tag.toLowerCase() === 'no-promo') ? (
           <h2 className={promoTextStyles}>
@@ -199,7 +199,7 @@ const PDPPrice = ({
           <>
             <PromoText />
             {
-              showPaymentPlanVendor === 'afterpay' ? <div className={classnames('afterpay', showAfterpay ? '' : 'hideAfterpay')}>
+              showPaymentPlanVendor === 'afterpay' ? <div className={classnames('pdp_afterpay', showAfterpay ? '' : 'hidePdpAfterpay')}>
                 {
                   Number(price) > MAX_PRICE ?
                     <afterpay-placement
@@ -213,7 +213,7 @@ const PDPPrice = ({
                     :
                     <>
                       <IconAfterpay />
-                      <p className={'afterpay_text'}>available for orders over $35</p>
+                      <p className={'pdp_afterpay_text'}>available for orders over $35</p>
                     </>
                 }
               </div> : null

@@ -102,7 +102,7 @@
   order: 8;
 }
 
-.afterpayContainer {
+.pdpDetails_afterpayContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,7 +113,7 @@
   display: none;
 }
 
-.cta__button {
+.pdpDetails_cta__button {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -195,7 +195,7 @@
 }
 
 /* Modal Learn More */
-.modal__container {
+.pdpDetails_modal__container {
   position: absolute;
   transform: translateY(-110%);
   background-color: #fff;
@@ -214,7 +214,7 @@
   padding: 0.5em;
 }
 
-.close__container {
+.pdpDetails_close__container {
   width: 100%;
   padding: 0.5em;
   display: flex;
@@ -359,7 +359,7 @@
   .compared_price {
     margin: 0;
   }
-  .afterpayContainer {
+  .pdpDetails_afterpayContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
