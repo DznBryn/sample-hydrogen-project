@@ -61,14 +61,6 @@
   margin-bottom: 8px;
 }
 
-.link {
-  font-family: "Avenir";
-  text-decoration: underline;
-  color: #47C6D9;
-  cursor: pointer;
-  margin-left: 6px;
-}
-
 .sfContainer {
   width: 100%;
   display: flex;

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import classnames from 'classnames';
 import {
   isProductMetafield,
@@ -17,6 +17,7 @@ import PDPHowToUse, { links as pdpHowToUseStyles } from '../pdpHowToUse';
 import PDPListrakRec, { links as pdpListrakRecStyles } from '../pdpListrakRec';
 import PDPYotPo, { links as pdpYotPoStyles } from '../pdpYotPo';
 import FireWorkPDPCarousel, { links as fireWorkPDPCarouselStyles } from '../fireWorkPDPCarousel';
+import PortableTextCustom from '../portableTextCustom';
 
 import styles from './styles.css';
 
@@ -47,7 +48,15 @@ const PDP = ({
   concealerImages
 }) => {
 
-  const details = useRef(getDetailsObj());
+  const details = useMemo(
+    () => getDetailsObj(product),
+    [product]
+  );
+
+  const isGiftCard = useMemo(
+    () => details.tags.find(tag => tag.toLowerCase().replace(' ', '-') === 'gift-card'),
+    [details]
+  );
 
   useEffect(() => {
 
@@ -78,7 +87,7 @@ const PDP = ({
               price: `${parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2)}`,
               brand: 'TULA Skincare',
               category: `${product.productType}`,
-              variant: `${details.current.variants[0].externalId}`,
+              variant: `${details.variants[0].externalId}`,
               quantity: 1,
             },
           ],
@@ -93,53 +102,63 @@ const PDP = ({
     window.postscript.event('page_view', {
       'shop_id': getApiKeys().POSTSCRIPT.shopId, // your Postscript Shop ID
       'url': window.location.href, // the current page
-      'search_params': { 'variant': `${details.current.variants[0].externalId}` },
+      'search_params': { 'variant': `${details.variants[0].externalId}` },
       'page_type': 'product',
       'referrer': document.referrer, // the referring page
       'resource': { // information about the product
         'category': `${product.type}`,
         'name': `${product.name}`,
-        'price_in_cents': `${product.minPrice}`,
-        'resource_id': `${details.current.variants[0].externalId}`,
+        'price_in_cents': product.minPrice * 100,
+        'resource_id': details.variants[0].externalId,
         'resource_type': 'product',
-        'sku': `${details.current.variants[0].sku}`,
-        'variant_id': `${details.current.variants[0].externalId}`,
+        'sku': `${details.variants[0].sku}`,
+        'variant_id': details.variants[0].externalId,
         'vendor': 'TULA Skincare'
       }
     });
 
   }
 
-  function getDetailsObj() {
+  function getDetailsObj(product) {
 
-    function getTitleObj(key) {
-
-      return {
+    return {
+      autoDeliveryInfo,
+      title: {
         name: product.name,
-        alt: handleProductMetafieldData(product, key, 'value'),
-      };
-
-    }
-
-    function getPricingObj() {
-
-      return (
-        {
-          minPrice: product.minPrice ? product.minPrice : 0,
-          maxPrice: product.maxPrice ? product.maxPrice : 0,
-          variants: product.variants ? product.variants : [],
-        }
-      );
-
-    }
+        alt: product.alt_title,
+      },
+      description: product.description ? product.description : '',
+      descriptionHtml: product.descriptionHtml ? product.descriptionHtml : '',
+      tags: product.tags ? [...product.tags, 'badge:best seller'] : [], //mock - badge:best seller
+      pricing: {
+        minPrice: product.minPrice ? product.minPrice : 0,
+        maxPrice: product.maxPrice ? product.maxPrice : 0,
+        variants: product.variants ? product.variants : [],
+      },
+      reviews: getReviewsObj(),
+      videos: getVideosData(),
+      productImages: product?.images ?? [],
+      selling_plans: cart || {},
+      size: '1.5 oz / 44g', //mock - handleProductMetafieldData(product, 'size_in_oz', 'value'),
+      productPromos: product?.productPromos ? product.productPromos : {},
+      suitableFor: 'oily, combination, mature, sensitive, dry, balanced, blemish-prone', //mock - handleProductMetafieldData(product, 'suitable_for', 'value'),
+      variants: product.variants ? product.variants : [],
+      variants_oos: getVariantsOOS(),
+      variants_title: getVariantsTitle(),
+      variant_shade: getVariantShadeObj(),
+      tabs: getTabs(),
+      tabSections: getTabsSections(),
+    };
 
     function getVideosData() {
 
-      return (
-        isProductMetafield(product, 'videos')
-          ? getProductMetafield(product, 'videos').value
-          : ''
-      );
+      return 'https://vimeo.com/552391343'; //mock
+
+      // return (
+      //   isProductMetafield(product, 'videos')
+      //     ? getProductMetafield(product, 'videos').value
+      //     : ''
+      // );
 
     }
 
@@ -254,38 +273,16 @@ const PDP = ({
 
     }
 
-    return {
-      autoDeliveryInfo,
-      title: getTitleObj('alt_title'),
-      description: product.description ? product.description : '',
-      descriptionHtml: product.descriptionHtml ? product.descriptionHtml : '',
-      tags: product.tags ? product.tags : [],
-      pricing: getPricingObj(),
-      reviews: getReviewsObj(),
-      videos: getVideosData(),
-      productImages: product?.media ?? [],
-      selling_plans: cart || {},
-      size: handleProductMetafieldData(product, 'size_in_oz', 'value'),
-      productPromos: product?.productPromos ? product.productPromos : {},
-      suitableFor: handleProductMetafieldData(product, 'suitable_for', 'value'),
-      variants: product.variants ? product.variants : [],
-      variants_oos: getVariantsOOS(),
-      variants_title: getVariantsTitle(),
-      variant_shade: getVariantShadeObj(),
-      tabs: getTabs(),
-      tabSections: getTabsSections(),
-    };
-
   }
 
-  function getTabNames() {
+  const getTabNames = useCallback(function () {
 
     const tabNames = [];
     const tabs = [
-      getTabSections('results'),
-      getTabSections('benefits'),
-      getTabSections('formulate'),
-      getTabSections('howToUse'),
+      details.tabSections['results'],
+      details.tabSections['benefits'],
+      details.tabSections['formulate'],
+      details.tabSections['howToUse'],
     ];
 
     tabs.length > 0 &&
@@ -299,38 +296,32 @@ const PDP = ({
       );
 
     return tabNames;
-  }
-
-  function getTabSections(section) {
-
-    return details.current.tabSections[section];
-
-  }
+  }, [details]);
 
   //comps
 
   const TopSection = () => {
 
-    function getExclusiveProductBannerVisibility() {
+    const getExclusiveProductBannerVisibility = useCallback(function () {
 
       return (
         exclusiveProductBannerContent?.available &&
         (exclusiveProductBannerContent?.slugWhereItShouldAppear === product?.slug)
       );
 
-    }
+    }, [exclusiveProductBannerContent]);
 
     return (
 
-      <div className={classnames('section', 'section__product_details')}>
+      <div className={classnames('pdpSection', 'section__product_details')}>
 
-        <div className={classnames('container', 'col_1')}>
+        <div className={classnames('pdpContainer', 'col_1')}>
           <PDPGallery
-            productImages={details.current.productImages}
-            videos={details.current.videos}
-            variants={details.current.variants}
+            productImages={details.productImages}
+            videos={details.videos}
+            variants={details.variants}
             productId={product.externalId}
-            details={details.current}
+            details={details}
             isExclusiveProduct={!!product?.exclusiveAtcColor}
           />
 
@@ -338,8 +329,8 @@ const PDP = ({
         </div>
 
 
-        <div className={classnames('container', 'col_2')}>
-          <PDPDetails product={product} details={details.current} shadeVariantsOos={shadeVariantsOos} concealerImages={concealerImages} />
+        <div className={classnames('pdpContainer', 'col_2')}>
+          <PDPDetails product={product} details={details} shadeVariantsOos={shadeVariantsOos} concealerImages={concealerImages} />
         </div>
 
       </div>
@@ -351,84 +342,80 @@ const PDP = ({
   const ContentSection = ({ children }) => {
 
     return (
-      <div className={classnames('section')}>
+      <div className={classnames('pdpSection')}>
         {children}
       </div>
     );
 
   };
 
-  const BottomSection = () => {
-
-    const isGiftCard = details.current.tags.find(tag => tag.toLowerCase().replace(' ', '-') === 'gift-card');
-
-    return (
-
-      <ContentSection>
-        {
-          (!isGiftCard)
-            ? (<PDPYotPo product={product} />)
-            : (
-              <div className={'giftcard_description__container'}>
-                <div
-                  className={'giftcard_description'}
-                  dangerouslySetInnerHTML={{ __html: details.current.descriptionHtml }}
-                />
-              </div>
-            )
-        }
-      </ContentSection>
-
-
-    );
-
-  };
-
   //render
 
-  return (<>
+  return (
 
-    <TopSection />
+    <div id={'pdpWrapper'} className="minHeight">
+      <div className={'pdp_page__container'}>
 
-    <ContentSection>
-      <PDPMoreDetailsList data={getTabNames()} />
-    </ContentSection>
+        <TopSection />
 
-    {
-      getTabSections('results') && <ContentSection>
-        <PDPRealResults data={getTabSections('results')} />
-      </ContentSection>
-    }
+        <ContentSection>
+          <PDPMoreDetailsList data={getTabNames()} />
+        </ContentSection>
 
-    {
-      getTabSections('benefits') && <ContentSection>
-        <PDPBenefits data={getTabSections('benefits')} />
-      </ContentSection>
-    }
+        {
+          details.tabSections['results'] && <ContentSection>
+            <PDPRealResults data={details.tabSections['results']} />
+          </ContentSection>
+        }
 
-    {
-      getTabSections('formulate') && <ContentSection>
-        <PDPFormulate data={getTabSections('formulate')} />
-      </ContentSection>
-    }
 
-    {
-      getTabSections('howToUse') && <ContentSection>
-        <PDPHowToUse data={getTabSections('howToUse')} />
-      </ContentSection>
-    }
 
-    <ContentSection>
-      <FireWorkPDPCarousel playlist="g4P8eg" />
-    </ContentSection>
+        {
+          details.tabSections['benefits'] && <ContentSection>
+            <PDPBenefits data={details.tabSections['benefits']} />
+          </ContentSection>
+        }
 
-    <ContentSection>
-      <PDPListrakRec listrak={listrak} />
-    </ContentSection>
+        {
+          details.tabSections['formulate'] && <ContentSection>
+            <PDPFormulate data={details.tabSections['formulate']} />
+          </ContentSection>
+        }
 
-    <BottomSection />
 
-  </>);
+
+        {
+          details.tabSections['howToUse'] && <ContentSection>
+            <PDPHowToUse data={details.tabSections['howToUse']} />
+          </ContentSection>
+        }
+
+        <ContentSection>
+          <FireWorkPDPCarousel playlist="g4P8eg" />
+        </ContentSection>
+
+        <ContentSection>
+          <PDPListrakRec listrak={listrak} />
+        </ContentSection>
+
+        <ContentSection>
+          {
+            (!isGiftCard)
+              ? (<PDPYotPo product={product} />)
+              : (
+                <div className={'giftcard_description__container'}>
+                  <div className={'giftcard_description'}>
+                    <PortableTextCustom value={details.descriptionHtmlRaw} />
+                  </div>
+                </div>
+              )
+          }
+        </ContentSection>
+
+      </div>
+    </div>
+
+  );
 };
 
 export default PDP;
