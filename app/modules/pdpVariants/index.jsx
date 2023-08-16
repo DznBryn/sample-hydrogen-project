@@ -1,4 +1,5 @@
-import { useEffect, useRef, useLayoutEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useLayoutEffect } from '~/utils/functions/eventFunctions';
 import { useStore } from '~/hooks/useStore';
 import SavingsBadges, { links as badgesStyles } from '../badges';
 import classnames from 'classnames';
@@ -108,7 +109,7 @@ const ShadeVariant = ({ variant = {}, isTypeShadeMatch = null, promos = null }) 
           {shade[0] ? (
             <p
               className={
-                variant.name.includes('So ')
+                variant.title.includes('So ')
                   ? 'variant_text text_bold'
                   : 'variant_text'
               }
@@ -118,13 +119,13 @@ const ShadeVariant = ({ variant = {}, isTypeShadeMatch = null, promos = null }) 
           ) : (
             ''
           )}
-          {shade[1] && !variant.name.includes('So ') ? (
+          {shade[1] && !variant.title.includes('So ') ? (
             <p className={'variant_text text_bold'}>{shade[1]}</p>
           ) : (
             ''
           )}
           {promos?.showPromo &&
-            promos?.promoVariants.find(variantId => parseInt(variantId) === variant.externalId) && (
+            promos?.promoVariants.find(variantId => parseInt(variantId) === variant.id) && (
             <span className={'promo'}>{promos?.variantPromoMessage}</span>
           )}
         </div>
@@ -141,7 +142,7 @@ const SizeVariants = ({ data }) => {
   const TypeSize = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'size');
 
   const getCurrentVariantShade = (variantId = null) =>
-    variantId && variants.find(variant => variant.externalId === variantId);
+    variantId && variants.find(variant => variant.id === variantId);
   const getShadeName = () =>
     TypeShade?.values &&
     TypeShade?.values?.find(
@@ -154,16 +155,16 @@ const SizeVariants = ({ data }) => {
     getShadeName() &&
     variants.find(
       (variant = null) =>
-        variant && variant.name.includes(getShadeName()) && variant.name.includes(size),
+        variant && variant.title.includes(getShadeName()) && variant.title.includes(size),
     );
 
   const enablePromo = (size) => {
     let value = false;
     productPromos?.variantIds.forEach((promoVariant) => {
 
-      if (variants.find(variant => variant.externalId === Number(promoVariant))) {
+      if (variants.find(variant => variant.id === Number(promoVariant))) {
         const trimSize = size.split('-')[0].replace(' ', '').toLowerCase();
-        const item = variants.find(variant => variant.externalId === Number(promoVariant));
+        const item = variants.find(variant => variant.id === Number(promoVariant));
         value = item.name.toLowerCase().includes(trimSize) ? true : false;
       }
     });
@@ -177,7 +178,7 @@ const SizeVariants = ({ data }) => {
         ...store,
         productPage: {
           ...store.productPage,
-          selectedVariant: handleVariantChange(size).externalId,
+          selectedVariant: handleVariantChange(size).id,
           selectedTypeSize: size,
         },
       });
@@ -224,47 +225,51 @@ const SizeVariants = ({ data }) => {
     <div className={'variants_size_container'}>
       {variants.map((variant) => (
         <div
-          key={variant.externalId}
-          className={
-            `
-                    ${store?.productPage?.selectedVariant === variant.externalId
-          ? 'variant__size_option size__selected'
-          : 'variant__size_option'
-        }
-                        ${variant.name.toLowerCase().includes('jumbo') && 'variant__size_option--expand'}`
-          }
+          key={variant.id}
+          className={classnames(
+            (
+              store?.productPage?.selectedVariant === variant.id
+                ? 'variant__size_option size__selected'
+                : 'variant__size_option'
+            ),
+            (
+              variant.title.toLowerCase().includes('jumbo') 
+                ? 'variant__size_option--expand' 
+                : undefined
+            )
+          )}
           onClick={() => {
-            window.history.replaceState(null, null, `?variant=${variant.externalId}`);
+            window.history.replaceState(null, null, `?variant=${variant.id}`);
 
             return setStore({
               ...store,
               productPage: {
                 ...store.productPage,
-                selectedVariant: variant.externalId,
-                selectedTypeSize: variant.name,
+                selectedVariant: variant.id,
+                selectedTypeSize: variant.title,
               },
             });
           }}
         >
           <p className={'option_text'}>
-            {variant.name.toLowerCase().includes('jumbo') ?
+            {variant.title.toLowerCase().includes('jumbo') ?
               (<>
                 <span className={'text_bold text_color--pink'}>New size!</span> {' '}
               </>)
               : null} {' '}
-            <span className={'text_bold'}>{variant.name}</span>
+            <span className={'text_bold'}>{variant.title}</span>
             <br />
             {productPromos?.showPromo &&
               parseInt(
                 productPromos?.variantIds?.find(
-                  variantId => parseInt(variantId) === variant.externalId,
+                  variantId => parseInt(variantId) === variant.id,
                 ),
-              ) === variant.externalId && (
+              ) === variant.id && (
               <span className={'promo'}>{productPromos.promoMessage}</span>
             )}
           </p>
           {
-            variant.name.toLowerCase().includes('jumbo') ?
+            variant.title.toLowerCase().includes('jumbo') ?
               <SavingsBadges message={'SAVE 35%'} /> : null
           }
         </div>
@@ -285,7 +290,7 @@ const SizeVariants = ({ data }) => {
 
 const DropdownVariants = ({ data = null }) => {
   const cardVariantId = useRef(null);
-  const [store, setStore] = useStore();
+  const {store, setStore} = useStore();
   const { variants } = data;
 
   const handleSelectedVariant = () =>
@@ -306,8 +311,8 @@ const DropdownVariants = ({ data = null }) => {
         onClick={handleSelectedVariant}
       >
         {variants.map(variant => (
-          <option key={variant._id} value={variant.externalId}>
-            {variant.name}
+          <option key={variant._id} value={variant.id}>
+            {variant.title}
           </option>
         ))}
       </select>
@@ -316,7 +321,7 @@ const DropdownVariants = ({ data = null }) => {
 };
 
 const VariantsContainer = ({ data = null }) => {
-  const [store, setStore] = useStore();
+  const {store, setStore} = useStore();
   const { variants, variants_title: variantsTitle, productPromos, variant_shade: variantShade } = data;
   const TypeShade = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'shade');
   const TypeSize = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'size');
@@ -351,7 +356,7 @@ const VariantsContainer = ({ data = null }) => {
         {Boolean(TypeShade && TypeSize) &&
           variants.map(
             variant =>
-              variant.name.includes(store?.productPage?.selectedTypeSize) && (
+              variant.title.includes(store?.productPage?.selectedTypeSize) && (
                 <Variant key={variant._id} variant={variant} />
               ),
           )}
@@ -365,22 +370,22 @@ const VariantsContainer = ({ data = null }) => {
 
   const Variant = ({ variant = null }) => {
     const isTypeShadeMatch = TypeShade.values.find((typeValue = null) =>
-      variant.name.includes(typeValue),
+      variant.title.includes(typeValue),
     );
 
     const getVariantClassnames = () =>
       store?.productPage?.selectedVariant !== null
-        ? store?.productPage?.selectedVariant === variant.externalId
+        ? store?.productPage?.selectedVariant === variant.id
           ? variant.availableForSale === false
             ? classnames(
-              styles.variant,
-              styles.show_variant,
-              styles.variant_selected,
-              styles.state__not_available,
+              'variant',
+              'show_variant',
+              'variant_selected',
+              'state__not_available',
             )
-            : classnames(styles.variant, styles.show_variant, styles.variant_selected)
-          : classnames(styles.variant, styles.show_variant)
-        : classnames(styles.variant);
+            : classnames('variant', 'show_variant', 'variant_selected')
+          : classnames('variant', 'show_variant')
+        : classnames('variant');
 
     return (
       variant && (
@@ -390,13 +395,13 @@ const VariantsContainer = ({ data = null }) => {
 
             variantsWraperScrollLeft.current = variantsWraper.current.scrollLeft;
 
-            window.history.replaceState(null, null, `?variant=${variant.externalId}`);
+            window.history.replaceState(null, null, `?variant=${variant.id}`);
 
             return setStore({
               ...store,
               productPage: {
                 ...store.productPage,
-                selectedVariant: variant.externalId,
+                selectedVariant: variant.id,
               },
             });
           }}
@@ -494,7 +499,7 @@ const PDPVariants = ({ classes, details = {} }) => {
             productPage: {
               ...store?.productPage,
               types: types.current,
-              selectedVariant: (details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].externalId : 0,
+              selectedVariant: (details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].id : 0,
               selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
               addToCart: {
                 ...store?.productPage?.addToCart,
@@ -508,7 +513,7 @@ const PDPVariants = ({ classes, details = {} }) => {
             productPage: {
               ...store?.productPage,
               types: types.current,
-              selectedVariant: (details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].externalId : 0,
+              selectedVariant: (details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].id : 0,
               selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
             },
           });
@@ -520,10 +525,9 @@ const PDPVariants = ({ classes, details = {} }) => {
   const getSelectedTypeSize = (types = null) =>
     types && types.find(type => type.name.toLowerCase() === 'size');
 
-  const getParamsVariantId = (stringId = '0') => {
-    const variantId = parseInt(stringId);
+  const getParamsVariantId = (variantId) => {
     const isVariantExist = Boolean(
-      details?.variants.find(variant => variant.externalId === variantId),
+      details?.variants.find(variant => variant.id === variantId),
     );
 
     return isVariantExist
@@ -541,7 +545,7 @@ const PDPVariants = ({ classes, details = {} }) => {
         productPage: {
           ...store.productPage,
           types: types.current,
-          selectedVariant: details?.variants.length <= 2 ? details.variants[0].externalId : 0,
+          selectedVariant: details?.variants.length <= 2 ? details.variants[0].id : 0,
           selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
         },
       });

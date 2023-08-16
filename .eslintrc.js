@@ -29,7 +29,6 @@ module.exports = {
     'arrow-spacing': 'error',
     'block-spacing': 'error',
     'no-console': 'warn',
-    'camelcase': 'error',
     'eqeqeq': 'error',
     'key-spacing': ['error', { 'afterColon': true }],
     'array-bracket-spacing': ['error', 'never'],

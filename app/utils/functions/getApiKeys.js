@@ -80,7 +80,7 @@ function getApiKeys() {
         otButtonMessage: 'Do Not Sell My Information'
       },
       FEATURE_FLAGS: {
-        LOYALTY: true,
+        LOYALTY: false,
       },
       // API_TYPE: storePlatformApiType
     };

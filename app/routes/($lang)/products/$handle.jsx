@@ -1,12 +1,24 @@
-/* eslint-disable react/prop-types */
+import Layouts from '~/layouts';
+
 import { flattenConnection } from '@shopify/hydrogen-react';
 import { useLoaderData } from 'react-router';
 import { PRODUCT_QUERY } from '~/utils/graphql/shopify/queries/collections';
 import { json } from '@shopify/remix-oxygen';
-import { useFetcher, useMatches } from '@remix-run/react';
-// import { useCartActions } from '../../../hooks/useCart';
+
+import PDP, {links as pdpStyles} from '~/modules/pdp';
+import { useMatches } from '@remix-run/react';
+import { getCMSDoc, getGroupOfCMSContent, getProductWithCMSData } from '~/utils/functions/eventFunctions';
+import { useMemo } from 'react';
+import { GET_AUTO_DELIVERY_INFO_MESSAGE, GET_CART_PAGE_CONFIG, GET_CONCEALER_SHADE_IMAGES, GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT, GET_LISTRAK_REC, GET_VARIANTS_OOS } from '~/utils/graphql/sanity/queries';
+
+export const links = () => {
+  return [
+    ...pdpStyles(),
+  ];
+};
 
 export const loader = async ({ params, context }) => {
+
   const { handle } = params;
   const { product } = await context.storefront.query(PRODUCT_QUERY, {
     variables: {
@@ -26,48 +38,64 @@ export const loader = async ({ params, context }) => {
     }
     : null;
 
+
+
+  //
+
+  const queries = [
+    GET_AUTO_DELIVERY_INFO_MESSAGE,
+    GET_VARIANTS_OOS,
+    GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT,
+    GET_CONCEALER_SHADE_IMAGES,
+    GET_LISTRAK_REC,
+    GET_CART_PAGE_CONFIG,
+  ];
+
+  const contents = await getGroupOfCMSContent(context, queries);
+
+  //
+
   return json({
-    handle,
     product: data,
+    ...contents,
   });
+
 };
 
-export default function PDP() {
-  const { handle, product } = useLoaderData();
-  return product ? (
-    <div className="outline outline-2 outline-blue-300 p-4 my-2">
-      <summary>
-        Collection: {product?.title ?? ''} ({handle})
-      </summary>
-      <div>
-        <ProductForm variantId={product.variants[0].id} />
-      </div>
-      <pre>{JSON.stringify(product, null, 2)}</pre>
-    </div>
-  ) : (
-    <></>
-  );
-}
+export default function PDPPage() {
 
-// @TODO: ProductForm must be converted in AddToCart global component
-export function ProductForm({ variantId }) {
   const [root] = useMatches();
-  const selectedLocale = root?.data?.selectedLocale;
-  const fetcher = useFetcher();
-  const lines = [{ merchandiseId: variantId, quantity: 1 }];
+  const { 
+    CartPageConfig,
+    product,
+    ListrakRec,
+    ConcealerShadeImages,
+    AutoDeliveryInfoMessage,
+    VariantsOOS,
+    ExclusiveProductBannerReleaseContent,
+  } = useLoaderData();
+
+  const productsCMSData = root.data.globalCMSData.products;
+
+  const currentProduct = useMemo(
+    () => getProductWithCMSData(product, productsCMSData),
+    [product, productsCMSData]
+  );
 
   return (
-    <fetcher.Form action="/cart" method="post">
-      <input type="hidden" name="cartAction" value={'ADD_TO_CART'} />
-      <input
-        type="hidden"
-        name="countryCode"
-        value={selectedLocale?.country ?? 'US'}
+    
+    <Layouts.MainNavFooter>
+      <PDP
+        product={currentProduct}
+        cart={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        listrak={getCMSDoc(ListrakRec, 'PDP')}
+        autoDeliveryInfo={getCMSDoc(AutoDeliveryInfoMessage, 'Auto Delivery Details')}
+        shadeVariantsOos={getCMSDoc(VariantsOOS, 'shadeFinderVariants')}
+        exclusiveProductBannerContent={getCMSDoc(ExclusiveProductBannerReleaseContent, 'rose glose test')}
+        concealerImages={ConcealerShadeImages}
       />
-      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button type="submit">
-        Add to cart
-      </button>
-    </fetcher.Form>
+    </Layouts.MainNavFooter>
+
   );
+
 }

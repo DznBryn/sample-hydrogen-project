@@ -5,11 +5,6 @@
   margin-bottom: 0.5em;
 }
 
-.price_container {
-  font-weight: 900;
-  /* margin: 1em 0; */
-}
-
 .m0 {
   margin: 0;
 }
@@ -50,7 +45,7 @@
   text-align: left;
 }
 
-.afterpay {
+.pdp_afterpay {
   width: 70px;
   margin-right: 0.25em;
 }
@@ -60,7 +55,7 @@
   line-height: 14px;
 }
 
-.afterpay {
+.pdp_afterpay {
   padding: 6px;
   width: 100%;
   border-radius: 3px;
@@ -69,16 +64,16 @@
   align-items: center;
 }
 
-.afterpay :global(afterpay-placement) {
+.pdp_afterpay :global(afterpay-placement) {
   --logo-badge-width: 70px;
   font-weight: 400;
 }
 
-.hideAfterpay {
+.hidePdpAfterpay {
   display: none;
 }
 
-.afterpay_text {
+.pdp_afterpay_text {
   font-style: normal;
   font-weight: 300;
   font-size: 11px;
@@ -112,14 +107,14 @@
   .compared_price {
     margin: 0;
   }
-  .afterpay {
+  .pdp_afterpay {
     justify-content: flex-start;
     max-width: 400px;
   }
-  .afterpay_text {
+  .pdp_afterpay_text {
     font-size: 14px;
   }
-  .afterpay afterpay-placement {
+  .pdp_afterpay afterpay-placement {
     --logo-badge-width: 80px;
     font-size: 14px;
   }

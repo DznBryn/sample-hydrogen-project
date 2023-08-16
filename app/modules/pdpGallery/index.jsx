@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
 import SwiperSlider, { links as swiperSliderStyles } from '../swiperSlider';
-import 'swiper/swiper-bundle.css';
 import PDPVideoModule, { links as pdpVideoModuleStyles } from '../pdpVideoModule';
 import { PDPBadges, links as badgesStyles } from '../badges';
 import { useStore } from '~/hooks/useStore';
@@ -10,8 +9,8 @@ import styles from './styles.css';
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
-    ...swiperSliderStyles(),
     ...pdpVideoModuleStyles(),
+    ...swiperSliderStyles(),
     ...badgesStyles(),
   ];
 };
@@ -23,14 +22,15 @@ const PDPGallery = ({
   videos = null,
   details,
 }) => {
+
   const {store} = useStore();
   const defaultImages = productImages.filter(img => img?.details?.name?.includes('default')).length > 0 ?
     productImages.filter(img => img.details.name.includes('default'))
     : productImages;
   const [images, setImages] = useState(productImages);
   const [isFiltered, setIsFiltered] = useState(false);
-  const isShadeFinderRendering = variants?.some(variant => variant.name.split(' ')[1] === '30') ?? false;
-  const isConcealerFinderRendering = variants?.some(variant => variant.name.split(' ')[0] === 'shade') ?? false;
+  const isShadeFinderRendering = variants?.some(variant => variant.title.split(' ')[1] === '30') ?? false;
+  const isConcealerFinderRendering = variants?.some(variant => variant.title.split(' ')[0] === 'shade') ?? false;
   const haveSelectedVariant = !!store?.productPage?.selectedVariant ?? false;
 
   useEffect(() => {
@@ -84,11 +84,11 @@ const PDPGallery = ({
       let mergeImages = [];
 
       if (variant?.name) {
-        const getFirstItemFromVariantNameList = variant.name
+        const getFirstItemFromVariantNameList = variant.title
           .toLowerCase()
           .replace(' ', '')
           ?.split('-')[0];
-        const getSecondItemFromVariantNameList = variant.name.replace(' ', '')?.split('-')[1];
+        const getSecondItemFromVariantNameList = variant.title.replace(' ', '')?.split('-')[1];
 
         if (!getSecondItemFromVariantNameList) {
           setImages(defaultImages);
@@ -99,7 +99,7 @@ const PDPGallery = ({
 
             sizeColorCode = sizes[sizeIndex];
           } else {
-            const variantInit = variant.name.replace(' ', '')?.split('-')[1].toLowerCase().trim();
+            const variantInit = variant.title.replace(' ', '')?.split('-')[1].toLowerCase().trim();
 
             if (variantInit?.split(' / ')[1]) {
               colorCode = variantInit.split(' / ')[0].replace('/', '_').replace(' ', '_');
@@ -150,27 +150,28 @@ const PDPGallery = ({
         setImages(defaultImages);
       }
     }
+
     setIsFiltered(true);
   }, [store?.productPage?.selectedVariant]);
 
   function getImages(imgObj) {
     return (
-      Boolean(imgObj?.details?._type === 'image') && (
-        <img
-          className={'product__image'}
-          loading={'lazy'}
-          src={imgObj?.details?.src ?? ''}
-          alt={imgObj?.details?.alt ?? 'Tula Product'}
-          width={imgObj?.details?.width ?? '500'}
-          height={imgObj?.details?.height ?? '500'}
-        />
-      )
+      // Boolean(imgObj?.details?._type === 'image') && (
+      <img
+        className={'product__image'}
+        loading={'lazy'}
+        src={imgObj?.url ?? ''}
+        alt={imgObj?.altText ?? 'Tula Product'}
+        width={imgObj.width ?? '500'}
+        height={imgObj?.height ?? '500'}
+      />
+      // )
     );
   }
 
   return (
     <div className={'gallery'}>
-      <div className={'badgeContainer'}>
+      <div className={'pdpGallerBadgeContainer'}>
         <PDPBadges
           productDetails={details}
           selectedVariant={0}
@@ -219,7 +220,7 @@ const PDPGalleryVideo = ({ productVideo = {} }) => {
             alt={productVideo?.thumbnail?.alt}
             width={productVideo?.thumbnail?.width}
           />
-          <div className={'icon__container'}>
+          <div className={'pdpGallery_icon__container'}>
             <IconPlay />
           </div>
         </div>

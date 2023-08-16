@@ -22,12 +22,12 @@ const StickyMobile = ({ isScroll, exclusiveProductAtcColor, exclusiveProductText
       className={
         isScroll === true
           ? classnames(
-            'mobile',
-            'wrapper',
-            'show',
-            'show_mobile'
+            'stickyATC_mobile',
+            'stickyATC_wrapper',
+            'stickyATC_show',
+            'stickyATC_show_mobile'
           )
-          : classnames('mobile', 'wrapper', 'show_mobile')
+          : classnames('stickyATC_mobile', 'stickyATC_wrapper', 'stickyATC_show_mobile')
       }>
       <div className={'stickyATCContainer'}>
         <PDPAddToCartForm
@@ -47,18 +47,18 @@ const StickyDesktop = ({ product, Component, PriceComponent, isScroll }) => (
     className={
       isScroll === true
         ? classnames(
-          'desktop',
-          'wrapper',
-          'show',
-          'show_desktop'
+          'stickyATC_desktop',
+          'stickyATC_wrapper',
+          'stickyATC_show',
+          'stickyATC_show_desktop'
         )
-        : classnames('desktop', 'wrapper', 'show_desktop')
+        : classnames('stickyATC_desktop', 'stickyATC_wrapper', 'stickyATC_show_desktop')
     }>
-    <div className={'container'}>
+    <div className={'stickyATCContainer'}>
       <p className={'product_title'}>
         {product?.title?.name || 'Product Title Here'}
       </p>
-      <p className={'product_price'}>{PriceComponent}</p>
+      <div className={'product_price'}>{PriceComponent}</div>
       <div className={'component_container'}>{Component}</div>
     </div>
   </div>

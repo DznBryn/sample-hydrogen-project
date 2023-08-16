@@ -81,7 +81,7 @@ const CommomVersion = () => {
 
     return (
 
-      <div className={'modalContainer noLoyalty'}>
+      <div className={'myAccountDropDown_modalContainer noLoyalty'}>
 
         <div className={'accDropdownCloseButton'}>
           {(!isLoggedIn) && <div onClick={() => setIsModalOpen(!isModalOpen)}><Icons.X /></div>}
@@ -192,7 +192,7 @@ const LoyaltyVersion = () => {
 
     return (
 
-      <div className={'modalContainer'}>
+      <div className={'myAccountDropDown_modalContainer'}>
 
         <div className={'banner'}>
           <div onClick={() => setIsModalOpen(!isModalOpen)}><Icons.X /></div>

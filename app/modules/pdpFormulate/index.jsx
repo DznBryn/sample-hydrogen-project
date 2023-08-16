@@ -1,6 +1,7 @@
 import PDPSliderPanel, { PDPPanelTitle, PDPSliderPanelTitle } from '../pdpPanelSlider';
 import SliderPanel, { switchSliderPanelVisibility } from '../sliderPanel';
 import classnames from 'classnames';
+import PortableTextCustom from '../portableTextCustom';
 
 import styles from './styles.css';
 
@@ -22,12 +23,9 @@ const PDPFormulate = ({ data }) => {
         <div id={'pdpFormulate_closeButton'} onClick={() => switchSliderPanelVisibility(`tab-${data?.tabName.replace(/\s/g, '')}`)}><span>close</span></div>
         <div className={'pdpFormulate_panel_container'}>
           <PDPPanelTitle title={data?.button?.slideContent?.title} />
-          <div
-            className={'pdpFormulate_panel_body'}
-            dangerouslySetInnerHTML={{
-              __html: data?.button?.slideContent?.content?.replace(scriptTags, ''),
-            }}
-          />
+          <div className={'pdpFormulate_panel_body'}>
+            <PortableTextCustom value={data?.button?.slideContent?.contentRaw}/>
+          </div>
         </div>
       </SliderPanel>
     </PDPSliderPanel>
@@ -40,19 +38,16 @@ const Content = ({ data }) => {
       <PDPSliderPanelTitle data={{ title: data?.title }} />
       <div className={'pdpFormulate_content'}>
         {data?.contents.map(ct => (
-          <div className={data?.contents.length !== 1 && 'pdpFormulate_content_wrapper'} key={data?.title}>
+          <div className={data?.contents.length !== 1 ? 'pdpFormulate_content_wrapper' : undefined} key={ct?.name}>
             <div className={data?.contents.length === 1 ? classnames('pdpFormulate_content_container', 'pdpFormulate_mWidth_100') : 'pdpFormulate_content_container'}>
-              {ct?.header !== '' ? (
-                <div
-                  className={'pdpFormulate_content_header'}
-                  dangerouslySetInnerHTML={{
-                    __html: ct?.header?.replace(scriptTags, ''),
-                  }}
-                />
-              ) : ct?.image ? (
+              {ct?.header !== undefined ? (
+                <div className={'pdpFormulate_content_header'}>
+                  <PortableTextCustom value={ct?.headerRaw}/>
+                </div>
+              ) : ct?.image?.asset.url ? (
                 <div className={'pdpFormulate_content_image'}>
                   <img
-                    src={ct?.image?.src}
+                    src={ct?.image?.asset.url}
                     alt={ct?.image?.alt}
                     width={70}
                     height={70}
@@ -70,7 +65,7 @@ const Content = ({ data }) => {
                       }}
                     />
                     : <span>{ct.subtitle}</span>}
-                  <p className={data?.contents.length === 1 && classnames('pdpFormulate_text_wTablet', 'pdpFormulate_text_center')}>{ct.body}</p>
+                  <p className={data?.contents.length === 1 ? classnames('pdpFormulate_text_wTablet', 'pdpFormulate_text_center') : undefined}>{ct.body}</p>
                 </div>
               )}
               {ct?.htmlBody !== '' && (

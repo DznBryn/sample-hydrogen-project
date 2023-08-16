@@ -580,7 +580,8 @@ export function getCollectionWithCMSData(collection, productsCMSData, collection
 
   if(collectionsCMSData){
 
-    const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.collectionId))[0];
+    const collectionCMSDoc = collectionsCMSData.find(data => (collectionCopy.handle === data.collectionId));
+    // const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.collectionId))[0];
     if(collectionCMSDoc) collectionCopy = { ...collectionCMSDoc, ...collection };
 
   }
@@ -589,14 +590,23 @@ export function getCollectionWithCMSData(collection, productsCMSData, collection
 
     collectionCopy.products = collectionCopy?.products.map(product => {
 
-      const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
-      return { ...product, ...CMSData[0] };
+      // const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
+      const CMSData = productsCMSData.find(data => (product.handle === data.productId));
+      return { ...product, ...CMSData };
 
     });
 
   }
 
   return collectionCopy;
+
+}
+
+export function getProductWithCMSData(product, productsCMSData){
+
+  const CMSData = productsCMSData.find(data => data.productId === product.handle);
+  
+  return (CMSData) ? {...product, ...CMSData} : product;
 
 }
 
