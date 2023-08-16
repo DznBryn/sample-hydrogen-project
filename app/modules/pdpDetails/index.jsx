@@ -464,6 +464,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
                 exclusiveProductAtcColor={product?.exclusiveAtcColor}
                 exclusiveProductTextColor={product?.exclusiveTextColor}
                 isGated={product?.isGated}
+                availableForSale={store?.product?.totalInventory > 0}
               />
             </div>
           }

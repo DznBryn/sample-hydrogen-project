@@ -1,4 +1,4 @@
-.mobile.wrapper {
+.stickyATC_mobile.stickyATC_wrapper {
   width: 100%;
   background-color: #fff;
   position: fixed;
@@ -15,7 +15,7 @@
   transition: all 0.25s ease;
 }
 
-.mobile .stickyATCContainer {
+.stickyATC_mobile .stickyATCContainer {
   max-width: 100%;
   display: flex;
   justify-content: space-evenly;
@@ -23,36 +23,36 @@
   padding: 0 1em;
 }
 
-.mobile .product_title {
+.stickyATC_mobile .product_title {
   font-size: 14px;
   font-weight: 800;
   text-transform: lowercase;
   padding: 0 0.5em 0 0.25em;
 }
 
-.mobile .product_price {
+.stickyATC_mobile .product_price {
   display: flex;
 }
 
-.mobile .product_price span {
+.stickyATC_mobile .product_price span {
   font-size: 14px;
 }
 
-.mobile .component_container {
+.stickyATC_mobile .component_container {
   width: 100%;
   min-width: 130px;
 }
 
-.show_mobile {
+.stickyATC_show_mobile {
   display: block;
 }
 
-.show_desktop {
+.stickyATC_show_desktop {
   display: none;
 }
 
 @media (min-width: 768px) {
-  .desktop.wrapper {
+  .stickyATC_desktop.stickyATC_wrapper {
     width: 100%;
     background-color: rgb(215, 240, 244);
     position: fixed;
@@ -66,33 +66,33 @@
     -o-transition: all 0.25s ease;
     transition: all 0.25s ease;
   }
-  .desktop .stickyATCContainer {
+  .stickyATC_desktop .stickyATCContainer {
     max-width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1em 0em;
   }
-  .desktop .product_title,
-  .desktop .product_price {
+  .stickyATC_desktop .product_title,
+  .stickyATC_desktop .product_price {
     padding: 0 1em 0 1em;
   }
-  .desktop .product_title {
+  .stickyATC_desktop .product_title {
     font-weight: 800;
     text-transform: lowercase;
     border-right: 1px solid;
   }
-  .desktop .component_container {
+  .stickyATC_desktop .component_container {
     max-width: 190px;
     min-width: 130px;
   }
-  .desktop.show {
+  .stickyATC_desktop.stickyATC_show {
     bottom: 0em;
   }
-  .show_mobile {
+  .stickyATC_show_mobile {
     display: none;
   }
-  .show_desktop {
+  .stickyATC_show_desktop {
     display: block;
   }
 }

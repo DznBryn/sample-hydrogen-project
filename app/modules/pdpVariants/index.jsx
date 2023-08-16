@@ -226,14 +226,18 @@ const SizeVariants = ({ data }) => {
       {variants.map((variant) => (
         <div
           key={variant.id}
-          className={
-            `
-                    ${store?.productPage?.selectedVariant === variant.id
-          ? 'variant__size_option size__selected'
-          : 'variant__size_option'
-        }
-                        ${variant.title.toLowerCase().includes('jumbo') && 'variant__size_option--expand'}`
-          }
+          className={classnames(
+            (
+              store?.productPage?.selectedVariant === variant.id
+                ? 'variant__size_option size__selected'
+                : 'variant__size_option'
+            ),
+            (
+              variant.title.toLowerCase().includes('jumbo') 
+                ? 'variant__size_option--expand' 
+                : undefined
+            )
+          )}
           onClick={() => {
             window.history.replaceState(null, null, `?variant=${variant.id}`);
 
