@@ -1,6 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import SwiperSlider from '../swiperSlider';
-import 'swiper/swiper-bundle.css';
+import SwiperSlider, { links as swiperSliderStyles } from '../swiperSlider';
 import PDPVideoModule, { links as pdpVideoModuleStyles } from '../pdpVideoModule';
 import { PDPBadges, links as badgesStyles } from '../badges';
 import { useStore } from '~/hooks/useStore';
@@ -11,6 +10,7 @@ export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
     ...pdpVideoModuleStyles(),
+    ...swiperSliderStyles(),
     ...badgesStyles(),
   ];
 };
@@ -150,27 +150,28 @@ const PDPGallery = ({
         setImages(defaultImages);
       }
     }
+
     setIsFiltered(true);
   }, [store?.productPage?.selectedVariant]);
 
   function getImages(imgObj) {
     return (
-      Boolean(imgObj?.details?._type === 'image') && (
-        <img
-          className={'product__image'}
-          loading={'lazy'}
-          src={imgObj?.details?.src ?? ''}
-          alt={imgObj?.details?.alt ?? 'Tula Product'}
-          width={imgObj?.details?.width ?? '500'}
-          height={imgObj?.details?.height ?? '500'}
-        />
-      )
+      // Boolean(imgObj?.details?._type === 'image') && (
+      <img
+        className={'product__image'}
+        loading={'lazy'}
+        src={imgObj?.url ?? ''}
+        alt={imgObj?.altText ?? 'Tula Product'}
+        width={imgObj.width ?? '500'}
+        height={imgObj?.height ?? '500'}
+      />
+      // )
     );
   }
 
   return (
     <div className={'gallery'}>
-      <div className={'badgeContainer'}>
+      <div className={'pdpGallerBadgeContainer'}>
         <PDPBadges
           productDetails={details}
           selectedVariant={0}
@@ -219,7 +220,7 @@ const PDPGalleryVideo = ({ productVideo = {} }) => {
             alt={productVideo?.thumbnail?.alt}
             width={productVideo?.thumbnail?.width}
           />
-          <div className={'icon__container'}>
+          <div className={'pdpGallery_icon__container'}>
             <IconPlay />
           </div>
         </div>

@@ -72,13 +72,13 @@
   position: absolute;
 }
 
-.icon__container {
+.pdpGallery_icon__container {
   height: 15px;
   position: absolute;
   z-index: 2;
 }
 
-.badgeContainer {
+.pdpGallerBadgeContainer {
   position: absolute;
   z-index: 2;
   width: 100%;
@@ -132,7 +132,7 @@
     height: 10px;
   }
 
-  .badgeContainer {
+  .pdpGallerBadgeContainer {
     display: none;
   }
 }

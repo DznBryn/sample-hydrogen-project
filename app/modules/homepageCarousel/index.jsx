@@ -2,14 +2,15 @@ import { useEffect } from 'react';
 import HomepageCarouselSlideVideo, { links as homepageCarouselSlideVideoStyles } from '../homepageCarouselSlideVideo';
 import HomepageCarouselSlideOne, { links as homepageCarouselSlideOneStyles } from '../homepageCarouselSlideOne';
 import HomepageCarouselStaticSlide, { links as homepageCarouselStaticSlideStyles } from '../homepageCarouselStaticSlide';
-import Swiper, { Autoplay, Pagination, EffectFade } from 'swiper';
-import 'swiper/swiper-bundle.css';
+import Swiper from 'swiper';
+import { Autoplay, Pagination, EffectFade } from 'swiper/modules';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' },
     ...homepageCarouselSlideVideoStyles(),
     ...homepageCarouselSlideOneStyles(),
     ...homepageCarouselStaticSlideStyles(),

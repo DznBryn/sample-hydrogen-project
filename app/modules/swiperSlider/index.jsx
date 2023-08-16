@@ -1,14 +1,22 @@
-import SwiperCore, { Navigation, Autoplay, Pagination, EffectFade } from 'swiper';
+import { Navigation, Autoplay, Pagination, EffectFade } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
 
-SwiperCore.use([Autoplay, Pagination, EffectFade, Navigation]);
+import styles from './styles.css';
+
+export const links = () => {
+  return [
+    { rel: 'stylesheet', href: styles },
+    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css' },
+  ];
+};
 
 const SwiperSlider = ({ classes = '', data = [], }) => {
+
   return (
-    <Swiper
+    data.length > 0 && <Swiper
       id="pdp-swiper-slider"
-      className={`swiper-wrapper swiper-wrapper ${classes}`}
+      className={`swiper-wrapper pdp-swiper-wrapper ${classes}`}
+      modules={[Autoplay, Pagination, EffectFade, Navigation]}
       wrapperTag="div"
       pagination={{ ...Pagination, clickable: true }}
       navigation
@@ -25,7 +33,7 @@ const SwiperSlider = ({ classes = '', data = [], }) => {
       }
       }
     >
-      {data.length > 0 &&
+      {
         data.map((slide, index) => (
           <SwiperSlide key={`slide-${index}`} className={'swiperSlide'}>
             {slide}
@@ -33,6 +41,7 @@ const SwiperSlider = ({ classes = '', data = [], }) => {
         ))}
     </Swiper>
   );
+
 };
 
 export default SwiperSlider;

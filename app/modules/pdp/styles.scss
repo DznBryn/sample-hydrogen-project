@@ -8,7 +8,7 @@
   width: 100%;
 }
 
-.page__container {
+.pdp_page__container {
   background-color: #fff;
   width: 100%;
   padding-top: 21px;
@@ -17,7 +17,7 @@
   align-items: center;
 }
 
-.section {
+.pdpSection {
   background-color: #fff;
   width: 100%;
   display: flex;
@@ -30,7 +30,7 @@
   max-width: 1140px;
 }
 
-.container {
+.pdpContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -67,12 +67,12 @@
   padding-top: 2em;
 }
 
-.giftcard_description .container {
+.giftcard_description .pdpContainer {
   max-width: 90%;
   border-top: 0.5px solid #ff5483;
 }
 
-.giftcard_description .questions .container h2 {
+.giftcard_description .questions .pdpContainer h2 {
   position: relative;
   margin-top: 2em;
   text-align: center;
@@ -82,12 +82,12 @@
   letter-spacing: 1px;
 }
 
-.giftcard_description .questions .container .grid {
+.giftcard_description .questions .pdpContainer .grid {
   display: flex;
   justify-content: center;
 }
 
-.giftcard_description .questions .container .grid__item {
+.giftcard_description .questions .pdpContainer .grid__item {
   box-sizing: border-box;
   float: left;
   min-height: 1px;
@@ -99,22 +99,22 @@
   color: #636363;
 }
 
-.giftcard_description .questions .container .grid__item p:first-child {
+.giftcard_description .questions .pdpContainer .grid__item p:first-child {
   display: none;
 }
 
-.giftcard_description .questions .container .grid__item p {
+.giftcard_description .questions .pdpContainer .grid__item p {
   margin-bottom: 1em;
 }
 
-.giftcard_description .questions .container .question_list .grid__item {
+.giftcard_description .questions .pdpContainer .question_list .grid__item {
   float: none;
   width: auto;
 }
 
 @media (min-width: 500px) {
 
-  .page__container,
+  .pdp_page__container,
   .section__product_details {
     background-color: #f8f8f8;
   }
@@ -125,14 +125,14 @@
     margin: 95px 0 3em;
   }
 
-  .section {
+  .pdpSection {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
   }
 
-  .container {
+  .pdpContainer {
     width: 50%;
   }
 
@@ -151,24 +151,24 @@
     justify-content: center;
   }
 
-  .giftcard_description .questions .container .grid__item {
+  .giftcard_description .questions .pdpContainer .grid__item {
     padding-left: 15px;
     padding-right: 15px;
   }
 
-  .giftcard_description .questions .container .question_list .grid__item {
+  .giftcard_description .questions .pdpContainer .question_list .grid__item {
     column-count: 2;
     -webkit-column-count: 2;
     -moz-column-count: 2;
   }
 
-  .giftcard_description .questions .container .grid__item p {
+  .giftcard_description .questions .pdpContainer .grid__item p {
     padding: 0 1em;
   }
 }
 
 @media (min-width: 1200px) {
-  .giftcard_description .container {
+  .giftcard_description .pdpContainer {
     max-width: 1100px;
   }
 }
