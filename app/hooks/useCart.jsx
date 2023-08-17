@@ -5,7 +5,7 @@ export function useCartState() {
 
   const [root] = useMatches();
 
-  const { id, checkoutUrl, totalQuantity, lines, cost } = root.data.cart;
+  const { id, checkoutUrl, totalQuantity, lines, cost } = root.data.cart ?? { id: '', checkoutUrl: '', totalQuantity: 0, cost: 0 };
   const items = lines ? flattenConnection(lines) : [];
 
   function getItems() {
