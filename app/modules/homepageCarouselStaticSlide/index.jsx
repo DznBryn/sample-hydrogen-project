@@ -1,4 +1,5 @@
 import { Link } from '@remix-run/react';
+import PortableTextCustom from '../portableTextCustom';
 
 import styles from './styles.css';
 
@@ -14,25 +15,25 @@ const HomepageCarouselStaticSlide = (slideContent) => {
     ctaColor: slideContent.slideContent.slideCtaFontColorHex ? slideContent.slideContent.slideCtaFontColorHex : '#FFF'
   };
 
-  const desktopImage = slideContent.slideContent.fullWidthImage.src;
-  const mobileImage = slideContent.slideContent.fullWidthMobileImage.src;
+  const desktopImage = slideContent.slideContent.fullWidthImage.asset.url;
+  const mobileImage = slideContent.slideContent.fullWidthMobileImage.asset.url;
 
   const css = `@media (max-width: 500px) {
-    .backimage${slideContent.slideContent.fullWidthImage.name.replace('.jpg', '')} {
+    .backimage${slideContent.slideContent.fullWidthImage.asset._id} {
         background-image: url(${mobileImage})
     }
   }
   @media (min-width: 501px) {
-      .backimage${slideContent.slideContent.fullWidthImage.name.replace('.jpg', '')} {
+      .backimage${slideContent.slideContent.fullWidthImage.asset._id} {
           background-image: url(${desktopImage})
       }
   }`;
 
   return (
     <div className={'slideWrapper'}>
-      <Link href={slideContent.slideContent.slideCtaLink}>
+      <Link to={slideContent.slideContent.slideCtaLink}>
         <style>{css}</style>
-        <div className={['hpStaticSlide', 'backimage' + slideContent.slideContent.fullWidthImage.name.replace('.jpg', '')].join(' ')}>
+        <div className={['hpStaticSlide', 'backimage' + slideContent.slideContent.fullWidthImage.asset._id].join(' ')}>
           <div className={'textWrapper'}>
             <h1 className={'eyebrow'} style={{ color: textColors.eyeBrowColor }}>
               {slideContent.slideContent.slideEyebrowText}
@@ -41,7 +42,9 @@ const HomepageCarouselStaticSlide = (slideContent) => {
               {slideContent.slideContent.slideHeader}
             </h1>
 
-            <p className={'slideCopy'} style={{ color: textColors.copyColor }} dangerouslySetInnerHTML={{ __html: slideContent.slideContent.slideCopy }} />
+            <div className={'slideCopy'} style={{ color: textColors.copyColor }} >
+              <PortableTextCustom value={slideContent.slideContent.slideCopyRaw}/>
+            </div>
 
             <button className={'btnClear'} style={{ color: slideContent.slideCtaFontColorHex, backgroundColor: slideContent.slideCtaBGColorHex }}>
               {slideContent.slideContent.slideCta}
