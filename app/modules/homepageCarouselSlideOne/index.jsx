@@ -10,7 +10,7 @@ export const links = () => {
 const HomepageCarouselSlideOne = ({ slideContent }) => {
   return (
     <div className={'slideWrapper'}>
-      <Link href={slideContent.slideCtaLink}>
+      <Link to={slideContent.slideCtaLink}>
         <div className={'slideOneWrapper'}>
           <div className={'hpVideo'}>
             <div className={'left'} style={{ backgroundColor: slideContent.slideBGColorHex }}>

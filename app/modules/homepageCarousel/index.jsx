@@ -17,35 +17,47 @@ export const links = () => {
   ];
 };
 
+let swiperOn = false;
+
 const HomepageCarousel = ({ carouselSlidesGroup }) => {
   useEffect(() => {
 
-    Swiper.use([Autoplay, Pagination, EffectFade]);
+    if(!swiperOn) {
 
-    new Swiper('.swiper', {
+      Swiper.use([Autoplay, Pagination, EffectFade]);
 
-      loop: true,
-      effect: 'fade',
+      new Swiper('.swiper', {
 
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false,
-      },
+        loop: true,
+        effect: 'fade',
 
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
+        fadeEffect: { 
+          crossFade: true
+        },
 
-      threshold: 50,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
 
-      scrollbar: {
-        el: '.swiper-scrollbar',
-        type: 'bullets'
-      },
-    });
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
 
-  });
+        threshold: 50,
+
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          type: 'bullets'
+        },
+      });
+
+      swiperOn = true;
+
+    }
+
+  }, []);
 
 
   return <div className='hpCarouselWrapper minHeight' >

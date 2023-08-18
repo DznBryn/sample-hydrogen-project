@@ -507,6 +507,12 @@ export const GET_CAROUSEL_SLIDES_GROUP = gql`
         _id
         name
         fullWidth
+        fullWidthImage{
+          asset{
+            _id
+            url
+          }
+        }
         fullWidthMobileImage{
           asset{
             _id
