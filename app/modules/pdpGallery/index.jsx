@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import SwiperSlider, { links as swiperSliderStyles } from '../swiperSlider';
 import PDPVideoModule, { links as pdpVideoModuleStyles } from '../pdpVideoModule';
 import { PDPBadges, links as badgesStyles } from '../badges';
@@ -23,140 +23,193 @@ const PDPGallery = ({
   details,
 }) => {
 
-  const {store} = useStore();
-  const defaultImages = productImages.filter(img => img?.details?.name?.includes('default')).length > 0 ?
-    productImages.filter(img => img.details.name.includes('default'))
-    : productImages;
-  const [images, setImages] = useState(productImages);
-  const [isFiltered, setIsFiltered] = useState(false);
-  const isShadeFinderRendering = variants?.some(variant => variant.title.split(' ')[1] === '30') ?? false;
-  const isConcealerFinderRendering = variants?.some(variant => variant.title.split(' ')[0] === 'shade') ?? false;
-  const haveSelectedVariant = !!store?.productPage?.selectedVariant ?? false;
+  const { store } = useStore();
+  const haveSelectedVariant = (store?.productPage?.selectedVariant && store?.productPage?.selectedVariant !== 0);
+  const images = (haveSelectedVariant) ? getFilteredImages() : [];
 
-  useEffect(() => {
+  function getFilteredImages(){
 
-    if ((isShadeFinderRendering || isConcealerFinderRendering) && !haveSelectedVariant) {
-      const filteredImage = productImages.filter(img => img?.details?.name?.includes('default'));
+    if ((isShadeFinderRendering() || isConcealerFinderRendering())) {
+      
+      return getFindersFilteredImages();
+      
+    } else if (variants?.length <= 1) {
 
-      if (filteredImage.length) {
-        setImages(filteredImage);
-        setIsFiltered(true);
-      }
+      return getSingleVariantFilteredImages();
 
-      return;
-    }
-
-    if ((isShadeFinderRendering || isConcealerFinderRendering) && store?.productPage?.selectedVariant && store.productPage.selectedVariant !== 0) {
-      const filteredImage = productImages.filter(img => img?.details?.name?.includes(store.productPage.selectedVariant));
-
-      if (filteredImage.length) {
-        setImages(filteredImage);
-        setIsFiltered(true);
-      }
-
-      return;
-    }
-
-    // Uncomment new logic
-    if (variants?.length <= 1) {
-      if (store?.productPage?.selectedVariant && store.productPage.selectedVariant !== 0) {
-        const filteredImage = productImages.filter(img =>
-          img?.details?.name?.includes(store.productPage.selectedVariant),
-        );
-        setImages([
-          ...filteredImage,
-          ...defaultImages,
-        ]);
-
-      } else {
-        const filteredImage = productImages.filter(img => img?.details?.name?.includes(productId));
-        setImages([
-          ...filteredImage,
-          ...defaultImages,
-        ]);
-      }
     } else if (variants?.length > 1 && store?.productPage?.selectedVariant) {
-      const variant = variants.find(v => v.externalId === store.productPage.selectedVariant);
-      const sizes = ['regular', 'regularsize', 'supersize', 'super size', 'jumbo'];
-      let filtersImages = [];
-      let colorCode = '';
-      let sizeColorCode = '';
-      let mergeImages = [];
+      
+      return getVariantsFilteredImages();
 
-      if (variant?.name) {
-        const getFirstItemFromVariantNameList = variant.title
-          .toLowerCase()
-          .replace(' ', '')
-          ?.split('-')[0];
-        const getSecondItemFromVariantNameList = variant.title.replace(' ', '')?.split('-')[1];
-
-        if (!getSecondItemFromVariantNameList) {
-          setImages(defaultImages);
-        }
-        if (getSecondItemFromVariantNameList) {
-          if (sizes.indexOf(getFirstItemFromVariantNameList) > 0) {
-            const sizeIndex = sizes.indexOf(getFirstItemFromVariantNameList);
-
-            sizeColorCode = sizes[sizeIndex];
-          } else {
-            const variantInit = variant.title.replace(' ', '')?.split('-')[1].toLowerCase().trim();
-
-            if (variantInit?.split(' / ')[1]) {
-              colorCode = variantInit.split(' / ')[0].replace('/', '_').replace(' ', '_');
-              const size = sizes.filter(size => {
-                return variantInit.includes(size);
-              });
-
-              colorCode = 'color_' + colorCode.toLowerCase() + '_shade';
-              sizeColorCode = size[0].replace(' ', '').replace('regular', 'regularsize');
-            } else {
-              colorCode = 'color_' + variantInit.replace('/', '_').replace(' ', '_') + '_shade';
-            }
-
-            if (sizeColorCode !== '') {
-              filtersImages = productImages.filter(
-                img =>
-                  img?.details?.name?.includes(colorCode) &&
-                  !img?.details?.name?.includes(sizeColorCode),
-              );
-            } else {
-              filtersImages = productImages.filter(img => img?.details?.name?.includes(colorCode));
-            }
-          }
-
-          if (colorCode !== '') {
-            mergeImages = productImages.filter(
-              img =>
-                img?.details?.name.includes(colorCode) || img?.details?.name.includes('default'),
-            );
-          } else {
-            mergeImages = productImages.filter(img => img?.details?.name.includes(sizeColorCode));
-            mergeImages = mergeImages.concat(
-              productImages.filter(img => img?.details?.name.includes('default')),
-            );
-          }
-
-          if (filtersImages.length < 2) {
-            setImages(mergeImages);
-          } else {
-            setImages(filtersImages);
-          }
-        }
-      } else {
-        setImages(defaultImages);
-      }
     } else {
-      if (images.length === 0) {
-        setImages(defaultImages);
-      }
+
+      return getDefaultImgs();
+
     }
 
-    setIsFiltered(true);
-  }, [store?.productPage?.selectedVariant]);
+  }
+
+  function getSingleVariantFilteredImages() {
+
+    let filteredImage;
+
+    if (store?.productPage?.selectedVariant && store.productPage.selectedVariant !== 0) {
+
+      filteredImage = productImages.filter(img =>
+        img?.url?.includes(store.productPage.selectedVariant),
+      );
+
+      // setImages([
+      //   ...filteredImage,
+      //   ...getDefaultImgs(),
+      // ]);
+
+    } else {
+
+      filteredImage = productImages.filter(img => img?.url?.includes(productId));
+      // setImages([
+      //   ...filteredImage,
+      //   ...getDefaultImgs(),
+      // ]);
+
+    }
+
+    return [
+      ...filteredImage,
+      ...getDefaultImgs(),
+    ];
+
+  }
+
+  function getVariantsFilteredImages() {
+
+    const variant = variants.find(v => v.id === store.productPage.selectedVariant);
+    const sizes = ['regular', 'regularsize', 'supersize', 'super size', 'jumbo'];
+
+    let filtersImages = [];
+    let colorCode = '';
+    let sizeColorCode = '';
+    let mergeImages = [];
+
+    if (variant?.title) {
+
+      const getFirstItemFromVariantNameList = variant.title
+        .toLowerCase()
+        .replace(' ', '')
+        ?.split('-')[0];
+      const getSecondItemFromVariantNameList = variant.title.replace(' ', '')?.split('-')[1];
+
+      if (getSecondItemFromVariantNameList) {
+
+        if (sizes.indexOf(getFirstItemFromVariantNameList) > 0) {
+
+          const sizeIndex = sizes.indexOf(getFirstItemFromVariantNameList);
+
+          sizeColorCode = sizes[sizeIndex];
+
+        } else {
+
+          const variantInit = variant.title.replace(' ', '')?.split('-')[1].toLowerCase().trim();
+
+          if (variantInit?.split(' / ')[1]) {
+            colorCode = variantInit.split(' / ')[0].replace('/', '_').replace(' ', '_');
+            const size = sizes.filter(size => {
+              return variantInit.includes(size);
+            });
+
+            colorCode = 'color_' + colorCode.toLowerCase() + '_shade';
+            sizeColorCode = size[0].replace(' ', '').replace('regular', 'regularsize');
+
+          } else {
+
+            colorCode = 'color_' + variantInit.replace('/', '_').replace(' ', '_') + '_shade';
+
+          }
+
+          if (sizeColorCode !== '') {
+
+            filtersImages = productImages.filter(
+              img =>
+                img?.url.includes(colorCode) &&
+                !img?.url.includes(sizeColorCode),
+            );
+
+          } else {
+
+            filtersImages = productImages.filter(img => img?.url.includes(colorCode));
+
+          }
+
+        }
+
+        if (colorCode !== '') {
+
+          mergeImages = productImages.filter(
+            img =>
+              img?.url.includes(colorCode) || img?.url.includes('default'),
+          );
+
+        } else {
+
+          mergeImages = productImages.filter(img => img?.url.includes(sizeColorCode));
+          mergeImages = mergeImages.concat(
+            productImages.filter(img => img?.url.includes('default')),
+          );
+
+        }
+
+        if (filtersImages.length < 2) {
+
+          return mergeImages;
+
+        } else {
+
+          return filtersImages;
+
+        }
+
+      }else{
+
+        return getDefaultImgs();
+      }
+
+    } else {
+
+      return getDefaultImgs();
+
+
+    }
+
+  }
+
+  function getFindersFilteredImages() {
+
+    return productImages.filter(img => img?.url.includes(store?.productPage?.selectedVariant));
+
+  }
+
+  function getDefaultImgs() {
+
+    return productImages.filter(img => img?.url.includes('default')).length > 0 ?
+      productImages.filter(img => img.url.includes('default'))
+      : productImages;
+
+  }
+
+  function isShadeFinderRendering() {
+
+    return variants?.some(variant => variant.title.split(' ')[1] === '30') ?? false;
+
+  }
+
+  function isConcealerFinderRendering() {
+
+    return variants?.some(variant => variant.title.split(' ')[0] === 'shade') ?? false;
+
+  }
 
   function getImages(imgObj) {
     return (
-      // Boolean(imgObj?.details?._type === 'image') && (
       <img
         className={'product__image'}
         loading={'lazy'}
@@ -165,7 +218,6 @@ const PDPGallery = ({
         width={imgObj.width ?? '500'}
         height={imgObj?.height ?? '500'}
       />
-      // )
     );
   }
 
@@ -191,7 +243,7 @@ const PDPGallery = ({
           />
         }
         {
-          isFiltered && (
+          (
             <SwiperSlider
               classes={'product__image_swiper'}
               data={images?.map(img => getImages(img))}
@@ -206,8 +258,10 @@ const PDPGallery = ({
 };
 
 const PDPGalleryVideo = ({ productVideo = {} }) => {
+
   const [shouldVideoShow, setShouldVideoShow] = useState(false);
   const handleShowVideo = useCallback(() => setShouldVideoShow(!shouldVideoShow));
+
   return (
     <>
       <div id="pdp__video_thumb" className={'video__thumbnail'}>
