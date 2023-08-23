@@ -41,86 +41,6 @@ export const links = () => {
   ];
 };
 
-const ModalLearnMore = ({
-  children,
-  showLearnMoreModal = false,
-  setShowLearnMoreModal = () => { },
-}) => {
-  return (
-    (showLearnMoreModal && (
-      <div className={'pdpDetails_modal__container'}>
-        <div className={'learn_more__container'}>
-          <div className={'pdpDetails_close__container'}>
-            <div className={'close'} onClick={() => setShowLearnMoreModal(false)}>
-              <IconClose />
-            </div>
-          </div>
-          {children}
-        </div>
-      </div>
-    )) ||
-    null
-  );
-};
-
-const PDPReviews = ({ product }) => {
-  return (
-    <div className={'reviews_container'}>
-      <div className="yotpo bottomLine" data-product-id={product?.externalId}></div>
-      defining reviews vendor 
-    </div>
-  );
-};
-
-const PDPLearnMore = () => {
-  const [showLearnMoreModal, setShowLearnMoreModal] = useState(false);
-
-  return (
-    <div className={'pdpDetails_afterpayContainer'}>
-      <ModalLearnMore
-        showLearnMoreModal={showLearnMoreModal}
-        setShowLearnMoreModal={setShowLearnMoreModal}
-      >
-        <p className={'learn_more__text'}>
-          If for any reason you aren’t satisfied with your products, we will happily accept your
-          return of items purchased in the last 60 days*. Shipping is covered by us and we will
-          offer you a prepaid shipping label. Learn more at our{' '}
-          <Link href={'https://returns.tula.com/'} className={'pdpDetails_cta__button'}>
-            return center
-          </Link>
-          .
-        </p>
-      </ModalLearnMore>
-
-      <p className={'returns_text_desktop'}>
-        <small>
-          free 60-day returns.{' '}
-          <span className={'pdpDetails_cta__button'} onClick={() => setShowLearnMoreModal(true)}>
-            Learn More
-          </span>
-        </small>
-      </p>
-    </div>
-  );
-};
-
-const PDPDescription = ({ classes, descriptionHtml, size }) => (
-  <div className={classnames('description_container', classes)}>
-    <div className={'description'} dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
-    {size !== '' ? (
-      !size.match(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g) ? (
-        <p className={'description'}>
-          <span className={'size_description'}>Size: {size}</span>
-        </p>
-      ) : (
-        <div className={'description'} dangerouslySetInnerHTML={{ __html: size }} />
-      )
-    ) : (
-      ''
-    )}
-  </div>
-);
-
 const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages = null }) => {
   const subscriptionEligibleTag = useRef(Boolean(details.tags.includes('subscriptionEligibleTag')));
   const [viewType, setViewType] = useState('LIST');
@@ -483,6 +403,86 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
     )
   );
 };
+
+const ModalLearnMore = ({
+  children,
+  showLearnMoreModal = false,
+  setShowLearnMoreModal = () => { },
+}) => {
+  return (
+    (showLearnMoreModal && (
+      <div className={'pdpDetails_modal__container'}>
+        <div className={'learn_more__container'}>
+          <div className={'pdpDetails_close__container'}>
+            <div className={'close'} onClick={() => setShowLearnMoreModal(false)}>
+              <IconClose />
+            </div>
+          </div>
+          {children}
+        </div>
+      </div>
+    )) ||
+    null
+  );
+};
+
+const PDPReviews = ({ product }) => {
+  return (
+    <div className={'reviews_container'}>
+      <div className="yotpo bottomLine" data-product-id={product?.externalId}></div>
+      defining reviews vendor 
+    </div>
+  );
+};
+
+const PDPLearnMore = () => {
+  const [showLearnMoreModal, setShowLearnMoreModal] = useState(false);
+
+  return (
+    <div className={'pdpDetails_afterpayContainer'}>
+      <ModalLearnMore
+        showLearnMoreModal={showLearnMoreModal}
+        setShowLearnMoreModal={setShowLearnMoreModal}
+      >
+        <p className={'learn_more__text'}>
+          If for any reason you aren’t satisfied with your products, we will happily accept your
+          return of items purchased in the last 60 days*. Shipping is covered by us and we will
+          offer you a prepaid shipping label. Learn more at our{' '}
+          <Link href={'https://returns.tula.com/'} className={'pdpDetails_cta__button'}>
+            return center
+          </Link>
+          .
+        </p>
+      </ModalLearnMore>
+
+      <p className={'returns_text_desktop'}>
+        <small>
+          free 60-day returns.{' '}
+          <span className={'pdpDetails_cta__button'} onClick={() => setShowLearnMoreModal(true)}>
+            Learn More
+          </span>
+        </small>
+      </p>
+    </div>
+  );
+};
+
+const PDPDescription = ({ classes, descriptionHtml, size }) => (
+  <div className={classnames('description_container', classes)}>
+    <div className={'description'} dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+    {size !== '' ? (
+      !size.match(/<\/?\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)\/?>/g) ? (
+        <p className={'description'}>
+          <span className={'size_description'}>Size: {size}</span>
+        </p>
+      ) : (
+        <div className={'description'} dangerouslySetInnerHTML={{ __html: size }} />
+      )
+    ) : (
+      ''
+    )}
+  </div>
+);
 
 export default PDPDetails;
 

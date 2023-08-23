@@ -24,8 +24,7 @@ const PDPGallery = ({
 }) => {
 
   const { store } = useStore();
-  const haveSelectedVariant = (store?.productPage?.selectedVariant && store?.productPage?.selectedVariant !== 0);
-  const images = (haveSelectedVariant) ? getFilteredImages() : [];
+  const images = getFilteredImages();
 
   function getFilteredImages(){
 

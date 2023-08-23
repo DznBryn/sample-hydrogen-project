@@ -65,6 +65,7 @@ const PDPVariants = ({ classes, details = {} }) => {
   function getVariantTypes(variants = null) {
 
     const types = [];
+
     const getTypes = (selectedOptions = null) => {
       selectedOptions &&
         selectedOptions.forEach((selectedOption = null) => {
@@ -90,6 +91,7 @@ const PDPVariants = ({ classes, details = {} }) => {
             );
           }
         });
+        
     };
 
     if (variants !== null) variants.forEach(variant => variant.selectedOptions && getTypes(variant.selectedOptions));
@@ -127,7 +129,7 @@ const DropdownVariants = ({ data = null }) => {
       ...store,
       productPage: {
         ...store.productPage,
-        selectedVariant: parseInt(cardVariantId.current.value),
+        selectedVariant: cardVariantId.current.value,
       },
     });
   
@@ -321,22 +323,40 @@ const SizeVariants = ({ data }) => {
   const TypeShade = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'shade');
   const TypeSize = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'size');
 
-  const getCurrentVariantShade = (variantId = null) =>
-    variantId && variants.find(variant => variant.id === variantId);
-  const getShadeName = () =>
-    TypeShade?.values &&
-    TypeShade?.values?.find(
-      (type = null) =>
-        getCurrentVariantShade(store?.productPage?.selectedVariant)?.name &&
-        getCurrentVariantShade(store?.productPage?.selectedVariant)?.name?.includes(type),
+  function getCurrentVariantShade(variantId = null){
+
+    return variantId && (
+      variants.find(variant => variant.id === variantId)
     );
 
-  const handleVariantChange = size =>
-    getShadeName() &&
-    variants.find(
-      (variant = null) =>
-        variant && variant.title.includes(getShadeName()) && variant.title.includes(size),
+  }
+  
+  function getShadeName(){
+
+    return TypeShade?.values && (
+    
+      TypeShade?.values?.find(
+        (type = null) =>
+          getCurrentVariantShade(store?.productPage?.selectedVariant)?.title &&
+          getCurrentVariantShade(store?.productPage?.selectedVariant)?.title?.includes(type),
+      )
+    
     );
+
+  }
+
+  function handleVariantChange(size){
+  
+    return getShadeName() && (
+    
+      variants.find(
+        (variant = null) =>
+          variant && variant.title.includes(getShadeName()) && variant.title.includes(size),
+      )
+    
+    );
+  
+  }
 
   const enablePromo = (size) => {
     let value = false;
@@ -518,11 +538,11 @@ const ShadeVariantImage = ({ variant = null, isTypeShadeMatch = null }) => {
             className={'variant_image'}
             src={
               variant?.metafields?.find(meta => meta.key === 'variant-shade-selector-img')?.value ||
-              ' '
+              'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/deep-2x-1619041327161.png' //MOCK
             }
             alt={
               variant?.metafields?.find(meta => meta.key === 'variant-modal-image-alt')?.value ||
-              ' '
+              'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/deep-2x-1619041327161.png' //MOCK
             }
           />
         </div>

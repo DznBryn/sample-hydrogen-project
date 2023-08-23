@@ -124,7 +124,7 @@ const PDP = ({
     return {
       autoDeliveryInfo,
       title: {
-        name: product.name,
+        name: product.title,
         alt: product.alt_title,
       },
       description: product.description ? product.description : '',
