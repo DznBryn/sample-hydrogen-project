@@ -278,7 +278,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
           }
           {
             filteredProducts.length > 0
-              ? products.map((product, index) => (
+              ? filteredProducts.map((product, index) => (
                 <HorizontalProduct
                   is2Columns={true}
                   product={product}
