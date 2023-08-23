@@ -5,6 +5,7 @@ import SavingsBadges, { links as badgesStyles } from '../badges';
 import classnames from 'classnames';
 
 import styles from './styles.css';
+import { useSearchParams } from '@remix-run/react';
 
 export const links = () => {
   return [
@@ -13,130 +14,309 @@ export const links = () => {
   ];
 };
 
-export const isArrayEmpty = (array = [], value = 0) => Array.isArray(array) && array.length > value;
+const PDPVariants = ({ classes, details = {} }) => {
 
-export const getVariantTypes = (variants = null) => {
-  const types = [];
-  const getTypes = (selectedOptions = null) => {
-    selectedOptions &&
-      selectedOptions.forEach((selectedOption = null) => {
-        if (selectedOption) {
-          types.length <= 0 ? (
-            types.push({
-              name: selectedOption.name.toLowerCase(),
-              values: [selectedOption.value],
-            })
-          ) : types.find(type => type?.name === selectedOption?.name.toLowerCase()) ? (
-            !types
-              .find(type => type?.name === selectedOption?.name.toLowerCase())
-              .values.find(v => v === selectedOption?.value) ? (
-                types
-                  .find(type => type?.name === selectedOption?.name.toLowerCase())
-                  .values.push(selectedOption.value)
-              ) : (
-                <></>
-              )
-          ) : (
-            types.push({
-              name: selectedOption.name.toLowerCase(),
-              values: [selectedOption.value],
-            })
-          );
+  const isGiftCard = useRef(details?.tags?.find(tag => tag.toLowerCase().replace(' ', '-') === 'gift-card'));
+  const types = useRef(getVariantTypes(details.variants));
+
+  const [searchParams] = useSearchParams();
+  const { store, setStore } = useStore();
+
+  useEffect(() => {
+
+    setStoreInitialValue();
+
+  }, []);
+
+  function setStoreInitialValue() {
+
+    function getSelectedVariant() {
+
+      const isVariantsOnUrl = (searchParams.get('variant') && searchParams.get('variant') !== '');
+
+      if (isVariantsOnUrl) {
+
+        const variantId = searchParams.get('variant');
+        const isVariantExist = Boolean(details?.variants.find(variant => variant.id === variantId));
+        const defaultVariantId = (details?.variants.length <= 2 ? details.variants[0].id : 0);
+
+        return isVariantExist ? variantId : defaultVariantId;
+
+      } else {
+
+        return ((details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].id : 0);
+
+      }
+
+    }
+
+    setStore({
+      ...store,
+      productPage: {
+        ...store?.productPage,
+        types: types.current,
+        selectedVariant: getSelectedVariant(),
+        selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
+      },
+    });
+
+  }
+
+  function getVariantTypes(variants = null) {
+
+    const types = [];
+    const getTypes = (selectedOptions = null) => {
+      selectedOptions &&
+        selectedOptions.forEach((selectedOption = null) => {
+          if (selectedOption) {
+            types.length <= 0 ? (
+              types.push({
+                name: selectedOption.name.toLowerCase(),
+                values: [selectedOption.value],
+              })
+            ) : types.find(type => type?.name === selectedOption?.name.toLowerCase()) ? (
+              !types.find(type => type?.name === selectedOption?.name.toLowerCase())
+                .values.find(v => v === selectedOption?.value) ?
+                (
+                  types.find(type => type?.name === selectedOption?.name.toLowerCase()).values.push(selectedOption.value)
+                ) : (
+                  <></>
+                )
+            ) : (
+              types.push({
+                name: selectedOption.name.toLowerCase(),
+                values: [selectedOption.value],
+              })
+            );
+          }
+        });
+    };
+
+    if (variants !== null) variants.forEach(variant => variant.selectedOptions && getTypes(variant.selectedOptions));
+
+    return types;
+  }
+
+  function getSelectedTypeSize(types = null) {
+
+    return (types && types.find(type => type.name.toLowerCase() === 'size'));
+
+  }
+
+  return ((details?.variants.length > 1) && (
+
+    <div className={classnames('variants_container', classes)}>
+      {
+        isGiftCard.current ? <DropdownVariants data={details} /> : <VariantsContainer data={details} /> 
+      }
+    </div>
+
+  ));
+
+};
+
+const DropdownVariants = ({ data = null }) => {
+
+  const cardVariantId = useRef(null);
+  const { store, setStore } = useStore();
+  const { variants } = data;
+
+  function handleSelectedVariant(){
+
+    setStore({
+      ...store,
+      productPage: {
+        ...store.productPage,
+        selectedVariant: parseInt(cardVariantId.current.value),
+      },
+    });
+  
+  }
+
+  return (
+
+    <div className={'dropdown__variants'}>
+    
+      <select
+        ref={cardVariantId}
+        value={store?.productPage?.selectedVariant}
+        onChange={handleSelectedVariant}
+        onClick={handleSelectedVariant}
+      >
+        {
+          variants.map(variant => (
+            <option key={variant._id} value={variant.id}>
+              {variant.title}
+            </option>
+          ))
         }
-      });
+      </select>
+
+    </div>
+
+  );
+
+};
+
+const VariantsContainer = ({ data = null }) => {
+
+  const { store, setStore } = useStore();
+  const { variants, variants_title: variantsTitle, productPromos, variant_shade: variantShade } = data;
+  const variantsWraperScrollLeft = useRef(0);
+  const variantsWraper = useRef(null);
+
+  const TypeShade = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'shade');
+  const TypeSize = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'size');
+
+  useLayoutEffect(() => {
+
+    if (variantsWraper.current) variantsWraper.current.scrollLeft = variantsWraperScrollLeft.current;
+
+  });
+
+  const ContainerTitle = () =>
+    TypeShade ? (
+      <p
+        className={'variant_title text_bold'}
+        dangerouslySetInnerHTML={{ __html: variantsTitle }}
+      />
+    ) :
+      !TypeShade && Boolean(TypeSize) ? (
+        <p
+          className={'variant_title text_bold'}
+        >{'Select a size'}</p>
+      ) : (
+        ''
+      );
+
+  const Variants = () => {
+    return (
+      <div className={'variants'} ref={variantsWraper}>
+        {
+          Boolean(TypeShade && TypeSize) &&
+          variants.map( variant =>
+            variant.title.includes(store?.productPage?.selectedTypeSize) && (
+              <Variant key={variant._id} variant={variant} />
+            )
+          )
+        }
+        {
+          Boolean(TypeShade && !TypeSize) && (
+            variants.map(variant => <Variant key={variant._id} variant={variant} />)
+          )
+        }
+        <CustomVariant />
+      </div>
+    );
+
   };
 
-  if (variants !== null) {
-    variants.forEach(variant => variant.selectedOptions && getTypes(variant.selectedOptions));
-  }
+  const Variant = ({ variant = null }) => {
 
-  return types;
-};
+    const isTypeShadeMatch = TypeShade.values.find((typeValue = null) =>
+      variant.title.includes(typeValue),
+    );
 
-const VariantAvailable = ({ variant = null, children }) =>
-  variant !== {} && variant.availableForSale === false ? (
-    <div className={'variant_image__overlay'}>{children}</div>
-  ) : null;
+    const getVariantClassnames = () =>
+      store?.productPage?.selectedVariant !== null
+        ? store?.productPage?.selectedVariant === variant.id
+          ? variant.availableForSale === false
+            ? classnames('variant', 'show_variant', 'variant_selected', 'state__not_available')
+            : classnames('variant', 'show_variant', 'variant_selected')
+          : classnames('variant', 'show_variant')
+        : classnames('variant');
 
-const ShadeVariantImage = ({ variant = null, isTypeShadeMatch = null }) => {
-  return (
-    (isTypeShadeMatch && (
-      <div className={'variant_image__wrapper'}>
-        <VariantAvailable variant={variant}>
-          <p>
-            Out of stock
-            <br />
-            in this size
-          </p>
-        </VariantAvailable>
-        <div
-          className={
-            variant.availableForSale === false
-              ? 'variant_image__container state__not_available'
-              : 'variant_image__container'
-          }
+    return (
+      variant && (
+        <div 
+          className={getVariantClassnames()}
+          onClick={() => {
+            variantsWraperScrollLeft.current = variantsWraper.current.scrollLeft;
+            window.history.replaceState(null, null, `?variant=${variant.id}`);
+
+            setStore({
+              ...store,
+              productPage: {
+                ...store.productPage,
+                selectedVariant: variant.id,
+              },
+            });
+
+          }}
         >
-          <img
-            className={'variant_image'}
-            src={
-              variant?.metafields?.find(meta => meta.key === 'variant-shade-selector-img')?.value ||
-              ' '
-            }
-            alt={
-              variant?.metafields?.find(meta => meta.key === 'variant-modal-image-alt')?.value ||
-              ' '
-            }
+          <ShadeSelector
+            variant={variant}
+            isTypeShadeMatch={isTypeShadeMatch}
+            shade={isTypeShadeMatch}
+            promo={productPromos}
           />
         </div>
-      </div>
-    )) ||
-    null
-  );
-};
+      )
+    );
+  };
 
-const ShadeVariant = ({ variant = {}, isTypeShadeMatch = null, promos = null }) => {
+  const CustomVariant = () => {
 
-  let shade = isTypeShadeMatch?.replace(/^\s/g, '').split('-');
+    return variantShade?.shade_pdp_product_name && (
+      <a
+        style={{ textDecoration: 'none' }}
+        className={
+          store?.productPage?.selectedVariant === 0
+            ? 'variant show_variant variant_selected'
+            : 'variant show_variant'
+        }
+        href={
+          store?.product?.metafields?.find(
+            (metafield) => metafield.key === 'shade-pdp-hardlink'
+          )?.value || '#'
+        }
+        onClick={() => {
+          return setStore({
+            ...store,
+            productPage: {
+              ...store.productPage,
+              selectedVariant: 0,
+            },
+          });
+        }}>
+        <div className={'variant_image__wrapper'}>
+          <div className={'variant_image__container'}>
+            <img
+              className={'variant_image'}
+              src={variantShade?.shade_pdp_image}
+              alt={variantShade?.shade_pdp_alt_text}
+            />
+          </div>
+        </div>
+        <div className={'variant_details__container'}>
+          <div className={'variant_text__container'}>
+            <p className={'variant_text'}>
+              {variantShade.shade_pdp_product_name.split('-')[0]}
+            </p>
+            <p className={'variant_text text_bold'}>
+              {variantShade.shade_pdp_product_name.replace(' ', '').split('-')[1]}
+            </p>
+          </div>
+          <div className={'variant_info__container'}>
+            <IconOutlink color='#666' />
+          </div>
+        </div>
+      </a>
+    );
 
-  if (shade?.length !== 2) {
-    shade = shade?.value?.replace(/^\s/g, '').split(' ');
-  }
+  };
 
   return (
-    (isTypeShadeMatch && (
-      <div className={'variant_details__container'}>
-        <div className={'variant_text__container'}>
-          {shade[0] ? (
-            <p
-              className={
-                variant.title.includes('So ')
-                  ? 'variant_text text_bold'
-                  : 'variant_text'
-              }
-            >
-              {shade[0]}
-            </p>
-          ) : (
-            ''
-          )}
-          {shade[1] && !variant.title.includes('So ') ? (
-            <p className={'variant_text text_bold'}>{shade[1]}</p>
-          ) : (
-            ''
-          )}
-          {promos?.showPromo &&
-            promos?.promoVariants.find(variantId => parseInt(variantId) === variant.id) && (
-            <span className={'promo'}>{promos?.variantPromoMessage}</span>
-          )}
-        </div>
-      </div>
-    )) ||
-    null
+    <>
+      <ContainerTitle />
+      <Variants />
+      <SizeVariants data={data} />
+    </>
   );
 };
 
 const SizeVariants = ({ data }) => {
-  const {store, setStore} = useStore();
+  const { store, setStore } = useStore();
   const { variants = null, productPromos } = data;
   const TypeShade = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'shade');
   const TypeSize = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'size');
@@ -233,8 +413,8 @@ const SizeVariants = ({ data }) => {
                 : 'variant__size_option'
             ),
             (
-              variant.title.toLowerCase().includes('jumbo') 
-                ? 'variant__size_option--expand' 
+              variant.title.toLowerCase().includes('jumbo')
+                ? 'variant__size_option--expand'
                 : undefined
             )
           )}
@@ -259,14 +439,17 @@ const SizeVariants = ({ data }) => {
               : null} {' '}
             <span className={'text_bold'}>{variant.title}</span>
             <br />
-            {productPromos?.showPromo &&
+            {
+              productPromos?.showPromo &&
               parseInt(
                 productPromos?.variantIds?.find(
                   variantId => parseInt(variantId) === variant.id,
                 ),
-              ) === variant.id && (
-              <span className={'promo'}>{productPromos.promoMessage}</span>
-            )}
+              ) === variant.id &&
+              (
+                <span className={'promo'}>{productPromos.promoMessage}</span>
+              )
+            }
           </p>
           {
             variant.title.toLowerCase().includes('jumbo') ?
@@ -288,285 +471,107 @@ const SizeVariants = ({ data }) => {
   ) : null;
 };
 
-const DropdownVariants = ({ data = null }) => {
-  const cardVariantId = useRef(null);
-  const {store, setStore} = useStore();
-  const { variants } = data;
-
-  const handleSelectedVariant = () =>
-    setStore({
-      ...store,
-      productPage: {
-        ...store.productPage,
-        selectedVariant: parseInt(cardVariantId.current.value),
-      },
-    });
-
+const IconOutlink = ({ color = '#979797' }) => {
   return (
-    <div className={'dropdown__variants'}>
-      <select
-        ref={cardVariantId}
-        value={store?.productPage?.selectedVariant}
-        onChange={handleSelectedVariant}
-        onClick={handleSelectedVariant}
-      >
-        {variants.map(variant => (
-          <option key={variant._id} value={variant.id}>
-            {variant.title}
-          </option>
-        ))}
-      </select>
-    </div>
+    <svg role="img" viewBox="0 0 14 14"><title>Outlink</title><path d="M11.2 1.4l-5 5c-.3.3-.3.8 0 1.1s.8.3 1.1 0l5-5v1.7a.68.68 0 0 0 .7.7.68.68 0 0 0 .7-.7V.7c0-.2-.1-.4-.2-.5-.2-.1-.4-.2-.6-.2H9.5c-.3 0-.6.3-.6.7a.68.68 0 0 0 .7.7h1.6zm2.4 6.8V4.9v7c0 .9-.7 1.7-1.5 1.7H1.5c-.8 0-1.5-.8-1.5-1.7V1.7C0 .8.7 0 1.5 0h7.3-3.4a.68.68 0 0 1 .7.7.68.68 0 0 1-.7.7H1.8c-.2 0-.4.2-.4.5v10c0 .2.2.5.4.5h10.1c.2 0 .4-.2.4-.5V8.2a.68.68 0 0 1 .7-.7c.4 0 .6.3.6.7h0z" fillRule="evenodd" fill={color} /></svg>
   );
 };
 
-const VariantsContainer = ({ data = null }) => {
-  const {store, setStore} = useStore();
-  const { variants, variants_title: variantsTitle, productPromos, variant_shade: variantShade } = data;
-  const TypeShade = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'shade');
-  const TypeSize = store?.productPage?.types?.find(option => option.name.toLowerCase() === 'size');
+const ShadeSelector = ({variant, isTypeShadeMatch, productPromos}) => {
 
-  const variantsWraperScrollLeft = useRef(0);
-  const variantsWraper = useRef(null);
+  return (<>
 
-  useLayoutEffect(() => {
+    <ShadeVariantImage variant={variant} isTypeShadeMatch={isTypeShadeMatch} />
+    <ShadeVariant
+      variant={variant}
+      isTypeShadeMatch={isTypeShadeMatch}
+      shade={isTypeShadeMatch}
+      promo={productPromos}
+    />
 
-    if (variantsWraper.current) variantsWraper.current.scrollLeft = variantsWraperScrollLeft.current;
+  </>);
 
-  });
+};
 
-  const ContainerTitle = () =>
-    TypeShade ? (
-      <p
-        className={'variant_title text_bold'}
-        dangerouslySetInnerHTML={{ __html: variantsTitle }}
-      />
-    ) :
-      !TypeShade && Boolean(TypeSize) ? (
-        <p
-          className={'variant_title text_bold'}
-        >{'Select a size'}</p>
-      ) : (
-        ''
-      );
-
-  const Variants = () => {
-    return (
-      <div className={'variants'} ref={variantsWraper}>
-        {Boolean(TypeShade && TypeSize) &&
-          variants.map(
-            variant =>
-              variant.title.includes(store?.productPage?.selectedTypeSize) && (
-                <Variant key={variant._id} variant={variant} />
-              ),
-          )}
-        {Boolean(TypeShade && !TypeSize) &&
-          variants.map(variant => <Variant key={variant._id} variant={variant} />)}
-        <CustomVariant />
-      </div>
-    );
-
-  };
-
-  const Variant = ({ variant = null }) => {
-    const isTypeShadeMatch = TypeShade.values.find((typeValue = null) =>
-      variant.title.includes(typeValue),
-    );
-
-    const getVariantClassnames = () =>
-      store?.productPage?.selectedVariant !== null
-        ? store?.productPage?.selectedVariant === variant.id
-          ? variant.availableForSale === false
-            ? classnames(
-              'variant',
-              'show_variant',
-              'variant_selected',
-              'state__not_available',
-            )
-            : classnames('variant', 'show_variant', 'variant_selected')
-          : classnames('variant', 'show_variant')
-        : classnames('variant');
-
-    return (
-      variant && (
+const ShadeVariantImage = ({ variant = null, isTypeShadeMatch = null }) => {
+  return (
+    (isTypeShadeMatch && (
+      <div className={'variant_image__wrapper'}>
+        {
+          (variant !== {} && variant.availableForSale === false) &&
+          <div className={'variant_image__overlay'}>
+            <p>
+              Out of stock
+              <br />
+              in this size
+            </p>
+          </div>
+        }
         <div
-          className={getVariantClassnames()}
-          onClick={() => {
-
-            variantsWraperScrollLeft.current = variantsWraper.current.scrollLeft;
-
-            window.history.replaceState(null, null, `?variant=${variant.id}`);
-
-            return setStore({
-              ...store,
-              productPage: {
-                ...store.productPage,
-                selectedVariant: variant.id,
-              },
-            });
-          }}
+          className={
+            variant.availableForSale === false
+              ? 'variant_image__container state__not_available'
+              : 'variant_image__container'
+          }
         >
-          <ShadeVariantImage variant={variant} isTypeShadeMatch={isTypeShadeMatch} />
-          <ShadeVariant
-            variant={variant}
-            isTypeShadeMatch={isTypeShadeMatch}
-            shade={isTypeShadeMatch}
-            promo={productPromos}
+          <img
+            className={'variant_image'}
+            src={
+              variant?.metafields?.find(meta => meta.key === 'variant-shade-selector-img')?.value ||
+              ' '
+            }
+            alt={
+              variant?.metafields?.find(meta => meta.key === 'variant-modal-image-alt')?.value ||
+              ' '
+            }
           />
         </div>
-      )
-    );
-  };
-
-  const CustomVariant = () => {
-
-    return variantShade?.shade_pdp_product_name && (
-      <a
-        style={{ textDecoration: 'none' }}
-        className={
-          store?.productPage?.selectedVariant === 0
-            ? 'variant show_variant variant_selected'
-            : 'variant show_variant'
-        }
-        href={
-          store?.product?.metafields?.find(
-            (metafield) => metafield.key === 'shade-pdp-hardlink'
-          )?.value || '#'
-        }
-        onClick={() => {
-          return setStore({
-            ...store,
-            productPage: {
-              ...store.productPage,
-              selectedVariant: 0,
-            },
-          });
-        }}>
-        <div className={'variant_image__wrapper'}>
-          <div className={'variant_image__container'}>
-            <img
-              className={'variant_image'}
-              src={variantShade?.shade_pdp_image}
-              alt={variantShade?.shade_pdp_alt_text}
-            />
-          </div>
-        </div>
-        <div className={'variant_details__container'}>
-          <div className={'variant_text__container'}>
-            <p className={'variant_text'}>
-              {variantShade.shade_pdp_product_name.split('-')[0]}
-            </p>
-            <p className={'variant_text text_bold'}>
-              {variantShade.shade_pdp_product_name.replace(' ', '').split('-')[1]}
-            </p>
-          </div>
-          <div className={'variant_info__container'}>
-            <IconOutlink color='#666' />
-          </div>
-        </div>
-      </a>
-    );
-
-  };
-
-  return (
-    <>
-      <ContainerTitle />
-      <Variants />
-      <SizeVariants data={data} />
-    </>
-  );
-};
-
-const PDPVariants = ({ classes, details = {} }) => {
-  const isGiftCard = useRef(
-    details?.tags?.find(tag => tag.toLowerCase().replace(' ', '-') === 'gift-card'),
-  );
-
-  const types = useRef(getVariantTypes(details.variants));
-
-  const {store, setStore} = useStore();
-
-  useEffect(() => {
-
-    if (details?.variants) {
-      window.location.search.includes('?variant=') &&
-        window.location.search.replace('?variant=', '') !== ''
-        ? getParamsVariantId(window.location.search.replace('?variant=', ''))
-        : store?.productPage?.addToCart?.selling_plan_id && store.productPage.addToCart.selling_plan_id !== 0 ?
-          setStore({
-            ...store,
-            productPage: {
-              ...store?.productPage,
-              types: types.current,
-              selectedVariant: (details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].id : 0,
-              selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
-              addToCart: {
-                ...store?.productPage?.addToCart,
-                ['selling_plan_id']: 0,
-                discount: 0,
-              },
-            },
-          })
-          : setStore({
-            ...store,
-            productPage: {
-              ...store?.productPage,
-              types: types.current,
-              selectedVariant: (details.variants.length <= 3 || (details.variants.length > 3 && isGiftCard.current)) ? details.variants[0].id : 0,
-              selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
-            },
-          });
-
-    }
-  }, []);
-
-
-  const getSelectedTypeSize = (types = null) =>
-    types && types.find(type => type.name.toLowerCase() === 'size');
-
-  const getParamsVariantId = (variantId) => {
-    const isVariantExist = Boolean(
-      details?.variants.find(variant => variant.id === variantId),
-    );
-
-    return isVariantExist
-      ? setStore({
-        ...store,
-        productPage: {
-          ...store.productPage,
-          types: types.current,
-          selectedVariant: variantId,
-          selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
-        },
-      })
-      : setStore({
-        ...store,
-        productPage: {
-          ...store.productPage,
-          types: types.current,
-          selectedVariant: details?.variants.length <= 2 ? details.variants[0].id : 0,
-          selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
-        },
-      });
-  };
-
-  return (
-    ((details?.variants && (details?.variants.length > 1)) && (
-      <div className={classnames('variants_container', classes)}>
-        {!isGiftCard.current ? (
-          <VariantsContainer data={details} />
-        ) : (
-          <DropdownVariants data={details} />
-        )}
       </div>
-    )) || <></>
+    )) ||
+    null
   );
 };
 
-const IconOutlink = ({ color = '#979797'}) => {
+const ShadeVariant = ({ variant = {}, isTypeShadeMatch = null, promos = null }) => {
+
+  let shade = isTypeShadeMatch?.replace(/^\s/g, '').split('-');
+
+  if (shade?.length !== 2) {
+    shade = shade?.value?.replace(/^\s/g, '').split(' ');
+  }
+
   return (
-    <svg role="img" viewBox="0 0 14 14"><title>Outlink</title><path d="M11.2 1.4l-5 5c-.3.3-.3.8 0 1.1s.8.3 1.1 0l5-5v1.7a.68.68 0 0 0 .7.7.68.68 0 0 0 .7-.7V.7c0-.2-.1-.4-.2-.5-.2-.1-.4-.2-.6-.2H9.5c-.3 0-.6.3-.6.7a.68.68 0 0 0 .7.7h1.6zm2.4 6.8V4.9v7c0 .9-.7 1.7-1.5 1.7H1.5c-.8 0-1.5-.8-1.5-1.7V1.7C0 .8.7 0 1.5 0h7.3-3.4a.68.68 0 0 1 .7.7.68.68 0 0 1-.7.7H1.8c-.2 0-.4.2-.4.5v10c0 .2.2.5.4.5h10.1c.2 0 .4-.2.4-.5V8.2a.68.68 0 0 1 .7-.7c.4 0 .6.3.6.7h0z" fillRule="evenodd" fill={color}/></svg>
+    (isTypeShadeMatch && (
+      <div className={'variant_details__container'}>
+        <div className={'variant_text__container'}>
+          {shade[0] ? (
+            <p
+              className={
+                variant.title.includes('So ')
+                  ? 'variant_text text_bold'
+                  : 'variant_text'
+              }
+            >
+              {shade[0]}
+            </p>
+          ) : (
+            ''
+          )}
+          {shade[1] && !variant.title.includes('So ') ? (
+            <p className={'variant_text text_bold'}>{shade[1]}</p>
+          ) : (
+            ''
+          )}
+          {
+            promos?.showPromo &&
+            promos?.promoVariants.find(variantId => parseInt(variantId) === variant.id) && (
+              <span className={'promo'}>{promos?.variantPromoMessage}</span>
+            )
+          }
+        </div>
+      </div>
+    )) ||
+    null
   );
 };
 
