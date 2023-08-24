@@ -1,0 +1,89 @@
+.tulaBlueButton {
+  min-width: 101px;
+  line-height: 18px;
+  text-align: center;
+  height: 36px;
+  padding: 9px 9px 28px 9px;
+  color: #FFFFFF;
+  background-color: #48C6D9;
+  border: 2px solid #48C6D9;
+  font: 800 14px avenir;
+}
+
+.tulaBlueButton:hover {
+  color: #48C6D9;
+  background-color: #ffffff;
+  border: 2px solid #48C6D9;
+}
+
+.tulaBlueButton:active {
+  color: #FFFFFF;
+  background-color: #48C6D9;
+  border: 2px solid #48C6D9;
+}
+
+.tulaBlueButton:disabled {
+  color: #FFFFFF;
+  background-color: rgba(76, 78, 86, 0.4);
+  border: 2px solid rgba(76, 78, 86, 0.4);
+}
+
+.tulaWhiteButton {
+  min-width: 101px;
+  line-height: 18px;
+  text-align: center;
+  height: 36px;
+  padding: 9px 9px 28px 9px;
+  color: #000000;
+  background-color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  font: 800 14px avenir;
+}
+
+.tulaWhiteButton:hover {
+  color: #48C6D9;
+  background-color: #ffffff;
+  border: 2px solid #48C6D9;
+}
+
+.tulaWhiteButton:active {
+  color: #FFFFFF;
+  background-color: #48C6D9;
+  border: 2px solid #48C6D9;
+}
+
+.tulaWhiteButton:disabled {
+  color: #FFFFFF;
+  background-color: rgba(76, 78, 86, 0.4);
+  border: 2px solid rgba(76, 78, 86, 0.4);
+}
+
+.tulaTsptButton {
+  min-width: 101px;
+  line-height: 18px;
+  text-align: center;
+  height: 36px;
+  padding: 9px 9px 28px 9px;
+  color: #48C6D9;
+  background-color: #ffffff;
+  border: 2px solid #48C6D9;
+  font: 800 14px avenir;
+}
+
+.tulaTsptButton:hover {
+  color: #FFFFFF;
+  background-color: #48C6D9;
+  border: 2px solid #48C6D9;
+}
+
+.tulaTsptButton:active {
+  color: #FFFFFF;
+  background-color: #48C6D9;
+  border: 2px solid #48C6D9;
+}
+
+.tulaTsptButton:disabled {
+  color: rgba(76, 78, 86, 0.4);
+  background-color: #ffffff;
+  border: 2px solid rgba(76, 78, 86, 0.4);
+}

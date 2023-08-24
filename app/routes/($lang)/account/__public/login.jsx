@@ -1,7 +1,13 @@
 import Layouts from '~/layouts';
-import { Form, Link, useActionData } from '@remix-run/react';
 import { json, redirect } from '@shopify/remix-oxygen';
 import { login } from '~/utils/graphql/shopify/mutations/customer';
+import LoginForm, { links as loginFormStyles } from '../../../../modules/accounts/login';
+
+export const links = () => {
+  return [
+    ...loginFormStyles()
+  ];
+};
 
 export async function action({ request, context, params }) {
   const { session, storefront } = context;
@@ -13,8 +19,11 @@ export async function action({ request, context, params }) {
   }
 
   try {
-    const customerAccessToken = await login(context, { email, password });
-    session.set('customerAccessToken', customerAccessToken);
+    const data = await login(context, { email, password });
+
+    if (data?.accessToken){
+      session.set('customerAccessToken', data.accessToken);
+    }
 
     return redirect(params.lang ? `${params.lang}/account` : '/account', {
       headers: {
@@ -45,45 +54,10 @@ export const meta = () => {
 };
 
 export default function LoginPage() {
-  const actionData = useActionData();
-  console.log('Your response from Form data:', actionData);
+
   return (
     <Layouts.MainNavFooter>
-      <h1>Login</h1>
-      <Form
-        method='post'
-        noValidate
-        action='/account/login'
-      >
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          placeholder="Email address"
-          aria-label="Email address"
-          autoFocus
-        />
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="current-password"
-          placeholder="Password"
-          aria-label="Password"
-          minLength={8}
-          required
-          autoFocus
-        />
-        <button
-          type="submit"
-        >
-          Login
-        </button>
-      </Form>
-      <br />
-      <Link to={'/account/register'}>sign up</Link>
+      <LoginForm />
     </Layouts.MainNavFooter>
   );
 }
