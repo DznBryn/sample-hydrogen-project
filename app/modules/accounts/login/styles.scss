@@ -1,0 +1,104 @@
+.errorText {
+  color: #FF5483;
+}
+
+.templateCustomersLogin {
+  min-height: calc(100vh - 220px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.templateCustomersLogin .formBox {
+  width: 300px;
+}
+
+.templateCustomersLogin .formBox h1 {
+  margin-bottom: 25px;
+}
+
+.templateCustomersLogin form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.templateCustomersLogin form input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.templateCustomersLogin form div,
+.templateCustomersLogin form button {
+  width: 100%;
+}
+
+.templateCustomersLogin form button {
+  margin-top: 35px;
+}
+
+.register {
+  text-align: right;
+}
+.formBox h1 {
+  text-align: center;
+}
+.formBox a {
+  text-decoration: none;
+  font-weight: 100;
+}
+
+.loginErrorSection {
+  min-height: 0px;
+}
+
+.loginError p {
+  margin-top: 20px;
+  color: #FF5483;
+}
+
+.inputText {
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  flex-grow: 2;
+  height: 45px;
+  padding: 14px 15px;
+  background-color: #FFFFFF;
+  border: 1px solid #4C4E56;
+  font: 400 16px avenir;
+}
+
+.inputText:focus {
+  border: 1px solid #48C6D9;
+  caret-color: #48C6D9;
+}
+
+.inputText:invalid {
+  border: 1px solid #FF5483;
+  caret-color: #FF5483;
+}
+
+.inputText:disabled {
+  border: 1px solid rgba(76, 78, 86, 0.4);
+}
+
+.some-page-wrapper {
+  margin: 15px;
+  background-color: red;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+@media all and (min-width: 768px) {
+  .templateCustomersLogin .formBox {
+    width: 400px;
+  }
+}

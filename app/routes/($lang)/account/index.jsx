@@ -10,7 +10,7 @@ export async function loader({ request, context, params }) {
   const lang = params.lang;
   const customerAccessToken = await context.session.get('customerAccessToken');
 
-  if (!customerAccessToken && isAccountPage) {
+  if (!customerAccessToken && isAccountPage ) {
     return redirect(lang ? `/${lang}/account/login` : '/account/login');
   }
 
