@@ -19,7 +19,7 @@ export default function LoginForm() {
     password: ''
   });
 
-  const disableLoginButton = loginForm.email === '' || loginForm.password === '' || fetcher.state === 'submitting'
+  const disableLoginButton = loginForm.email === '' || loginForm.password === '' || fetcher.state === 'submitting';
   return (
     <div className="alllogin">
       <div className="templateCustomersLogin">
