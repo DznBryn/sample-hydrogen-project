@@ -31,7 +31,9 @@ const Button = ({ product, opensBlank = false, ...rest }) => {
       addItem={{
         variantId: product.variants?.nodes?.[0].id,
         slug: product.handle,
-        action: 'ADD_TO_CART'
+        action: 'ADD_TO_CART',
+        quantity: 1,
+        product
       }} 
       forceSoldOut={forceSoldOut}
       exclusiveProductAtcColor={product?.exclusiveAtcColor}

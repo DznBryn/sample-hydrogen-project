@@ -6,7 +6,7 @@ import Filter, { links as filterStyles } from '../plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from '../genericRecommendedProducts';
 import Banner, { links as plpBannerStyles } from '../plpBanner';
 import Title, { links as titleStyles } from '../plpTitle';
-import FireWorkPLPCarousel, { links as fireWorkCarouselStyles } from '../fireWorkCarousel';
+import FireWorkPLPCarousel, { links as fireWorkCarouselStyles } from '../fireWorkPLPCarousel';
 import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../plpHorizontalProductBox';
 import ComparisonModal, { links as comparisonModalStyles } from '../comparisonModal';
 
@@ -309,7 +309,11 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
             <FireWorkPLPCarousel collectionSlug={collection.handle} />
             : null
         }
-        <p className={'description'}>{collection.description}</p>
+        {
+          collection.description && (
+            <p className={'description'}>{collection.description}</p>
+          )
+        }
         <ComparisonModal collection={collection}/>
       </section>
 
