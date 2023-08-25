@@ -58,18 +58,9 @@ const PDPGallery = ({
         img?.url?.includes(store.productPage.selectedVariant),
       );
 
-      // setImages([
-      //   ...filteredImage,
-      //   ...getDefaultImgs(),
-      // ]);
-
     } else {
 
       filteredImage = productImages.filter(img => img?.url?.includes(productId));
-      // setImages([
-      //   ...filteredImage,
-      //   ...getDefaultImgs(),
-      // ]);
 
     }
 
