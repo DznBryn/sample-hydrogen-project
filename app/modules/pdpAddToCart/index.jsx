@@ -22,14 +22,11 @@ export default function PDPAddToCart({
   addItem,
   classes = [],
   forceSoldOut = false,
-  // analytics = null,
-  // onClick = null,
   displayPrice,
   exclusiveProductAtcColor,
   exclusiveProductTextColor,
   isGated = false,
   fromPLP = false,
-  quantity,
   availableForSale,
 }) {
   const [root] = useMatches();
@@ -43,21 +40,22 @@ export default function PDPAddToCart({
     borderColor: exclusiveProductTextColor,
     background: 'transparent',
   };
-  const atcStylesForExclusiveProducts = fromPLP ? 'plpExclusive' : 'exclusive';
-  const lineItems = [{ merchandiseId: addItem?.variantId, quantity: 1 }];
+  const atcStylesForExclusiveProducts = fromPLP ? 'plpExclusive' : 'pdpExclusive';
+  const lineItems = [{ merchandiseId: addItem?.variantId, quantity: addItem?.quantity || 1 }];
 
   useLayoutEffect(() => {
-    if (quantity === 0 || !availableForSale || forceSoldOut) {
+
+    if (addItem?.quantity === 0 || !availableForSale || forceSoldOut) {
       setButtonState(SOLD_OUT);
     } else if (isGated && !isLoggedIn) {
       setButtonState(LOCKED);
-    } else if (addItem?.variantId && addItem?.variantId === 0) {
+    } else if (addItem?.variantId === 0) {
       setButtonState(SELECT_SHADE);
     } else if (addToCart?.state === 'loading') {
       setButtonState(LOADING);
     } else if (addToCart?.type && addToCart?.type === 'done' && addToCart?.data?.errors?.length > 0) {
       setButtonState(ERROR);
-    } else if (quantity > 0 && availableForSale && buttonState !== IDLE) {
+    } else if (addItem?.quantity > 0 && availableForSale && buttonState !== IDLE) {
       if(addToCart.data && addToCart.type === 'done'){
         dispatchAlertEvent();
       }
@@ -65,7 +63,7 @@ export default function PDPAddToCart({
     }
 
     return () => { };
-  }, [quantity, isLoggedIn, addToCart.state]);
+  }, [addItem?.quantity, addItem?.variantId, isLoggedIn, addToCart.data, addToCart.state, addToCart?.type, availableForSale, isGated, buttonState]);
 
   function dispatchAlertEvent() {
 
