@@ -36,11 +36,11 @@ const PDPVariants = ({ classes, details = {} }) => {
 
       if (isVariantsOnUrl) {
 
-        const variantId = searchParams.get('variant');
-        const isVariantExist = Boolean(details?.variants.find(variant => variant.id === variantId));
+        const variantIdOnUrl = searchParams.get('variant');
+        const variant = details?.variants.find(variant => variant.id.includes(variantIdOnUrl));
         const defaultVariantId = (details?.variants.length <= 2 ? details.variants[0].id : 0);
 
-        return isVariantExist ? variantId : defaultVariantId;
+        return variant.id || defaultVariantId;
 
       } else {
 
@@ -50,13 +50,24 @@ const PDPVariants = ({ classes, details = {} }) => {
 
     }
 
+    function getSelectedTypeSize(types = null) {
+
+      return (types && types.find(type => type.name.toLowerCase() === 'size'));
+
+    }
+
     setStore({
       ...store,
+      product: details.product,
       productPage: {
         ...store?.productPage,
         types: types.current,
         selectedVariant: getSelectedVariant(),
         selectedTypeSize: getSelectedTypeSize(types.current)?.values[0] ?? null,
+        addToCart: {
+          ...store?.productPage?.addToCart,
+          quantity: 1,
+        },
       },
     });
 
@@ -97,12 +108,6 @@ const PDPVariants = ({ classes, details = {} }) => {
     if (variants !== null) variants.forEach(variant => variant.selectedOptions && getTypes(variant.selectedOptions));
 
     return types;
-  }
-
-  function getSelectedTypeSize(types = null) {
-
-    return (types && types.find(type => type.name.toLowerCase() === 'size'));
-
   }
 
   return ((details?.variants.length > 1) && (
@@ -219,9 +224,11 @@ const VariantsContainer = ({ data = null }) => {
       variant.title.includes(typeValue),
     );
 
+    const isVariantSelected = (store?.productPage?.selectedVariant === variant.id);
+
     const getVariantClassnames = () =>
       store?.productPage?.selectedVariant !== null
-        ? store?.productPage?.selectedVariant === variant.id
+        ? isVariantSelected
           ? variant.availableForSale === false
             ? classnames('variant', 'show_variant', 'variant_selected', 'state__not_available')
             : classnames('variant', 'show_variant', 'variant_selected')
@@ -234,7 +241,8 @@ const VariantsContainer = ({ data = null }) => {
           className={getVariantClassnames()}
           onClick={() => {
             variantsWraperScrollLeft.current = variantsWraper.current.scrollLeft;
-            window.history.replaceState(null, null, `?variant=${variant.id}`);
+            // window.history.replaceState(null, null, `?variant=${variant.id}`);
+            updateSearchParams(variant.id);
 
             setStore({
               ...store,
@@ -333,15 +341,16 @@ const SizeVariants = ({ data }) => {
   
   function getShadeName(){
 
-    return TypeShade?.values && (
-    
+    const shade = TypeShade?.values && (
       TypeShade?.values?.find(
         (type = null) =>
           getCurrentVariantShade(store?.productPage?.selectedVariant)?.title &&
           getCurrentVariantShade(store?.productPage?.selectedVariant)?.title?.includes(type),
       )
-    
     );
+    
+
+    return shade;
 
   }
 
@@ -373,20 +382,26 @@ const SizeVariants = ({ data }) => {
   };
 
   const SizesWithShades = () => {
+
     const handleSelectedSize = (size = null) => {
-      return setStore({
-        ...store,
-        productPage: {
-          ...store.productPage,
-          selectedVariant: handleVariantChange(size).id,
-          selectedTypeSize: size,
-        },
-      });
+
+      if(getShadeName()){
+
+        return setStore({
+          ...store,
+          productPage: {
+            ...store.productPage,
+            selectedVariant: handleVariantChange(size).id,
+            selectedTypeSize: size,
+          },
+        });
+
+      }
     };
 
     return (
       <div className={'variants_size_container'}>
-        {TypeSize ? (
+        {(TypeSize && getShadeName()) ? (
           <div className={'variant__size'}>
             {TypeSize.values.map((size, id) => {
               const variantSize = size.replace(/^\s/g, '').split('-');
@@ -439,7 +454,8 @@ const SizeVariants = ({ data }) => {
             )
           )}
           onClick={() => {
-            window.history.replaceState(null, null, `?variant=${variant.id}`);
+            // window.history.replaceState(null, null, `?variant=${variant.id}`);
+            updateSearchParams(variant.id);
 
             return setStore({
               ...store,
@@ -594,5 +610,18 @@ const ShadeVariant = ({ variant = {}, isTypeShadeMatch = null, promos = null }) 
     null
   );
 };
+
+function updateSearchParams(id){
+
+  window.history.replaceState(null, null, `?variant=${getFormatedID(id)}`);
+
+}
+
+function getFormatedID(id){
+
+  const exceptNums = /[^0-9]/g;
+  return id.replace(exceptNums, '');
+
+}
 
 export default PDPVariants;
