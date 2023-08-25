@@ -12,12 +12,11 @@ export const links = () => {
   ];
 };
 
-const PDPRealResults = ({ data }) => {
-  
+const PDPRealResults = ({ data }) => {  
   return (
     <PDPSliderPanel data={data} useGradient={data?.useBackgroundGradient ?? false}>
       {
-        data?.contentBlock && data.contentBlock.map((content = null) => content && <Content key={content} data={content} />)
+        data?.contentBlock && data.contentBlock.map((content = null) => content && <Content key={content?.name} data={content} />)
       }
       <SliderPanel id={`tab-${data?.tabName.replace(/\s/g, '')}`}>
         <div id={'closeButton'} onClick={() => switchSliderPanelVisibility(`tab-${data?.tabName.replace(/\s/g, '')}`)}><span>close</span></div>
@@ -37,7 +36,7 @@ const Content = ({ data }) =>
       <PDPSliderPanelTitle data={{ title: data?.title }} />
       <div className={'realResultsContent'}>
         {data?.contents.map(ct => (
-          <div className={'realResultsContent_wrapper'} key={ct?.header}>
+          <div className={'realResultsContent_wrapper'} key={ct?.name}>
             <div className={'realResultsContent_container'}>
               {ct?.header !== '' ? (
                 <div className={'content_header'}>

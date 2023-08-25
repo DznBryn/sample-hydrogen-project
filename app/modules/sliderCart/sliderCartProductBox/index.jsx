@@ -194,7 +194,9 @@ const SliderCartProductBox = ({ item = {}, /*promo,*/ cartPageConfig = {}/*, set
           <h6> {item?.title} </h6>
           {isSellingPlan && <h6 className={'autoDeliver'}>Auto-Deliver every {sellingPlanName}</h6>}
 
-          <YotpoProductPrice price={Number(item?.variant?.price) * 10} />
+          {
+            (!isNaN(Number(item?.variant?.price))) && <YotpoProductPrice price={Number(item?.variant?.price) * 10} />
+          }
 
         </div>
         <div className={'productQty'}>

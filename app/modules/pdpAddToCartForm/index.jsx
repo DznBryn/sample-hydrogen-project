@@ -51,15 +51,19 @@ const PDPAddToCartForm = ({ classes, forceSoldOut, renderingShadeFinder, exclusi
           >
             -
           </button>
-          <input
-            className={'quantity'}
-            type="number"
-            name="quantity"
-            value={forceSoldOut ? 0 : store?.productPage?.addToCart?.quantity}
-            pattern="/[^1-5]/gi"
-            disabled
-            required
-          />
+          { 
+            store?.productPage?.addToCart?.quantity && (
+              <input
+                className={'quantity'}
+                type="number"
+                name="quantity"
+                value={forceSoldOut ? 0 : store?.productPage?.addToCart?.quantity}
+                pattern="/[^1-5]/gi"
+                disabled
+                required
+              />
+            )
+          }
           <button
             className={'control_button'}
             onClick={() => (store?.productPage?.addToCart?.quantity < 5) && increaseItemQty()}

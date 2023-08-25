@@ -26,7 +26,7 @@ const PDPVideoModule = ({ shouldVideoShow = true, handleShowVideo = null, videoU
           </div>
         </div>
         <div className={'pdp_video'}>
-          <iframe src={'https://player.vimeo.com/video/' + videoID.current + '?h=015aec3995&autoplay=' + (shouldVideoShow ? '1' : '0') + '&loop=1&title=0&byline=0&portrait=0'} allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <iframe src={'https://player.vimeo.com/video/' + videoID.current + '?h=015aec3995&autoplay=' + (shouldVideoShow ? '1' : '0') + '&loop=1&title=0&byline=0&portrait=0'} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen></iframe>
           <script src="https://player.vimeo.com/api/player.js"></script>
         </div>
       </div>
