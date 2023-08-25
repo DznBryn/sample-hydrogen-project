@@ -48,7 +48,7 @@ export const getVariantTypes = (variants = null) => {
 };
 
 const Selected = ({ oos = false }) => (
-  <div className={'selected'}>
+  <div className={'sf_selected'}>
     {!oos && (
       <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11 1.21524L9.88322 0L3.83709 6.58218L1.11678 3.62026L0 4.83605L3.82692 9L11 1.21524Z" fill="white" />
@@ -763,7 +763,7 @@ const PDPConcealerVariants = ({
   const haveShadeRecommendation = !!store?.selectedShade;
 
   const HalfCircle = () => (
-    <div className={'halfCircle'}>
+    <div className={'sf_halfCircle'}>
       <svg width="36" height="11" viewBox="0 0 36 11" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           opacity="0.9"
@@ -802,7 +802,6 @@ const PDPConcealerVariants = ({
         selectedVariant: externalId,
         addToCart: {
           ...store.productPage.addToCart,
-          variantId: externalId,
         },
       },
     });
@@ -855,7 +854,7 @@ const PDPConcealerVariants = ({
           {isSelected === shadeRecommended && <Selected oos />}
           {selectedShade === shadeRecommended && (
             <div className={'shadeRecommendedContainer'}>
-              <div className={'recommendedBadge'}>RECOMMENDED</div>
+              <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
             </div>
           )}
         </div>
@@ -877,7 +876,7 @@ const PDPConcealerVariants = ({
           {isSelected === shadeRecommended && <Selected />}
           {selectedShade === shadeRecommended && (
             <div className={'shadeRecommendedContainer'}>
-              <div className={'recommendedBadge'}>RECOMMENDED</div>
+              <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
             </div>
           )}
         </div>
@@ -913,7 +912,7 @@ const PDPConcealerVariants = ({
           id={shadeId}
         >
           <div
-            className={'shadeIcon'}
+            className={'sf_shadeIcon'}
             onMouseEnter={() => handleMouseEnter(shadeRecommended)}
             onMouseLeave={() => handleMouseLeave(shadeRecommended)}
             style={{
@@ -926,7 +925,7 @@ const PDPConcealerVariants = ({
             {isMobile && treatedSelectedShade !== shadeRecommended && (
               <>
                 <HalfCircle />
-                <p className={'isMobile'}>{getShadeNumberByName(shadeRecommended)}</p>
+                <p className={'sf_isMobile'}>{getShadeNumberByName(shadeRecommended)}</p>
               </>
             )}
             {treatedSelectedShade !== shadeRecommended && !isMobile && <p>{shadeRecommended.split(' ')[0]}</p>/**TODO */}
@@ -976,12 +975,12 @@ const PDPConcealerVariants = ({
           </div>
         ) : (
           <div className={'sfVariantsGridContainer'}>
-            <div className={'rowContainer'}>
+            <div className={'sf_rowContainer'}>
               {details?.variants.map(({ name: shadeRecommended }) => {
                 return <>{renderVariants(shadeRecommended, selectedShade)}</>;
               })}
             </div>
-            <div className={'shade'}>{shade}</div>
+            <div className={'sf_shade'}>{shade}</div>
           </div>
         )}
       </>
@@ -1036,6 +1035,7 @@ const PDPConcealerVariants = ({
       setShade(store.selectedShade);
       setStore({
         ...store,
+        product: details.product,
         productPage: {
           ...store?.productPage,
           types: types.current,

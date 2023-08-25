@@ -87,7 +87,7 @@ const PDP = ({
               price: `${parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2)}`,
               brand: 'TULA Skincare',
               category: `${product.productType}`,
-              variant: `${details.variants[0].externalId}`,
+              variant: `${details.variants[0].id}`,
               quantity: 1,
             },
           ],
@@ -102,17 +102,17 @@ const PDP = ({
     window.postscript.event('page_view', {
       'shop_id': getApiKeys().POSTSCRIPT.shopId, // your Postscript Shop ID
       'url': window.location.href, // the current page
-      'search_params': { 'variant': `${details.variants[0].externalId}` },
+      'search_params': { 'variant': `${details.variants[0].id}` },
       'page_type': 'product',
       'referrer': document.referrer, // the referring page
       'resource': { // information about the product
         'category': `${product.type}`,
         'name': `${product.name}`,
         'price_in_cents': product.minPrice * 100,
-        'resource_id': details.variants[0].externalId,
+        'resource_id': details.variants[0].id,
         'resource_type': 'product',
         'sku': `${details.variants[0].sku}`,
-        'variant_id': details.variants[0].externalId,
+        'variant_id': details.variants[0].id,
         'vendor': 'TULA Skincare'
       }
     });
@@ -124,12 +124,12 @@ const PDP = ({
     return {
       autoDeliveryInfo,
       title: {
-        name: product.name,
+        name: product.title,
         alt: product.alt_title,
       },
       description: product.description ? product.description : '',
       descriptionHtml: product.descriptionHtml ? product.descriptionHtml : '',
-      tags: product.tags ? [...product.tags, 'badge:best seller'] : [], //mock - badge:best seller
+      tags: product.tags,
       pricing: {
         minPrice: product.minPrice ? product.minPrice : 0,
         maxPrice: product.maxPrice ? product.maxPrice : 0,
@@ -148,6 +148,7 @@ const PDP = ({
       variant_shade: getVariantShadeObj(),
       tabs: getTabs(),
       tabSections: getTabsSections(),
+      product,
     };
 
     function getVideosData() {
@@ -298,46 +299,14 @@ const PDP = ({
     return tabNames;
   }, [details]);
 
-  //comps
-
-  const TopSection = () => {
-
-    const getExclusiveProductBannerVisibility = useCallback(function () {
-
-      return (
-        exclusiveProductBannerContent?.available &&
-        (exclusiveProductBannerContent?.slugWhereItShouldAppear === product?.slug)
-      );
-
-    }, [exclusiveProductBannerContent]);
+  const getExclusiveProductBannerVisibility = useCallback(function () {
 
     return (
-
-      <div className={classnames('pdpSection', 'section__product_details')}>
-
-        <div className={classnames('pdpContainer', 'col_1')}>
-          <PDPGallery
-            productImages={details.productImages}
-            videos={details.videos}
-            variants={details.variants}
-            productId={product.externalId}
-            details={details}
-            isExclusiveProduct={!!product?.exclusiveAtcColor}
-          />
-
-          {getExclusiveProductBannerVisibility() && <PDPExclusiveProductBannerRelease content={exclusiveProductBannerContent} />}
-        </div>
-
-
-        <div className={classnames('pdpContainer', 'col_2')}>
-          <PDPDetails product={product} details={details} shadeVariantsOos={shadeVariantsOos} concealerImages={concealerImages} />
-        </div>
-
-      </div>
-
+      exclusiveProductBannerContent?.available &&
+      (exclusiveProductBannerContent?.slugWhereItShouldAppear === product?.slug)
     );
 
-  };
+  }, [exclusiveProductBannerContent]);
 
   const ContentSection = ({ children }) => {
 
@@ -356,7 +325,28 @@ const PDP = ({
     <div id={'pdpWrapper'} className="minHeight">
       <div className={'pdp_page__container'}>
 
-        <TopSection />
+        <div className={classnames('pdpSection', 'section__product_details')}>
+
+          <div className={classnames('pdpContainer', 'col_1')}>
+          
+            <PDPGallery
+              productImages={details.productImages}
+              videos={details.videos}
+              variants={details.variants}
+              productId={product.id}
+              details={details}
+              isExclusiveProduct={!!product?.exclusiveAtcColor}
+            />
+
+            {getExclusiveProductBannerVisibility() && <PDPExclusiveProductBannerRelease content={exclusiveProductBannerContent} />}
+          </div>
+
+
+          <div className={classnames('pdpContainer', 'col_2')}>
+            <PDPDetails product={product} details={details} shadeVariantsOos={shadeVariantsOos} concealerImages={concealerImages} />
+          </div>
+
+        </div>
 
         <ContentSection>
           <PDPMoreDetailsList data={getTabNames()} />

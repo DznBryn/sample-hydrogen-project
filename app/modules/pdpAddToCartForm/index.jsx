@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import PDPAddToCart, { links as pdpAddToCartStyles } from '../pdpAddToCart';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 import { useStore } from '~/hooks/useStore';
@@ -15,52 +14,30 @@ export const links = () => {
 
 const PDPAddToCartForm = ({ classes, forceSoldOut, renderingShadeFinder, exclusiveProductAtcColor, exclusiveProductTextColor, isGated, renderingConcealer }) => {
   const showOOSForm = false;
-  const {store, setStore} = useStore();
-  const [item, setItem] = useState({
-    variantId: 0,
-    quantity: 1,
-  });
-  const { variantId, quantity } = item;
+  const { store, setStore } = useStore();
 
-  useEffect(() => {
-    if (variantId === 0) {
-      setItem({
-        ...item,
-        variantId: store?.productPage?.selectedVariant,
-        quantity,
-      });
-    } else {
-      setStore({
-        ...store,
-        productPage: {
-          ...store?.productPage,
-          addToCart: {
-            ...store?.productPage?.addToCart,
-            variantId: store?.productPage?.selectedVariant,
-            quantity,
-          },
+  function setQuantity(quantity) {
+
+    setStore({
+      ...store,
+      productPage: {
+        ...store?.productPage,
+        addToCart: {
+          ...store?.productPage?.addToCart,
+          quantity,
         },
-      });
-    }
-  }, [variantId, quantity]);
-
-  const increaseItemQty = () =>
-    setItem({
-      ...item,
-      quantity: store?.productPage?.addToCart?.quantity + 1,
+      },
     });
+    
+  }
 
-  const decreaseItemQty = () =>
-    setItem({
-      ...item,
-      quantity: store?.productPage?.addToCart?.quantity - 1,
-    });
+  const increaseItemQty = () => {
+    setQuantity(store?.productPage?.addToCart?.quantity + 1);
+  };
 
-  const handleChange = e =>
-    setItem({
-      ...item,
-      quantity: e.target.name['quantity'],
-    });
+  const decreaseItemQty = () => {
+    setQuantity(store?.productPage?.addToCart?.quantity - 1);
+  }; 
 
   return (
     <div className={classnames('atc__container', classes)}>
@@ -69,12 +46,7 @@ const PDPAddToCartForm = ({ classes, forceSoldOut, renderingShadeFinder, exclusi
           <button
             className={'control_button'}
             onClick={() =>
-              quantity <= 1
-                ? setItem({
-                  ...item,
-                  quantity: 1,
-                })
-                : decreaseItemQty()
+              (store?.productPage?.addToCart?.quantity > 1) && decreaseItemQty()
             }
           >
             -
@@ -83,15 +55,14 @@ const PDPAddToCartForm = ({ classes, forceSoldOut, renderingShadeFinder, exclusi
             className={'quantity'}
             type="number"
             name="quantity"
-            value={forceSoldOut ? 0 : quantity}
-            onChange={e => handleChange(e)}
+            value={forceSoldOut ? 0 : store?.productPage?.addToCart?.quantity}
             pattern="/[^1-5]/gi"
             disabled
             required
           />
           <button
             className={'control_button'}
-            onClick={() => (quantity < 5 ? increaseItemQty() : '')}
+            onClick={() => (store?.productPage?.addToCart?.quantity < 5) && increaseItemQty()}
           >
             +
           </button>
@@ -114,11 +85,11 @@ const PDPAddToCartForm = ({ classes, forceSoldOut, renderingShadeFinder, exclusi
               {
                 product: store?.product ?? {},
                 variantId: store?.productPage?.selectedVariant,
-                quantity,
+                quantity: store?.productPage?.addToCart?.quantity,
                 ['selling_plan_id']: store?.productPage?.addToCart?.selling_plan_id && store?.productPage?.addToCart?.selling_plan_id !== 0 ? store.productPage.addToCart.selling_plan_id : null,
                 discount: store?.productPage?.addToCart?.discount ?? 0
               }
-            } 
+            }
             forceSoldOut={forceSoldOut}
             exclusiveProductAtcColor={exclusiveProductAtcColor}
             exclusiveProductTextColor={exclusiveProductTextColor}

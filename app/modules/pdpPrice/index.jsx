@@ -226,7 +226,7 @@ const PDPPrice = ({
 };
 
 const IconAfterpay = () => (
-  <svg version="1.1" id="Afterpay_Logo_Black" className={'afterpay'} x="0px" y="0px" viewBox="0 0 1165.5 234.5" >
+  <svg version="1.1" id="Afterpay_Logo_Black" className={'pdp_afterpay_logo'} x="0px" y="0px" viewBox="0 0 1165.5 234.5" >
     <g>
       <path d="M1139.9,51.5l-34.6-19.8l-35.1-20.1C1047-1.7,1018,15,1018,41.8v4.5c0,2.5,1.3,4.8,3.5,6l16.3,9.3
 		c4.5,2.6,10.1-0.7,10.1-5.9V45c0-5.3,5.7-8.6,10.3-6l32,18.4l31.9,18.3c4.6,2.6,4.6,9.3,0,11.9l-31.9,18.3l-32,18.4

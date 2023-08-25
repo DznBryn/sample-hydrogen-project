@@ -36,7 +36,7 @@
   border: 2px solid #c4c4c4;
 }
 
-.exclusive {
+.pdpExclusive {
   border: none !important;
   height: 44px !important;
 }
@@ -46,7 +46,7 @@
   height: 37px !important;
 }
 
-.exclusive span,
+.pdpExclusive span,
 .plpExclusive span {
   display: flex;
   gap: 12px;
