@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import classnames from 'classnames';
 import { Link } from '@remix-run/react';
 import { useStore } from '~/hooks/useStore';
@@ -57,10 +57,9 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
   }
 
 
-  const {store, setStore} = useStore();
+  const {store} = useStore();
 
-
-  const xpto = () => {
+  const getVariantsSelector = () => {
     if (shouldRenderSkinFinder || shouldRenderConcealer) {
       return (
         <>
@@ -101,15 +100,6 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
       <path d="M15.8431 13.5882H4.39216C4.30588 13.5882 4.23529 13.5141 4.23529 13.4235V12.2706C4.23529 12.18 4.30588 12.1059 4.39216 12.1059H15.8431C15.9294 12.1059 16 12.18 16 12.2706V13.4235C16 13.5141 15.9294 13.5882 15.8431 13.5882ZM15.8431 7.74118H4.39216C4.30588 7.74118 4.23529 7.66706 4.23529 7.57647V6.42353C4.23529 6.33294 4.30588 6.25882 4.39216 6.25882H15.8431C15.9294 6.25882 16 6.33294 16 6.42353V7.57647C16 7.66706 15.9294 7.74118 15.8431 7.74118ZM15.8431 1.89412H4.39216C4.30588 1.89412 4.23529 1.82 4.23529 1.72941V0.57647C4.23529 0.485882 4.30588 0.411764 4.39216 0.411764H15.8431C15.9294 0.411764 16 0.485882 16 0.57647V1.72941C16 1.82 15.9294 1.89412 15.8431 1.89412ZM0 12.8471C-2.1487e-09 12.6957 0.0284017 12.5457 0.0835833 12.4058C0.138765 12.266 0.219646 12.1389 0.321608 12.0318C0.423571 11.9247 0.544618 11.8398 0.677838 11.7819C0.811058 11.7239 0.953843 11.6941 1.09804 11.6941C1.24224 11.6941 1.38502 11.7239 1.51824 11.7819C1.65146 11.8398 1.77251 11.9247 1.87447 12.0318C1.97643 12.1389 2.05731 12.266 2.1125 12.4058C2.16768 12.5457 2.19608 12.6957 2.19608 12.8471C2.19608 12.9985 2.16768 13.1484 2.1125 13.2883C2.05731 13.4282 1.97643 13.5553 1.87447 13.6623C1.77251 13.7694 1.65146 13.8543 1.51824 13.9122C1.38502 13.9702 1.24224 14 1.09804 14C0.953843 14 0.811058 13.9702 0.677838 13.9122C0.544618 13.8543 0.423571 13.7694 0.321608 13.6623C0.219646 13.5553 0.138765 13.4282 0.0835833 13.2883C0.0284017 13.1484 -2.1487e-09 12.9985 0 12.8471ZM0 7C-2.1487e-09 6.84859 0.0284017 6.69867 0.0835833 6.55879C0.138765 6.41891 0.219646 6.29181 0.321608 6.18475C0.423571 6.07769 0.544618 5.99276 0.677838 5.93482C0.811058 5.87688 0.953843 5.84706 1.09804 5.84706C1.24224 5.84706 1.38502 5.87688 1.51824 5.93482C1.65146 5.99276 1.77251 6.07769 1.87447 6.18475C1.97643 6.29181 2.05731 6.41891 2.1125 6.55879C2.16768 6.69867 2.19608 6.84859 2.19608 7C2.19608 7.15141 2.16768 7.30133 2.1125 7.44121C2.05731 7.58109 1.97643 7.70819 1.87447 7.81525C1.77251 7.92231 1.65146 8.00724 1.51824 8.06518C1.38502 8.12312 1.24224 8.15294 1.09804 8.15294C0.953843 8.15294 0.811058 8.12312 0.677838 8.06518C0.544618 8.00724 0.423571 7.92231 0.321608 7.81525C0.219646 7.70819 0.138765 7.58109 0.0835833 7.44121C0.0284017 7.30133 -2.1487e-09 7.15141 0 7ZM0 1.15294C-2.1487e-09 1.00153 0.0284017 0.85161 0.0835833 0.711729C0.138765 0.571848 0.219646 0.444749 0.321608 0.337688C0.423571 0.230628 0.544618 0.145703 0.677838 0.0877619C0.811058 0.0298214 0.953843 0 1.09804 0C1.24224 0 1.38502 0.0298214 1.51824 0.0877619C1.65146 0.145703 1.77251 0.230628 1.87447 0.337688C1.97643 0.444749 2.05731 0.571848 2.1125 0.711729C2.16768 0.85161 2.19608 1.00153 2.19608 1.15294C2.19608 1.30435 2.16768 1.45427 2.1125 1.59415C2.05731 1.73403 1.97643 1.86113 1.87447 1.96819C1.77251 2.07525 1.65146 2.16018 1.51824 2.21812C1.38502 2.27606 1.24224 2.30588 1.09804 2.30588C0.953843 2.30588 0.811058 2.27606 0.677838 2.21812C0.544618 2.16018 0.423571 2.07525 0.321608 1.96819C0.219646 1.86113 0.138765 1.73403 0.0835833 1.59415C0.0284017 1.45427 -2.1487e-09 1.30435 0 1.15294Z" fill={isSelected ? '#47C6D9' : '#4C4E56'} fillOpacity={isSelected ? '1' : '.2'} />
     </svg>
   );
-
-  useEffect(() => {
-    if (!store?.product) {
-      setStore({
-        ...store,
-        product
-      });
-    }
-  }, [product]);
 
   const generatePriceConfigs = isStickyCta => {
     return {
@@ -283,11 +273,6 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
             ''
           )}
           <div className={'badgesWraper'}>
-            {/*  
-                        isExclusive ? 
-                            <ExclusiveMemberBadge style={{ marginLeft: 8 }} /> : 
-                            <PDPBadges productDetails={details} selectedVariant={0} />
-                        */}
             <PDPBadges productDetails={details} selectedVariant={0} />
           </div>
 
@@ -323,9 +308,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
             </div>
           )
         }
-        {details.variants !== null ? xpto() : (
-          ''
-        )}
+        {details.variants !== null && getVariantsSelector()}
         {
           (getApiKeys().FEATURE_FLAGS.LOYALTY) && <LoyaltyMessage className={'show_desktop'} />
         }
@@ -361,12 +344,12 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
           Component={
             <div className={'ctaContainer'}>
               {
-                (shouldRenderSkinFinder && store?.productPage?.addToCart?.variantId === undefined)
+                (shouldRenderSkinFinder && store?.productPage?.selectedVariantId === undefined)
                 && <div className={'openSFButtonSticky'} onClick={() => switchSliderPanelVisibility('ShadeFinderSlider')}>Find my shade</div>
               }
 
               {
-                (shouldRenderConcealer && store?.productPage?.addToCart?.variantId === undefined)
+                (shouldRenderConcealer && store?.productPage?.selectedVariantId === undefined)
                 && <div className={'openSFButtonSticky'} onClick={() => switchSliderPanelVisibility('ConcealerSlider')}>Find my shade</div>
               }
 
