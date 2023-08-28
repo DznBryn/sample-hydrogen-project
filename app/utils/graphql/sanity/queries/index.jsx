@@ -5,7 +5,7 @@ export const GET_OUR_STORY = gql`
     allOurStoryAndFounder {
       _id
       name
-      image{
+      images{
         asset{
           id
           url
