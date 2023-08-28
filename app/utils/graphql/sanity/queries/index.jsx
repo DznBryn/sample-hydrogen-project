@@ -1,12 +1,22 @@
 import { gql } from '@apollo/client';
 
 export const GET_OUR_STORY = gql`
-query GetAllOurStory {
-  allOurStory {
-    _id
-    name
+  query GetAllOurStory {
+    allOurStory {
+      _id
+      name
+    }
   }
-}
+`;
+
+
+export const GET_WHY_TULA = gql`
+  query GetWhyTula {
+    allWhyTula {
+      _id
+      name
+    } 
+  }
 `;
 
 export const GET_FOOTERS = gql`
