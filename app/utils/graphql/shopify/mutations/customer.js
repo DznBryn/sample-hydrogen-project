@@ -9,15 +9,16 @@ export async function login({storefront}, {email, password}) {
       },
     },
   });
-
   if (data?.customerAccessTokenCreate?.customerAccessToken?.accessToken) {
-    return data?.customerAccessTokenCreate?.customerAccessToken?.accessToken;
+    console.log(
+      'SUCCESS: ',
+      data?.customerAccessTokenCreate?.customerAccessToken,
+    );
+    return data?.customerAccessTokenCreate?.customerAccessToken;
   }
   if (data?.customerAccessTokenCreate?.customerUserErrors) {
-    return json({
-      messages: data?.customerAccessTokenCreate?.customerUserErrors,
-      status: 401,
-    });
+    console.log('ERROR: ', data?.customerAccessTokenCreate?.customerUserErrors);
+    return data?.customerAccessTokenCreate?.customerUserErrors;
   }
 }
 
@@ -33,9 +34,12 @@ export async function register({storefront}, customerObj) {
       },
     },
   });
-
+  console.log(
+    'REGISTER: ',
+    data?.customerCreate?.customerUserErrors.join(', '),
+  );
   if (!data?.customerCreate?.customer?.id) {
-    throw new Error(data?.customerCreate?.customerUserErrors.join(', '));
+    return data?.customerCreate?.customerUserErrors.join(', ');
   }
 }
 

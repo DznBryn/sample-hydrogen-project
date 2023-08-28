@@ -1,0 +1,252 @@
+.header__banner {
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/OnPaste.20230104-115546.png?v=1672844182');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 56px;
+  padding-bottom: 40px;
+  margin-bottom: 56px;
+
+}
+
+.header__banner div {
+
+  color: white;
+  font-weight: 800;
+  font-size: 20px;
+
+}
+
+.header__banner p {
+
+  color: white;
+  font-weight: 400;
+  font-size: 16px;
+  width: 350px;
+  text-align: center;
+  line-height: 20px;
+
+}
+
+.header__banner svg {
+
+  margin-top: 25px;
+
+}
+
+.header__title {
+  font-weight: 800;
+  font-size: 28px;
+}
+
+.header__copy {
+
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 26px;
+  width: 350px;
+  margin-top: 16px;
+  margin-bottom: 22px;
+  text-align: center;
+
+}
+
+.errorText {
+  color: #ff5483;
+  margin-bottom: 10px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.warningText {
+  color: #778699;
+  font-size: 14px;
+  text-align: center;
+}
+
+.templateCustomersLogin {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 100px;
+}
+
+.templateCustomersLogin .formBox {
+  width: 350px;
+}
+
+.templateCustomersLogin h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.templateCustomersLogin form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.templateCustomersLogin p {
+  margin-top: 18px;
+}
+
+.templateCustomersLogin form input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.templateCustomersLogin form div,
+.templateCustomersLogin form button {
+  width: 100%;
+}
+
+.templateCustomersLogin form button {
+  margin-top: 15px;
+}
+
+.register {
+  text-align: right;
+}
+
+.formBox a {
+  text-decoration: none;
+  font-weight: 100;
+}
+
+.newsletter {
+  margin-top: 80px;
+}
+
+.formBox .join {
+  display: inline-block;
+  width: 15px;
+  transform: scale(1.5);
+  vertical-align: top;
+  margin: 9px 9px 0 0;
+}
+
+.formBox .joinText {
+  display: inline-block;
+  width: 80%;
+  margin-top: 6px;
+}
+
+.already {
+  display: inline-block;
+}
+
+.inputText {
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  flex-grow: 2;
+  height: 45px;
+  padding: 14px 15px;
+  background-color: #ffffff;
+  border: 1px solid #4c4e56;
+  font: 400 16px avenir;
+}
+
+.inputText:focus {
+  border: 1px solid #48c6d9;
+  caret-color: #48c6d9;
+}
+
+.inputText:disabled {
+  border: 1px solid rgba(76, 78, 86, 0.4);
+}
+
+/* .inputText:invalid {
+  border: 1px solid #FF5483;
+  caret-color: #FF5483;
+} */
+
+.inputTextError {
+  border: 1px solid #ff5483;
+  caret-color: #ff5483;
+}
+
+.infoText {
+  font-size: 10px;
+  margin-top: 5px !important;
+}
+
+.infoText a {
+  text-decoration: underline;
+  text-decoration-color: #777777;
+}
+
+.infoTextAlt {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(76, 78, 86, 0.8);
+  margin-top: 5px !important;
+}
+
+.infoTextAlt a {
+  text-decoration: underline;
+}
+
+.text-center{
+  text-align: center;
+}
+
+@media all and (min-width: 768px) {
+  .templateCustomersLogin .formBox {
+    width: 400px;
+  }
+}
+
+@media all and (max-width: 768px) {
+  .templateCustomersLogin {
+    margin: 100px 0;
+    margin-top: 9em;
+  }
+
+  .templateCustomersLogin .formBox {
+    width: 300px;
+  }
+
+  .header__banner {
+
+    background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/OnPaste.20230104-115600.png?v=1672844182');
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+
+  }
+
+  .header__banner p {
+
+    width: 300px;
+    font-size: 14px;
+
+  }
+
+  .header__title {
+    font-weight: 800;
+    font-size: 26px;
+  }
+
+  .header__copy {
+
+    font-size: 14px;
+    line-height: 20px;
+
+  }
+
+}
+
+@media all and (max-height: 840px) {
+  .templateCustomersLogin {
+    min-height: auto;
+    margin: 100px 0;
+    margin-top: 92px;
+  }
+}

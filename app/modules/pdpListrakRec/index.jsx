@@ -16,23 +16,17 @@ export const links = () => {
   ];
 };
 
-const mockListrak = {
-  listrakId: 'fb44285e-a4de-45ab-97a5-46db11bced2c',
-  title: 'boost your tula routine with these',
-  name: 'Shopping Cart',
-};
-
 let listLoading = false;
 let recs = [];
 let products = [];
 
 const PDPListrakRec = ({ listrak, product, title }) => {
   
-  //useYotpoReviewsRefresh();
-  
-  const listrackConfig = listrak?.listrakId ? listrak : mockListrak;
+  const listrackConfig = listrak;
+  const ListrakProductsContainer = useRef(null);
   const { fetchProduct } = useCartActions();
   let [loader, setLoader] = useState(0);
+
   const getProductData = async productHandle => {
     return await fetchProduct(productHandle);
   };
@@ -61,13 +55,15 @@ const PDPListrakRec = ({ listrak, product, title }) => {
     );
   };
 
-  const ListrakProductsContainer = useRef(null);
   useEffect(() => {
+
     const dlProducts = [];
+
     if (typeof window._ltk !== 'undefined' && recs.length < 4) {
       window._ltk.Recommender.AddSku(product?.variants[0].externalId);
       window._ltk.Recommender.Render();
     }
+
     if (recs.length === 0 && recs.length < 3) {
       setTimeout(() => {
         document.querySelectorAll('.product_img').forEach(elem => {
@@ -81,10 +77,12 @@ const PDPListrakRec = ({ listrak, product, title }) => {
         listLoading = true;
         setLoader(++loader);
       }, 2000);
-    } //else{
+    }
+
     if (products.length === 0 && recs.length > 0) {
-      //const handleRegex = /(?<=products\/)((?!\?|\$).)+/;
+
       const handles = [];
+
       recs.forEach(rec => {
         let handle = rec.replace(window.location.origin + '/products/', '');
         handle = handle.substring(0, handle.indexOf('?'));
@@ -92,6 +90,7 @@ const PDPListrakRec = ({ listrak, product, title }) => {
           handles.push(handle);
         }
       });
+
       getReccomededProducts(handles)
         .then(results => {
           if (results.length > 0) {
@@ -99,7 +98,6 @@ const PDPListrakRec = ({ listrak, product, title }) => {
 
             setLoader(++loader);
           }
-          // Product list here
 
           results.forEach((prod, index) => {
             return dlProducts.push({
@@ -110,14 +108,15 @@ const PDPListrakRec = ({ listrak, product, title }) => {
               position: index,
             });
           });
-          // console.log('PLP PDP', dlProducts)
 
           triggerAnalyticsOnScroll(ListrakProductsContainer.current, dlProducts, 'Product Page');
+
         })
         .catch(() => {});
+
     }
-    //}
-  });
+
+  }, []);
 
   return (
     <div className={'listrakRecWrap'}>
@@ -172,7 +171,7 @@ const PDPListrakRec = ({ listrak, product, title }) => {
                         products: [
                           {
                             name: product?.title,
-                            id: product?.id,
+                            id: window.btoa(product?.id),
                             price: parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
                             category: product?.productType,
                             variant: '',

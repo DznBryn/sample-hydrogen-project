@@ -52,7 +52,7 @@ export const getVariantTypes = (variants = null) => {
 };
 
 const Selected = ({ oos = false }) => (
-  <div className={'selected'}>
+  <div className={'sf_selected'}>
     {!oos && <svg width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M11 1.21524L9.88322 0L3.83709 6.58218L1.11678 3.62026L0 4.83605L3.82692 9L11 1.21524Z" fill="white" />
     </svg>}
@@ -240,7 +240,7 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
   const haveShadeRecommendation = !!store?.selectedShade;
 
   const HalfCircle = () => (
-    <div className={'halfCircle'}>
+    <div className={'sf_halfCircle'}>
       <svg width="36" height="11" viewBox="0 0 36 11" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path opacity="0.9" d="M35.1216 0.240479C33.5706 3.46456 31.1407 6.18519 28.1117 8.08928C25.0827 9.99338 21.5777 11.0036 17.9999 11.0036C14.4221 11.0036 10.9171 9.99338 7.88805 8.08928C4.85905 6.18519 2.42922 3.46456 0.878174 0.240479H35.1216Z" fill="white" />
       </svg>
@@ -262,13 +262,13 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
     setIsSelected(shadeRecommended);
     setStore({
       ...store,
+      product: details.product,
       productPage: {
         ...store.productPage,
         selectedVariantId: externalId,
         selectedVariant: externalId,
         addToCart: {
           ...store.productPage.addToCart,
-          variantId: externalId
         },
       },
     });
@@ -313,7 +313,7 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
           {selectedShade === shadeRecommended &&
             (
               <div className={'shadeRecommendedContainer'}>
-                <div className={'recommendedBadge'}>RECOMMENDED</div>
+                <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
               </div>
             )
           }
@@ -322,13 +322,13 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
     } else {
       return (
         <div onClick={() => handleRecommendation(shadeRecommended, true)} className={'sfVariantItem'} name={shadeRecommended} id={shadeRecommended} key={shadeRecommended}>
-          <div className={'shadeIcon'} style={{ background: `${shadeBackground}`, marginRight: 10 }}></div>
+          <div className={'sf_shadeIcon'} style={{ background: `${shadeBackground}`, marginRight: 10 }}></div>
           {shadeRecommended}
           {isSelected === shadeRecommended && <Selected />}
           {selectedShade === shadeRecommended &&
             (
               <div className={'shadeRecommendedContainer'}>
-                <div className={'recommendedBadge'}>RECOMMENDED</div>
+                <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
               </div>
             )
           }
@@ -351,7 +351,7 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
     } else {
       return (
         <div onClick={() => handleRecommendation(shadeRecommended)} className={'sfVariantItem'} key={shadeRecommended}>
-          <div className={'shadeIcon'}
+          <div className={'sf_shadeIcon'}
             onMouseEnter={() => handleMouseEnter(shadeRecommended)}
             onMouseLeave={() => handleMouseLeave(shadeRecommended)}
             style={{ background: `${shadeBackground}`, height: 35, width: 35 }}
@@ -359,7 +359,7 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
             {isMobile && isSelected !== shadeRecommended &&
               <>
                 <HalfCircle />
-                <p className={'isMobile'}>{getShadeNumberByName(shadeRecommended)}</p>
+                <p className={'sf_isMobile'}>{getShadeNumberByName(shadeRecommended)}</p>
               </>
             }
             {(isSelected !== shadeRecommended && !isMobile) && <p>{getShadeNumberByName(shadeRecommended)}</p>}
@@ -408,14 +408,14 @@ const PDPVariants = ({ details = {}, viewType, shadeVariantsOos = [] }) => {
           ) :
           (
             <div className={'sfVariantsGridContainer'}>
-              <div className={'rowContainer'}>
+              <div className={'sf_rowContainer'}>
                 {mockedShadeResult.map(({ shadeRecommended, shadeBackground }) => {
                   return (<>
                     {renderVariants(shadeRecommended, shadeBackground, selectedShade)}
                   </>);
                 })}
               </div>
-              <div className={'shade'}>{shade}</div>
+              <div className={'sf_shade'}>{shade}</div>
             </div>
           )}
       </>
