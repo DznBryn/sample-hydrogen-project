@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 
 export const GET_OUR_STORY = gql`
   query GetAllOurStory {
-    allOurStory {
+    allOurStoryAndFounder {
       _id
       name
     }
