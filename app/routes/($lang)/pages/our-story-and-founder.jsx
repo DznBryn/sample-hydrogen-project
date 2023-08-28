@@ -9,7 +9,7 @@ import OurStoryAndFounder from '~/modules/ourStoryAndFounder';
 
 export async function loader({context}) {
 
-  const ourStoryContent = await getCMSContent(contect, GET_OUR_STORY);
+  const ourStoryContent = await getCMSContent(context, GET_OUR_STORY);
 
   const carouselSlidesGroup = await getCMSContent(context, GET_CAROUSEL_SLIDES_GROUP);
   const whyTulaContent = await getCMSContent(context, GET_WHY_TULA);
