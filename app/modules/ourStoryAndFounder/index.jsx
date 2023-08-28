@@ -16,7 +16,7 @@ const OurStoryAndFounder = ({ourStoryText, ourStoryImgs}) => {
     console.log("devdrew outStoryObj", ourStoryText)
     return (
       <div>
-        <p>Hello Module</p>
+        <OurStoryBlockOne content={ourStoryText} images={ourStoryImgs} />
       </div>
     )
   }
