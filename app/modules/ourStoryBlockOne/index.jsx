@@ -6,6 +6,8 @@ import styles from './styles.css';
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+
 const OurStoryBlockOne = ({content}) => {
   return (
     <div className="fixedWidthPage">

@@ -1,11 +1,12 @@
 import Layouts from '~/layouts';
 
 import { getCMSContent, getCMSDoc } from '~/utils/functions/eventFunctions';
-import { GET_OUR_STORY, GET_CAROUSEL_SLIDES_GROUP, GET_WHY_TULA } from '~/utils/graphql/sanity/queries';
+import { GET_OUR_STORY } from '~/utils/graphql/sanity/queries';
 import { useLoaderData } from '@remix-run/react';
 
-import OurStoryAndFounder from '~/modules/ourStoryAndFounder';
+import OurStoryAndFounder, { links as ourStoryAndFounderStyles } from '~/modules/ourStoryAndFounder';
 
+export const links = () => ourStoryAndFounderStyles();
 
 export async function loader({context}) {
 
@@ -23,7 +24,7 @@ export default function OurStoryAndFounderComponent() {
 
   } = useLoaderData();
 
-  console.log("devdrew ourStoryContent", ourStoryContent)
+  console.log("devdrew ourStoryContent::", ourStoryContent)
 
   return (
     <Layouts.MainNavFooter>

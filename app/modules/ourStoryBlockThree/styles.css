@@ -1,0 +1,68 @@
+.blockThree {
+  display: flex;
+}
+
+.blockThree .contain {
+  display: flex;
+  flex-direction: row;
+}
+
+.blockThree .section {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.blockThree .section.left {
+  width: 41.667%;
+  flex-direction: column;
+  padding-right: 40px;
+}
+
+.blockThree .section.right {
+  width: 58.333%;
+  align-items: center;
+}
+
+.blockThree .section.right img {
+  max-height: 410px;
+  height: 100%;
+}
+
+.blockThree .section.left blockquote {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 30px;
+  letter-spacing: 1px;
+  margin-bottom: 2em;
+}
+
+@media all and (max-width: 768px) {
+  .blockThree .section,
+  .blockThree .section.left,
+  .blockThree .section.right {
+    width: 100%;
+  }
+  .contain.blockThree {
+    flex-direction: column-reverse;
+  }
+  .blockThree .section img {
+    width: 100%;
+  }
+  .blockThree .section.left {
+    padding: 0;
+  }
+  .blockThree .section.left blockquote {
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: 1px;
+    margin: 2em auto;
+  }
+  .blockThree .section.left .signature {
+    font-size: 14px;
+    line-height: 26px;
+    letter-spacing: 1px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

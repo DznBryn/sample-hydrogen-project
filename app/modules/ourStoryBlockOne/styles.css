@@ -1,4 +1,8 @@
-.section h1 {
+.blockOne {
+  display: flex;
+}
+
+.blockOne .section h1 {
   font-size: 42px;
   font-weight: 800;
   letter-spacing: 0px;
@@ -8,47 +12,47 @@
   margin-top: 1.25em;
 }
 
-.blockOne h2 {
+.blockOne .blockOne h2 {
   font-size: 22px;
   line-height: 38px;
   font-weight: 800;
   color: #48c6d9;
 }
 
-.section p {
+.blockOne .section p {
   font-size: 16px;
   line-height: 30px;
   margin-bottom: 12px;
   margin: 0 0 15px 0;
 }
 
-.contain {
+.blockOne .contain {
   width: 100%;
   display: flex;
   flex-direction: row;
 }
 
-.section {
+.blockOne .section {
   width: 50%;
 }
 
-.left {
+.blockOne .left {
   padding-right: 70px;
 }
 
-.right {
+.blockOne .right {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.image1 {
+.blockOne .image1 {
   margin: 3em auto 0;
   height: 30em;
   object-fit: contain;
 }
 
-.image2 {
+.blockOne .image2 {
   width: 100%;
   padding: 0 15px;
 }
@@ -58,32 +62,32 @@
     flex-direction: column-reverse;
     margin-top: 48px;
   }
-  .image1 {
+  .blockOne .image1 {
     margin: 0;
     height: 27em;
   }
-  .section {
+  .blockOne .section {
     width: 100%;
   }
-  .section.left {
+  .blockOne .section.left {
     padding: 0;
   }
-  .section.left img {
+  .blockOne .section.left img {
     width: 100%;
   }
-  .section.right img {
+  .blockOne .section.right img {
     padding: 0;
     margin-top: 1.25em;
   }
-  .section h1 {
+  .blockOne .section h1 {
     font-size: 30px;
     margin-top: 1em;
   }
-  .section h2 {
+  .blockOne .section h2 {
     font-size: 16px;
     line-height: 28px;
   }
-  .section p {
+  .blockOne .section p {
     font-size: 16px;
     line-height: 28px;
     margin-bottom: 15px;

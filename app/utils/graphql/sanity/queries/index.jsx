@@ -17,6 +17,18 @@ export const GET_OUR_STORY = gql`
           url
         }
       }
+      sectionThreeImage {
+        asset{
+          _id
+          url
+        }
+      }
+      sectionFourImage {
+        asset{
+          _id
+          url
+        }
+      }
       contentSectionOneRaw
       contentSectionTwoRaw
       contentSectionThreeRaw
