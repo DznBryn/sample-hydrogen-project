@@ -5,12 +5,8 @@ export const GET_OUR_STORY = gql`
     allOurStoryAndFounder {
       _id
       name
-      images{
-        asset{
-          id
-          url
-        }
-      }
+      sectionOneImageLeft
+      sectionOneImageRight
       contentSectionOneRaw
       contentSectionTwoRaw
       contentSectionThreeRaw
