@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { Link } from '@remix-run/react';
 
 import styles from './styles.css'
 
@@ -99,9 +100,9 @@ const WhyTulaDesktop = ({content}) => {
               <p className={"fadeInParagraph"}>
                 TULA founder, Dr. Roshini Raj is a practicing gastroenterologist who has been studying probiotics for 20 years. A breakthrough innovation in skincare, probiotic extracts are a powerful ingredient that help soothe, hydrate and nourish skin to improve its balance and calm the look of irritation. That’s why 100% of TULA skincare products are powered by probiotic extracts & superfoods.
               </p>
-              <a href={content[0].sectionLinks[0]}>
+              <Link href={content[0].sectionLinks[0]}>
                 <button className={"ctaBtn"}>Learn More</button>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -123,9 +124,9 @@ const WhyTulaDesktop = ({content}) => {
               <p className={"fadeInParagraph"}>
                 We take skincare seriously. Our formulas are grounded in thorough scientific research so your products deliver the results you deserve.
               </p>
-              <a href={content[0].sectionLinks[2]}>
+              <Link href={content[0].sectionLinks[2]}>
                 <button className={"ctaBtn"}>Learn More</button>
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -173,9 +174,9 @@ const WhyTulaDesktop = ({content}) => {
                 REIMAGINE skincare.
               </p>
 
-              <a href={content[0].sectionLinks[3]}>
+              <Link href={content[0].sectionLinks[3]}>
                 <button className={"ctaBtn"}>Learn More</button>
-              </a>
+              </Link>
 
             </div>
           </div>

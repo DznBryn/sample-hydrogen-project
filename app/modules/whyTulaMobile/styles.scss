@@ -1,0 +1,125 @@
+.whyTulaMobile {
+    margin-top: 0px;
+  }
+  
+  .whyTulaMobile .whyImages {
+    height: initial;
+    width: 100vw;
+    object-fit: contain;
+  }
+  
+  .whyTulaMobile .trademark {
+    font-size: 0.5em;
+    margin-left: 0;
+  }
+  
+  .whyTulaMobile {
+    display: none;
+  }
+  
+  .whyTulaMobile h1 {
+    font-size: 28px;
+    line-height: 38px;
+    font-weight: 900;
+    padding-top: .5em;
+  }
+  .whyTulaMobile h2 {
+    font-size: 26px;
+    line-height: 38px;
+    font-weight: 900;
+    padding-top: .5em;
+  }
+  
+  .whyTulaMobile h1 span.smallHeader,
+  .whyTulaMobile h2 span.smallHeader {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 55px;
+  }
+  
+  .whyTulaMobile p {
+    font-size: 18px;
+    line-height: 30.6px;
+    font-weight: 400;
+    margin: 31px 0;
+  }
+  
+  .whyTulaMobile a {
+    text-decoration: none;
+  }
+  
+  .whyTulaMobile .copy {
+    width: 400px;
+  }
+  
+  .whyTulaMobile .ctaBtn {
+    background-color: #fff0;
+    border: 2px solid #48C6D9;
+    color: #48C6D9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    line-height: 18px;
+    width: 139px;
+    height: 40px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: .25s all;
+  }
+  
+  .whyTulaMobile .blockOne {
+    background-color: #FAF7FF;
+  }
+  
+  .whyTulaMobile .blockTwo {
+    background-color: #FFF6EF;
+  }
+  
+  .whyTulaMobile .blockThree {
+    background-color: #FDEFEE;
+  }
+  
+  .whyTulaMobile .blockFour {
+    background-color: #EBF9FB;
+  }
+  
+  
+  .whyTulaMobile .blockOne .container {
+    padding: 74px 52px;
+  }
+  
+  .whyTulaMobile .container {
+    padding: 20px 45px 54px;
+  }
+  
+  .whyTulaMobile .slideFirstHeader {
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 24.59px;
+    color: #4C4E56;
+  }
+  
+  .whyTulaMobile .slideSubheader {
+    font-weight: 900;
+    font-size: 18px;
+    line-height: 24.59px;
+    color: #48C6D9;
+  }
+  
+  .whyTulaMobile .slideText {
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 19.12px;
+    color: #4C4E56;
+    margin-top: -32px;
+  }
+  
+  @media all and (max-width: 768px){
+    .whyTula {
+      display: none;
+    }
+    .whyTulaMobile {
+      display: block;
+    }
+  }
