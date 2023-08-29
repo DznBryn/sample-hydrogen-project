@@ -7,7 +7,7 @@ export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
-const OurStoryBlockThree = ({content, images}) => {
+const OurStoryBlockThree = ({content}) => {
   return (
     <div className="fixedWidthPage">
       <div className={"contain blockThree"}>

@@ -33,6 +33,7 @@ export const GET_OUR_STORY = gql`
       contentSectionTwoRaw
       contentSectionThreeRaw
       contentSectionFourRaw
+      contentSectionFiveRaw
     }
   }
 `;

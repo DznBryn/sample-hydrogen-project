@@ -1,0 +1,77 @@
+.blockFour  {
+    display: flex;
+}
+.blockFour.contain {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 3em;
+  }
+  
+  .blockThree {
+    margin-top: 6em;
+  }
+  
+  .blockFour .ourStoryBlockFour h2 {
+    color: #48c6d9;
+  }
+  
+  .blockFour .section {
+    width: 50%;
+    display: flex;
+    padding: 0 15px;
+  }
+  
+  .blockFour .section.right {
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .blockFour .blockFour sup {
+    font-size: 13px;
+    vertical-align: text-top;
+  }
+  
+  .blockFour .section img {
+    height: 100%;
+    object-fit: contain;
+  }
+  
+  @media all and (min-width: 769px){
+    .blockFour .section img {
+      max-height: 430px;
+    }
+  }
+  
+  @media all and (max-width: 768px){
+    .contain.blockFour {
+      flex-direction: column;
+      margin: 2em auto;
+    }
+  
+    .blockFour .section {
+      width: 100%;
+      justify-content: center;
+      padding: 0;
+    }
+  
+    .blockFour .section img {
+      width: 100%;
+      padding: 0;
+      max-height: initial;
+      margin-bottom: 3em;
+    }
+  
+    .blockFour h2 {
+      font-size: 18px;
+      letter-spacing: 2px;
+      font-weight: 400;
+      margin-bottom: 1em;
+    }
+    .blockFour p {
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 26px;
+    }
+  }
+  
