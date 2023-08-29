@@ -32,7 +32,12 @@ export const GET_OUR_STORY = gql`
       contentSectionOneRaw
       contentSectionTwoRaw
       contentSectionThreeRaw
-      contentSectionFourRaw
+      contentSectionFourRaw {
+        asset{
+          _id
+          url
+        }
+      }
       contentSectionFiveRaw
     }
   }
@@ -44,6 +49,55 @@ export const GET_WHY_TULA = gql`
     allWhyTula {
       _id
       name
+      imageOne {
+        asset{
+          _id
+          url
+        }
+      }
+      imageTwo {
+        asset{
+          _id
+          url
+        }
+      }
+      imageThree {
+        asset{
+          _id
+          url
+        }
+      }
+      imageFour {
+        asset{
+          _id
+          url
+        }
+      }
+      imageOneMobile {
+        asset{
+          _id
+          url
+        }
+      }
+      imageTwoMobile {
+        asset{
+          _id
+          url
+        }
+      }
+      imageThreeMobile {
+        asset{
+          _id
+          url
+        }
+      }
+      imageFourMobile {
+        asset{
+          _id
+          url
+        }
+      }
+      sectionLinks
     } 
   }
 `;

@@ -1,0 +1,407 @@
+.whyTula {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+
+.trademark {
+  font-size: 0.5em;
+  margin-left: 0;
+}
+
+.whyTula .section {
+  width: 50vw;
+}
+
+.whyTula a {
+  text-decoration: none;
+}
+
+.whyTula .section.left .imgWrapper {
+  top: 0;
+  position: sticky;
+  height: 100vh;
+  width: 50vw;
+}
+
+.whyTula .bgColors .contain,
+.whyTula .section.left .contain {
+  position: relative;
+}
+
+.whyTula .bgColors {
+  position: absolute;
+}
+
+.whyTula .bgColors .contain div {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+}
+
+.whyTula .bgColors .contain div:nth-child(1) {
+  z-index: -1;
+  background-color: #FAF7FF;
+}
+
+.whyTula .bgColors .contain div:nth-child(2) {
+  z-index: -2;
+  background-color: #FFF6EF;
+}
+
+.whyTula .bgColors .contain div:nth-child(3) {
+  z-index: -3;
+  background-color: #FDEFEE;
+}
+
+.whyTula .bgColors .contain div:nth-child(4) {
+  z-index: -4;
+  background-color: #EBF9FB;
+}
+
+.whyTula .section.left .imgSlide {
+  position: absolute;
+  height: 100vh;
+  width: 50vw;
+  object-fit: cover;
+  z-index: 5;
+}
+
+.whyTula .section.left .imgSlide:nth-child(1) {
+  z-index: 4;
+}
+
+.whyTula .section.left .imgSlide:nth-child(2) {
+  top: 90px;
+  z-index: 3;
+}
+
+.whyTula .section.left .imgSlide:nth-child(3) {
+  z-index: 2;
+}
+
+.whyTula .section.left .imgSlide:nth-child(4) {
+  z-index: 1;
+}
+
+.whyTula .section.right .slide {
+  height: 100vh;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+
+.whyTula h1 {
+  font-size: 44px;
+  line-height: 55px;
+  font-weight: 900;
+  padding-top: 0.5em;
+}
+
+.whyTula h2 {
+  font-size: 38px;
+  line-height: 55px;
+  font-weight: 900;
+  padding-top: 0.5em;
+}
+
+.slideCopyThree h2 {
+  font-size: 32px;
+  line-height: 44px;
+}
+
+.whyTula h1 span.smallHeader,
+.whyTula h2 span.smallHeader {
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 55px;
+}
+
+.whyTula p {
+  font-size: 18px;
+  line-height: 30.6px;
+  font-weight: 400;
+  margin: 31px 0;
+}
+
+.slideCopyThree p {
+  font-size: 16px;
+  margin: 12px 0;
+}
+
+.slideCopyThree > .fadeIn:first-child {
+  margin-bottom: 30px;
+}
+
+.whyTula .copy {
+  width: 400px;
+  opacity: 0;
+}
+
+.whyTula.copy.active {
+  opacity: initial;
+  width: 400px;
+}
+
+.whyTula .ctaBtn {
+  background-color: rgba(255, 255, 255, 0);
+  border: 2px solid #48C6D9;
+  color: #48C6D9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  line-height: 18px;
+  width: 165px;
+  height: 48px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: 0.25s all;
+  border-radius: 3px;
+}
+
+.slideCopyThree .ctaBtn {
+  font-size: 16px;
+}
+
+.whyTula .ctaBtn:hover {
+  background-color: #48C6D9;
+  color: #fff;
+}
+
+.whyTula .slideFirstHeader {
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #4C4E56;
+}
+
+.whyTula .slideSubheader {
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #48C6D9;
+}
+
+.whyTula .slideText {
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 19.12px;
+  color: #4C4E56;
+  margin-top: -32px;
+}
+
+#slideCopyFour .section.right .slide {
+  justify-content: start;
+  padding-top: 23vh;
+}
+
+.whyTulaMobile {
+  display: none;
+}
+
+.scrollDown {
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 6em;
+  position: absolute;
+  bottom: 7vh;
+}
+
+.scrollDown svg {
+  margin-top: 0.5em;
+}
+
+@media all and (max-height: 839px) {
+  .whyTula .section.left .imgSlide:nth-child(2), .longerSlide {
+    height: auto !important;
+  }
+  .longerSlide {
+    margin-bottom: 12px;
+  }
+}
+@media all and (max-width: 768px) {
+  .whyTula {
+    display: none;
+  }
+  .whyTulaMobile {
+    display: block;
+  }
+}
+/* Slides with Copy */
+.fadeIn {
+  width: 400px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    margin-top: 200px;
+  }
+  66% {
+    opacity: 0;
+    margin-top: 100px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes fadeInParagraph {
+  0% {
+    opacity: 0;
+    margin-top: 200px;
+  }
+  70% {
+    opacity: 0;
+    margin-top: 100px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 30px;
+  }
+}
+/* Slide 4 Transitions */
+.whyTula p.hideParaTwo {
+  opacity: 0;
+  margin-top: 50px;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #4C4E56;
+}
+
+.whyTula p.showParaTwo {
+  transition-delay: 0.2s;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.whyTula p.hideParaThree {
+  opacity: 0;
+  margin-top: 50px;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #48C6D9;
+}
+
+.whyTula p.showParaThree {
+  transition-delay: 0.4s;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.whyTula p.hideParaFour {
+  opacity: 0;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 14px !important;
+  color: #4C4E56;
+  margin-top: 50px;
+}
+
+.whyTula p.showParaFour {
+  transition-delay: 0.6s;
+  opacity: 1;
+  margin-top: -32px;
+}
+
+.whyTula p.hideParaFive {
+  opacity: 0;
+  margin-top: 50px;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #48C6D9;
+}
+
+.whyTula p.showParaFive {
+  transition-delay: 0.8s;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.whyTula p.hideParaSix {
+  opacity: 0;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 14px !important;
+  color: #4C4E56;
+  margin-top: 50px;
+}
+
+.whyTula p.showParaSix {
+  transition-delay: 1s;
+  opacity: 1;
+  margin-top: -32px;
+}
+
+.whyTula p.hideParaSeven {
+  opacity: 0;
+  margin-top: 50px;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #48C6D9;
+}
+
+.whyTula p.showParaSeven {
+  transition-delay: 1.2s;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.whyTula p.hideParaEight {
+  opacity: 0;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 14px !important;
+  color: #4C4E56;
+  margin-top: 50px;
+}
+
+.whyTula p.showParaEight {
+  transition-delay: 1.4s;
+  opacity: 1;
+  margin-top: -32px;
+}
+
+.whyTula p.hideParaNine {
+  opacity: 0;
+  margin-top: 50px;
+  transition: 1s all;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 24.59px;
+  color: #48C6D9;
+}
+
+.whyTula p.showParaNine {
+  transition-delay: 1.6s;
+  opacity: 1;
+  margin-top: 0;
+}
+
+.slideFour {
+  min-height: 651px;
+}
+
+.higherSlide {
+  min-height: 950px;
+}
+
+/*# sourceMappingURL=styles.css.map */

@@ -24,8 +24,6 @@ export default function OurStoryAndFounderComponent() {
 
   } = useLoaderData();
 
-  console.log("devdrew ourStoryContent::", ourStoryContent)
-
   return (
     <Layouts.MainNavFooter>
        <OurStoryAndFounder ourStoryContent={ourStoryContent} />
