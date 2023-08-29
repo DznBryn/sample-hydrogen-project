@@ -27,7 +27,7 @@ export default function OurStoryAndFounderComponent() {
 
   return (
     <Layouts.MainNavFooter>
-       <OurStoryAndFounder ourStoryText={ourStoryContent} ourStoryImgs={ourStoryContent} />
+       <OurStoryAndFounder ourStoryContent={ourStoryContent} />
     </Layouts.MainNavFooter>
   );
 }

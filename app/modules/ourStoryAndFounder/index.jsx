@@ -1,22 +1,22 @@
 import React from 'react'
 
-import OurStoryBlockOne, { links as ourStoryBlockOne } from '../ourStoryBlockOne';
+import OurStoryBlockOne, { links as ourStoryBlockOneStyles } from '../ourStoryBlockOne';
 
 import styles from './styles.css'
 
 export const links = () => {
     return [
         { rel: 'stylesheet', href: styles },
-        ...ourStoryBlockOne(),
+        ...ourStoryBlockOneStyles(),
     ];
 };
 
 
-const OurStoryAndFounder = ({ourStoryText, ourStoryImgs}) => {
-    console.log("devdrew outStoryObj", ourStoryText)
+const OurStoryAndFounder = ({ourStoryContent}) => {
+    console.log("devdrew outStoryObj", ourStoryContent)
     return (
       <div>
-        <OurStoryBlockOne content={ourStoryText} images={ourStoryImgs} />
+        <OurStoryBlockOne content={ourStoryContent[0]} />
       </div>
     )
   }

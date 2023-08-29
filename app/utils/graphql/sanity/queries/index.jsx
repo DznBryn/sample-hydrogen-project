@@ -5,8 +5,18 @@ export const GET_OUR_STORY = gql`
     allOurStoryAndFounder {
       _id
       name
-      sectionOneImageLeft
-      sectionOneImageRight
+      sectionOneImageLeft {
+        asset{
+          _id
+          url
+        }
+      }
+      sectionOneImageRight {
+        asset{
+          _id
+          url
+        }
+      }
       contentSectionOneRaw
       contentSectionTwoRaw
       contentSectionThreeRaw

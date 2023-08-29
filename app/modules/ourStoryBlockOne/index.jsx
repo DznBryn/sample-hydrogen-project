@@ -1,17 +1,23 @@
-import React from 'react'
-import classnames from 'classnames';
-import styles from './styles.css'
+import { Link } from '@remix-run/react';
+import PortableTextCustom from '../portableTextCustom';
+
+import styles from './styles.css';
 
 export const links = () => {
-    return [
-      { rel: 'stylesheet', href: styles },
-    ];
-  };
-
-const OurStoryBlockOne = ({content, images}) => {
+  return [{rel: 'stylesheet', href: styles}];
+};
+const OurStoryBlockOne = ({content}) => {
   return (
     <div className="fixedWidthPage">
-     <p>Our Story Block One</p>
+      <div className="contain blockOne">
+        <div className="section left">
+          <PortableTextCustom value={content.contentSectionOneRaw} />
+          <img src={content.sectionOneImageLeft.asset.url} className={"image1"} />
+        </div>
+        <div className="section right">
+          <img src={content.sectionOneImageRight.asset.url} className={"image2"} />
+        </div>
+      </div>
     </div>
   )
 }
