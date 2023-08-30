@@ -1,5 +1,15 @@
 import { gql } from '@apollo/client';
 
+export const GET_CLEAN_AND_EFFECTIVE = gql`
+  query GetAllCleanAndEffective {
+    allCleanAndEffective {
+      _id
+      name
+
+    }
+  }
+`;
+
 export const GET_OUR_STORY = gql`
   query GetAllOurStory {
     allOurStoryAndFounder {

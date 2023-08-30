@@ -1,0 +1,328 @@
+.clinicallyEffectiveContainer {
+  width: 100vw;
+  overflow: hidden;
+}
+
+.clinicallyEffectiveContainer .fullBanner {
+  width: 100vw;
+  display: flex;
+  padding: 115px 0;
+  overflow: hidden;
+  position: relative;
+  flex-direction: row;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/desktop-clinical-hero-2x.jpg?v=1651516537");
+}
+
+.clinicallyEffectiveContainer .fullBanner .bannerImg {
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+}
+
+.clinicallyEffectiveContainer .fullBanner .headline {
+  gap: 30px;
+  display: flex;
+  margin: 0 auto;
+  max-width: 640px;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.clinicallyEffectiveContainer .fullBanner .headline h1 {
+  margin: 0 0;
+  color: #fff;
+  font-size: 44px;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 0em;
+  line-height: 111.1%;
+}
+
+.clinicallyEffectiveContainer .fullBanner .headline p {
+  font-size: 18px;
+  max-width: 450px;
+  color: #FFFFFF;
+  font-weight: 400;
+  line-height: 25px;
+  text-align: center;
+}
+
+.clinicallyEffectiveContainer .firstSection {
+  max-width: 100vw;
+  padding: 132px 147px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/gradient.png?v=1651259679");
+}
+
+.clinicallyEffectiveContainer .firstSection .content {
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  max-width: 1148px;
+  padding: 55px 55px;
+  border-bottom: 1px solid #B0B0B0;
+}
+
+.clinicallyEffectiveContainer .firstSection .content:first-child {
+  padding-top: 0px;
+}
+
+.clinicallyEffectiveContainer .firstSection .content:last-child {
+  border-width: 0;
+  padding-bottom: 0px;
+}
+
+.clinicallyEffectiveContainer .firstSection .content .leftContent {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.clinicallyEffectiveContainer .firstSection .content .leftContent b {
+  font-size: 55px;
+  font-weight: 900;
+  color: #4C4E56;
+}
+
+.clinicallyEffectiveContainer .firstSection .content .leftContent span {
+  font-size: 44px;
+  font-weight: 900;
+  color: #48C6D9;
+}
+
+.clinicallyEffectiveContainer .firstSection .content .rightContent {
+  width: 50%;
+}
+
+.clinicallyEffectiveContainer .firstSection .content .rightContent span {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.clinicallyEffectiveContainer .secondSection {
+  max-width: 100vw;
+  padding: 132px 147px;
+}
+
+.clinicallyEffectiveContainer .secondSection .content {
+  gap: 38px;
+  width: 100%;
+  display: flex;
+  margin: 0 auto;
+  max-width: 1148px;
+  margin-bottom: 68px;
+}
+
+.clinicallyEffectiveContainer .secondSection .content .imgContent {
+  width: 50%;
+  margin: auto 0;
+}
+
+.clinicallyEffectiveContainer .secondSection .content:last-child {
+  margin-bottom: 0px;
+}
+
+.clinicallyEffectiveContainer .secondSection .content .imgContent img {
+  width: 100%;
+  border-radius: 6px;
+}
+
+.clinicallyEffectiveContainer .secondSection .content .textContent {
+  width: 50%;
+  display: flex;
+  margin: auto 0;
+  flex-direction: column;
+}
+
+.clinicallyEffectiveContainer .secondSection .content .textContent > b {
+  display: flex;
+  font-size: 24px;
+  font-weight: 900;
+  color: #48C6D9;
+  line-height: 36px;
+  align-items: center;
+  letter-spacing: 0.25px;
+}
+
+.clinicallyEffectiveContainer .secondSection .content .textContent span {
+  font-size: 16px;
+  font-weight: 400;
+  color: #4C4E56;
+  line-height: 26px;
+}
+
+/**/
+.clinicallyEffectiveContainer .thirdSection {
+  max-width: 100vw;
+  background-size: cover;
+  background-position: center;
+  padding: 100px 81px 81px 50%;
+  background-repeat: no-repeat;
+  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/desktop-clinical-img4-2x.jpg?v=1651516537");
+}
+
+.thirdSection .textContent {
+  gap: 18px;
+  display: flex;
+  max-width: 401px;
+  flex-direction: column;
+}
+
+.clinicallyEffectiveContainer .thirdSection .textContent b {
+  font-size: 32px;
+  font-weight: 900;
+  color: #4C4E56;
+  line-height: 115.1%;
+}
+
+.clinicallyEffectiveContainer .thirdSection .textContent span {
+  font-size: 16px;
+  color: #4C4E56;
+  font-weight: 400;
+  line-height: 165.6%;
+}
+
+.clinicallyEffectiveContainer .thirdSection .textContent .ctaBtn {
+  width: 165px;
+  height: 48px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #4C4E56;
+  line-height: 18px;
+  border-radius: 3px;
+  transition: 0.25s all;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid #4C4E56;
+}
+
+.clinicallyEffectiveContainer .thirdSection .imgContent {
+  display: none;
+}
+
+/*
+
+  mobile
+
+*/
+@media only screen and (max-width: 935px) {
+  .clinicallyEffectiveContainer .firstSection .content {
+    padding-left: 0;
+    padding-right: 0;
+    flex-direction: column;
+  }
+  .clinicallyEffectiveContainer .firstSection .content .rightContent,
+  .clinicallyEffectiveContainer .firstSection .content .leftContent {
+    width: 100%;
+  }
+  .clinicallyEffectiveContainer .firstSection .content .leftContent b {
+    font-size: 36px;
+  }
+  .clinicallyEffectiveContainer .firstSection .content .leftContent span {
+    font-size: 24px;
+    /* padding-right: 26px; */
+  }
+  .clinicallyEffectiveContainer .firstSection .content .rightContent span {
+    font-size: 16px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .clinicallyEffectiveContainer .container {
+    padding-top: 79px;
+  }
+  /**/
+  .clinicallyEffectiveContainer .fullBanner {
+    padding-left: 48px;
+    padding-right: 48px;
+    background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/clinical-mobile-hero.jpg?v=1651281522");
+  }
+  .clinicallyEffectiveContainer .fullBanner .headline h1 {
+    font-size: 32px;
+  }
+  .clinicallyEffectiveContainer .fullBanner .headline p {
+    font-size: 16px;
+  }
+  /**/
+  .clinicallyEffectiveContainer .firstSection {
+    padding: 46px 15px;
+  }
+  .clinicallyEffectiveContainer .firstSection .content {
+    padding: 47px 12px;
+  }
+  .clinicallyEffectiveContainer .firstSection .content .leftContent b {
+    font-size: 44px;
+  }
+  .clinicallyEffectiveContainer .firstSection .content .leftContent span {
+    font-size: 28px;
+  }
+  .clinicallyEffectiveContainer .firstSection .content .rightContent span {
+    font-size: 14px;
+  }
+  /**/
+  .clinicallyEffectiveContainer .secondSection {
+    padding: 0px;
+    margin-bottom: 49px;
+  }
+  .clinicallyEffectiveContainer .secondSection .content {
+    gap: 0;
+    padding: 0;
+    margin-bottom: 0px;
+    flex-direction: column;
+  }
+  .clinicallyEffectiveContainer .secondSection .content:nth-child(2n+2) {
+    flex-direction: column-reverse;
+  }
+  .clinicallyEffectiveContainer .secondSection .content .imgContent,
+  .thirdSection .imgContent {
+    padding: 0;
+    width: 100%;
+  }
+  .clinicallyEffectiveContainer .secondSection .content .imgContent img,
+  .thirdSection .imgContent img {
+    border-radius: 0;
+  }
+  .clinicallyEffectiveContainer .secondSection .content .textContent,
+  .thirdSection .textContent {
+    width: 100%;
+    padding: 30px;
+    max-width: none;
+  }
+  .clinicallyEffectiveContainer .secondSection .content .textContent > b {
+    font-size: 21px;
+  }
+  .clinicallyEffectiveContainer .secondSection .content .textContent span {
+    font-size: 14px;
+  }
+  /**/
+  .clinicallyEffectiveContainer .thirdSection {
+    padding: 0px;
+    background-image: none;
+  }
+  .thirdSection .textContent b {
+    font-size: 21px;
+  }
+  .clinicallyEffectiveContainer .thirdSection .textContent span {
+    font-size: 14px;
+  }
+  .clinicallyEffectiveContainer .thirdSection .imgContent {
+    width: 100vw;
+    display: block;
+    overflow: hidden;
+    max-height: 260px;
+  }
+  .clinicallyEffectiveContainer .thirdSection .imgContent img {
+    height: 100%;
+    margin-left: -120px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
