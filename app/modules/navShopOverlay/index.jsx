@@ -14,7 +14,7 @@ const MenuImage = ({ ctaImage = { src: '', alt: '' }, cta, ctaUrl }) => (
   <div className={'sideImg'}>
     <div className={'menuImgWrap'}>
       <img src={ctaImage.asset.url} />
-      <Link className={'ctaLink'} to={ctaUrl} >{cta}</Link>
+      <Link reloadDocument className={'ctaLink'} to={ctaUrl} >{cta}</Link>
     </div>
   </div>
 );
@@ -25,12 +25,12 @@ const MenuLinks = ({ menuLinks = [] }) => (
       return (
         <div className={'sectionList'} key={sectionLinks.displayText}>
           <h2 className={'catLink'}>{sectionLinks.displayText}</h2>
-          <Link className={'seeLink'} to={sectionLinks.url}>See All</Link>
+          <Link reloadDocument className={'seeLink'} to={sectionLinks.url}>See All</Link>
           <ul>
             {sectionLinks.navLinks.map((l) => {
               return (
                 <li key={l._id} className={'linkItem'}>
-                  <Link className={'link'} to={l.url}>
+                  <Link reloadDocument className={'link'} to={l.url}>
                     {l.displayText}
                     {l.calloutText && <span className={'callout'} style={{ color: (l.calloutFontColorHex) ? l.calloutFontColorHex : '' }}>{l.calloutText}</span>}</Link>
                 </li>);
