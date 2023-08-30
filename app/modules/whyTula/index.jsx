@@ -12,7 +12,6 @@ export const links = () => {
 };
 
 const WhyTula = ({content}) => {
-    console.log("devdrew why tula content", content);
     return (
         <div className="whyTulaPage minHeight">
             <WhyTulaDesktop content={content} />
