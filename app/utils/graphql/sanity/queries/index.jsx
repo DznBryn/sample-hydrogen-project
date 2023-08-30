@@ -1,16 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const GET_STORE_LOCATOR = gql`
-  query GetAllStoreLocator {
-    allStoreLocator {
-      _id
-      name
-      storeLocatorHeader
-      storeLocatorContentRaw
-    }
-  }
-`;
-
 export const GET_OUR_STORY = gql`
   query GetAllOurStory {
     allOurStoryAndFounder {

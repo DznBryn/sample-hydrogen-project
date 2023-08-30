@@ -1,4 +1,5 @@
-import { Link } from '@remix-run/react';
+import { useEffect } from 'react';
+import { appendScript } from '~/utils/functions/eventFunctions';
 import PortableTextCustom from '../portableTextCustom';
 
 import styles from './styles.css'
@@ -27,10 +28,10 @@ const StoreLocator = ({content}) => {
     });
 
   return (
-    <div id="store-locator" className={"fixedWidthPage minHeight container"}>
-      <h1 className={"h1"}>{content.storeLocatorHeader}</h1>
+    <div id="store-locator" className={"fixedWidthPage minHeight"}>
+      <h1 className={"h1"}>Store Locator</h1>
       <h2 className={"h2"}>
-        <PortableTextCustom value={content.storeLocatorContentRaw} />
+      Find TULA in one of our retail partners nearest you. You can also shop TULA in Sephora Canada and Mecca Australia stores.
       </h2>
       <div class="storerocket-store-locator"></div>
     </div>
