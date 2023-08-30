@@ -58,7 +58,7 @@ const MobileNavbar = ({ content }) => {
     if (avoidScrollEffect()) return;
 
     const scrollTop = document.documentElement.scrollTop;
-    const mobileWrap = document.querySelector('.container');
+    const mobileWrap = document.querySelector('.mobileNavBar_container');
 
     if (!initScroll && scrollTop > 30) {
       mobileWrap.classList.add('inactive');
@@ -132,7 +132,7 @@ const MobileNavbar = ({ content }) => {
   const holidayColor = '#EF0000';
 
   return !isHidden && (
-    <div className={'container'} style={{ display: 'none' }}>
+    <div className={'mobileNavBar_container'} style={{ display: 'none' }}>
       <div id='mobileNavbarContainer' className={'mobileNavContainer'}>
         <div className={'mobileNavItemWrapper'}>
           {sortedContent.map((navItem, idx) => (
