@@ -17,7 +17,7 @@ export async function loader({context}) {
   }
 }
 
-export default function OurStoryAndFounderComponent() {
+export default function WhyTulaComponent() {
 
   const { 
     whyTulaContent

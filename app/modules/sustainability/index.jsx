@@ -8,7 +8,7 @@ export const links = () => {
 };
 
 
-const Sustainability = ({blocksContent = []}) => {
+const Sustainability = () => {
 
   function getBlockData(blockName){
     const CMS_BlockData = blocksContent?.find(data => data.name === blockName.toLowerCase());
@@ -22,7 +22,7 @@ const Sustainability = ({blocksContent = []}) => {
 
         <div className={"hero"}>
           <div className={"section left"}>
-            <h1>sustainability at TULA</h1>
+            <h1>Sustainability at TULA</h1>
             <h2>This is the start of our journey. We're continuing to evaluate opportunities that make a more thoughtful impact on the environment &amp; help you make choices that keep your skin &amp; our planet healthy.</h2>
           </div>
           <div className={"section right"}></div>
