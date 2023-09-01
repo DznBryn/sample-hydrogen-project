@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import HomepageRecs, { links as HomepageRecsStyles } from '../homepageRecs';
 
 import styles from './styles.css';
+import { useYotpo } from '~/hooks/useYotpo';
 
 export const links = () => {
   return [
@@ -19,6 +20,8 @@ const HomepageRecommendations = ({ hpRecs }) => {
 
   const currentTab = 1;
   const [activeTab, setActiveTab] = useState(currentTab);
+
+  const {refreshWidgets} = useYotpo();
 
   function handleActiveTab(tab) {
     setActiveTab(() => tab);
@@ -46,9 +49,7 @@ const HomepageRecommendations = ({ hpRecs }) => {
     });
 
 
-    if (typeof window === 'object') {
-      window?.yotpo?.initWidgets();
-    }
+    refreshWidgets();
 
   });
 

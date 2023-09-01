@@ -11,6 +11,7 @@ import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../pl
 import ComparisonModal, { links as comparisonModalStyles } from '../comparisonModal';
 
 import styles from './styles.css';
+import { useYotpo } from '~/hooks/useYotpo';
 
 export const links = () => {
   return [
@@ -29,7 +30,7 @@ export const links = () => {
 
 const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig }) => {
 
-  // useYotpoReviewsRefresh();
+  const {refreshWidgets} = useYotpo();
 
   const sortOptions = mockSortOptions;
   collection = collection || mockCollection;
@@ -247,9 +248,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 
   useEffect(() => {
 
-    if (typeof window === 'object') {
-      window?.yotpo?.initWidgets();
-    }
+    refreshWidgets();
 
   });
 

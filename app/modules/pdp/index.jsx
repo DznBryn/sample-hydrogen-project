@@ -20,6 +20,7 @@ import FireWorkPDPCarousel, { links as fireWorkPDPCarouselStyles } from '../fire
 import PortableTextCustom from '../portableTextCustom';
 
 import styles from './styles.css';
+import { useYotpo } from '~/hooks/useYotpo';
 
 export const links = () => {
   return [
@@ -48,6 +49,8 @@ const PDP = ({
   concealerImages
 }) => {
 
+  const {refreshWidgets} = useYotpo();
+
   const details = useMemo(
     () => getDetailsObj(product),
     [product]
@@ -73,9 +76,7 @@ const PDP = ({
 
   useEffect(() => {
 
-    if(typeof window === 'object'){
-      window?.yotpo?.initWidgets();
-    }
+    refreshWidgets();
 
   });
 
