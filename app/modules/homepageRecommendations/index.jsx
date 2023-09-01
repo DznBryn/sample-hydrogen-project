@@ -45,6 +45,11 @@ const HomepageRecommendations = ({ hpRecs }) => {
       elem.style.borderColor = hpRecs.collectionOneFontColorHex;
     });
 
+
+    if (typeof window === 'object') {
+      window?.yotpo?.initWidgets();
+    }
+
   });
 
   return (

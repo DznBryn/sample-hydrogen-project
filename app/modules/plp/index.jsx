@@ -1,6 +1,6 @@
-import {useState, useEffect, useReducer, useRef,} from 'react';
+import { useState, useEffect, useReducer, useRef, } from 'react';
 import classnames from 'classnames';
-import {mockCollection, mockFilterOptions, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
+import { mockCollection, mockFilterOptions, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from '../plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from '../genericRecommendedProducts';
@@ -46,13 +46,13 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
   const { handle: slug } = collection;
   // const { metafields = [], handle: slug } = collection;
   // const banners = getBanners(metafields); //we need to get banners from metafield 
-  const banners = bannersMock; 
+  const banners = bannersMock;
 
   const [size, setSize] = useState({
     width: undefined,
     height: undefined,
   });
-    
+
   // Currently displayed collection
   const [filteredProducts, setFilteredProducts] = useState(products);
 
@@ -201,7 +201,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     };
   }, []);
 
-  function getPropValue(value){
+  function getPropValue(value) {
     return (value > 0 ? value : undefined);
   }
 
@@ -230,26 +230,34 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     <div className={'empty__container'}>
       <h2 className={'empty__header'}>NO RESULTS</h2>
       <p className={'empty__body_text'}>
-          Sorry! There aren&apost any results for your selections. Please adjust your
-          filters to continue.
+        Sorry! There aren&apost any results for your selections. Please adjust your
+        filters to continue.
       </p>
       <p className={'empty__body_text'}>
-          Not sure where to begin? Try one of our
+        Not sure where to begin? Try one of our
         <a
           className={'empty__anchor_text'}
           href="https://www.tula.com/collections/best-sellers"
         >
-            best sellers.
+          best sellers.
         </a>
       </p>
     </div>
   );
 
+  useEffect(() => {
+
+    if (typeof window === 'object') {
+      window?.yotpo?.initWidgets();
+    }
+
+  });
+
   return filteredProducts.length > 0 ? (
     <div className={'plpWrapper minHeight'} >
       <section id="section" className={isInfluencerPage ? 'influencerContainer' : 'plpContainer'}>
         {!isInfluencerPage && (
-          <Title title={titleContent} showAfterpay={cartConfig.showAfterpay}/>
+          <Title title={titleContent} showAfterpay={cartConfig.showAfterpay} />
         )}
 
         {slug === 'all' && (
@@ -267,14 +275,16 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 
         <div className={collectionContainerStyle} ref={PLPContainer}>
           {bannersPositions &&
-                banners.map((banner, idx) => { return(
-                  (Object.prototype.hasOwnProperty.call(bannersPositions, `pos${idx + 1}`) && bannersPositions[`pos${idx + 1}`].pos <= (filteredProducts.length + 1)) 
-                  && <Banner
-                    banner={banner}
-                    key={idx}
-                    style={bannersPositions[`pos${idx + 1}`]}
-                  />
-                ); })
+            banners.map((banner, idx) => {
+              return (
+                (Object.prototype.hasOwnProperty.call(bannersPositions, `pos${idx + 1}`) && bannersPositions[`pos${idx + 1}`].pos <= (filteredProducts.length + 1))
+                && <Banner
+                  banner={banner}
+                  key={idx}
+                  style={bannersPositions[`pos${idx + 1}`]}
+                />
+              );
+            })
           }
           {
             filteredProducts.length > 0
@@ -314,14 +324,14 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
             <p className={'description'}>{collection.description}</p>
           )
         }
-        <ComparisonModal collection={collection}/>
+        <ComparisonModal collection={collection} />
       </section>
 
     </div>
   ) : (
     <section id="section" className={isInfluencerPage ? 'influencerContainer' : 'plpContainer'}>
       {!isInfluencerPage && (
-        <Title title={titleContent} showAfterpay={cartConfig.showAfterpay}/>
+        <Title title={titleContent} showAfterpay={cartConfig.showAfterpay} />
       )}
 
       {slug === 'all' && (

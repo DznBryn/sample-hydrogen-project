@@ -409,10 +409,9 @@ const ModalLearnMore = ({
   );
 };
 
-const PDPReviews = ({ product }) => {
+const PDPReviews = (/*{ product }*/) => {
 
-  const productID = product?.id.replace(/[^0-9]/g, '');
-  console.log({productID});
+  // const productID = product?.id.replace(/[^0-9]/g, '');
 
   return (
     <div className={'pdpReviews'}>

@@ -65,6 +65,7 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
       sitewide = JSON.parse(window.localStorage.getItem('tulaSitewide'));
 
     }
+    
   });
 
   function getPrice(){
@@ -212,6 +213,18 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
     }
   };
 
+  const PLPReviews = (/*{ product }*/) => {
+
+    // const productID = product?.id.replace(/[^0-9]/g, '');
+  
+    return (
+      <div className={'plpReviews'}>
+        <div className="yotpo bottomLine" data-yotpo-product-id={'4472659050542'}/> {/*mocked ID*/}
+        {/* <div className="yotpo bottomLine" data-yotpo-product-id={productID}/> */}
+      </div>
+    );
+  };
+
   return (
 
     <div className={'plpWrapperProductBox'} id={`product-${product?.handle ? product.handle : slug}`}>
@@ -235,11 +248,9 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
             {title}
           </Link>
 
-          <div className='reviewRates2'>
-            <div className='yotpo bottomLine' style={{ pointerEvents: 'none' }} data-product-id={product?.externalId}></div>
-          </div>
+          <PLPReviews product={product}/>
 
-          <PriceComp />
+          <PriceComp/>
 
           <PromoComp product={product} sitewide={sitewide} /> 
 

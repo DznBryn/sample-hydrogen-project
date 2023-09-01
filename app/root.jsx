@@ -9,7 +9,6 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/reac
 import getApiKeys from './utils/functions/getApiKeys';
 import { links as layoutsStyles } from '~/layouts';
 import { GET_PRODUCTS } from './utils/graphql/sanity/queries';
-import { useEffect } from 'react';
 
 
 export const links = () => {
@@ -55,14 +54,6 @@ export async function loader({ context }) {
 }
 
 export default function App() {
-
-  useEffect(() => {
-
-    if(typeof window === 'object'){
-      window?.yotpo?.initWidgets();
-    }
-
-  });
 
   return (
     <html lang="en">

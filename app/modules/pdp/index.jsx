@@ -71,6 +71,14 @@ const PDP = ({
 
   }, []);
 
+  useEffect(() => {
+
+    if(typeof window === 'object'){
+      window?.yotpo?.initWidgets();
+    }
+
+  });
+
   //utils
 
   function setUpAnalytics() {
