@@ -9,9 +9,9 @@ import Title, { links as titleStyles } from '../plpTitle';
 import FireWorkPLPCarousel, { links as fireWorkCarouselStyles } from '../fireWorkPLPCarousel';
 import HorizontalProduct, { links as plpHorizontalProductBoxStyles } from '../plpHorizontalProductBox';
 import ComparisonModal, { links as comparisonModalStyles } from '../comparisonModal';
+import { useYotpo } from '~/hooks/useYotpo';
 
 import styles from './styles.css';
-import { useYotpo } from '~/hooks/useYotpo';
 
 export const links = () => {
   return [
@@ -25,8 +25,6 @@ export const links = () => {
     ...titleStyles(),
   ];
 };
-
-// import { useYotpoReviewsRefresh } from '@frontend-sdk/yotpo';
 
 const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig }) => {
 

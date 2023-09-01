@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import HomepageRecs, { links as HomepageRecsStyles } from '../homepageRecs';
+import { useYotpo } from '~/hooks/useYotpo';
 
 import styles from './styles.css';
-import { useYotpo } from '~/hooks/useYotpo';
 
 export const links = () => {
   return [

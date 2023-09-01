@@ -4,8 +4,6 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import { useCustomerState } from '~/hooks/useCostumer';
 import Search, { links as searchStyles} from '~/modules/search';
 
-// import { useYotpoReviews } from '@frontend-sdk/yotpo';
-
 import styles from './styles.css';
 
 export const links = () => {
@@ -119,9 +117,6 @@ const NavPlaceholder = ({ searchConfig, siteWideSettings }) => {
     }
 
   }
-
-  // const appKey = getApiKeys().YOTPO_KEY;
-  // useYotpoReviews(appKey);
 
   const iframeStyle = {
     display: 'none',

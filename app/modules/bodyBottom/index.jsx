@@ -1,5 +1,4 @@
 import {useEffect } from 'react';
-// import { useYotpoReviewsRefresh } from '@frontend-sdk/yotpo';
 import Listrack from '~/modules/listrack';
 import GladlySidekick from '~/modules/gladlySidekick';
 import { SiteSwitcherPopUp } from '~/modules/siteSwitcher';
@@ -22,8 +21,6 @@ export const links = () => {
 const BodyBottom = ({emailSmsSignupContent, productList}) => {
 
   const { id, email, phone } = useCustomerState;
-
-  // useYotpoReviewsRefresh();
 
   useEffect(() => {
       
