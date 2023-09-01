@@ -1,4 +1,4 @@
-.container {
+.mobileNavBar_container {
   position: relative;
   top: 0;
   margin-top: 0px;
@@ -104,13 +104,13 @@
 }
 
 @media all and (max-width: 769px) {
-  .container {
+  .mobileNavBar_container {
     display: block !important;
   }
 }
 
 @media all and (min-width: 550px) {
-  .container {
+  .mobileNavBar_container {
     top: 0px;
   }
 }

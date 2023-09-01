@@ -66,6 +66,7 @@ const DesktopHoverList = ({ linkList = [] }) => {
     <div className={'desktopHoverWrap desktopNavItemHidden'} ref={dropDownRef} data-hover-state="hide">
       {linkList.map((navLink = {}) => (
         <Link
+          reloadDocument
           key={navLink._id}
           to={navLink.url}
           className={'desktopHoverItem'}
@@ -91,6 +92,7 @@ const DesktopNavItem = ({ navItem = {}, itemId = '' }) => {
     >
       {navItem.emoji && <img className={'emoji'} src={navItem.emoji.src} />}
       <Link
+        reloadDocument 
         className={'navLink'}
         to={navItem.linkUrl}
         style={{ color: (navItem?.fontColorHex) ? navItem?.fontColorHex : undefined }}

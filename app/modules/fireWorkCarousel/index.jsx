@@ -12,7 +12,8 @@ export const links = () => {
 const FireWorkCarousel = ({ playlist }) => {
   useEffect(() => {
     /* FireWork Script Call Code */
-    appendScript('//asset.fwcdn2.com/js/fwn.js')?.then(() => { });
+    appendScript('https://asset.fwcdn2.com/js/fwn.js')?.then(() => { });
+    appendScript('https://asset.fwcdn2.com/js/embed-feed.js')?.then(() => { });
 
     /* Products Hydration */
     document.addEventListener('fw:shopping:hydrate-products', async (/*event*/) => {

@@ -7,6 +7,8 @@ const PageMeta = () => {
   return (
 
     <>
+      <script async src={`https://staticw2.yotpo.com/${getApiKeys().YOTPO_KEY}/widget.js`}></script>
+
       <meta name="google-site-verification" content={getApiKeys().GOOGLE_SITE_VERIFICATION_ID} />
 
       {(getApiKeys().CURRENT_ENV.includes('UK')) && <meta name="facebook-domain-verification" content="fw3gr1515pe7790vj7heo8w1jnz400" />}
@@ -99,7 +101,6 @@ const PageMeta = () => {
       <script dangerouslySetInnerHTML={{ __html: `Yo.configure('https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${getApiKeys().YOTTA_KEY}');` }}></script>
 
     </>
-
 
   );
 

@@ -3,6 +3,7 @@
   width: 100%;
   max-width: 1140px;
   margin: 0 auto;
+  margin-top: 16px;
 }
 
 .fireWorkPDPCarouselHeader h3 {
@@ -24,9 +25,9 @@
 }
 
 @media all and (max-width: 768px) {
-  .fireWorkPDPCarouselHeader {
-    width: calc(100% - 44px);
-  }
+  // .fireWorkPDPCarouselHeader {
+  //   width: calc(100% - 44px);
+  // }
 
   .fireWorkPDPCarouselWrapper {
     width: 100%;

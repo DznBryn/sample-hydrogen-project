@@ -14,6 +14,7 @@ const NavCollectionProductCard = ({ product = {} }) => {
   return (
     <div className={'productWrap'}>
       <Link
+        reloadDocument
         className={'productLink'}
         to={'/products/' + product.handle}
         draggable="false">
@@ -25,6 +26,7 @@ const NavCollectionProductCard = ({ product = {} }) => {
       </Link>
       {/* {product.alt_title !== undefined &&
         <Link
+          reloadDocument
           className={'productLink'}
           to={'/products/' + product.handle}
           draggable="false">
@@ -34,6 +36,7 @@ const NavCollectionProductCard = ({ product = {} }) => {
         </Link>
       } */}
       <Link
+        reloadDocument
         className={'productLink'}
         to={'/products/' + product.handle}
         draggable="false">

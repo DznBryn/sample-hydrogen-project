@@ -18,6 +18,7 @@ import PDPListrakRec, { links as pdpListrakRecStyles } from '../pdpListrakRec';
 import PDPYotPo, { links as pdpYotPoStyles } from '../pdpYotPo';
 import FireWorkPDPCarousel, { links as fireWorkPDPCarouselStyles } from '../fireWorkPDPCarousel';
 import PortableTextCustom from '../portableTextCustom';
+import { useYotpo } from '~/hooks/useYotpo';
 
 import styles from './styles.css';
 
@@ -48,6 +49,8 @@ const PDP = ({
   concealerImages
 }) => {
 
+  const {refreshWidgets} = useYotpo();
+
   const details = useMemo(
     () => getDetailsObj(product),
     [product]
@@ -70,6 +73,12 @@ const PDP = ({
     }
 
   }, []);
+
+  useEffect(() => {
+
+    refreshWidgets();
+
+  });
 
   //utils
 

@@ -3,7 +3,7 @@ import { useCollection } from '~/hooks/useCollection';
 import ListrakRec, { links as listrakRecStyles } from '../listrakRec';
 import ProductBoxLoading, { links as productBoxLoadingStyles } from '../productBoxLoading';
 import PLPProductBox, { links as plpProductBoxStyles } from '../plpProductBox';
-
+import { useYotpo } from '~/hooks/useYotpo';
 import { useSearch } from '~/hooks/useSearch';
 
 import styles from './styles.css';
@@ -19,7 +19,7 @@ export const links = () => {
 
 const SearchPage = ({ listrak, searchQuery, algoliaKeys }) => {
 
-  // useYotpoReviewsRefresh();
+  const {refreshWidgets} = useYotpo();
 
   const { state, products: allProducts } = useCollection('all');
   const { search, status, hits } = useSearch(algoliaKeys);
@@ -28,6 +28,12 @@ const SearchPage = ({ listrak, searchQuery, algoliaKeys }) => {
     () => (getResults() || []),
     [hits, state]
   );
+
+  useEffect(() => {
+
+    refreshWidgets();
+
+  });
 
   useEffect(() => {
 

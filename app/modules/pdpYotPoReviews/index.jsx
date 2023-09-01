@@ -1,13 +1,15 @@
 const PDPYotPoReviews = (product) => {
+  // const productID = product?.id.replace(/[^0-9]/g, '');
   return (
     <section className="YotpoProductReviews">
       <div className="yotpo yotpo-main-widget"
+        // data-product-id={productID}
+        data-product-id={'4472659050542'} /*mock ID*/
         data-currency="USD"
-        data-image-url={product.thumbnail?.src.length ? product.thumbnail?.src : ''}
-        data-name={product.name}
-        data-price={product.maxPrice}
-        data-product-id={product.externalId}
-        data-url={`/products/${product.slug}`}
+        data-image-url={product.images[0].url}
+        data-name={product.title}
+        data-price={product.priceRange.maxVariantPrice.amount}
+        data-url={`/products/${product.handle}`}
       >
       </div>
     </section>
