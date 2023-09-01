@@ -5,15 +5,17 @@ import { defer } from '@shopify/remix-oxygen';
 import { getMainNavFooterCMSData } from './layouts/MainNavFooter';
 import { CacheShort, generateCacheControlHeader } from '@shopify/hydrogen';
 import { getCMSContent, getCartData, getCustomerData } from './utils/functions/eventFunctions';
-import { Link, Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
-
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import getApiKeys from './utils/functions/getApiKeys';
 import { links as layoutsStyles } from '~/layouts';
 import { GET_PRODUCTS } from './utils/graphql/sanity/queries';
+import { useEffect } from 'react';
 
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
+    { rel: 'stylesheet', href: `https://staticw2.yotpo.com/${getApiKeys().YOTPO_KEY}/widget.css?widget_version=2022-10-06_07-58-33` },
     { rel: 'preconnect', href: 'https://cdn.shopify.com' },
     { rel: 'preconnect', href: 'https://shop.app' },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
@@ -54,24 +56,13 @@ export async function loader({ context }) {
 
 export default function App() {
 
-  const links = [
-    {
-      name: 'Account Page',
-      link: '/account',
-    },
-    {
-      name: 'Login Page',
-      link: '/account/login'
-    },
-    {
-      name: 'Collections All page',
-      link: '/products'
-    },
-    {
-      name: 'Cart page',
-      link: '/cart'
-    },
-  ];
+  useEffect(() => {
+
+    if(typeof window === 'object'){
+      window?.yotpo?.initWidgets();
+    }
+
+  });
 
   return (
     <html lang="en">
@@ -84,9 +75,6 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        {
-          links.map(item => <p key={item.link}><Link to={item.link}>{item.name}</Link></p>)
-        }
       </body>
     </html>
   );
