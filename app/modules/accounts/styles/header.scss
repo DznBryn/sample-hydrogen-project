@@ -1,0 +1,46 @@
+.myH1 {
+  text-align: center;
+  font-weight: 100;
+}
+
+.carat {
+  font-size: 16px;
+  vertical-align: center;
+  cursor: pointer;
+}
+
+.myAccountHeaderWrapper,
+.dropdownWrap {
+  position: relative;
+}
+
+.dropdownWrap {
+  margin-left: .5em;
+}
+
+.myAccountHeaderWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
+.shortMenu {
+  position: absolute;
+  left: 0;
+  top: 2em;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #d0d0d0;
+  width: 9em;
+  height: fit-content;
+  padding: .75em 1.25em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.shortMenu a {
+  text-decoration: none;
+  line-height: 2.25em;
+}

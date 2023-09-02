@@ -75,6 +75,7 @@ export async function recoverPassword(email, {storefront}) {
     });
     return json({resetRequested: true});
   } catch (error) {
+    console.log(error)
     return {
       message: 'Something went wrong. Please try again later.',
       status: 500,

@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useFetcher } from 'react-router-dom';
 import styles from './styles.css';
 import Button, { links as buttonStyles } from '~/modules/global/button';
 import { Link } from '@remix-run/react';
+import { API_METHODS } from '~/utils/constants';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }, ...buttonStyles()];
@@ -10,9 +11,9 @@ export const links = () => {
 
 export default function LoginForm() {
   const fetcher = useFetcher();
-  const LOGIN_BUTTON_TEXT = 'Sign In'
-  const FORGOT_PASSWORD = 'Forgot your password?'
-  const REGISTER_LINK_TEXT = 'Create Account'
+  const LOGIN_BUTTON_TEXT = 'Sign In';
+  const FORGOT_PASSWORD = 'Forgot your password?';
+  const REGISTER_LINK_TEXT = 'Create Account';
 
   const [loginForm, setLoginForm] = useState({
     email: '',
@@ -26,7 +27,7 @@ export default function LoginForm() {
         <div className="formBox">
           <h1>WELCOME TO TULA</h1>
           <fetcher.Form
-            method='post'
+            method={API_METHODS.POST}
             noValidate
             action='/account/login'
           >

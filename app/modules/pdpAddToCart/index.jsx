@@ -6,6 +6,7 @@ import { useCustomerState } from '~/hooks/useCostumer';
 import { createCustomEvent, useLayoutEffect } from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
+import { API_METHODS } from '~/utils/constants';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -84,7 +85,7 @@ export default function PDPAddToCart({
   const clearError = () => setButtonState(IDLE);
 
   const mapStateToButton = {
-    [IDLE]: <addToCart.Form action="/cart" method="post">
+    [IDLE]: <addToCart.Form action="/cart" method={API_METHODS.POST}>
       <input type="hidden" name="cartAction" value={addItem?.action ?? 'ADD_TO_CART'} />
       <input
         type="hidden"
