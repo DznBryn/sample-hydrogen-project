@@ -1,0 +1,68 @@
+@import url('./styles/header.css');
+
+.fullWidth {
+  width: 100%;
+  margin-top: 145px;
+  display: block;
+  font-family: 'Lato', sans-serif;
+}
+
+.fixedWidthPage {
+  margin: auto;
+  display: block;
+}
+
+.MAMenu {
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: center;
+  overflow: scroll;
+  gap: 27px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.MAMenu::-webkit-scrollbar {
+  display: none;
+}
+
+.navigationTab {
+  white-space: nowrap;
+  font-size: 12px;
+  color: #778699;
+  text-decoration: none;
+  padding-bottom: 11px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.MAMenu .selected {
+  color: #47C6D9;
+  font-weight: bold;
+  border-bottom: #47C6D9 solid 3px;
+}
+
+.myHr {
+  margin: 0px 0 32.15px;
+  color: #D7E1EA;
+}
+
+@media all and (min-width: 768px) {
+  .fixedWidthPage {
+    max-width: 1140px;
+  }
+
+  .MAMenu {
+    width: 100%;
+    justify-content: center;
+    gap: inherit;
+  }
+
+  .navigationTab {
+    margin: 0 30px;
+    font-size: 14px;
+  }
+}

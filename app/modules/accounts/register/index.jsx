@@ -3,6 +3,7 @@ import styles from './styles.css';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import Button, { links as buttonStyles } from '~/modules/global/button';
 import { useState } from 'react';
+import { API_METHODS, FETCHER } from '~/utils/constants';
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }, ...buttonStyles()];
@@ -13,7 +14,7 @@ export default function Register() {
     email: '',
     password: ''
   });
-  const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher.state === 'submitting';
+  const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher?.state === FETCHER.STATE.SUBMIT || fetcher?.stat === FETCHER.STATE.LOADING;
 
   return (
     <div>
@@ -21,7 +22,7 @@ export default function Register() {
         <Header />
         <div className='formBox'>
           <fetcher.Form
-            method='post'
+            method={API_METHODS.POST}
             noValidate
             action='/account/register'
             style={{
@@ -111,7 +112,11 @@ export default function Register() {
               )
             }
             <Button type="submit" color="blue" disabled={disableLoginButton} >
-              {fetcher.state !== 'idle' ? 'Loading' : 'Register'}
+              {
+                fetcher?.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
+                  fetcher?.state === FETCHER.STATE.LOADING ? 'Loading' :
+                    'Register'
+              }
             </Button>
           </fetcher.Form>
           <p className='text-center'>

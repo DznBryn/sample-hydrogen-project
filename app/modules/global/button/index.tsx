@@ -4,7 +4,7 @@ import styles from './styles.css';
 export function links() {
   return [{rel: 'stylesheet', href: styles}];
 }
-const TulaButton = (props) => {
+const Button = (props) => {
   if (props.color === 'white') {
     return (
       <button
@@ -48,4 +48,4 @@ const TulaButton = (props) => {
     );
   }
 };
-export default TulaButton;
+export default Button;

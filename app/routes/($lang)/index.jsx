@@ -20,15 +20,20 @@ export const action = async ({ request, context }) => {
   if (formData.get(SIGN_IN_EMAIL) && (formData.get(SIGN_IN_EMAIL) !== '' || typeof formData.get(SIGN_IN_EMAIL) !== 'string') && formData.get(SIGN_IN_PASSWORD) && (formData.get(SIGN_IN_PASSWORD) !== '' || typeof formData.get(SIGN_IN_PASSWORD) !== 'string')) {
     const email = formData.get(SIGN_IN_EMAIL);
     const password = formData.get(SIGN_IN_PASSWORD);
-    const customerAccessToken = await login(context, { email, password });
-    context.session.set('customerAccessToken home', customerAccessToken);
-    // console.log('customerAccessToken:', customerAccessToken);
-    return redirect('/', {
-      headers: {
-        'Set-Cookie': await context.session.commit()
-      }
-    });
+    const data = await login(context, { email, password });
 
+    if (data?.accessToken){
+      context.session.set('customerAccessToken', data.accessToken);
+      return redirect('/', {
+        headers: {
+          'Set-Cookie': await context.session.commit()
+        }
+      });
+    }
+
+    return {
+      data
+    };
   } else {
     errorMessage = 'Email and password are required.';
   }

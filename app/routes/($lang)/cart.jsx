@@ -1,6 +1,7 @@
 import { Link, useFetcher, useLoaderData } from '@remix-run/react';
 import { json } from '@shopify/remix-oxygen';
 import { useEffect } from 'react';
+import { API_METHODS } from '~/utils/constants';
 import { cartAddItems, cartCreate, cartRemoveItems, cartUpdate, cartUpdateCustomerIdentity } from '~/utils/graphql/shopify/mutations/cart';
 import { getCart } from '~/utils/graphql/shopify/queries/cart';
 
@@ -161,7 +162,7 @@ export function UpdateCartButton({ /*children,*/ lines }) {
     }
   }, [fetcher.state]);
   return (
-    <fetcher.Form action="/cart" method="post">
+    <fetcher.Form action="/cart" method={API_METHODS.POST}>
       <input type="hidden" name="cartAction" value={'UPDATE_CART'} />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
       <button

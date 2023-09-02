@@ -27,6 +27,7 @@ const CUSTOMER_QUERY = `#graphql
   ) @inContext(country: $country, language: $language) {
     customer(customerAccessToken: $customerAccessToken) {
       id
+      createdAt
       firstName
       lastName
       phone

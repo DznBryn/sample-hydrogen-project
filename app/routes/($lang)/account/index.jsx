@@ -1,8 +1,17 @@
-import { Form, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { CacheShort, flattenConnection, generateCacheControlHeader } from '@shopify/hydrogen';
 import { defer, redirect } from '@shopify/remix-oxygen';
 import { getCustomer } from '~/utils/graphql/shopify/queries/customer';
 import Layouts from '~/layouts';
+import Account, {links as accountStyles} from '~/modules/accounts';
+import { useStore } from '~/hooks/useStore';
+import { useEffect } from 'react';
+
+export function links(){
+  return [
+    ...accountStyles(),
+  ];
+}
 
 export async function loader({ request, context, params }) {
   const { pathname } = new URL(request.url);
@@ -10,8 +19,13 @@ export async function loader({ request, context, params }) {
   const lang = params.lang;
   const customerAccessToken = await context.session.get('customerAccessToken');
 
-  if (!customerAccessToken && isAccountPage ) {
-    return redirect(lang ? `/${lang}/account/login` : '/account/login');
+  if (typeof customerAccessToken !== 'string' && isAccountPage ) {
+    await context.session.unset('customerAccessToken');
+    return redirect(lang ? `/${lang}/account/login` : '/account/login', {
+      headers: {
+        'Set-Cookie': await context.session.commit()
+      }
+    });
   }
 
   const customer = await getCustomer(context, customerAccessToken);
@@ -33,18 +47,17 @@ export async function loader({ request, context, params }) {
   );
 }
 export default function AccountPage() {
-  const { header, customer } = useLoaderData();
-  console.log('Customer:', customer);
+  const { customer } = useLoaderData();
+  const {data, setCustomerData} = useStore((store) => store?.account);
+  useEffect(() => {
+    if(data.id === ''){
+      setCustomerData(customer);
+    }
+  }, []);
+  
   return (
-
     <Layouts.MainNavFooter>
-
-      <h1>{header}</h1>
-      <Form method='post' action='/account/logout'>
-        <button type='submit'>logout</button>
-      </Form>
-      <pre>{JSON.stringify(customer, null, 2)}</pre>
-
+      <Account />
     </Layouts.MainNavFooter>
     
   );
