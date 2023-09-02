@@ -8,6 +8,7 @@ export const useStore = create((set) => ({
   account: {
     data: {
       id: '',
+      createAt: null,
       firstName: '',
       lastName: '',
       phone: null,
@@ -20,6 +21,7 @@ export const useStore = create((set) => ({
     setCustomerData: (customerData = null, ) => {
       const data = {
         id: '',
+        createdAt: null,
         firstName: '',
         lastName: '',
         phone: null,

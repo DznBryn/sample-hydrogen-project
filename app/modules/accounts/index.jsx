@@ -1,4 +1,4 @@
-import { Form, Link, useLoaderData } from '@remix-run/react';
+import { Form, Link} from '@remix-run/react';
 import { useStore } from '~/hooks/useStore';
 import { API_METHODS } from '~/utils/constants';
 import styles from './styles.css';
@@ -16,7 +16,7 @@ export function links() {
 export default function Account() {
   const { data } = useStore(store => store.account);
   const { id } = data;
-  console.log(data);
+  
   return id !== '' ? (
     <div className={'fullWidth minHeight'}>
       <Header data={{
@@ -51,6 +51,7 @@ function Header({ data }) {
 function Tabs() {
   const showRewardsTab = (getApiKeys().FEATURE_FLAGS.LOYALTY);
   const showAddressTab = true;
+  const showReferralTab = true;
   const [active, setActive] = useState(1);
 
   const tabsID = {
@@ -76,6 +77,7 @@ function Tabs() {
   }
 
   function setURLQuery(tab) {
+    // eslint-disable-next-line no-unused-vars
     const urlTogo = Object.entries(tabsID).filter(([key, value]) => value === tab)[0];
     if (urlTogo) window.history.pushState('tab', '', `/account?c=${urlTogo[0]}`);
   }
@@ -88,6 +90,9 @@ function Tabs() {
   return < div className = {'fixedWidthPage' }>
     <section className={'MAMenu'}>
       {showRewardsTab && <div className={active === 5 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(5)}>Rewards</div>}
+      <div className={active == 1 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(1)}>Auto-Deliveries</div>
+      <div className={active === 2 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(2)}>Order History</div>
+      {showReferralTab && <div className={active == 3 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(3)}>Referral</div>}
       {showAddressTab && <div className={active === 4 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(4)}>Addresses</div>}
     </section>
     <hr className="myHr" />
