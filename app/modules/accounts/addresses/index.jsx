@@ -1,6 +1,8 @@
-import React from 'react';
+import { useRef, useState } from 'react';
 import { useStore } from '~/hooks/useStore';
 import styles from './styles.css';
+import { useFetcher } from '@remix-run/react';
+import { US_STATES } from '~/utils/constants';
 
 export function links() {
   return [
@@ -9,7 +11,19 @@ export function links() {
 }
 export default function Addresses() {
   const data = useStore(store => store?.account?.data ?? null);
-  return (
+  const [showAddAddressForm, setShowAddAddressForm] = useState({
+    headerMessage: 'Add New Address',
+    submitBtnMessage: 'Add address',
+  });
+
+  return showAddAddressForm.id ? (
+    <Form data={{
+      headerMessage: showAddAddressForm?.headerMessage,
+      submitBtnMessage: showAddAddressForm?.submitBtnMessage,
+      closeForm: () => setShowAddAddressForm({ id: null }),
+      ...showAddAddressForm
+    }} />
+  ) : (
     <div id="addressTab" className={'mainContainer'}>
       <div className="dataContainer">
         <div className="accountDetailsContainer">
@@ -37,7 +51,11 @@ export default function Addresses() {
             <h3 className={'headerTitle'}>Shipping Addresses</h3>
             <button
               className={'editButton'}
-
+              onClick={() => setShowAddAddressForm({
+                id: ' ',
+                headerMessage: 'Add New Address',
+                submitBtnMessage: 'Add address',
+              })}
             >
               + Add New Address
             </button>
@@ -49,8 +67,17 @@ export default function Addresses() {
                   data.addresses.sort((a, b) => {
                     a.isDefault = data?.defaultAddress?.id === a.id;
                     b.isDefault = data?.defaultAddress?.id === b.id;
-                    return b.isDefault - a.isDefault
-                  }).map(address => <><AddressBox data={address} /></>)
+                    return b.isDefault - a.isDefault;
+                  }).map(address => <div key={`address-${address.id}`}>
+                    <AddressBox data={{
+                      editAddress: () => setShowAddAddressForm({
+                        headerMessage: 'Edit Address',
+                        submitBtnMessage: 'Update address',
+                        ...address
+                      }),
+                      ...address
+                    }} />
+                  </div>)
                 }
               </div>
             ) : (<p className={'noAddressesMessage'}>
@@ -62,7 +89,11 @@ export default function Addresses() {
               </span>
               <span
                 className={'editButton'}
-
+                onClick={() => setShowAddAddressForm({
+                  id: ' ',
+                  headerMessage: 'Add New Address',
+                  submitBtnMessage: 'Add address',
+                })}
               >
                 add a new address now.
               </span>
@@ -104,7 +135,7 @@ const AddressBox = ({ data = null }) => {
         <button
           className={'addressBtn'}
           type="button"
-
+          onClick={data?.editAddress}
         >
           Edit Address
         </button>
@@ -119,3 +150,291 @@ const AddressBox = ({ data = null }) => {
     </div>
   );
 };
+
+function Form({ data }) {
+  const fetcher = useFetcher();
+  const [setForm] = useState({});
+  const [formErrors] = useState([]);
+  const phoneRef = useRef(null);
+
+  function format(ref) {
+    function doFormat(x, pattern, mask) {
+      var strippedValue = x.replace(/[^0-9]/g, '');
+      var chars = strippedValue.split('');
+      var count = 0;
+      var formatted = '';
+      for (var i = 0; i < pattern.length; i++) {
+        const c = pattern[i];
+        if (chars[count]) {
+          if (/\*/.test(c)) {
+            formatted += chars[count];
+            count++;
+          } else {
+            formatted += c;
+          }
+        } else if (mask) {
+          if (mask.split('')[i]) formatted += mask.split('')[i];
+        }
+      }
+      return formatted;
+    }
+    const val = doFormat(
+      ref.current.value,
+      ref.current.getAttribute('data-format')
+    );
+    ref.current.value = doFormat(
+      ref.current.value,
+      ref.current.getAttribute('data-format'),
+      ref.current.getAttribute('data-mask')
+    );
+    if (ref.current.createTextRange) {
+      var range = ref.current.createTextRange();
+      range.move('character', val.length);
+      range.select();
+    } else if (ref.current.selectionStart) {
+      ref.current.focus();
+      ref.current.setSelectionRange(val.length, val.length);
+    }
+  }
+
+  const handleOnChange = (e) => {
+    e?.preventDefault();
+    var regex = /[^0-9]/gi;
+    const { name, value } = e.target || e.current;
+    if (name === 'zip') {
+      return setForm((prevFormData) => ({ ...prevFormData, [name]: value.replace(regex, '') }));
+    } else {
+      return setForm((prevFormData) => ({ ...prevFormData, [name]: value }));
+    }
+  };
+
+  return <fetcher.Form className={'formContainer'}>
+    {data?.headerMessage && <h2 className={'formTitle'}>{data.headerMessage}</h2>}
+    <p className={'formInfoText'}>* indicates a required field</p>
+    <div className={'formGroup'}>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>First Name*</label>
+        <input
+          name="firstName"
+          className={`formInput ${formErrors.includes('firstName') && 'formInputError'}`}
+          placeholder="First Name"
+          value={data?.firstName}
+          onChange={handleOnChange}
+          required
+        />
+        {formErrors.includes('firstName') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>Last Name*</label>
+        <input
+          name="lastName"
+          className={`formInput ${formErrors.includes('lastName') && 'formInputError'}`}
+          placeholder="Last Name"
+          value={data?.lastName}
+          onChange={handleOnChange}
+          required
+        />
+        {formErrors.includes('lastName') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+    </div>
+    <div className={'formGroup'}>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>Company</label>
+        <input
+          name="company"
+          placeholder="Company name (optional)"
+          className={'formInput'}
+          value={data?.company}
+          onChange={handleOnChange}
+        />
+      </span>
+    </div>
+    <div className={'formGroup'}>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>Street Address*</label>
+        <input
+          name="streetAddress"
+          placeholder="Street Address"
+          className={`formInput ${formErrors.includes('streetAddress') && 'formInputError'}`}
+          value={data?.streetAddress}
+          onChange={handleOnChange}
+          required
+        />
+        {formErrors.includes('streetAddress') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+    </div>
+    <div className={'aptCityGroup'}>
+      <span className={'inputCell aptCell'}>
+        <label className={'inputLabel'}>Apt, Suite</label>
+        <input
+          type="tel"
+          name="number"
+          className={'formInput'}
+          placeholder="No."
+          value={data?.number}
+          onChange={handleOnChange}
+        />
+      </span>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>City*</label>
+        <input
+          name="city"
+          className={`formInput ${formErrors.includes('city') && 'formInputError'}`}
+          placeholder="City"
+          value={data?.city}
+          onChange={handleOnChange}
+          required
+        />
+        {formErrors.includes('city') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+    </div>
+    <div className={'formGroup'}>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>State*</label>
+        <div
+          className={`formInput ${formErrors.includes('province') && 'formInputError'}`}
+          name="countryContainer"
+          required
+        >
+          <AddressIcon
+            style={{ position: 'absolute', top: '25%', left: 16 }}
+            formErrors={formErrors}
+          />
+          <select
+            name="province"
+            value={data?.province}
+            className={'countrySelect'}
+            onChange={handleOnChange}
+            required
+          >
+            <option value="" disabled selected hidden>
+              -- Select --
+            </option>
+            {US_STATES.map((state, idx) => (
+              <option key={idx}>
+                {state.split(' ').slice(0, 3).join(' ')}
+              </option>
+            ))}
+          </select>
+        </div>
+        {formErrors.includes('province') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>Zip Code*</label>
+        <input
+          type="tel"
+          name="zip"
+          className={`formInput ${formErrors.includes('zip') && 'formInputError'}`}
+          placeholder="Zip Code"
+          value={data?.zip}
+          onChange={handleOnChange}
+          minLength="5"
+          maxLength="5"
+          required
+        />
+        {formErrors.includes('zip') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+    </div>
+    <div className={'formGroup'}>
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>Country*</label>
+        <input
+          name="country"
+          className={`formInput ${formErrors.includes('country') && 'formInputError'}`}
+          value={'United States'}
+          onChange={handleOnChange}
+          readOnly
+          required
+        />
+        {formErrors.includes('country') && (
+          <p className={'errorMessage'}>*Required</p>
+        )}
+      </span>
+
+      <span className={'inputCell'}>
+        <label className={'inputLabel'}>Phone</label>
+        <input
+          name="phone"
+          type="tel"
+          placeholder="( ___ ) ___ - ____"
+          className={'formInput'}
+          aria-label="( ___ ) ___ - ____"
+          ref={phoneRef}
+          value={data?.phone?.slice(0, 16)}
+          data-format="(***) *** - ****"
+          data-mask="( ___ ) ___ - ____"
+          onKeyUp={() => format(phoneRef)}
+          onChange={() => handleOnChange(phoneRef)}
+        />
+      </span>
+    </div>
+    <div className={'defaultCheckboxContainer'}>
+      <label className={'defaultCheckbox'}>
+        <input
+          type="checkbox"
+          readOnly
+          checked={data?.isDefault}
+          value={data?.isDefault}
+        />
+        <span className={'checkmark'}></span>
+      </label>
+      <p>Set as default address</p>
+    </div>
+    <div className={'formBtnContainer'}>
+      <Button
+        type="submit"
+        styleType="solid"
+        message={data.submitBtnMessage}
+        className={'addAddress'}
+      />
+      <Button
+        type="button"
+        message="Cancel"
+        className={'addAddress'}
+        onClick={data?.closeForm}
+      />
+    </div>
+  </fetcher.Form>;
+}
+
+const Button = ({ message, styleType, ...rest }) => {
+
+
+  return (
+    <button
+      {...rest}
+      className={`defaultButton ${styleType}`}
+    >
+      {message}
+    </button>
+  );
+};
+
+const AddressIcon = ({ formErrors = [], ...rest }) => (
+  <svg
+    {...rest}
+    xmlns="http://www.w3.org/2000/svg"
+    width={15}
+    height={19}
+    fill="none"
+  >
+    <path
+      d="M7.5.688c4.039 0 7.313 3.274 7.313 7.313 0 3.09-2.171 6.458-6.457 10.139-.238.205-.542.317-.856.317a1.31 1.31 0 0 1-.856-.318l-.284-.246C2.263 14.306.188 11.021.188 8 .188 3.961 3.461.688 7.5.688zm0 4.5c-.746 0-1.461.296-1.989.824S4.688 7.254 4.688 8s.296 1.461.824 1.989a2.81 2.81 0 0 0 3.977 0 2.81 2.81 0 0 0 0-3.977c-.527-.527-1.243-.824-1.989-.824z"
+      fill={formErrors.includes('country') ? '#FF5483' : '#4c4e56'}
+      fillOpacity={0.5}
+    />
+  </svg>
+);
