@@ -496,7 +496,6 @@ export function getFormData(object) {
   Object.keys(object).forEach(key => formData.append(key, object[key]));
   return formData;
 }
-
 /**
  *   GraphQL functions
  */

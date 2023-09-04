@@ -18,6 +18,13 @@ export const FETCHER = {
   },
 };
 
+// Form Action Types
+export const FORM_ACTIONS = {
+  CREATE: 'CREATE',
+  UPDATE: 'UPDATE',
+  DELETE: 'DELETE',
+};
+
 // Accounts
 export const SIGN_IN_EMAIL = 'signInEmail';
 export const SIGN_IN_PASSWORD = 'signInPassword';

@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from '~/hooks/useStore';
 import styles from './styles.css';
 import { useFetcher } from '@remix-run/react';
-import { US_STATES } from '~/utils/constants';
+import { API_METHODS, FETCHER, FORM_ACTIONS, US_STATES } from '~/utils/constants';
 
 export function links() {
   return [
@@ -14,6 +14,7 @@ export default function Addresses() {
   const [showAddAddressForm, setShowAddAddressForm] = useState({
     headerMessage: 'Add New Address',
     submitBtnMessage: 'Add address',
+    formAction: FORM_ACTIONS.CREATE,
   });
 
   return showAddAddressForm.id ? (
@@ -55,6 +56,7 @@ export default function Addresses() {
                 id: ' ',
                 headerMessage: 'Add New Address',
                 submitBtnMessage: 'Add address',
+                formAction: FORM_ACTIONS.CREATE
               })}
             >
               + Add New Address
@@ -73,6 +75,7 @@ export default function Addresses() {
                       editAddress: () => setShowAddAddressForm({
                         headerMessage: 'Edit Address',
                         submitBtnMessage: 'Update address',
+                        formAction: FORM_ACTIONS.UPDATE,
                         ...address
                       }),
                       ...address
@@ -93,6 +96,7 @@ export default function Addresses() {
                   id: ' ',
                   headerMessage: 'Add New Address',
                   submitBtnMessage: 'Add address',
+                  formAction: FORM_ACTIONS.CREATE,
                 })}
               >
                 add a new address now.
@@ -140,22 +144,61 @@ const AddressBox = ({ data = null }) => {
           Edit Address
         </button>
         <div className={'verticalSeparator'} />
-        <button
-          className={'addressBtn'}
-          type="button"
-        >
-          Remove Address
-        </button>
+        <RemoveAddress addressId={data.id} />
       </div>
     </div>
   );
 };
 
+function RemoveAddress({ addressId }) {
+  const fetcher = useFetcher();
+  const { removeAddress } = useStore(store => store?.account ?? null);
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
+      removeAddress(addressId);
+    }
+  }, [fetcher.type]);
+  return <fetcher.Form action='/account' method={API_METHODS.DELETE} >
+    <input type="hidden" name="addressId" value={addressId} required />
+    <button
+      className={'addressBtn'}
+      type="submit"
+    >
+      {
+        fetcher.state === FETCHER.STATE.SUBMIT || fetcher.state === FETCHER.STATE.LOADING ? '...Removing Address' : 'Remove Address'
+      }
+    </button>
+  </fetcher.Form>;
+}
+
 function Form({ data }) {
   const fetcher = useFetcher();
-  const [setForm] = useState({});
+  const { updateAddresses } = useStore(store => store?.account ?? null);
+  const [form, setForm] = useState({
+    firstName: data?.firstName ?? '',
+    lastName: data?.lastName ?? '',
+    streetAddress: data?.address1 ?? '',
+    number: data?.address2 ?? '',
+    city: data?.city ?? '',
+    company: data?.company ?? '',
+    isDefault: data?.isDefault ?? false,
+    country: data?.country ?? 'United States',
+    phone:
+      data?.phone && data.phone !== 'undefined'
+        ? String(data.phone.slice(0, 16))
+        : null,
+    province: data?.province ?? '',
+    zip: data?.zip ? String(data.zip.slice(0, 5)) : '',
+  });
   const [formErrors] = useState([]);
   const phoneRef = useRef(null);
+
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
+      updateAddresses(fetcher.data);
+      data.closeForm();
+    }
+  }, [fetcher.type]);
 
   function format(ref) {
     function doFormat(x, pattern, mask) {
@@ -208,8 +251,14 @@ function Form({ data }) {
     }
   };
 
-  return <fetcher.Form className={'formContainer'}>
+
+  return <fetcher.Form className={'formContainer'} action='/account' method={API_METHODS.POST}>
     {data?.headerMessage && <h2 className={'formTitle'}>{data.headerMessage}</h2>}
+    <input type="hidden" name="formAction" value={data?.formAction} />
+    {
+      data?.formAction === FORM_ACTIONS.UPDATE &&
+      <input type="hidden" name="addressId" value={data?.id} />
+    }
     <p className={'formInfoText'}>* indicates a required field</p>
     <div className={'formGroup'}>
       <span className={'inputCell'}>
@@ -218,7 +267,7 @@ function Form({ data }) {
           name="firstName"
           className={`formInput ${formErrors.includes('firstName') && 'formInputError'}`}
           placeholder="First Name"
-          value={data?.firstName}
+          value={form?.firstName ?? data?.firstName}
           onChange={handleOnChange}
           required
         />
@@ -232,7 +281,7 @@ function Form({ data }) {
           name="lastName"
           className={`formInput ${formErrors.includes('lastName') && 'formInputError'}`}
           placeholder="Last Name"
-          value={data?.lastName}
+          value={form?.lastName ?? data?.lastName}
           onChange={handleOnChange}
           required
         />
@@ -248,7 +297,7 @@ function Form({ data }) {
           name="company"
           placeholder="Company name (optional)"
           className={'formInput'}
-          value={data?.company}
+          value={form?.company}
           onChange={handleOnChange}
         />
       </span>
@@ -260,7 +309,7 @@ function Form({ data }) {
           name="streetAddress"
           placeholder="Street Address"
           className={`formInput ${formErrors.includes('streetAddress') && 'formInputError'}`}
-          value={data?.streetAddress}
+          value={form?.streetAddress}
           onChange={handleOnChange}
           required
         />
@@ -277,7 +326,7 @@ function Form({ data }) {
           name="number"
           className={'formInput'}
           placeholder="No."
-          value={data?.number}
+          value={form?.number}
           onChange={handleOnChange}
         />
       </span>
@@ -287,7 +336,7 @@ function Form({ data }) {
           name="city"
           className={`formInput ${formErrors.includes('city') && 'formInputError'}`}
           placeholder="City"
-          value={data?.city}
+          value={form?.city}
           onChange={handleOnChange}
           required
         />
@@ -310,7 +359,7 @@ function Form({ data }) {
           />
           <select
             name="province"
-            value={data?.province}
+            value={form?.province}
             className={'countrySelect'}
             onChange={handleOnChange}
             required
@@ -337,7 +386,7 @@ function Form({ data }) {
           name="zip"
           className={`formInput ${formErrors.includes('zip') && 'formInputError'}`}
           placeholder="Zip Code"
-          value={data?.zip}
+          value={form?.zip}
           onChange={handleOnChange}
           minLength="5"
           maxLength="5"
@@ -373,7 +422,7 @@ function Form({ data }) {
           className={'formInput'}
           aria-label="( ___ ) ___ - ____"
           ref={phoneRef}
-          value={data?.phone?.slice(0, 16)}
+          value={form?.phone}
           data-format="(***) *** - ****"
           data-mask="( ___ ) ___ - ____"
           onKeyUp={() => format(phoneRef)}
@@ -385,9 +434,11 @@ function Form({ data }) {
       <label className={'defaultCheckbox'}>
         <input
           type="checkbox"
+          name='isDefault'
           readOnly
-          checked={data?.isDefault}
-          value={data?.isDefault}
+          checked={form?.isDefault}
+          value={form?.isDefault}
+          onClick={() => setForm({ ...form, isDefault: !form?.isDefault })}
         />
         <span className={'checkmark'}></span>
       </label>
@@ -397,7 +448,11 @@ function Form({ data }) {
       <Button
         type="submit"
         styleType="solid"
-        message={data.submitBtnMessage}
+        message={
+          fetcher.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
+            fetcher.state === FETCHER.STATE.LOADING ? 'Loading' :
+              data.submitBtnMessage
+        }
         className={'addAddress'}
       />
       <Button

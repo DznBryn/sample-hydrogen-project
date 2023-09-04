@@ -18,7 +18,7 @@ export const useStore = create((set) => ({
       addresses: [],
       orders: []
     },
-    setCustomerData: (customerData = null, ) => {
+    setCustomerData: (customerData = null) => {
       const data = {
         id: '',
         createdAt: null,
@@ -36,12 +36,42 @@ export const useStore = create((set) => ({
         if (customerData?.[key] && data[key] !== customerData[key]) data[key] = customerData[key];
       });
 
-      return set({
-        account: {
-          data
-        }
+      return set((state) => {
+        return {
+          ...state,
+          account: {
+            ...state.account,
+            data,
+          }
+        };
       });
-    }
+    },
+    updateAddresses: (addresses) => set((state) => {
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          data: {
+            ...state.account.data,
+            ...addresses
+          }
+        }
+      };
+    }),
+    removeAddress: (id) => set((state) => {
+      const addresses = state.account.data.addresses.filter(address => address?.id !== id);
+      return {
+        ...state,
+        account: {
+          ...state.account,
+          data: {
+            ...state.account.data,
+            addresses
+          }
+        }
+      };
+    })
+
   }
 }));
 
