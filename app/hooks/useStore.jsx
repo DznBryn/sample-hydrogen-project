@@ -18,7 +18,7 @@ export const useStore = create((set) => ({
       addresses: [],
       orders: []
     },
-    setCustomerData: (customerData = null,) => {
+    setCustomerData: (customerData = null) => {
       const data = {
         id: '',
         createdAt: null,
