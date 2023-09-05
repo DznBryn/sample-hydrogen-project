@@ -6,10 +6,12 @@ import { useEffect, useState } from 'react';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import Addresses, { links as addressesStyles} from './addresses';
 import OrderHistory, {links as ordersStyles } from './orders';
+import ReferralWidget, {links as referralStyles} from './referral';
 
 export function links() {
   return [
     { rel: 'stylesheet', href: styles },
+    ...referralStyles(),
     ...ordersStyles(),
     ...addressesStyles(),
   ];
@@ -99,6 +101,7 @@ function Tabs() {
     </section>
     <hr className="myHr" />
     {active === 2 ? <OrderHistory /> : null}
+    {active === 3 ? <ReferralWidget /> : null}
     {showAddressTab && active === 4 ? <Addresses /> : null}
   </div>;
 }

@@ -1,0 +1,22 @@
+.skeleton {
+  background-color: #f5f5f5;
+}
+
+.loading {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(-90deg, #efefef 0%, #fcfcfc 50%, #efefef 100%);
+  background-size: 400% 400%;
+  animation: loading 1.2s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -135% 0%;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
