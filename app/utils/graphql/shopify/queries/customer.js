@@ -93,12 +93,22 @@ const CUSTOMER_QUERY = `#graphql
           processedAt
           financialStatus
           fulfillmentStatus
+          statusUrl
           currentTotalPrice {
             ...MoneyFragment
           }
-          lineItems(first: 5) {
+          lineItems(first: 20) {
             nodes {
               title
+              variant {
+                image {
+                  id
+                  url
+                  altText
+                  width
+                  height
+                }
+              }
               quantity
               discountedTotalPrice {
                 ...MoneyFragment
