@@ -5,11 +5,13 @@ import styles from './styles.css';
 import { useEffect, useState } from 'react';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import Addresses, { links as addressesStyles} from './addresses';
+import OrderHistory, {links as ordersStyles } from './orders';
 
 export function links() {
   return [
-    ...addressesStyles(),
     { rel: 'stylesheet', href: styles },
+    ...ordersStyles(),
+    ...addressesStyles(),
   ];
 }
 
@@ -90,12 +92,13 @@ function Tabs() {
   return < div className = {'fixedWidthPage' }>
     <section className={'MAMenu'}>
       {showRewardsTab && <div className={active === 5 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(5)}>Rewards</div>}
-      <div className={active == 1 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(1)}>Auto-Deliveries</div>
+      <div className={active === 1 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(1)}>Auto-Deliveries</div>
       <div className={active === 2 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(2)}>Order History</div>
-      {showReferralTab && <div className={active == 3 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(3)}>Referral</div>}
+      {showReferralTab && <div className={active === 3 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(3)}>Referral</div>}
       {showAddressTab && <div className={active === 4 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(4)}>Addresses</div>}
     </section>
     <hr className="myHr" />
+    {active === 2 ? <OrderHistory /> : null}
     {showAddressTab && active === 4 ? <Addresses /> : null}
   </div>;
 }
