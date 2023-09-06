@@ -62,7 +62,11 @@ export default function App() {
         <Links />
         <PageMeta/>
       </head>
-      <body>
+      <body style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr',
+        
+      }}>
         <Outlet />
         <ScrollRestoration />
         <Scripts />
