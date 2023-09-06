@@ -1,5 +1,81 @@
 import { gql } from '@apollo/client';
 
+export const GET_AUTO_DELIVERY = gql`
+  query GetAutoDelivery {
+    allAutoDelivery {
+      _id
+      name
+      heroBackgroundImage {
+        asset {
+          _id
+          url
+        }
+      }
+      heroBackgroundMobileImage {
+        asset {
+          _id
+          url
+        }
+      }
+      sectionTwoIconOne {
+        asset {
+          _id
+          url
+        }
+      }
+      sectionTwoIconTwo {
+        asset {
+          _id
+          url
+        }
+      }
+      sectionTwoIconThree {
+        asset {
+          _id
+          url
+        }
+      }
+      sectionThreeBigImage {
+        asset {
+          _id
+          url
+        }
+      }
+      sectionThreeSmallImage {
+        asset {
+          _id
+          url
+        }
+      }
+      sectionThreeMobileImage {
+        asset {
+          _id
+          url
+        }
+      }
+      checkmark {
+        asset {
+          _id
+          url
+        }
+      }
+      fullWidthBannerImage {
+        asset {
+          _id
+          url
+        }
+      }
+      fullWidthBannerMobileImage {
+        asset {
+          _id
+          url
+        }
+      }
+
+    }
+  }
+`;
+
 export const GET_CONTACT_US = gql`
   query GetAllContactUs {
     allContactUs {
