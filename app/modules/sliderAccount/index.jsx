@@ -7,6 +7,7 @@ import { useCustomerActions, useCustomerState } from '~/hooks/useCostumer';
 import { Link, useFetcher } from '@remix-run/react';
 
 import styles from './styles.css';
+import { API_METHODS } from '~/utils/constants';
 
 export const links = () => {
   return [
@@ -509,7 +510,7 @@ const MainContent = () => {
 
       <div className={'header'}>welcome!</div>
 
-      <login.Form action="/" method="post" className={'form'}>
+      <login.Form action="/" method={API_METHODS.POST} className={'form'}>
 
         <input className={'input'} key={'siginEmail'} id="signInEmail" name="signInEmail" ref={signInEmail} type="email" placeholder="Email" /> {/**/}
 
@@ -568,7 +569,7 @@ const MainContent = () => {
         <p>Enter your email and we will send you a password reset link to your inbox.</p>
       </div>
 
-      <recoverPassword.Form action="/" method="post" className={'form'}>
+      <recoverPassword.Form action="/" method={API_METHODS.POST} className={'form'}>
         <input className={'input'} id="forgotEmail" name="forgotEmail" ref={forgotEmail} type="email" placeholder="Email" />
         <button type="submit" ref={recoverPasswordButtonRef} className={'button'}>send</button>
         <div className={'subText'} onClick={() => changeMainContent('signIn')}>Go back to login</div>

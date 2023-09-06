@@ -1,0 +1,559 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 29px;
+}
+
+.accountDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.addressContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 27px;
+}
+
+.defaultAddressBadge {
+  margin: 16px 0 10px 19px;
+  width: 97px;
+  height: 20px;
+  background: #98c7cf;
+  border-radius: 81px;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 15px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+}
+
+.noAddressesMessage {
+  width: 241px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 14px;
+  line-height: 24px;
+  margin: 32px auto 0;
+}
+
+.headerContainer {
+  display: flex;
+  padding: 6px 0;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(76, 78, 86, 0.2);
+  width: 100%;
+}
+
+.headerTitle {
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 19px;
+}
+
+.accountName {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  color: #4c4e56;
+  margin: 17px 0 7px;
+}
+
+.accountDetails {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 159.6%;
+  color: rgba(76, 78, 86, 0.8);
+}
+
+.editButton {
+  border: none;
+  background: none;
+  text-decoration: underline;
+  color: #47c6d9;
+  font-weight: 800;
+  font-size: 12px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.addressListContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  margin-top: 22px;
+}
+
+.addressBoxContainer {
+  position: relative;
+  height: 154px;
+  border: 1px solid #cbf8ff;
+  border-radius: 3px;
+}
+
+.addressDetails {
+  padding: 0 21px 30px;
+}
+
+.addressDetailName {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+
+.addressDetailAddress {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.addAddress {
+  padding: 10px 20px;
+  border-radius: 0;
+  background-color: white;
+  color: #47c6d9;
+  border-color: #47c6d9;
+  border-style: solid;
+  margin-bottom: 40px;
+}
+
+.addressBtnContainer {
+  display: flex;
+  position: absolute;
+  bottom: 12px;
+  left: 21px;
+  right: auto;
+  top: auto;
+}
+
+.addressBtn {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  border: none;
+  background: none;
+  color: #47c6d9;
+}
+
+.verticalSeparator {
+  height: auto;
+  margin: 0 7px;
+  border-right: 1px solid #47c6d9;
+}
+
+/*
+*  Form Styles
+*/
+
+.formContainer {
+  margin-inline: auto;
+  padding: 27px;
+}
+
+.formTitle {
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 22px;
+  color: #4c4e56;
+  margin-bottom: 17px;
+  text-align: center;
+}
+
+.formInfoText {
+  font-weight: 500;
+  font-size: 14px;
+  font-style: italic;
+  line-height: 32px;
+  color: rgba(76, 78, 86, 0.6);
+  margin-bottom: 2px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  row-gap: 9px;
+}
+
+.aptCityGroup {
+  display: flex;
+  flex-direction: row;
+  column-gap: 9px;
+}
+
+.aptCell {
+  max-width: 30%;
+}
+
+.inputCell {
+  position: relative;
+  display: inline-grid;
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.inputLabel {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32px;
+  color: #4c4e56;
+}
+
+.formInput {
+  border: 1px solid #4c4e5666;
+  border-radius: 2px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  color: #4c4e56;
+  padding: 9px 19px;
+  width: 100%;
+  position: relative;
+}
+
+.formInputError {
+  border-color: #ff5483;
+  background: #ff548314;
+}
+
+.errorMessage {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff5483;
+  position: absolute;
+  bottom: -20px;
+}
+
+.formInput::placeholder {
+  color: #4c4e5666;
+}
+
+.countrySelect {
+  border: none;
+  margin-left: 20px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  background: none;
+  width: calc(100% - 20px);
+}
+
+.defaultCheckboxContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 32px;
+  color: #4c4e56;
+  margin-top: 19px;
+}
+
+.defaultCheckboxContainer input:checked~.checkmark {
+  background-color: #47c6d9;
+}
+
+.defaultCheckboxContainer .defaultCheckbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.defaultCheckboxContainer .defaultCheckbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.defaultCheckboxContainer .checkmark {
+  position: absolute;
+  top: -4px;
+  left: 0;
+  height: 17px;
+  width: 17px;
+  border-radius: 2px;
+  background-color: #fff;
+  border: 1px solid rgba(76, 78, 86, 0.4);
+}
+
+.defaultCheckboxContainer .defaultCheckbox:hover input~.checkmark {
+  background-color: #fff;
+}
+
+.defaultCheckboxContainer .defaultCheckbox input:checked~.checkmark {
+  background-color: #47c6d9;
+  border-color: #47c6d9;
+}
+
+.defaultCheckboxContainer .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.defaultCheckboxContainer .defaultCheckbox input:checked~.checkmark:after {
+  display: block;
+}
+
+.defaultCheckboxContainer .defaultCheckbox .checkmark:after {
+  left: 5px;
+  top: 2px;
+  width: 3px;
+  height: 7px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.formBtnContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+  justify-content: center;
+  margin-top: 46px;
+}
+
+/*
+*  MODAL STYLES  #must be styled for mobile first
+*/
+
+.backgroundOpacity {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  width: 284px;
+  height: 258px;
+  padding: 48px 19px 19px;
+  z-index: 10001;
+  border-radius: 7px;
+}
+
+.closeButton {
+  color: #4c4e56;
+  transform: rotate(45deg);
+  font-size: 2em;
+  line-height: 0.7;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.modalContent {
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  line-height: 23px;
+  color: #4c4e56;
+  text-align: center;
+  margin: 0 30px;
+}
+
+.modalBtnContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+
+.defaultButton {
+  height: 43px;
+  border: 1px solid #47c6d9;
+  border-radius: 2px;
+  color: #47c6d9;
+  background: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  min-width: 180px;
+}
+
+.defaultButton[disabled] {
+  border-radius: 2px;
+  color: #fff;
+  background: rgba(76, 78, 86, 0.4);
+  border-color: rgba(76, 78, 86, 0.4);
+}
+
+.solid {
+  color: #fff;
+  background: #47c6d9;
+}
+
+@media all and (min-width: 768px) {
+  .dataContainer {
+    flex-direction: row;
+    column-gap: 65px;
+    padding: 0;
+    margin: 0 auto;
+  }
+
+  .accountDetailsContainer {
+    width: 257px;
+  }
+
+  .addressContainer {
+    width: 582px;
+    margin: 0;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  .accountName {
+    font-size: 18px;
+    line-height: 25px;
+    margin: 21px 0 7px;
+  }
+
+  .accountDetails {
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  .noAddressesMessage {
+    width: 100%;
+    text-align: left;
+    display: block;
+    margin-top: 23px;
+  }
+
+  .addressBoxContainer {
+    width: 582px;
+    height: 113px;
+  }
+
+  .defaultAddressBadge {
+    margin-left: 32px;
+  }
+
+  .addressListContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    margin-top: 22px;
+  }
+
+  .addressDetails {
+    padding: 0 32px 20px;
+  }
+
+  .countryBreakRow {
+    display: none;
+  }
+
+  .addressDetailAddress {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .addressDetailAddress:hover {
+    text-overflow: unset;
+    overflow: unset;
+  }
+
+  .addressBtnContainer {
+    display: flex;
+    position: absolute;
+    top: 10px;
+    right: 8px;
+    bottom: auto;
+    left: auto;
+  }
+
+  .modal {
+    height: 230px;
+    width: 632px;
+    padding: 45px;
+  }
+
+  .modalContent {
+    line-height: 30px;
+  }
+
+  .modalBtnContainer {
+    flex-direction: row;
+    column-gap: 6px;
+  }
+
+  .formContainer {
+    width: 457px;
+    padding: 0;
+  }
+
+  .formGroup {
+    flex-direction: row;
+    column-gap: 9px;
+  }
+
+  .aptCell {
+    max-width: 20%;
+  }
+
+  .errorMessage {
+    font-size: 14px;
+    line-height: 15px;
+  }
+
+  .formBtnContainer {
+    flex-direction: row;
+    column-gap: 6px;
+    justify-content: center;
+  }
+}

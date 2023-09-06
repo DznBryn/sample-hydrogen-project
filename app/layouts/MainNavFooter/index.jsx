@@ -75,15 +75,19 @@ const MainNavFooter = ({ children }) => {
 
       {children}
 
-      <BodyBottom
-        emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
-        productList={collection}
-      />
+      <div className="footerContainer" style={{
+        marginTop: 'auto',
+      }}>
+        <BodyBottom
+          emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
+          productList={collection}
+        />
 
-      <Footer
-        desktopFooter={getCMSDoc(Footers, 'Desktop')}
-        mobileFooter={getCMSDoc(Footers, 'Mobile')}
-      />
+        <Footer
+          desktopFooter={getCMSDoc(Footers, 'Desktop')}
+          mobileFooter={getCMSDoc(Footers, 'Mobile')}
+        />
+      </div>
 
     </>
 

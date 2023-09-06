@@ -15,9 +15,31 @@ export async function getCustomer(context, customerAccessToken) {
     throw await logout(context);
   }
 
-  return data.customer; 
+  return data.customer;
 }
 
+export async function getAddresses(context, customerAccessToken, type) {
+  const {storefront} = context;
+  const QUERY = type === 'addresses' ? CUSTOMER_ADDRESSES_QUERY : null;
+
+  if (!QUERY) {
+    throw new Error('Please input QUERY type "addresses", "orders", etc.');
+  }
+
+  const data = await storefront.query(QUERY, {
+    variables: {
+      customerAccessToken,
+      country: storefront?.i18n?.country,
+      language: storefront?.i18n?.language,
+    },
+  });
+
+  if (!data || !data?.customer) {
+    throw await logout(context);
+  }
+
+  return data.customer;
+}
 
 const CUSTOMER_QUERY = `#graphql
   query CustomerDetails(
@@ -27,6 +49,7 @@ const CUSTOMER_QUERY = `#graphql
   ) @inContext(country: $country, language: $language) {
     customer(customerAccessToken: $customerAccessToken) {
       id
+      createdAt
       firstName
       lastName
       phone
@@ -46,7 +69,7 @@ const CUSTOMER_QUERY = `#graphql
         zip
         phone
       }
-      addresses(first: 6){
+      addresses(first: 10){
         nodes {
           id
           firstName
@@ -70,12 +93,22 @@ const CUSTOMER_QUERY = `#graphql
           processedAt
           financialStatus
           fulfillmentStatus
+          statusUrl
           currentTotalPrice {
             ...MoneyFragment
           }
-          lineItems(first: 5) {
+          lineItems(first: 20) {
             nodes {
               title
+              variant {
+                image {
+                  id
+                  url
+                  altText
+                  width
+                  height
+                }
+              }
               quantity
               discountedTotalPrice {
                 ...MoneyFragment
@@ -90,4 +123,46 @@ const CUSTOMER_QUERY = `#graphql
     }
   }
   ${MONEY_FRAGMENT}
+`;
+
+const CUSTOMER_ADDRESSES_QUERY = `#graphql
+  query CustomerDetails(
+    $customerAccessToken: String!
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    customer(customerAccessToken: $customerAccessToken) {
+      defaultAddress {
+        id
+        formatted
+        firstName
+        lastName
+        company
+        address1
+        address2
+        country
+        province
+        city
+        zip
+        phone
+      }
+      addresses(first: 20){
+        nodes {
+          id
+          firstName
+          lastName
+          formatted
+          address1
+          address2
+          city
+          company
+          country
+          countryCodeV2
+          province
+          zip
+          phone
+        }
+      }
+    }
+  }
 `;

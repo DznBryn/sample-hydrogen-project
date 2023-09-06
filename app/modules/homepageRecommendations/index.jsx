@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import HomepageRecs, { links as HomepageRecsStyles } from '../homepageRecs';
+import { useYotpo } from '~/hooks/useYotpo';
 
 import styles from './styles.css';
 
@@ -19,6 +20,8 @@ const HomepageRecommendations = ({ hpRecs }) => {
 
   const currentTab = 1;
   const [activeTab, setActiveTab] = useState(currentTab);
+
+  const {refreshWidgets} = useYotpo();
 
   function handleActiveTab(tab) {
     setActiveTab(() => tab);
@@ -44,6 +47,9 @@ const HomepageRecommendations = ({ hpRecs }) => {
       elem.style.backgroundColor = hpRecs.collectionOneFontColorHex;
       elem.style.borderColor = hpRecs.collectionOneFontColorHex;
     });
+
+
+    refreshWidgets();
 
   });
 

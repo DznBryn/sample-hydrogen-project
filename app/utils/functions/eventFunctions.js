@@ -496,7 +496,6 @@ export function getFormData(object) {
   Object.keys(object).forEach(key => formData.append(key, object[key]));
   return formData;
 }
-
 /**
  *   GraphQL functions
  */
@@ -625,7 +624,7 @@ export async function getCustomerData(context) {
 
   const customerAccessToken = await context.session.get('customerAccessToken');
   console.log('customerAccessToken', customerAccessToken);
-  if (customerAccessToken) {
+  if (typeof customerAccessToken === 'string' ) {
 
     customer = await getCustomer(context, customerAccessToken);
 

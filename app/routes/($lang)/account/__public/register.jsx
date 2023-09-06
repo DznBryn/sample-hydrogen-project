@@ -2,9 +2,11 @@ import { json, redirect } from '@shopify/remix-oxygen';
 import Layouts from '~/layouts';
 import { login, register } from '~/utils/graphql/shopify/mutations/customer';
 import Register, { links as registerStyles } from '~/modules/accounts/register';
+
 export function links() {
   return [...registerStyles()];
 }
+
 export async function action({ request, context, params }) {
   const { session, storefront } = context;
   const formData = await request.formData();

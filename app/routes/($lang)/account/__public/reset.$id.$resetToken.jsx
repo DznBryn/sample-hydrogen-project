@@ -2,6 +2,7 @@ import { json } from '@shopify/remix-oxygen';
 import { Form, useActionData } from '@remix-run/react';
 import { useRef } from 'react';
 import { resetPassword } from '~/utils/graphql/shopify/mutations/customer';
+import { API_METHODS } from '~/utils/constants';
 
 export const action = async ({
   request,
@@ -64,7 +65,7 @@ export default function Reset() {
         <h1 className="text-4xl">Reset Password.</h1>
         <p className="mt-4">Enter a new password for your account.</p>
         <Form
-          method="post"
+          method={API_METHODS.POST}
           noValidate
           className="pt-6 pb-8 mt-4 mb-4 space-y-3"
         >
