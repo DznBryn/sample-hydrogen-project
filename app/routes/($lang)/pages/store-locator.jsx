@@ -4,7 +4,7 @@ import StoreLocator, { links as storeLocatorStyles } from '~/modules/storeLocato
 
 export const links = () => storeLocatorStyles();
 
-export default function OurStoryAndFounderComponent() {
+export default function StoreLocatorComponent() {
 
   return (
     <Layouts.MainNavFooter>

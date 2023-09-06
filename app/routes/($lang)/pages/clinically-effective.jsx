@@ -4,7 +4,7 @@ import ClinicallyEffective, { links as clinicallyEffectiveStyles } from '~/modul
 
 export const links = () => clinicallyEffectiveStyles();
 
-export default function clinicallyEffectiveComponent() {
+export default function ClinicallyEffectiveComponent() {
   return (
     <Layouts.MainNavFooter>
        <ClinicallyEffective />

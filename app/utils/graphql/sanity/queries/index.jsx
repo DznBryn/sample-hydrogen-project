@@ -1,5 +1,44 @@
 import { gql } from '@apollo/client';
 
+export const GET_CONTACT_US = gql`
+  query GetAllContactUs {
+    allContactUs {
+      _id
+      name
+      contactMessage
+      emailAddress
+      contactEmailIcon {
+        asset {
+          _id
+          url
+        }
+      }
+      contactEmailHeader
+      emailAddress
+      contactPhoneIcon {
+        asset {
+          _id
+          url
+        }
+      }
+      contactPhoneHeader
+      phoneNumber
+      contactSocialIcon {
+        asset {
+          _id
+          url
+        }
+      }
+      officeHours
+      ContactSocialHeader
+      facebook
+      twitter
+      pinterest
+      instagram
+    }
+  }
+`;
+
 export const GET_OUR_STORY = gql`
   query GetAllOurStory {
     allOurStoryAndFounder {
