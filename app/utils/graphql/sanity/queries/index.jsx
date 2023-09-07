@@ -1,5 +1,44 @@
 import { gql } from '@apollo/client';
 
+export const GET_EMBRACE_YOUR_SKIN = gql`
+  query GetAllEmbraceYourSkin {
+    allEmbraceYourSkin {
+      _id
+      name
+      tulaSkincareLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      heartIcon {
+        asset {
+          _id
+          url
+        }
+      }
+      heartSms {
+        asset {
+          _id
+          url
+        }
+      }
+      drRaj {
+        asset {
+          _id
+          url
+        }
+      }
+      downArrow {
+        asset {
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
+
 export const GET_AUTO_DELIVERY = gql`
   query GetAutoDelivery {
     allAutoDelivery {

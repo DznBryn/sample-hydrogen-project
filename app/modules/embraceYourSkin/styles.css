@@ -1,0 +1,893 @@
+.eysPage .eysHeader {
+  max-width: 1140px;
+  background-color: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.eysPage .eysHeader .sectionLeft {
+  width: 40%;
+}
+
+.eysPage .eysHeader .sectionRight {
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.eysPage .eysHeader .sectionLeft img {
+  height: 50px;
+}
+
+.eysPage .eysHeader .sectionRight a {
+  text-decoration: none;
+  color: #47C6D9;
+  font-weight: 800;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.eysPage .hero {
+  position: relative;
+}
+
+.eysPage .fullBanner {
+  width: 100vw;
+  height: 65vh;
+  overflow: hidden;
+  margin-top: 30px;
+  position: relative;
+  background-size: cover;
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-image: url(https://cdn.shopify.com/s/files/1/1736/9637/files/EYS-Header_Option-3_2.jpg?v=1661893855);
+}
+
+.eysPage #downArrow {
+  bottom: 3.5em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.eysPage .hero video,
+.eysPage .secondVideo video {
+  width: 100%;
+}
+
+.eysPage .sectionTwo {
+  width: 100%;
+  background-color: #c8eef4;
+  padding: 5.5em 30px;
+  margin-top: -6px;
+}
+
+.eysPage .sectionTwo .wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.eysPage .sectionTwo .wrapper .percent {
+  color: #fff;
+  font-weight: 700;
+  font-size: 80px;
+  margin-bottom: 50px;
+}
+
+.eysPage .sectionTwo .wrapper .left,
+.eysPage .sectionTwo .wrapper .right {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 1140px;
+}
+
+.eysPage .sectionTwo .wrapper .copy {
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  max-width: 350px;
+}
+
+.eysPage .sectionTwo .wrapper .copy sup {
+  font-size: 8px;
+}
+
+.eysPage .sectionTwo .centeredWrapper {
+  max-width: 100%;
+  text-align: center;
+}
+
+.eysPage .sectionTwo .centeredWrapper p {
+  margin: 35px auto 0;
+  line-height: 1.5em;
+}
+
+.eysPage .sectionTwo .centeredWrapper p:nth-child(1) {
+  max-width: 525px;
+}
+
+.eysPage .sectionTwo .centeredWrapper p:nth-child(3) {
+  font-weight: 800;
+}
+
+.eysPage .sectionThree {
+  max-width: 1140px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.eysPage h2 {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  margin: 35px auto;
+}
+
+.eysPage h2 span {
+  color: #47C6D9;
+  font-weight: 800;
+  font-family: inherit;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.eysPage .sectionThree .list {
+  text-align: left;
+}
+
+.eysPage .sectionThree .list p {
+  color: #4C4E56;
+  font-size: 22px;
+  line-height: 32px;
+}
+
+.eysPage .sectionThree #reimagine p {
+  margin-bottom: 30px;
+}
+
+.eysPage .sectionThree .list p span {
+  color: #47C6D9;
+}
+
+.eysPage .sectionThree > p {
+  margin-bottom: 35px;
+  max-width: 700px;
+  line-height: 28px;
+}
+
+.eysPage .sectionThree > p:nth-child(2) {
+  margin-bottom: 0;
+}
+
+.eysPage .sectionThree #embrace p {
+  margin-bottom: 20px;
+}
+
+.eysPage .sectionThree #invest {
+  max-width: 100%;
+}
+
+.eysPage .sectionThree #tulaHeart {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+}
+
+.eysPage .sectionThree #tulaHeart img {
+  height: 18px;
+}
+
+.eysPage .sectionThree #tulaHeart p {
+  font-weight: 900;
+  font-size: 29px;
+  margin-top: 3px;
+  margin-left: 3px;
+  letter-spacing: 1px;
+  color: #47C6D9;
+}
+
+.eysPage .sectionThree #tulaHeart p.footnote {
+  color: #4C4E56;
+  font-size: 11px;
+  font-weight: 400;
+  position: absolute;
+  letter-spacing: 0;
+  right: 186px;
+  bottom: 1px;
+}
+
+.eysPage .sectionFour {
+  text-align: center;
+}
+
+.eysPage .sectionFive {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.eysPage .sectionFive .block {
+  width: 50%;
+  padding: 70px 0;
+}
+
+.eysPage .sectionFive .textWrapper {
+  max-width: 570px;
+  width: 100%;
+  padding: 0 8em 0 3em;
+}
+
+.eysPage .sectionFive .textWrapper sup {
+  font-size: 8px;
+}
+
+.eysPage .sectionFive #leftUpperBlock,
+.eysPage .sectionFive #rightLowerBlock {
+  background-color: #c8eef4;
+}
+
+.eysPage .sectionFive #rightUpperBlock,
+.eysPage .sectionFive #leftLowerBlock {
+  background-color: #f1fbfc;
+}
+
+.eysPage .sectionFive #leftUpperBlock,
+.eysPage .sectionFive #leftLowerBlock {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.eysPage .sectionFive #rightUpperBlock,
+.eysPage .sectionFive #rightLowerBlock {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.eysPage .sectionFive #leftUpperBlock .percent,
+.eysPage .sectionFive #rightLowerBlock .percent {
+  color: #fff;
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 105px;
+}
+
+.eysPage .sectionFive #rightUpperBlock .percent,
+.eysPage .sectionFive #leftLowerBlock .percent {
+  color: #88dae6;
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 105px;
+}
+
+.eysPage .sectionFive .boldedCopy {
+  font-weight: 800;
+  margin-bottom: 1.5em;
+  max-width: 410px;
+}
+
+.eysPage .sectionFive p {
+  line-height: 1.5em;
+}
+
+.eysPage .sectionSix {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 65px 0;
+}
+
+.eysPage .sectionSix .percent {
+  font-weight: 700;
+  font-size: 80px;
+  line-height: 105px;
+  color: #47C6D9;
+  margin-bottom: 0;
+}
+
+.eysPage .sectionSix .percent,
+.eysPage .sectionSix p {
+  text-align: center;
+}
+
+.eysPage .sectionSix p {
+  color: #4C4E56;
+  font-size: 16px;
+  line-height: 28px;
+  margin-bottom: 2em;
+}
+
+.eysPage .sectionSeven {
+  background-color: #48c6d9;
+  padding: 2em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eysPage .sectionSeven .wrapper {
+  flex-direction: column;
+}
+
+.eysPage .sectionSeven .wrapper br {
+  display: none;
+}
+
+.eysPage .sectionSeven h2,
+.eysPage .sectionSeven p,
+.eysPage .sectionSeven a {
+  color: #fff;
+  text-align: center;
+}
+
+.eysPage .sectionSeven h2 {
+  margin: 21px auto;
+  font-size: 32px;
+}
+
+.eysPage .sectionSeven p {
+  font-size: 16px;
+}
+
+#eysSmsCta {
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.eysPage .sectionSeven .smsBubble {
+  position: relative;
+  height: 64px;
+  width: 68px;
+  margin: 0 auto 1em;
+}
+
+.eysPage .sectionSeven .smsBubble img:nth-child(1),
+.eysPage .sectionSeven .smsBubble img:nth-child(2) {
+  position: absolute;
+}
+
+.eysPage .sectionSeven .smsBubble img:nth-child(1) {
+  z-index: 0;
+}
+
+.eysPage .sectionSeven .smsBubble img:nth-child(2) {
+  z-index: 1;
+  left: 19px;
+  top: 22px;
+}
+
+/* SMS Form */
+.eysPage #smsConfirm {
+  background-color: #fff;
+  height: 200px;
+  width: 353px;
+  border-radius: 8px;
+  position: fixed;
+  z-index: 10000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  flex-direction: column;
+}
+
+.eysPage #smsConfirm.active {
+  display: flex;
+}
+
+.eysPage #smsConfirm div {
+  width: 353px;
+  object-fit: contain;
+  object-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eysPage #smsConfirm div:nth-child(1) {
+  height: 1em;
+}
+
+.eysPage #smsConfirm div:nth-child(2) {
+  height: 11em;
+}
+
+.eysPage #smsConfirm div:last-child {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  height: 6em;
+}
+
+.eysPage #smsConfirm div:last-child p {
+  color: #48C6D9;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.eysPage span.closeSms {
+  font-size: 38px;
+  position: absolute;
+  top: -3px;
+  right: 8px;
+  transform: rotate(45deg);
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.eysPage #smsConfirm p,
+.eysPage #smsConfirm p a {
+  color: #2F2E35;
+  font-family: inherit;
+  font-size: 1em;
+  text-align: center;
+}
+
+.eysPage #smsConfirm p a {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.eysPage #smsConfirm p.hed {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  margin: 50px 20px 20px;
+  text-align: center;
+}
+
+.eysPage #smsConfirm p.dek {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 16px;
+  margin: 0 45px 26px;
+  text-align: center;
+}
+
+.eysPage #sms-campaign {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eysPage #sms-campaign form {
+  height: 50px;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0);
+  margin: 2.5em auto 1.25em;
+}
+
+.eysPage #sms-campaign form input {
+  border: 1px solid #c7c4dd;
+  border-radius: 0px;
+  width: 250px;
+  height: 50px;
+  margin-right: 0px;
+  color: #4C4E56;
+  background-color: #E9F8FA;
+  padding: 0 15px;
+  font-size: 14px;
+  line-height: 22px;
+  letter-spacing: initial;
+}
+
+.eysPage #sms-campaign form input:focus,
+.eysPage #sms-campaign form input:active {
+  outline: none;
+}
+
+.eysPage #sms-campaign form input::placeholder {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: inherit;
+}
+
+.eysPage #sms-campaign form #btnSubmit {
+  color: #47C6D9;
+  background-color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 1px solid #c7c4dd;
+  border-left: none;
+  border-radius: 0px;
+  width: 100px;
+  height: 50px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.smsTerms {
+  max-width: 535px;
+  width: 100%;
+  font-size: 10px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.eysPage .sectionEight {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 770px;
+  width: 100%;
+  margin: 5em auto;
+}
+
+.eysPage .sectionEight .left,
+.eysPage .sectionEight .right {
+  width: 50%;
+  position: relative;
+}
+
+.eysPage .sectionEight .left {
+  margin-left: auto;
+}
+
+.eysPage .sectionEight .left img {
+  max-width: 310px;
+  width: 100%;
+}
+
+.eysPage .sectionEight .left p {
+  font-weight: 800;
+}
+
+.eysPage .sectionEight .right p {
+  color: rgb(191, 155, 198);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  margin: 35px auto;
+  max-width: 285px;
+  width: 100%;
+  text-align: center;
+}
+
+.eysPage .sectionEight .right .quotes {
+  color: rgb(72, 198, 217);
+  position: absolute;
+  opacity: 0.3;
+  font-size: 8em;
+}
+
+.eysPage .sectionEight .right .quotes:nth-child(1) {
+  right: 1.3em;
+}
+
+.eysPage .sectionEight .right #rightQuote {
+  left: 1.3em;
+  top: 3em;
+}
+
+.eysPage .sectionNine {
+  background-color: #48c6d9;
+  padding: 2em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eysPage .sectionNine h2,
+.eysPage .sectionNine p {
+  color: #fff;
+  text-align: center;
+}
+
+.eysPage .sectionNine h2 {
+  margin-bottom: 0;
+}
+
+.eysPage .sectionNine p {
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.eysPage .sectionNine .yotpo {
+  width: 100%;
+  max-width: 1140px;
+  margin-top: 2.75em;
+}
+
+.eysPage .footnotesSection {
+  margin: 3em 0;
+  margin-left: 6em;
+}
+
+.eysPage .footnotesSection ol {
+  max-width: 36.6em;
+  margin-bottom: 2em;
+}
+
+.eysPage .footnotesSection ol,
+.eysPage .footnotesSection p {
+  font-size: 14px;
+}
+
+.eysPage .footnotesSection ol > li:before {
+  font-weight: 800;
+}
+
+#eysSmsCta {
+  font-family: Avenir;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 31px;
+  letter-spacing: 0.01em;
+  text-align: center;
+  margin: 38px 0;
+}
+
+#eysSmsConsent {
+  font-family: Avenir;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0.01em;
+  text-align: center;
+  max-width: 601px;
+  width: 100%;
+}
+
+@media all and (max-width: 768px) {
+  #eysSmsCta {
+    font-size: 17px;
+    line-height: 23px;
+    margin: 38px;
+  }
+  #eysSmsConsent {
+    font-size: 9px;
+    line-height: 12px;
+    padding: 0 11px;
+  }
+  .eysPage .hero {
+    margin-top: 7.25em;
+  }
+  .fullBanner {
+    height: 20vh;
+    background-position: initial;
+    margin-top: 115px;
+  }
+  .eysPage .sectionTwo {
+    padding: 4.5em 30px;
+  }
+  .eysPage :global(#downArrow) img {
+    display: none;
+  }
+  .eysPage .sectionTwo .wrapper {
+    flex-direction: column;
+  }
+  .eysPage .sectionTwo .wrapper .left,
+  .eysPage .sectionTwo .wrapper .right {
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .eysPage .sectionTwo .wrapper .copy {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 30px;
+  }
+  .eysPage .sectionTwo .centeredWrapper {
+    max-width: 100%;
+    text-align: left;
+    margin-top: -2em;
+  }
+  .eysPage .sectionTwo .centeredWrapper p,
+  .eysPage .sectionThree > p {
+    margin: 15px auto 0;
+    line-height: 1.5em;
+    font-size: 14px;
+  }
+  .eysPage .sectionThree > p:nth-child(1) {
+    margin-top: 0;
+  }
+  .eysPage h2 {
+    font-size: 19px;
+    font-weight: 500;
+    line-height: 26px;
+    margin: 20px 0;
+  }
+  .eysPage h2 span {
+    color: #47C6D9;
+    font-weight: 800;
+    font-family: inherit;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+  .eysPage .sectionThree {
+    text-align: left;
+    width: calc(100% - 60px);
+    align-items: flex-start;
+  }
+  .eysPage .sectionThree .list p {
+    font-size: 18px;
+  }
+  .eysPage .sectionThree .list:nth-child(2) p {
+    color: #4C4E56;
+    font-size: 18px;
+    line-height: 30px;
+  }
+  .eysPage .desktopBreak br {
+    display: none;
+  }
+  .eysPage .sectionThree #tulaHeart {
+    justify-content: flex-start;
+    margin: 1em 0;
+  }
+  .eysPage .sectionThree #tulaHeart img {
+    height: 12px;
+  }
+  .eysPage .sectionThree #tulaHeart p {
+    font-size: 18px;
+  }
+  .eysPage .sectionThree #tulaHeart p.footnote {
+    right: 0;
+    margin-bottom: -20px;
+  }
+  .eysPage .sectionThree #embrace p {
+    margin-bottom: 0px;
+  }
+  .eysPage .sectionThree #reimagine p {
+    margin-bottom: 10px;
+  }
+  .eysPage .sectionFive .block {
+    width: 100%;
+    padding: 20px 0 35px;
+  }
+  .eysPage .sectionFive #leftUpperBlock,
+  .eysPage .sectionFive #leftLowerBlock {
+    background-color: #fff;
+  }
+  .eysPage .sectionFive #rightUpperBlock,
+  .eysPage .sectionFive #rightLowerBlock {
+    background-color: #c8eef4;
+  }
+  .eysPage .sectionFive #leftUpperBlock .percent,
+  .eysPage .sectionFive #leftLowerBlock .percent {
+    color: #88dae6;
+  }
+  .eysPage .sectionFive #rightUpperBlock .percent,
+  .eysPage .sectionFive #rightLowerBlock .percent {
+    color: #fff;
+  }
+  .eysPage .sectionFive #leftUpperBlock .percent,
+  .eysPage .sectionFive #leftLowerBlock .percent,
+  .eysPage .sectionFive #rightUpperBlock .percent,
+  .eysPage .sectionFive #rightLowerBlock .percent,
+  .eysPage .sectionSix .percent {
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 105px;
+  }
+  .eysPage .sectionFour h2 {
+    margin: 10px 30px 0;
+    text-align: left;
+  }
+  .eysPage .sectionFive .textWrapper {
+    padding: 0 30px;
+  }
+  .eysPage .sectionFive p {
+    font-size: 14px;
+  }
+  .eysPage .sectionSix {
+    align-items: flex-start;
+    padding: 10px 30px;
+  }
+  .eysPage .sectionSix p {
+    font-size: 14px;
+    line-height: 1.5em;
+    text-align: left;
+  }
+  .eysPage .sectionSeven .wrapper {
+    width: calc(100% - 30px);
+  }
+  .eysPage .sectionSeven .wrapper br {
+    display: block;
+  }
+  .eysPage :global(#sms-campaign) form {
+    width: calc(100% - 30px);
+  }
+  .smsTerms {
+    width: calc(100% - 30px);
+  }
+  .eysPage .sectionSeven .smsBubble img:nth-child(1) {
+    height: 45px;
+  }
+  .eysPage .sectionSeven .smsBubble img:nth-child(2) {
+    z-index: 1;
+    left: 14px;
+    top: 16px;
+    height: 16px;
+  }
+  .eysPage .sectionSeven h2 {
+    font-size: 20px;
+  }
+  .eysPage .sectionSeven p {
+    font-size: 14px;
+  }
+  .eysPage .sectionSeven .smsTerms {
+    font-size: 10px;
+  }
+  .eysPage .sectionEight {
+    margin: 0 auto;
+    width: 100%;
+    overflow: hidden;
+  }
+  .eysPage .sectionEight .left {
+    padding-left: 17px;
+  }
+  .eysPage .sectionEight .left img {
+    max-width: 310px;
+    width: 100%;
+  }
+  .eysPage .sectionEight .right p {
+    font-size: 16px;
+    line-height: 20px;
+    max-width: 150px;
+  }
+  .eysPage .sectionEight .right .quotes:nth-child(1) {
+    right: 0.6em;
+    top: 0.3em;
+  }
+  .eysPage .sectionEight .right #rightQuote {
+    left: 0.5em;
+    top: 1.5em;
+  }
+  .eysPage .sectionEight .left p {
+    font-size: 11px;
+  }
+  .eysPage .sectionNine {
+    padding: 1em 0;
+  }
+  .eysPage .sectionNine h2 {
+    font-size: 20px;
+  }
+  .eysPage .sectionNine p {
+    font-weight: 800;
+    font-size: 12px;
+    margin-top: 1em;
+  }
+  .eysPage .sectionNine .yotpo {
+    margin-top: 1em;
+  }
+  .eysPage .footnotesSection {
+    margin: 1.5em 50px;
+  }
+  .eysPage .footnotesSection ol {
+    font-size: 12px;
+  }
+  .eysPage.pushDown {
+    margin-top: 100px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

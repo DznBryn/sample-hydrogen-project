@@ -23,8 +23,6 @@ export default function AutoDeliveryComponent() {
         autoDeliveryContent
     } = useLoaderData();
 
-    console.log("devdrew autoDeliveryContent", autoDeliveryContent)
-
   return (
     <Layouts.MainNavFooter>
        <AutoDelivery content={autoDeliveryContent} />
