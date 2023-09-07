@@ -673,7 +673,7 @@
     }
     
     .eysPage .hero {
-      margin-top: 7.25em;
+      margin-top: 0;
     }
   
     .fullBanner {
@@ -686,7 +686,7 @@
       padding: 4.5em 30px;
     }
   
-    .eysPage :global(#downArrow) img {
+    .eysPage #downArrow img {
       display: none;
     }
   
@@ -704,7 +704,7 @@
     .eysPage .sectionTwo .wrapper .copy {
       font-size: 14px;
       text-align: left;
-      margin-bottom: 30px;
+      margin-bottom: 60px;
     }
   
     .eysPage .sectionTwo .centeredWrapper {
