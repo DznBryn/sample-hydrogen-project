@@ -1,5 +1,165 @@
 import { gql } from '@apollo/client';
 
+export const GET_PRESS_PAGE = gql`
+  query GetAllPressPage {
+    allPressPage {
+      _id
+      name
+      topBanner {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockOneLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockOneText
+      featuredBlockTwoLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockTwoText
+      featuredBlockThreeLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockThreeText
+      featuredBlockFourLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockFourText
+      featuredBlockFiveLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockFiveText
+      featuredBlockSixLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      featuredBlockSixText
+      articleOneImage {
+        asset {
+          _id
+          url
+        }
+      }
+      articleOneLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      articleOnePreviewText
+      articleOneLink
+      articleTwoImage {
+        asset {
+          _id
+          url
+        }
+      }
+      articleTwoLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      articleTwoPreviewText
+      articleTwoLink
+      articleThreeImage {
+        asset {
+          _id
+          url
+        }
+      }
+      articleThreeLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      articleThreePreviewText
+      articleThreeLink
+      articleFourImage {
+        asset {
+          _id
+          url
+        }
+      }
+      articleFourLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      articleFourPreviewText
+      articleFourLink
+      articleFiveImage {
+        asset {
+          _id
+          url
+        }
+      }
+      articleFiveLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      articleFivePreviewText
+      articleFiveLink
+      articleSixImage {
+        asset {
+          _id
+          url
+        }
+      }
+      articleSixLogo {
+        asset {
+          _id
+          url
+        }
+      }
+      articleSixPreviewText
+      articleSixLink
+      productRecommendationHeader
+      productRecommendationSubHeader
+      productRecommendations {
+        name
+        promoPosition1
+        promoOneLink
+        promoPosition2
+        promoTwoLink
+        promoPosition3
+        promoThreeLink
+        additionalProductsTitle
+        additionalProducts
+        showCompareButton
+        fireworkStoryPosition
+        collectionId
+      }
+      seoTitle
+      seoDescription
+      seoUrl
+    }
+  }
+`;
+
 export const GET_SMS_SIGNUP = gql`
   query GetAllSmsSignUp {
     allSmsSignUp {
@@ -16,7 +176,6 @@ export const GET_SMS_SIGNUP = gql`
           url
         }
       }
-      
     }
   }
 `;
