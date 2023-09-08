@@ -1,10 +1,10 @@
 import Layouts from '~/layouts';
 
-import AccessibilityPage, { links as accessibilityPageStyles } from '~/modules/AccessibilityPage';
+import AccessibilityPage, { links as accessibilityPageStyles } from '~/modules/accessibilityPage';
 
 export const links = () => accessibilityPageStyles();
 
-export default function SmsSignUpComponent() {
+export default function AccessibilityPageComponent() {
   return (
     <Layouts.MainNavFooter>
        <AccessibilityPage />
