@@ -1,0 +1,21 @@
+.accessibilityPage {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.accessibilityPage iframe {
+  width: 100%;
+  height: 3750px;
+  border: none;
+  margin-bottom: 40px;
+  margin-top: 5em;
+}
+
+@media only screen and (max-width: 768px) {
+  .accessibilityPage iframe {
+    margin-top: 6em;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
