@@ -1,5 +1,16 @@
 import { gql } from '@apollo/client';
 
+export const GET_PRIVACY_POLICY_PAGE = gql `
+  query GetAllPrivacyPolicyPage {
+    allPrivacyPolicyPage {
+      _id
+      name
+      ContentRaw
+      ContentTwoRaw
+    }
+  }
+`;
+
 export const GET_TERMS_CONDITIONS_PAGE = gql `
   query GetAllTermsConditionsPage {
     allTermsConditionsPage {

@@ -1,0 +1,134 @@
+.privacyPolicy {
+  margin: 52px 0;
+  margin-top: 104px;
+}
+
+.section.intro li {
+  font-weight: 700;
+}
+
+.privacyPolicy .section {
+  margin-top: 4em;
+}
+
+.privacyPolicy :global(.scrollOffset) {
+  scroll-margin: 115px;
+}
+
+.privacyPolicy :global(.subheader) {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 700;
+  color: #48c6d9;
+}
+
+.privacyPolicy h1 {
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 58.8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.privacyPolicy h2 {
+  font-size: 30px;
+  line-height: 42px;
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+.privacyPolicy h3 {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 700;
+  color: #48c6d9;
+}
+
+.privacyPolicy p,
+.privacyPolicy span {
+  color: #4c4e56;
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 15px;
+}
+
+.privacyPolicy a,
+.privacyPolicy a:active,
+.privacyPolicy a:focus,
+.privacyPolicy a:visited {
+  font-weight: 700;
+  color: inherit;
+}
+
+.privacyPolicy ul {
+  margin-bottom: 2em;
+  margin-left: 1em;
+}
+
+.privacyPolicy li {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 300;
+  margin-bottom: 4px;
+}
+
+.privacyPolicy li a {
+  font-weight: 700;
+}
+
+.privacyPolicy a:hover {
+  color: #48c6d9;
+}
+
+.privacyPolicy li :global(.underline) {
+  text-decoration: underline;
+}
+
+.privacyPolicy table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.privacyPolicy td,
+.privacyPolicy th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+.privacyPolicy th {
+  text-align: center;
+}
+
+.privacyPolicy th {
+  background-color: #dddddd;
+  border-color: rgb(184, 184, 184);
+}
+
+@media all and (max-width: 768px) {
+  .privacyPolicy {
+    margin-top: 132px;
+  }
+  .privacyPolicy h1 {
+    font-size: 30px;
+    line-height: 42px;
+    margin-bottom: 15px;
+  }
+  .privacyPolicy h2 {
+    font-weight: 24px !important;
+    line-height: 33.6px;
+  }
+  .privacyPolicy h3 {
+    font-size: 14px;
+    line-height: 24px;
+  }
+  .privacyPolicy p,
+  .privacyPolicy li,
+  .privacyPolicy a {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
