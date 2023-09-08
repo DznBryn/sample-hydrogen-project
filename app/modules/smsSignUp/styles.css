@@ -1,0 +1,265 @@
+#sms-signup .container {
+  margin-top: 60px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+#sms-signup .horizontalLine {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #c2c2c2;
+}
+
+#sms-signup .open {
+  display: block !important;
+}
+
+/* Content Section */
+#sms-signup .content {
+  display: flex;
+  flex-direction: column;
+}
+
+#sms-signup .section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+#sms-signup .content > .section:nth-child(1) {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 300px;
+}
+
+#sms-signup .content > .section:nth-child(2) {
+  margin: 5% auto;
+}
+
+#sms-signup .title {
+  width: 70%;
+  margin: 1vh auto;
+  font-size: 6vw;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+#sms-signup .description {
+  width: 80%;
+  margin: 3px auto;
+  font-size: 4vw;
+}
+
+#sms-signup .form {
+  margin-bottom: 2vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#sms-signup .input {
+  background-color: #e9f8fa;
+  border: 1px solid #c7c4dd;
+  border-radius: 5px;
+  margin: 1rem auto;
+  padding: 0 15px;
+}
+
+#sms-signup .button {
+  background-color: #48C6D9;
+  border: none;
+  border-radius: 5px;
+  margin: 0 auto;
+  color: #ffffff;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+#sms-signup .input,
+#sms-signup .button {
+  width: 60vw;
+  height: 12vw;
+  font-size: 4vw;
+}
+
+#sms-signup .note {
+  width: 80%;
+  margin: 3px auto;
+  font-size: 3vw;
+  line-height: 1.4;
+}
+
+#sms-signup .note p {
+  min-height: 10px;
+  color: #747474;
+}
+
+#sms-signup .backgroundText {
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 8vw;
+  margin-top: 10%;
+}
+
+/* Modal Section */
+#sms-signup .modal {
+  position: absolute;
+  z-index: 3;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #ffffff;
+  box-shadow: 1px 1px 20px rgb(150, 150, 150);
+  border-radius: 10px;
+  width: 300px;
+  padding: 2vh 0;
+}
+
+#sms-signup .closeButton {
+  position: absolute;
+  cursor: pointer;
+  top: 1%;
+  left: 88%;
+  transform: rotate(45deg);
+  font-size: 38px;
+}
+
+#sms-signup .modalContent {
+  padding: 2em 1rem 1rem 1rem;
+}
+
+#sms-signup .modalTitle {
+  font-size: 20px;
+  font-weight: 700;
+  padding: 0 1rem;
+}
+
+#sms-signup .modalDescription {
+  font-size: 14px;
+  padding: 0 1rem;
+  margin: 0.5rem 0;
+}
+
+#sms-signup .modalButton {
+  padding: 5px 0;
+  border: none;
+  background: none;
+  font-size: 18px;
+  font-weight: 700;
+  color: #48C6D9;
+}
+
+#sms-signup .modalOverlay {
+  display: none;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+#sms-signup .pushDown {
+  margin-top: 100px !important;
+}
+
+@media all and (min-width: 769px) {
+  /* Content Section */
+  #sms-signup .content {
+    background-color: #f5f5f5;
+    flex-direction: row-reverse;
+    margin: 1vh 3vh;
+  }
+  #sms-signup .section {
+    text-align: initial;
+    margin: 5%;
+  }
+  #sms-signup .title {
+    width: 100%;
+    margin: 2vh auto;
+    font-size: 3.5vw;
+  }
+  #sms-signup .description {
+    width: 100%;
+    margin: 0 auto;
+    font-size: 1.5vw;
+    line-height: 1.3;
+  }
+  #sms-signup .form {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10%;
+    margin-bottom: 0;
+  }
+  #sms-signup .input,
+  #sms-signup .button {
+    margin: 1vh auto;
+    width: 50%;
+    height: 5vw;
+    font-size: 1vw;
+  }
+  #sms-signup .input {
+    margin-right: 0.5rem;
+  }
+  #sms-signup .button {
+    margin-left: 0.5rem;
+  }
+  #sms-signup .note {
+    width: 100%;
+    margin: 0.5vw auto;
+    font-size: 1vw;
+    color: rgb(116, 116, 116);
+    line-height: 1.4;
+  }
+  #sms-signup .backgroundText {
+    text-align: center;
+    font-size: 2.5vw;
+    margin-top: 3rem;
+  }
+  #sms-signup .content > .section:nth-child(1) {
+    width: 40%;
+    height: inherit;
+  }
+  #sms-signup .content > .section:nth-child(2) {
+    width: 68%;
+    padding: 5%;
+    padding-left: 10%;
+  }
+  /* Modal Section */
+  #sms-signup .modal {
+    width: 500px;
+  }
+  #sms-signup .closeButton {
+    position: absolute;
+    cursor: pointer;
+    top: 2%;
+    left: 92%;
+    transform: rotate(45deg);
+    font-size: 42px;
+  }
+  #sms-signup .modalTitle {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 2rem;
+  }
+  #sms-signup .modalDescription {
+    font-size: 18px;
+    margin: 1rem 0;
+    padding: 0 6rem;
+  }
+  #sms-signup .modalButton {
+    padding: 10px 0;
+    font-size: 22px;
+    font-weight: 700;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

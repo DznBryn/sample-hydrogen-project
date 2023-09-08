@@ -1,5 +1,26 @@
 import { gql } from '@apollo/client';
 
+export const GET_SMS_SIGNUP = gql`
+  query GetAllSmsSignUp {
+    allSmsSignUp {
+      _id
+      name
+      headline
+      subCopyRaw
+      ctaLabel
+      disclaimerRaw
+      imageText
+      backgroundImage {
+        asset {
+          _id
+          url
+        }
+      }
+      
+    }
+  }
+`;
+
 export const GET_EMBRACE_YOUR_SKIN = gql`
   query GetAllEmbraceYourSkin {
     allEmbraceYourSkin {
