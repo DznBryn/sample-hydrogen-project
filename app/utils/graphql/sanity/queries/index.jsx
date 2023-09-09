@@ -1,5 +1,25 @@
 import { gql } from '@apollo/client';
 
+export const GET_TULA_SCHOLARSHIP_PAGE = gql `
+  query GetAllTulaScholarshipPage {
+    allTulaScholarshipPage {
+      _id
+      name
+      ContentRaw
+      ContentTwoRaw
+      ContentThreeRaw
+      ContentFourRaw
+      ContentFiveRaw
+      ContentSixRaw
+      ContentSevenRaw
+      ContentEightRaw
+      ContentNineRaw
+      ContentTenRaw
+      ContentElevenRaw
+    }
+  }
+`;
+
 export const GET_COOKIE_POLICY_PAGE = gql `
   query GetAllCookiePolicyPage {
     allCookiePolicyPage {

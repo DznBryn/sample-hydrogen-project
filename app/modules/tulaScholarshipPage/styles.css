@@ -1,0 +1,82 @@
+.medicalSchoolScholarship {
+  margin: 5em auto;
+  margin-top: 7em;
+}
+
+.medicalSchoolScholarship h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: normal;
+  line-height: 29.4px;
+  text-align: center;
+  color: inherit;
+}
+
+.medicalSchoolScholarship h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: inherit;
+  line-height: 22.4px;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.medicalSchoolScholarship h3 {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 22.4px;
+}
+
+.medicalSchoolScholarship p,
+.medicalSchoolScholarship li {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 26px;
+  color: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.medicalSchoolScholarship ul {
+  margin-left: 16px;
+}
+
+.medicalSchoolScholarship a,
+.medicalSchoolScholarship a:visited,
+.medicalSchoolScholarship a:focus,
+.medicalSchoolScholarship a:active {
+  font-weight: 700;
+  color: inherit;
+}
+
+.medicalSchoolScholarship .section {
+  margin-bottom: 1em;
+}
+
+.medicalSchoolScholarship .quote {
+  background-color: #e7f5f6;
+  padding: 20px;
+  font-style: italic;
+}
+
+@media all and (max-width: 768px) {
+  .medicalSchoolScholarship {
+    margin-top: 8em;
+  }
+  .medicalSchoolScholarship h2 {
+    font-size: 15px;
+    line-height: 21px;
+  }
+  .medicalSchoolScholarship h3 {
+    font-size: 15px;
+    line-height: 21px;
+    letter-spacing: 2px;
+  }
+  .medicalSchoolScholarship p {
+    font-size: 14px;
+    line-height: 24px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
