@@ -1,5 +1,18 @@
 import { gql } from '@apollo/client';
 
+export const GET_COOKIE_POLICY_PAGE = gql `
+  query GetAllCookiePolicyPage {
+    allCookiePolicyPage {
+      _id
+      name
+      ContentRaw
+      ContentTwoRaw
+      ContentThreeRaw
+      ContentFourRaw
+    }
+  }
+`;
+
 export const GET_PRIVACY_POLICY_PAGE = gql `
   query GetAllPrivacyPolicyPage {
     allPrivacyPolicyPage {
