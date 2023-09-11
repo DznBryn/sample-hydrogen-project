@@ -4,8 +4,8 @@ import { bindCustomEvent, isAutoCart, getCartQuantity, getCurrency, getCartTotal
 import getApiKeys from '~/utils/functions/getApiKeys';
 import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
 
-import IconSearch, { links as iconSearchStyles } from '~/modules/iconSearch';
-import IconCart, { links as iconCartStyles } from '~/modules/iconCart';
+import IconSearch, { links as iconSearchStyles } from '~/modules/mainNav/iconSearch';
+import IconCart, { links as iconCartStyles } from '~/modules/mainNav/iconCart';
 
 import { useCustomerState } from '~/hooks/useCostumer';
 import { useCartState } from '~/hooks/useCart';

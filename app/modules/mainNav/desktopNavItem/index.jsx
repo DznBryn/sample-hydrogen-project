@@ -1,9 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
 import { bindCustomEvent, createCustomEvent } from '~/utils/functions/eventFunctions';
-import NavCollectionCarousel, {links as navCollectionCarouselStyle} from '~/modules/navCollectionCarousel';
-import NavShopOverlay, {links as navShopOverlayStyle} from '~/modules/navShopOverlay';
-import NavShopOverlaySplit, {links as navShopOverlaySplitStyle} from '~/modules/navShopOverlaySplit';
+import NavCollectionCarousel, {links as navCollectionCarouselStyle} from '~/modules/mainNav/navCollectionCarousel';
+import NavShopOverlay, {links as navShopOverlayStyle} from '~/modules/mainNav/navShopOverlay';
+import NavShopOverlaySplit, {links as navShopOverlaySplitStyle} from '~/modules/mainNav/navShopOverlaySplit';
 
 import styles from './styles.css';
 

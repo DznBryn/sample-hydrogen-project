@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from '@remix-run/react';
 import { useCollection } from '~/hooks/useCollection';
-import NavCollectionProductCard, { links as navCollectionProductCardStyles } from '~/modules/navCollectionProductCard';
+import NavCollectionProductCard, { links as navCollectionProductCardStyles } from '~/modules/mainNav/navCollectionProductCard';
 import { bindCustomEvent } from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';

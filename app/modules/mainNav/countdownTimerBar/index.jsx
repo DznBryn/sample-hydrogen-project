@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, Fragment } from 'react';
-import {updateElemsPositionOnBannerClose} from '../mainNav';
+import {updateElemsPositionOnBannerClose} from '..';
 import styles from './styles.css';
 
 export const links = () => {

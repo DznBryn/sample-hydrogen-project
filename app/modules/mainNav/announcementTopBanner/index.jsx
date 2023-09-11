@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import {updateElemsPositionOnBannerClose} from '../mainNav';
+import {updateElemsPositionOnBannerClose} from '..';
 import {PortableText} from '@portabletext/react';
 
 import styles from './styles.css';

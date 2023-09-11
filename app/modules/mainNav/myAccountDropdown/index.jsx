@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import LoadingSkeleton, { links as loadingSkeletonStyles } from '../loadingSkeleton';
+import LoadingSkeleton, { links as loadingSkeletonStyles } from '../../loadingSkeleton';
 import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import { Link } from '@remix-run/react';

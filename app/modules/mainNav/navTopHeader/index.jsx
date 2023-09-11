@@ -1,5 +1,5 @@
-import MyAccountDropdown, { links as myAccountDropdownStyles } from '~/modules/myAccountDropdown';
-import AnnouncementHeader, { links as announcementHeaderStyles } from '~/modules/announcementHeader';
+import MyAccountDropdown, { links as myAccountDropdownStyles } from '~/modules/mainNav/myAccountDropdown';
+import AnnouncementHeader, { links as announcementHeaderStyles } from '~/modules/mainNav/announcementHeader';
 
 import styles from './styles.css';
 
