@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react';
-import PortableTextCustom from '../portableTextCustom';
+import PortableTextCustom from '../../portableTextCustom';
 
 import styles from './styles.css';
 
