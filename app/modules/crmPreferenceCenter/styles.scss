@@ -1,0 +1,59 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#ltkPrefCenter {
+  width: 100%;
+  margin: 0 auto;
+  min-height: 700px;
+}
+
+.skeletonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  max-width: 888px;
+  width: 100%;
+  margin-top: 60px;
+  position: absolute;
+  z-index: -1;
+}
+
+.skeletonWrapper>div {
+
+  display: flex;
+  width: 100%;
+  justify-content: space-between
+}
+
+.skeletonWrapper>div>div:nth-child(1) {
+
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+}
+
+@media all and (max-width: 660px) {
+
+  .skeletonWrapper {
+    padding: 0 20px;
+  }
+
+  .skeletonWrapper>div>div:nth-child(1) {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .skeletonWrapper>div>div:nth-child(2) {
+    display: none;
+  }
+
+  .mainContainer {
+    margin-top: 90px;
+  }
+
+}
