@@ -1,4 +1,4 @@
-import FireWorkCarousel, { links as fireWorkCarouselStyle } from '../fireWorkCarousel';
+import FireWorkCarousel, { links as fireWorkCarouselStyle } from '../../fireWorkCarousel';
 import { PDPSliderPanelTitle } from '../pdpPanelSlider';
 
 import styles from './styles.css';

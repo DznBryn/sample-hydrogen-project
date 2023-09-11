@@ -1,6 +1,6 @@
 import PDPSliderPanel, { PDPPanelTitle, PDPSliderPanelTitle } from '../pdpPanelSlider';
-import SliderPanel, { switchSliderPanelVisibility } from '../sliderPanel';
-import PortableTextCustom from '../portableTextCustom';
+import SliderPanel, { switchSliderPanelVisibility } from '../../sliderPanel';
+import PortableTextCustom from '../../portableTextCustom';
 
 import styles from './styles.css';
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLayoutEffect } from '~/utils/functions/eventFunctions';
 import { useStore } from '~/hooks/useStore';
-import SavingsBadges, { links as badgesStyles } from '../badges';
+import SavingsBadges, { links as badgesStyles } from '../../badges';
 import classnames from 'classnames';
 
 import styles from './styles.css';

@@ -1,6 +1,6 @@
 import React from 'react';
 import PDPSliderPanel, { PDPPanelTitle, PDPSliderPanelTitle } from '../pdpPanelSlider';
-import SliderPanel, { switchSliderPanelVisibility } from '../sliderPanel';
+import SliderPanel, { switchSliderPanelVisibility } from '../../sliderPanel';
 import classnames from 'classnames';
 
 import styles from './styles.css';

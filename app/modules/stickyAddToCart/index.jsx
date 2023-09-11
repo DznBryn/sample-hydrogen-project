@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import PDPAddToCartForm from '../pdpAddToCartForm';
+import PDPAddToCartForm from '../pdp/pdpAddToCartForm';
 import { useStore } from '~/hooks/useStore';
 import classnames from 'classnames';
 

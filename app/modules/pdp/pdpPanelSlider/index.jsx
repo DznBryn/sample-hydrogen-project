@@ -1,6 +1,6 @@
 import classnames from 'classnames';
-import { switchSliderPanelVisibility } from '../sliderPanel';
-import Button, { links as buttonStyles } from '../button';
+import { switchSliderPanelVisibility } from '../../sliderPanel';
+import Button, { links as buttonStyles } from '../../button';
 
 import styles from './styles.css';
 

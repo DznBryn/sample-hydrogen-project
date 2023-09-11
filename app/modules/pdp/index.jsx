@@ -6,19 +6,20 @@ import {
   handleProductMetafieldData,
 } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
-import PDPGallery, { links as pdpGalleryStyles } from '../pdpGallery';
-import PDPDetails, { links as pdpDetailsStyles } from '../pdpDetails';
-import PDPMoreDetailsList, { links as pdpMoreDetailsListStyles } from '../pdpMoreDetailsList';
-import PDPRealResults, { links as pdpRealResultsStyles } from '../pdpRealResults';
-import PDPExclusiveProductBannerRelease, { links as pdpExclusiveProductBannerReleaseStyles } from '../pdpExclusiveProductBannerRelease';
-import PDPBenefits, { links as pdpBenefitsStyles } from '../pdpBenefits';
-import PDPFormulate, { links as pdpFormulateStyles } from '../pdpFormulate';
-import PDPHowToUse, { links as pdpHowToUseStyles } from '../pdpHowToUse';
-import PDPListrakRec, { links as pdpListrakRecStyles } from '../pdpListrakRec';
-import PDPYotPo, { links as pdpYotPoStyles } from '../pdpYotPo';
-import FireWorkPDPCarousel, { links as fireWorkPDPCarouselStyles } from '../fireWorkPDPCarousel';
-import PortableTextCustom from '../portableTextCustom';
 import { useYotpo } from '~/hooks/useYotpo';
+import PortableTextCustom from '../portableTextCustom';
+import PDPGallery, { links as pdpGalleryStyles } from './pdpGallery';
+import PDPDetails, { links as pdpDetailsStyles } from './pdpDetails';
+import PDPMoreDetailsList, { links as pdpMoreDetailsListStyles } from './pdpMoreDetailsList';
+import PDPRealResults, { links as pdpRealResultsStyles } from './pdpRealResults';
+import PDPExclusiveProductBannerRelease, { links as pdpExclusiveProductBannerReleaseStyles } from './pdpExclusiveProductBannerRelease';
+import PDPBenefits, { links as pdpBenefitsStyles } from './pdpBenefits';
+import PDPFormulate, { links as pdpFormulateStyles } from './pdpFormulate';
+import PDPHowToUse, { links as pdpHowToUseStyles } from './pdpHowToUse';
+import PDPListrakRec, { links as pdpListrakRecStyles } from './pdpListrakRec';
+import PDPYotPo, { links as pdpYotPoStyles } from './pdpYotPo';
+import FireWorkPDPCarousel, { links as fireWorkPDPCarouselStyles } from './fireWorkPDPCarousel';
+
 
 import styles from './styles.css';
 

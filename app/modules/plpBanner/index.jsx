@@ -78,7 +78,7 @@ const PLPBanner = ({ banner, ...rest }) => {
     bannerData[newKeyValue] = field.value;
   });
 
-  return bannerData !== {} ? (
+  return Object.keys(bannerData).length > 0? (
     isMobile ? (
       <BannerMobile banner={bannerData} {...rest} />
     ) : (

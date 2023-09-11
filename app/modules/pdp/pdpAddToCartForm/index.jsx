@@ -1,5 +1,5 @@
-import PDPAddToCart, { links as pdpAddToCartStyles } from '../pdpAddToCart';
-import { switchSliderPanelVisibility } from '../sliderPanel';
+import PDPAddToCart, { links as pdpAddToCartStyles } from '../../pdpAddToCart';
+import { switchSliderPanelVisibility } from '../../sliderPanel';
 import { useStore } from '~/hooks/useStore';
 import classnames from 'classnames';
 

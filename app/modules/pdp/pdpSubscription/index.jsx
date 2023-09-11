@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import Badges, { links as badgesStyles } from '../badges';
-import ModalGeneric, { links as modalGenericStyles } from '../modalGeneric';
-import PortableTextCustom from '../portableTextCustom';
+import Badges, { links as badgesStyles } from '../../badges';
+import ModalGeneric, { links as modalGenericStyles } from '../../modalGeneric';
+import PortableTextCustom from '../../portableTextCustom';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import { useStore } from '~/hooks/useStore';
 import classnames from 'classnames';

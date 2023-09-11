@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
-import SwiperSlider, { links as swiperSliderStyles } from '../swiperSlider';
+import SwiperSlider, { links as swiperSliderStyles } from '../../swiperSlider';
 import PDPVideoModule, { links as pdpVideoModuleStyles } from '../pdpVideoModule';
-import { PDPBadges, links as badgesStyles } from '../badges';
+import { PDPBadges, links as badgesStyles } from '../../badges';
 import { useStore } from '~/hooks/useStore';
 
 import styles from './styles.css';
