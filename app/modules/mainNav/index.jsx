@@ -1,15 +1,15 @@
 import { useRef, useEffect } from 'react';
 import { createCustomEvent } from '~/utils/functions/eventFunctions';
-import DesktopNavItem, { links as desktopNavItemStyles } from '~/modules/desktopNavItem';
-import HeaderIcons, { links as headerIconsStyles } from '~/modules/headerIcons';
-import HeaderLogo, { links as headerLogoStyles } from '~/modules/headerLogo';
-import NavTopHeader, { links as navTopHeaderStyles } from '~/modules/navTopHeader';
-import MobileNavbar, { links as mobileNavbarStyles } from '~/modules/mobileNavbar';
-import MainNavMobileOverlay, { links as mainNavMobileOverlayStyles } from '~/modules/mainNavMobileOverlay';
-import PromoOfferBar, { links as promoOfferBarStyles } from '~/modules/promoOfferBar';
-import IconSearch, { links as iconSearchStyles } from '~/modules/iconSearch';
-import CountdownTimerBar, { links as countdownTimerBarStyles } from '~/modules/countdownTimerBar';
-import AnnouncementTopBanner, { links as announcementTopBannerStyles } from '~/modules/announcementTopBanner';
+import DesktopNavItem, { links as desktopNavItemStyles } from '~/modules/mainNav/desktopNavItem';
+import HeaderIcons, { links as headerIconsStyles } from '~/modules/mainNav/headerIcons';
+import HeaderLogo, { links as headerLogoStyles } from '~/modules/mainNav/headerLogo';
+import NavTopHeader, { links as navTopHeaderStyles } from '~/modules/mainNav/navTopHeader';
+import MobileNavbar, { links as mobileNavbarStyles } from '~/modules/mainNav/mobileNavbar';
+import MainNavMobileOverlay, { links as mainNavMobileOverlayStyles } from '~/modules/mainNav/mainNavMobileOverlay';
+import PromoOfferBar, { links as promoOfferBarStyles } from '~/modules/mainNav/promoOfferBar';
+import IconSearch, { links as iconSearchStyles } from '~/modules/mainNav/iconSearch';
+import CountdownTimerBar, { links as countdownTimerBarStyles } from '~/modules/mainNav/countdownTimerBar';
+import AnnouncementTopBanner, { links as announcementTopBannerStyles } from '~/modules/mainNav/announcementTopBanner';
 
 import styles from './styles.css';
 

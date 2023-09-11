@@ -1,8 +1,8 @@
-import SiteSwitcher, { links as siteSwitcherStyles } from '~/modules/siteSwitcher';
-import FooterCopyright, { links as footerCopyrightStyles} from '~/modules/footerCopyright';
-import FooterSocial, { links as footerSocialStyles} from '~/modules/footerSocial';
-import FooterLogo, { links as footerLogoStyles } from '~/modules/footerLogo';
-import FooterNav, { links as footerNavStyles } from '~/modules/footerNav';
+import SiteSwitcher, { links as siteSwitcherStyles } from '~/modules/footer/siteSwitcher';
+import FooterCopyright, { links as footerCopyrightStyles} from '~/modules/footer/footerCopyright';
+import FooterSocial, { links as footerSocialStyles} from '~/modules/footer/footerSocial';
+import FooterLogo, { links as footerLogoStyles } from '~/modules/footer/footerLogo';
+import FooterNav, { links as footerNavStyles } from '~/modules/footer/footerNav';
 
 import styles from './styles.css';
 

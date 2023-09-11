@@ -1,10 +1,10 @@
 import {useEffect } from 'react';
-import Listrack from '~/modules/listrack';
-import GladlySidekick from '~/modules/gladlySidekick';
-import { SiteSwitcherPopUp } from '~/modules/siteSwitcher';
-import PLPSkeleton, { links as PLPSkeletonStyles } from '~/modules/plpSkeleton';
-import PDPSkeleton, { links as PDPSkeletonStyles } from '~/modules/pdpSkeleton';
-import EmailSmsSignup, { links as EmailSmsSignupStyles } from '~/modules/emailSmsSignup';
+import Listrack from '~/modules/bodyBottom/listrack';
+import GladlySidekick from '~/modules/bodyBottom/gladlySidekick';
+import { SiteSwitcherPopUp } from '~/modules/footer/siteSwitcher';
+import PLPSkeleton, { links as PLPSkeletonStyles } from '~/modules/plp/plpSkeleton';
+import PDPSkeleton, { links as PDPSkeletonStyles } from '~/modules/pdp/pdpSkeleton';
+import EmailSmsSignup, { links as EmailSmsSignupStyles } from '~/modules/bodyBottom/emailSmsSignup';
 
 import styles from './styles.css';
 import { useCustomerState } from '~/hooks/useCostumer';
