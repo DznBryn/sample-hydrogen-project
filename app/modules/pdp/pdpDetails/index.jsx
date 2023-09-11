@@ -10,7 +10,7 @@ import { IconClose } from '../../plp/plpFilterModal';
 import PDPTitle, { links as pdpTitleStyles } from '../pdpTitle';
 import PDPPrice, { links as pdpPriceStyles } from '../pdpPrice';
 import PDPVariants, { links as pdpVariantsStyles } from '../pdpVariants';
-import PDPAddToCart, { links as pdpAddToCartStyles } from '../../pdpAddToCart';
+import PDPAddToCart, { links as pdpAddToCartStyles } from '../../addToCartButton';
 import ModalGeneric, { links as modalGenericStyles } from '../../modalGeneric';
 import { CertifiedBadge, PDPBadges, links as badgesStyles } from '../../badges';
 import PDPConditions, { links as pdpConditionsStyles } from '../pdpConditions';

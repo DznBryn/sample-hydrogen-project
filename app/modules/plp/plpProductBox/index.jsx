@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { triggerAnalyticsProductClick, getCurrency } from '~/utils/functions/eventFunctions';
-import PDPAddToCart, {links as pdpAddToCartStyles} from '../../pdpAddToCart';
+import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import { comparisonUtils } from '../comparisonModal';
 import { Link } from '@remix-run/react';

@@ -1,4 +1,4 @@
-import PDPAddToCart, { links as pdpAddToCartStyles } from '../../pdpAddToCart';
+import PDPAddToCart, { links as pdpAddToCartStyles } from '../../addToCartButton';
 import { switchSliderPanelVisibility } from '../../sliderPanel';
 import { useStore } from '~/hooks/useStore';
 import classnames from 'classnames';

@@ -1,5 +1,5 @@
 import React from 'react';
-import PDPAddToCart, { links as pdpAddToCartStyles } from '../../pdpAddToCart';
+import PDPAddToCart, { links as pdpAddToCartStyles } from '../../addToCartButton';
 // import ResponsiveImage from 'frontend-ui/ResponsiveImage';
 import { getCurrency } from '../../../utils/functions/eventFunctions';
 import styles from './styles.css';
