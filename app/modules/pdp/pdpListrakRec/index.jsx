@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { useCartActions } from '~/hooks/useCart';
 import { triggerAnalyticsOnScroll, prepProduct } from '~/utils/functions/eventFunctions';
 import ProductBoxLoading, { links as productBoxLoadingStyles } from '../../productBoxLoading';
-import PLPProductBox, { links as plpProductBoxStyles } from '../../plpProductBox';
+import PLPProductBox, { links as plpProductBoxStyles } from '../../plp/plpProductBox';
 import { PDPSliderPanelTitle, links as pdpPanelSliderStyles } from '../pdpPanelSlider';
 
 import styles from './styles.css';

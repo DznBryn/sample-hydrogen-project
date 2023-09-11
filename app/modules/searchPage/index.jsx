@@ -2,7 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useCollection } from '~/hooks/useCollection';
 import ListrakRec, { links as listrakRecStyles } from '../listrakRec';
 import ProductBoxLoading, { links as productBoxLoadingStyles } from '../productBoxLoading';
-import PLPProductBox, { links as plpProductBoxStyles } from '../plpProductBox';
+import PLPProductBox, { links as plpProductBoxStyles } from '../plp/plpProductBox';
 import { useYotpo } from '~/hooks/useYotpo';
 import { useSearch } from '~/hooks/useSearch';
 

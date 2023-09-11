@@ -2,7 +2,7 @@ import {useEffect } from 'react';
 import Listrack from '~/modules/listrack';
 import GladlySidekick from '~/modules/gladlySidekick';
 import { SiteSwitcherPopUp } from '~/modules/siteSwitcher';
-import PLPSkeleton, { links as PLPSkeletonStyles } from '~/modules/plpSkeleton';
+import PLPSkeleton, { links as PLPSkeletonStyles } from '~/modules/plp/plpSkeleton';
 import PDPSkeleton, { links as PDPSkeletonStyles } from '~/modules/pdp/pdpSkeleton';
 import EmailSmsSignup, { links as EmailSmsSignupStyles } from '~/modules/emailSmsSignup';
 

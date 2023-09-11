@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { triggerAnalyticsOnScroll } from '~/utils/functions/eventFunctions';
 import { useCollection } from '~/hooks/useCollection';
-import Product, {links as productStyles} from '../plpProductBox';
+import Product, {links as productStyles} from '../plp/plpProductBox';
 
 import styles from './styles.css';
 

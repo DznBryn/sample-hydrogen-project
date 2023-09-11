@@ -1,4 +1,4 @@
-import FireWorkCarousel, { links as fireWorkCarouselStyles } from '../fireWorkCarousel';
+import FireWorkCarousel, { links as fireWorkCarouselStyles } from '../../fireWorkCarousel';
 import getApiKeys from '~/utils/functions/getApiKeys';
 
 import styles from './styles.css';

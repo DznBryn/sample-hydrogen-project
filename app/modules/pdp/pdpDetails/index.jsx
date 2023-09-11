@@ -6,7 +6,7 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import { useCustomerState } from '~/hooks/useCostumer';
 import { switchSliderPanelVisibility } from '../../sliderPanel';
 import { triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
-import { IconClose } from '../../plpFilterModal';
+import { IconClose } from '../../plp/plpFilterModal';
 import PDPTitle, { links as pdpTitleStyles } from '../pdpTitle';
 import PDPPrice, { links as pdpPriceStyles } from '../pdpPrice';
 import PDPVariants, { links as pdpVariantsStyles } from '../pdpVariants';

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { getCurrency, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import { Link } from '@remix-run/react';
-import PDPAddToCart, { links as pdpAddToCartStyles } from '../pdpAddToCart';
+import PDPAddToCart, { links as pdpAddToCartStyles } from '../../pdpAddToCart';
 import PLPBadges, { links as plpBadgesStyles } from '../plpBadges';
-import Badges, { links as badgesStyles } from '../badges';
+import Badges, { links as badgesStyles } from '../../badges';
 import Product, { links as plpProductBoxStyles } from '../plpProductBox';
 
 import styles from './styles.css';

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import FireWorkStory from '../fireWorkStory';
+import FireWorkStory from '../../fireWorkStory';
 
 import styles from './styles.css';
 
