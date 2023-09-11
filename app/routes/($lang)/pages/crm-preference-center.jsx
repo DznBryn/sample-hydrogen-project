@@ -6,8 +6,7 @@ export const links = () => crmPreferenceCenterStyles();
 
 export default function CrmPreferenceCenterComponent() {
   return (
-    <Layouts.MainNavFooter
-        <SkeletonLoader />
+    <Layouts.MainNavFooter>
        <CrmPreferenceCenter />
     </Layouts.MainNavFooter>
   );
