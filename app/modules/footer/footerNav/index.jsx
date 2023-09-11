@@ -1,6 +1,6 @@
 import React from 'react';
-import FooterNavDesktop, { links as footerNavDesktopStyles } from '~/modules/footerNavDesktop';
-import FooterNavMobile, { links as footerNavMobileStyles } from '~/modules/footerNavMobile';
+import FooterNavDesktop, { links as footerNavDesktopStyles } from '~/modules/footer/footerNavDesktop';
+import FooterNavMobile, { links as footerNavMobileStyles } from '~/modules/footer/footerNavMobile';
 
 import styles from './styles.css';
 
