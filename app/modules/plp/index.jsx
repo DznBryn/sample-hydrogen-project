@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer, useRef, } from 'react';
 import classnames from 'classnames';
-import { mockCollection, mockFilterOptions, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
+import { mockCollection, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from './plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from './genericRecommendedProducts';
@@ -32,7 +32,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 
   const sortOptions = mockSortOptions;
   collection = collection || mockCollection;
-  filtersOptions = filtersOptions || mockFilterOptions;
+  filtersOptions = getSortedFilterOptions(filtersOptions);
 
   const currentFiltersConfig = useRef({});
 
@@ -79,6 +79,19 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     setFilteredProducts(
       sortProducts(sortedBy, null, filterProducts(products, value))
     );
+  }
+
+  function getSortedFilterOptions(options){
+
+    const sorted = [];
+
+    sorted[0] = options.find(data => data.name === 'product category');
+    sorted[1] = options.find(data => data.name === 'skin type');
+    sorted[2] = options.find(data => data.name === 'skin concern');
+    sorted[3] = options.find(data => data.name === 'ingredient preferences');
+
+    return sorted;
+
   }
 
   // function which will be called on reducer
@@ -229,7 +242,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     <div className={'empty__container'}>
       <h2 className={'empty__header'}>NO RESULTS</h2>
       <p className={'empty__body_text'}>
-        Sorry! There aren&apost any results for your selections. Please adjust your
+        Sorry! There aren&apos;t any results for your selections. Please adjust your
         filters to continue.
       </p>
       <p className={'empty__body_text'}>
@@ -254,7 +267,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     <div className={'plpWrapper minHeight'} >
       <section id="section" className={isInfluencerPage ? 'influencerContainer' : 'plpContainer'}>
         {!isInfluencerPage && (
-          <Title title={titleContent} showAfterpay={cartConfig.showAfterpay} />
+          <Title title={titleContent} showAfterpay={cartConfig.show_afterpay} />
         )}
 
         {slug === 'all' && (
