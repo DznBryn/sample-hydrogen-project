@@ -293,14 +293,14 @@ function getEnv(){
 
     const {host} = window.location;
    
-    if(host.includes('localhost') || host.includes('tula-hydroxy-def')){
-      return 'US_STG';
-    }else if(host.includes('tula.com')){ 
+    if(host.includes('tula.com')){ 
       return 'US_PROD';
     }else if(host.includes('tulaskincare.ca')){
       return 'CA_PROD';
     }else if(host.includes('tulaskincare.co.uk')){
       return 'UK_PROD';
+    }else{
+      return 'US_STG';
     }
 
   }else{ //on server end - need to check if it will bring no problem on differents envs
