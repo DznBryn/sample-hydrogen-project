@@ -19,7 +19,6 @@ const ContactUs = ({content}) => {
         </div>
 
         <div className={"contactUsBody"}>
-          
           <div className={"contactUsDetails"}>
             <div>
               <img className={"contactIcon"} src={content[0].contactEmailIcon.asset.url} />
