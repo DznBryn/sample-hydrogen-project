@@ -1,4 +1,4 @@
-.fw_bold {
+.fw_bold_mobile {
   font-weight: 900;
   /* text-transform: uppercase; */
 }
@@ -62,13 +62,13 @@ ul li:first-child .linkItem_link__container {
   }
 }
 
-.fw_bold {
+.fw_bold_mobile {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-.fw_bold img {
+.fw_bold_mobile img {
   height: 12px;
   width: 12px;
   margin-bottom: 2px;

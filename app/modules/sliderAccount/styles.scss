@@ -13,7 +13,7 @@
   text-decoration: none;
 }
 
-.header {
+.sliderAccount_header {
   font-weight: 800;
   font-size: 21px;
   line-height: 14px;
@@ -24,7 +24,7 @@
   gap: 15px;
 }
 
-.header p {
+.sliderAccount_header p {
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
@@ -32,11 +32,11 @@
   color: #4C4E56;
 }
 
-.header>span {
+.sliderAccount_header>span {
   text-transform: capitalize;
 }
 
-.header>span>span {
+.sliderAccount_header>span>span {
   font-size: 21px;
   font-weight: 400;
   line-height: 14px;

@@ -30,7 +30,7 @@ const MainNavMobileOverlay = ({ mobileOverlayItems, mobileNavMainButton }) => {
 
       <FooterButtons />
 
-      <Link to={mobileNavMainButton.linkURL} id={'footer'} onClick={() => { (getApiKeys().FEATURE_FLAGS.LOYALTY) && triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'mobileBanner' }); }} style={((getApiKeys().FEATURE_FLAGS.LOYALTY)) ? { backgroundImage: 'url(' + mobileNavMainButton.imageBackground.asset.url + ')' } : {}}>
+      <Link reloadDocument to={mobileNavMainButton.linkURL} id={'footer'} onClick={() => { (getApiKeys().FEATURE_FLAGS.LOYALTY) && triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'mobileBanner' }); }} style={((getApiKeys().FEATURE_FLAGS.LOYALTY)) ? { backgroundImage: 'url(' + mobileNavMainButton.imageBackground.asset.url + ')' } : {}}>
 
         <div className={['content', ((getApiKeys().FEATURE_FLAGS.LOYALTY) ? 'whiteColor' : '')].join(' ')} onClick={handleClickOnLink}>
           <p className={(getApiKeys().FEATURE_FLAGS.LOYALTY) && 'whiteColor'}>{mobileNavMainButton.header}</p>
@@ -53,7 +53,7 @@ const Navigation = ({ overlayItems }) => {
 
   function handleClickOnOption(e) {
 
-    const menuOption = e.currentTarget;
+    const menuOption = e.currentTarget.parentNode;
     const icon = menuOption.querySelector('.navIcon');
     const subItems = menuOption.querySelector('.navGroupItems');
     const isItOpen = menuOption.classList.contains('active');
@@ -65,7 +65,7 @@ const Navigation = ({ overlayItems }) => {
       const heightToGo = ((isItOpen) ? optionOffsetHeight : optionOffsetHeight + subItems.offsetHeight) + 'px';
       const iconToShow = (isItOpen) ? '+' : '–';
 
-      menuOption.classList[(isItOpen) ? 'remove' : 'add'](styles.active);
+      menuOption.classList[(isItOpen) ? 'remove' : 'add']('active');
       menuOption.style.height = heightToGo;
       icon.textContent = iconToShow;
 
@@ -75,7 +75,7 @@ const Navigation = ({ overlayItems }) => {
 
   const LinkButton = ({ navItem, idx }) => (
 
-    <Link to={navItem.linkUrl} style={{ zIndex: idx.toString() }}>
+    <Link reloadDocument to={navItem.linkUrl} style={{ zIndex: idx.toString() }}>
       <div className={'navItem nav_click_hamburger_t1'} onClick={handleClickOnLink}>
         <ButtonLabel navItem={navItem} />
       </div>
@@ -85,9 +85,11 @@ const Navigation = ({ overlayItems }) => {
 
   const ButtonwithSubMenu = ({ navItem, idx }) => (
 
-    <div className={'navItem nav_click_hamburger_t1'} onClick={handleClickOnOption} style={{ zIndex: idx.toString() }}>
-      <ButtonLabel navItem={navItem} />
-      <span className={'navIcon'}>+</span>
+    <div className={'navItem nav_click_hamburger_t1'} style={{ zIndex: idx.toString() }}>
+      <div onClick={handleClickOnOption}>
+        <ButtonLabel navItem={navItem} />
+        <span className={'navIcon'}>+</span>
+      </div>
       <SubItems navItem={navItem} />
     </div>
 
@@ -100,7 +102,7 @@ const Navigation = ({ overlayItems }) => {
       {
         navItem.dropdownOverlay?.overlayNavLinks.map((navLink) => (
 
-          <Link to={navLink.url} key={navLink.displayText}>
+          <Link reloadDocument to={navLink.url} key={navLink.displayText}>
             <div className={'navGroupItem nav_click_hamburger_t2'} onClick={handleClickOnLink}>
               {navLink.displayText}
               {navLink.calloutText && <span className={'callout'} style={{ color: (navLink?.calloutFontColorHex) ? navLink?.calloutFontColorHex : '' }}>{navLink.calloutText}</span>}
@@ -127,14 +129,14 @@ const Navigation = ({ overlayItems }) => {
 
     <div className={'overlayMenu'}>
       <div id={'header'}>
-        <Link to={'/pages/skincare-finder'} onClick={handleClickOnLink}>
+        <Link reloadDocument to={'/pages/skincare-finder'} onClick={handleClickOnLink}>
           <p>Take our skin quiz</p>
           find your perfect skin routine
         </Link>
       </div>
       {
         overlayItems?.map((navItem, idx) =>
-          (navItem.linkUrl !== '') ?
+          (navItem.linkUrl !== '' && navItem.linkUrl !== null) ?
             <LinkButton navItem={navItem} idx={idx} key={navItem.displayText} />
             : <ButtonwithSubMenu navItem={navItem} idx={idx} key={navItem.displayText} />)
       }
@@ -161,7 +163,7 @@ const FooterButtons = () => {
       {
         links.map((data) => (
           (data.showIt) && (
-            <Link to={data.link} className={'extraLink'} key={data.label}
+            <Link reloadDocument to={data.link} className={'extraLink'} key={data.label}
               onClick={(data.onClick ? (() => { data.onClick(); handleClickOnLink(); }) : (handleClickOnLink))}>
               {data.icon}
               <span>{data.label}</span>

@@ -18,7 +18,7 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
 
   const {
     announcementTextRaw = [],
-    announcementUrl,
+    announcementURL,
     emoji,
     shouldOpenModal,
     modalLinkText,
@@ -48,12 +48,12 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
   return (
     <>
       <div key={index} className={'messageBox'}>
-        <a className={'messageLink'} style={{ fontColor: fontColor }} href={announcementUrl}>
+        <Link reloadDocument className={'messageLink'} style={{ fontColor: fontColor }} to={announcementURL}>
           <PortableText value={getFirstPromoRichText(announcementTextRaw)} />
           {emoji && (
             <img src={emoji.src} />
           )}
-        </a>
+        </Link>
         {shouldOpenModal && (
           <p
             className={'seeDetailsMessage'}
@@ -65,6 +65,7 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
         )}
         {shouldOpenLink && (
           <Link
+            reloadDocument
             to={linkToGo}
             className={'seeDetailsMessage'}
             style={{ color: fontColor }}

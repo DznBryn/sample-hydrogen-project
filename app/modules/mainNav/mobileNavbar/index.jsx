@@ -105,12 +105,13 @@ const MobileNavbar = ({ content }) => {
   }
 
   const onNavbarClick = (idx) => {
+    
     if (idx === subItemsOpenId) {
       handleCloseSubItems();
       return;
     }
 
-    if (navbarContent[idx].navLinks.length > 0) {
+    if (navbarContent[idx]?.navLinks?.length > 0) {
       handleOpenSubItems(idx);
       return;
     }

@@ -142,7 +142,7 @@ const FooterSubNavDesktop = ({ navLinks = [] }) => {
       {
         navLinks.map(linkItem => (
           <li key={linkItem._id} className={classes.desktopSubNavListItem}>
-            <Link to={linkItem.url} className={classes.listItemLink} style={linkItem?.fontColorHex ? { color: linkItem?.fontColorHex } : undefined}>
+            <Link reloadDocument to={linkItem.url} className={classes.listItemLink} style={linkItem?.fontColorHex ? { color: linkItem?.fontColorHex } : undefined}>
               {linkItem.displayText}
               {linkItem?.emoji && <img src={linkItem.emoji?.asset?.url} />}
             </Link>
@@ -161,7 +161,7 @@ const FooterNavDesktop = ({ navLinkGroups }) => {
       {
         navLinkGroups.map(linkItem => (
           <li key={linkItem._id} className={classes.desktopNavListItem}>
-            <Link to={linkItem.url} className={classes.listItemLinkBold}>
+            <Link reloadDocument to={linkItem.url} className={classes.listItemLinkBold}>
               {linkItem.displayText}
             </Link>
             {linkItem.navLinks && <FooterSubNavDesktop navLinks={linkItem.navLinks} />}

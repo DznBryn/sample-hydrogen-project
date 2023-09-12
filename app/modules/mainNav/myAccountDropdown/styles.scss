@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-start;
 }
-.noLoyalty .cta {
+.noLoyalty .accDropdown_cta {
   padding-bottom: 6px;
 }
 .navAccountMenuOld > a,
@@ -95,45 +95,45 @@
   color: #47c6d9;
   font-weight: 500;
 }
-.content {
+.accDropdown_content {
   font-weight: 400;
   font-size: 13px;
   color: #4c4e56;
 }
-.content > p {
+.accDropdown_content > p {
   color: #47c6d9;
   font-weight: 900;
   font-size: 18px;
   margin-bottom: 8px;
 }
-.content.accDropdownloggedIn {
+.accDropdown_content.accDropdownloggedIn {
   text-align: center;
 }
-.cta {
+.accDropdown_cta {
   width: 100%;
   display: flex;
   gap: 8px;
   font-weight: 800;
 }
-.cta.accDropdownloggedIn {
+.accDropdown_cta.accDropdownloggedIn {
   flex-direction: column;
   text-align: center;
   font-size: 14px;
 }
-.cta > div,
-.cta > a {
+.accDropdown_cta > div,
+.accDropdown_cta > a {
   border-radius: 3px;
   cursor: pointer;
   text-decoration: none;
 }
-.cta > div:nth-child(1),
-.cta > a:nth-child(1) {
+.accDropdown_cta > div:nth-child(1),
+.accDropdown_cta > a:nth-child(1) {
   padding: 6px 19px;
   color: #fff;
   background: #47C6D9;
 }
-.cta > div:nth-child(2),
-.cta > a:nth-child(2) {
+.accDropdown_cta > div:nth-child(2),
+.accDropdown_cta > a:nth-child(2) {
   padding: 5px 18px;
   color: #47c6d9;
   border: 1px solid #47C6D9;

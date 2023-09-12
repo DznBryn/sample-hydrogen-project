@@ -48,7 +48,7 @@ const CommomVersion = () => {
 
       LoggedIn: () => <>
 
-        <div className={'content accDropdownloggedIn navAccountMenuOld'}>
+        <div className={'accDropdown_content accDropdownloggedIn navAccountMenuOld'}>
           <a href="/account">My Account</a>
           <a href="https://returns.tula.com/">Returns & Exchanges</a>
           <a href="/pages/contact-us">Contact Us</a>
@@ -65,12 +65,12 @@ const CommomVersion = () => {
 
       LoggedOut: () => <>
 
-        <div className={'content'}>
+        <div className={'accDropdown_content'}>
           <p>Hey, glowgetter!</p>
           login or create an account to easily manage orders & auto-deliveries
         </div>
 
-        <div className={'cta'} onClick={openSliderAccount.bind(this)}>
+        <div className={'accDropdown_cta'} onClick={openSliderAccount.bind(this)}>
           <div>Join now</div>
           <div>Sign in</div>
         </div>
@@ -152,14 +152,14 @@ const LoyaltyVersion = () => {
 
       LoggedIn: () => <>
 
-        <div className={'content accDropdownloggedIn'}>
+        <div className={'accDropdown_content accDropdownloggedIn'}>
           <p>Hi, {firstName}!</p>
           you have <b><SwellPointBalance /></b> points
         </div>
 
-        <div className={'cta accDropdownloggedIn'}>
-          <Link to={'/account?c=rewards'}>Redeem Points</Link>
-          <Link to={'/pages/upload-receipt'}>Upload a Receipt & Earn</Link>
+        <div className={'accDropdown_cta accDropdownloggedIn'}>
+          <Link reloadDocument to={'/account?c=rewards'}>Redeem Points</Link>
+          <Link reloadDocument to={'/pages/upload-receipt'}>Upload a Receipt & Earn</Link>
           <div className={'signOut'} onClick={async () => {
             await logout();
             window.location.reload();
@@ -172,17 +172,17 @@ const LoyaltyVersion = () => {
 
       LoggedOut: () => <>
 
-        <div className={'content'}>
+        <div className={'accDropdown_content'}>
           <p>Hey, glowgetter!</p>
           login or create an account to manage your <b>TULA 24-7 Rewards</b>
         </div>
 
-        <div className={'cta'} onClick={openSliderAccount.bind(this)}>
+        <div className={'accDropdown_cta'} onClick={openSliderAccount.bind(this)}>
           <div onClick={() => triggerAnalyticsLoyaltyEvents('SignupBtnClick', { source: 'desktopBanner' })}>Join now</div>
           <div onClick={() => triggerAnalyticsLoyaltyEvents('LoginBtnClick', { source: 'desktopBanner' })}>Sign in</div>
         </div>
 
-        <Link className={'extraButton'} to={'/rewards'} onClick={() => triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'desktopBanner' })}>
+        <Link reloadDocument className={'extraButton'} to={'/rewards'} onClick={() => triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'desktopBanner' })}>
           learn more
         </Link>
 
