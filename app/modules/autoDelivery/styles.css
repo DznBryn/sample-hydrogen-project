@@ -109,10 +109,10 @@
 
 @media all and (max-width: 768px) {
   .AutoDeliveryHero {
-    height: 279px;
+    height: fit-content;
     min-height: 279px;
     width: 100%;
-    margin-top: 104px;
+    margin-top: 0px;
   }
   .AutoDeliveryHero .backgroundImage {
     display: none;
