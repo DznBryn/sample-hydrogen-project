@@ -53,7 +53,7 @@ const Navigation = ({ overlayItems }) => {
 
   function handleClickOnOption(e) {
 
-    const menuOption = e.currentTarget;
+    const menuOption = e.currentTarget.parentNode;
     const icon = menuOption.querySelector('.navIcon');
     const subItems = menuOption.querySelector('.navGroupItems');
     const isItOpen = menuOption.classList.contains('active');
@@ -65,7 +65,7 @@ const Navigation = ({ overlayItems }) => {
       const heightToGo = ((isItOpen) ? optionOffsetHeight : optionOffsetHeight + subItems.offsetHeight) + 'px';
       const iconToShow = (isItOpen) ? '+' : '–';
 
-      menuOption.classList[(isItOpen) ? 'remove' : 'add'](styles.active);
+      menuOption.classList[(isItOpen) ? 'remove' : 'add']('active');
       menuOption.style.height = heightToGo;
       icon.textContent = iconToShow;
 
@@ -85,9 +85,11 @@ const Navigation = ({ overlayItems }) => {
 
   const ButtonwithSubMenu = ({ navItem, idx }) => (
 
-    <div className={'navItem nav_click_hamburger_t1'} onClick={handleClickOnOption} style={{ zIndex: idx.toString() }}>
-      <ButtonLabel navItem={navItem} />
-      <span className={'navIcon'}>+</span>
+    <div className={'navItem nav_click_hamburger_t1'} style={{ zIndex: idx.toString() }}>
+      <div onClick={handleClickOnOption}>
+        <ButtonLabel navItem={navItem} />
+        <span className={'navIcon'}>+</span>
+      </div>
       <SubItems navItem={navItem} />
     </div>
 
@@ -134,7 +136,7 @@ const Navigation = ({ overlayItems }) => {
       </div>
       {
         overlayItems?.map((navItem, idx) =>
-          (navItem.linkUrl !== '') ?
+          (navItem.linkUrl !== '' && navItem.linkUrl !== null) ?
             <LinkButton navItem={navItem} idx={idx} key={navItem.displayText} />
             : <ButtonwithSubMenu navItem={navItem} idx={idx} key={navItem.displayText} />)
       }
