@@ -32,7 +32,7 @@ const Sustainability = () => {
           <div className={"blockOne gridBlock"}>
             <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/Official_TerraCycle_Logo.png?v=1610141256" alt="TerraCycle" />
             <h3>TULA<sup>®</sup> Skincare Recycling Program</h3>
-            <p>Recycle TULA jars &amp; tubes that can’t be curbside recycled, free of charge, thanks to our partnership with TerraCycle<sup>®</sup>. <Link href="https://www.terracycle.com/en-US/brigades/tula" target="_blank" rel="noopener noreferrer">How it works</Link>. </p>
+            <p>Recycle TULA jars &amp; tubes that can’t be curbside recycled, free of charge, thanks to our partnership with TerraCycle<sup>®</sup>. <Link to="https://www.terracycle.com/en-US/brigades/tula" target="_blank" rel="noopener noreferrer">How it works</Link>. </p>
           </div>
           
           <div className={"blockTwo gridBlock"}>

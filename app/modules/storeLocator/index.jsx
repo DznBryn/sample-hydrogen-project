@@ -28,7 +28,7 @@ const StoreLocator = ({content}) => {
     });
 
   return (
-    <div id="store-locator" className={"fixedWidthPage minHeight"}>
+    <div id="store-locator" className={"fixedWidthPage minHeight container"}>
       <h1 className={"h1"}>Store Locator</h1>
       <h2 className={"h2"}>
       Find TULA in one of our retail partners nearest you. You can also shop TULA in Sephora Canada and Mecca Australia stores.

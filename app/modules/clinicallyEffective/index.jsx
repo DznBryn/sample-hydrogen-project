@@ -98,7 +98,7 @@ const ClinicallyEffective = () => (
           <span>
             We create hardworking formulas made with good-for-you ingredients so our community can feel confident in choosing TULA products. At TULA, clean isn’t just a buzzword, it’s part of our core philosophy. 
           </span>
-          <Link href={"/pages/clean"}>
+          <Link to={"/pages/clean"}>
             <button className={"ctaBtn"}>Learn More</button>
           </Link>
         </div>

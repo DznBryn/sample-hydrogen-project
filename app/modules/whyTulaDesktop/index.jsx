@@ -100,7 +100,7 @@ const WhyTulaDesktop = ({content}) => {
               <p className={"fadeInParagraph"}>
                 TULA founder, Dr. Roshini Raj is a practicing gastroenterologist who has been studying probiotics for 20 years. A breakthrough innovation in skincare, probiotic extracts are a powerful ingredient that help soothe, hydrate and nourish skin to improve its balance and calm the look of irritation. That’s why 100% of TULA skincare products are powered by probiotic extracts & superfoods.
               </p>
-              <Link href={content[0].sectionLinks[0]}>
+              <Link to={content[0].sectionLinks[0]}>
                 <button className={"ctaBtn"}>Learn More</button>
               </Link>
             </div>
@@ -115,16 +115,16 @@ const WhyTulaDesktop = ({content}) => {
               <p className={"fadeInParagraph"}>
                 We create hardworking formulas made with good-for-you ingredients so our community can feel confident in choosing TULA products. At TULA, clean isn’t just a buzzword, it’s part of our core philosophy.
               </p>
-              <a href={content[0].sectionLinks[1]}>
+              <Link to={content[0].sectionLinks[1]}>
                 <button className={"ctaBtn"}>Learn More</button>
-              </a>
+              </Link>
               <h2 style={{paddingTop: '1em'}} className={"fadeIn"}>
                 what does clinically effective mean at TULA?
               </h2>
               <p className={"fadeInParagraph"}>
                 We take skincare seriously. Our formulas are grounded in thorough scientific research so your products deliver the results you deserve.
               </p>
-              <Link href={content[0].sectionLinks[2]}>
+              <Link to={content[0].sectionLinks[2]}>
                 <button className={"ctaBtn"}>Learn More</button>
               </Link>
             </div>
@@ -166,7 +166,7 @@ const WhyTulaDesktop = ({content}) => {
                 REIMAGINE imagery.
               </p>
 
-              <p className={"hideParaEight, styles.showParaEight"}>
+              <p className={"hideParaEight showParaEight"}>
                 Healthy, not 'perfect.'
               </p>
 
@@ -174,7 +174,7 @@ const WhyTulaDesktop = ({content}) => {
                 REIMAGINE skincare.
               </p>
 
-              <Link href={content[0].sectionLinks[3]}>
+              <Link to={content[0].sectionLinks[3]}>
                 <button className={"ctaBtn"}>Learn More</button>
               </Link>
 
