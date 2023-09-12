@@ -1,20 +1,3 @@
-//mock 
-const storeId = '1e83734e-b29a-4caf-b575-9ee51ad4b9ef'; //stg
-
-const storesIDs = {
-  US: {
-    DEV: '72c84931-eba5-4d46-9ad3-265966ef6a02',
-    PROD: '1ab66bad-5861-4069-811d-256a147da4cb',
-    STG: '1e83734e-b29a-4caf-b575-9ee51ad4b9ef'
-  },
-  CA: {
-    PROD: '4bdc9c79-5b2b-404f-9864-3c814922fcc4'
-  },
-  UK: {
-    PROD: 'ddd6be9a-d79b-4dd6-8652-4c61d3664548'
-  }
-};
-
 const ogKeys = {
   US: {
     AD15: 'ddeeb16695fd11ea80bdbc764e10b970',
@@ -32,60 +15,9 @@ const ogKeys = {
 
 function getApiKeys() {
 
-  switch (storeId) {
+  switch (getEnv()) {
 
-  case (storesIDs.US.DEV):    
-    return {
-
-      CURRENT_ENV: 'US_DEV',
-      CURRENCY_SYMBOL: '$',
-      CLOVERLY_ID: 40953533268141,
-      AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
-      AUDIOEYE_URL: 'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
-      OG_KEY: ogKeys.US.AD20,
-      YOTPO_KEY: 'C0xryJ2odYUmfvBx6EmyD1JP9cAQPAjNA1KBWKwd',
-      LISTRAK_SCRIPT: 'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
-      GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
-      GLADLY_CONFIG: {
-        api: 'https://us-1.gladly.com',
-        orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
-        brandId: 'tula.com-en-us',
-        cdn: 'https://cdn.gladly.com',
-        selector: '#gladly-help-center'
-      },
-      GLADLY_EMBED_CONFIG: { appId: 'tula.com' },
-      GOOGLE_SITE_VERIFICATION_ID: 'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
-      RETURNS_HREF: 'https://returns.tula.com/',
-      LISTRAK_IDS: {
-        // list_id: 345013,
-        // birthday_segment_id: 431,
-        externalEventName: 11771,
-        fieldGroupName: 51,
-        fieldName: 7810
-      },
-      YOTTA_KEY: 'zZisVju12QIJQg',
-      YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
-      YOTPO_LOYALTY_GUID: '2WRlHAg5CQBSYTHLyTML2A',
-      GIFT_CARD_ID: 33630516353,
-      GIFT_CARDS_VARIANTS_IDS: [33630516353, 33630516417, 34008161345, 34008182785, 30290305187886],
-      SHOW_FIREWORK: true,
-      ONE_TRUST: {
-        OtAutoBlock: 'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
-        OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-        // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
-        otButtonMessage: 'Do Not Sell My Information'
-      },
-      FEATURE_FLAGS: {
-        LOYALTY: false,
-      },
-      // API_TYPE: storePlatformApiType
-    };
-
-  case (storesIDs.US.STG):
+  case ('US_STG'):
     return {
 
       CURRENT_ENV: 'US_STG',
@@ -139,7 +71,7 @@ function getApiKeys() {
       // API_TYPE: storePlatformApiType
     };
 
-  case (storesIDs.US.PROD):
+  case ('US_PROD'):
     return {
 
       CURRENT_ENV: 'US_PROD',
@@ -190,7 +122,7 @@ function getApiKeys() {
       // API_TYPE: storePlatformApiType
     };
 
-  case (storesIDs.CA.PROD):
+  case ('CA_PROD'):
     return {
 
       CURRENT_ENV: 'CA_PROD',
@@ -235,7 +167,7 @@ function getApiKeys() {
       // API_TYPE: storePlatformApiType
     };
 
-  case (storesIDs.UK.PROD):
+  case ('UK_PROD'):
     return {
 
       CURRENT_ENV: 'UK_PROD',
@@ -285,6 +217,96 @@ function getApiKeys() {
       },
       // API_TYPE: storePlatformApiType
     };
+  
+  // case ('US_DEV'):    
+  //   return {
+
+  //     CURRENT_ENV: 'US_DEV',
+  //     CURRENCY_SYMBOL: '$',
+  //     CLOVERLY_ID: 40953533268141,
+  //     AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
+  //     AUDIOEYE_URL: 'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
+  //     OG_KEY: ogKeys.US.AD20,
+  //     YOTPO_KEY: 'C0xryJ2odYUmfvBx6EmyD1JP9cAQPAjNA1KBWKwd',
+  //     LISTRAK_SCRIPT: 'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
+  //     GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  //                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  //                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  //                   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  //                   })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
+  //     GLADLY_CONFIG: {
+  //       api: 'https://us-1.gladly.com',
+  //       orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
+  //       brandId: 'tula.com-en-us',
+  //       cdn: 'https://cdn.gladly.com',
+  //       selector: '#gladly-help-center'
+  //     },
+  //     GLADLY_EMBED_CONFIG: { appId: 'tula.com' },
+  //     GOOGLE_SITE_VERIFICATION_ID: 'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
+  //     RETURNS_HREF: 'https://returns.tula.com/',
+  //     LISTRAK_IDS: {
+  //       // list_id: 345013,
+  //       // birthday_segment_id: 431,
+  //       externalEventName: 11771,
+  //       fieldGroupName: 51,
+  //       fieldName: 7810
+  //     },
+  //     YOTTA_KEY: 'zZisVju12QIJQg',
+  //     YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
+  //     YOTPO_LOYALTY_GUID: '2WRlHAg5CQBSYTHLyTML2A',
+  //     GIFT_CARD_ID: 33630516353,
+  //     GIFT_CARDS_VARIANTS_IDS: [33630516353, 33630516417, 34008161345, 34008182785, 30290305187886],
+  //     SHOW_FIREWORK: true,
+  //     ONE_TRUST: {
+  //       OtAutoBlock: 'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
+  //       OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
+  //       // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
+  //       otButtonMessage: 'Do Not Sell My Information'
+  //     },
+  //     FEATURE_FLAGS: {
+  //       LOYALTY: false,
+  //     },
+  //     // API_TYPE: storePlatformApiType
+  //   };
+
+  }
+
+}
+
+function getEnv(){
+
+  /**
+   * I made this function to keep the apiGetEnv as a function.
+   * Here, we are checking the domain to define the enviroment
+   * that the application is running. Definetely, the best 
+   * approach would be to get the storefront.getShopifyDomain
+   * function's return, since it would work on server end too. 
+   * But we only have access to the storefront API data on
+   * the loader function (server end), and the only way to 
+   * access this data would be within a component, usign the
+   * hook useMatches. It's a palliative solution to avoid
+   * transform getApiKeys in a custom hook and have all the
+   * work to update it's implementation on the whole app.
+   */
+
+  if(typeof window === 'object'){
+
+    const {host} = window.location;
+   
+    if(host.includes('localhost') || host.includes('tula-hydroxy-def')){
+      return 'US_STG';
+    }else if(host.includes('tula.com')){ 
+      return 'US_PROD';
+    }else if(host.includes('tulaskincare.ca')){
+      return 'CA_PROD';
+    }else if(host.includes('tulaskincare.co.uk')){
+      return 'UK_PROD';
+    }
+
+  }else{ //on server end - need to check if it will bring no problem on differents envs
+
+    return 'US_STG'; 
+
   }
 
 }
