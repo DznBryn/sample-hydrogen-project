@@ -7,6 +7,7 @@
   padding: 0;
   margin-bottom: .75em;
   text-align: center;
+  width: 100%;
 }
 
 .plpTitleContainer .title {
@@ -22,7 +23,7 @@
   line-height: 25px;
 }
 
-.afterpay {
+.plpTitle_afterpay_container {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -75,7 +76,7 @@
     line-height: 25px;
   }
 
-  .plpTitleContainer .afterpay {
+  .plpTitleContainer .plpTitle_afterpay_container {
     display: none;
   }
 
@@ -93,7 +94,7 @@
   }
 }
 
-.afterpay{
+.afterpay_logo{
   width: 70px;
   margin-right: 0.25em;
 }

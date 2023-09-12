@@ -53,43 +53,6 @@ const HeaderIcons = ({ cartConfig, hideSearch, fixedRight, lpMinimalHeader, prod
     }
   }
 
-  const CartAlert = ({ lpMinimalHeader }) => {
-
-    const ID = (lpMinimalHeader ? 'cartAlertMinimalHeader' : '___cartAlert___');
-
-    function shouldForceLift() {
-
-      if (typeof window === 'object') {
-
-        const IS_LANDING_PAGE = window.location.pathname.includes('/tiktok');
-
-        return (IS_LANDING_PAGE);
-
-      }
-
-    }
-
-    return (
-
-      <div id={ID} className={['cartAlert', 'hidden', (shouldForceLift() ? 'forceLift' : '')].join(' ')} ref={alertRef} data-alert-state="hide">
-
-        <div className={'alertText'}>
-          <div className={'addItem'}>
-            1 item added to cart <span>-</span>
-          </div>
-          {progressMsg}
-        </div>
-
-        <a className={'checkoutButton'} href={cart?.checkoutUrl}>
-          Checkout
-        </a>
-
-      </div>
-
-    );
-
-  };
-
   function getTotalItemsOnCart() {
 
     const GWP_PRODUCT_EXTERNAL_ID = parseInt(cartConfig?.freeGiftPromoProductExternalID);
@@ -112,7 +75,20 @@ const HeaderIcons = ({ cartConfig, hideSearch, fixedRight, lpMinimalHeader, prod
   return (
     <>
 
-      <CartAlert lpMinimalHeader={lpMinimalHeader} />
+      <div id={(lpMinimalHeader ? 'cartAlertMinimalHeader' : '___cartAlert___')} className={'cartAlert hidden'} ref={alertRef} data-alert-state="hide">
+
+        <div className={'alertText'}>
+          <div className={'addItem'}>
+            1 item added to cart <span>-</span>
+          </div>
+          {progressMsg}
+        </div>
+
+        <a className={'checkoutButton'} href={cart?.checkoutUrl}>
+          Checkout
+        </a>
+
+      </div>
 
       {fixedRight === true ?
         <ul id={'headerIcons'} className={'header_icons'}>

@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer, useRef, } from 'react';
 import classnames from 'classnames';
-import { mockCollection, mockFilterOptions, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
+import { mockCollection, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from './plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from './genericRecommendedProducts';
@@ -28,11 +28,11 @@ export const links = () => {
 
 const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig }) => {
 
-  const {refreshWidgets} = useYotpo();
+  const { refreshWidgets } = useYotpo();
 
   const sortOptions = mockSortOptions;
   collection = collection || mockCollection;
-  filtersOptions = filtersOptions || mockFilterOptions;
+  filtersOptions = getSortedFilterOptions(filtersOptions);
 
   const currentFiltersConfig = useRef({});
 
@@ -79,6 +79,19 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     setFilteredProducts(
       sortProducts(sortedBy, null, filterProducts(products, value))
     );
+  }
+
+  function getSortedFilterOptions(options){
+
+    const sorted = [];
+
+    sorted[0] = options.find(data => data.name === 'product category');
+    sorted[1] = options.find(data => data.name === 'skin type');
+    sorted[2] = options.find(data => data.name === 'skin concern');
+    sorted[3] = options.find(data => data.name === 'ingredient preferences');
+
+    return sorted;
+
   }
 
   // function which will be called on reducer
@@ -229,7 +242,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     <div className={'empty__container'}>
       <h2 className={'empty__header'}>NO RESULTS</h2>
       <p className={'empty__body_text'}>
-        Sorry! There aren&apost any results for your selections. Please adjust your
+        Sorry! There aren&apos;t any results for your selections. Please adjust your
         filters to continue.
       </p>
       <p className={'empty__body_text'}>
@@ -254,7 +267,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
     <div className={'plpWrapper minHeight'} >
       <section id="section" className={isInfluencerPage ? 'influencerContainer' : 'plpContainer'}>
         {!isInfluencerPage && (
-          <Title title={titleContent} showAfterpay={cartConfig.showAfterpay} />
+          <Title title={titleContent} showAfterpay={cartConfig.show_afterpay} />
         )}
 
         {slug === 'all' && (
@@ -477,43 +490,16 @@ const bannersMock = [
     ]
   ],
   [
-    'promo-4',
+    'firework-plp-banner',
     [
       {
-        'namespace': 'promo-2.promo-boxes',
-        'value': '/products/hydrating-day-night-cream?internal_source=plp_eg247',
-        'key': 'promo-box-url',
-        'storefrontId': 'gid://shopify/Metafield/21326974320686',
-        '_id': 'b573180f-9354-4052-9f35-c9c746e7cd8e'
-      },
-      {
-        'namespace': 'promo-2.promo-boxes',
-        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/090122SITEPLPEVERGREEN247DAYANDNIGHTCREAMMOBILE-750x420-1662152903487.jpg',
-        'key': 'promo-box-image-mobile',
-        'storefrontId': 'gid://shopify/Metafield/21326974353454',
-        '_id': 'e11a7bb7-2727-47eb-a910-9485d7c531f1'
-      },
-      {
-        'namespace': 'promo-2.promo-boxes',
-        'value': 'https://cdn.shopify.com/s/files/1/1736/9637/t/97/assets/090122SITEPLPEVERGREEN247DAYANDNIGHTCREAMDESKTOP-520x926-1662152903482.jpg',
-        'key': 'promo-box-image-desktop',
-        'storefrontId': 'gid://shopify/Metafield/21326974386222',
-        '_id': '7ab1ffe5-ff05-4105-b682-c19da8376ee5'
-      },
-      {
-        'namespace': 'promo-2.promo-boxes',
-        'value': 'false',
-        'key': 'promo-box-link-target',
-        'storefrontId': 'gid://shopify/Metafield/21326974418990',
-        '_id': '199db859-8749-42cb-ba38-57fe1f33ec14'
-      },
-      {
-        'namespace': 'promo-2.promo-boxes',
-        'value': 'type-1',
-        'key': 'promo-box-type',
-        'storefrontId': 'gid://shopify/Metafield/21326974451758',
-        '_id': 'a192fe4f-aa9a-465e-9507-65095405f177'
+        namespace: 'firework.plp-banners',
+        storefrontId: 'gid://shopify/Metafield/21576211234989',
+        key: 'firework-video-id',
+        value:
+          '5DJBea',
+        _id: '2c681480-a2fc-4ec0-a5c1-9d508e4497cc',
       }
-    ]
+    ],
   ],
 ];

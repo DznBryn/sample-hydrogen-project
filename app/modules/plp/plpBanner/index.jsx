@@ -19,10 +19,7 @@ const BannerDesktop = ({ banner = {}, ...rest }) => {
           </div>
         ) : (
           <a href={banner.url}>
-            {/* <img src={banner.desktop} className={'imageDesktop'} /> */}
-            <div className={'imageDesktop'} style={{backgroundColor: '#47C6D9', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white' }}>
-              Add banners via Metafield
-            </div> {/*placeholder -> remove after add banner via metafields*/}
+            <img src={banner.desktop} className={'imageDesktop'} />
           </a>
         )
       }

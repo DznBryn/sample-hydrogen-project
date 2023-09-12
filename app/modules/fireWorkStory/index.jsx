@@ -4,9 +4,9 @@ import { appendScript } from '~/utils/functions/eventFunctions';
 const FireWorkStory = ({ playlist, id, autoplay = false }) => {
 
   useEffect(() => {
-    appendScript('//asset.fwcdn2.com/js/integrations/shopify.js')?.then(() => { });
-    appendScript('//asset.fwcdn2.com/js/fwn.js')?.then(() => { });
-    appendScript('//asset.fwcdn3.com/js/storyblock.js')?.then(() => { });
+    appendScript('https://asset.fwcdn2.com/js/integrations/shopify.js')?.then(() => { });
+    appendScript('https://asset.fwcdn2.com/js/fwn.js')?.then(() => { });
+    appendScript('https://asset.fwcdn3.com/js/storyblock.js')?.then(() => { });
 
     /* Products Hydration */
     document.addEventListener('fw:shopping:hydrate-products', async (/*event*/) => {
