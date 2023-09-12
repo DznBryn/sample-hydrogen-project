@@ -16,7 +16,7 @@ const classes = {
   mobileSubNavListItem: classnames('mobileSubNav_listItem'),
   listItemLinkContainer: classnames('linkItem_link__container'),
   listItemLink: classnames('listItem_link'),
-  listItemLinkBold: classnames('listItem_link', 'fw_bold')
+  listItemLinkBold: classnames('listItem_link', 'fw_bold_mobile')
 };
 
 const FooterSubNavMobile = ({ navLinks = [] }) => (
@@ -24,7 +24,7 @@ const FooterSubNavMobile = ({ navLinks = [] }) => (
     {
       navLinks.map(linkItem =>
         <li key={linkItem._id} className={classes.mobileSubNavListItem}>
-          <Link to={linkItem.url} className={classes.listItemLink}>
+          <Link reloadDocument to={linkItem.url} className={classes.listItemLink}>
             {linkItem.displayText}
           </Link>
         </li>
@@ -36,12 +36,12 @@ const FooterSubNavMobile = ({ navLinks = [] }) => (
 const FooterNavMobile = ({ navLinkGroups = [] }) => {
 
   const handleDropdown = (e) => {
-    if (e.currentTarget.classList.contains(styles.active)) {
-      e.currentTarget.classList.remove(styles.active);
+    if (e.currentTarget.classList.contains('active')) {
+      e.currentTarget.classList.remove('active');
       e.currentTarget.children[0].children[1].textContent = '+';
     } else {
-      e.currentTarget.classList.add(styles.active);
-      e.currentTarget.children[0].children[1].textContent = 'U+2013';
+      e.currentTarget.classList.add('active');
+      e.currentTarget.children[0].children[1].textContent = '–';
     }
   };
 
@@ -49,7 +49,7 @@ const FooterNavMobile = ({ navLinkGroups = [] }) => {
     <ul className={classes.footerMobileNav}>
       {
         navLinkGroups.map(linkItem => linkItem.navLinks && linkItem.navLinks.length > 0 ? (
-          <li key={linkItem._id} className={classes.mobileNav_listItem} onClick={(e) => handleDropdown(e)}>
+          <li key={linkItem._id} className={classes.mobileNavListItem} onClick={(e) => handleDropdown(e)}>
             <div className={classes.listItemLinkContainer}>
               <span to={linkItem.url} className={classes.listItemLinkBold}>{linkItem.displayText}</span>
               <span className={classes.listItemLinkBold} >+</span>
@@ -57,11 +57,11 @@ const FooterNavMobile = ({ navLinkGroups = [] }) => {
             <FooterSubNavMobile navLinks={linkItem.navLinks} />
           </li>
         ) : (
-          <li key={linkItem._id} className={classes.mobileNav_listItem}>
+          <li key={linkItem._id} className={classes.mobileNavListItem}>
             <div className={classes.listItemLinkContainer}>
-              <Link to={linkItem.url} className={classes.listItemLinkBold} style={linkItem?.fontColorHex ? { color: linkItem?.fontColorHex } : undefined}>
+              <Link reloadDocument to={linkItem.url} className={classes.listItemLinkBold} style={linkItem?.fontColorHex ? { color: linkItem?.fontColorHex } : undefined}>
                 {linkItem.displayText}
-                {linkItem?.emoji && <img src={linkItem.emoji?.src} />}
+                {linkItem?.emoji && <img src={linkItem.emoji?.asset?.url} />}
               </Link>
             </div>
           </li>
