@@ -232,7 +232,7 @@ const MainContent = () => {
   }
 
   function disableFormButton(form) {
-    const button = form;
+    const button = form[form.length - 1];
 
     button.disabled = true;
     button.classList.add('disabledButton');
