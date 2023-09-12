@@ -102,7 +102,7 @@ export default function PDPAddToCart({
           disabled={addToCart?.state === 'submitting'}
         >
           <span>
-            {displayPrice === true ? `Add To Cart - ${3400 / 100}` : 'Add To Cart'}
+            {(displayPrice === true && addItem?.product?.price) ? `Add To Cart - $${addItem?.product?.price}` : 'Add To Cart'}
           </span>
         </button>
       </div>
