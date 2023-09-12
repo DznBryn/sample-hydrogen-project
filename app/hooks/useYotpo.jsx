@@ -8,7 +8,11 @@ export function useYotpo() {
 
       if (!yotpoSDK) throw new Error('Yotpo SDK not found');
 
-      yotpoSDK?.initWidgets();
+      try{
+
+        yotpoSDK?.initWidgets();
+
+      }catch(e){ throw new Error(e); }
 
     }
 
