@@ -19,7 +19,6 @@ const ContactUs = ({content}) => {
         </div>
 
         <div className={"contactUsBody"}>
-          
           <div className={"contactUsDetails"}>
             <div>
               <img className={"contactIcon"} src={content[0].contactEmailIcon.asset.url} />
@@ -32,7 +31,6 @@ const ContactUs = ({content}) => {
               <p className={"secondHeader"}>{content[0].phoneNumber}</p>
               <p>{content[0].officeHours}</p>
             </div>
-
             <div>
               <img className={"contactIcon"} src={content[0].contactSocialIcon.asset.url} />
               <h3>{content[0].ContactSocialHeader}</h3>
