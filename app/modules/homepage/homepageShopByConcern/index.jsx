@@ -7,30 +7,43 @@ export const links = () => {
 };
 
 const HomepageShopByConcern = ({ concerns }) => {
+
+  /**
+   * paleative approach to sort
+   * the content since Sanity
+   * doens't accept ordering
+   * on CMS doc content.
+   */
+
+  const _1 = concerns[2];
+  const _2 = concerns[0];
+  const _3 = concerns[3];
+  const _4 = concerns[1];
+
   return (
     <div className={'homepageShopByConcern'}>
-      <a className={'concernBlock'} href={concerns[0].collectionLink}>
-        <div style={{ backgroundImage: `url(${concerns[0].concernImage.asset.url})` }}>
-          <h2>{concerns[0].name}</h2>
-          <p>{concerns[0].linkText}</p>
+      <a className={'concernBlock'} href={_1.collectionLink}>
+        <div style={{ backgroundImage: `url(${_1.concernImage.asset.url})` }}>
+          <h2>{_1.name}</h2>
+          <p>{_1.linkText}</p>
         </div>
       </a>
-      <a className={'concernBlock'} href={concerns[1].collectionLink}>
-        <div style={{ backgroundImage: `url(${concerns[1].concernImage.asset.url})` }}>
-          <h2>{concerns[1].name}</h2>
-          <p>{concerns[1].linkText}</p>
+      <a className={'concernBlock'} href={_2.collectionLink}>
+        <div style={{ backgroundImage: `url(${_2.concernImage.asset.url})` }}>
+          <h2>{_2.name}</h2>
+          <p>{_2.linkText}</p>
         </div>
       </a>
-      <a className={'concernBlock'} href={concerns[2].collectionLink}>
-        <div style={{ backgroundImage: `url(${concerns[2].concernImage.asset.url})` }}>
-          <h2>{concerns[2].name}</h2>
-          <p>{concerns[2].linkText}</p>
+      <a className={'concernBlock'} href={_3.collectionLink}>
+        <div style={{ backgroundImage: `url(${_3.concernImage.asset.url})` }}>
+          <h2>{_3.name}</h2>
+          <p>{_3.linkText}</p>
         </div>
       </a>
-      <a className={'concernBlock'} href={concerns[3].collectionLink}>
-        <div style={{ backgroundImage: `url(${concerns[3].concernImage.asset.url})` }}>
-          <h2>{concerns[3].name}</h2>
-          <p>{concerns[3].linkText}</p>
+      <a className={'concernBlock'} href={_4.collectionLink}>
+        <div style={{ backgroundImage: `url(${_4.concernImage.asset.url})` }}>
+          <h2>{_4.name}</h2>
+          <p>{_4.linkText}</p>
         </div>
       </a>
     </div>

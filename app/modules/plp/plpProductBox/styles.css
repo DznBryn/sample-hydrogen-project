@@ -115,7 +115,7 @@
   margin-bottom: 0.5em;
 }
 
-.plpWrapperProductBox .compared_price {
+.plpWrapperProductBox .plpBox_compared_price {
   font-weight: 300;
   font-size: 14px;
   color: var(--color-primary-black);
@@ -123,8 +123,13 @@
   margin-bottom: 0;
 }
 
-.plpWrapperProductBox .compared_price span {
+.plpWrapperProductBox .plpBox_compared_price span,
+.plpWrapperProductBox .plpBox_compared_price p {
   letter-spacing: 0.5px;
+}
+
+.plpWrapperProductBox .plpBox_compared_price p {
+  text-align: center;
 }
 
 .plpWrapperProductBox .plpProductBoxcontainer .ctaContainer {
