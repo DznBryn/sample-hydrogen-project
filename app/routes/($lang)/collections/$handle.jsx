@@ -30,6 +30,7 @@ export const loader = async ({ params, context }) => {
     filtersOptions,
     collectionsCMSData,
     collection: {
+      ...collection,
       handle,
       title: collection?.title ?? '',
       products: collection?.products

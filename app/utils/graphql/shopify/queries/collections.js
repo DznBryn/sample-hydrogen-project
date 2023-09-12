@@ -31,6 +31,8 @@ export const PRODUCTS_QUERY = `#graphql
   query Collection($handle: String!) {
   collection(handle: $handle){
     title
+    description
+    descriptionHtml
     products(first: 250){
       nodes {
         id
