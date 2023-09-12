@@ -277,7 +277,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
             sortOptions={sortOptions}
             filtersOptions={filtersOptions}
             filtersQuantity={filtersQuantityCalculation(state)}
-            collectionQuantity={filteredProducts.length}
+            collectionQuantity={filterProducts(products, state).length}
             state={state}
             dispatch={dispatch}
           />
@@ -351,7 +351,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
           sortOptions={sortOptions}
           filtersOptions={filtersOptions}
           filtersQuantity={filtersQuantityCalculation(state)}
-          collectionQuantity={filteredProducts.length}
+          collectionQuantity={filterProducts(products, state).length}
           state={state}
           dispatch={dispatch}
         />
