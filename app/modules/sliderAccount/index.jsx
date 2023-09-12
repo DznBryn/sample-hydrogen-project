@@ -508,7 +508,7 @@ const MainContent = () => {
 
     'signIn': (<>
 
-      <div className={'header'}>welcome!</div>
+      <div className={'sliderAccount_header'}>welcome!</div>
 
       <login.Form action="/" method={API_METHODS.POST} className={'form'}>
 
@@ -548,7 +548,7 @@ const MainContent = () => {
 
     'welcomeBack': (<>
 
-      <div className={'header'}>
+      <div className={'sliderAccount_header'}>
         <span>
           <span>welcome back,</span> {firstName || '{USERNAME}'}!
         </span>
@@ -564,7 +564,7 @@ const MainContent = () => {
 
     'forgotPassword': (<>
 
-      <div className={'header'}>
+      <div className={'sliderAccount_header'}>
         forgot password
         <p>Enter your email and we will send you a password reset link to your inbox.</p>
       </div>
@@ -596,7 +596,7 @@ const MainContent = () => {
 
     'createAccount': (<>
 
-      <div className={'header'}>
+      <div className={'sliderAccount_header'}>
         welcome!
         <p>create your TULA account</p>
       </div>
