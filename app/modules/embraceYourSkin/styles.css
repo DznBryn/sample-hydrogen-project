@@ -657,6 +657,9 @@
 }
 
 @media all and (max-width: 768px) {
+  #percent-copy {
+    margin-top: -60px;
+  }
   #eysSmsCta {
     font-size: 17px;
     line-height: 23px;

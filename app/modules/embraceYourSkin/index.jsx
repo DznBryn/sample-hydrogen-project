@@ -60,7 +60,7 @@ const EmbraceYourSkin = ({content}) => {
                     </p>
                 </div>
                 </div>
-                <div className={"centeredWrapper"}>
+                <div id="percent-copy" className={"centeredWrapper"}>
                     <p>
                         With our #EmbraceYourSkin initiative, we recognize that a huge part of feeling our best comes from how we speak to ourselves. 
                     </p>
@@ -183,10 +183,10 @@ const EmbraceYourSkin = ({content}) => {
                     <p className={"boldedCopy"}>
                     89% say confidence is weakened by their own negative self-talk / thoughts.<sup>7</sup>
                     </p>
-                    {(content.showsSmsEntrySection) && (<p className={"copy"}>
+                    <p className={"copy"}>
                     We launched a program to text you<br/>
                     weekly positive affirmations. <strong>Sign up below!</strong>
-                    </p>)}
+                    </p>
                 </div>
                 </div>
                 
@@ -205,7 +205,7 @@ const EmbraceYourSkin = ({content}) => {
                 <div id="leftLowerBlock" className={"block"}>
                 <div className={"textWrapper"}>
                     <p className={"percent"}>60%</p>
-                    <p className={styles.boldedCopy}>
+                    <p className={"boldedCopy"}>
                     60% say “bad” skin days have a negative effect<br/> 
                     on their self-confidence.<sup>3</sup>
                     </p>
