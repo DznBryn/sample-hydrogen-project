@@ -93,7 +93,7 @@ const ComparisonModal = ({ collection = mockCollection }) => {
   const Buttons = () => {
 
     const containerClassName = classNames('compare', enableCompare ? '' : 'disabled');
-    const linkGoTo = enableCompare ? `/pages/compare?c=${collection.slug}&p=${getSavedData().join(',')}` : '#';
+    const linkGoTo = enableCompare ? `/pages/compare?c=${collection.handle}&p=${getSavedData().join(',')}` : '#';
     const linkLabel = enableCompare ?
       `compare ${getSavedData().length} products`
       : `select at least ${MINIMUN_OF_PRODUCTS} products`;

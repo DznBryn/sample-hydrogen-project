@@ -30,6 +30,7 @@ export const COLLECTIONS_QUERY = `#graphql
 export const PRODUCTS_QUERY = `#graphql
   query Collection($handle: String!) {
   collection(handle: $handle){
+    handle
     title
     description
     descriptionHtml
