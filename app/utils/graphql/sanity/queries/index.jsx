@@ -278,6 +278,20 @@ export const GET_AUTO_DELIVERY = gql`
     allAutoDelivery {
       _id
       name
+      featuredCollection {
+        name
+        promoPosition1
+        promoOneLink
+        promoPosition2
+        promoTwoLink
+        promoPosition3
+        promoThreeLink
+        additionalProductsTitle
+        additionalProducts
+        showCompareButton
+        fireworkStoryPosition
+        collectionId
+      }
       heroBackgroundImage {
         asset {
           _id
