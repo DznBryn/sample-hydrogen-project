@@ -1,11 +1,21 @@
+import { useCollection } from '~/hooks/useCollection';
+import Product, {links as productStyles} from '../plpProductBox';
 import styles from './styles.css'
 
 export const links = () => {
-    return [{rel: 'stylesheet', href: styles}];
+    return [
+      { rel: 'stylesheet', href: styles },
+      ...productStyles(),
+    ];
   };
   
 
 const AutoDelivery = ({content}) => {
+    console.log("devdrew collection", content[0].featuredCollection)
+
+    const {state, products} = useCollection(content[0].featuredCollection.collectionId);
+
+    console.log("devdrew products?", products)
   
   return (
     <div id="ad-page">
@@ -216,11 +226,40 @@ const AutoDelivery = ({content}) => {
                     <div className={"recommendationWrapper"}>
                     
                     {/*
-                    {collection.products.slice(0,4).map((product) => {
+                    
+                    {content[0].featuredCollection.products.slice(0,4).map((product) => {
                         return <Product product={product} key={product._id} className={styles.product}/>
                     })}
+                    
                     */}
+                    {(state === 'loaded') && products.slice(0, 4).map((product, index) => {
+                        return (
+                            <Product
+                              product={product}
+                              key={product?.id}
+                              className={'product'}
+                              analytics={{
+                                click: {
+                                  actionField: { list: 'Auto Delivery' },
+                                  products: [
+                                    {
+                                      name: product?.title,
+                                      id: window.btoa(product?.id),
+                                      price: parseInt(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
+                                      category: product?.productType,
+                                      variant: '',
+                                      position: index,
+                                    },
+                                  ],
+                                },
+                              }}
+                            />
+                          );
+                    })}
 
+
+                    
+                    
                     </div>
 
                 </div>
