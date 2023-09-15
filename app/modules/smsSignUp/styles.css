@@ -211,6 +211,9 @@
   }
   #sms-signup .button {
     margin-left: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   #sms-signup .note {
     width: 100%;

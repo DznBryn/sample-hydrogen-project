@@ -17,9 +17,9 @@
   
   #terms-conditions .container h1 {
     font-weight: 800;
-    font-size: 24px;
+    font-size: 30px;
+    line-height: 42px;
     text-transform: capitalize;
-    line-height: 58.8px;
     letter-spacing: 2px;
     text-align: center;
   }
@@ -73,6 +73,7 @@
     #terms-conditions .container {
       width: 1106px;
       padding-inline: 0;
+      margin: 0 auto;
     }
   }
   

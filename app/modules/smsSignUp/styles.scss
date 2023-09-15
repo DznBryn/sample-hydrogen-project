@@ -189,7 +189,6 @@
 	#sms-signup .title {
 		width: 100%;
 		margin: 2vh auto;
-
 		font-size: 3.5vw;
 	}
 
@@ -225,6 +224,9 @@
 
 	#sms-signup .button {
 		margin-left: 0.5rem;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	#sms-signup .note {
