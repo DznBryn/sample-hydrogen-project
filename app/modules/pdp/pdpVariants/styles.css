@@ -152,7 +152,7 @@
 }
 
 .promo {
-  font-size: 10px;
+  font-size: 13px;
   color: #ff5483;
   color: var(--color-secondary-pink);
   font-weight: 800;
@@ -249,6 +249,9 @@
   }
 }
 @media (min-width: 768px) {
+  .promo {
+    font-size: 16px;
+  }
   .variant {
     overflow: hidden;
     width: 100px;

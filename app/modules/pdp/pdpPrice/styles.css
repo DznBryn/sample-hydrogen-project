@@ -12,7 +12,7 @@
 .compared_price {
   margin: 0 0.25em;
   font-weight: 800;
-  font-size: 21px;
+  font-size: 18px;
   line-height: 22px;
   color: #C6C6C6;
   text-decoration: line-through;
@@ -30,7 +30,7 @@
 .secondary {
   margin-top: 0.5em;
   font-weight: 800;
-  font-size: 21px;
+  font-size: 18px;
   line-height: 22px;
   color: #FF5483;
 }
@@ -64,7 +64,7 @@
   align-items: center;
 }
 
-.pdp_afterpay :global(afterpay-placement) {
+.pdp_afterpay afterpay-placement {
   --logo-badge-width: 70px;
   font-weight: 400;
 }
@@ -105,7 +105,10 @@
     font-size: 24px;
   }
   .compared_price {
-    margin: 0;
+    font-size: 24px;
+  }
+  .secondary {
+    font-size: 24px;
   }
   .pdp_afterpay {
     justify-content: flex-start;

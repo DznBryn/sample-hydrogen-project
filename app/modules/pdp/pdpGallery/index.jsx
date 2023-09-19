@@ -264,9 +264,6 @@ const PDPGalleryVideo = ({ productVideo = {} }) => {
             alt={productVideo?.thumbnail?.alt}
             width={productVideo?.thumbnail?.width}
           />
-          <div className={'pdpGallery_icon__container'}>
-            <IconPlay />
-          </div>
         </div>
       </div>
       <PDPVideoModule
@@ -277,14 +274,5 @@ const PDPGalleryVideo = ({ productVideo = {} }) => {
     </>
   );
 };
-
-const IconPlay = ({ color = '#F8F8F8' }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="28" viewBox="0 0 23 28" fill="none">
-    <path
-      d="M21.2858 12.1882L4.12673 0.788007C2.6629 -0.185391 0.683502 0.874159 0.683502 2.62069V25.3918C0.683502 27.1674 2.6629 28.199 4.12673 27.2244L21.2858 15.8243C22.577 14.9941 22.577 13.0473 21.2858 12.1881V12.1882Z"
-      fill={color}
-    />
-  </svg>
-);
 
 export default PDPGallery;
