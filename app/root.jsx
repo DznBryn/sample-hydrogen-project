@@ -8,8 +8,10 @@ import { getCMSContent, getCartData, getCustomerData } from './utils/functions/e
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
 import getApiKeys from './utils/functions/getApiKeys';
 import { links as layoutsStyles } from '~/layouts';
-import { GET_PRODUCTS } from './utils/graphql/sanity/queries';
-
+import { GET_LISTRAK_REC, GET_PRODUCTS } from './utils/graphql/sanity/queries';
+import ErrorContent, { links as errorBoundaryStyles } from './boundaries/errorContent';
+import CatchContent, { links as catchBoundaryStyles } from './boundaries/catchContent';
+import { useCatch } from '@remix-run/react';
 
 export const links = () => {
   return [
@@ -19,6 +21,8 @@ export const links = () => {
     { rel: 'preconnect', href: 'https://shop.app' },
     { rel: 'icon', type: 'image/svg+xml', href: favicon },
     ...layoutsStyles().mainNavFooterStyles,
+    ...errorBoundaryStyles(),
+    ...catchBoundaryStyles(),
   ];
 };
 
@@ -33,6 +37,7 @@ export async function loader({ context }) {
 
   const cart = await getCartData(context);
   const customer = await getCustomerData(context);
+  const listrakRec = await getCMSContent(context, GET_LISTRAK_REC);
   const globalCMSData = {
     mainNavFooter: await getMainNavFooterCMSData(context),
     products: await getCMSContent(context, GET_PRODUCTS),
@@ -43,6 +48,7 @@ export async function loader({ context }) {
       customer,
       cart,
       globalCMSData,
+      listrakRec,
     },
     {
       headers: {
@@ -56,18 +62,74 @@ export async function loader({ context }) {
 export default function App() {
 
   return (
+    <RootStructure>
+      <Outlet />
+    </RootStructure>
+  );
+
+}
+
+/**
+ * 
+ * This will handle all thrown responses that weren't 
+ * handled in a nested route (more on that in a sec).
+ * 
+ * ref: https://remix.run/docs/en/1.19.3/guides/not-found
+ */
+
+export function CatchBoundary() {
+
+  const { status } = useCatch();
+
+  return (
+    <RootStructure>
+      <CatchContent status={status}/>
+    </RootStructure>
+  );
+
+}
+
+/**
+ * An ErrorBoundary is a React component that renders 
+ * whenever there is an error anywhere on the route, 
+ * either during rendering or during data loading. 
+ * We use the word "error" to mean an uncaught exception; 
+ * something you didn't anticipate happening. You can 
+ * intentionally throw a Response to render the CatchBoundary, 
+ * but everything else that is thrown is handled by the ErrorBoundary.
+ * 
+ * ref: https://remix.run/docs/en/1.19.3/route/error-boundary
+ */
+
+export function ErrorBoundary({ error }) {
+
+  return (
+    <RootStructure>
+      <ErrorContent error={error} />
+    </RootStructure>
+  );
+
+}
+
+/**
+ * default structure for all the pages
+ */
+
+function RootStructure({children}) {
+
+  return (
     <html lang="en">
       <head>
         <Meta />
         <Links />
-        <PageMeta/>
+        <PageMeta />
       </head>
       <body>
-        <Outlet />
+        {children}
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-}
 
+}
