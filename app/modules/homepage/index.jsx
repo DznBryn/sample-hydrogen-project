@@ -20,6 +20,7 @@ export const links = () => {
 };
 
 const Homepage = ({ carouselSlidesGroup, hpRecs, concerns, homepageWhyProbioticsContent, homepageSkinQuizContent, homepageCollectionCallout }) => {
+
   return (
     <>
       <HomepageCarousel carouselSlidesGroup={carouselSlidesGroup} />
