@@ -102,7 +102,7 @@ const PDPSubscription = ({ classes, sellingPlans, autoDeliveryInfo }) => {
           <div className={'form__header'}>
             <label
               htmlFor={'one-time'}
-              className={sellingOption.current === 0 ? styles.checked : null}
+              className={sellingOption.current === 0 ? 'checked' : null}
               onClick={() => handleSellingOption(0)}
             >
               One time purchase{' '}

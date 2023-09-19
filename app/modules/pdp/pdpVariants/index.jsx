@@ -152,7 +152,7 @@ const DropdownVariants = ({ data = null }) => {
       >
         {
           variants.map(variant => (
-            <option key={variant._id} value={variant.id}>
+            <option key={variant.id} value={variant.id}>
               {variant.title}
             </option>
           ))
