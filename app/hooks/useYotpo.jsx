@@ -6,13 +6,15 @@ export function useYotpo() {
 
       const yotpoSDK = window?.yotpo;
 
-      if (!yotpoSDK) throw new Error('Yotpo SDK not found');
+      if (yotpoSDK){
 
-      try{
+        try{
 
-        yotpoSDK?.initWidgets();
+          yotpoSDK?.initWidgets();
 
-      }catch(e){ throw new Error(e); }
+        }catch(e){ e => e; }
+
+      }
 
     }
 
