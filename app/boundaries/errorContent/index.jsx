@@ -11,12 +11,17 @@ export const links = () => {
   ];
 };
 
+let notThrowed = true;
+
 export default function ErrorContent({ error }) {
 
   const [root] = useMatches();
 
-  // eslint-disable-next-line no-console
-  console.error(error);
+  if(notThrowed) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    notThrowed = false;
+  }
 
   return (
     <Layouts.MainNavFooter>
