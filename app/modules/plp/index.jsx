@@ -1,6 +1,6 @@
 import { useState, useEffect, useReducer, useRef, } from 'react';
 import classnames from 'classnames';
-import { mockCollection, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, } from '~/utils/functions/plpFunctionsAndSupplies';
+import { mockCollection, mockSortOptions, /*getBanners,*/ sortProducts, filterProducts, filterHiddenProductsByTag, handleFilterOptions, filtersQuantityCalculation, newChangeBannersPositions, mockFilterOptions, } from '~/utils/functions/plpFunctionsAndSupplies';
 import { triggerAnalyticsOnScroll, useLayoutEffect } from '~/utils/functions/eventFunctions';
 import Filter, { links as filterStyles } from './plpFilter';
 import GenericRecommendedProducts, { links as genericRecommendedProductsStyles } from './genericRecommendedProducts';
@@ -32,7 +32,7 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 
   const sortOptions = mockSortOptions;
   collection = collection || mockCollection;
-  filtersOptions = getSortedFilterOptions(filtersOptions);
+  filtersOptions = getSortedFilterOptions(filtersOptions || mockFilterOptions);
 
   const currentFiltersConfig = useRef({});
 
@@ -85,10 +85,10 @@ const PLP = ({ collection, filtersOptions, isInfluencerPage = false, cartConfig 
 
     const sorted = [];
 
-    sorted[0] = options.find(data => data.name === 'product category');
-    sorted[1] = options.find(data => data.name === 'skin type');
-    sorted[2] = options.find(data => data.name === 'skin concern');
-    sorted[3] = options.find(data => data.name === 'ingredient preferences');
+    sorted[0] = options.find(data => data.type === 'product category');
+    sorted[1] = options.find(data => data.type === 'skin type');
+    sorted[2] = options.find(data => data.type === 'skin concern');
+    sorted[3] = options.find(data => data.type === 'ingredient preferences');
 
     return sorted;
 
