@@ -184,13 +184,13 @@ const PLPProductBox2 = ({ product, analytics, compareButtonConfig = {showIt: fal
 
       return (
 
-        <p className={'plpBox_compared_price'}>
+        <div className={'plpBox_compared_price'}>
           <div>
             <strong className='value strikethrough'>{getStrikethroughPrice()}</strong>{' '}
             <strong className='value promo'>{getPromoPrice()}</strong>
           </div>
           { (originalPriceHigher && !product?.productPromos?.showPromo) && (<p>{` (${getCurrency() + (originalPrice)} value)`}</p>) }
-        </p>
+        </div>
 
       );
 

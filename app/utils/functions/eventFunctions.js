@@ -580,7 +580,6 @@ export function getCollectionWithCMSData(collection, productsCMSData, collection
   if(collectionsCMSData){
 
     const collectionCMSDoc = collectionsCMSData.find(data => (collectionCopy.handle === data.collectionId));
-    // const collectionCMSDoc = collectionsCMSData.filter(data => (collectionCopy.handle === data.collectionId))[0];
     if(collectionCMSDoc) collectionCopy = { ...collectionCMSDoc, ...collection };
 
   }
@@ -589,7 +588,6 @@ export function getCollectionWithCMSData(collection, productsCMSData, collection
 
     collectionCopy.products = collectionCopy?.products.map(product => {
 
-      // const CMSData = productsCMSData.filter(data => (product.handle === data.productId));
       const CMSData = productsCMSData.find(data => (product.handle === data.productId));
       return { ...product, ...CMSData };
 
@@ -606,6 +604,35 @@ export function getProductWithCMSData(product, productsCMSData){
   const CMSData = productsCMSData.find(data => data.productId === product.handle);
   
   return (CMSData) ? {...product, ...CMSData} : product;
+
+}
+
+export function getCMSProductsWithShopifyData(aProducts = [], shopifyAllCollection){
+
+  let newArray = [];
+
+  if(aProducts.length > 0){
+
+    newArray = aProducts.map(product => {
+
+      const shopifyProduct = shopifyAllCollection?.products?.nodes.find(({handle}) => handle === product.productId);
+      return { ...shopifyProduct, ...product};
+
+    });
+
+  }
+  
+  return newArray;
+
+}
+
+export function getPageOnCMSBySlug(pagesOnCMS, slug){
+
+  let page = undefined;
+
+  if(pagesOnCMS && slug) page = pagesOnCMS.find(data => data.pageSlug === slug);
+  
+  return page;
 
 }
 

@@ -534,7 +534,7 @@ const ShadeVariantImage = ({ variant = null, isTypeShadeMatch = null }) => {
     (isTypeShadeMatch && (
       <div className={'variant_image__wrapper'}>
         {
-          (variant !== {} && variant.availableForSale === false) &&
+          (Object.keys(variant).length > 0 && variant.availableForSale === false) &&
           <div className={'variant_image__overlay'}>
             <p>
               Out of stock
