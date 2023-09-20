@@ -1,0 +1,180 @@
+.influencerPage_container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.influencerPage_headerWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #F1F1F1;
+}
+
+.noBannerHeader {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #FFF;
+  margin-top: 30px
+}
+
+.bannerBlock {
+  width: 100%;
+  height: 300px;
+}
+
+.bannerBlock>img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.infoBlock {
+  width: 100%;
+  height: 170px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.influencerTitle {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 27px;
+
+  max-width: 60%;
+  margin-bottom: 15px;
+}
+
+.influencerDescription {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19.2px;
+  max-width: 60%;
+}
+
+.productsWrapper {
+  margin: 100px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.plpWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1140px;
+}
+
+.productsTitle {
+  border-bottom: .5px solid #FF5483;
+  padding-bottom: 10px;
+  display: block;
+  margin-bottom: 80px;
+  width: calc(100% - 30px);
+}
+
+.productsTitle h2 {
+  font-weight: 900;
+  font-size: 21px;
+  line-height: 28px;
+}
+
+.collection__container {
+  margin-bottom: 50px;
+  display: grid;
+  grid: 1fr / 1fr;
+  row-gap: 70px;
+  width: auto;
+  margin-top: 1.3em;
+}
+
+.collection__container_2Collumns {
+  grid: 1fr / repeat(2, 1fr);
+  row-gap: 25px;
+}
+
+@media (min-width: 550px) {
+  .collection__container {
+    grid: 1fr / repeat(2, 1fr);
+    row-gap: 70px;
+  }
+
+  .bannerBlock>img {
+    width: 30vw;
+  }
+}
+
+@media all and (min-width: 769px) {
+  .collection__container {
+    margin-bottom: 100px;
+    grid: 1fr / repeat(3, 1fr);
+    row-gap: 70px;
+  }
+
+  .influencerPage_headerWrapper {
+    flex-direction: row;
+    height: 400px;
+  }
+
+  .bannerBlock {
+    width: 30%;
+    height: 100%;
+  }
+
+  .infoBlock {
+    width: 100%;
+    height: 100%;
+  }
+
+  .influencerTitle {
+    max-width: 30%;
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .influencerDescription {
+    max-width: 30%;
+    font-size: 21px;
+  }
+
+  .productsTitle {
+    padding-bottom: 15px;
+    width: 100%;
+  }
+
+  .productsTitle h2 {
+    font-size: 24px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .collection__container {
+    grid: 1fr / repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 70px;
+    max-width: 1130px;
+    margin-top: 58px;
+  }
+
+  .influencerPage_container #section {
+    margin: 0;
+    padding: 0;
+  }
+
+  .influencerPage_container #section .container {
+    height: 0;
+  }
+
+  .fireWorkInfluencerWrapper {
+    width: 100%;
+    max-width: 1140px;
+  }
+}
