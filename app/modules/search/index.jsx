@@ -144,11 +144,11 @@ const Search = ({ searchConfig }) => {
         </svg>
         <input
           type="text"
-          className={'searchInput'}
+          className={'searchCompInput'}
           placeholder="What are you looking for?"
           onKeyUp={handleSearch}
           ref={inputRef}
-          id="searchInput"
+          id="searchCompInput"
         />
         <div className={'searchClose'} onClick={handleClose}>
           X

@@ -10,7 +10,7 @@
 }
 
 .compared_price {
-  margin: 0 0.25em;
+  margin-right: 0.25em;
   font-weight: 800;
   font-size: 18px;
   line-height: 22px;
@@ -57,6 +57,7 @@
 
 .pdp_afterpay {
   padding: 6px;
+  padding-left: 0;
   width: 100%;
   border-radius: 3px;
   display: flex;
@@ -76,7 +77,7 @@
 .pdp_afterpay_text {
   font-style: normal;
   font-weight: 300;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 21px;
   letter-spacing: 0.01em;
   margin-right: 5px;
@@ -100,6 +101,9 @@
     justify-content: flex-start;
     margin-bottom: 1em;
   }
+  .pdp_afterpay_logo {
+    width: 80px;
+  }
   .pdpPrice {
     text-align: left;
     font-size: 24px;
@@ -115,7 +119,7 @@
     max-width: 400px;
   }
   .pdp_afterpay_text {
-    font-size: 14px;
+    font-size: 12px;
   }
   .pdp_afterpay afterpay-placement {
     --logo-badge-width: 80px;
