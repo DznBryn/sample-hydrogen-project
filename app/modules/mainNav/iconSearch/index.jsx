@@ -17,7 +17,7 @@ const handleClick = () => {
   } else {
     document.querySelector('[data-search-state]').setAttribute('data-search-state', 'show');
     document.querySelector('[data-search-state]').dispatchEvent(searchEvent);
-    setTimeout(() => document.querySelector('#searchInput').focus(), 500);
+    setTimeout(() => document.querySelector('#searchCompInput').focus(), 500);
   }
   return false;
 };
