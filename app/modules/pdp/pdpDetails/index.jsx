@@ -57,7 +57,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
   }
 
 
-  const {store} = useStore();
+  const { store } = useStore();
 
   const getVariantsSelector = () => {
     if (shouldRenderSkinFinder || shouldRenderConcealer) {
@@ -142,7 +142,7 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
 
   const LoyaltyMessage = ({ className }) => {
 
-    const { isLoggedIn, status } = useCustomerState();
+    const { isLoggedIn } = useCustomerState();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     function handleModalDisplay() {
@@ -231,21 +231,17 @@ const PDPDetails = ({ product, details = null, shadeVariantsOos, concealerImages
 
     return (
 
-      (status === 'loaded' || status === 'error') && (
+      <span className={className}>
+        <div className={'loyaltyMessageContainer'}>
 
-        <span className={className}>
-          <div className={'loyaltyMessageContainer'}>
+          <RoundStarIcon />
+          <Copy />
+          <ActionButton />
 
-            <RoundStarIcon />
-            <Copy />
-            <ActionButton />
+          <Modal />
 
-            <Modal />
-
-          </div>
-        </span>
-
-      )
+        </div>
+      </span>
 
     );
 
@@ -415,7 +411,7 @@ const PDPReviews = (/*{ product }*/) => {
 
   return (
     <div className={'pdpReviews'}>
-      <div className="yotpo bottomLine" data-yotpo-product-id={'4472659050542'}/> {/*mocked ID*/}
+      <div className="yotpo bottomLine" data-yotpo-product-id={'4472659050542'} /> {/*mocked ID*/}
       {/* <div className="yotpo bottomLine" data-yotpo-product-id={productID}/> */}
     </div>
   );
