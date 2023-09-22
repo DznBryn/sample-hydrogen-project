@@ -76,7 +76,7 @@ const Clean = () => (
             </span>
           </div> 
           <div className={"imgContent"}>
-            <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/desktop-clean-img2-2x.jpg?v=1651506730"/>
+            <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/Clean.jpg"/>
           </div>
         </div>
 
