@@ -5,13 +5,15 @@ import { defer } from '@shopify/remix-oxygen';
 import { getMainNavFooterCMSData } from './layouts/MainNavFooter';
 import { CacheShort, generateCacheControlHeader } from '@shopify/hydrogen';
 import { getCMSContent, getCartData, getCustomerData } from './utils/functions/eventFunctions';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from '@remix-run/react';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData } from '@remix-run/react';
 import getApiKeys from './utils/functions/getApiKeys';
 import { links as layoutsStyles } from '~/layouts';
 import { GET_LISTRAK_REC, GET_PRODUCTS } from './utils/graphql/sanity/queries';
 import ErrorContent, { links as errorBoundaryStyles } from './boundaries/errorContent';
 import CatchContent, { links as catchBoundaryStyles } from './boundaries/catchContent';
 import { useCatch } from '@remix-run/react';
+import { useEffect } from 'react';
+import { useStore } from './hooks/useStore';
 
 export const links = () => {
   return [
@@ -83,7 +85,7 @@ export function CatchBoundary() {
 
   return (
     <RootStructure>
-      <CatchContent status={status}/>
+      <CatchContent status={status} />
     </RootStructure>
   );
 
@@ -115,8 +117,15 @@ export function ErrorBoundary({ error }) {
  * default structure for all the pages
  */
 
-function RootStructure({children}) {
-
+function RootStructure({ children }) {
+  const loaderData = useLoaderData();
+  const { setData: setCartData = () => { }, data = null } = useStore(store => store?.cart ?? null);
+  useEffect(() => {
+    if (loaderData?.cart?.id && loaderData?.cart?.id !== data?.id) {
+      setCartData(loaderData.cart);
+    }
+    console.log('Root Renders');
+  }, []);
   return (
     <html lang="en">
       <head>

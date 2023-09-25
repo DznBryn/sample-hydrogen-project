@@ -7,6 +7,7 @@ import { createCustomEvent, useLayoutEffect } from '~/utils/functions/eventFunct
 
 import styles from './styles.css';
 import { API_METHODS } from '~/utils/constants';
+import { useStore } from '~/hooks/useStore';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -31,6 +32,7 @@ export default function PDPAddToCart({
   availableForSale,
 }) {
   const [root] = useMatches();
+  const { setData: setCartData = () => { }, data = null } = useStore(store => store?.cart ?? null);
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
 
@@ -59,6 +61,9 @@ export default function PDPAddToCart({
     } else if (addItem?.quantity > 0 && availableForSale && buttonState !== IDLE) {
       if(addToCart.data && addToCart.type === 'done'){
         dispatchAlertEvent();
+        if (root?.data?.cart?.totalQuantity !== data?.totalQuantity) {
+          setCartData(root.data.cart);
+        }
       }
       setButtonState(IDLE);
     }

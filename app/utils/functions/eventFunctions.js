@@ -169,9 +169,9 @@ export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
 }
 
 export function isAutoCart(items) {
-  return items.some((item) => {
+  return items ? items.some((item) => {
     return item?.selling_plan_allocation !== undefined;
-  });
+  }) : null;
 }
 
 export function getCartQuantity(items) {
