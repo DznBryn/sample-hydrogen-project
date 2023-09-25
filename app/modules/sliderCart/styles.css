@@ -73,11 +73,20 @@
   padding-top: 55px;
   position: absolute;
   right: -100%;
-  transition: all 1s;
+  transition: right 1s ease-in-out;
+  -webkit-transition: right 1s ease-in-out;
+  -moz-transition: right 1s ease-in-out;
+  -ms-transition: right 1s ease-in-out;
+  -o-transition: right 1s ease-in-out;
 }
 
-.sliderCartWrap.visible .sliderCart {
+.sliderCartWrap.show-cart .sliderCart {
   right: 0;
+  transition: right 1s ease-in-out;
+  -webkit-transition: right 1s ease-in-out;
+  -moz-transition: right 1s ease-in-out;
+  -ms-transition: right 1s ease-in-out;
+  -o-transition: right 1s ease-in-out;
 }
 
 .cartHeader {
@@ -379,16 +388,24 @@
   margin: 0 5px;
 }
 
-.visible {
+.show-cart {
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -o-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
 }
 
-.hidden {
+.hide-cart {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 0.3s, opacity 0.3s linear;
+  transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -moz-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
+  -o-transition: opacity 0.3s linear, visibility 0.3s ease-in-out;
 }
 
 .innerContent {

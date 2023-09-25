@@ -14,34 +14,34 @@ export const links = () => {
 const SliderCartRec = ({ productRecs, limit, gwpProductId }) => {
   if (limit > 0 && productRecs?.productList.length > 0) {
     return (
-      <div className={styles.sliderCartRec}>
+      <div className={'sliderCartRec'}>
         <h2>Boost your TULA routine with</h2>
         {productRecs?.productList?.filter((product) => (product.externalId !== gwpProductId))
           .map((product, index) => {
             if (index < limit) {
               const addItem = { variantId: product.variants[0].externalId, quantity: 1, /*selling_plan_id: 0,*/ product };
               return (
-                <div key={index} className={styles.product}>
+                <div key={index} className={'product'}>
                   <a href={'/products/' + product.slug}>
-                    {/* <ResponsiveImage className={styles.productImage} src={product.media[0]?.details.src} /> */}
+                    {/* <ResponsiveImage className={'productImage'} src={product.media[0]?.details.src} /> */}
                   </a>
-                  <div className={styles.productInfo}>
-                    <a href={'/products/' + product.slug} className={styles.productName}>
+                  <div className={'productInfo'}>
+                    <a href={'/products/' + product.slug} className={'productName'}>
                       {product.name}
                     </a>
-                    <div className={styles.productPrice}>
+                    <div className={'productPrice'}>
                       {getCurrency() + parseFloat(product.variants[0].price).toFixed(2)}
                     </div>
                   </div>
-                  <div className={styles.addToCartContainer} >
+                  <div className={'addToCartContainer'} >
                     <PDPAddToCart addItem={addItem} />
                   </div>
-                </div>
+                </div >
               );
             }
             return null;
           })}
-      </div>
+      </div >
     );
   } else { return null; }
 };

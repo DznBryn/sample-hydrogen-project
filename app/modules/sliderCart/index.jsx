@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SliderCartRec, { links as sliderCartRecStyles } from './sliderCartRec';
 import SliderCartProductBox, { links as sliderCartProductBoxStyles } from './sliderCartProductBox';
 // import LoyaltyBanner, {
@@ -6,8 +6,6 @@ import SliderCartProductBox, { links as sliderCartProductBoxStyles } from './sli
 //   ExclamationIcon,
 // } from 'Components/LoyaltyBanner';
 import {
-  bindCustomEvent,
-  createCustomEvent,
   // updateListrakCart,
   // updateListrakCartGraphQL,
   isAutoCart,
@@ -33,12 +31,16 @@ import LoyaltyTooltipModal from './modules/LoyaltyTooltipModal';
 // import FreeGiftPromoProduct from './modules/FreeGiftPromoProduct';
 import { GearIcon } from '../icons/index';
 import { mockCartConfig, mockProductRecs } from '../../utils/functions/mocks';
+import { useStore } from '~/hooks/useStore';
+import Banner, { SkinQuizCartBanner, links as loyaltyBannerStyles } from '../loyalty/banner';
+import { PortableText } from '@portabletext/react';
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
     ...sliderCartRecStyles(),
     ...sliderCartProductBoxStyles(),
+    ...loyaltyBannerStyles(),
   ];
 };
 
@@ -56,9 +58,11 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
   const { items, inventory, subtotalPrice } = useCartState()
     ? useCartState()
     : [];
-  const cart = useCartState() ? useCartState() : {};
+  const cart = useStore((store) => store?.cart?.data ?? {});
+
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => { }));
+  const isSliderCartOpen = useStore((store) => store?.cart?.isSliderCartOpen ?? false);
   const { addItems, removeItems } = useCartActions();
-  const cartRef = React.useRef(null);
   const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
   const carbonOffsetItem = items.filter(
     (item) =>
@@ -88,11 +92,9 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
   const totalCart =
     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
 
-  // const [rewardsPoints, setRewardsPoints] = React.useState(totalCart);
   const setRewardsPoints = () => { }; //mock
 
   const { id, email, status } = useCustomerState();
-  // const { id, isLoggedIn, firstName, email, status } = useCustomerState();
 
   const addAutoDeliveryItemsToLocalStorage = useCallback(() => {
     if (
@@ -271,23 +273,10 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
   }
 
   React.useEffect(() => {
-    bindCustomEvent(cartRef, 'data-slider-state', {
-      hidden: 'hidden',
-      visible: 'visible',
-    });
 
     addAutoDeliveryItemsToLocalStorage();
 
-    return function cleanup() {
-      if (
-        document.querySelector('html').classList.contains('bodyWrap') &&
-        document
-          .querySelector('[data-slider-state]')
-          .getAttribute('data-slider-state') === 'hide'
-      ) {
-        document.querySelector('html').classList.remove('bodyWrap');
-      }
-    };
+    return function cleanup() { };
   }, []);
 
   productRecList.productList = productRecList.productList.filter((product) => {
@@ -305,18 +294,8 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
     return true;
   });
 
-  const handleClick = () => {
-    const sliderEvent = createCustomEvent();
-    if (cartRef.current.getAttribute('data-slider-state') === 'show') {
-      document.querySelector('html').classList.remove('bodyWrap');
-      cartRef.current.setAttribute('data-slider-state', 'hide');
-      cartRef.current.dispatchEvent(sliderEvent);
-    }
-  };
-
   async function getCustomerData() {
-    // const env = getApiKeys().CURRENT_ENV;
-    const env = 'US_PROD';
+    const env = getApiKeys().CURRENT_ENV;
     const data = { email, customerId: id, env, useCache: false };
 
     if (email || id) {
@@ -330,7 +309,6 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
   }
 
   React.useEffect(() => {
-    // console.log();
     if (status === 'loaded' || status === 'error') {
       getCustomerData();
     }
@@ -370,6 +348,9 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
     }
   }
 
+  useEffect(() => {
+
+  }, [isSliderCartOpen]);
   const cartContentProps = {
     cart,
     items,
@@ -378,7 +359,7 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
     carbonOffsetItem,
     quantity: getTotalItemsOnCart(),
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
-    handleClick: () => handleClick(),
+    handleClick: toggleCart,
     setLoading: () => setLoading(),
     isAbleToRedeem,
     products,
@@ -388,10 +369,8 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
 
   return (
     <div
-      className={'sliderCartWrap hidden'}
-      data-slider-state="hide"
-      ref={cartRef}
-      onClick={handleClick}
+      className={`sliderCartWrap ${isSliderCartOpen ? 'show-cart' : 'hide-cart'}`}
+      onClick={toggleCart}
     >
       <div
         className={'sliderCart'}
@@ -405,8 +384,12 @@ const SliderCart = ({ cartPageConfig, productRecs, products, ...props }) => {
   );
 };
 
-const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGiftCards, cart, handleClick, carbonOffsetItem, isAbleToRedeem, ...props }) => {
+const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGiftCards, handleClick, carbonOffsetItem, isAbleToRedeem, ...props }) => {
+
   const [showModal, setShowModal] = useState(false);
+  const account = useStore((store) => store?.account?.data ?? {});
+  const cart = useStore((store) => store?.cart?.data ?? {});
+  const totalCart = Number(cart?.cost?.subtotalAmount?.amount ?? 0);
   const productRecList = productRecs?.productList
     ? productRecs
     : mockProductRecs;
@@ -415,38 +398,6 @@ const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGift
     setShowModal(!showModal);
   }
 
-  const EmptyCart = () => (
-    <>
-      <div className={'cartHeader'}>
-        <div className={'cartHeader_title'}>
-          <p>{cartConfig?.emptyCartMessage}</p>
-          {/* <RichText source={cartConfig?.emptyCartMessage} /> */}
-        </div>
-        <div className={'cartClose} onClick={handleClick'}>
-          CLOSE
-        </div>
-      </div>
-
-      <div className={'emptyCart'}>
-        {getApiKeys().CURRENT_ENV.includes('US') && (
-          isLoggedIn
-          // <LoyaltyBanner loggedIn={isLoggedIn} isEmpty />
-        )
-
-          /* <SkinQuizCartBanner /> */
-        }
-      </div>
-
-      <SliderCartRec
-        productRecs={productRecList}
-        limit={1}
-        gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
-      />
-
-      <Checkout message="Start Shopping" url="/collections/all" />
-    </>
-  );
-
   const itemsListProps = {
     items,
     cartConfig,
@@ -454,8 +405,15 @@ const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGift
     ...props
   };
 
+  const emptyCartProps = {
+    cartConfig,
+    handleClick,
+    isLoggedIn,
+    productRecList,
+  };
+
   return items.length === 0 ? (
-    <EmptyCart />
+    <EmptyCart {...emptyCartProps} />
   ) : (
     <>
       <div className={'cartHeader'}>
@@ -469,27 +427,25 @@ const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGift
         <ProgressBar cart={cart} cartConfig={cartConfig} />
       )}
 
-      {cartConfig?.showTemporaryWarn && (
+      {cartConfig?.cartTemporaryWarnRaw && (
         <div
           className={'temporaryWarn'}
           style={{ marginTop: hasOnlyGiftCards() ? '20px' : '0' }}
         >
           <GearIcon />
           <span>
-            {cartConfig?.cartTemporaryWarn}
-            {/* <RichText source={cartConfig?.cartTemporaryWarn} /> */}
+            <PortableText value={cartConfig?.cartTemporaryWarnRaw} />
           </span>
         </div>
       )}
       {getApiKeys().CURRENT_ENV.includes('US') && (
-        'LoyaltyBar'
-        // <LoyaltyBanner
-        //   loggedIn={isLoggedIn}
-        //   points={rewardsPoints}
-        //   isAbleToRedeem={isAbleToRedeem}
-        //   userName={firstName}
-        //   onClick={toggleModal}
-        // />
+        <Banner
+          loggedIn={account?.id !== ''}
+          points={Math.floor(totalCart) * 10}
+          isAbleToRedeem={isAbleToRedeem}
+          userName={account?.firstName !== '' ? account?.firstName : 'Jane'}
+          onClick={toggleModal}
+        />
       )}
 
       <ItemsList {...itemsListProps} />
@@ -515,13 +471,46 @@ const CartContent = ({ items, cartConfig, productRecs, quantity = 1, hasOnlyGift
   );
 };
 
+const EmptyCart = ({ cartConfig, handleClick, isLoggedIn, productRecList }) => (
+  <>
+    <div className={'cartHeader'}>
+      <div className={'cartHeader_title'}>
+        {
+          cartConfig?.emptyCartMessageRaw?.[0] ?
+            <PortableText value={[cartConfig?.emptyCartMessageRaw?.[0]]} /> :
+            <p>Your Cart Is Currently Empty</p>
+        }
+      </div>
+      <div className={'cartClose'} onClick={handleClick}>
+        CLOSE
+      </div>
+    </div>
+
+    <div className={'emptyCart'}>
+      {getApiKeys().CURRENT_ENV.includes('US') && (
+        <Banner loggedIn={isLoggedIn} isEmpty />
+      )}
+      <SkinQuizCartBanner />
+    </div>
+
+    <SliderCartRec
+      productRecs={productRecList}
+      limit={1}
+      gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
+    />
+
+    <Checkout message="Start Shopping" url="/collections/all" />
+  </>
+);
 const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
-  // const getRecItemsLimit = () => {
-  //   if (items.length === 2) return 2;
-  //   if (items.length === 3) return 1;
-  //   if (items.length > 4) return 0;
-  //   return 3;
-  // };
+  console.log('ItemsList Renders', { cartConfig, items });
+  const cart = useStore((store) => store?.cart?.data ?? {});
+  const getRecItemsLimit = () => {
+    if (items.length === 2) return 2;
+    if (items.length === 3) return 1;
+    if (items.length > 4) return 0;
+    return 3;
+  };
 
   const filteredItems = {
     noAD:
@@ -539,44 +528,32 @@ const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
         : items.filter((data) => data.selling_plan_allocation),
   };
 
-  // const shouldActivateFreeGift = () => {
-  //   let cartTotal =
-  //     apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
-  //   if (!cartConfig?.freeGiftPromoCombineAD) {
-  //     cartTotal =
-  //       apiType === 'graphql'
-  //         ? cart.items
-  //           .filter(
-  //             (item) =>
-  //               !item.customAttributes.some(
-  //                 (el) => el.key === 'selling_plan',
-  //               ),
-  //           )
-  //           .reduce(
-  //             (total, value) => (total += Number(value.variant.price)),
-  //             0,
-  //           )
-  //         : cart.items
-  //           .filter((item) => item.selling_plan_allocation === undefined)
-  //           .reduce(
-  //             (total, value) => (total += value.final_line_price / 100),
-  //             0,
-  //           );
-  //   }
-  //   return cartTotal >= cartConfig?.freeGiftPromoThreshold;
-  // };
+  const shouldActivateFreeGift = () => {
+    let cartTotal = Number(cart?.cost?.subtotalAmount?.amount ?? '0.00');
+    if (!cartConfig?.freeGiftPromoCombineAD) {
+      cartTotal = items
+        .filter(
+          (item) =>
+            !item?.customAttributes?.some(
+              (el) => el.key === 'selling_plan',
+            ),
+        )
+        .reduce(
+          (total, value) => (total += Number(value?.variant?.price)),
+          0,
+        );
+    }
+    return cartTotal >= cartConfig?.freeGiftPromoThreshold;
+  };
 
   /**
    * this code bellow is the code for Loyalty products
    * TODO => implement a method to add 'loyalty_redeem' at the redeemed product
    */
 
-  const loyaltyProduct =
-    apiType === 'graphql'
-      ? items.find((item) =>
-        item.customAttributes.some((el) => el.key === 'loyalty_redeem'),
-      )
-      : items.find((item) => item.loyalty_redeem);
+  const loyaltyProduct = items.find((item) =>
+    item?.customAttributes?.some((el) => el.key === 'loyalty_redeem'),
+  );
 
   return (
     <div className={'innerContent'}>
@@ -646,8 +623,8 @@ const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
         <div>
           {filteredItems.noAD.length > 0 &&
             filteredItems.withAD.length > 0 && (
-            <p>Your one-time purchase items:</p>
-          )}
+              <p>Your one-time purchase items:</p>
+            )}
           {filteredItems.noAD.map((item) => {
             const product =
               apiType === 'graphql'
@@ -697,7 +674,8 @@ const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
         </div>
       </div>
 
-      {/* {isFreeGitPromoActivate(cartConfig) &&
+      {/* {
+      isFreeGitPromoActivate(cartConfig) &&
           !hasOnlyGiftCards() &&
           products.products
             .filter(
@@ -714,20 +692,20 @@ const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
                 productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
                 active={shouldActivateFreeGift()}
               />
-            ))}
+            ))} */}
 
-        <SliderCartRec
-          productRecs={productRecList}
-          limit={getRecItemsLimit()}
-          gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
-        />
+      <SliderCartRec
+        productRecs={props?.productRecList}
+        limit={getRecItemsLimit()}
+        gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
+      />
 
-        {getApiKeys().CURRENT_ENV.includes('US') && (
-          <div className={'discount'}>
-            *300 rewards points applicable for every new Auto Delivery
-            subscription
-          </div>
-        )} */}
+      {getApiKeys().CURRENT_ENV.includes('US') && (
+        <div className={'discount'}>
+          *300 rewards points applicable for every new Auto Delivery
+          subscription
+        </div>
+      )}
     </div>
   );
 };

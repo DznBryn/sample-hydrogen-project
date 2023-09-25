@@ -71,8 +71,29 @@ export const useStore = create((set) => ({
         }
       };
     })
-
-  }
+  },
+  cart: {
+    data: null,
+    isSliderCartOpen: false,
+    setData: (cartData) => set((state) => {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          data: cartData
+        }
+      };
+    }),
+    toggleCart: () => set((state) => {
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          isSliderCartOpen: !state.cart.isSliderCartOpen
+        }
+      };
+    }),
+  },
 }));
 
 export const useComparisonModalStore = create((set) => ({

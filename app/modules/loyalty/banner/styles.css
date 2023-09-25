@@ -1,0 +1,173 @@
+.loyaltyBannerContainer {
+  background-image: url(//cdn.shopify.com/s/files/1/1736/9637/files/slider-cart-loyalty-banner.png?v=1670343012);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 57px;
+  padding-inline: 18px 11px;
+  gap: 30px;
+  margin-bottom: 17px;
+}
+
+.loyaltyBannerContainer p {
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+.ableToRedeemContainer {
+  gap: 10px;
+  min-height: auto;
+}
+
+.ableToRedeemContainer > div {
+  margin: 10px auto 10px 0;
+}
+
+.ableToRedeemContainer h3 {
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 18px;
+  color: #FFFFFF;
+  margin: 0 !important;
+}
+
+.ableToRedeemContainer p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  font-style: italic;
+  color: #FFFFFF;
+  max-width: 286px;
+}
+
+.loggedinContainer {
+  gap: 55px;
+  padding-inline: 31px 21px;
+}
+
+.loggedinContainer svg {
+  min-width: 15px;
+}
+
+.bannerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 26px;
+  padding-inline: 7.5px 3.5px;
+  border: 1.5px solid #FFFFFF;
+  border-radius: 3px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.bannerButton span {
+  font-weight: 800;
+  font-size: 11px;
+  line-height: 21px;
+  letter-spacing: 0.01em;
+  color: #FFFFFF;
+  width: max-content;
+}
+
+.pointSentence {
+  text-decoration: underline;
+}
+
+.emptyCartBannerContainer {
+  background-image: url(//cdn.shopify.com/s/files/1/1736/9637/files/0zS9iC3o_1.png?v=1672240823);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  min-height: 141px;
+  padding: 24px 0 30px 34px;
+  text-decoration: none;
+}
+
+.emptyCartBadge {
+  width: 82px;
+  height: 17px;
+  background: #47C6D9;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 10px;
+  line-height: 28px;
+  color: #FFFFFF;
+  margin-bottom: 12px;
+}
+
+.emptyCartBannerContainer h2 {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 117.6%;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.emptyCartBannerContainer p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 117.6%;
+  color: #FFFFFF;
+  max-width: 228px;
+}
+
+.skinQuizBannerContainer {
+  background-image: url(//cdn.shopify.com/s/files/1/1736/9637/files/Group_1000001007.png?v=1672762635);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  min-height: 141px;
+  padding: 29px 0 0 34px;
+}
+
+.skinQuizBannerContainer h2 {
+  max-width: 160px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 117.6%;
+  color: #FFFFFF;
+  margin-bottom: 4px;
+}
+
+.skinQuizBannerContainer p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 117.6%;
+  color: #FFFFFF;
+  max-width: 162px;
+}
+
+@media (min-width: 768px) {
+  .loyaltyBannerContainer {
+    padding-inline: 20px 24px;
+  }
+  .loggedinContainer {
+    padding-inline: 28px 26px;
+  }
+  .pointSentence {
+    text-decoration: none;
+  }
+  .ableToRedeemContainer > div {
+    margin: 10px 0;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
