@@ -116,9 +116,9 @@ const PDP = ({
       'page_type': 'product',
       'referrer': document.referrer, // the referring page
       'resource': { // information about the product
-        'category': `${product.type}`,
+        'category': `${product.productType}`,
         'name': `${product.name}`,
-        'price_in_cents': product.minPrice * 100,
+        'price_in_cents': parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2) * 100,
         'resource_id': details.variants[0].id,
         'resource_type': 'product',
         'sku': `${details.variants[0].sku}`,

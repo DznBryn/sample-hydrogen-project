@@ -54,6 +54,7 @@ export const PRODUCTS_QUERY = `#graphql
         variants(first: 10){
           nodes {
             id
+            sku
             price{
               amount
             }
@@ -109,11 +110,13 @@ export const PRODUCT_QUERY = `#graphql
       }
     }
     tags
+    productType
     totalInventory
     variants(first:100) {
       nodes {
         id
         title
+        sku
         availableForSale
         price {
           amount

@@ -65,6 +65,9 @@ function getApiKeys() {
         // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
         otButtonMessage: 'Do Not Sell My Information'
       },
+      POSTSCRIPT: {
+        shopId: 272499
+      },
       FEATURE_FLAGS: {
         LOYALTY: true,
       },
@@ -116,6 +119,9 @@ function getApiKeys() {
         // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
         otButtonMessage: 'Do Not Sell My Information'
       },
+      POSTSCRIPT: {
+        shopId: 272499
+      },
       FEATURE_FLAGS: {
         LOYALTY: true,
       },
@@ -161,6 +167,9 @@ function getApiKeys() {
       GIFT_CARD_ID: 42936398807263,
       GIFT_CARDS_VARIANTS_IDS: [42936398807263, 42936398840031, 42936398872799, 42936398905567, 42936398938335],
       SHOW_FIREWORK: false,
+      POSTSCRIPT: {
+        shopId: 272832
+      },
       FEATURE_FLAGS: {
         LOYALTY: false,
       },
