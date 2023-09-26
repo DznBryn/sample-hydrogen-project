@@ -16,14 +16,15 @@ export function useCartState() {
 
       return {
         id: merchandise.product.id.split('Product/')[1],
-        ['line_item_id']: item.id,
+        line_item_id: item.id,
         merchandiseId: merchandise.id,
-        ['variant_id']: merchandise.id.split('ProductVariant/')[1],
+        variant_id: merchandise.id.split('ProductVariant/')[1],
         title: `${merchandise.product.title} - ${merchandise.title}`,
         handle: merchandise.product.handle,
         quantity,
         image: merchandise.image,
         cost: item.cost,
+        selling_plan_allocation: item.sellingPlanAllocation
       };
 
     });
