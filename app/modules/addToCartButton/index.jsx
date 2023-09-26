@@ -8,6 +8,8 @@ import { createCustomEvent, useLayoutEffect } from '~/utils/functions/eventFunct
 import styles from './styles.css';
 import { API_METHODS } from '~/utils/constants';
 import { useStore } from '~/hooks/useStore';
+import { useCartState } from '~/hooks/useCart';
+import getApiKeys from '~/utils/functions/getApiKeys';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }];
@@ -36,7 +38,8 @@ export default function PDPAddToCart({
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
 
-  const { isLoggedIn } = useCustomerState;
+  const {id, items} = useCartState();
+  const { isLoggedIn } = useCustomerState();
   const [buttonState, setButtonState] = useState(IDLE);
   const loadingBtnStylesForExclusiveProducts = {
     color: exclusiveProductTextColor,
@@ -59,7 +62,8 @@ export default function PDPAddToCart({
     } else if (addToCart?.type && addToCart?.type === 'done' && addToCart?.data?.errors?.length > 0) {
       setButtonState(ERROR);
     } else if (addItem?.quantity > 0 && availableForSale && buttonState !== IDLE) {
-      if(addToCart.data && addToCart.type === 'done'){
+      if (addToCart.data && addToCart.type === 'done') {
+        updateOGState();
         dispatchAlertEvent();
         if (root?.data?.cart?.totalQuantity !== data?.totalQuantity) {
           setCartData(root.data.cart);
@@ -83,6 +87,41 @@ export default function PDPAddToCart({
         document.querySelector('[data-alert-state]').setAttribute('data-alert-state', 'hide');
         document.querySelector('[data-alert-state]').dispatchEvent(alertEvent);
       }, 4000);
+    }
+
+  }
+
+  function updateOGState() {
+
+    if (addItem.selling_plan_id !== 0) {
+      
+      const OG_STATE = {
+        sessionId: id,
+        optedin: [
+          { id: '8419474538542', frequency: '2_3' },
+          { id: '35292334273', frequency: '2_3' },
+          { id: '39450381320238', frequency: '2_3' },
+          { id: '33187649665', frequency: '3_3' },
+        ],
+        optedout: [],
+        productOffer: {},
+        firstOrderPlaceDate: {},
+        productToSubscribe: {},
+      };
+
+      OG_STATE.productOffer[addItem.variantId.toString()] = [getApiKeys().OG_KEY];
+
+      items.forEach(item => {
+        if (item.selling_plan_allocation) {
+          OG_STATE.productOffer[item.variant_id] = [getApiKeys().OG_KEY];
+        }
+      });
+      
+      if(typeof window === 'object') {
+      
+        window.localStorage.setItem('OG_STATE', JSON.stringify(OG_STATE));
+      
+      }
     }
 
   }
@@ -151,7 +190,7 @@ export default function PDPAddToCart({
       </button>
     </div>
   };
-  
+
   return buttonState === SOLD_OUT || buttonState === SELECT_SHADE ? mapStateToButton[SOLD_OUT] : mapStateToButton[buttonState];
 
 }
