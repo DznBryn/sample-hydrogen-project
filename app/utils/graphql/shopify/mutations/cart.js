@@ -213,12 +213,85 @@ export const UPDATE_LINE_ITEMS_MUTATION = `#graphql
     cartLinesUpdate(cartId: $cartId, lines: $lines){
       cart {
         ...CartLinesFragment
+         lines(first: 100) {
+          edges {
+            node {
+              id
+              quantity
+              attributes {
+                key
+                value
+              }
+              cost {
+                totalAmount {
+                  amount
+                  currencyCode
+                }
+                amountPerQuantity {
+                  amount
+                  currencyCode
+                }
+                compareAtAmountPerQuantity {
+                  amount
+                  currencyCode
+                }
+              }
+              sellingPlanAllocation {
+                sellingPlan {
+                  id
+                }
+              }
+              merchandise {
+                ... on ProductVariant{
+                  id
+                  availableForSale
+                  compareAtPrice {
+                    ...MoneyFragment
+                  }
+                  price {
+                    ...MoneyFragment
+                  }
+                  requiresShipping
+                  title
+                  image {
+                    ...ImageFragment
+                  }
+                  product {
+                    handle
+                    title
+                    id
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+        cost {
+          subtotalAmount {
+            ...MoneyFragment
+          }
+          totalAmount {
+            ...MoneyFragment
+          }
+          totalDutyAmount {
+            ...MoneyFragment
+          }
+          totalTaxAmount {
+            ...MoneyFragment
+          }
+        }
       },
       userErrors {
         ...ErrorFragment
       }
     }
   }
+  ${MONEY_FRAGMENT}
+  ${IMAGE_FRAGMENT}
   ${LINES_CART_FRAGMENT}
   ${USER_ERROR_FRAGMENT}
 `;

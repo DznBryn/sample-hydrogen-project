@@ -41,7 +41,9 @@
   line-height: 16px;
   display: inline;
 }
-
+.product_input {
+  display: flex;
+}
 .product_input input {
   padding: 0;
   border: 1px solid #f6f6f6;
