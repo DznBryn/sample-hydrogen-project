@@ -209,7 +209,7 @@ function getApiKeys() {
         fieldGroupName: 2948,
         fieldName: 26886
       },
-      YOTTA_KEY: 'P6Qr6e8GbjsV4g',
+      YOTTA_KEY: 'FV0jkBbqZ1-VkQ',
       YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
       YOTPO_LOYALTY_GUID: 'xpVaGpCDsSJoAZoBLKuxig',
       GIFT_CARD_ID: 7781918540017,
