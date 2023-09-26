@@ -88,6 +88,8 @@
 .productDelete {
   cursor: pointer;
   margin: auto 24px auto auto;
+  background: transparent;
+  border: 0;
 }
 
 .autoDeliver {
@@ -100,7 +102,7 @@
   margin-right: 5px;
 }
 
-.loyaltyContainer{
+.loyaltyContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -181,6 +183,7 @@
   border: solid 1px #48C6D9;
   border-radius: 34px;
   min-width: 34px;
+  width: auto;
 }
 
 .switcherContainer .slider:before {
@@ -261,8 +264,10 @@
   gap: 3px;
 }
 
+
 @media only screen and (max-width: 768px) {
   .productInfo {
     max-width: 60%;
   }
+
 }

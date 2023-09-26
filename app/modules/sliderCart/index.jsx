@@ -1,10 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import SliderCartRec, { links as sliderCartRecStyles } from './sliderCartRec';
-import SliderCartProductBox, { links as sliderCartProductBoxStyles } from './sliderCartProductBox';
-// import LoyaltyBanner, {
-//   SkinQuizCartBanner,
-//   ExclamationIcon,
-// } from 'Components/LoyaltyBanner';
 import {
   // updateListrakCart,
   // updateListrakCartGraphQL,
@@ -15,13 +9,11 @@ import {
   getLoyaltyCustomerData,
 } from '../../utils/functions/eventFunctions';
 import { compareItemsState, isFreeGitPromoActivate } from './utils/index';
-
-// import RichText from 'frontend-ui/RichText';
 import { useCartState, useCartActions } from '../../hooks/useCart';
 import { useCustomerState } from '../../hooks/useCostumer';
+import { PortableText } from '@portabletext/react';
 import getApiKeys from '../../utils/functions/getApiKeys';
 import LoadingSkeleton from '../loadingSkeleton';
-// import ResponsiveImage from 'frontend-ui/ResponsiveImage';
 
 import styles from './styles.css';
 
@@ -32,8 +24,9 @@ import LoyaltyTooltipModal from './modules/LoyaltyTooltipModal';
 import { GearIcon } from '../icons/index';
 import { mockCartConfig, mockProductRecs } from '../../utils/functions/mocks';
 import { useStore } from '~/hooks/useStore';
+import SliderCartRec, { links as sliderCartRecStyles } from './sliderCartRec';
+import SliderCartProductBox, { links as sliderCartProductBoxStyles } from './sliderCartProductBox';
 import Banner, { SkinQuizCartBanner, links as loyaltyBannerStyles } from '../loyalty/banner';
-import { PortableText } from '@portabletext/react';
 
 export const links = () => {
   return [
@@ -503,7 +496,6 @@ const EmptyCart = ({ cartConfig, handleClick, isLoggedIn, productRecList }) => (
   </>
 );
 const ItemsList = ({ items, cartConfig, setLoading, products, ...props }) => {
-  console.log('ItemsList Renders', { cartConfig, items });
   const cart = useStore((store) => store?.cart?.data ?? {});
   const getRecItemsLimit = () => {
     if (items.length === 2) return 2;

@@ -1,3 +1,5 @@
+import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from "../fragments";
+
 export async function cartCreate({input, storefront}) {
   const {cartCreate} = await storefront.mutate(CREATE_CART_MUTATION, {
     variables: {input},
@@ -41,7 +43,7 @@ export async function cartUpdate({cartId, lines, storefront}) {
       },
     },
   );
-  
+
   if (!cartLinesUpdate) {
     throw new Error('No data returned from update line items mutation');
   }
@@ -127,12 +129,70 @@ export const REMOVE_LINE_ITEMS_MUTATION = `#graphql
             node {
               id
               quantity
-              merchandise {
-                ...on ProductVariant {
+              attributes {
+                key
+                value
+              }
+              cost {
+                totalAmount {
+                  amount
+                  currencyCode
+                }
+                amountPerQuantity {
+                  amount
+                  currencyCode
+                }
+                compareAtAmountPerQuantity {
+                  amount
+                  currencyCode
+                }
+              }
+              sellingPlanAllocation {
+                sellingPlan {
                   id
                 }
               }
+              merchandise {
+                ... on ProductVariant{
+                  id
+                  availableForSale
+                  compareAtPrice {
+                    ...MoneyFragment
+                  }
+                  price {
+                    ...MoneyFragment
+                  }
+                  requiresShipping
+                  title
+                  image {
+                    ...ImageFragment
+                  }
+                  product {
+                    handle
+                    title
+                    id
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
             }
+          }
+        }
+        cost {
+          subtotalAmount {
+            ...MoneyFragment
+          }
+          totalAmount {
+            ...MoneyFragment
+          }
+          totalDutyAmount {
+            ...MoneyFragment
+          }
+          totalTaxAmount {
+            ...MoneyFragment
           }
         }
       }
@@ -141,6 +201,8 @@ export const REMOVE_LINE_ITEMS_MUTATION = `#graphql
       }
     }
   }
+  ${MONEY_FRAGMENT}
+  ${IMAGE_FRAGMENT}
   ${LINES_CART_FRAGMENT}
   ${USER_ERROR_FRAGMENT}
 `;

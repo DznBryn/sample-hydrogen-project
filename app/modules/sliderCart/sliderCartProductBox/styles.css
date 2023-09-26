@@ -88,6 +88,8 @@
 .productDelete {
   cursor: pointer;
   margin: auto 24px auto auto;
+  background: transparent;
+  border: 0;
 }
 
 .autoDeliver {
@@ -180,6 +182,7 @@
   border: solid 1px #48C6D9;
   border-radius: 34px;
   min-width: 34px;
+  width: auto;
 }
 
 .switcherContainer .slider:before {
