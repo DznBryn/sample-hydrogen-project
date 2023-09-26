@@ -9,6 +9,7 @@ const PortableTextCustom = ({value}) => {
       components={{
         marks: { 
           superscript: SuperscriptMark, 
+          color: ColorMark,
         }
       }}
     />
@@ -18,5 +19,7 @@ const PortableTextCustom = ({value}) => {
 };
 
 const SuperscriptMark = ({children}) => <sup>{children}</sup>;
+
+const ColorMark = ({text, value}) => <span style={{color: value.hex}}>{text}</span>;
 
 export default PortableTextCustom;
