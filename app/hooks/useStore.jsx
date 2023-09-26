@@ -93,6 +93,20 @@ export const useStore = create((set) => ({
         }
       };
     }),
+    updateCart: (cart) => set((state) => {
+
+      
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          data: {
+            ...state.cart.data,
+            ...cart
+          }
+        }
+      };
+    }),
   },
 }));
 

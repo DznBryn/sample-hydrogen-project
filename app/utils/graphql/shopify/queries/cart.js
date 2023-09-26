@@ -1,8 +1,7 @@
 // import {json} from '@shopify/remix-oxygen';
-import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from '../fragments';
+import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
 
 export async function getCart(context, cartId) {
-
   const cartData = await context.storefront.query(CART_QUERY, {
     variables: {
       cartId,
@@ -53,6 +52,11 @@ const CART_FRAGMENT = `#graphql
             compareAtAmountPerQuantity {
               amount
               currencyCode
+            }
+          }
+          sellingPlanAllocation {
+            sellingPlan {
+              id
             }
           }
           merchandise {
@@ -106,6 +110,7 @@ const CART_FRAGMENT = `#graphql
     discountCodes {
       code
     }
+    
   }
   ${MONEY_FRAGMENT}
   ${IMAGE_FRAGMENT}

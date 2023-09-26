@@ -1,7 +1,10 @@
+
+import { useStore } from '~/hooks/useStore';
 import { getCurrency } from '../../../utils/functions/eventFunctions';
 import getApiKeys from '../../../utils/functions/getApiKeys';
 
-const Checkout = ({ message, url, cart = null, valueToSubtract = null }) => {
+const Checkout = ({ message, url, valueToSubtract = null }) => {
+  const cart = useStore(store => store?.cart?.data ?? null);
   const subtotalPrice = Number(cart?.cost?.subtotalAmount?.amount ?? 0).toFixed(2);
   return (
     <div className={cart !== null ? 'checkout' : 'emptyCheckout'}>
