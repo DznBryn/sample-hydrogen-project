@@ -78,14 +78,7 @@ const NavPlaceholder = ({ searchConfig, siteWideSettings }) => {
 
     appendYotpoScript();
 
-    if (window.Glady) {
-      window.Glady.init({
-        appId: 'tula.com',
-        autoShowButton: true
-      }).then(() => {
-        //.....}).catch((e) => { console.log(`Could not load Gladly chat widget due to ${e}`) 
-      });
-    }
+    appendGorgiasChat();
 
     if (typeof window === 'object' && getApiKeys().FEATURE_FLAGS.LOYALTY) window.addClickEventOnWidgetElement = addClickEventOnWidgetElement;
 
@@ -104,6 +97,12 @@ const NavPlaceholder = ({ searchConfig, siteWideSettings }) => {
     }
 
   });
+
+  function appendGorgiasChat(){
+
+    appendScript('https://config.gorgias.chat/bundle-loader/01H7G04F846WG95Q6E2FBRW47X');
+
+  }
 
   function appendYotpoScript(){
 
