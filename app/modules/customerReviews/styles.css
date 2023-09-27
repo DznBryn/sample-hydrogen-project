@@ -1,0 +1,227 @@
+.customerReviewsTop {
+  margin-top: calc(63px + 1.5em);
+  margin-bottom: 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.customerReviewsTop .topLeftWrap {
+  width: 66.66%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.customerReviewsTop .topLeftWrap .topImages {
+  width: 50%;
+}
+
+.customerReviewsTop .topImages {
+  height: 554px;
+  width: calc(33.33% - 30px);
+  margin: 0 15px;
+}
+
+.customerReviewsTop .bottom {
+  width: 100%;
+  height: 295px;
+}
+
+.customerReviewsTop .topImages,
+.customerReviewsTop .topImages .top,
+.customerReviewsTop .bottom {
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.customerReviewsTop .topImages .top {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 259px;
+}
+
+.customerReviewsTop h1 {
+  display: block;
+  font-family: Lato-Tula, sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin: 0 0 0.5em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.customerReviewsTop .starRatingWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 1em auto 2em;
+}
+
+.customerReviewsTop .starWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.customerReviewsTop svg {
+  height: 1em;
+  width: 2.5em;
+  transform: scale(2);
+}
+
+.customerReviewsTop p.avgStarCount {
+  margin-left: 18px;
+  font-size: 20px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
+}
+
+.customerReviewsTop p {
+  display: block;
+  font-family: Lato-Tula, sans-serif;
+  font-weight: 400;
+  letter-spacing: 2px;
+  margin: 0 0 0.5em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media all and (max-width: 768px) {
+  .customerReviewsTop {
+    margin-top: 6em;
+    flex-direction: column-reverse;
+  }
+  .customerReviewsTop .top {
+    height: 220px;
+  }
+  .customerReviewsTop .topLeftWrap {
+    flex-direction: column;
+    width: 100%;
+  }
+  .customerReviewsTop .topImages {
+    width: 100%;
+    height: 475px;
+  }
+  .customerReviewsTop .topLeftWrap .topImages,
+  .customerReviewsTop .topImages .bottom {
+    height: 200px;
+  }
+  .customerReviewsTop .topLeftWrap .topImages {
+    margin: 15px;
+    width: 100%;
+  }
+  .customerReviewsTop svg {
+    height: 1em;
+    width: 1.5em;
+    transform: scale(1.2);
+  }
+  .customerReviewsTop h1 {
+    font-size: 30px;
+    line-height: 42px;
+  }
+  .customerReviewsTop p.avgStarCount {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .customerReviewsTop p {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+.customerReviewsBottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 0.5em;
+}
+
+.customerReviewsBottom .left {
+  width: 66.66%;
+  box-sizing: border-box;
+  float: left;
+  min-height: 1px;
+  margin-left: 15px;
+  margin-right: 15px;
+  vertical-align: top;
+  height: 554px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.customerReviewsBottom .right {
+  width: 33.33%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.customerReviewsBottom .right .bottomImage {
+  width: 100%;
+  box-sizing: border-box;
+  float: left;
+  min-height: 1px;
+  vertical-align: top;
+  height: 320px;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.customerReviewsBottom .right a {
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font-size: 12px;
+  line-height: 16px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: 2px solid #4c4e56;
+  cursor: pointer;
+  margin-bottom: 3em;
+}
+
+.customerReviewsBottom .right a:hover {
+  color: #48c6d9;
+  border: 2px solid #48c6d9;
+}
+
+@media all and (max-width: 768px) {
+  .customerReviewsBottom {
+    flex-direction: column-reverse;
+  }
+  .customerReviewsBottom .left,
+  .customerReviewsBottom .right {
+    width: 100%;
+    padding: 0;
+  }
+  .customerReviewsBottom .right a {
+    height: 50px;
+    margin-bottom: 2.2em;
+  }
+  .customerReviewsBottom .left,
+  .customerReviewsBottom .right .bottomImage {
+    width: 100%;
+    height: 200px;
+  }
+  .customerReviewsBottom .right .bottomImage {
+    margin-bottom: 1.8em;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

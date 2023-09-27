@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 
-export const GET_TULA_SCHOLARSHIP_PAGE = gql `
+export const GET_TULA_SCHOLARSHIP_PAGE = gql`
   query GetAllTulaScholarshipPage {
     allTulaScholarshipPage {
       _id
@@ -20,7 +20,7 @@ export const GET_TULA_SCHOLARSHIP_PAGE = gql `
   }
 `;
 
-export const GET_COOKIE_POLICY_PAGE = gql `
+export const GET_COOKIE_POLICY_PAGE = gql`
   query GetAllCookiePolicyPage {
     allCookiePolicyPage {
       _id
@@ -33,7 +33,7 @@ export const GET_COOKIE_POLICY_PAGE = gql `
   }
 `;
 
-export const GET_PRIVACY_POLICY_PAGE = gql `
+export const GET_PRIVACY_POLICY_PAGE = gql`
   query GetAllPrivacyPolicyPage {
     allPrivacyPolicyPage {
       _id
@@ -44,7 +44,7 @@ export const GET_PRIVACY_POLICY_PAGE = gql `
   }
 `;
 
-export const GET_TERMS_CONDITIONS_PAGE = gql `
+export const GET_TERMS_CONDITIONS_PAGE = gql`
   query GetAllTermsConditionsPage {
     allTermsConditionsPage {
       _id
@@ -358,7 +358,6 @@ export const GET_AUTO_DELIVERY = gql`
           url
         }
       }
-
     }
   }
 `;
@@ -408,25 +407,25 @@ export const GET_OUR_STORY = gql`
       _id
       name
       sectionOneImageLeft {
-        asset{
+        asset {
           _id
           url
         }
       }
       sectionOneImageRight {
-        asset{
+        asset {
           _id
           url
         }
       }
       sectionThreeImage {
-        asset{
+        asset {
           _id
           url
         }
       }
       sectionFourImage {
-        asset{
+        asset {
           _id
           url
         }
@@ -440,62 +439,61 @@ export const GET_OUR_STORY = gql`
   }
 `;
 
-
 export const GET_WHY_TULA = gql`
   query GetWhyTula {
     allWhyTula {
       _id
       name
       imageOne {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageTwo {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageThree {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageFour {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageOneMobile {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageTwoMobile {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageThreeMobile {
-        asset{
+        asset {
           _id
           url
         }
       }
       imageFourMobile {
-        asset{
+        asset {
           _id
           url
         }
       }
       sectionLinks
-    } 
+    }
   }
 `;
 
@@ -504,16 +502,16 @@ export const GET_FOOTERS = gql`
     allFooters {
       _id
       name
-      navLinkGroups{
+      navLinkGroups {
         _id
         displayText
         url
-        navLinks{
+        navLinks {
           _id
           displayText
           url
-          emoji{
-            asset{
+          emoji {
+            asset {
               _id
               url
             }
@@ -521,16 +519,16 @@ export const GET_FOOTERS = gql`
           fontColorHex
           calloutText
           calloutFontColorHex
-          thumbnail{
-            asset{
+          thumbnail {
+            asset {
               _id
               url
             }
           }
         }
         fontColorHex
-        emoji{
-          asset{
+        emoji {
+          asset {
             _id
             url
           }
@@ -574,13 +572,13 @@ export const GET_CART_PAGE_CONFIG = gql`
       productLimitText
       freeShippingThreshold
       promoImageMobile {
-        asset{
+        asset {
           _id
           url
         }
       }
       promoImageDesktop {
-        asset{
+        asset {
           _id
           url
         }
@@ -603,7 +601,7 @@ export const GET_CART_PAGE_CONFIG = gql`
       freeGiftPromoProductPrice
       freeGiftPromoIsMisteryProductToggle
       freeGiftPromoMysteryImage {
-        asset{
+        asset {
           _id
           url
         }
@@ -639,11 +637,11 @@ export const GET_ANNOUNCEMENT_HEADER = gql`
       promoTextRaw
       promoModalLinkText
       modalRaw
-      emoji{
-        asset{
-            _id
-            url
-          }
+      emoji {
+        asset {
+          _id
+          url
+        }
       }
     }
   }
@@ -656,11 +654,11 @@ export const GET_ANNOUNCEMENT_MESSAGES = gql`
       name
       announcementTextRaw
       announcementURL
-      emoji{
-        asset{
-            _id
-            url
-          }
+      emoji {
+        asset {
+          _id
+          url
+        }
       }
       shouldOpenModal
       modalLinkText
@@ -676,16 +674,16 @@ export const GET_MOBILE_NAV_BAR = gql`
     allMobileNavbar {
       _id
       name
-      navbarItems{
+      navbarItems {
         _id
         displayText
         url
-        navLinks{
+        navLinks {
           _id
           displayText
           url
-          emoji{
-            asset{
+          emoji {
+            asset {
               _id
               url
             }
@@ -693,16 +691,16 @@ export const GET_MOBILE_NAV_BAR = gql`
           fontColorHex
           calloutText
           calloutFontColorHex
-          thumbnail{
-            asset{
+          thumbnail {
+            asset {
               _id
               url
             }
           }
         }
         fontColorHex
-        emoji{
-          asset{
+        emoji {
+          asset {
             _id
             url
           }
@@ -718,13 +716,13 @@ export const GET_HEADER_CONFIG = gql`
     allHeaderConfig {
       _id
       name
-      headerNavItems{
+      headerNavItems {
         name
         displayText
         linkUrl
-        dropdownOverlay{
+        dropdownOverlay {
           name
-          carouselProductCollection{
+          carouselProductCollection {
             name
             promoPosition1
             promoOneLink
@@ -738,12 +736,12 @@ export const GET_HEADER_CONFIG = gql`
             fireworkStoryPosition
             collectionId
           }
-          overlayNavLinks{
+          overlayNavLinks {
             _id
             displayText
             url
-            emoji{
-              asset{
+            emoji {
+              asset {
                 _id
                 url
               }
@@ -751,41 +749,41 @@ export const GET_HEADER_CONFIG = gql`
             fontColorHex
             calloutText
             calloutFontColorHex
-            thumbnail{
-              asset{
+            thumbnail {
+              asset {
                 _id
                 url
               }
             }
           }
-          megaMenuOverlay{
+          megaMenuOverlay {
             name
-            leftBackgroundMedia{
-              asset{
+            leftBackgroundMedia {
+              asset {
                 _id
                 url
               }
             }
             leftCta
             leftCtaUrl
-            rightBackgroundMedia{
-              asset{
+            rightBackgroundMedia {
+              asset {
                 _id
                 url
               }
             }
             rightCta
             rightCtaUrl
-            navLinkGroups{
+            navLinkGroups {
               _id
               displayText
               url
-              navLinks{
+              navLinks {
                 _id
                 displayText
                 url
-                emoji{
-                  asset{
+                emoji {
+                  asset {
                     _id
                     url
                   }
@@ -793,16 +791,16 @@ export const GET_HEADER_CONFIG = gql`
                 fontColorHex
                 calloutText
                 calloutFontColorHex
-                thumbnail{
-                  asset{
+                thumbnail {
+                  asset {
                     _id
                     url
                   }
                 }
               }
               fontColorHex
-              emoji{
-                asset{
+              emoji {
+                asset {
                   _id
                   url
                 }
@@ -810,17 +808,17 @@ export const GET_HEADER_CONFIG = gql`
               order
             }
           }
-          megaMenuSplit{
+          megaMenuSplit {
             name
-            backgroundImage{
-                asset{
-                  _id
-                  url
-                }
+            backgroundImage {
+              asset {
+                _id
+                url
               }
+            }
             imageText
             imageTextCta
-            imageCollectionLink{
+            imageCollectionLink {
               name
               promoPosition1
               promoOneLink
@@ -834,7 +832,7 @@ export const GET_HEADER_CONFIG = gql`
               fireworkStoryPosition
               collectionId
             }
-            menuCollections{
+            menuCollections {
               name
               promoPosition1
               promoOneLink
@@ -850,8 +848,8 @@ export const GET_HEADER_CONFIG = gql`
             }
           }
         }
-        emoji{
-          asset{
+        emoji {
+          asset {
             _id
             url
           }
@@ -872,8 +870,8 @@ export const GET_MOBILE_NAV_FOOTER_MAIN_BUTTON = gql`
       header
       contentText
       linkURL
-      imageBackground{
-        asset{
+      imageBackground {
+        asset {
           _id
           url
         }
@@ -913,7 +911,7 @@ export const GET_SEARCH_CONFIG = gql`
       _id
       name
       searchTags
-      searchProducts{
+      searchProducts {
         name
         richRaw
         alt_title
@@ -922,7 +920,7 @@ export const GET_SEARCH_CONFIG = gql`
         shouldShowOOSForm
         ingredients_list
         full_ingredients_list
-        productPromos{
+        productPromos {
           name
           promoMessage
           discount
@@ -934,28 +932,28 @@ export const GET_SEARCH_CONFIG = gql`
         whatItDoes
         keyIngredients
         finish
-        tabs{
+        tabs {
           name
           tabName
-          button{
+          button {
             name
             showButton
             text
             buttonOutlineStyle
-            slideContent{
+            slideContent {
               name
               title
               contentRaw
             }
           }
-          contentBlock{
+          contentBlock {
             name
             title
-            contents{
+            contents {
               name
               headerRaw
-              image{
-                asset{
+              image {
+                asset {
                   _id
                   url
                 }
@@ -968,12 +966,12 @@ export const GET_SEARCH_CONFIG = gql`
           }
           useBackgroundGradient
         }
-        certifiedBadges{
+        certifiedBadges {
           name
-          badges{
+          badges {
             name
-            image{
-              asset{
+            image {
+              asset {
                 _id
                 url
               }
@@ -983,8 +981,8 @@ export const GET_SEARCH_CONFIG = gql`
         }
         description_WithPriority
         benefits_WithPriority
-        gallery_WithPriority{
-          asset{
+        gallery_WithPriority {
+          asset {
             _id
             url
           }
@@ -1002,18 +1000,18 @@ export const GET_CAROUSEL_SLIDES_GROUP = gql`
     allCarouselSlidesGroup {
       _id
       name
-      slides{
+      slides {
         _id
         name
         fullWidth
-        fullWidthImage{
-          asset{
+        fullWidthImage {
+          asset {
             _id
             url
           }
         }
-        fullWidthMobileImage{
-          asset{
+        fullWidthMobileImage {
+          asset {
             _id
             url
           }
@@ -1029,14 +1027,14 @@ export const GET_CAROUSEL_SLIDES_GROUP = gql`
         slideCta
         slideCtaBGColorHex
         slideCtaLink
-        slideImage{
-          asset{
+        slideImage {
+          asset {
             _id
             url
           }
         }
-        slideImageMobile{
-          asset{
+        slideImageMobile {
+          asset {
             _id
             url
           }
@@ -1045,8 +1043,8 @@ export const GET_CAROUSEL_SLIDES_GROUP = gql`
         videoSlideCopy
         videoSlideCta
         videoSlideCtaLink
-        video{
-          asset{
+        video {
+          asset {
             _id
             url
           }
@@ -1061,7 +1059,7 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
     allHomepageRecommendations {
       _id
       name
-      collectionOne{
+      collectionOne {
         name
         promoPosition1
         promoOneLink
@@ -1076,13 +1074,13 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
         collectionId
       }
       collectionOneFontColorHex
-      collectionOneEmoji{
-        asset{
+      collectionOneEmoji {
+        asset {
           _id
           url
         }
       }
-      collectionTwo{
+      collectionTwo {
         name
         promoPosition1
         promoOneLink
@@ -1097,13 +1095,13 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
         collectionId
       }
       collectionTwoFontColorHex
-      collectionTwoEmoji{
-        asset{
+      collectionTwoEmoji {
+        asset {
           _id
           url
         }
       }
-      collectionThree{
+      collectionThree {
         name
         promoPosition1
         promoOneLink
@@ -1118,13 +1116,13 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
         collectionId
       }
       collectionThreeFontColorHex
-      collectionThreeEmoji{
-        asset{
+      collectionThreeEmoji {
+        asset {
           _id
           url
         }
       }
-      collectionFour{
+      collectionFour {
         name
         promoPosition1
         promoOneLink
@@ -1139,8 +1137,8 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
         collectionId
       }
       collectionFourFontColorHex
-      collectionFourEmoji{
-        asset{
+      collectionFourEmoji {
+        asset {
           _id
           url
         }
@@ -1155,8 +1153,8 @@ export const GET_HOMEPAGE_SHOP_BY_CONCERN = gql`
       _id
       name
       collectionLink
-      concernImage{
-        asset{
+      concernImage {
+        asset {
           _id
           url
         }
@@ -1181,14 +1179,14 @@ export const GET_HOMEPAGE_WHY_PROBIOTICS = gql`
       subtextThree
       buttonText
       buttonUrl
-      bigImage{
-        asset{
+      bigImage {
+        asset {
           _id
           url
         }
       }
-      smallImage{
-        asset{
+      smallImage {
+        asset {
           _id
           url
         }
@@ -1207,14 +1205,14 @@ export const GET_HOMEPAGE_SKIN_QUIZ = gql`
       sectionCopy
       buttonText
       buttonUrl
-      bigImage{
-        asset{
+      bigImage {
+        asset {
           _id
           url
         }
       }
-      smallImage{
-        asset{
+      smallImage {
+        asset {
           _id
           url
         }
@@ -1233,20 +1231,20 @@ export const GET_HOMEPAGE_COLLECTION_CALLOUT = gql`
       sectionCopy
       buttonText
       buttonUrl
-      bigImage{
-        asset{
+      bigImage {
+        asset {
           _id
           url
         }
       }
-      smallImage{
-        asset{
+      smallImage {
+        asset {
           _id
           url
         }
       }
-      mobileImage{
-        asset{
+      mobileImage {
+        asset {
           _id
           url
         }
@@ -1269,7 +1267,7 @@ export const GET_PLP_FILTER_MENU = gql`
 
 export const GET_PRODUCTS = gql`
   query GetAllProducts {
-    allProducts{
+    allProducts {
       name
       richRaw
       alt_title
@@ -1278,7 +1276,7 @@ export const GET_PRODUCTS = gql`
       shouldShowOOSForm
       ingredients_list
       full_ingredients_list
-      productPromos{
+      productPromos {
         name
         promoMessage
         discount
@@ -1290,28 +1288,28 @@ export const GET_PRODUCTS = gql`
       whatItDoes
       keyIngredients
       finish
-      tabs{
+      tabs {
         name
         tabName
-        button{
+        button {
           name
           showButton
           text
           buttonOutlineStyle
-          slideContent{
+          slideContent {
             name
             title
             contentRaw
           }
         }
-        contentBlock{
+        contentBlock {
           name
           title
-          contents{
+          contents {
             name
             headerRaw
-            image{
-              asset{
+            image {
+              asset {
                 _id
                 url
               }
@@ -1324,12 +1322,12 @@ export const GET_PRODUCTS = gql`
         }
         useBackgroundGradient
       }
-      certifiedBadges{
+      certifiedBadges {
         name
-        badges{
+        badges {
           name
-          image{
-            asset{
+          image {
+            asset {
               _id
               url
             }
@@ -1339,8 +1337,8 @@ export const GET_PRODUCTS = gql`
       }
       description_WithPriority
       benefits_WithPriority
-      gallery_WithPriority{
-        asset{
+      gallery_WithPriority {
+        asset {
           _id
           url
         }
@@ -1354,7 +1352,7 @@ export const GET_PRODUCTS = gql`
 
 export const GET_PRODUCT_COLLECTIONS = gql`
   query GetAllProductCollections {
-    allProductCollections{
+    allProductCollections {
       name
       promoPosition1
       promoOneLink
@@ -1373,7 +1371,7 @@ export const GET_PRODUCT_COLLECTIONS = gql`
 
 export const GET_LISTRAK_REC = gql`
   query GetAllListrakRec {
-    allListrakRec{
+    allListrakRec {
       name
       listrakId
       title
@@ -1383,7 +1381,7 @@ export const GET_LISTRAK_REC = gql`
 
 export const GET_VARIANTS_OOS = gql`
   query GetAllVariantsOOS {
-    allVariantsOOS{
+    allVariantsOOS {
       name
       storefrontId
     }
@@ -1392,12 +1390,12 @@ export const GET_VARIANTS_OOS = gql`
 
 export const GET_IMAGES = gql`
   query GetAllImages {
-    allImages{
+    allImages {
       name
       alt
       role
-      images{
-        asset{
+      images {
+        asset {
           _id
           url
         }
@@ -1408,7 +1406,7 @@ export const GET_IMAGES = gql`
 
 export const GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT = gql`
   query GetAllExclusiveProductBannerReleaseContent {
-    allExclusiveProductBannerReleaseContent{
+    allExclusiveProductBannerReleaseContent {
       name
       message
       slug
@@ -1422,22 +1420,22 @@ export const GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT = gql`
 
 export const GET_CONCEALER_SHADE_IMAGES = gql`
   query GetAllConcealerShadeImages {
-    allConcealerShadeImages{
+    allConcealerShadeImages {
       name
-      desktop{
-        asset{
+      desktop {
+        asset {
           _id
           url
         }
       }
-      mobile{
-        asset{
+      mobile {
+        asset {
           _id
           url
         }
       }
-      mobileNoLabels{
-        asset{
+      mobileNoLabels {
+        asset {
           _id
           url
         }
@@ -1448,7 +1446,7 @@ export const GET_CONCEALER_SHADE_IMAGES = gql`
 
 export const GET_AUTO_DELIVERY_INFO_MESSAGE = gql`
   query GetAllAutoDeliveryInfoMessage {
-    allAutoDeliveryInfoMessage{
+    allAutoDeliveryInfoMessage {
       name
       messageRaw
       disableInfomessage
@@ -1458,18 +1456,18 @@ export const GET_AUTO_DELIVERY_INFO_MESSAGE = gql`
 
 export const GET_INFLUENCER_PAGE = gql`
   query GetAllInfluencerPage {
-    allInfluencerPage{
+    allInfluencerPage {
       name
       pageSlug
       influencerTitle
       influencerDescription
-      influencerBanner{
-        asset{
+      influencerBanner {
+        asset {
           _id
           url
         }
       }
-      influencerProducts{
+      influencerProducts {
         name
         richRaw
         alt_title
@@ -1478,7 +1476,7 @@ export const GET_INFLUENCER_PAGE = gql`
         shouldShowOOSForm
         ingredients_list
         full_ingredients_list
-        productPromos{
+        productPromos {
           name
           promoMessage
           discount
@@ -1490,28 +1488,28 @@ export const GET_INFLUENCER_PAGE = gql`
         whatItDoes
         keyIngredients
         finish
-        tabs{
+        tabs {
           name
           tabName
-          button{
+          button {
             name
             showButton
             text
             buttonOutlineStyle
-            slideContent{
+            slideContent {
               name
               title
               contentRaw
             }
           }
-          contentBlock{
+          contentBlock {
             name
             title
-            contents{
+            contents {
               name
               headerRaw
-              image{
-                asset{
+              image {
+                asset {
                   _id
                   url
                 }
@@ -1524,12 +1522,12 @@ export const GET_INFLUENCER_PAGE = gql`
           }
           useBackgroundGradient
         }
-        certifiedBadges{
+        certifiedBadges {
           name
-          badges{
+          badges {
             name
-            image{
-              asset{
+            image {
+              asset {
                 _id
                 url
               }
@@ -1539,8 +1537,8 @@ export const GET_INFLUENCER_PAGE = gql`
         }
         description_WithPriority
         benefits_WithPriority
-        gallery_WithPriority{
-          asset{
+        gallery_WithPriority {
+          asset {
             _id
             url
           }
@@ -1550,7 +1548,7 @@ export const GET_INFLUENCER_PAGE = gql`
         productId
       }
       plpTitle
-      plpCollection{
+      plpCollection {
         name
         promoPosition1
         promoOneLink
@@ -1563,6 +1561,48 @@ export const GET_INFLUENCER_PAGE = gql`
         showCompareButton
         fireworkStoryPosition
         collectionId
+      }
+    }
+  }
+`;
+
+export const GET_CUSTOMER_REVIEWS = gql`
+  query GetAllCustomerReviews {
+    allCustomerReviews {
+      name
+      topHeader
+      topRating
+      topReviewCount
+      topImageLeft {
+        asset {
+          _id
+          url
+        }
+      }
+      topImageMiddle {
+        asset {
+          _id
+          url
+        }
+      }
+      topImageRight {
+        asset {
+          _id
+          url
+        }
+      }
+      shopNowLink
+      bottomLeftImage {
+        asset {
+          _id
+          url
+        }
+      }
+      bottomRightImage {
+        asset {
+          _id
+          url
+        }
       }
     }
   }
