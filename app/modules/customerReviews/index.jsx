@@ -2,6 +2,7 @@ import {useEffect} from 'react';
 import {useYotpo} from '~/hooks/useYotpo';
 
 import styles from './styles.css';
+import {Link} from '@remix-run/react';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -16,19 +17,21 @@ const CustomerReviews = ({content}) => {
 
   return (
     <>
+      {/* Top */}
       <div className={'fixedWidthPage minHeight'}>
         <div className={'customerReviewsTop'}>
           <div className={'topLeftWrap'}>
-            <img
+            <div
               className={'topImages columnOne'}
-              src={content.topImageLeft.asset.url}
+              style={{backgroundImage: `url(${content.topImageLeft.asset.url}`}}
             />
-            <img
+            <div
               className={'topImages columnTwo'}
-              src={content.topImageMiddle.asset.url}
+              style={{
+                backgroundImage: `url(${content.topImageMiddle.asset.url}`,
+              }}
             />
           </div>
-
           <div className={'topImages columnThree'}>
             <div className={'top'}>
               <h1>{content.topHeader}</h1>
@@ -74,19 +77,28 @@ const CustomerReviews = ({content}) => {
           </div>
         </div>
       </div>
+
+      {/* Yotpo Review */}
       <div className="fixedWidthPage">
-        <div id="yotpo-testimonials-custom-tab" data-yotpo-element-id="1">
-          {' '}
-        </div>
+        <div id="yotpo-testimonials-custom-tab" data-yotpo-element-id="1" />
       </div>
+
+      {/* Bottom */}
       <div className="fixedWidthPage">
         <div className={'customerReviewsBottom'}>
-          <img className={'left'} src={content.bottomLeftImage.asset.url} />
+          <div
+            className={'left'}
+            style={{
+              backgroundImage: `url(${content.bottomLeftImage.asset.url}`,
+            }}
+          />
           <div className={'right'}>
-            <a href={content.shopNowLink}>Shop Now</a>
-            <img
+            <Link to={content.shopNowLink}>Shop Now</Link>
+            <div
               className={'bottomImage'}
-              src={content.bottomRightImage.asset.url}
+              style={{
+                backgroundImage: `url(${content.bottomRightImage.asset.url}`,
+              }}
             />
           </div>
         </div>
