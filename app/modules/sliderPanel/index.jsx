@@ -1,5 +1,8 @@
-import React, { useEffect } from 'react';
-import { bindCustomEvent, createCustomEvent } from '~/utils/functions/eventFunctions';
+import React, {useEffect} from 'react';
+import {
+  bindCustomEvent,
+  createCustomEvent,
+} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 
@@ -9,7 +12,7 @@ export const links = () => {
 
 export const openedStateID = 'tl-sp-o';
 
-const SliderPanel = ({ children, id, overlayOn = true }) => {
+const SliderPanel = ({children, id, overlayOn = true}) => {
   const sliderRef = React.useRef(null);
 
   useEffect(() => {
@@ -24,7 +27,7 @@ const SliderPanel = ({ children, id, overlayOn = true }) => {
     const dataSliderState = sliderRef.current.getAttribute('data-slider-state');
 
     if (dataSliderState === 'show') {
-      document.querySelector('html').classList.remove('bodyWrap');
+      document.querySelector('body').classList.remove('bodyWrap');
       sliderRef.current.setAttribute('data-slider-state', 'hide');
       sliderRef.current.dispatchEvent(sliderEvent);
       sessionStorage.setItem(openedStateID, '0');
@@ -35,14 +38,12 @@ const SliderPanel = ({ children, id, overlayOn = true }) => {
     <>
       <div
         id={id}
-        className='sliderWrap hiddenPanel'
+        className="sliderWrap hiddenPanel"
         data-slider-state="hide"
         ref={sliderRef}
       >
         <div className={overlayOn && 'overlay'} onClick={handleClose}></div>
-        <div className='slider'>
-          {children}
-        </div>
+        <div className="slider">{children}</div>
       </div>
     </>
   );
@@ -53,12 +54,12 @@ export const switchSliderPanelVisibility = (dataId) => {
   const dataSliderState = document.querySelector(`#${dataId}`);
 
   if (dataSliderState.getAttribute('data-slider-state') === 'show') {
-    document.querySelector('html').classList.remove('bodyWrap');
+    document.querySelector('body').classList.remove('bodyWrap');
     dataSliderState.setAttribute('data-slider-state', 'hide');
     dataSliderState.dispatchEvent(sliderEvent);
     sessionStorage.setItem(openedStateID, '0');
   } else {
-    document.querySelector('html').classList.add('bodyWrap');
+    document.querySelector('body').classList.add('bodyWrap');
     dataSliderState.setAttribute('data-slider-state', 'show');
     dataSliderState.dispatchEvent(sliderEvent);
   }
