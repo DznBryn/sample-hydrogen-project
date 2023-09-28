@@ -1,18 +1,18 @@
-import { MONEY_FRAGMENT } from '../fragments';
+import {MONEY_FRAGMENT} from '../fragments';
 import {flattenConnection} from '@shopify/hydrogen-react';
 
-export async function getCollectionProducts(context, collectiontitle){
-
+export async function getCollectionProducts(context, collectiontitle) {
   const {collection} = await context.storefront.query(PRODUCTS_QUERY, {
-    variables: { handle: collectiontitle },
+    variables: {handle: collectiontitle},
   });
 
   if (!collection) throw new Response(null, {status: 404});
 
   return {
-    products: collection?.products ? flattenConnection(collection.products) : [],
+    products: collection?.products
+      ? flattenConnection(collection.products)
+      : [],
   };
-
 }
 
 export const COLLECTIONS_QUERY = `#graphql
@@ -59,6 +59,9 @@ export const PRODUCTS_QUERY = `#graphql
               amount
             }
             compareAtPrice{
+              amount
+            }
+            unitPrice{
               amount
             }
             quantityAvailable
@@ -119,6 +122,12 @@ export const PRODUCT_QUERY = `#graphql
         sku
         availableForSale
         price {
+          amount
+        }
+        compareAtPrice{
+          amount
+        }
+        unitPrice{
           amount
         }
         image {
