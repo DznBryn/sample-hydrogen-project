@@ -1,23 +1,18 @@
 module.exports = {
   env: {
-    'browser': true,
-    'es2021': true,
-    'node': true
+    browser: true,
+    es2021: true,
+    node: true,
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
   settings: {
-    react: {version: 'detect',},
+    react: {version: 'detect'},
   },
   parserOptions: {
-    'ecmaVersion': 'latest',
-    'sourceType': 'module'
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: [
-    'react',
-  ],
+  plugins: ['react'],
   rules: {
     'react-hooks/exhaustive-deps': 'off',
     'react/react-in-jsx-scope': 'off',
@@ -29,12 +24,11 @@ module.exports = {
     'arrow-spacing': 'error',
     'block-spacing': 'error',
     'no-console': 'warn',
-    'eqeqeq': 'error',
-    'key-spacing': ['error', { 'afterColon': true }],
+    eqeqeq: 'error',
+    'key-spacing': ['error', {afterColon: true}],
     'array-bracket-spacing': ['error', 'never'],
     'linebreak-style': ['error', 'unix'],
-    'quotes': ['error', 'single'],
-    'semi': ['error', 'always'],
-    'indent': ['error', 2],
-  }
+    quotes: ['error', 'single'],
+    semi: ['error', 'always'],
+  },
 };
