@@ -1,5 +1,4 @@
 .navPlaceholder {
-  height: 55px;
   width: 100vw;
   position: relative;
 }
@@ -22,9 +21,6 @@
 }
 
 @media all and (max-width: 768px) {
-  .navPlaceholder {
-    height: 50px;
-  }
   .navPlaceholder .mobileSubNavActive {
     padding-bottom: 92px;
   }
