@@ -189,17 +189,21 @@ const PDPDetails = ({
   const getPrice = (selectedVariant = 0, isStickyCta = false) => {
     return selectedVariant !== 0
       ? {
-          originalPrice:
+          originalPrice: parseFloat(
             details.variants?.find((variant) => variant.id === selectedVariant)
               ?.compareAtPrice?.amount ?? 0,
-          price:
+          ),
+          price: parseFloat(
             details.variants.find((variant) => variant.id === selectedVariant)
               ?.price?.amount ?? 0,
+          ),
           ...generatePriceConfigs(isStickyCta),
         }
       : {
-          originalPrice: details.variants[0]?.originalPrice ?? 0,
-          price: details.variants[0]?.price?.amount ?? 0,
+          originalPrice: parseFloat(
+            details.variants[0]?.compareAtPrice?.amount ?? 0,
+          ),
+          price: parseFloat(details.variants[0]?.price?.amount ?? 0),
           ...generatePriceConfigs(isStickyCta),
         };
   };
