@@ -11,7 +11,8 @@
     "preview": "npm run build && shopify hydrogen preview",
     "lint": "eslint --no-error-on-unmatched-pattern --fix",
     "g": "shopify hydrogen generate",
-    "generate-doc": "npx jsdoc -c jsdoc.config.json"
+    "generate-doc": "npx jsdoc -c jsdoc.config.json",
+    "prepare": "husky install"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
