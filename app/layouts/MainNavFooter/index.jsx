@@ -37,7 +37,7 @@ const MainNavFooter = ({ children }) => {
     HeaderConfig,
     MobileNavFooterMainButton,
     AnnouncementTopBanner,
-    SiteWideSettings,
+    // SiteWideSettings,
     SearchConfig,
     collection,
   } = CMSData;
