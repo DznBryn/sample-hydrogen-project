@@ -52,7 +52,7 @@ const MainNavFooter = ({ children }) => {
     <>
 
       <NavPlaceholder
-        siteWideSettings={getCMSDoc(SiteWideSettings, 'Black Friday')}
+        // siteWideSettings={getCMSDoc(SiteWideSettings, 'Black Friday')}
         searchConfig={getCMSDoc(SearchConfig, 'Default')}
       />
 
