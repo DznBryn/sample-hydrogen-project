@@ -1617,3 +1617,12 @@ export const GET_REDIRECTS = gql`
     }
   }
 `;
+
+export const GET_ROBOTS = gql`
+  query GetAllRobots {
+    allRobots {
+      name
+      content
+    }
+  }
+`;
