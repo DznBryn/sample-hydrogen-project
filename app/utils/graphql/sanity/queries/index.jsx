@@ -1607,3 +1607,13 @@ export const GET_CUSTOMER_REVIEWS = gql`
     }
   }
 `;
+
+export const GET_REDIRECTS = gql`
+  query GetAllRedirects {
+    allRedirects {
+      destination
+      source
+      statusCode
+    }
+  }
+`;
