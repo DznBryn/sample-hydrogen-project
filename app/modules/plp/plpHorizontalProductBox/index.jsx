@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { getCurrency, useLayoutEffect } from '~/utils/functions/eventFunctions';
-import { Link } from '@remix-run/react';
-import PDPAddToCart, { links as pdpAddToCartStyles } from '../../addToCartButton';
-import PLPBadges, { links as plpBadgesStyles } from '../plpBadges';
-import Badges, { links as badgesStyles } from '../../badges';
-import Product, { links as plpProductBoxStyles } from '../plpProductBox';
+import {useState, useEffect} from 'react';
+import {getCurrency, useLayoutEffect} from '~/utils/functions/eventFunctions';
+import {Link} from '@remix-run/react';
+import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
+import PLPBadges, {links as plpBadgesStyles} from '../plpBadges';
+import Badges, {links as badgesStyles} from '../../badges';
+import Product, {links as plpProductBoxStyles} from '../plpProductBox';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
-    { rel: 'stylesheet', href: styles },
+    {rel: 'stylesheet', href: styles},
     ...pdpAddToCartStyles(),
     ...plpBadgesStyles(),
     ...badgesStyles(),
@@ -18,9 +18,9 @@ export const links = () => {
   ];
 };
 
-const Button = ({ product, ...rest }) => {
+const Button = ({product, ...rest}) => {
   const [forceSoldOut, setForceSoldOut] = useState(false);
-  const { variants, tags } = product;
+  const {variants, tags} = product;
 
   const outOfStock =
     variants?.length === 1 &&
@@ -41,7 +41,7 @@ const Button = ({ product, ...rest }) => {
       product && product.tags.includes('force_sold_out')
         ? setForceSoldOut(true)
         : setForceSoldOut(false),
-    []
+    [],
   );
 
   const button = {
@@ -49,23 +49,24 @@ const Button = ({ product, ...rest }) => {
       <Link
         to={{
           pathname: `/products/${product.handle}`,
-          state: { product: product },
+          state: {product: product},
         }}
         {...rest}
-        prefetch={false}>
-				View Product
+        prefetch={false}
+      >
+        View Product
       </Link>
     ),
 
     add: (
       <div className={'addToCartContainer'}>
-        <PDPAddToCart 
-          addItem={addItem} 
-          forceSoldOut={forceSoldOut} 
+        <PDPAddToCart
+          addItem={addItem}
+          forceSoldOut={forceSoldOut}
           exclusiveProductAtcColor={product?.exclusiveAtcColor}
-          exclusiveProductTextColor={product?.exclusiveTextColor} 
+          exclusiveProductTextColor={product?.exclusiveTextColor}
           isGated={product?.isGated}
-          {...rest} 
+          {...rest}
         />
         <></>
       </div>
@@ -75,11 +76,12 @@ const Button = ({ product, ...rest }) => {
       <Link
         to={{
           pathname: `/products/${product.handle}`,
-          state: { product: product },
+          state: {product: product},
         }}
         {...rest}
-        prefetch={false}>
-				Shop Options
+        prefetch={false}
+      >
+        Shop Options
       </Link>
     ),
   };
@@ -87,28 +89,37 @@ const Button = ({ product, ...rest }) => {
   return outOfStock
     ? button['out']
     : variants?.length > 1
-      ? button['view']
-      : button['add'];
+    ? button['view']
+    : button['add'];
 };
 
 let sitewide = false;
 
-const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButtonConfig, ...rest }) => {
+const PLPHorizontalProductBox = ({
+  is2Columns,
+  product,
+  analytics,
+  compareButtonConfig,
+  ...rest
+}) => {
   const [forceChange, setForceChange] = useState(false);
-  const { media = [], name } = product;
+  const {media = [], name} = product;
   const variants = product.variants.nodes;
 
   is2Columns = is2Columns || false;
 
   const title = product.altTitle || '';
   const price =
-    getCurrency() + (variants.length > 1 ? getRangePrice(variants) : variants[0].price);
+    getCurrency() +
+    (variants.length > 1 ? getRangePrice(variants) : variants[0].price);
 
   function getRangePrice(variants) {
     let allPrices = variants.map((variant) => variant.price);
     return allPrices[0] === allPrices[variants.length - 1]
-      ? getCurrency() + (allPrices[0])
-      : `${getCurrency() + (allPrices[0])} - ${getCurrency() + (allPrices[variants.length - 1])}`;
+      ? getCurrency() + allPrices[0]
+      : `${getCurrency() + allPrices[0]} - ${
+          getCurrency() + allPrices[variants.length - 1]
+        }`;
   }
 
   const getPromoPrice = (product, sitewide) => {
@@ -133,8 +144,11 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
               Number(product.variants[product.variants.length - 1].price);
 
         return `${
-          getCurrency() + (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
-        } - ${getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)}`;
+          getCurrency() +
+          (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
+        } - ${
+          getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)
+        }`;
       }
       if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
         startPrice =
@@ -152,8 +166,11 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
       }
 
       return `${
-        getCurrency() + (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
-      } - ${getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)}`;
+        getCurrency() +
+        (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
+      } - ${
+        getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)
+      }`;
     } else {
       if (product.productPromos && product.productPromos.showPromo) {
         price = product.variants[0].originalPrice
@@ -196,16 +213,22 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
           : product.variants[product.variants.length - 1].price;
 
         return `${
-          getCurrency() + (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
-        } - ${getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)}`;
+          getCurrency() +
+          (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
+        } - ${
+          getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)
+        }`;
       }
 
       if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
         startPrice = Number(product.variants[0].price);
         endPrice = Number(variants[product.variants.length - 1].price);
         return `${
-          getCurrency() + (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
-        } - ${getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)}`;
+          getCurrency() +
+          (startPrice % 1 !== 0 ? startPrice.toFixed(2) : startPrice)
+        } - ${
+          getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)
+        }`;
       }
     } else {
       if (product.productPromos && product.productPromos.showPromo) {
@@ -217,7 +240,7 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
       }
 
       if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
-        return getCurrency() + (product.variants[0].price);
+        return getCurrency() + product.variants[0].price;
       }
     }
   };
@@ -231,13 +254,15 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
 
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
 
-  const PriceComp = ({ product, price, sitewide }) => {
-    if ((sitewide === false && !product?.productPromos?.showPromo) || noPromo ) {
+  const PriceComp = ({product, price, sitewide}) => {
+    if ((sitewide === false && !product?.productPromos?.showPromo) || noPromo) {
       return product?.variants[0] ? (
         product.variants[0].originalPrice > variants[0].price ? (
           <p className={'compared_price'}>
             <strong className="value">{price}</strong>
-            <span>{` (${getCurrency() + product.variants[0].originalPrice} value)`}</span>
+            <span>{` (${
+              getCurrency() + product.variants[0].originalPrice
+            } value)`}</span>
           </p>
         ) : (
           <strong className="value">{price}</strong>
@@ -249,25 +274,27 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
       return product?.variants[0] ? (
         product.variants[0].originalPrice > variants[0].price &&
         !product?.productPromos?.showPromo ? (
-            <p className={'compared_price'}>
-              <strong className="value strikethrough">
-                {getStrikethroughPrice(product, sitewide)}
-              </strong>
-              <strong className="value promo">
-                {getPromoPrice(product, sitewide)}
-              </strong>
-              <span>{` (${getCurrency() + product.variants[0].originalPrice} value)`}</span>
-            </p>
-          ) : (
-            <p className={'compared_price'}>
-              <strong className="value strikethrough">
-                {getStrikethroughPrice(product, sitewide)}
-              </strong>
-              <strong className="value promo">
-                {getPromoPrice(product, sitewide)}
-              </strong>
-            </p>
-          )
+          <p className={'compared_price'}>
+            <strong className="value strikethrough">
+              {getStrikethroughPrice(product, sitewide)}
+            </strong>
+            <strong className="value promo">
+              {getPromoPrice(product, sitewide)}
+            </strong>
+            <span>{` (${
+              getCurrency() + product.variants[0].originalPrice
+            } value)`}</span>
+          </p>
+        ) : (
+          <p className={'compared_price'}>
+            <strong className="value strikethrough">
+              {getStrikethroughPrice(product, sitewide)}
+            </strong>
+            <strong className="value promo">
+              {getPromoPrice(product, sitewide)}
+            </strong>
+          </p>
+        )
       ) : (
         <p className={'compared_price'}>
           <strong className="value strikethrough">
@@ -281,9 +308,9 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
     }
   };
 
-  const PromoComp = ({ product, sitewide }) => {
+  const PromoComp = ({product, sitewide}) => {
     if (!noPromo) {
-      if(!sitewide?.excludeList?.includes(product.externalId)){
+      if (!sitewide?.excludeList?.includes(product.externalId)) {
         return (
           <span className="value promoMessage promo">
             {product?.productPromos && product.productPromos.showPromo
@@ -303,8 +330,8 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
   // const secImg = getResponsiveImageSrc(media[1]?.details.src, {
   //   width: media[1]?.details.width,
   // });
-  const mainImg = media[0]?.details.asset.url;
-  const secImg = media[1]?.details.asset.url;
+  const mainImg = media[0]?.details.asset.url + '?auto=format';
+  const secImg = media[1]?.details.asset.url + '?auto=format';
 
   const triggerAnalyticsProductClick = (analytics) => {
     if (window?.dataLayer) {
@@ -320,7 +347,12 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
       className={'plpWrapperHorizontalProductBox'}
       id={`product-${product?.handle ? product.handle : product.slug}`}
     >
-      <Product product={product} analytics={analytics} key={product._id} compareButtonConfig={compareButtonConfig}/>
+      <Product
+        product={product}
+        analytics={analytics}
+        key={product._id}
+        compareButtonConfig={compareButtonConfig}
+      />
     </div>
   ) : (
     <div
@@ -334,7 +366,7 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
             <Link
               to={{
                 pathname: `/products/${product.handle}`,
-                state: { product: product },
+                state: {product: product},
               }}
               className="horizontal_imageContainer"
               prefetch="false"
@@ -359,20 +391,20 @@ const PLPHorizontalProductBox = ({ is2Columns, product, analytics, compareButton
           <div className="horizontal_details__side">
             {product.variants[0].originalPrice > variants[0].price &&
               !sitewide && (
-              <div className={'badge'}>
-                <Badges
-                  message={`Save ${Math.round(
-                    (1 -
+                <div className={'badge'}>
+                  <Badges
+                    message={`Save ${Math.round(
+                      (1 -
                         variants[0].price / product.variants[0].originalPrice) *
-                        100
-                  )}%`}
-                />
-              </div>
-            )}
+                        100,
+                    )}%`}
+                  />
+                </div>
+              )}
             <Link
               to={{
                 pathname: `/products/${product.handle}`,
-                state: { product: product },
+                state: {product: product},
               }}
               className="horizontal_title"
               prefetch="false"

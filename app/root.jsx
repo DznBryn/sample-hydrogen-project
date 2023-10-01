@@ -43,6 +43,7 @@ export const links = () => {
       href: `https://staticw2.yotpo.com/${
         getApiKeys().YOTPO_KEY
       }/widget.css?widget_version=2022-10-06_07-58-33`,
+      media: 'screen',
     },
     {rel: 'stylesheet', href: styles},
     {rel: 'preconnect', href: 'https://shop.app'},
