@@ -49,7 +49,10 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
           getApiKeys().FEATURE_FLAGS.LOYALTY
             ? {
                 backgroundImage:
-                  'url(' + mobileNavMainButton.imageBackground.asset.url + ')',
+                  'url(' +
+                  mobileNavMainButton.imageBackground.asset.url +
+                  '?auto=format' +
+                  ')',
               }
             : {}
         }

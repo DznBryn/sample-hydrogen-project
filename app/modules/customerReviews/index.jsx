@@ -23,12 +23,18 @@ const CustomerReviews = ({content}) => {
           <div className={'topLeftWrap'}>
             <div
               className={'topImages columnOne'}
-              style={{backgroundImage: `url(${content.topImageLeft.asset.url}`}}
+              style={{
+                backgroundImage: `url(${
+                  content.topImageLeft.asset.url + '?auto=format'
+                }`,
+              }}
             />
             <div
               className={'topImages columnTwo'}
               style={{
-                backgroundImage: `url(${content.topImageMiddle.asset.url}`,
+                backgroundImage: `url(${
+                  content.topImageMiddle.asset.url + '?auto=format'
+                }`,
               }}
             />
           </div>
@@ -73,7 +79,10 @@ const CustomerReviews = ({content}) => {
               <p>{content.topReviewCount}</p>
             </div>
 
-            <img className={'bottom'} src={content.topImageRight.asset.url} />
+            <img
+              className={'bottom'}
+              src={content.topImageRight.asset.url + '?auto=format'}
+            />
           </div>
         </div>
       </div>
@@ -89,7 +98,9 @@ const CustomerReviews = ({content}) => {
           <div
             className={'left'}
             style={{
-              backgroundImage: `url(${content.bottomLeftImage.asset.url}`,
+              backgroundImage: `url(${
+                content.bottomLeftImage.asset.url + '?auto=format'
+              }`,
             }}
           />
           <div className={'right'}>
@@ -97,7 +108,9 @@ const CustomerReviews = ({content}) => {
             <div
               className={'bottomImage'}
               style={{
-                backgroundImage: `url(${content.bottomRightImage.asset.url}`,
+                backgroundImage: `url(${
+                  content.bottomRightImage.asset.url + '?auto=format'
+                }`,
               }}
             />
           </div>

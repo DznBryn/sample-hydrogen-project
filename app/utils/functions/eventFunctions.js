@@ -98,9 +98,9 @@ export function createCookie(name, value, days, isSecure = false) {
   document.cookie = name + '=' + value + expires + '; path=/; ' + secure;
 }
 
-export function appendScript(src, id = '', isAsync = true, callback) {
+export function appendScript(src, id = '', isDefer = true, callback) {
   var po = document.createElement('script');
-  po.async = isAsync;
+  po.defer = isDefer;
   po.src = src;
 
   if (id !== '') po.id = id;
