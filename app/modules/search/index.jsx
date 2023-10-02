@@ -17,7 +17,11 @@ const SearchProduct = (product) => {
   return (
     <div className={'searchProduct'}>
       <a href={'/products/' + product.handle} className={'searchProductLink'}>
-        <img src={thumbnail?.url} alt={thumbnail.altText || ''} />
+        <img
+          loading="lazy"
+          src={thumbnail?.url + '&width=60'}
+          alt={thumbnail.altText || ''}
+        />
         <div className={'productInfo'}>
           {product.alt_title !== undefined && (
             <div className={'productAltSearch'}>{product.alt_title}</div>
