@@ -192,7 +192,7 @@ function Form({ data }) {
     province: data?.province ?? '',
     zip: data?.zip ? String(data.zip.slice(0, 5)) : '',
   });
-  const [formErrors] = useState([]);
+  const [formErrors, setErrors] = useState([]);
   const phoneRef = useRef(null);
 
   useEffect(() => {
@@ -247,8 +247,22 @@ function Form({ data }) {
     var regex = /[^0-9]/gi;
     const { name, value } = e.target || e.current;
     if (name === 'zip') {
+      if (value === '' && !formErrors.includes(name)) {
+        setErrors([...formErrors, name]);
+      }
+      if (value !== '' && formErrors.includes(name)) {
+        const errors = formErrors.filter((error) => error !== name);
+        setErrors(errors);
+      }
       return setForm((prevFormData) => ({ ...prevFormData, [name]: value.replace(regex, '') }));
     } else {
+      if (value === '' && !formErrors.includes(name)) {
+        setErrors([...formErrors, name]);
+      }
+      if (value !== '' && formErrors.includes(name)) {
+        const errors = formErrors.filter((error) => error !== name);
+        setErrors(errors);
+      }
       return setForm((prevFormData) => ({ ...prevFormData, [name]: value }));
     }
   };
@@ -313,7 +327,6 @@ function Form({ data }) {
           className={`formInput ${formErrors.includes('streetAddress') && 'formInputError'}`}
           value={form?.streetAddress}
           onChange={handleOnChange}
-          required
         />
         {formErrors.includes('streetAddress') && (
           <p className={'errorMessage'}>*Required</p>
@@ -340,7 +353,6 @@ function Form({ data }) {
           placeholder="City"
           value={form?.city}
           onChange={handleOnChange}
-          required
         />
         {formErrors.includes('city') && (
           <p className={'errorMessage'}>*Required</p>
@@ -392,7 +404,6 @@ function Form({ data }) {
           onChange={handleOnChange}
           minLength="5"
           maxLength="5"
-          required
         />
         {formErrors.includes('zip') && (
           <p className={'errorMessage'}>*Required</p>
@@ -450,6 +461,7 @@ function Form({ data }) {
       <Button
         type="submit"
         styleType="solid"
+        disabled={formErrors.length > 0}
         message={
           fetcher.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
             fetcher.state === FETCHER.STATE.LOADING ? 'Loading' :
@@ -468,8 +480,6 @@ function Form({ data }) {
 }
 
 const Button = ({ message, styleType, ...rest }) => {
-
-
   return (
     <button
       {...rest}
