@@ -3,7 +3,7 @@ import { useFetcher } from 'react-router-dom';
 import styles from './styles.css';
 import Button, { links as buttonStyles } from '~/modules/global/button';
 import { Link } from '@remix-run/react';
-import { API_METHODS } from '~/utils/constants';
+import { API_METHODS} from '~/utils/constants';
 
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }, ...buttonStyles()];
@@ -19,8 +19,8 @@ export default function LoginForm() {
     email: '',
     password: ''
   });
-
   const disableLoginButton = loginForm.email === '' || loginForm.password === '' || fetcher.state === 'submitting';
+  
   return (
     <div className="alllogin">
       <div className="templateCustomersLogin">
@@ -33,11 +33,10 @@ export default function LoginForm() {
           >
             <input
               id="email"
-              className={'inputText'}
+              className={fetcher.data?.[0]?.code ? 'inputText invalid' : 'inputText'}
               name="email"
               type="email"
               autoComplete="email"
-              required
               placeholder="Email address"
               aria-label="Email address"
               value={loginForm.email}
@@ -49,19 +48,19 @@ export default function LoginForm() {
             />
             <input
               id="password"
-              className={'inputText'}
+              className={fetcher.data?.[0]?.code ? 'inputText invalid' : 'inputText'}
               name="password"
               type="password"
               autoComplete="current-password"
               placeholder="Password"
               aria-label="Password"
               minLength={8}
-              required
               value={loginForm.password}
               onChange={(e) => setLoginForm({
                 ...loginForm,
                 [e.target.name]: e.target.value
               })}
+              required={fetcher.data?.[0]?.code}
               autoFocus
             />
             <div className='flexWrapper'>
@@ -70,6 +69,13 @@ export default function LoginForm() {
                 <Link to={'/account/register'}>{REGISTER_LINK_TEXT}</Link>
               </div>
             </div>
+            {
+              fetcher.data && fetcher.data?.length > 0 && fetcher.data.map((error, index) => !error.field && (
+                <p className={'errorText'} key={index}>
+                  The email address and password you entered don't match any TULA account. Please try again.
+                </p>
+              ))
+            }
             <Button type="submit" color="blue" disabled={disableLoginButton}>
               {LOGIN_BUTTON_TEXT}
             </Button>

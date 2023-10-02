@@ -20,7 +20,9 @@ export async function action({ request, context, params }) {
 
   try {
     const data = await login(context, { email, password });
-
+    if (data?.length > 0 && data?.[0]?.code) {
+      return data;
+    }
     if (data?.accessToken){
       session.set('customerAccessToken', data.accessToken);
     }
