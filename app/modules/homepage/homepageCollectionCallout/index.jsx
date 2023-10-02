@@ -63,12 +63,16 @@ const HomepageCollectionCallout = ({homepageCollectionCallout}) => {
         </div>
         <div className={'section right'}>
           <img
-            src={homepageCollectionCallout.bigImage.asset.url + '?auto=format'}
+            src={
+              homepageCollectionCallout.bigImage.asset.url +
+              '?auto=format&w=480'
+            }
             className={'squareOneBig bigImg'}
           />
           <img
             src={
-              homepageCollectionCallout.smallImage.asset.url + '?auto=format'
+              homepageCollectionCallout.smallImage.asset.url +
+              '?auto=format&w=250'
             }
             className={'squareOne smallImg'}
           />

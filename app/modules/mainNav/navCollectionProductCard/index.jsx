@@ -1,14 +1,12 @@
-import { Link } from '@remix-run/react';
+import {Link} from '@remix-run/react';
 
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-const NavCollectionProductCard = ({ product = {} }) => {
+const NavCollectionProductCard = ({product = {}}) => {
   const thumbnail = product.images.nodes[0];
   // const thumbnail = product.thumbnail;
   return (
@@ -17,12 +15,14 @@ const NavCollectionProductCard = ({ product = {} }) => {
         reloadDocument
         className={'productLink'}
         to={'/products/' + product.handle}
-        draggable="false">
+        draggable="false"
+      >
         <img
-          src={thumbnail?.url}
+          src={thumbnail?.url + '&width=100'}
           alt={thumbnail?.altText}
           className={'productImg'}
-          draggable="false" />
+          draggable="false"
+        />
       </Link>
       {/* {product.alt_title !== undefined &&
         <Link
@@ -39,7 +39,8 @@ const NavCollectionProductCard = ({ product = {} }) => {
         reloadDocument
         className={'productLink'}
         to={'/products/' + product.handle}
-        draggable="false">
+        draggable="false"
+      >
         <div className={'navCollectionProductCardProductName'}>
           {product.title}
         </div>

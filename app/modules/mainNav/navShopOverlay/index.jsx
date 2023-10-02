@@ -11,7 +11,7 @@ export const links = () => {
 const MenuImage = ({ctaImage = {src: '', alt: ''}, cta, ctaUrl}) => (
   <div className={'sideImg'}>
     <div className={'menuImgWrap'}>
-      <img src={ctaImage.asset.url + '?auto=format'} />
+      <img src={ctaImage.asset.url + '?auto=format&w=160'} />
       <Link reloadDocument className={'ctaLink'} to={ctaUrl}>
         {cta}
       </Link>
