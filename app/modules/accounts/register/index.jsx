@@ -28,7 +28,7 @@ export default function Register() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 15,
+              gap: 6,
             }}
           >
             <input
