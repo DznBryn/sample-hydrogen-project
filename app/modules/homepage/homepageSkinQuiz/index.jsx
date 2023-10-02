@@ -50,12 +50,14 @@ const HomepageSkinQuiz = ({homepageSkinQuizContent}) => {
         </div>
         <div className={'section right'}>
           <img
+            loading="lazy"
             src={
               homepageSkinQuizContent.bigImage.asset.url + '?auto=format&w=480'
             }
             className={'squareOneBig bigImg'}
           />
           <img
+            loading="lazy"
             src={
               homepageSkinQuizContent.smallImage.asset.url +
               '?auto=format&w=250'
