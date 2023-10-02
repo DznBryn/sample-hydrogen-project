@@ -47,6 +47,10 @@
   text-align: center;
 }
 
+.templateCustomersLogin p.errorText {
+  margin: 0;
+}
+
 .errorText {
   color: #ff5483;
   margin-bottom: 10px;

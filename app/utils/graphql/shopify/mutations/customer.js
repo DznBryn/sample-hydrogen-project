@@ -34,12 +34,9 @@ export async function register({storefront}, customerObj) {
       },
     },
   });
-  console.log(
-    'REGISTER: ',
-    data?.customerCreate?.customerUserErrors.join(', '),
-  );
+  console.log('REGISTER: ', data?.customerCreate?.customerUserErrors);
   if (!data?.customerCreate?.customer?.id) {
-    return data?.customerCreate?.customerUserErrors.join(', ');
+    return data?.customerCreate?.customerUserErrors;
   }
 }
 
