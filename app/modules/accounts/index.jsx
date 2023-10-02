@@ -35,20 +35,6 @@ function Header({ data }) {
   const [open, setOpen] = useState(false);
   return <div className="myAccountHeaderWrapper">
     <h1 className={'myH1'}>Welcome Back{data.firstName !== '' && ', ' + data.firstName}!</h1>
-    <div className="dropdownWrap">
-      <div id="headerMenuBtn" className={'carat'} onClick={() => setOpen(!open)}>&#9660;</div>
-      {open ?
-        <div className={'shortMenu'}>
-          {/*<a href="/account/edit">Edit Account</a>*/}
-          <Link to="/pages/contact-us">Contact Us</Link>
-          <Form method={API_METHODS.POST} action='/account/logout'>
-            <button type='submit'>Sign out</button>
-          </Form>
-        </div>
-        :
-        null
-      }
-    </div>
   </div>;
 }
 

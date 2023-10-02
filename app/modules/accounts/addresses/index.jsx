@@ -18,12 +18,14 @@ export default function Addresses() {
   });
 
   return showAddAddressForm.id ? (
-    <Form data={{
-      headerMessage: showAddAddressForm?.headerMessage,
-      submitBtnMessage: showAddAddressForm?.submitBtnMessage,
-      closeForm: () => setShowAddAddressForm({ id: null }),
-      ...showAddAddressForm
-    }} />
+    <div id="addressTab" className={'mainContainer'}>
+      <Form data={{
+        headerMessage: showAddAddressForm?.headerMessage,
+        submitBtnMessage: showAddAddressForm?.submitBtnMessage,
+        closeForm: () => setShowAddAddressForm({ id: null }),
+        ...showAddAddressForm
+      }} />
+    </div>
   ) : (
     <div id="addressTab" className={'mainContainer'}>
       <div className="dataContainer">
