@@ -14,7 +14,7 @@ export default function Register() {
     email: '',
     password: ''
   });
-  const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher?.state === FETCHER.STATE.SUBMIT || fetcher?.stat === FETCHER.STATE.LOADING;
+  const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher?.state === FETCHER.STATE.SUBMIT || fetcher?.state === FETCHER.STATE.LOADING;
 
   return (
     <div>

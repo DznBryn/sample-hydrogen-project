@@ -1,6 +1,6 @@
 import { Link, useFetcher } from '@remix-run/react';
 import { useState } from 'react';
-import { API_METHODS, FETCHER } from '~/utils/constants';
+import { API_METHODS, FETCHER, MESSAGE_ERROR } from '~/utils/constants';
 import styles from './styles.css';
 import Button, { links as buttonStyles } from '~/modules/global/button';
 
@@ -45,6 +45,15 @@ export default function ForgotPasswordForm() {
                   onChange={(e) => setEmail(e.target.value)}
                   autoFocus
                 />
+                {
+                  fetcher.data?.data && fetcher.data?.data?.length > 0 && fetcher.data.data.map((error, index) => error?.field?.includes('email') && (
+                    <p className={'errorText'} key={index}>
+                      {
+                        MESSAGE_ERROR.EMAIL[error.code] ?? error.message
+                      }
+                    </p>
+                  ))
+                }
                 <Button type={'submit'} color={'blue'} disabled={disabledButton}>
                   {
                     fetcher?.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
@@ -53,13 +62,13 @@ export default function ForgotPasswordForm() {
                   }
                 </Button>
                 <br />
-                <Link href='/account/login'>Go back to login</Link>
+                <Link to='/account/login'>Go back to login</Link>
                 {fetcher?.data?.data?.status === 500 && (
-                  <div>
-                    <strong key={'error-message'}>
+                  <p className={'errorText'} >
+                    <strong>
                       {fetcher?.data?.data?.message}
                     </strong>
-                  </div>
+                  </p>
                 )}
               </fetcher.Form>
             </>
