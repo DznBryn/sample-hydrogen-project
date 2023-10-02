@@ -68,16 +68,19 @@ const HomepageWhyProbiotics = ({homepageWhyProbioticsContent}) => {
         <div className={'homepageWhyProbiotics'}>
           <div className={'section left'}>
             <img
+              loading="lazy"
               className={'squareTwoBig bigImg desktop'}
               src={
-                homepageWhyProbioticsContent.bigImage.asset.url + '?auto=format'
+                homepageWhyProbioticsContent.bigImage.asset.url +
+                '?auto=format&w=480'
               }
             />
             <img
+              loading="lazy"
               className={'squareTwo smallImg'}
               src={
                 homepageWhyProbioticsContent.smallImage.asset.url +
-                '?auto=format'
+                '?auto=format&w=250'
               }
             />
           </div>

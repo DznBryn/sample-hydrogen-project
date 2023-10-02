@@ -18,6 +18,7 @@ const NavCollectionProductCard = ({product = {}}) => {
         draggable="false"
       >
         <img
+          loading="lazy"
           src={thumbnail?.url + '&width=100'}
           alt={thumbnail?.altText}
           className={'productImg'}
