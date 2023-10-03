@@ -34,6 +34,12 @@ export const PRODUCTS_QUERY = `#graphql
     title
     description
     descriptionHtml
+    metafields(identifiers:[
+      { namespace: "global", key: "sub_title"},
+    ]) {
+      key
+      value
+    }
     products(first: 250){
       nodes {
         id
