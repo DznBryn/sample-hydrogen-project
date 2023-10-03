@@ -100,6 +100,19 @@ export const PRODUCT_QUERY = `#graphql
     description
     descriptionHtml
     handle
+    metafields(identifiers:[
+      {namespace: "global", key: "size_in_oz"},
+      {namespace: "global", key: "videos"},
+      {namespace: "global", key: "variants-title"},
+      {namespace: "global", key: "shade-pdp-hardlink"},
+      {namespace: "global", key: "shade-pdp-product-name"},
+      {namespace: "global", key: "shade-pdp-image"},
+      {namespace: "global", key: "shade-pdp-alt-text"},
+      {namespace: "global", key: "suitable_for"},
+    ]){
+      key
+      value
+    }
     images(first: 50) {
       nodes {
         id
@@ -127,6 +140,13 @@ export const PRODUCT_QUERY = `#graphql
         title
         sku
         availableForSale
+        metafields(identifiers:[
+      		{namespace: "global", key: "variant-shade-selector-img"},
+          {namespace: "global", key: "variant-modal-image-alt"},
+        ]){
+          key
+          value
+        }
         price {
           amount
         }
