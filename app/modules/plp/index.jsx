@@ -33,6 +33,7 @@ import ComparisonModal, {
 import {useYotpo} from '~/hooks/useYotpo';
 
 import styles from './styles.css';
+import {Link} from '@remix-run/react';
 
 export const links = () => {
   return [
@@ -258,7 +259,7 @@ const PLP = ({
       if (additionalProducts?.length === 4) {
         const title =
           collection.additionalProductsTitle ||
-          'while you\'re here, check out these best sellers';
+          'while you&apos;re here, check out these best sellers';
 
         return (
           <GenericRecommendedProducts
@@ -281,12 +282,9 @@ const PLP = ({
       </p>
       <p className={'empty__body_text'}>
         Not sure where to begin? Try one of our
-        <a
-          className={'empty__anchor_text'}
-          href="https://www.tula.com/collections/best-sellers"
-        >
+        <Link className={'empty__anchor_text'} to="/collections/best-sellers">
           best sellers.
-        </a>
+        </Link>
       </p>
     </div>
   );
