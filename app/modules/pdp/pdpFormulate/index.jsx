@@ -78,7 +78,7 @@ const Content = ({data}) => {
                   <div className={'pdpFormulate_content_header'}>
                     <PortableTextCustom value={ct?.headerRaw} />
                   </div>
-                ) : ct?.image?.asset.url + '?auto=format' ? (
+                ) : ct?.image?.asset.url ? (
                   <div className={'pdpFormulate_content_image'}>
                     <img
                       src={ct?.image?.asset.url + '?auto=format'}
