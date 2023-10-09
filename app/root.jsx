@@ -13,7 +13,6 @@ import {
   getCMSContent,
   getCartData,
   getCustomerData,
-  getRedirectObj,
 } from './utils/functions/eventFunctions';
 import {
   Links,
@@ -66,12 +65,13 @@ export const meta = () => ({
 export async function loader({context, request}) {
   //redirects handle
   const {pathname} = new URL(request.url);
-  const redirects = await getCMSContent(context, GET_REDIRECTS);
-  const redirectObj = getRedirectObj(pathname, redirects);
+  const redirectObj = await getCMSContent(context, GET_REDIRECTS, {
+    source: pathname,
+  });
 
-  if (redirectObj?.destination) {
-    const statusCode = parseInt(redirectObj?.statusCode) || 301;
-    return redirect(redirectObj?.destination, statusCode);
+  if (redirectObj[0]?.destination) {
+    const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
+    return redirect(redirectObj[0]?.destination, statusCode);
   }
   //
 

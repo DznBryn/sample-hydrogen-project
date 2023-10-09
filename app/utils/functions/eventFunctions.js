@@ -518,10 +518,6 @@ export function getFormData(object) {
   return formData;
 }
 
-export function getRedirectObj(source, redirects) {
-  return redirects.find((redirect) => redirect.source === source);
-}
-
 /**
  *   GraphQL functions
  */
@@ -578,12 +574,12 @@ export function getCartTotalForFreeShippingGraphQL() {
  * CMS functions
  */
 
-export async function getCMSContent(context, query) {
+export async function getCMSContent(context, query, variables) {
   const {SANITY_DATASET_DOMAIN, SANITY_API_TOKEN} = context.env;
   const result = await apolloClient(
     SANITY_DATASET_DOMAIN,
     SANITY_API_TOKEN,
-  ).query({query});
+  ).query({query, variables});
 
   return Object.values(result.data)[0];
 }
