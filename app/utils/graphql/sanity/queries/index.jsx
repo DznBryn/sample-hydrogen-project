@@ -1609,8 +1609,8 @@ export const GET_CUSTOMER_REVIEWS = gql`
 `;
 
 export const GET_REDIRECTS = gql`
-  query GetAllRedirects {
-    allRedirects {
+  query GetAllRedirects($source: String!) {
+    allRedirects(where: {source: {eq: $source}}) {
       destination
       source
       statusCode
