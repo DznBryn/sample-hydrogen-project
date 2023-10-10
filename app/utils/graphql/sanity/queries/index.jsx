@@ -1607,3 +1607,82 @@ export const GET_CUSTOMER_REVIEWS = gql`
     }
   }
 `;
+
+export const GET_EYE_QUIZ_RESULTS = gql`
+  query GetAllEyeQuizResults {
+    allEyeQuizResults {
+      name
+      productId
+      quizAttributes {
+        name
+        category
+        default
+        priorityOrder
+        qualifiers {
+          name
+          qualifier
+          type
+        }
+      }
+    }
+  }
+`;
+
+export const GET_EYE_QUIZ_QUESTIONS = gql`
+  query GetAllEyeQuizQuestions {
+    allEyeQuizQuestions {
+      name
+      questionText
+      questionType
+      multipleChoice
+      textBoxRaw
+      answers {
+        name
+        answerText
+        answerType
+        qualifiers {
+          name
+          qualifier
+          type
+        }
+        images {
+          asset {
+            _id
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_EYE_QUIZ_CONTENT = gql`
+  query GetAllEyeQuizContent {
+    allEyeQuizContent {
+      name
+      skinQuizCopy {
+        name
+        richTextBlockRaw
+      }
+      backgroundImage {
+        asset {
+          _id
+          url
+        }
+      }
+      backgroundColor
+      calloutPillColor
+      calloutPillFontColor
+      headerFontColor
+      ctaFontColor
+      ctaButtonColor
+      ctaLink
+      images {
+        asset {
+          _id
+          url
+        }
+      }
+    }
+  }
+`;
