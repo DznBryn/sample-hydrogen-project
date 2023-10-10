@@ -3,7 +3,7 @@ import styles from './styles.css';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import Button, { links as buttonStyles } from '~/modules/global/button';
 import { useState } from 'react';
-import { API_METHODS, FETCHER } from '~/utils/constants';
+import { API_METHODS, FETCHER, MESSAGE_ERROR } from '~/utils/constants';
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }, ...buttonStyles()];
@@ -14,7 +14,7 @@ export default function Register() {
     email: '',
     password: ''
   });
-  const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher?.state === FETCHER.STATE.SUBMIT || fetcher?.stat === FETCHER.STATE.LOADING;
+  const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher?.state === FETCHER.STATE.SUBMIT || fetcher?.state === FETCHER.STATE.LOADING;
 
   return (
     <div>
@@ -28,7 +28,7 @@ export default function Register() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 15,
+              gap: 6,
             }}
           >
             <input
@@ -48,52 +48,66 @@ export default function Register() {
               name="lastName"
               type="text"
               autoComplete="lastName"
-              required
               placeholder="Last Name"
               aria-label="Last Name"
               autoFocus
             />
-            <input
-              className='inputText'
-              id="email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              required
-              placeholder="Email@example.com"
-              aria-label="Email address"
-              autoFocus
-              value={registerForm.email}
-              onChange={(e) => setRegisterForm({
-                ...registerForm,
-                [e.target.name]: e.target.value
-              })}
-            />
-            
-            <input
-              className='inputText'
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              placeholder="Password"
-              aria-label="Password"
-              minLength={8}
-              required
-              autoFocus
-              value={registerForm.password}
-              onChange={(e) => setRegisterForm({
-                ...registerForm,
-                [e.target.name]: e.target.value
-              })}
-            />
-            {(fetcher.data?.code) && (
-              <span className={'errorText'}>
-                {
-                  messageError[fetcher.data.code]
-                }
-              </span>
-            )}
+            <div>
+              <input
+                className='inputText'
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="Email@example.com"
+                aria-label="Email address"
+                autoFocus
+                value={registerForm.email}
+                onChange={(e) => setRegisterForm({
+                  ...registerForm,
+                  [e.target.name]: e.target.value
+                })}
+              />
+              {
+                fetcher.data && fetcher.data?.length > 0 && fetcher.data.map((error, index) => error?.field?.includes('email') && (
+                  <p className={'errorText'} key={index}>
+                    {
+                      MESSAGE_ERROR.EMAIL[error.code] ?? error.message
+                    }
+                  </p>
+                ))
+              }
+
+            </div>
+
+            <div>
+              <input
+                className='inputText'
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                placeholder="Password"
+                aria-label="Password"
+                minLength={8}
+                required
+                autoFocus
+                value={registerForm.password}
+                onChange={(e) => setRegisterForm({
+                  ...registerForm,
+                  [e.target.name]: e.target.value
+                })}
+              />
+              {
+                fetcher.data && fetcher.data?.length > 0 && fetcher.data.map((error, index) => error?.field?.includes('password') && (
+                  <p className={'errorText'} key={index}>
+                    {
+                      MESSAGE_ERROR.PASSWORD[error.code] ?? error.message
+                    }
+                  </p>
+                ))
+              }
+            </div>
             {
               (getApiKeys().CURRENT_ENV.includes('UK')) ? (
                 <p className={'infoText'}>

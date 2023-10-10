@@ -1608,6 +1608,25 @@ export const GET_CUSTOMER_REVIEWS = gql`
   }
 `;
 
+export const GET_REDIRECTS = gql`
+  query GetAllRedirects($source: String!) {
+    allRedirects(where: {source: {eq: $source}}) {
+      destination
+      source
+      statusCode
+    }
+  }
+`;
+
+export const GET_ROBOTS = gql`
+  query GetAllRobots {
+    allRobots {
+      name
+      content
+    }
+  }
+`;
+
 export const GET_EYE_QUIZ_RESULTS = gql`
   query GetAllEyeQuizResults {
     allEyeQuizResults {

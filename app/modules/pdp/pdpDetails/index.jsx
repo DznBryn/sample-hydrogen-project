@@ -385,7 +385,7 @@ const PDPDetails = ({
                   style={{
                     gridColumn: singleColumnForCertifiedBadges ? 'span 2' : '',
                   }}
-                  image={badge.image.asset.url}
+                  image={badge.image.asset.url + '?auto=format'}
                   title={badge.title}
                   key={badge.title}
                 />

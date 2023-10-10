@@ -1,17 +1,14 @@
-import { useEffect } from 'react';
+import {useEffect} from 'react';
 import classnames from 'classnames';
-import { isInViewPort } from '~/utils/functions/eventFunctions';
+import {isInViewPort} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-const HomepageSkinQuiz = ({ homepageSkinQuizContent }) => {
-  
+const HomepageSkinQuiz = ({homepageSkinQuizContent}) => {
   useEffect(() => {
     window.addEventListener('scroll', () => {
       isInViewPort(document.querySelector('.homepageSkinQuiz'), () => {
@@ -33,22 +30,38 @@ const HomepageSkinQuiz = ({ homepageSkinQuizContent }) => {
     <div className={'fixedWidthPage'}>
       <div className={'homepageSkinQuiz'}>
         <div className={'section left'}>
-          <h2 className={classnames('fadeInOne')}>{homepageSkinQuizContent.grayText}</h2>
-          <h3 className={classnames('fadeInTwo')}>{homepageSkinQuizContent.boldHeader}</h3>
+          <h2 className={classnames('fadeInOne')}>
+            {homepageSkinQuizContent.grayText}
+          </h2>
+          <h3 className={classnames('fadeInTwo')}>
+            {homepageSkinQuizContent.boldHeader}
+          </h3>
           <p className={classnames('fadeInThree')}>
             {homepageSkinQuizContent.sectionCopy}
           </p>
-          <a href={homepageSkinQuizContent.buttonUrl} className={classnames('fadeInFour')}>
-            <button className={'btn'}>{homepageSkinQuizContent.buttonText}</button>
+          <a
+            href={homepageSkinQuizContent.buttonUrl}
+            className={classnames('fadeInFour')}
+          >
+            <button className={'btn'}>
+              {homepageSkinQuizContent.buttonText}
+            </button>
           </a>
         </div>
         <div className={'section right'}>
           <img
-            src={homepageSkinQuizContent.bigImage.asset.url}
+            loading="lazy"
+            src={
+              homepageSkinQuizContent.bigImage.asset.url + '?auto=format&w=480'
+            }
             className={'squareOneBig bigImg'}
           />
           <img
-            src={homepageSkinQuizContent.smallImage.asset.url}
+            loading="lazy"
+            src={
+              homepageSkinQuizContent.smallImage.asset.url +
+              '?auto=format&w=250'
+            }
             className={'squareOne smallImg'}
           />
         </div>

@@ -34,12 +34,9 @@ export async function register({storefront}, customerObj) {
       },
     },
   });
-  console.log(
-    'REGISTER: ',
-    data?.customerCreate?.customerUserErrors.join(', '),
-  );
+  console.log('REGISTER: ', data?.customerCreate?.customerUserErrors);
   if (!data?.customerCreate?.customer?.id) {
-    return data?.customerCreate?.customerUserErrors.join(', ');
+    return data?.customerCreate?.customerUserErrors;
   }
 }
 
@@ -70,12 +67,16 @@ export async function activateAccount(
 
 export async function recoverPassword(email, {storefront}) {
   try {
-    await storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
+    const res = await storefront.mutate(CUSTOMER_RECOVER_MUTATION, {
       variables: {email},
     });
+    console.log('FORGOT_PASSWORD:', res.customerRecover.customerUserErrors);
+    if (res?.customerRecover?.customerUserErrors?.length > 0) {
+      return res.customerRecover.customerUserErrors;
+    }
     return json({resetRequested: true});
   } catch (error) {
-    console.log(error);
+    console.log('STOREFRONT_API_ERROR:', error);
     return {
       message: 'Something went wrong. Please try again later.',
       status: 500,

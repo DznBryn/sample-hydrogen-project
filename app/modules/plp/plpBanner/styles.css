@@ -7,6 +7,7 @@
   width: 100%;
   height: 503px;
   padding: 0 10px;
+  position: relative;
 }
 
 .containerMobile {
@@ -18,6 +19,7 @@
 .containerFireWorkMobile {
   height: 393px;
   margin: 0 3px;
+  position: relative;
 }
 
 .imageDesktop {

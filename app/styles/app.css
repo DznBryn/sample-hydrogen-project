@@ -2,26 +2,31 @@
   font-family: "Avenir LT Pro";
   src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Light.otf?v=1615476619") format("truetype");
   font-weight: 200;
+  font-display: swap;
 }
 @font-face {
   font-family: "Avenir LT Pro";
   src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Roman.otf?v=1615476619") format("truetype");
   font-weight: 400;
+  font-display: swap;
 }
 @font-face {
   font-family: "Avenir LT Pro";
   src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Medium.otf?v=1615476619") format("truetype");
   font-weight: 500;
+  font-display: swap;
 }
 @font-face {
   font-family: "Avenir LT Pro";
   src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Heavy.otf?v=1615476619") format("truetype");
   font-weight: 800;
+  font-display: swap;
 }
 @font-face {
   font-family: "Avenir LT Pro";
   src: url("https://cdn.shopify.com/s/files/1/1736/9637/files/AvenirLTStd-Black.otf?v=1615476619") format("truetype");
   font-weight: 900;
+  font-display: swap;
 }
 * {
   margin: 0;
@@ -78,10 +83,6 @@ h4,
 h5 {
   font-weight: 400;
   font-size: 21px;
-}
-
-h5 {
-  font-size: 18px;
 }
 
 h6 {
@@ -161,16 +162,6 @@ li img {
 
 .plpReviews .yotpo-bottomline.pull-left.star-clickable .yotpo-stars .yotpo-icon {
   font-size: 15px !important;
-}
-
-.tikTokProductPage .swiper-button-prev,
-.tikTokProductPage .swiper-button-next {
-  color: rgba(0, 0, 0, 0.2) !important;
-}
-
-.tikTokProductPage .swiper-button-prev::after,
-.tikTokProductPage .swiper-button-next::after {
-  font-size: 21px !important;
 }
 
 @media (max-width: 550px) {
