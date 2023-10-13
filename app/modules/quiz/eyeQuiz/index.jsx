@@ -326,7 +326,7 @@ const MainContentQuiz = ({content}) => {
       <p className="question">{questionText}</p>
       {multipleChoice ? (
         <p className="multipleChoiceDek">
-          Select up to {multipleChoice} by order of priority.
+          Select up to {multipleChoice} in order of priority.
         </p>
       ) : null}
       <br />
@@ -355,7 +355,7 @@ const ResultView = ({content}) => {
       <SkinQuizAgeEmailOptIn setRangeAge={setRangeAge} />
 
       <section className="quizResults">
-        <h2>We’ve found the best routine for your eye care to help you</h2>
+        <h2>We’ve found your perfect eye care routine.</h2>
 
         <br />
 
@@ -380,6 +380,7 @@ const ResultView = ({content}) => {
                     handleGetProductByID(resultState[item][0].productId)
                       .variants.length > 1
                   }
+                  is2Columns={true}
                   key={resultState[item][0].productId}
                 />
               )}

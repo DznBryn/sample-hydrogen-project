@@ -25,7 +25,7 @@
 }
 
 #skinQuizLandingWrapper {
-  margin-top: 100px;
+  margin-top: 50px;
   position: relative;
   min-height: 655px;
   color: #4c4e56;
@@ -307,7 +307,6 @@
 }
 
 .productWrapper {
-  width: 250px;
   min-height: 565px;
   margin-bottom: 3em;
 }
@@ -533,6 +532,10 @@
   text-decoration: underline;
 }
 
+#quizWrapper {
+  display: none;
+}
+
 /* TEST */
 .advanceRoutineActive {
   height: fit-content;
@@ -588,10 +591,7 @@
   }
   #skinQuizLandingWrapper {
     min-height: 674px;
-    top: 114px;
-  }
-  :global(#quizWrapper) {
-    display: none;
+    margin-top: 0;
   }
   #skinQuizLandingWrapper .fixedWidthPage {
     padding: 0;
@@ -630,7 +630,6 @@
   }
   .container {
     width: 100vw;
-    margin: 105px auto 50px;
   }
   .buttons_grid {
     padding: 0 15px;
@@ -671,6 +670,9 @@
   }
   .buttons_grid .smallerBtn:nth-child(even) {
     margin-right: 0px;
+  }
+  .finalWrapper .quizResults {
+    margin-bottom: 0;
   }
   .finalWrapper .quizResults h2 {
     font-size: 22px;
