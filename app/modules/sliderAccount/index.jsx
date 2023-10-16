@@ -7,13 +7,15 @@ import { useCustomerActions, useCustomerState } from '~/hooks/useCostumer';
 import { Link, useFetcher } from '@remix-run/react';
 
 import styles from './styles.css';
-import { API_METHODS } from '~/utils/constants';
+import { API_METHODS, FETCHER } from '~/utils/constants';
+import { RegisterForm, links as registerFormStyles } from '../accounts/register';
 
 export const links = () => {
   return [
     { rel: 'stylesheet', href: styles },
     ...loadingSkeletonStyles(),
     ...sliderPanelStyles(),
+    ...registerFormStyles(),
   ];
 };
 
@@ -53,11 +55,12 @@ const MainContent = () => {
   const loginButtonRef = useRef(null);
   const recoverPassword = useFetcher();
   const recoverPasswordButtonRef = useRef(null);
+  const registerFetcher = useFetcher();
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
   const { id, firstName, email, isLoggedIn } = useCustomerState();
-  const { logout, register } = useCustomerActions();
+  const { logout } = useCustomerActions();
 
   const forgotEmail = useRef(null);
   const errorElement = useRef(null);
@@ -65,14 +68,6 @@ const MainContent = () => {
 
   const signInEmail = useRef(null);
   const signInPassword = useRef(null);
-
-  const createAccountForm = useRef(null);
-  const createAccountMail = useRef(null);
-  const createAccountFirstName = useRef(null);
-  const createAccountLastName = useRef(null);
-  const createAccountPassword = useRef(null);
-  const createAccountCheck = useRef(null);
-  const passwordInfo = useRef(null);
 
   const initialized = useRef(false);
 
@@ -83,7 +78,7 @@ const MainContent = () => {
 
   useEffect(() => {
     if (loginButtonRef.current) {
-      if (login.state === 'submitting' || login.state === 'loading') {
+      if (login.state === 'submitting') {
         loginButtonRef.current.disabled = true;
         loginButtonRef.current.classList.add('disabledButton');
       } else {
@@ -106,7 +101,6 @@ const MainContent = () => {
       }
       changeMainContent((isLoggedIn) ? 'welcomeBack' : 'signIn');
     }
-
   }, [login.state]);
 
   useEffect(() => {
@@ -130,6 +124,14 @@ const MainContent = () => {
     return;
   }, [recoverPassword.state]);
   /**/
+
+  useEffect(() => {
+    if (registerFetcher.type === FETCHER.TYPE.DONE && registerFetcher.data?.accessToken){
+      triggerAnalyticsLoyaltyEvents('RegisterAccount', { 'userAcceptsMarketing': true });
+      changeMainContent('createAccountSuccess');
+    }
+  }, [registerFetcher.state]);
+
 
   function init() {
 
@@ -196,22 +198,6 @@ const MainContent = () => {
 
   }
 
-  function highlightInput(input, info, inputParent) {
-
-    removeErrorMessage();
-
-    highLightedInput.current = {
-      input: input,
-      info: info,
-      inputParent: inputParent,
-    };
-
-    if (input) input.classList.add('errorHighlight');
-    if (info) info.classList.add('errorHighlight');
-    if (inputParent) inputParent.classList.add('errorHighlight');
-
-  }
-
   function reserHighlightedInput() {
 
     const { input, info, inputParent } = highLightedInput.current;
@@ -224,45 +210,6 @@ const MainContent = () => {
 
   }
 
-
-  function passwordIsValid(password) {
-
-    return password.length >= 5;
-
-  }
-
-  function disableFormButton(form) {
-    const button = form[form.length - 1];
-
-    button.disabled = true;
-    button.classList.add('disabledButton');
-
-  }
-
-  function enableFormButton(form) {
-
-    const button = form[form.length - 1];
-
-    button.disabled = false;
-    button.classList.remove('disabledButton');
-
-  }
-
-  function shouldEnableAccFormButton() {
-
-    const refs = [createAccountMail, createAccountFirstName, createAccountLastName, createAccountPassword];
-    const isNotEmpty = (ref) => ref.current.value.length > 0;
-
-    const allFilled = refs.every(ref => isNotEmpty(ref));
-    const form = createAccountForm.current;
-
-    (allFilled) ? enableFormButton(form) : disableFormButton(form);
-
-  }
-
-  /**/
-
-
   async function handleLogout() {
 
     const { errors } = await logout();
@@ -274,79 +221,6 @@ const MainContent = () => {
     }
 
   }
-
-
-  async function handleCreateAccount(event) {
-
-    event.preventDefault();
-
-    const firstName = createAccountFirstName.current.value;
-    const lastName = createAccountLastName.current.value;
-    const email = createAccountMail.current.value;
-    const password = createAccountPassword.current.value;
-    const acceptsMarketing = createAccountCheck.current?.checked ?? true;
-
-    if (firstName.length === 0) {
-      showInputError(createAccountFirstName.current, 'Please enter a first name');
-      return;
-    }
-
-    if (lastName.length === 0) {
-      showInputError(createAccountLastName.current, 'Please enter a last name');
-      return;
-    }
-
-    if (!passwordIsValid(password)) {
-      highlightInput(createAccountPassword.current, passwordInfo.current, createAccountPassword.current.parentElement);
-      return;
-    }
-
-    disableFormButton(event.target);
-
-    // const { errors } = await register({
-    //   firstName: firstName,
-    //   lastName: lastName,
-    //   email: email,
-    //   password: password,
-    //   acceptsMarketing: acceptsMarketing
-    // });
-
-    // if (!errors || errors.length === 0) {
-
-    //   triggerAnalyticsLoyaltyEvents('RegisterAccount', { 'userAcceptsMarketing': acceptsMarketing.toString() });
-    //   changeMainContent('createAccountSuccess');
-
-    // } else {
-
-    //   if (errors[0].code === 'TAKEN') {
-
-    //     showInputError(createAccountMail.current, 'An account already exists with this email address. Sign in to your existing account or sign up with a different email.');
-
-    //   } else if (errors[0].message.includes('verify your email adress')) {
-
-    //     changeMainContent('createAccountSuccess');
-
-    //   } else {
-
-    //     showInputError(createAccountMail.current, errors[0].message);
-
-    //   }
-
-    // }
-
-    const { success, message } = await register(email, password, firstName, lastName, acceptsMarketing);
-
-    if (success) {
-      triggerAnalyticsLoyaltyEvents('RegisterAccount', { 'userAcceptsMarketing': acceptsMarketing.toString() });
-      changeMainContent('createAccountSuccess');
-    } else {
-      showInputError(createAccountMail.current, message);
-    }
-
-    enableFormButton(event.target);
-
-  }
-
   /**/
 
   const SwellPointBalance = () => {
@@ -515,9 +389,16 @@ const MainContent = () => {
         <input className={'input'} key={'siginEmail'} id="signInEmail" name="signInEmail" ref={signInEmail} type="email" placeholder="Email" /> {/**/}
 
         <div className={'input'}>
-          <input className={'passwordInput'} id="signInPassword" name="signInPassword" ref={signInPassword} type="password" placeholder="Password" autoComplete="on"/> {/**/}
+          <input className={'passwordInput'} id="signInPassword" name="signInPassword" ref={signInPassword} type="password" placeholder="Password" autoComplete="on" /> {/**/}
           <span onClick={tooglePasswordType.bind(this, signInPassword)}>show</span>
         </div>
+        {
+          login.data?.data && login.data?.data?.length > 0 && login.data?.data?.map((error, index) => !error.field && (
+            <p className={'errorText'} key={index}>
+              The email address and password you entered don't match any TULA account. Please try again.
+            </p>
+          ))
+        }
 
         <button type="submit" ref={loginButtonRef} className={'button'}>sign in</button>
 
@@ -600,38 +481,9 @@ const MainContent = () => {
         welcome!
         <p>create your TULA account</p>
       </div>
-
-      <form className={'form'} ref={createAccountForm} onChange={shouldEnableAccFormButton.bind(this)} onSubmit={handleCreateAccount.bind(this)}>
-        <input className={'input'} key={'createName'} id="createAccountFirstName" name="createAccountFirstName" ref={createAccountFirstName} type="text" placeholder="First Name*" />
-        <input className={'input'} id="createAccountLastName" name="createAccountLastName" ref={createAccountLastName} type="text" placeholder="Last Name*" />
-        <input className={'input'} id="createAccountMail" name="createAccountMail" ref={createAccountMail} type="email" placeholder="Email*" />
-        <div className={'input'}>
-          <input className={'passwordInput'} id="createAccountPassword" name="createAccountPassword" ref={createAccountPassword} type="password" placeholder="Password*" autoComplete="on"/>
-          <span onClick={tooglePasswordType.bind(this, createAccountPassword)}>show</span>
-        </div>
-        <span ref={passwordInfo}>Password must be at least 5 characters</span>
-        {
-          (getApiKeys().CURRENT_ENV.includes('UK')) && (
-            <div className={'checkInput'}>
-              <label>
-                <input type="checkbox" ref={createAccountCheck} />
-                <div className={'checkmarkSliderAccount'}></div>
-                Email me with news and offers. You may opt out anytime.
-              </label>
-            </div>
-          )
-        }
-
-        <button disabled className={'button disabledButton'}>register</button>
-
-        {
-          (getApiKeys().CURRENT_ENV.includes('UK')) ? (
-            <div className={'subText'}>By creating an account, you agree to the <Link to="/pages/terms-conditions">Terms & Conditions</Link> and acknowledge our <Link to="/pages/privacy-policy">Privacy Policy</Link>.</div>
-          ) : (
-            <div className={'subText subTextAlt'}>By registering, I agree to receive emails from TULA Skincare. I have read and agree to the TULA Skincare <Link to="/pages/terms-conditions">Terms & Conditions</Link> and TULA Skincare <Link to="/pages/privacy-policy">Privacy Policy</Link>.</div>
-          )
-        }
-      </form>
+      <div className={'form'}>
+        <RegisterForm fetcher={registerFetcher} />
+      </div>
 
       <Links />
 

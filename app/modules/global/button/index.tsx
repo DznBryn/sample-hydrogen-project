@@ -8,7 +8,7 @@ const Button = (props) => {
   if (props.color === 'white') {
     return (
       <button
-        className={'tulaWhiteButton'}
+        className={ props?.className ? props.className : 'tulaWhiteButton' }
         type={props.type}
         onClick={props.onclk}
       >
@@ -18,7 +18,7 @@ const Button = (props) => {
   } else if (props.color === 'transparent') {
     return (
       <button
-        className={'tulaTsptButton'}
+        className={ props?.className ? props.className : 'tulaTsptButton' }
         type={props.type}
         onClick={props.onclk}
       >
@@ -28,7 +28,7 @@ const Button = (props) => {
   } else if (props.disabled === true) {
     return (
       <button
-        className={'tulaBlueButton'}
+        className={ props?.className ? props.className : 'tulaBlueButton' }
         type={props.type}
         onClick={props.onclk}
         disabled
@@ -39,7 +39,7 @@ const Button = (props) => {
   } else {
     return (
       <button
-        className={'tulaBlueButton'}
+        className={ props?.className ? props.className : 'tulaBlueButton' }
         type={props.type}
         onClick={props.onclk}
       >
