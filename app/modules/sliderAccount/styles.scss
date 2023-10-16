@@ -574,6 +574,13 @@
   display: none !important;
 }
 
+.errorText {
+  text-align: left;
+  margin-top: 10px;
+  color: #FF5483;
+  font-size: 12px;
+}
+
 @media only screen and (max-width: 768px) {
   .hideOnDesktop {
     display: flex !important;
