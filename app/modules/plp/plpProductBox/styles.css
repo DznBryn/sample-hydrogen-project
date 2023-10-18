@@ -35,11 +35,11 @@
   transition: opacity 0.3s;
 }
 
-.plpWrapperProductBox .plpProductBoxcontainer:hover .dinamicImage {
+.plpWrapperProductBox .plpProductBoxcontainer:not(.noHover):hover .dinamicImage {
   opacity: 1 !important;
 }
 
-.plpWrapperProductBox .plpProductBoxcontainer:hover .plpProductBox_productImage {
+.plpWrapperProductBox .plpProductBoxcontainer:not(.noHover):hover .plpProductBox_productImage {
   opacity: 0;
 }
 
@@ -62,7 +62,7 @@
   line-height: 18px;
   text-align: center;
   /* color: var(--color-primary); */
-  color: #48C6D9;
+  color: #48c6d9;
   transition: color 0.3s;
   text-transform: lowercase;
 }
@@ -92,11 +92,11 @@
 }
 
 .plpWrapperProductBox .plpProductBoxcontainer .infoContainer .value.promo {
-  color: #FF5483;
+  color: #ff5483;
 }
 
 .plpWrapperProductBox .promoText {
-  color: #FF5483;
+  color: #ff5483;
   font-weight: 900;
   font-size: 14px;
   line-height: 18px;
@@ -105,7 +105,7 @@
 }
 
 .plpWrapperProductBox .plpProductBoxcontainer .infoContainer .value.strikethrough {
-  color: #C6C6C6;
+  color: #c6c6c6;
   text-decoration: line-through;
 }
 
@@ -152,7 +152,7 @@
   cursor: pointer;
   font-weight: 700;
   font-size: 14px !important;
-  background: #48C6D9;
+  background: #48c6d9;
   color: var(--color-secondary-white);
   border: 2px solid var(--color-primary);
   width: 100% !important;
@@ -177,7 +177,7 @@
   font-weight: 800;
   font-size: 14px;
   line-height: 15px;
-  color: #48C6D9;
+  color: #48c6d9;
   cursor: pointer;
 }
 
@@ -189,7 +189,7 @@
 .plpWrapperProductBox .plpProductBoxcontainer .compareButton .compareCheckbox .checkmark {
   height: 15px;
   width: 15px;
-  border: solid 2px #48C6D9;
+  border: solid 2px #48c6d9;
 }
 
 .plpWrapperProductBox .plpProductBoxcontainer .compareButton .compareCheckbox.disabled .checkmark,
@@ -207,7 +207,7 @@
   width: 3px;
   height: 6px;
   margin-left: 3px;
-  border: solid #48C6D9;
+  border: solid #48c6d9;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -228,7 +228,7 @@
 }
 
 .tagProductBox {
-  background-color: #48C6D9;
+  background-color: #48c6d9;
   color: #fff;
   text-transform: uppercase;
   font-size: 11px;
@@ -251,19 +251,19 @@
   z-index: 98;
   text-align: center;
   pointer-events: none;
-  background: linear-gradient(90deg, #AF075A 0%, #F377BA 50.52%, #FFCDE7 100%);
+  background: linear-gradient(90deg, #af075a 0%, #f377ba 50.52%, #ffcde7 100%);
   box-shadow: 0px 0px 10.5308px rgba(0, 0, 0, 0.05);
   border-radius: 2px;
 }
 
 .holidayBadgeContainer {
   display: flex;
-  background-color: #EF0000;
+  background-color: #ef0000;
   gap: 3px;
 }
 
 .saveTag {
-  background: #FF5483;
+  background: #ff5483;
 }
 
 /* 
@@ -320,7 +320,7 @@
   .plpWrapperProductBox .plpProductBoxcontainer .compareButton .compareCheckbox .checkmark {
     height: 12px;
     width: 12px;
-    border: solid 1px #48C6D9;
+    border: solid 1px #48c6d9;
   }
   .plpWrapperProductBox .plpProductBoxcontainer .compareButton .compareCheckbox .checkmark:after {
     width: 2px;
@@ -347,7 +347,7 @@
   font-size: 12px;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: #ffffff;
   height: 12px;
 }
 
@@ -358,7 +358,7 @@
   position: absolute;
   height: 3px;
   width: 3px;
-  background-color: #FFF;
+  background-color: #fff;
   top: 50%;
   transform: translateY(-50%);
 }

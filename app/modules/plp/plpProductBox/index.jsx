@@ -76,7 +76,7 @@ const PLPProductBox2 = ({
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
 
   const mainImg = media[0]?.url + '&height=328';
-  const secImg = media[1]?.url + '&height=328';
+  const secImg = media[1]?.url && media[1]?.url + '&height=328';
 
   useEffect(() => {
     if (window.localStorage.getItem('tulaSitewide') !== null) {
@@ -247,7 +247,7 @@ const PLPProductBox2 = ({
       className={'plpWrapperProductBox'}
       id={`product-${product?.handle ? product.handle : slug}`}
     >
-      <div className="plpProductBoxcontainer">
+      <div className={classNames('plpProductBoxcontainer', {noHover: !secImg})}>
         <PLPBadges product={product} sitewide={sitewide} noPromo={noPromo} />
 
         <Link
@@ -261,11 +261,13 @@ const PLPProductBox2 = ({
             src={mainImg}
             alt={media[0]?.altText}
           />
-          <img
-            className="plpProductBox_productImage dinamicImage"
-            src={secImg || mainImg}
-            alt={media[1]?.altText}
-          />
+          {secImg && (
+            <img
+              className="plpProductBox_productImage dinamicImage"
+              src={secImg || mainImg}
+              alt={media[1]?.altText}
+            />
+          )}
         </Link>
 
         <div className="infoContainer">
