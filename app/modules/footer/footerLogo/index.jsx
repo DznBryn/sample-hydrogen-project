@@ -6,7 +6,7 @@ export const links = () => {
 
 const mockLogo = {
   image:
-    'https://cdn.shopify.com/s/files/1/1736/9637/t/77/assets/tula-skincare-logo.png?v=5746727401723605709&width=150',
+    'https://cdn.shopify.com/s/files/1/1736/9637/t/77/assets/tula-skincare-logo.png?v=5746727401723605709&width=350',
   linkUrl: '/',
 };
 
