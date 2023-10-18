@@ -24,6 +24,7 @@
   width: 234px;
   align-items: center;
   font-weight: 700;
+  min-height: 19px;
 }
 .myAccountButton > svg {
   margin-top: -3px;
@@ -74,7 +75,7 @@
   background-color: #fff;
 }
 .accDropdownCloseButton svg {
-  filter: brightness(.2);
+  filter: brightness(0.2);
 }
 .banner svg,
 .accDropdownCloseButton svg {
@@ -130,13 +131,13 @@
 .accDropdown_cta > a:nth-child(1) {
   padding: 6px 19px;
   color: #fff;
-  background: #47C6D9;
+  background: #47c6d9;
 }
 .accDropdown_cta > div:nth-child(2),
 .accDropdown_cta > a:nth-child(2) {
   padding: 5px 18px;
   color: #47c6d9;
-  border: 1px solid #47C6D9;
+  border: 1px solid #47c6d9;
 }
 .signOut {
   width: fit-content;
