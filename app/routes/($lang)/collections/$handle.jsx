@@ -1,7 +1,10 @@
 import Layouts from '~/layouts';
 import {flattenConnection} from '@shopify/hydrogen-react';
 import {useLoaderData} from 'react-router';
-import {PRODUCTS_QUERY} from '~/utils/graphql/shopify/queries/collections';
+import {
+  NAV_COLLECTION_CAROUSEL,
+  PRODUCTS_QUERY,
+} from '~/utils/graphql/shopify/queries/collections';
 import {
   GET_CART_PAGE_CONFIG,
   GET_PLP_FILTER_MENU,
@@ -21,9 +24,23 @@ export const links = () => {
   return [...plpStyles()];
 };
 
-export const loader = async ({params, context}) => {
+export const loader = async ({params, context, request}) => {
   const {handle} = params;
-  const {collection} = await context.storefront.query(PRODUCTS_QUERY, {
+  const searchParams = new URLSearchParams(request.url.split('?')[1]);
+  const customQueryName = searchParams.get('query');
+
+  let query;
+
+  switch (customQueryName) {
+    case 'NAV_COLLECTION_CAROUSEL':
+      query = NAV_COLLECTION_CAROUSEL;
+      break;
+
+    default:
+      query = PRODUCTS_QUERY;
+  }
+
+  const {collection} = await context.storefront.query(query, {
     variables: {handle},
   });
   if (!collection) throw new Response(null, {status: 404});

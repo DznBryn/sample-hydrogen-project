@@ -172,3 +172,22 @@ export const PRODUCT_QUERY = `#graphql
 }
 ${MONEY_FRAGMENT}
 `;
+
+export const NAV_COLLECTION_CAROUSEL = `#graphql
+  query Collection($handle: String!) {
+  collection(handle: $handle){
+    products(first: 250){
+      nodes {
+        title
+        handle
+        images(first: 1) {
+          nodes {
+            url
+            altText
+          }
+        }
+      }
+    }
+  }
+}
+`;

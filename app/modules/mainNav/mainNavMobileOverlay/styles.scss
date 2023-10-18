@@ -1,6 +1,6 @@
 .overlayWrap {
-  background-color: #FFFFFF;
-  position: fixed;
+  background-color: #ffffff;
+  // position: fixed;
   width: 100%;
   /* height: 100%; */
   height: -webkit-fill-available;
@@ -11,18 +11,18 @@
 }
 
 .overlayMenu {
-  flex-grow: 1;
+  // flex-grow: 1;
   overflow: auto;
-  height: -webkit-fill-available;
+  // height: -webkit-fill-available;
 }
 
 .navItem {
   height: 54px;
   padding: 18.3px 0;
   border-top: 0.3px solid #d6d6d6;
-  transition: height 0.60s ease;
+  transition: height 0.6s ease;
   overflow: hidden;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   text-transform: lowercase;
 }
 
@@ -40,8 +40,7 @@
 
 .navItem,
 .navItem groupHeader {
-  color:
-    rgba(76, 78, 86, 0.8);
+  color: rgba(76, 78, 86, 0.8);
   cursor: pointer;
   font-weight: 900;
   font-size: 16px;
@@ -96,13 +95,14 @@
 .mainNavMobileOverlay_visible {
   visibility: visible;
   opacity: 1;
-  transition: opacity .3s linear;
+  transition: opacity 0.3s linear;
 }
 
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s .3s, opacity .3s linear;
+  display: none;
+  transition: visibility 0s 0.3s, opacity 0.3s linear;
 }
 
 .emoji {
@@ -133,7 +133,7 @@
 }
 
 #footer {
-  background: linear-gradient(94.2deg, #EBF9FB 3.45%, #FAF7FF 103.07%);
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
   background-size: cover;
   border-radius: 3px;
 
@@ -146,10 +146,9 @@
   font-weight: 300;
   font-size: 12px;
   line-height: 20px;
-  color: rgba(76, 78, 86, .8);
+  color: rgba(76, 78, 86, 0.8);
   font-style: italic;
 }
-
 
 #header p,
 #footer p {
@@ -179,8 +178,8 @@
 }
 
 #extraLinkContainer .extraLink {
-  background: #FFFFFF;
-  border: 1px solid #E9E9E9;
+  background: #ffffff;
+  border: 1px solid #e9e9e9;
   border-radius: 3px;
   min-width: 130px;
   width: 130px;
