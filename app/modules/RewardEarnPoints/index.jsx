@@ -1,16 +1,20 @@
-import React from 'react'
-import IconLoyaltyStar from 'Components/IconLoyaltyStar'
-import IconComputer from 'Components/IconComputer'
-import IconStore from 'Components/IconStore'
-import Button from 'Components/Button'
-import { Slider } from 'Components/UploadReceipt'
-import styles from './styles.module.css'
-import ResponsiveImage from 'frontend-ui/ResponsiveImage'
-import { useCustomerState } from 'frontend-customer'
-import { switchSliderPanelVisibility } from 'Components/SliderPanel'
+import React from 'react';
+import IconLoyaltyStar from '../IconLoyaltyStar';
+import IconComputer from '../IconComputer';
+import IconStore from '../IconStore';
+import Button from '../button/index';
+// import { Slider } from 'Components/UploadReceipt';
+import styles from './styles.module.css';
+// import ResponsiveImage from 'frontend-ui/ResponsiveImage';
+import { useCustomerState } from '~/hooks/useCostumer';
+import { switchSliderPanelVisibility } from '../sliderPanel';
+
+export const links = () => {
+  return [{rel: 'stylesheet', href: styles}];
+};
 
 const RewardEarnPoints = () => {
-  const { isLoggedIn } = useCustomerState()
+  const { isLoggedIn } = useCustomerState();
 
   return (
     <div className={styles.section}>
@@ -41,11 +45,11 @@ const RewardEarnPoints = () => {
               <div className={styles['col__body']}>
                 <div className={styles['col__container']}>
                   <div className={styles['logo__container']}>
-                    <ResponsiveImage
+                    {/* <ResponsiveImage
                       className={styles.logo}
                       src={'https://cdn.shopify.com/s/files/1/1736/9637/files/5yOoDPBE.png'}
                       alt={'Tula Skinscare Logo'}
-                    />
+                    /> */}
                   </div>
                   <p className={styles['col__body-text']}>
                     earn 2x the points with every purchase on www.tula.com{' '}
@@ -84,15 +88,15 @@ const RewardEarnPoints = () => {
               <div className={styles.divider}></div>
               <div className={styles['col__body']}>
                 <div className={`${styles['logos__mobile']} ${styles.mobile}`}>
-                  <Slider />
+                  {/* < Slider/> */}
                 </div>
                 <div className={`${styles['logos__desktop']} ${styles.desktop}`}>
-                  {Object.values(brandLogos).map(svg => (
-                    <div className={styles.svg}>{svg}</div>
+                  {Object.values(brandLogos).map((svg, index) => (
+                    <div key={index} className={styles.svg}>{svg}</div>
                   ))}
                 </div>
                 <div className={`${styles['cta__container']} ${styles.uploader}`}>
-                  <div class="yotpo-widget-instance" data-yotpo-instance-id="264193"></div>
+                  <div className="yotpo-widget-instance" data-yotpo-instance-id="264193"></div>
                 </div>
               </div>
             </div>
@@ -100,8 +104,8 @@ const RewardEarnPoints = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const brandLogos = {
   ulta_beauty: (
@@ -329,6 +333,6 @@ const brandLogos = {
       </defs>
     </svg>
   ),
-}
+};
 
-export default RewardEarnPoints
+export default RewardEarnPoints;
