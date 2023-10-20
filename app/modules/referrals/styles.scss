@@ -1,0 +1,23 @@
+.referrals {
+  width: 100%;
+  margin: 60px auto 0 auto;
+  min-height: 781px;
+}
+
+.loadingSkeleton {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: -1;
+}
+
+.talkableContainer {
+  width: 100%;
+  background-color: white;
+}
+
+@media (min-width: 769px) {
+  .loadingSkeleton {
+    max-height: 781px;
+  }
+}
