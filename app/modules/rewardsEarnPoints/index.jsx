@@ -1,16 +1,21 @@
 import React from 'react';
-import IconLoyaltyStar from '../IconLoyaltyStar';
-import IconComputer from '../IconComputer';
-import IconStore from '../IconStore';
+import IconLoyaltyStar from '../iconLoyaltyStar';
+import IconComputer from '../iconComputer';
+import IconStore from '../iconStore';
 import Button from '../button/index';
-// import { Slider } from 'Components/UploadReceipt';
-import styles from './styles.module.css';
+import { Slider, link as uploadReceiptStyles } from '~/modules/uploadReceipt';
+import styles from './styles.css';
 // import ResponsiveImage from 'frontend-ui/ResponsiveImage';
 import { useCustomerState } from '~/hooks/useCostumer';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 
 export const links = () => {
-  return [{rel: 'stylesheet', href: styles}];
+  return [
+    {
+      rel: 'stylesheet', href: styles
+    },
+    ...uploadReceiptStyles()
+  ];
 };
 
 const RewardEarnPoints = () => {
@@ -88,7 +93,7 @@ const RewardEarnPoints = () => {
               <div className={styles.divider}></div>
               <div className={styles['col__body']}>
                 <div className={`${styles['logos__mobile']} ${styles.mobile}`}>
-                  {/* < Slider/> */}
+                  < Slider/>
                 </div>
                 <div className={`${styles['logos__desktop']} ${styles.desktop}`}>
                   {Object.values(brandLogos).map((svg, index) => (
