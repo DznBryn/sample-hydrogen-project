@@ -1,0 +1,141 @@
+.section {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
+  padding: 33px 0;
+}
+
+.container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  width: 100%;
+  height: auto;
+  max-width: 285px;
+}
+.section__subheading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: rgba(71, 198, 217, 0.8);
+  text-transform: uppercase;
+  margin-bottom: 13px;
+}
+.section__heading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 28px;
+  color: rgba(76, 78, 86, 1);
+  margin-bottom: 33px;
+}
+
+.animation {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+.progress__bar {
+  width: 100%;
+  height: 100%;
+}
+.progress__bar--animate {
+  transform-origin: center left;
+  width: 100%;
+  height: 7px;
+  transition: width 2s ease-out;
+  background: #47c6d9;
+}
+.row {
+  width: 100%;
+  height: 100%;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: -1em;
+}
+.col {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 0 0.5em;
+}
+.checkmark {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  background: #47c6d9;
+  padding: 0.25em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 11px;
+}
+.points {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+.points svg {
+  width: 13px;
+  padding-bottom: 3px;
+}
+.reward {
+  text-align: center;
+  font-size: 14px;
+}
+.desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .container {
+    position: relative;
+  }
+  .header {
+    max-width: 645px;
+  }
+  .section__subheading {
+    font-size: 22px;
+  }
+  .section__heading {
+    font-size: 50px;
+  }
+  .row {
+    margin-top: -1.5em;
+  }
+  .progress__bar--animate {
+    height: 14px;
+  }
+  .points {
+    font-size: 24px;
+    font-weight: 900;
+  }
+  .points p {
+    color: #47c6d9;
+  }
+  .points svg {
+    width: 20px;
+    margin-bottom: 3px;
+  }
+  .checkmark {
+    width: 37px;
+    height: 37px;
+  }
+  .reward {
+    font-weight: 600;
+    font-size: 22px;
+    max-width: 200px;
+  }
+}
