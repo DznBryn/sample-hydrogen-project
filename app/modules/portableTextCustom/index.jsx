@@ -2,8 +2,17 @@ import { PortableText } from '@portabletext/react';
 
 const PortableTextCustom = ({value}) => {
 
+  const firstContent = value[0].children[0].text;
+  const isHTML = (/<\/?[a-z][\s\S]*>/i.test(firstContent));
+
   return (
   
+    isHTML ? (
+      
+      <div dangerouslySetInnerHTML={{__html: firstContent}}/>
+    
+    ) : (
+    
     <PortableText 
       value={value} 
       components={{
@@ -13,6 +22,8 @@ const PortableTextCustom = ({value}) => {
         }
       }}
     />
+
+    )
 
   );
 
