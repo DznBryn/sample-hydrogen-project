@@ -197,16 +197,16 @@ const VariantsContainer = ({data = null}) => {
     );
 
   const Variants = () => {
-    return (
+    return Boolean(TypeShade) && (
       <div className={'variants'} ref={variantsWraper}>
-        {Boolean(TypeShade && TypeSize) &&
+        {Boolean(TypeSize) &&
           variants.map(
             (variant) =>
               variant.title.includes(store?.productPage?.selectedTypeSize) && (
                 <Variant key={variant._id} variant={variant} />
               ),
           )}
-        {Boolean(TypeShade && !TypeSize) &&
+        {Boolean(!TypeSize) &&
           variants.map((variant) => (
             <Variant key={variant._id} variant={variant} />
           ))}
