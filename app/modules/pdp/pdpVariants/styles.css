@@ -9,6 +9,7 @@
   display: grid;
   grid: 1fr/repeat(3, 1fr);
   gap: 7px;
+  margin-bottom: 1em;
 }
 
 .variant {
@@ -18,7 +19,7 @@
   min-height: 80px;
   align-items: center;
   flex-direction: column;
-  background: #F4F4F4;
+  background: #f4f4f4;
   cursor: pointer;
 }
 
@@ -246,7 +247,7 @@
   .variant {
     margin-right: 0;
     flex: 0 0 98%;
-    background: #FFF;
+    background: #fff;
   }
 }
 @media (min-width: 768px) {
