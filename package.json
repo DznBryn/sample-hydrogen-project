@@ -4,7 +4,7 @@
   "sideEffects": false,
   "version": "0.0.0",
   "scripts": {
-    "build": "npm run generate-doc && sass app/:app/ --style=compressed --no-source-map && shopify hydrogen build",
+    "build": "sass app/:app/ --style=compressed --no-source-map && shopify hydrogen build",
     "dev:hydrogen": "shopify hydrogen dev",
     "dev:sass": "sass --watch app/:app/",
     "dev": "npm-run-all --parallel dev:hydrogen dev:sass",
