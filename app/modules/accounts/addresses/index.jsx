@@ -16,7 +16,7 @@ export default function Addresses() {
     submitBtnMessage: 'Add address',
     formAction: FORM_ACTIONS.CREATE,
   });
-
+  
   return showAddAddressForm.id ? (
     <div id="addressTab" className={'mainContainer'}>
       <Form data={{
@@ -34,9 +34,13 @@ export default function Addresses() {
             <h3 className={'headerTitle'}>Account Details</h3>
           </div>
           <h3 className={'accountName'}>{
-            (data?.defaultAddress?.firstName !== '' ? data.defaultAddress.firstName : data?.firstName)
+            (data?.defaultAddress !== null &&
+              data?.defaultAddress?.firstName !== ''
+              ? data.defaultAddress.firstName : data?.firstName)
             + ' ' +
-            (data?.defaultAddress?.lastName !== '' ? data.defaultAddress.lastName : data?.lastName)
+            (data?.defaultAddress !== null &&
+              data?.defaultAddress?.lastName !== ''
+              ? data.defaultAddress.lastName : data?.lastName)
           }</h3>
           <span className={'accountDetails'}>{data?.phone}</span>
           <span className={'accountDetails'}>{data?.email}</span>

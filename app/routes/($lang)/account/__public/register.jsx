@@ -26,6 +26,13 @@ export async function action({ request, context, params }) {
     const data = await login(context, { email, password });
     if (data?.accessToken) {
       session.set('customerAccessToken', data.accessToken);
+      if (formData?.get('form_location') && formData.get('form_location') !== '') {
+        return json(data, {
+          headers: {
+            'Set-Cookie': await session.commit(),
+          },
+        });
+      }
       return redirect(params.lang ? `${params.lang}/account` : '/account', {
         headers: {
           'Set-Cookie': await session.commit()
