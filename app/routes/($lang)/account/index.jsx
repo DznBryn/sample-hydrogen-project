@@ -16,7 +16,7 @@ export function links() {
   ];
 }
 
-export async function action({ request, context}) {
+export async function action({ request, context }) {
   const { storefront, session } = context;
   const formData = await request.formData();
 
@@ -40,8 +40,39 @@ export async function action({ request, context}) {
     country: formData?.get('country') ?? '',
     phone: formData?.get('phone') ? String(formData?.get('phone').slice(0, 16)) : null,
     province: formData?.get('province') ?? '',
-    zip: formData.get('zip') ? String(formData.get('zip').slice(0, 5)) : null,
+    zip: formData.get('zip') ? String(formData.get('zip').slice(0, 5)) : '',
   };
+
+
+  const formErrors = [];
+  const requiredFields = ['firstName', 'lastName', 'city', 'province'];
+
+  Object.keys(normalizeAddress).forEach((key) => {
+    if (key === 'zip') {
+      if (normalizeAddress[key] === '' && !formErrors.includes('zip')) {
+        formErrors.push('zip');
+      }
+    }
+    if (key === 'address1') {
+      if (normalizeAddress[key] === '' && !formErrors.includes('streetAddress')) {
+        formErrors.push('streetAddress');
+      }
+    }
+    if (requiredFields.includes(key)) {
+      if (normalizeAddress[key] === '' && !formErrors.includes(key)) {
+        formErrors.push(key);
+      }
+    }
+  });
+
+  if(formErrors.length > 0) {
+    return {
+      message: 'Please fill out all required fields.',
+      status: 400,
+      errors: formErrors
+    };
+  }
+
 
   if (request.method === FORM_ACTIONS.DELETE) {
     // refactor into function deleteAddress() 
@@ -82,10 +113,9 @@ export async function action({ request, context}) {
     }
   }
 
-
   const isDefault = formData?.get('isDefault') && formData?.get('isDefault') !== '' ? true : false;
 
-  if ((!addressId || addressId !== '') && formAction === FORM_ACTIONS.CREATE ) {
+  if ((!addressId || addressId !== '') && formAction === FORM_ACTIONS.CREATE) {
     try {
       const data = await storefront.mutate(CREATE_ADDRESS_MUTATION, {
         variables: {
@@ -163,7 +193,7 @@ export async function action({ request, context}) {
         message: error?.message,
         status: 400
       };
-    } 
+    }
   }
 }
 

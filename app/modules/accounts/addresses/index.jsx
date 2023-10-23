@@ -16,7 +16,6 @@ export default function Addresses() {
     submitBtnMessage: 'Add address',
     formAction: FORM_ACTIONS.CREATE,
   });
-  
   return showAddAddressForm.id ? (
     <div id="addressTab" className={'mainContainer'}>
       <Form data={{
@@ -200,6 +199,9 @@ function Form({ data }) {
   const phoneRef = useRef(null);
 
   useEffect(() => {
+    if (fetcher.data?.errors) {
+      setErrors(fetcher.data.errors);
+    }
     if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
       updateAddresses(fetcher.data);
       data.closeForm();
@@ -289,7 +291,6 @@ function Form({ data }) {
           placeholder="First Name"
           value={form?.firstName ?? data?.firstName}
           onChange={handleOnChange}
-          required
         />
         {formErrors.includes('firstName') && (
           <p className={'errorMessage'}>*Required</p>
@@ -303,7 +304,6 @@ function Form({ data }) {
           placeholder="Last Name"
           value={form?.lastName ?? data?.lastName}
           onChange={handleOnChange}
-          required
         />
         {formErrors.includes('lastName') && (
           <p className={'errorMessage'}>*Required</p>
@@ -369,7 +369,6 @@ function Form({ data }) {
         <div
           className={`formInput ${formErrors.includes('province') && 'formInputError'}`}
           name="countryContainer"
-          required
         >
           <AddressIcon
             style={{ position: 'absolute', top: '25%', left: 16 }}
@@ -380,7 +379,6 @@ function Form({ data }) {
             value={form?.province}
             className={'countrySelect'}
             onChange={handleOnChange}
-            required
           >
             <option value="" disabled selected hidden>
               -- Select --
@@ -423,7 +421,6 @@ function Form({ data }) {
           value={'United States'}
           onChange={handleOnChange}
           readOnly
-          required
         />
         {formErrors.includes('country') && (
           <p className={'errorMessage'}>*Required</p>
@@ -465,7 +462,7 @@ function Form({ data }) {
       <Button
         type="submit"
         styleType="solid"
-        disabled={formErrors.length > 0}
+        disabled={formErrors.length > 0 || fetcher.state === FETCHER.STATE.SUBMIT || fetcher.state === FETCHER.STATE.LOADING}
         message={
           fetcher.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
             fetcher.state === FETCHER.STATE.LOADING ? 'Loading' :

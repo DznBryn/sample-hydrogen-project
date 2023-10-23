@@ -13,7 +13,13 @@ export async function action({ request, context, params }) {
   const { email, password } = Object.fromEntries(formData);
 
   if (password.length > 8) {
-    return json({ message: 'The email address you entered is too long. Please enter a valid email address.', field: ['password'], code: 'TOO_LONG' });
+    return [
+      {
+        message: 'The password you entered is too long. Please enter a valid password.',
+        field: ['password'],
+        code: 'TOO_LONG'
+      }
+    ];
   }
 
   try {

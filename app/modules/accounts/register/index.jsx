@@ -82,7 +82,7 @@ export default function Register() {
 
             <div>
               <input
-                className='inputText'
+                className={fetcher.data && fetcher.data?.length > 0 && fetcher.data?.[0]?.field?.includes('password') ? 'inputText inputTextError' : 'inputText'}
                 id="password"
                 name="password"
                 type="password"
@@ -185,7 +185,7 @@ export function RegisterForm({ fetcher = useFetcher() }) {
     password: ''
   });
   const disableLoginButton = registerForm.email === '' || registerForm.password === '' || fetcher?.state === FETCHER.STATE.SUBMIT || fetcher?.state === FETCHER.STATE.LOADING;
-  
+
   const passwordRef = useRef(null);
 
   function togglePassword() {
@@ -278,16 +278,16 @@ export function RegisterForm({ fetcher = useFetcher() }) {
         />
         <span onClick={togglePassword}>show</span>
       </div>
-        {
-          fetcher.data && fetcher.data?.length > 0 && fetcher.data.map((error, index) => error?.field?.includes('password') && (
-            <p className={'errorText'} key={index}>
-              {
-                MESSAGE_ERROR.PASSWORD[error.code] ?? error.message
-              }
-            </p>
-          ))
-        }
-        <span className='smallText'>Password must be at least 5 characters</span>
+      {
+        fetcher.data && fetcher.data?.length > 0 && fetcher.data.map((error, index) => error?.field?.includes('password') && (
+          <p className={'errorText'} key={index}>
+            {
+              MESSAGE_ERROR.PASSWORD[error.code] ?? error.message
+            }
+          </p>
+        ))
+      }
+      <span className='smallText'>Password must be at least 5 characters</span>
       <Button type="submit" className={`button ${disableLoginButton && 'disabledButton'}`} color="blue" disabled={disableLoginButton} >
         {
           fetcher?.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
@@ -312,7 +312,7 @@ export function RegisterForm({ fetcher = useFetcher() }) {
           </p>
         )
       }
-      
+
     </fetcher.Form>
   );
 }
