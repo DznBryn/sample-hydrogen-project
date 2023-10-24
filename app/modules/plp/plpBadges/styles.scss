@@ -23,10 +23,10 @@
   border: none;
 }
 
-.new {
-  background-color: var(--color-bright-yellow);
-  color: var(--color-primary);
-}
+// .new {
+//   background-color: var(--color-bright-yellow);
+//   color: var(--color-primary);
+// }
 
 .out-stock {
   font-size: 9px;
@@ -73,7 +73,6 @@
 }
 
 @media (max-width: 550px) {
-
   .tag {
     font-weight: 600;
     height: 50px;
@@ -81,5 +80,4 @@
     line-height: 1.3;
     width: 50px;
   }
-
 }
