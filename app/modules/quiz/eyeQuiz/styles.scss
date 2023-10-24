@@ -368,6 +368,8 @@
   text-transform: uppercase;
   border: none;
   margin: auto;
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .finalWrapper .quizResults {
@@ -725,5 +727,9 @@
   }
   .advanceRoutineResults .reviewQuizAnswers p {
     font-size: 12px;
+  }
+
+  .resultsProductGrid .infoContainer a {
+    font-size: 14px !important;
   }
 }
