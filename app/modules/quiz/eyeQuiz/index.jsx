@@ -185,7 +185,7 @@ const EyeQuiz = ({content}) => {
   }, [step, rangeAge]);
 
   return (
-    <body id="skinQuizLandingWrapper" className="minHeight">
+    <main id="skinQuizLandingWrapper" className="minHeight">
       <LandingCover content={landingCoverContent} />
 
       <div id="quizWrapper" className="container">
@@ -195,7 +195,7 @@ const EyeQuiz = ({content}) => {
           <MainContentQuiz content={mainQuizContent} />
         )}
       </div>
-    </body>
+    </main>
   );
 };
 

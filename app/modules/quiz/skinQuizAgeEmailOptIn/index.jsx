@@ -159,7 +159,8 @@ const SkinQuizAgeEmailOptIn = ({setRangeAge}) => {
           <button
             onClick={() => handleDateSubmit()}
             id="nextBtnAge"
-            className={classNames(!dateInputted && styles.inactiveBtn)}
+            className={classNames(!dateInputted && 'inactiveBtn')}
+            disabled={!dateInputted}
           >
             Next
           </button>
@@ -202,7 +203,6 @@ const SkinQuizAgeEmailOptIn = ({setRangeAge}) => {
             <button
               id="submitEmail"
               // className={classNames(false && styles.inactiveBtn)}
-              // className={classNames(checked && styles.inactiveBtn)}
               // disabled={checked}
               onClick={() => handleSubmit()}
             >
