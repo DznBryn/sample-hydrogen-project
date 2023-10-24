@@ -23,11 +23,6 @@
   border: none;
 }
 
-.new {
-  background-color: var(--color-bright-yellow);
-  color: var(--color-primary);
-}
-
 .out-stock {
   font-size: 9px;
 }
