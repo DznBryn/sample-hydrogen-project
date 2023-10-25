@@ -7,7 +7,7 @@ import NavPlaceholder, { links as NavPlaceholderStyles } from '~/modules/navPlac
 import { useMatches } from '@remix-run/react';
 import { getGroupOfCMSContent, getCMSDoc, getCollectionWithCMSData } from '~/utils/functions/eventFunctions';
 import { getCollectionProducts } from '~/utils/graphql/shopify/queries/collections';
-import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_ANNOUNCEMENT_MESSAGES, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER, GET_SITE_WIDE_SETTINGS, GET_SEARCH_CONFIG } from '~/utils/graphql/sanity/queries';
+import { GET_FOOTERS, GET_EMAIL_SMS_SIGNUP_CONTENT, GET_CART_PAGE_CONFIG, GET_ANNOUNCEMENT_HEADER, GET_MOBILE_NAV_BAR, GET_HEADER_CONFIG, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON, GET_ANNOUNCEMENT_TOP_BANNER, GET_SITE_WIDE_SETTINGS, GET_SEARCH_CONFIG } from '~/utils/graphql/sanity/queries';
 import { useMemo } from 'react';
 
 export const links = () => {
@@ -32,7 +32,6 @@ const MainNavFooter = ({ children }) => {
     EmailSmsSignupContent,
     CartPageConfig,
     AnnouncementHeaders,
-    AnnouncementMessages,
     MobileNavbar,
     HeaderConfig,
     MobileNavFooterMainButton,
@@ -59,7 +58,6 @@ const MainNavFooter = ({ children }) => {
       <MainNav
         cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
         announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')}
-        announcementMessages={AnnouncementMessages}
         mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
         mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
         mobileNavMainButton={getCMSDoc(MobileNavFooterMainButton, 'Main Button')}
@@ -108,7 +106,6 @@ export async function getMainNavFooterCMSData(context) {
     GET_EMAIL_SMS_SIGNUP_CONTENT,
     GET_CART_PAGE_CONFIG,
     GET_ANNOUNCEMENT_HEADER,
-    GET_ANNOUNCEMENT_MESSAGES,
     GET_MOBILE_NAV_BAR,
     GET_HEADER_CONFIG,
     GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,

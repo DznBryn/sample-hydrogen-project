@@ -11,13 +11,14 @@ export const links = () => {
   ];
 };
 
-const NavTopHeader = ({ announcementHeader, announcementMessages }) => {
+const NavTopHeader = ({ announcementHeader }) => {
 
   const {
     backgroundColorHex,
     fontColorHex,
     referralUrl,
     referralText,
+    messages,
   } = announcementHeader;
 
   return (
@@ -34,7 +35,7 @@ const NavTopHeader = ({ announcementHeader, announcementMessages }) => {
 
         <div>
           <AnnouncementHeader
-            announcementMessages={announcementMessages}
+            announcementMessages={messages}
             fontColor={fontColorHex}
           />
         </div>

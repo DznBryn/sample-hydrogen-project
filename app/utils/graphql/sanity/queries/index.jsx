@@ -637,34 +637,29 @@ export const GET_ANNOUNCEMENT_HEADER = gql`
       promoTextRaw
       promoModalLinkText
       modalRaw
+      messages {
+        _id
+        name
+        announcementTextRaw
+        announcementURL
+        emoji {
+          asset {
+            _id
+            url
+          }
+        }
+        shouldOpenModal
+        modalLinkText
+        modalContentRaw
+        shouldOpenLink
+        linkToGo
+      }
       emoji {
         asset {
           _id
           url
         }
       }
-    }
-  }
-`;
-
-export const GET_ANNOUNCEMENT_MESSAGES = gql`
-  query GetAllAnnouncementMessages {
-    allAnnouncementMessages {
-      _id
-      name
-      announcementTextRaw
-      announcementURL
-      emoji {
-        asset {
-          _id
-          url
-        }
-      }
-      shouldOpenModal
-      modalLinkText
-      modalContentRaw
-      shouldOpenLink
-      linkToGo
     }
   }
 `;

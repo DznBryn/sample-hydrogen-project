@@ -54,7 +54,6 @@ const MainNav = ({
   mobileOverlayNav,
   mobileNavbar,
   announcementHeader,
-  announcementMessages,
   cartConfig,
   searchConfig,
   promoContent,
@@ -122,7 +121,6 @@ const MainNav = ({
         <div className={'relativeNav'}>
           <NavTopHeader
             announcementHeader={announcementHeader}
-            announcementMessages={announcementMessages}
           />
 
           <div className={'navItemsWrap'}>
