@@ -22,6 +22,10 @@ const PageMeta = () => {
       )}
 
       <script
+        src={getApiKeys().LISTRAK_SCRIPT}
+      ></script>
+
+      <script
         defer
         dangerouslySetInnerHTML={{__html: 'window.lockABTastyTag = true;'}}
       ></script>
