@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import { appendScript } from '~/utils/functions/eventFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
 
 const Listrack = ({ productList }) => {
 
@@ -26,11 +24,7 @@ const Listrack = ({ productList }) => {
 
     };
 
-    if (typeof window._ltk === 'undefined') {
-      appendScript(getApiKeys().LISTRAK_SCRIPT, 'listrak', true, triggerListrak);
-    } else {
-      triggerListrak();
-    }
+    triggerListrak();
 
   }, []);
 
