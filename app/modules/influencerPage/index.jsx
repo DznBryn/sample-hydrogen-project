@@ -35,7 +35,7 @@ const InfluencerPage = ({influencer, cartConfig}) => {
   }, [influencer.plpCollection]);
 
   const collectionContainerStyle =
-    'collection__container collection__container_2Collumns';
+    'influencerPage_collection__container influencerPage_collection__container_2Collumns';
   const headerWrapperStyle = influencer.influencerBanner
     ? 'influencerPage_headerWrapper'
     : 'noBannerHeader';
@@ -79,7 +79,7 @@ const InfluencerPage = ({influencer, cartConfig}) => {
         ))}
       </div>
 
-      <div className={'plpWrapper'}>
+      <div className={'influencerPage_plpWrapper'}>
         <div className={'productsTitle'}>
           <h2>{influencer.plpTitle}</h2>
         </div>
