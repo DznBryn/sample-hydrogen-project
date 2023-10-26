@@ -78,7 +78,7 @@ const MainNavFooter = ({ children }) => {
       }}>
         <BodyBottom
           emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
-          productList={collection}
+          productList={collectionWithCMSData}
         />
 
         <Footer

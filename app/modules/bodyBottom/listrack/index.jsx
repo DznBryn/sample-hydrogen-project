@@ -12,11 +12,18 @@ const Listrack = ({ productList }) => {
 
       if (window.location.href.includes('/products/')) {
 
-        const slug = window.location.pathname.replace('/products/', '');
+        const handle = window.location.pathname.replace('/products/', '');
 
-        const product = productList.products.filter((prod) => (prod.slug === slug));
+        const product = productList.products.find((prod) => (prod.handle === handle));
 
-        window._ltk.Activity.AddProductBrowse(product[0].externalId.toString());
+        if(product){
+
+          const splittedID = product.id.split('/');
+          const externalID = splittedID[splittedID.length-1];
+          
+          window._ltk.Activity.AddProductBrowse(externalID);
+          
+        }
 
       }
 
@@ -24,7 +31,12 @@ const Listrack = ({ productList }) => {
 
     };
 
-    triggerListrak();
+    if (typeof window._ltk === 'object') {
+
+      triggerListrak();
+
+    }
+
 
   }, []);
 
