@@ -12,6 +12,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .earn_points_container__header {
   display: flex;
   flex-direction: column;
@@ -21,11 +22,13 @@
   background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
   padding-top: 45px;
 }
+
 .earn_points_header {
   width: 100%;
   height: auto;
   max-width: 285px;
 }
+
 .earn_points_section__subheading {
   text-align: center;
   font-weight: 900;
@@ -34,11 +37,12 @@
   text-transform: uppercase;
   margin-bottom: 13px;
 }
+
 .earn_points_section__heading {
   text-align: center;
   font-weight: 900;
   font-size: 28px;
-  color: rgba(76, 78, 86, 1);
+  color: rgb(76, 78, 86);
   margin-bottom: 33px;
 }
 
@@ -46,6 +50,7 @@
   width: 100%;
   height: 100%;
 }
+
 .earn_points_row__container {
   width: 100%;
   height: 100%;
@@ -53,6 +58,7 @@
   flex-direction: column;
   align-items: center;
 }
+
 .earn_points_col {
   width: 100%;
   max-width: 515px;
@@ -62,9 +68,11 @@
   flex-direction: column;
   align-items: center;
 }
+
 .earn_points_col:first-child {
   padding-top: 50px;
 }
+
 .earn_points_col__header {
   width: 100%;
   height: auto;
@@ -73,19 +81,22 @@
   align-items: center;
   margin-bottom: 15px;
 }
+
 .earn_points_col:last-child .earn_points_col__header {
   padding-top: 28px;
 }
+
 .earn_points_col__svg {
   width: auto;
   height: auto;
   margin-bottom: 15px;
 }
+
 .earn_points_col__heading {
   text-align: center;
   font-weight: 900;
   font-size: 22px;
-  color: rgba(71, 198, 217);
+  color: rgb(71, 198, 217);
   margin-bottom: 12px;
 }
 
@@ -93,9 +104,11 @@
   text-align: center;
   font-size: 12px;
 }
+
 .earn_points_col__subheading > span {
   margin: 0 3px;
 }
+
 .earn_points_col__body {
   width: 100%;
   height: 100%;
@@ -104,6 +117,7 @@
   align-items: center;
   order: 1;
 }
+
 .earn_points_col__container {
   width: 100%;
   height: auto;
@@ -112,33 +126,33 @@
   flex-direction: column;
   align-items: center;
 }
+
 .earn_points_logo__container {
   width: 100%;
   max-width: 100px;
   margin-bottom: 20px;
 }
+
 .earn_points_logo {
   width: 100%;
   height: auto;
 }
+
 .earn_points_col__body-text {
   font-size: 14px;
   text-align: center;
   color: rgba(76, 78, 86, 0.8);
 }
+
 .earn_points_divider {
   width: 85%;
   min-height: 2px;
   height: 2px;
   margin-top: 32px;
-  background: linear-gradient(
-    90deg,
-    rgba(175, 191, 210, 0.1) 0%,
-    rgba(158, 176, 197, 0.6) 50.38%,
-    rgba(175, 191, 210, 0.1) 100%
-  );
+  background: linear-gradient(90deg, rgba(175, 191, 210, 0.1) 0%, rgba(158, 176, 197, 0.6) 50.38%, rgba(175, 191, 210, 0.1) 100%);
   order: 2;
 }
+
 .earn_points_cta__container {
   width: 100%;
   max-width: 400px;
@@ -161,6 +175,7 @@
   width: 100%;
   overflow-x: scroll;
 }
+
 .earn_points_logos__container {
   margin-bottom: 43px;
 }
@@ -188,6 +203,7 @@
   align-items: center;
   margin-bottom: 29px;
 }
+
 .earn_points_svg {
   display: flex;
   justify-content: center;
@@ -199,19 +215,15 @@
   max-width: 400px;
 }
 
-.earn_points_cta__container {
-  .yotpo-widget-campaign-widget-container {
-    padding: 0 !important;
-  }
-
-  .yotpo-container-headline {
-    display: none !important;
-  }
-
-  .yotpo-widget-campaign-widget .flexified-wrapper {
-    padding: 0 !important;
-    width: 100% !important;
-  }
+.earn_points_cta__container .yotpo-widget-campaign-widget-container {
+  padding: 0 !important;
+}
+.earn_points_cta__container .yotpo-container-headline {
+  display: none !important;
+}
+.earn_points_cta__container .yotpo-widget-campaign-widget .flexified-wrapper {
+  padding: 0 !important;
+  width: 100% !important;
 }
 
 @media (min-width: 768px) {
@@ -285,3 +297,5 @@
     display: flex;
   }
 }
+
+/*# sourceMappingURL=styles.css.map */

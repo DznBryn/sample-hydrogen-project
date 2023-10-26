@@ -1,11 +1,8 @@
 import { Link } from '@remix-run/react';
-// import { getResponsiveImageSrc } from 'frontend-ui';k
-// import ResponsiveImage from 'frontend-ui/ResponsiveImage';
 import { triggerAnalyticsProductClick, triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
-import AddToCartButton, { addToCartButtonStyles } from '../addToCartButton';
+import AddToCartButton, { links as addToCartButtonStyles } from '../addToCartButton';
 
 import { useCustomerState } from '~/hooks/useCostumer';
-import { mockProduct } from './mock';
 
 import styles from './styles.css';
 
@@ -19,45 +16,41 @@ export const links = () => {
 			...addToCartButtonStyles()];
   };
 
-const YotpoRedeemProductBox = ({ content }) => {
-    const { yotpoProduct = mockProduct, analytics, ctaOpensBlank = false, parentComp } = content;
-	const { product, yotpoPointsValue, widgetId, variantId = '', variantName = '' } = yotpoProduct;
-	const { altTitle = 'Loren Ipsun', slug, name} = product;
+const YotpoRedeemProductBox = ({ yotpoProducts = [] }) => {
+	
+	const { products: product, yotpo_points_value: yotpoPointsValue, widget_id: widgetId, variant_Id: variantId = '', variant_name: variantName = '' } = yotpoProducts[0];
+	const { images, alt_title: altTitle, handle: slug, name} = product;
 
 	const { isLoggedIn } = useCustomerState();
+	const analytics = {};
   
-	// const mainImg = null;
-    // // getResponsiveImageSrc(media[0]?.details.src, { width: media[0]?.details.width });
-	// const secImg = null;
-    // // getResponsiveImageSrc(media[1]?.details.src, { width: media[1]?.details.width });
   
-   const yotpoVariant = product.variants.length ? product.variants.find(variant => variant.externalId === Number(variantId)) : null;
+   const yotpoVariant = product?.variants?.length ? product.variants.find(variant => variant.externalId === Number(variantId)) : null;
     const currentProductName = yotpoVariant ? `${name} - ${variantName}` : name;
 
 	return (
 
-		<div className={styles.plpWrapper} id={`product-${product?.handle ? product.handle : slug}`}>
+		<div className={'redeemProductsSection_plpWrapper'} id={`product-${product?.handle ? product.handle : slug}`}>
 
-			<div className='container'>
+			<div className='redeemProductsSection_container'>
 
-				<Link className='imageContainer' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
-					{/* <ResponsiveImage className='productImage' src={mainImg} alt={media[0]?.details.alt} />
-					<ResponsiveImage className='productImage dinamicImage' src={secImg} alt={media[1]?.details.alt}/> */}
+				<Link className='redeemProductsSection_imageContainer' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
+					<img className='redeemProductsSection_productImage' src={images?.nodes[0]?.url} alt={images?.nodes[0]?.alt} />
 				</Link>
 
-				<div className='infoContainer'>
+				<div className='redeemProductsSection_infoContainer'>
 
-					<Link className='title' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
+					<Link className='redeemProductsSection_title' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
 						{altTitle}
 					</Link>
 
-					<Link className='subTitle' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
+					<Link className='redeemProductsSection_subTitle' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
 						{currentProductName}
 					</Link>
 				
 				</div>
 
-				<span className={styles.yotpoPoints}>
+				<span className={'redeemProductsSection_yotpoPoints'}>
 					<PointsIcon />{yotpoPointsValue.toLocaleString()} points
 				</span>
 
@@ -65,16 +58,16 @@ const YotpoRedeemProductBox = ({ content }) => {
 					<>
 						<span>step one:</span>
 						
-						<div className='ctaContainer'>
+						<div className='redeemProductsSection_ctaContainer'>
 							<Button
-								className='productButton'
+								className='redeemProductsSection_productButton'
 								product={product}
 								analytics={analytics}
-								opensBlank={ctaOpensBlank}
+								opensBlank={null}
                                 yotpoVariant={yotpoVariant}
 								onClick={() => {
-                                    if(parentComp){
-                                        triggerAnalyticsLoyaltyEvents('AddToCart', {source: parentComp});
+                                    if(null){
+                                        triggerAnalyticsLoyaltyEvents('AddToCart', {source: null});
                                     }
                                 }}
 							/>

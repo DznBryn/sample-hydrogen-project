@@ -1,0 +1,193 @@
+.wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 44px;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  max-width: 1300px;
+}
+
+.content__container {
+  width: 100%;
+  margin: 60px 0;
+  height: auto;
+}
+
+.content {
+  text-align: center;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  font-size: 14px;
+}
+
+.section__hero {
+  width: 100%;
+  height: auto;
+  position: relative;
+}
+
+.section__hero .image {
+  width: 100%;
+  height: 100%;
+}
+
+.section__hero .content__image {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.section__hero .content__image svg {
+  width: 170px;
+  height: auto;
+}
+
+.wrapper__redeem-products {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 53px;
+}
+
+.container__redeem-products {
+  width: 100%;
+  height: auto;
+  max-width: 1300px;
+}
+
+.content__heading {
+  color: #47c6d9;
+  font-weight: 900;
+  line-height: 32px;
+  font-size: 16px;
+}
+
+.section__heading-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 18px;
+  margin-bottom: 20px;
+}
+
+.section__heading {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 37.5px;
+  color: #47c6d9;
+  font-family: "Avenir LT Pro";
+  text-align: center;
+}
+
+.section__heading-body {
+  font-size: 14px;
+  text-align: center;
+  line-height: 22px;
+  opacity: 0.8;
+}
+
+.body-2 {
+  font-size: 16px;
+}
+
+.section__heading-subtext {
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.6;
+}
+
+#redemption__wrapper {
+  margin-bottom: 60px;
+  margin-top: 0px;
+}
+
+#redemption__wrapper :global(.yotpo-coupons-redemption-widget .yotpo-coupons-redemption-widget-container) {
+  padding-top: 42px;
+}
+
+#redemption__wrapper :global(.yotpo-coupons-redemption-widget
+    .yotpo-coupons-redemption-widget-container.yotpo-logged-out) {
+  padding-bottom: 26px;
+}
+
+.section__rewards :global(.yotpo-loyalty-popup-overlay) {
+  margin-top: 117px;
+}
+
+.section__rewards :global(.yotpo-widget-my-rewards-widget .yotpo-is-mobile .yotpo-grid) {
+  height: calc(90vh - 180px);
+}
+
+@media (min-width: 768px) {
+  .section__hero {
+    display: none;
+  }
+  .section__heading {
+    font-size: 35px;
+    line-height: 45px;
+    margin-bottom: 14px;
+  }
+  .section__heading-body {
+    font-size: 16px;
+  }
+  .body-2 {
+    font-size: 20px;
+  }
+  .section__heading-subtext {
+    font-size: 14px;
+  }
+  .rewards_wrapper :global(.yotpo-coupons-redemption-widget
+      .yotpo-coupons-redemption-widget-container.yotpo-logged-out) {
+    margin-top: 100px;
+  }
+  .wrapper__redeem-products {
+    margin-top: 68px;
+  }
+}
+.skeleton {
+  background-color: #f5f5f5;
+}
+
+.widget__container {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+}
+
+.loading {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(-90deg, #efefef 0%, #fcfcfc 50%, #efefef 100%);
+  background-size: 400% 400%;
+  animation: loading 1.2s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: -135% 0%;
+  }
+}
+.yotpo-coupons-redemption-widget .yotpo-coupon-background-type.yotpo-redemption-options-list {
+  margin-top: 0 !important;
+}
+
+/*# sourceMappingURL=styles.css.map */

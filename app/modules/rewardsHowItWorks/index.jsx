@@ -1,8 +1,4 @@
-// import ResponsiveImage from 'frontend-ui/ResponsiveImage';
-// import getResponsiveImageSrc from 'frontend-ui/getResponsiveImageSrc';
 import styles from './styles.css';
-
-const getResponsiveImageSrc = () => null;
 
 export const links = () => {
   return [
@@ -13,68 +9,68 @@ export const links = () => {
 };
 
 const RewardsHowItWorks = () => (
-  <div className={styles.section}>
-    <div className={styles.container}>
-      <h2 className={`${styles['section__heading']} ${styles.mobile}`}>how it works</h2>
-      <div className={styles['image__container']}>
+  <div className={'howitworks_section'}>
+    <div className={'howitworks_container'}>
+      <h2 className={'howitworks_section__heading howitworks_mobile'}>how it works</h2>
+      <div className={'howitworks_image__container'}>
         <picture>
           <source
             srcSet="https://cdn.shopify.com/s/files/1/1736/9637/files/reward-chart.gif"
             media="(min-width: 600px)"
           />
           <img
-            className={styles.image}
-            src={getResponsiveImageSrc(
-              'https://cdn.shopify.com/s/files/1/1736/9637/files/reward-chart.gif',
-            )}
+            className={'howitworks_image'}
+            src={
+              'https://cdn.shopify.com/s/files/1/1736/9637/files/reward-chart.gif'
+            }
             alt={'Rewards Chart'}
           />
         </picture>
       </div>
-      <div className={styles.content}>
-        <h2 className={`${styles['section__heading']} ${styles.desktop}`}>how it works</h2>
-        <div className={styles.list}>
-          <div className={styles['list__container']}>
-            <div className={styles['list__icon']}>
+      <div className={'howitworks_content'}>
+        <h2 className={'howitworks_section__heading'}>how it works</h2>
+        <div className={'howitworks_list'}>
+          <div className={'howitworks_list__container'}>
+            <div className={'howitworks_list__icon'}>
               <IconAccount />
             </div>
-            <div className={styles['list__item']}>
-              <p className={styles['content__subheading']}>create an account</p>
-              <p className={styles['content__body']}>
+            <div className={'howitworks_list__item'}>
+              <p className={'howitworks_content__subheading'}>create an account</p>
+              <p className={'howitworks_content__body'}>
                 Choose your favorite perks from our exclusive members-only benefits.
               </p>
             </div>
           </div>
-          <div className={styles['list__container']}>
-            <div className={styles['list__icon']} style={{ marginTop: '.5em' }}>
+          <div className={'howitworks_list__container'}>
+            <div className={'howitworks_list__icon'} style={{ marginTop: '.5em' }}>
               <IconUptrend />
             </div>
-            <div className={styles['list__item']}>
-              <p className={styles['content__subheading']}>earn points</p>
-              <p className={styles['content__body']}>
+            <div className={'howitworks_list__item'}>
+              <p className={'howitworks_content__subheading'}>earn points</p>
+              <p className={'howitworks_content__body'}>
                 Earn online and in-store! Plus earn bonus points for engaging with TULA online.
               </p>
             </div>
           </div>
-          <div className={styles['list__container']}>
-            <div id={styles.rewards__icon} className={styles['list__icon']}>
+          <div className={'howitworks_list__container'}>
+            <div id={'rewards__icon'} className={'howitworks_list__icon'}>
               <picture>
                 <source
                   srcSet="https://cdn.shopify.com/s/files/1/1736/9637/files/Redeem_Rewards__coin_flip_animation.gif"
                   media="(min-width: 600px)"
                 />
                 <img
-                  className={styles.image}
-                  src={getResponsiveImageSrc(
-                    'https://cdn.shopify.com/s/files/1/1736/9637/files/Redeem_Rewards__coin_flip_animation.gif',
-                  )}
+                  className={'howitworks_image'}
+                  src={
+                    'https://cdn.shopify.com/s/files/1/1736/9637/files/Redeem_Rewards__coin_flip_animation.gif'
+                  }
                   alt="redeem rewards"
                 />
               </picture>
             </div>
-            <div className={styles['list__item']}>
-              <p className={styles['content__subheading']}>redeem rewards</p>
-              <p className={styles['content__body']}>
+            <div className={'howitworks_list__item'}>
+              <p className={'howitworks_content__subheading'}>redeem rewards</p>
+              <p className={'howitworks_content__body'}>
                 Redeem your points for full-size products, discounts, and members-only perks.
               </p>
             </div>

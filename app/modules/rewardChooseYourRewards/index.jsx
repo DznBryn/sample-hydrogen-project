@@ -10,52 +10,52 @@ export const links = () => {
 
 export default function RewardChooseYourRewards() {
   return (
-    <div className={styles.section}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <p className={styles['section__subheading']}>HOW TO REDEEM</p>
-          <h2 className={styles['section__heading']}>choose your rewards</h2>
+    <div className={'rewardChooseYourRewards_section'}>
+      <div className={'rewardChooseYourRewards_container'}>
+        <div className={'rewardChooseYourRewards_header'}>
+          <p className={'rewardChooseYourRewards_section__subheading'}>HOW TO REDEEM</p>
+          <h2 className={'rewardChooseYourRewards_section__heading'}>choose your rewards</h2>
         </div>
       </div>
-      <div className={styles.container}>
-        <div className={styles.animation}>
-          <div className={styles.progress__bar}>
-            <div className={styles['progress__bar--animate']}></div>
+      <div className={'rewardChooseYourRewards_container'}>
+        <div className={'rewardChooseYourRewards_animation'}>
+          <div className={'rewardChooseYourRewards_progress__bar'}>
+            <div className={'rewardChooseYourRewards_progress__bar--animate'}></div>
           </div>
-          <div className={styles.row}>
-            <div className={styles.col}>
-              <div className={styles.checkmark}>
+          <div className={'rewardChooseYourRewards_row'}>
+            <div className={'rewardChooseYourRewards_col'}>
+              <div className={'rewardChooseYourRewards_checkmark'}>
                 <Checkmark />
               </div>
-              <div className={styles.points}>
+              <div className={'rewardChooseYourRewards_points'}>
                 <IconLoyaltyStar />
                 <p>1250 pts</p>
               </div>
-              <div className={styles.reward}>
+              <div className={'rewardChooseYourRewards_reward'}>
                 <p>$5 reward</p>
               </div>
             </div>
-            <div className={styles.col}>
-              <div className={styles.checkmark}>
+            <div className={'rewardChooseYourRewards_col'}>
+              <div className={'rewardChooseYourRewards_checkmark'}>
                 <Checkmark />
               </div>
-              <div className={styles.points}>
+              <div className={'rewardChooseYourRewards_points'}>
                 <IconLoyaltyStar />
                 <p>2000 pts</p>
               </div>
-              <div className={styles.reward}>
+              <div className={'rewardChooseYourRewards_reward'}>
                 <p>free full-size product</p>
               </div>
             </div>
-            <div className={styles.col}>
-              <div className={styles.checkmark}>
+            <div className={'rewardChooseYourRewards_col'}>
+              <div className={'rewardChooseYourRewards_checkmark'}>
                 <Checkmark />
               </div>
-              <div className={styles.points}>
+              <div className={'rewardChooseYourRewards_points'}>
                 <IconLoyaltyStar />
                 <p>5000 pts</p>
               </div>
-              <div className={styles.reward}>
+              <div className={'rewardChooseYourRewards_reward'}>
                 <p>free full-size deluxe product</p>
               </div>
             </div>

@@ -1,11 +1,9 @@
-import React from 'react';
 import IconLoyaltyStar from '../iconLoyaltyStar';
 import IconComputer from '../iconComputer';
 import IconStore from '../iconStore';
 import Button from '../button/index';
-import { Slider, link as uploadReceiptStyles } from '~/modules/uploadReceipt';
+// import { Slider, links as uploadReceiptStyles } from '~/modules/uploadReceipt';
 import styles from './styles.css';
-// import ResponsiveImage from 'frontend-ui/ResponsiveImage';
 import { useCustomerState } from '~/hooks/useCostumer';
 import { switchSliderPanelVisibility } from '../sliderPanel';
 
@@ -14,7 +12,7 @@ export const links = () => {
     {
       rel: 'stylesheet', href: styles
     },
-    ...uploadReceiptStyles()
+    // ...uploadReceiptStyles()
   ];
 };
 
@@ -22,23 +20,23 @@ const RewardEarnPoints = () => {
   const { isLoggedIn } = useCustomerState();
 
   return (
-    <div className={styles.section}>
-      <div className={styles.container}>
-        <div className={styles['container__header']}>
-          <div className={styles['header']}>
-            <p className={styles['section__subheading']}>earn your way</p>
-            <h2 className={styles['section__heading']}>earn points wherever you shop TULA</h2>
+    <div className={'earn_points_section'}>
+      <div className={'earn_points_container'}>
+        <div className={'earn_points_container__header'}>
+          <div className={'earn_points_header'}>
+            <p className={'earn_points_section__subheading'}>earn your way</p>
+            <h2 className={'earn_points_section__heading'}>earn points wherever you shop TULA</h2>
           </div>
         </div>
-        <div className={styles.row}>
-          <div className={styles['row__container']}>
-            <div className={styles.col}>
-              <div className={styles['col__header']}>
-                <div className={styles['col__svg']}>
+        <div className={'earn_points_row'}>
+          <div className={'earn_points_row__container'}>
+            <div className={'earn_points_col'}>
+              <div className={'earn_points_col__header'}>
+                <div className={'earn_points_col__svg'}>
                   <IconComputer />
                 </div>
-                <p className={styles['col__heading']}>earn points online</p>
-                <p className={styles['col__subheading']}>
+                <p className={'earn_points_col__heading'}>earn points online</p>
+                <p className={'earn_points_col__subheading'}>
                   Every $1 spent ={' '}
                   <span>
                     <IconLoyaltyStar />
@@ -46,29 +44,29 @@ const RewardEarnPoints = () => {
                   10 points
                 </p>
               </div>
-              <div className={styles.divider}></div>
-              <div className={styles['col__body']}>
-                <div className={styles['col__container']}>
-                  <div className={styles['logo__container']}>
-                    {/* <ResponsiveImage
-                      className={styles.logo}
+              <div className={'earn_points_divider'}></div>
+              <div className={'earn_points_col__body'}>
+                <div className={'earn_points_col__container'}>
+                  <div className={'earn_points_logo__container'}>
+                    <img
+                      className={'earn_points_logo'}
                       src={'https://cdn.shopify.com/s/files/1/1736/9637/files/5yOoDPBE.png'}
                       alt={'Tula Skinscare Logo'}
-                    /> */}
+                    />
                   </div>
-                  <p className={styles['col__body-text']}>
+                  <p className={'earn_points_col__body-text'}>
                     earn 2x the points with every purchase on www.tula.com{' '}
                   </p>
                 </div>
-                <div className={styles['cta__container']}>
+                <div className={'earn_points_cta__container'}>
                   {isLoggedIn ? (
-                    <a className={styles['btn__link']} href="/collections/all">
-                      <Button classes={styles.btn}>shop now</Button>
+                    <a className={'earn_points_btn__link'} href="/collections/all">
+                      <Button classes={'earn_points_btn'}>shop now</Button>
                     </a>
                   ) : (
                     <Button
-                      classes={styles.btn}
                       onClick={() => switchSliderPanelVisibility('SliderAccount')}
+                      classes={'btn'}
                     >
                       sign up
                     </Button>
@@ -76,13 +74,13 @@ const RewardEarnPoints = () => {
                 </div>
               </div>
             </div>
-            <div className={styles.col}>
-              <div className={styles['col__header']}>
-                <div className={styles['col__svg']}>
+            <div className={'earn_points_col'}>
+              <div className={'earn_points_col__header'}>
+                <div className={'earn_points_col__svg'}>
                   <IconStore />
                 </div>
-                <p className={styles['col__heading']}>earn points in-store</p>
-                <p className={styles['col__subheading']}>
+                <p className={'earn_points_col__heading'}>earn points in-store</p>
+                <p className={'earn_points_col__subheading'}>
                   Every $1 spent ={' '}
                   <span>
                     <IconLoyaltyStar />
@@ -90,17 +88,15 @@ const RewardEarnPoints = () => {
                   5 points
                 </p>
               </div>
-              <div className={styles.divider}></div>
-              <div className={styles['col__body']}>
-                <div className={`${styles['logos__mobile']} ${styles.mobile}`}>
-                  < Slider/>
-                </div>
-                <div className={`${styles['logos__desktop']} ${styles.desktop}`}>
+              <div className={'earn_points_divider'}></div>
+              <div className={'earn_points_col__body'}>
+               
+                <div className={'earn_points_logos__desktop earn_points_desktop'}>
                   {Object.values(brandLogos).map((svg, index) => (
-                    <div key={index} className={styles.svg}>{svg}</div>
+                    <div key={index} className={'earn_points_svg'}>{svg}</div>
                   ))}
                 </div>
-                <div className={`${styles['cta__container']} ${styles.uploader}`}>
+                <div className={'earn_points_cta__container earn_points_uploader'}>
                   <div className="yotpo-widget-instance" data-yotpo-instance-id="264193"></div>
                 </div>
               </div>

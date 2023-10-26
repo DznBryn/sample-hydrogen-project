@@ -5,25 +5,25 @@ export const links = () => {
 };
 
 const RewardPerks = () => (
-  <div className={styles.section}>
-    <div className={styles.container}>
-      <div className={styles['header']}>
-        <p className={styles['section__subheading']}>PICK YOUR PERKS</p>
-        <h2 className={styles['section__heading']}>members-only benefits</h2>
-        <p className={styles['section__body']}>
+  <div className={'rewardPerks_section'}>
+    <div className={'rewardPerks_container'}>
+      <div className={'rewardPerks_header'}>
+        <p className={'rewardPerks_section__subheading'}>PICK YOUR PERKS</p>
+        <h2 className={'rewardPerks_section__heading'}>members-only benefits</h2>
+        <p className={'rewardPerks_section__body'}>
           Choose your favorite perks from our exclusive members-only benefits.
         </p>
         <IconDownArrow />
       </div>
     </div>
-    <div className={styles.container}>
-      <ul className={styles['list__container']}>
+    <div className={'rewardPerks_container'}>
+      <ul className={'rewardPerks_list__container'}>
         {perks.map((perk, index) =>
           perk ? (
-            <li key={index} className={styles['list__item']}>
+            <li key={index} className={'rewardPerks_list__item'}>
               {perk?.icon ? perk.icon : null}
-              {perk?.header ? <p className={styles['item__header']}>{perk.header}</p> : null}
-              {perk?.content ? <p className={styles['item__content']}>{perk.content}</p> : null}
+              {perk?.header ? <p className={'rewardPerks_item__header'}>{perk.header}</p> : null}
+              {perk?.content ? <p className={'rewardPerks_item__content'}>{perk.content}</p> : null}
             </li>
           ) : null,
         )}

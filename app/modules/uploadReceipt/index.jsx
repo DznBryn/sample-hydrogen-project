@@ -2,11 +2,11 @@
 import {useEffect, useRef} from 'react';
 import { Link} from '@remix-run/react';
 
-import PDPListrakRec, { link as pdpListrakRecStyles } from '~/modules/pdp/pdpListrakRec';
+import PDPListrakRec, { links as pdpListrakRecStyles } from '~/modules/pdp/pdpListrakRec';
 import getApiKey from '~/utils/functions/getApiKeys';
-import LoadingSkeleton, { link as loadingSkeletonStyles } from '~/modules/loadingSkeleton';
-import { switchSliderPanelVisibility } from '~/modules/SliderPanel';
-import { triggerAnalyticsLoyaltyEvents } from '~/modules/EventFunctions';
+import LoadingSkeleton, { links as loadingSkeletonStyles } from '~/modules/loadingSkeleton';
+import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
+import { triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 

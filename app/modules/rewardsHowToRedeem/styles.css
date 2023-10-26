@@ -6,6 +6,7 @@
   align-items: center;
   padding: 40px 0;
 }
+
 .rewardsHowToRedeem_section__heading {
   margin-bottom: 20px;
   font-weight: 900;
@@ -13,6 +14,7 @@
   text-align: center;
   padding: 0 2em;
 }
+
 .rewardsHowToRedeem_container {
   width: 100%;
   height: auto;
@@ -51,6 +53,7 @@
   width: 30%;
   height: 100%;
 }
+
 .rewardsHowToRedeem_image {
   width: 100%;
   height: 100%;
@@ -83,6 +86,7 @@
 .rewardsHowToRedeem_mobile {
   display: block;
 }
+
 .rewardsHowToRedeem_desktop {
   display: none;
 }
@@ -110,3 +114,5 @@
     display: block;
   }
 }
+
+/*# sourceMappingURL=styles.css.map */

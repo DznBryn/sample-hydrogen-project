@@ -1,18 +1,17 @@
-// import ResponsiveImage from 'frontend-ui/ResponsiveImage'
-// import getResponsiveImageSrc from 'frontend-ui/getResponsiveImageSrc'
-import RewardEarnPoints, { link as rewardEarnPointsStyles } from '../rewardsEarnPoints';
-import RewardPerks, { link as rewardPerksStyles } from '../rewardPerks'; 
-import RewardsFAQSection, { link as loyaltyRewardsTabStyles } from '../loyaltyRewardsTab';
-import RewardsHowItWorks, { link as rewardsHowItWorksStyles } from '../rewardsHowItWorks';
-import RewardsHowToRedeem, { link as rewardsHowToRedeemStyles} from '../RewardsHowToRedeem';
-import RedeemProductsSection, { link as redeemProductsSectionStyles } from '../redeemProductsSection';
-import RewardChooseYourRewards, { link as rewardChooseYourRewards } from '../RewardChooseYourRewards';
+import { useEffect } from 'react';
+import { useCollection } from '~/hooks/useCollection';
 import { useCustomerState } from '~/hooks/useCostumer';
 
-import styles from './styles.css';
+import RewardEarnPoints, { links as rewardEarnPointsStyles } from '../rewardsEarnPoints';
+import RewardPerks, { links as rewardPerksStyles } from '../rewardPerks'; 
+import RewardsFAQSection, { links as loyaltyRewardsTabStyles } from '../loyaltyRewardsTab';
+import RewardsHowItWorks, { links as rewardsHowItWorksStyles } from '../rewardsHowItWorks';
+import RewardsHowToRedeem, { links as rewardsHowToRedeemStyles} from '../rewardsHowToRedeem';
+import RedeemProductsSection, { links as redeemProductsSectionStyles } from '../redeemProductsSection';
+import RewardChooseYourRewards, { links as rewardChooseYourRewards } from '../rewardChooseYourRewards';
 
-const getResponsiveImageSrc = () => {};
-const ResponsiveImage = () => <div></div>;
+
+import styles from './styles.css';
 
 export const links = () => {
   return [
@@ -29,28 +28,44 @@ export const links = () => {
   ];
 };
 
-const RewardsPage = ({ content: props }) => {
+
+const RewardsPage = ({ context, yotpoFaq }) => {
+  
   const { isLoggedIn } = useCustomerState();
-  const redeemProducts = props?.redeemProducts[0]?.yotpoProducts || [];
-  const yotpoFAQ = props?.yotpoFaq[0]?.yotpoQuestions || [];
+  const {state, products} = useCollection('all');
+  
+  function handleGetProductByID(_productId) {
+    const product = products.find((prod) => prod.handle === _productId);
+    return product;
+  }
+  
+  useEffect(() => {
+    if (state === 'loaded') {
+      const productData = handleGetProductByID(context[0]?.products[0]?.productId);
+
+      delete context[0].products;
+      context[0].products = productData;
+    }
+
+  }, [state]);
 
   return (
-    <section id={'rewards'} className={styles.section__rewards} data-isloggedin={isLoggedIn}>
+    <section id={'rewards'} className={'section__rewards'} data-isloggedin={isLoggedIn}>
       <script
         src="https://cdn-widgetsrepository.yotpo.com/v1/loader/qfEoWaPmtkBoUMwPAGu1ow"
         async
       ></script>
       {isLoggedIn ? (
         <LoadingSkeleton minHeight={200}>
-          <div className={`${styles.section__hero}`}>
-            <ResponsiveImage
-              className={styles.image}
-              src={getResponsiveImageSrc(
-                'https://cdn.shopify.com/s/files/1/1736/9637/files/Mobile_background.png',
-              )}
+          <div className={'section__hero'}>
+            <img
+              className={'image'}
+              src={
+                'https://cdn.shopify.com/s/files/1/1736/9637/files/Mobile_background.png'
+              }
               alt={'Rewards Product'}
             />
-            <div className={styles.content__image}>
+            <div className={'content__image'}>
               <MobileRewardsContentSVG />
             </div>
           </div>
@@ -59,7 +74,7 @@ const RewardsPage = ({ content: props }) => {
       ) : (
         <LoadingSkeleton minHeight={300}>
           <div
-            className={`yotpo-widget-instance ${styles.bannerSection}`}
+            className={'yotpo-widget-instance bannerSection'}
             data-yotpo-instance-id="295794"
           ></div>
         </LoadingSkeleton>
@@ -69,27 +84,27 @@ const RewardsPage = ({ content: props }) => {
           <div>
             <RewardsHowToRedeem />
           </div>
-          <div className={styles['wrapper__redeem-products']}>
-            <div className={styles['container__redeem-products']}>
-              <div className={styles['section__heading-container']}>
-                <p className={styles.section__heading}>redeem for full-size products</p>
-                <p className={styles['section__heading-body']}>
+          <div className={'wrapper__redeem-products'}>
+            <div className={'container__redeem-products'}>
+              <div className={'section__heading-container'}>
+                <p className={'section__heading'}>redeem for full-size products</p>
+                <p className={'section__heading-body'}>
                   Add your product to cart then click “redeem” to receive your code to use at
                   checkout.
                 </p>
-                <small className={styles['section__heading-subtext']}>
+                <small className={'section__heading-subtext'}>
                   Must be redeemed with purchase.
                 </small>
               </div>
-              {redeemProducts ? <RedeemProductsSection products={redeemProducts} /> : null}
+              {context?.products?.images ? <RedeemProductsSection products={context} /> : null}
             </div>
           </div>
-          <div className={styles.content__container}>
+          <div className={'content__container'}>
             <LoadingSkeleton minHeight={100}>
-              <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295798"></div>
+              <div className={'yotpo-widget-instance'} data-yotpo-instance-id="295798"></div>
             </LoadingSkeleton>
-            <p className={styles.content}>
-              <span className={styles.content__heading}>
+            <p className={'content'}>
+              <span className={'content__heading'}>
                 Have an active auto-delivery subscription?
               </span>
               <br />
@@ -107,8 +122,8 @@ const RewardsPage = ({ content: props }) => {
         <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295796"></div>
       </LoadingSkeleton>
       {isLoggedIn ? (
-        <div className={styles.wrapper}>
-          <div className={styles.container}>
+        <div className={'wrapper'}>
+          <div className={'container'}>
             <LoadingSkeleton minHeight={300}>
               <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295799"></div>
             </LoadingSkeleton>
@@ -117,23 +132,23 @@ const RewardsPage = ({ content: props }) => {
       ) : (
         <>
           <RewardChooseYourRewards />
-          <div className={styles['wrapper__redeem-products']}>
-            <div className={styles['container__redeem-products']}>
-              <div className={styles['section__heading-container']}>
-                <p className={styles.section__heading}>redeem for full-size products</p>
-                <p className={`${styles['section__heading-body']} ${styles['body-2']}`}>
+          <div className={'wrapper__redeem-products'}>
+            <div className={'container__redeem-products'}>
+              <div className={'section__heading-container'}>
+                <p className={'section__heading'}>redeem for full-size products</p>
+                <p className={'section__heading-body body-2'}>
                   Redeem with your next purchase.
                 </p>
               </div>
-              {redeemProducts ? <RedeemProductsSection products={redeemProducts} /> : null}
+              {context[0]?.products?.images ? <RedeemProductsSection products={context} /> : null}
             </div>
           </div>
-          <div id={styles.redemption__wrapper} className={styles.content__container}>
+          <div id={'redemption__wrapper'} className={'content__container'}>
             <LoadingSkeleton minHeight={100}>
               <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295798"></div>
             </LoadingSkeleton>
-            <p className={styles.content}>
-              <span className={styles.content__heading}>
+            <p className={'content'}>
+              <span className={'content__heading'}>
                 Have an active auto-delivery subscription?
               </span>
               <br />
@@ -144,15 +159,15 @@ const RewardsPage = ({ content: props }) => {
         </>
       )}
       <RewardPerks />
-      {yotpoFAQ ? <RewardsFAQSection yotpoFAQ={yotpoFAQ} /> : null}
+      {yotpoFaq ? <RewardsFAQSection yotpoFAQ={yotpoFaq} /> : null}
     </section>
   );
 };
 
 const LoadingSkeleton = ({ width, minHeight, style = {}, children }) => {
   return (
-    <div className={`${styles.skeleton} ${styles.loading}`} style={{ ...style, width, minHeight }}>
-      <div className={styles.widget__container}>{children}</div>
+    <div className={'skeleton loading'} style={{ ...style, width, minHeight }}>
+      <div className={'widget__container'}>{children}</div>
     </div>
   );
 };

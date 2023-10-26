@@ -43,11 +43,12 @@
   text-transform: uppercase;
   margin-bottom: 13px;
 }
+
 .rewardPerks_section__heading {
   text-align: center;
   font-weight: 900;
   font-size: 28px;
-  color: rgba(76, 78, 86, 1);
+  color: rgb(76, 78, 86);
   margin-bottom: 13px;
 }
 
@@ -56,6 +57,7 @@
   font-size: 16px;
   line-height: 31px;
 }
+
 .rewardPerks_icon__down-arrow {
   margin-top: 32px;
 }
@@ -102,30 +104,24 @@
   .rewardPerks_header {
     max-width: 645px;
   }
-
   .rewardPerks_section__subheading {
     font-size: 22px;
     margin-bottom: 32px;
   }
-
   .rewardPerks_section__heading {
     font-size: 50px;
   }
-
   .rewardPerks_section__body {
     font-size: 26px;
     line-height: 43px;
   }
-
   .rewardPerks_container {
     padding-top: 58px;
     padding-bottom: 38px;
   }
-
   .rewardPerks_container:last-child {
     padding-top: 52px;
   }
-
   .rewardPerks_list__container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -134,7 +130,6 @@
     justify-content: center;
     height: 100%;
   }
-
   .rewardPerks_list__item {
     border-bottom: 0;
     border-right: 3px solid rgba(76, 78, 86, 0.1);
@@ -147,15 +142,11 @@
   .rewardPerks_list__item:last-child {
     border: 0;
   }
-
-  .rewardPerks_container {
-    #early_access {
-      width: 120px;
-      margin: 0 auto 10px;
-      border: 1px solid red;
-    }
+  .rewardPerks_container #early_access {
+    width: 120px;
+    margin: 0 auto 10px;
+    border: 1px solid red;
   }
-
   .rewardPerks_item__header {
     text-align: center;
     font-weight: 900;
@@ -163,9 +154,10 @@
     color: #47c6d9;
     margin: 10px auto;
   }
-
   .rewardPerks_item__content {
     color: rgba(76, 78, 86, 0.8);
     font-size: 14px;
   }
 }
+
+/*# sourceMappingURL=styles.css.map */
