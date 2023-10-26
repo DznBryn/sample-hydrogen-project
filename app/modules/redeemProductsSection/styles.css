@@ -1,0 +1,87 @@
+.swiperContainer :global(.swiper-slide) {
+  width: inherit;
+}
+
+.redeemProductItem :global(.container) {
+  width: auto !important;
+}
+
+.redeemProductItem > span {
+  color: rgba(76, 78, 86, 0.8);
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 38px;
+  font-weight: 900;
+}
+
+.arrowsContainer {
+  display: none;
+}
+
+.yotpoLoginButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2.625rem auto 0;
+  width: 249px;
+  height: 45px;
+  border: none;
+  background: #47C6D9;
+  border-radius: 3px;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 18px;
+  color: #FFFFFF;
+}
+
+.redeemProductItem :global(.yotpo-button-standard-size) {
+  width: 149px !important;
+  height: 37px !important;
+  margin-inline: 18px !important;
+  border: 1px solid rgb(71, 198, 217) !important;
+  color: rgb(71, 198, 217) !important;
+}
+
+.redeemProductItem :global(.yotpo-button-standard-size) > span {
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  line-height: 38px !important;
+}
+
+@media (min-width: 768px) {
+  .redeemProductItem :global(.yotpo-button-standard-size) {
+    width: 230px !important;
+  }
+  .redeemProductsListContainer {
+    padding-inline: 50px;
+    position: relative;
+  }
+  .arrowsContainer {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 50%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .arrowsContainer button {
+    background: transparent;
+    z-index: 10;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(76, 78, 86, 0.1);
+  }
+  .arrowsContainer button:disabled path {
+    stroke: gray;
+    stroke-opacity: 0.2;
+  }
+  .yotpoLoginButton {
+    width: 234px;
+    height: 45px;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

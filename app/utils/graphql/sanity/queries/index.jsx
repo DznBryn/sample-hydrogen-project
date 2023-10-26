@@ -1670,6 +1670,35 @@ export const GET_EYE_QUIZ_QUESTIONS = gql`
   }
 `;
 
+export const GET_REWARDS_PRODUCT_CONTENT = gql`
+  query GetRewardsContent {
+    allRedeemProducts{
+      name
+      yotpo_points_value
+      variant_id
+      variant_name
+      widget_id
+      products {
+        _id
+        productId
+      }
+    }
+  }
+`;
+
+export const GET_REWARDS_FAQ_CONTENT = gql`
+  query GetYotpoFaq {
+    allYotpoFaq {
+      name
+      yotpoQuestions {
+        name
+        questions
+        answers
+      } 
+    }
+  }
+`;
+
 export const GET_EYE_QUIZ_CONTENT = gql`
   query GetAllEyeQuizContent {
     allEyeQuizContent {

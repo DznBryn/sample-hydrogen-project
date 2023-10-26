@@ -1,0 +1,151 @@
+.howitworks_section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.howitworks_container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.howitworks_image__container {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.howitworks_image {
+  width: 100%;
+  height: 100%;
+}
+
+.howitworks_section__heading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 28px;
+  color: rgb(76, 78, 86);
+  margin-bottom: 13px;
+}
+
+.howitworks_content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.howitworks_content__subheading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 24px;
+  color: rgba(71, 198, 217, 0.8);
+}
+
+.howitworks_content__body {
+  text-align: center;
+  font-size: 16px;
+  line-height: 31px;
+}
+
+.howitworks_icon__down-arrow {
+  margin-top: 32px;
+}
+
+.howitworks_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 10px 0;
+}
+
+.howitworks_list__container {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 308px;
+  height: auto;
+  text-align: center;
+  align-items: center;
+  gap: 0 15px;
+}
+
+.howitworks_list__icon {
+  height: 100%;
+}
+
+.howitworks_list__item {
+  width: 100%;
+}
+
+.howitworks_mobile {
+  display: block;
+}
+
+.howitworks_desktop {
+  display: none;
+}
+
+#rewards__icon {
+  height: 27px;
+  width: 30px;
+}
+
+@media (min-width: 768px) {
+  .howitworks_section {
+    padding: 74px 0 87px;
+  }
+  .howitworks_container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    gap: 0 100px;
+  }
+  .howitworks_content {
+    margin-top: 0;
+    max-width: 350px;
+  }
+  .howitworks_list {
+    gap: 38px 0;
+  }
+  .howitworks_list__container {
+    max-width: unset;
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .howitworks_section__heading {
+    text-align: left;
+    font-size: 50px;
+    margin-bottom: 21px;
+  }
+  .howitworks_content__subheading {
+    text-align: left;
+    font-size: 26px;
+  }
+  .howitworks_content__body {
+    font-size: 16px;
+    text-align: left;
+  }
+  .howitworks_mobile {
+    display: none;
+  }
+  .howitworks_desktop {
+    display: block;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

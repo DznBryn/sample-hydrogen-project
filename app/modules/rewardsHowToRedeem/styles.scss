@@ -1,0 +1,112 @@
+.rewardsHowToRedeem_section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 0;
+}
+.rewardsHowToRedeem_section__heading {
+  margin-bottom: 20px;
+  font-weight: 900;
+  font-size: 24px;
+  text-align: center;
+  padding: 0 2em;
+}
+.rewardsHowToRedeem_container {
+  width: 100%;
+  height: auto;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15px;
+  gap: 10px 0;
+}
+
+.rewardsHowToRedeem_card {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  max-height: 133px;
+  background-color: #edfafc;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.rewardsHowToRedeem_card__container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 18px;
+  gap: 0 10px;
+}
+
+.rewardsHowToRedeem_card__image {
+  width: 30%;
+  height: 100%;
+}
+.rewardsHowToRedeem_image {
+  width: 100%;
+  height: 100%;
+}
+
+.rewardsHowToRedeem_number {
+  padding-top: 3px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #47c6d9;
+  line-height: 0;
+  color: #fff;
+  font-size: Avenir;
+  font-weight: 900;
+  border-radius: 50px;
+}
+
+.rewardsHowToRedeem_heading {
+  color: #47c6d9;
+  font-size: Avenir;
+  font-size: 18px;
+  font-weight: 900;
+  max-width: 170px;
+}
+
+.rewardsHowToRedeem_mobile {
+  display: block;
+}
+.rewardsHowToRedeem_desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .rewardsHowToRedeem_section {
+    padding: 74px 0 87px;
+  }
+  .rewardsHowToRedeem_section__heading {
+    font-size: 35px;
+  }
+  .rewardsHowToRedeem_container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    gap: 0 18px;
+  }
+  .rewardsHowToRedeem_heading {
+    font-size: 20px;
+  }
+  .rewardsHowToRedeem_mobile {
+    display: none;
+  }
+  .rewardsHowToRedeem_desktop {
+    display: block;
+  }
+}

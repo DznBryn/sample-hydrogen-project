@@ -1,0 +1,171 @@
+.rewardPerks_section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 77px;
+}
+
+.rewardPerks_container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px;
+  padding-top: 43px;
+  padding-bottom: 21px;
+}
+
+.rewardPerks_container:first-child {
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
+}
+
+.rewardPerks_container:last-child {
+  padding-top: 0px;
+}
+
+.rewardPerks_header {
+  width: 100%;
+  height: auto;
+  max-width: 285px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rewardPerks_section__subheading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 14px;
+  color: rgba(71, 198, 217, 0.8);
+  text-transform: uppercase;
+  margin-bottom: 13px;
+}
+.rewardPerks_section__heading {
+  text-align: center;
+  font-weight: 900;
+  font-size: 28px;
+  color: rgba(76, 78, 86, 1);
+  margin-bottom: 13px;
+}
+
+.rewardPerks_section__body {
+  text-align: center;
+  font-size: 16px;
+  line-height: 31px;
+}
+.rewardPerks_icon__down-arrow {
+  margin-top: 32px;
+}
+
+.rewardPerks_list__container {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  max-width: 1180px;
+}
+
+.rewardPerks_list__item {
+  border-bottom: 3px solid rgba(76, 78, 86, 0.1);
+  padding: 15px 0;
+  width: 100%;
+}
+
+.rewardPerks_list__item:last-child {
+  border: 0;
+}
+
+.rewardPerks_item__header {
+  text-align: center;
+  font-weight: 900;
+  font-size: 22px;
+  color: #47c6d9;
+  margin-bottom: 10px;
+}
+
+.rewardPerks_item__content {
+  color: rgba(76, 78, 86, 0.8);
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .rewardPerks_section {
+    margin-bottom: 92px;
+  }
+  .rewardPerks_header {
+    max-width: 645px;
+  }
+
+  .rewardPerks_section__subheading {
+    font-size: 22px;
+    margin-bottom: 32px;
+  }
+
+  .rewardPerks_section__heading {
+    font-size: 50px;
+  }
+
+  .rewardPerks_section__body {
+    font-size: 26px;
+    line-height: 43px;
+  }
+
+  .rewardPerks_container {
+    padding-top: 58px;
+    padding-bottom: 38px;
+  }
+
+  .rewardPerks_container:last-child {
+    padding-top: 52px;
+  }
+
+  .rewardPerks_list__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .rewardPerks_list__item {
+    border-bottom: 0;
+    border-right: 3px solid rgba(76, 78, 86, 0.1);
+    padding: 0px 58px;
+    height: 100%;
+  }
+  .rewardPerks_list__item:nth-child(1) .rewardPerks_item__header {
+    width: 120px;
+  }
+  .rewardPerks_list__item:last-child {
+    border: 0;
+  }
+
+  .rewardPerks_container {
+    #early_access {
+      width: 120px;
+      margin: 0 auto 10px;
+      border: 1px solid red;
+    }
+  }
+
+  .rewardPerks_item__header {
+    text-align: center;
+    font-weight: 900;
+    font-size: 22px;
+    color: #47c6d9;
+    margin: 10px auto;
+  }
+
+  .rewardPerks_item__content {
+    color: rgba(76, 78, 86, 0.8);
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,90 @@
+/*
+*  REWARDS FAQ SECTION STYLES ## BEGIN ##
+*/
+.loyaltyRewardsTab_faq__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 98px;
+  margin-inline: 27px;
+}
+
+.loyaltyRewardsTab_faq__container dl,
+.loyaltyRewardsTab_faq__divider {
+  width: 100%;
+  max-width: 925px;
+}
+
+.loyaltyRewardsTab_faq__title {
+  font-family: Avenir;
+  font-weight: 900;
+  margin-bottom: 31px;
+  font-size: 28px;
+  line-height: 38px;
+}
+
+.loyaltyRewardsTab_faq__divider {
+  width: 100%;
+  height: 3px;
+  background: rgba(76, 78, 86, 0.1);
+}
+
+.loyaltyRewardsTab_faq__questionButton {
+  position: relative;
+  font-family: Avenir;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 120%;
+  background: transparent;
+  border: none;
+  padding: 18px 0;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  color: #4C4E56;
+}
+
+.loyaltyRewardsTab_faq__questionCloseButton {
+  font-weight: 400;
+}
+
+.loyaltyRewardsTab_faq__questionCloseButtonRotate {
+  transform: rotate(45deg);
+  transition: transform 0.26s ease;
+}
+
+.loyaltyRewardsTab_faq__answer {
+  display: none;
+}
+
+.loyaltyRewardsTab_faq__answer p {
+  margin: 1rem 1.5rem 2rem;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 140%;
+}
+
+.loyaltyRewardsTab_faq_showDescription {
+  display: block;
+}
+
+@media (min-width: 768px) {
+  .loyaltyRewardsTab_faq__container {
+    padding: 79px 0 96px;
+    background: rgba(248, 248, 248, 0.8);
+    /* margin-inline: 117px; */
+    border-radius: 3px;
+  }
+  .loyaltyRewardsTab_faq__container .loyaltyRewardsTab_faq__title {
+    font-size: 50px;
+    line-height: 45px;
+    margin-bottom: 80px;
+    text-transform: capitalize;
+  }
+}
+/*
+*  REWARDS FAQ SECTION STYLES ## END ##
+*/
+
+/*# sourceMappingURL=styles.css.map */
