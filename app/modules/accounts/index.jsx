@@ -7,6 +7,7 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import Addresses, { links as addressesStyles} from './addresses';
 import OrderHistory, {links as ordersStyles } from './orders';
 import ReferralWidget, {links as referralStyles} from './referral';
+import LoyaltyRewardsTab, { links as loyaltyStyles } from './loyalty';
 
 export function links() {
   return [
@@ -14,6 +15,7 @@ export function links() {
     ...referralStyles(),
     ...ordersStyles(),
     ...addressesStyles(),
+    ...loyaltyStyles(),
   ];
 }
 
@@ -89,5 +91,6 @@ function Tabs() {
     {active === 2 ? <OrderHistory /> : null}
     {active === 3 ? <ReferralWidget /> : null}
     {showAddressTab && active === 4 ? <Addresses /> : null}
+    {active === 5 ? <LoyaltyRewardsTab /> : null}
   </div>;
 }

@@ -27,12 +27,12 @@
   width: 249px;
   height: 45px;
   border: none;
-  background: #47C6D9;
+  background: #47c6d9;
   border-radius: 3px;
   font-weight: 800;
   font-size: 16px;
   line-height: 18px;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .redeemProductItem :global(.yotpo-button-standard-size) {
