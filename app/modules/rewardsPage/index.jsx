@@ -96,7 +96,7 @@ const RewardsPage = ({ context, yotpoFaq }) => {
                   Must be redeemed with purchase.
                 </small>
               </div>
-              {context?.products?.images ? <RedeemProductsSection products={context} /> : null}
+              {context ? <RedeemProductsSection products={context} /> : null}
             </div>
           </div>
           <div className={'content__container'}>
@@ -140,7 +140,7 @@ const RewardsPage = ({ context, yotpoFaq }) => {
                   Redeem with your next purchase.
                 </p>
               </div>
-              {context[0]?.products?.images ? <RedeemProductsSection products={context} /> : null}
+              {context ? <RedeemProductsSection products={context} /> : null}
             </div>
           </div>
           <div id={'redemption__wrapper'} className={'content__container'}>
