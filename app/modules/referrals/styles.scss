@@ -1,0 +1,18 @@
+.referrals {
+  width: 100%;
+  margin: 60px auto 0 auto;
+  min-height: 781px;
+}
+
+.referrals_loadingSkeleton {
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: -1;
+}
+
+@media (min-width: 769px) {
+  .referrals_loadingSkeleton {
+    max-height: 781px;
+  }
+}
