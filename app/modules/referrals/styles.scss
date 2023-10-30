@@ -4,20 +4,15 @@
   min-height: 781px;
 }
 
-.loadingSkeleton {
+.referrals_loadingSkeleton {
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
   z-index: -1;
 }
 
-.talkableContainer {
-  width: 100%;
-  background-color: white;
-}
-
 @media (min-width: 769px) {
-  .loadingSkeleton {
+  .referrals_loadingSkeleton {
     max-height: 781px;
   }
 }

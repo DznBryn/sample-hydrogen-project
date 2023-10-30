@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ReferralsLoading, { link as referralsLoadingStyles } from '../referralsLoading';
+import ReferralsLoading, { links as referralsLoadingStyles } from '../referralsLoading';
 
 import styles from './styles.css';
 
@@ -13,43 +13,21 @@ export const links = () => {
 };
 
 const Referrals = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (window && document) {
-      window._talkableq = window._talkableq || [];
-      // eslint-disable-next-line no-undef
-      _talkableq.push(['init', { site_id: 'tula' }]);
-
-      window._talkableq.push(['authenticate_customer', {
-        email: '', 
-        first_name: '',
-        last_name: '', 
-        traffic_source: 'TULA Referrals Page' 
-      }]);
-
-      window._talkableq.push(['register_affiliate', {}]);
-
-      const script = document.createElement('script');
-      script.src = 'https://d2jjzw81hqbuqv.cloudfront.net/integration/clients/tula.min.js';
-      const body = document.getElementsByTagName('body')[0];
-      body.appendChild(script);
-      
-      script.addEventListener('load', () => {});
-    }
-
     setInterval(() => setIsLoading(false), 6000);
   }, []);
 
   return (
-    <div className={styles.referrals}>
+    <div className={'referrals'}>
       {isLoading && (
-        <div className={styles.loadingSkeleton}>
+        <div className={'referrals_loadingSkeleton'}>
           <ReferralsLoading />
         </div>
       )}
 
-      <div id="talkable-offer" className={styles.talkableContainer}></div>
+      <div className="yotpo-widget-instance" data-yotpo-instance-id="266415"></div>
     </div>
   );
 };

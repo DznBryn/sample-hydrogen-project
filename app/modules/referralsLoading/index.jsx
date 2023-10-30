@@ -1,4 +1,3 @@
-import React from 'react';
 import LoadingSkeleton from '../loadingSkeleton';
 
 import styles from './styles.css';
@@ -9,27 +8,27 @@ export const links = () => {
 
 const ReferralsLoading = () => {
   return (
-    <div className={styles.container}>
-      <div className={styles.sectionOne}>
-        <div className={styles.areaOne}>
+    <div className={'referralsLoading_container'}>
+      <div className={'referralsLoading_sectionOne'}>
+        <div className={'referralsLoading_areaOne'}>
           <LoadingSkeleton />
         </div>
       </div>
 
-      <div className={styles.sectionTwo}>
-        <div className={styles.areaTwo}>
+      <div className={'referralsLoading_sectionTwo'}>
+        <div className={'referralsLoading_areaTwo'}>
           <LoadingSkeleton />
           <LoadingSkeleton />
           <LoadingSkeleton />
         </div>
 
-        <div className={styles.areaThree}>
+        <div className={'referralsLoading_areaThree'}>
           <LoadingSkeleton />
           <LoadingSkeleton />
           <LoadingSkeleton />
         </div>
 
-        <div className={styles.areaFour}>
+        <div className={'referralsLoading_areaFour'}>
           <LoadingSkeleton />
           <LoadingSkeleton />
         </div>
