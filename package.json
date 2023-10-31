@@ -30,7 +30,7 @@
     "@sanity/preview-kit": "^1.5.2",
     "@shopify/cli": "3.29.0",
     "@shopify/cli-hydrogen": "^4.0.9",
-    "@shopify/hydrogen": "^2023.1.6",
+    "@shopify/hydrogen": "^2023.10.0",
     "@shopify/remix-oxygen": "^1.0.4",
     "algoliasearch": "^4.19.1",
     "classnames": "^2.3.2",
