@@ -49,11 +49,9 @@ export async function loader({ context, params }) {
   return null;
 }
 
-export const meta = () => {
-  return {
-    title: 'Login',
-  };
-};
+export const meta = () => [ 
+  {title: 'Login',},
+];
 
 export default function LoginPage() {
 

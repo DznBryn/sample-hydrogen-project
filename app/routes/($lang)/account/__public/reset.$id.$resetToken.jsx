@@ -9,11 +9,9 @@ export function links() {
   ];
 }
 
-export const meta = () => {
-  return {
-    title: 'Reset Password',
-  };
-};
+export const meta = () => [
+   {title: 'Reset Password',}
+];
 
 export const action = async ({
   request,

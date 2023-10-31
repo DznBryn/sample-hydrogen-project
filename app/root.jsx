@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
-import {useCatch} from '@remix-run/react';
 import favicon from '../public/favicon.ico';
 import {defer} from '@shopify/remix-oxygen';
 import {links as layoutsStyles} from '~/layouts';
@@ -33,6 +32,10 @@ import ErrorContent, {
 import CatchContent, {
   links as catchBoundaryStyles,
 } from './boundaries/catchContent';
+import {
+  useRouteError,
+  isRouteErrorResponse,
+} from '@remix-run/react';
 import styles from './styles/app.css';
 
 export const links = () => {
@@ -54,13 +57,12 @@ export const links = () => {
   ];
 };
 
-export const meta = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width,initial-scale=1',
-  title: 'TULA Skincare: Probiotic Skin Care Products',
-  description:
-    'Clean + effective probiotic skincare products made with superfoods.',
-});
+export const meta = () => ([
+  { charset: 'utf-8' },
+  { viewport: 'width=device-width,initial-scale=1' },
+  { title: 'TULA Skincare: Probiotic Skin Care Products' },
+  { description: 'Clean + effective probiotic skincare products made with superfoods.' } ,
+]);
 
 export async function loader({context, request}) {
   //redirects handle
@@ -99,6 +101,18 @@ export async function loader({context, request}) {
 }
 
 export default function App() {
+
+  const loaderData = useLoaderData();
+  const {setData: setCartData = () => {}, data = null} = useStore(
+    (store) => store?.cart ?? null,
+  );
+
+  useEffect(() => {
+    if (loaderData?.cart?.id && loaderData?.cart?.id !== data?.id) {
+      setCartData(loaderData.cart);
+    }
+  }, []);
+
   return (
     <RootStructure>
       <Outlet />
@@ -107,36 +121,25 @@ export default function App() {
 }
 
 /**
+ * ...In v2 there is no CatchBoundary and all 
+ * unhandled exceptions will render the 
+ * ErrorBoundary, response or otherwise.
  *
- * This will handle all thrown responses that weren't
- * handled in a nested route (more on that in a sec).
- *
- * ref: https://remix.run/docs/en/1.19.3/guides/not-found
+ * ref: https://remix.run/docs/en/1.15.0/pages/v2#catchboundary-and-errorboundary
  */
 
-export function CatchBoundary() {
-  const {status} = useCatch();
+export function ErrorBoundary() {
+  const error = useRouteError();
 
-  return (
-    <RootStructure>
-      <CatchContent status={status} />
-    </RootStructure>
-  );
-}
+  // when true, this is what used to go to `CatchBoundary`
+  if (isRouteErrorResponse(error)) {
+    return (
+      <RootStructure>
+       <CatchContent status={error.status} />
+     </RootStructure>
+    );
+  }
 
-/**
- * An ErrorBoundary is a React component that renders
- * whenever there is an error anywhere on the route,
- * either during rendering or during data loading.
- * We use the word "error" to mean an uncaught exception;
- * something you didn't anticipate happening. You can
- * intentionally throw a Response to render the CatchBoundary,
- * but everything else that is thrown is handled by the ErrorBoundary.
- *
- * ref: https://remix.run/docs/en/1.19.3/route/error-boundary
- */
-
-export function ErrorBoundary({error}) {
   return (
     <RootStructure>
       <ErrorContent error={error} />
@@ -149,16 +152,6 @@ export function ErrorBoundary({error}) {
  */
 
 function RootStructure({children}) {
-  const loaderData = useLoaderData();
-  const {setData: setCartData = () => {}, data = null} = useStore(
-    (store) => store?.cart ?? null,
-  );
-  useEffect(() => {
-    if (loaderData?.cart?.id && loaderData?.cart?.id !== data?.id) {
-      setCartData(loaderData.cart);
-    }
-    console.log('Root Renders');
-  }, []);
   return (
     <html lang="en">
       <head>
