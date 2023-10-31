@@ -1,7 +1,18 @@
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {showPaymentPlanVendor} from '~/utils/functions/eventFunctions';
+import {useEffect} from 'react';
 
 const PageMeta = () => {
+  useEffect(() => {
+    if (typeof window === 'object' && window?.Yo) {
+      window?.Yo.configure(
+        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${
+          getApiKeys().YOTTA_KEY
+        }`,
+      );
+    }
+  }, []);
+
   return (
     <>
       <script
@@ -21,9 +32,7 @@ const PageMeta = () => {
         />
       )}
 
-      <script
-        src={getApiKeys().LISTRAK_SCRIPT}
-      ></script>
+      <script src={getApiKeys().LISTRAK_SCRIPT}></script>
 
       <script
         defer
@@ -147,15 +156,6 @@ const PageMeta = () => {
           ></script>
         </>
       ) : null}
-
-      <script
-        defer
-        dangerouslySetInnerHTML={{
-          __html: `Yo.configure('https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${
-            getApiKeys().YOTTA_KEY
-          }');`,
-        }}
-      ></script>
     </>
   );
 };
