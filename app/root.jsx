@@ -57,13 +57,12 @@ export const links = () => {
   ];
 };
 
-export const meta = () => ({
-  charset: 'utf-8',
-  viewport: 'width=device-width,initial-scale=1',
-  title: 'TULA Skincare: Probiotic Skin Care Products',
-  description:
-    'Clean + effective probiotic skincare products made with superfoods.',
-});
+export const meta = () => ([
+  { charset: 'utf-8' },
+  { viewport: 'width=device-width,initial-scale=1' },
+  { title: 'TULA Skincare: Probiotic Skin Care Products' },
+  { description: 'Clean + effective probiotic skincare products made with superfoods.' } ,
+]);
 
 export async function loader({context, request}) {
   //redirects handle

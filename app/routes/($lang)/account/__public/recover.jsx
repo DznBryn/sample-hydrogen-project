@@ -26,11 +26,9 @@ export async function loader({ context, params }) {
   return new Response(null);
 }
 
-export const meta = () => {
-  return {
-    title: 'Recover Password',
-  };
-};
+export const meta = () => [
+  { title: 'Recover Password' }
+];
 
 export default function Recover() {
   return (
