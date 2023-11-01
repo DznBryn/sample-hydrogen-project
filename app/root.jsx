@@ -32,10 +32,7 @@ import ErrorContent, {
 import CatchContent, {
   links as catchBoundaryStyles,
 } from './boundaries/catchContent';
-import {
-  useRouteError,
-  isRouteErrorResponse,
-} from '@remix-run/react';
+import {useRouteError, isRouteErrorResponse} from '@remix-run/react';
 import styles from './styles/app.css';
 
 export const links = () => {
@@ -57,12 +54,15 @@ export const links = () => {
   ];
 };
 
-export const meta = () => ([
-  { charset: 'utf-8' },
-  { viewport: 'width=device-width,initial-scale=1' },
-  { title: 'TULA Skincare: Probiotic Skin Care Products' },
-  { description: 'Clean + effective probiotic skincare products made with superfoods.' } ,
-]);
+export const meta = () => [
+  {charset: 'utf-8'},
+  {viewport: 'width=device-width,initial-scale=1'},
+  {title: 'TULA Skincare: Probiotic Skin Care Products'},
+  {
+    description:
+      'Clean + effective probiotic skincare products made with superfoods.',
+  },
+];
 
 export async function loader({context, request}) {
   //redirects handle
@@ -101,7 +101,6 @@ export async function loader({context, request}) {
 }
 
 export default function App() {
-
   const loaderData = useLoaderData();
   const {setData: setCartData = () => {}, data = null} = useStore(
     (store) => store?.cart ?? null,
@@ -121,8 +120,8 @@ export default function App() {
 }
 
 /**
- * ...In v2 there is no CatchBoundary and all 
- * unhandled exceptions will render the 
+ * ...In v2 there is no CatchBoundary and all
+ * unhandled exceptions will render the
  * ErrorBoundary, response or otherwise.
  *
  * ref: https://remix.run/docs/en/1.15.0/pages/v2#catchboundary-and-errorboundary
@@ -135,8 +134,8 @@ export function ErrorBoundary() {
   if (isRouteErrorResponse(error)) {
     return (
       <RootStructure>
-       <CatchContent status={error.status} />
-     </RootStructure>
+        <CatchContent status={error.status} />
+      </RootStructure>
     );
   }
 

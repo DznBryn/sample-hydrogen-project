@@ -273,7 +273,7 @@
 */
 @media only screen and (max-width: 550px) {
   .plpWrapperProductBox .plpProductBoxcontainer {
-    width: 100%;
+    width: 175px;
   }
   .plpWrapperProductBox .plpProductBoxcontainer .imageContainer {
     width: auto !important;
