@@ -29,9 +29,8 @@ export const links = () => {
 export const loader = async ({params, context}) => {
   const {handle} = params;
   const {product} = await context.storefront.query(PRODUCT_QUERY, {
-    variables: {
-      handle,
-    },
+    variables: {handle},
+    cache: context.storefront.CacheLong(),
   });
 
   if (!product) {

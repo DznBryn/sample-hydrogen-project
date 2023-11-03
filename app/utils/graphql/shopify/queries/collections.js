@@ -4,6 +4,7 @@ import {flattenConnection} from '@shopify/hydrogen-react';
 export async function getCollectionProducts(context, collectiontitle) {
   const {collection} = await context.storefront.query(PRODUCTS_QUERY, {
     variables: {handle: collectiontitle},
+    cache: context.storefront.CacheLong(),
   });
 
   if (!collection) throw new Response(null, {status: 404});

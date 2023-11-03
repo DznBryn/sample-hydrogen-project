@@ -42,6 +42,7 @@ export const loader = async ({params, context, request}) => {
 
   const {collection} = await context.storefront.query(query, {
     variables: {handle},
+    cache: context.storefront.CacheLong(),
   });
   if (!collection) throw new Response(null, {status: 404});
 
