@@ -20,9 +20,7 @@ const YotpoRedeemProductBox = ({ yotpoProducts = mockProduct }) => {
 	const isLoggedIn = data?.id !== '' || data?.id !== null || data?.id !== undefined;
 
 	const { product, yotpoPointsValue, widgetId, variantId = '', variantName = '' } = yotpoProducts;
-	const { images, alt_title: altTitle, handle: slug, name } = product;
-
-	const analytics = {};
+	const { media, alt_title: altTitle, handle: slug, name } = product;
 
 	const yotpoVariant = product?.variants?.length ? product.variants.find(variant => variant.externalId === Number(variantId)) : null;
 	const currentProductName = yotpoVariant ? `${name} - ${variantName}` : name;
@@ -32,17 +30,17 @@ const YotpoRedeemProductBox = ({ yotpoProducts = mockProduct }) => {
 
 			<div className='redeemProductsSection_container'>
 
-				<Link className='redeemProductsSection_imageContainer' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
-					<img className='redeemProductsSection_productImage' src={images?.nodes[0]?.url} alt={images?.nodes[0]?.alt} />
+				<Link className='redeemProductsSection_imageContainer' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(null)}>
+					<img className='redeemProductsSection_productImage' src={media[0]?.details.src} alt={media[0]?.details?.alt} />
 				</Link>
 
 				<div className='redeemProductsSection_infoContainer'>
 
-					<Link className='redeemProductsSection_title' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
+					<Link className='redeemProductsSection_title' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(null)}>
 						{altTitle}
 					</Link>
 
-					<Link className='redeemProductsSection_subTitle' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(analytics)}>
+					<Link className='redeemProductsSection_subTitle' to={getLinkToObj(slug, product)} prefetch='false' onClick={() => triggerAnalyticsProductClick(null)}>
 						{currentProductName}
 					</Link>
 
@@ -60,13 +58,11 @@ const YotpoRedeemProductBox = ({ yotpoProducts = mockProduct }) => {
 							<Button
 								className='redeemProductsSection_productButton'
 								product={product}
-								analytics={analytics}
+								analytics={null}
 								opensBlank={null}
 								yotpoVariant={yotpoVariant}
 								onClick={() => {
-									if (null) {
 										triggerAnalyticsLoyaltyEvents('AddToCart', { source: null });
-									}
 								}}
 							/>
 						</div>

@@ -2,12 +2,10 @@ import {useLoaderData} from '@remix-run/react';
 import {flattenConnection} from '@shopify/hydrogen-react';
 import { COLLECTIONS_QUERY } from '~/utils/graphql/shopify/queries/collections';
 
-export const meta = () => {
-  return {
-    title: 'Collections',
-    description: 'Tula featured collections',
-  };
-};
+export const meta = () => [
+  { title: 'Collections' },
+  { description: 'Tula featured collections',}
+];
 
 export async function loader({context}) {
   const collections = await context.storefront.query(COLLECTIONS_QUERY);
