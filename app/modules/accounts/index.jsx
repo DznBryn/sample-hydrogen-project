@@ -8,10 +8,12 @@ import Addresses, { links as addressesStyles} from './addresses';
 import OrderHistory, {links as ordersStyles } from './orders';
 import ReferralWidget, {links as referralStyles} from './referral';
 import LoyaltyRewardsTab, { links as loyaltyStyles } from './loyalty';
+import AccountSubscription, { links as subscriptionStyles} from '~/modules/subscription/orderGroove/accounts';
 
 export function links() {
   return [
     { rel: 'stylesheet', href: styles },
+    ...subscriptionStyles(),
     ...referralStyles(),
     ...ordersStyles(),
     ...addressesStyles(),
@@ -28,7 +30,7 @@ export default function Account() {
       <Header data={{
         firstName: data.firstName
       }} />
-      <Tabs />
+      <Tabs data={data}/>
     </div>
   ) : null;
 }
@@ -40,7 +42,7 @@ function Header({ data }) {
   </div>;
 }
 
-function Tabs() {
+function Tabs({ data }) {
   const showRewardsTab = (getApiKeys().FEATURE_FLAGS.LOYALTY);
   const showAddressTab = true;
   const showReferralTab = true;
@@ -78,7 +80,7 @@ function Tabs() {
     setActive(tab);
     setURLQuery(tab);
   }
-
+  console.log(data)
   return < div className = {'fixedWidthPage' }>
     <section className={'MAMenu'}>
       {showRewardsTab && <div className={active === 5 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(5)}>Rewards</div>}
@@ -88,6 +90,7 @@ function Tabs() {
       {showAddressTab && <div className={active === 4 ? 'navigationTab selected' : 'navigationTab'} onClick={() => handleActiveTab(4)}>Addresses</div>}
     </section>
     <hr className="myHr" />
+    {active === 1 ? <AccountSubscription clientId={data.id !== '' ? data.id.replace('gid://shopify/Customer/', '') : ''} active={active} /> : null}
     {active === 2 ? <OrderHistory /> : null}
     {active === 3 ? <ReferralWidget /> : null}
     {showAddressTab && active === 4 ? <Addresses /> : null}
