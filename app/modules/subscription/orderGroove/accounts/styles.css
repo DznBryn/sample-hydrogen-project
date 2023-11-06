@@ -1,0 +1,39 @@
+.noAutoFound {
+  border: #dddddd solid 1px;
+  padding: 34px 40px;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.noAutoFound p {
+  font-weight: 100;
+}
+
+.noAutoFound .clickable {
+  color: #a0a0a0;
+  text-decoration: none;
+  width: 74px;
+  margin: auto;
+  display: block;
+}
+
+.instructions {
+  padding-bottom: 25px;
+  padding-left: 6px;
+  text-align: center;
+}
+
+.menuWrapper :global(#autoTab) {
+  margin: 15px auto;
+  width: calc(100% - 30px);
+}
+
+.ogMyAcctWrapper h2 {
+  margin-bottom: 1em;
+}
+
+.hidden {
+  display: none;
+}
+
+/*# sourceMappingURL=styles.css.map */
