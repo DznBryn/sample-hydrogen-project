@@ -1,16 +1,14 @@
-import { useEffect, useRef } from 'react';
-import { Link } from '@remix-run/react';
-import { bindCustomEvent } from '~/utils/functions/eventFunctions';
+import {useEffect, useRef} from 'react';
+import {Link} from '@remix-run/react';
+import {bindCustomEvent} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-const MenuLinks = ({ menuLinks = [] }) => (
+const MenuLinks = ({menuLinks = []}) => (
   <div className={'menuLinks'}>
     {menuLinks.map((collection, index) => {
       return (
@@ -25,20 +23,28 @@ const MenuLinks = ({ menuLinks = [] }) => (
   </div>
 );
 
-const NavShopOverlaySplit = ({ megaMenuSplit = {} }) => {
-
+const NavShopOverlaySplit = ({megaMenuSplit = {}}) => {
   const shopOverlayRef = useRef(null);
 
-  useEffect(() => bindCustomEvent(shopOverlayRef, 'data-hover-state', {
-    hidden: 'hidden',
-    visible: 'visible'
-  }));
+  useEffect(() =>
+    bindCustomEvent(shopOverlayRef, 'data-hover-state', {
+      hidden: 'hidden',
+      visible: 'visible',
+    }),
+  );
 
   return (
-    <div className={'navShopOverlaySplit hidden'} ref={shopOverlayRef} data-hover-state="hide">
+    <div
+      className={'navShopOverlaySplit hidden'}
+      ref={shopOverlayRef}
+      data-hover-state="hide"
+    >
       <div className={'sectionWrapper'}>
         <div className={'sectionLeft'}>
-          <Link className={'featuredLink'} to={`/collections/${megaMenuSplit.imageCollectionLink.slug}`}>
+          <Link
+            className={'featuredLink'}
+            to={`/collections/${megaMenuSplit.imageCollectionLink.slug}`}
+          >
             {megaMenuSplit.imageTextCta}
           </Link>
           <div className={'collectionLinkWrapper'}>
@@ -46,7 +52,7 @@ const NavShopOverlaySplit = ({ megaMenuSplit = {} }) => {
           </div>
         </div>
         <div className={'sectionRight'}>
-          <a href={`/collections/${megaMenuSplit.imageCollectionLink.slug}`}>
+          <Link to={`/collections/${megaMenuSplit.imageCollectionLink.slug}`}>
             <img
               src={megaMenuSplit.backgroundImage.src}
               className={'imageBlock'}
@@ -54,12 +60,11 @@ const NavShopOverlaySplit = ({ megaMenuSplit = {} }) => {
               <h2>{megaMenuSplit.imageText}</h2>
               <p>{megaMenuSplit.imageTextCta}</p>
             </img>
-          </a>
+          </Link>
         </div>
       </div>
     </div>
   );
-  
 };
 
 export default NavShopOverlaySplit;

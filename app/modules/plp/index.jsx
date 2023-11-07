@@ -151,6 +151,10 @@ const PLP = ({
     );
   }, []);
 
+  useLayoutEffect(() => {
+    setFilteredProducts(products);
+  }, [collection]);
+
   // effect to update collection after sorted
   useLayoutEffect(() => {
     const filtersConfig =
