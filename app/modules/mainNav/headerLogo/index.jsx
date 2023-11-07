@@ -1,3 +1,4 @@
+import {Link} from '@remix-run/react';
 import styles from './styles.css';
 
 export const links = () => {
@@ -25,13 +26,13 @@ const HeaderLogo = ({logo}) => {
 
   return (
     <div id={'HeaderLogo'}>
-      <a href="/">
+      <Link to="/">
         <img
           src={logo.image.src}
           className={'HeaderImg'}
           alt={logo.image.alt}
         />
-      </a>
+      </Link>
     </div>
   );
 };

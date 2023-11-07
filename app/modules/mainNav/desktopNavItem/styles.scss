@@ -18,17 +18,18 @@
 }
 
 .desktopNavItem .navLink {
-  color: #4C4E56;
+  color: #4c4e56;
   text-decoration: none;
+  user-select: none;
 }
 
 .desktopNavItem .navLink:hover {
-  color: #48C6D9;
+  color: #48c6d9;
 }
 
 .desktopHoverWrap {
   background-color: #fff;
-  border: 1px solid #E5E5E5;
+  border: 1px solid #e5e5e5;
   border-top: none;
   box-sizing: border-box;
   display: flex;
@@ -41,7 +42,7 @@
 }
 
 .desktopHoverItem {
-  color: #4C4E56;
+  color: #4c4e56;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -55,13 +56,13 @@
 .desktopNavItemVisible {
   visibility: visible;
   opacity: 1;
-  transition: opacity .3s linear;
+  transition: opacity 0.3s linear;
 }
 
 .desktopNavItemHidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s .1s, opacity .1s linear;
+  transition: visibility 0s 0.1s, opacity 0.1s linear;
 }
 
 .emoji {
@@ -88,11 +89,9 @@
   }
 
   .desktopNavItem .navLink:hover {
-    color: #4C4E56;
+    color: #4c4e56;
   }
-
 }
-
 
 @media only screen and (min-width: 1037px) and (max-width: 1440px) {
   .desktopNavItem {

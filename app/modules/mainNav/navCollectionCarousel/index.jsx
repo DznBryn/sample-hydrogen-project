@@ -6,6 +6,7 @@ import NavCollectionProductCard, {
 } from '~/modules/mainNav/navCollectionProductCard';
 import {bindCustomEvent} from '~/utils/functions/eventFunctions';
 import styles from './styles.css';
+import LoadingSkeleton from '~/modules/global/loadingSkeleton';
 
 export const links = () => {
   return [
@@ -135,10 +136,13 @@ const NavCollectionCarousel = ({collection, navItem}) => {
           style={{transform: 'translateX(0px)'}}
           ref={carouselRef}
         >
-          {state === 'loaded' &&
+          {state === 'loaded' ? (
             products.map((product, idx) => {
               return <NavCollectionProductCard key={idx} product={product} />;
-            })}
+            })
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
       <div className={'rightArrow'} onClick={goRight}>
@@ -162,6 +166,34 @@ const NavCollectionCarousel = ({collection, navItem}) => {
           </Link>
         )}
       </div>
+    </div>
+  );
+};
+
+const Loading = () => {
+  return (
+    <>
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+      <Skeleton />
+    </>
+  );
+};
+
+const Skeleton = () => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5px',
+        padding: '15px 40px',
+      }}
+    >
+      <LoadingSkeleton width={125} height={123.47} />
+      <LoadingSkeleton width={125} height={32} />
     </div>
   );
 };

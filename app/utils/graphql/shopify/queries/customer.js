@@ -9,6 +9,7 @@ export async function getCustomer(context, customerAccessToken) {
       country: storefront?.i18n?.country,
       language: storefront?.i18n?.language,
     },
+    cache: context.storefront.CacheLong(),
   });
 
   if (!data || !data?.customer) {

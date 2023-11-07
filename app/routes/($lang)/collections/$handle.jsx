@@ -6,7 +6,6 @@ import {
   PRODUCTS_QUERY,
 } from '~/utils/graphql/shopify/queries/collections';
 import {
-  GET_CART_PAGE_CONFIG,
   GET_PLP_FILTER_MENU,
   GET_PRODUCT_COLLECTIONS,
 } from '~/utils/graphql/sanity/queries';
@@ -42,18 +41,16 @@ export const loader = async ({params, context, request}) => {
 
   const {collection} = await context.storefront.query(query, {
     variables: {handle},
+    cache: context.storefront.CacheLong(),
   });
   if (!collection) throw new Response(null, {status: 404});
 
-  const cartPageConfig = await getCMSContent(context, GET_CART_PAGE_CONFIG);
-  const filtersOptions = await getCMSContent(context, GET_PLP_FILTER_MENU);
-  const collectionsCMSData = await getCMSContent(
-    context,
-    GET_PRODUCT_COLLECTIONS,
-  );
+  const [filtersOptions, collectionsCMSData] = await Promise.all([
+    getCMSContent(context, GET_PLP_FILTER_MENU),
+    getCMSContent(context, GET_PRODUCT_COLLECTIONS),
+  ]);
 
   return json({
-    cartPageConfig,
     filtersOptions,
     collectionsCMSData,
     collection: {
@@ -70,9 +67,9 @@ export const loader = async ({params, context, request}) => {
 export default function PLPPage() {
   const [root] = useMatches();
   const productsCMSData = root.data.globalCMSData.products;
+  const {CartPageConfig} = root.data.globalCMSData.mainNavFooter;
 
-  const {cartPageConfig, filtersOptions, collectionsCMSData, collection} =
-    useLoaderData();
+  const {filtersOptions, collectionsCMSData, collection} = useLoaderData();
 
   const collectionWithCMSData = useMemo(
     () =>
@@ -85,7 +82,7 @@ export default function PLPPage() {
       <PLP
         collection={collectionWithCMSData}
         filtersOptions={filtersOptions}
-        cartConfig={getCMSDoc(cartPageConfig, 'DefaultCart')}
+        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
       />
     </Layouts.MainNavFooter>
   );

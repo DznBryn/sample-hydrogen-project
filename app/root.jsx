@@ -7,7 +7,6 @@ import {links as layoutsStyles} from '~/layouts';
 import {redirect} from '@remix-run/server-runtime';
 import getApiKeys from './utils/functions/getApiKeys';
 import {getMainNavFooterCMSData} from './layouts/MainNavFooter';
-import {CacheShort, generateCacheControlHeader} from '@shopify/hydrogen';
 import {
   getCMSContent,
   getCartData,
@@ -67,37 +66,34 @@ export const meta = () => [
 export async function loader({context, request}) {
   //redirects handle
   const {pathname} = new URL(request.url);
-  const redirectObj = await getCMSContent(context, GET_REDIRECTS, {
-    source: pathname,
-  });
 
-  if (redirectObj[0]?.destination) {
-    const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
-    return redirect(redirectObj[0]?.destination, statusCode);
+  if (pathname.length > 1) {
+    const redirectObj = await getCMSContent(context, GET_REDIRECTS, {
+      source: pathname,
+    });
+
+    if (redirectObj[0]?.destination) {
+      const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
+      return redirect(redirectObj[0]?.destination, statusCode);
+    }
   }
   //
 
-  const cart = await getCartData(context);
-  const customer = await getCustomerData(context);
-  const listrakRec = await getCMSContent(context, GET_LISTRAK_REC);
-  const globalCMSData = {
-    mainNavFooter: await getMainNavFooterCMSData(context),
-    products: await getCMSContent(context, GET_PRODUCTS),
-  };
+  const listrakRec = getCMSContent(context, GET_LISTRAK_REC);
 
-  return defer(
-    {
-      customer,
-      cart,
-      globalCMSData,
-      listrakRec,
-    },
-    {
-      headers: {
-        'Cache-Control': generateCacheControlHeader(CacheShort()),
-      },
-    },
-  );
+  const [cart, customer, mainNavFooter, products] = await Promise.all([
+    getCartData(context),
+    getCustomerData(context),
+    getMainNavFooterCMSData(context),
+    getCMSContent(context, GET_PRODUCTS),
+  ]);
+
+  return defer({
+    cart,
+    customer,
+    listrakRec,
+    globalCMSData: {mainNavFooter, products},
+  });
 }
 
 export default function App() {
