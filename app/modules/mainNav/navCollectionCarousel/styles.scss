@@ -8,7 +8,7 @@
   position: absolute;
   top: 93px;
   width: 100%;
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .navCollectionWrap {
@@ -25,7 +25,7 @@
   display: flex;
   flex-direction: row;
   position: relative;
-  transition: all .5s ease 0s;
+  transition: all 0.5s ease 0s;
 }
 
 .rightArrow,
@@ -44,11 +44,12 @@
 
 .viewAllWrap {
   width: 100%;
+  user-select: none;
 }
 
 a.viewAllLink {
   display: block;
-  color: #4C4E56;
+  color: #4c4e56;
   font-style: normal;
   font-weight: 800;
   font-size: 14px;
@@ -62,7 +63,7 @@ a.viewAllLink {
 .visible {
   display: flex;
   opacity: 1;
-  transition: opacity .1s linear;
+  transition: opacity 0.1s linear;
 }
 
 .hidden {

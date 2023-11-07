@@ -92,12 +92,7 @@ const DesktopHoverList = ({linkList = []}) => {
       data-hover-state="hide"
     >
       {linkList.map((navLink = {}) => (
-        <Link
-          // reloadDocument
-          key={navLink._id}
-          to={navLink.url}
-          className={'desktopHoverItem'}
-        >
+        <Link key={navLink._id} to={navLink.url} className={'desktopHoverItem'}>
           {navLink.displayText}
         </Link>
       ))}
@@ -123,12 +118,10 @@ const DesktopNavItem = ({navItem = {}, itemId = ''}) => {
       id={itemId}
       onMouseEnter={(e) => handleMouseEnter(e, itemId)}
       onMouseLeave={handleMouseLeave}
-      onClick={handleMouseLeave}
       onTouchStart={handleTouch}
     >
       {navItem.emoji && <img className={'emoji'} src={navItem.emoji.src} />}
       <Link
-        // reloadDocument
         className={'navLink'}
         to={navItem.linkUrl}
         style={{

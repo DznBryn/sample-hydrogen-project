@@ -8,7 +8,7 @@
   position: absolute;
   top: 93px;
   width: 100%;
-  border-bottom: 1px solid #E5E5E5;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .navCollectionWrap {
@@ -44,11 +44,12 @@
 
 .viewAllWrap {
   width: 100%;
+  user-select: none;
 }
 
 a.viewAllLink {
   display: block;
-  color: #4C4E56;
+  color: #4c4e56;
   font-style: normal;
   font-weight: 800;
   font-size: 14px;
