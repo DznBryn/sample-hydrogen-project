@@ -1,11 +1,10 @@
-import Layouts from '~/layouts';
+import {useLoaderData} from '@remix-run/react';
 
 import {getCMSContent} from '~/utils/functions/eventFunctions';
 import {QUIZ_CONTENT} from '~/utils/graphql/sanity/queries';
 
-import {useLoaderData} from '@remix-run/react';
-
-import Quiz, {links as quizStyles} from '~/modules/quiz/eyeQuiz';
+import Layouts from '~/layouts';
+import Quiz, {links as quizStyles} from '~/modules/quiz/skinQuiz';
 
 export const links = () => quizStyles();
 
