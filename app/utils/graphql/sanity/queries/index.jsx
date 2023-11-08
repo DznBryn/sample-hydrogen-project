@@ -1705,3 +1705,89 @@ export const GET_EYE_QUIZ_CONTENT = gql`
     }
   }
 `;
+
+export const QUIZ_CONTENT = gql`
+  query GetQuizContent($id: ID!) {
+    QuizContent(id: $id) {
+      name
+      quizBannerContent {
+        name
+        skinQuizCopy {
+          name
+          richTextBlockRaw
+        }
+        backgroundImage {
+          asset {
+            _id
+            url
+          }
+        }
+        backgroundColor
+        calloutPillColor
+        calloutPillFontColor
+        headerFontColor
+        ctaFontColor
+        ctaButtonColor
+        ctaLink
+        images {
+          asset {
+            _id
+            url
+          }
+        }
+      }
+      quizQuestions {
+        questionText
+        questionType
+        multipleChoice
+        textBoxRaw
+        answers {
+          name
+          answerText
+          answerType
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+          images {
+            asset {
+              _id
+              url
+            }
+          }
+        }
+      }
+      quizResults {
+        name
+        productId
+        quizAttributes {
+          name
+          category
+          default
+          priorityOrder
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+        }
+      }
+      quizAdvancedResults {
+        name
+        productId
+        quizAttributes {
+          name
+          category
+          default
+          priorityOrder
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+        }
+      }
+    }
+  }
+`;

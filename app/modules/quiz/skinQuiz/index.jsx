@@ -23,16 +23,18 @@ export const links = () => {
   ];
 };
 
-const EYE_QUIZ_MODEL = {
-  quizID: 'US-eye-quiz',
+const SKIN_QUIZ_MODEL = {
+  quizID: 'US-skin-quiz',
   marketAvailability: ['US'],
+  // categories: ['eye-balm', 'moisturizer', 'treat&prep', 'cleanser', 'spf'],
   categories: ['morning', 'night'],
-  quizType: 'eye-quiz',
+  resultTypes: ['regular', 'advanced'],
+  quizType: 'skin-quiz',
 };
 
 const productQualifierKey = 'qualifier';
 
-const EyeQuiz = ({content}) => {
+const SkinQuiz = ({content}) => {
   const [multipleChoiceState, setMultipleChoiceState] = useState([]);
   const [answerState, setAnswerState] = useState([]);
   const [resultState, setResultState] = useState({});
@@ -41,7 +43,7 @@ const EyeQuiz = ({content}) => {
 
   const {products} = useCollection('all');
 
-  const quizz = quizzService(EYE_QUIZ_MODEL);
+  const quizz = quizzService(SKIN_QUIZ_MODEL);
 
   const {quizBannerContent, quizQuestions, quizResults} = content;
 
@@ -199,7 +201,7 @@ const EyeQuiz = ({content}) => {
   );
 };
 
-export default EyeQuiz;
+export default SkinQuiz;
 
 const LandingCover = ({content}) => {
   const {
