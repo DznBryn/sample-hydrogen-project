@@ -1,15 +1,25 @@
-import { useRef, useState, useEffect } from 'react';
-import { useCartActions } from '~/hooks/useCart';
-import { triggerAnalyticsOnScroll, prepProduct } from '~/utils/functions/eventFunctions';
-import ProductBoxLoading, { links as productBoxLoadingStyles } from '../../productBoxLoading';
-import PLPProductBox, { links as plpProductBoxStyles } from '../../plp/plpProductBox';
-import { PDPSliderPanelTitle, links as pdpPanelSliderStyles } from '../pdpPanelSlider';
+import {useRef, useState, useEffect} from 'react';
+import {useCartActions} from '~/hooks/useCart';
+import {
+  triggerAnalyticsOnScroll,
+  prepProduct,
+} from '~/utils/functions/eventFunctions';
+import ProductBoxLoading, {
+  links as productBoxLoadingStyles,
+} from '../../productBoxLoading';
+import PLPProductBox, {
+  links as plpProductBoxStyles,
+} from '../../plp/plpProductBox';
+import {
+  PDPSliderPanelTitle,
+  links as pdpPanelSliderStyles,
+} from '../pdpPanelSlider';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
-    { rel: 'stylesheet', href: styles },
+    {rel: 'stylesheet', href: styles},
     ...productBoxLoadingStyles(),
     ...pdpPanelSliderStyles(),
     ...plpProductBoxStyles(),
@@ -20,21 +30,26 @@ let listLoading = false;
 let recs = [];
 let products = [];
 
-const PDPListrakRec = ({ listrak, product, title }) => {
-  
+const mockListrak = {
+  listrakId: 'fb44285e-a4de-45ab-97a5-46db11bced2c',
+  title: 'boost your tula routine with these',
+  name: 'Shopping Cart',
+};
+
+const PDPListrakRec = ({listrak = mockListrak, product, title}) => {
   const listrackConfig = listrak;
   const ListrakProductsContainer = useRef(null);
-  const { fetchProduct } = useCartActions();
+  const {fetchProduct} = useCartActions();
   let [loader, setLoader] = useState(0);
 
-  const getProductData = async productHandle => {
+  const getProductData = async (productHandle) => {
     return await fetchProduct(productHandle);
   };
 
-  const getProduct = handle => {
+  const getProduct = (handle) => {
     return new Promise((resolve, reject) => {
       try {
-        getProductData({ id: handle }).then(result => {
+        getProductData({id: handle}).then((result) => {
           resolve(result);
         });
       } catch (error) {
@@ -43,20 +58,19 @@ const PDPListrakRec = ({ listrak, product, title }) => {
     });
   };
 
-  const getProductPromise = async handle => {
+  const getProductPromise = async (handle) => {
     return getProduct(handle);
   };
 
-  const getReccomededProducts = handles => {
+  const getReccomededProducts = (handles) => {
     return Promise.all(
-      handles.map(handle => {
+      handles.map((handle) => {
         return getProductPromise(handle);
       }),
     );
   };
 
   useEffect(() => {
-
     const dlProducts = [];
 
     if (typeof window._ltk !== 'undefined' && recs.length < 4) {
@@ -66,7 +80,7 @@ const PDPListrakRec = ({ listrak, product, title }) => {
 
     if (recs.length === 0 && recs.length < 3) {
       setTimeout(() => {
-        document.querySelectorAll('.product_img').forEach(elem => {
+        document.querySelectorAll('.product_img').forEach((elem) => {
           if (
             recs.indexOf(elem.href) === -1 &&
             elem.href.indexOf('@Recommendation.LinkUrl') === -1
@@ -80,10 +94,9 @@ const PDPListrakRec = ({ listrak, product, title }) => {
     }
 
     if (products.length === 0 && recs.length > 0) {
-
       const handles = [];
 
-      recs.forEach(rec => {
+      recs.forEach((rec) => {
         let handle = rec.replace(window.location.origin + '/products/', '');
         handle = handle.substring(0, handle.indexOf('?'));
         if (handle !== null && handle !== '24-7-hydrating-day-night-eye-balm') {
@@ -92,7 +105,7 @@ const PDPListrakRec = ({ listrak, product, title }) => {
       });
 
       getReccomededProducts(handles)
-        .then(results => {
+        .then((results) => {
           if (results.length > 0) {
             products = results;
 
@@ -109,13 +122,14 @@ const PDPListrakRec = ({ listrak, product, title }) => {
             });
           });
 
-          triggerAnalyticsOnScroll(ListrakProductsContainer.current, dlProducts, 'Product Page');
-
+          triggerAnalyticsOnScroll(
+            ListrakProductsContainer.current,
+            dlProducts,
+            'Product Page',
+          );
         })
         .catch(() => {});
-
     }
-
   }, []);
 
   return (
@@ -132,14 +146,20 @@ const PDPListrakRec = ({ listrak, product, title }) => {
               data-quickbuy="true"
               data-handle="@Recommendation.Meta5"
             >
-              <a className="product_img main-img" href="@Recommendation.LinkUrl">
+              <a
+                className="product_img main-img"
+                href="@Recommendation.LinkUrl"
+              >
                 <img src="@Recommendation.ImageUrl" />
               </a>
               <div className="product_info">
                 <h4>
                   <a href="@Recommendation.LinkUrl">
                     @(Recommendation.Meta1 != &quot;null&quot; ? &apos;
-                    <span className="alt-title">&apos; + Recommendation.Meta1 + &apos;</span>&apos; : &apos;&apos;)
+                    <span className="alt-title">
+                      &apos; + Recommendation.Meta1 + &apos;
+                    </span>
+                    &apos; : &apos;&apos;)
                     <span className="main-title">@Recommendation.Title</span>
                   </a>
                 </h4>
@@ -152,12 +172,14 @@ const PDPListrakRec = ({ listrak, product, title }) => {
       {listLoading && (
         <div className={'listrakRec'}>
           <div className={'listHeader'}>
-            <PDPSliderPanelTitle data={{ title: (title || listrackConfig.title) }} />
+            <PDPSliderPanelTitle
+              data={{title: title || listrackConfig.title}}
+            />
           </div>
           <div className={'listProducts'} ref={ListrakProductsContainer}>
             {products.length === 0 &&
               [1, 2, 3, 4].map((value) => {
-                return <ProductBoxLoading key={value}/>;
+                return <ProductBoxLoading key={value} />;
               })}
             {products.length > 0 &&
               products.map((product, index) => {
@@ -167,12 +189,14 @@ const PDPListrakRec = ({ listrak, product, title }) => {
                     product={prepProduct(product)}
                     analytics={{
                       click: {
-                        actionField: { list: 'Product Page' },
+                        actionField: {list: 'Product Page'},
                         products: [
                           {
                             name: product?.title,
                             id: window.btoa(product?.id),
-                            price: parseFloat(product?.priceRange?.minVariantPrice?.amount)?.toFixed(2),
+                            price: parseFloat(
+                              product?.priceRange?.minVariantPrice?.amount,
+                            )?.toFixed(2),
                             category: product?.productType,
                             variant: '',
                             position: index,
