@@ -37,39 +37,38 @@ const ListrakRec = ({listrak}) => {
 
   useEffect(() => {
     if (typeof _ltk !== 'undefined' && recs.length < 4) {
-      console.log('Show me what u got');
-      // window._ltk.Recommender.Render();
+      window._ltk.Recommender.Render();
     }
 
-    // if (recs.length === 0 && recs.length < 3) {
-    //   setTimeout(() => {
-    //     document.querySelectorAll('.product_img').forEach((elem) => {
-    //       if (
-    //         recs.indexOf(elem.href) === -1 &&
-    //         elem.href.indexOf('@Recommendation.LinkUrl') === -1
-    //       ) {
-    //         recs.push(elem.href);
-    //       }
-    //     });
-    //     listLoading = true;
-    //     setLoader(++loader);
-    //   }, 2000);
-    // }
+    if (recs.length === 0 && recs.length < 3) {
+      setTimeout(() => {
+        document.querySelectorAll('.product_img').forEach((elem) => {
+          if (
+            recs.indexOf(elem.href) === -1 &&
+            elem.href.indexOf('@Recommendation.LinkUrl') === -1
+          ) {
+            recs.push(elem.href);
+          }
+        });
+        listLoading = true;
+        setLoader(++loader);
+      }, 2000);
+    }
 
-    // if (recProducts.length === 0 && recs.length > 0) {
-    //   let a = [];
+    if (recProducts.length === 0 && recs.length > 0) {
+      let a = [];
 
-    //   recs.forEach((rec) => {
-    //     let handle = rec.replace(window.location.origin + '/products/', '');
-    //     handle = handle.substring(0, handle.indexOf('?'));
+      recs.forEach((rec) => {
+        let handle = rec.replace(window.location.origin + '/products/', '');
+        handle = handle.substring(0, handle.indexOf('?'));
 
-    //     if (handle !== null && handle !== '24-7-hydrating-day-night-eye-balm') {
-    //       a.push(handle);
-    //     }
-    //   });
+        if (handle !== null && handle !== '24-7-hydrating-day-night-eye-balm') {
+          a.push(handle);
+        }
+      });
 
-    //   setHandles(a);
-    // }
+      setHandles(a);
+    }
   });
 
   useEffect(() => {
@@ -118,7 +117,7 @@ const ListrakRec = ({listrak}) => {
           </script>
         </div>
       </div>
-      {/* {listLoading && (
+      {listLoading && (
         <div className={'listrakRec'}>
           <div className={'listHeader'}>
             <h2>{listrackConfig.title}</h2>
@@ -139,7 +138,7 @@ const ListrakRec = ({listrak}) => {
               })}
           </div>
         </div>
-      )} */}
+      )}
     </div>
   );
 };
