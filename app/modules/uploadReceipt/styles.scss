@@ -1,11 +1,11 @@
-.mainContainer {
+.uploadReceipt_mainContainer {
   margin-top: 93px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.header {
+.uploadReceipt_header {
   width: 100%;
   text-align: center;
   display: flex;
@@ -14,7 +14,7 @@
   gap: 12px;
 }
 
-.header>p {
+.uploadReceipt_header > p {
   font-weight: 900;
   text-transform: uppercase;
   font-size: 18px;
@@ -22,36 +22,41 @@
   color: rgba(71, 198, 217, 0.8);
 }
 
-.header>h1 {
+.uploadReceipt_header > h1 {
   font-weight: 900;
   font-size: 40px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
-.header>div {
+.uploadReceipt_header > div {
   font-size: 20px;
   font-weight: 400;
   color: rgba(76, 78, 86, 0.8);
   width: 450px;
 }
 
-.header>div>span {
+.uploadReceipt_header > div > span {
   font-weight: 800;
-  color: #47C6D9;
+  color: #47c6d9;
 }
 
-.header>div>span>svg {
+.uploadReceipt_header > div > span > svg {
   zoom: 150%;
 }
 
-.divider {
+.uploadReceipt_divider {
   width: 85%;
   height: 2px;
   margin: 30px 0;
-  background: linear-gradient(90deg, rgba(175, 191, 210, 0.1) 0%, rgba(158, 176, 197, 0.6) 50.38%, rgba(175, 191, 210, 0.1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(175, 191, 210, 0.1) 0%,
+    rgba(158, 176, 197, 0.6) 50.38%,
+    rgba(175, 191, 210, 0.1) 100%
+  );
 }
 
-.slider {
+.uploadReceipt_slider {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -60,11 +65,11 @@
   zoom: 100%;
 }
 
-.slider::-webkit-scrollbar {
+.uploadReceipt_slider::-webkit-scrollbar {
   display: none;
 }
 
-.logosContainer {
+.uploadReceipt_logosContainer {
   display: flex;
   align-items: center;
   gap: 54px;
@@ -72,46 +77,48 @@
   padding: 0 27px;
 }
 
-.uploader {
+.uploadReceipt_uploader {
   width: 100vw;
   margin-bottom: 50px;
   display: grid;
 }
 
-.mainContainer :global(.yotpo-container-headline),
-.mainContainer :global(.yotpo-widget-campaign-widget-container) {
-  padding: 0 !important;
+.uploadReceipt_mainContainer {
+  .yotpo-container-headline,
+  .yotpo-widget-campaign-widget-container {
+    padding: 0 !important;
+  }
+
+  .yotpo-widget-campaign-widget {
+    grid-area: 1/1;
+  }
+
+  .flexified-child.yotpo-outer-tile {
+    width: 50% !important;
+    margin: 0 auto !important;
+  }
 }
 
-.mainContainer :global(.yotpo-widget-campaign-widget) {
-  grid-area: 1/1;
-}
-
-.mainContainer :global(.flexified-child.yotpo-outer-tile) {
-  width: 50% !important;
-  margin: 0 auto !important;
-}
-
-.cta {
+.uploadReceipt_cta {
   width: 100%;
   padding: 47px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: linear-gradient(94.2deg, #EBF9FB 3.45%, #FAF7FF 103.07%);
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
   text-align: center;
 }
 
-.cta>p {
+.uploadReceipt_cta > p {
   font-weight: 900;
   font-size: 24px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
-.cta>button {
-  font-family: "Avenir LT Pro", sans-serif;
-  background: #48C6D9;
-  border: 1px solid #48C6D9;
+.uploadReceipt_cta > button {
+  font-family: 'Avenir LT Pro', sans-serif;
+  background: #48c6d9;
+  border: 1px solid #48c6d9;
   border-radius: 3px;
   font-weight: 600;
   font-size: 18px;
@@ -120,7 +127,7 @@
   margin: 20px 0 12px 0;
 }
 
-.cta>a {
+.uploadReceipt_cta > a {
   font-weight: 400;
   font-size: 14px;
   color: rgba(76, 78, 86, 0.6);
@@ -128,57 +135,53 @@
 }
 
 @media (max-width: 768px) {
-
-  .header>p {
+  .uploadReceipt_header > p {
     font-size: 12px;
   }
 
-  .header>h1 {
+  .uploadReceipt_header > h1 {
     font-size: 28px;
   }
 
-  .header>div {
+  .uploadReceipt_header > div {
     font-size: 14px;
     width: 320px;
   }
 
-  .slider {
+  .uploadReceipt_slider {
     zoom: 80%;
   }
 
-  .divider {
+  .vdivider {
     margin: 20px 0;
   }
 
-  .cta {
+  .uploadReceipt_cta {
     padding: 22px;
   }
 
-  .cta>p {
+  .uploadReceipt_cta > p {
     font-size: 16px;
   }
 
-  .cta>button {
+  .uploadReceipt_cta > button {
     font-size: 14px;
     padding: 8px 95px;
     margin: 12px 0;
   }
 
-  .header>div>span>svg {
+  .uploadReceipt_header > div > span > svg {
     zoom: 100%;
   }
-
 }
 
 @media (max-width: 1223px) {
-
-  .slider {
+  .uploadReceipt_slider {
     align-items: flex-start;
     justify-content: normal;
   }
 
-  .mainContainer :global(.flexified-child.yotpo-outer-tile) {
+  .uploadReceipt_mainContainer :global(.flexified-child.yotpo-outer-tile) {
     width: 100% !important;
   }
-
 }
