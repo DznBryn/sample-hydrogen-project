@@ -8,8 +8,8 @@ export default function quizService(_quizModel = {}) {
   }
 
   function handleGetProductQualifiers(_product, _key = 'qualifier') {
-    const answers = _product.quizAttributes?.qualifiers.map((e) =>
-      e[_key].toLowerCase(),
+    const answers = _product?.quizAttributes?.qualifiers?.map((e) =>
+      e[_key]?.toLowerCase(),
     );
     return answers;
   }
@@ -19,10 +19,11 @@ export default function quizService(_quizModel = {}) {
     _answers,
     _key = 'qualifier',
   ) {
-    const result = _products.filter((prod) =>
-      handleGetProductQualifiers(prod, _key)?.every(
-        (key) => _answers.includes(key) || key.includes('goal'),
-      ),
+    const result = _products.filter(
+      (prod) =>
+        handleGetProductQualifiers(prod, _key)?.every(
+          (value) => _answers.includes(value) || value.includes('goal'),
+        ) || prod?.quizAttributes.default,
     );
 
     return result;
@@ -39,32 +40,32 @@ export default function quizService(_quizModel = {}) {
     const products = handleGetProductsResultByAnswers(
       _products,
       _answers,
-      'qualifier',
+      _key,
     );
 
     for (const cat of categories) {
-      objReturn[cat.toLowerCase()] = products
+      const category = cat.toLowerCase();
+
+      let arr = products
         .filter(
-          (prod) =>
-            prod?.quizAttributes?.category.toLowerCase() === cat.toLowerCase(),
+          (prod) => prod?.quizAttributes?.category.toLowerCase() === category,
         )
         .sort(
           (a, b) =>
-            b?.quizAttributes?.qualifiers.length -
-            a?.quizAttributes?.qualifiers.length,
+            b?.quizAttributes?.qualifiers?.length -
+            a?.quizAttributes?.qualifiers?.length,
         );
 
-      const includesGoalOnFirstResult = objReturn[
-        cat.toLowerCase()
-      ][0]?.quizAttributes?.qualifiers?.some((q) => q.name.includes('goal'));
+      arr = arr.sort((a) => (a?.quizAttributes.default ? 1 : -1));
 
-      objReturn[cat.toLowerCase()] = includesGoalOnFirstResult
-        ? getResultByGoalReference(
-            objReturn[cat.toLowerCase()],
-            _key,
-            _multipleChoice,
-          )
-        : objReturn[cat.toLowerCase()];
+      const includesGoalOnFirstResult =
+        arr[0]?.quizAttributes?.qualifiers?.some((q) =>
+          q[_key].includes('goal'),
+        );
+
+      objReturn[category] = includesGoalOnFirstResult
+        ? getResultByGoalReference(arr, _multipleChoice, _key)
+        : arr;
     }
 
     return objReturn;
@@ -85,15 +86,15 @@ export default function quizService(_quizModel = {}) {
     return handleGetAnswersQualifiers(_answers, _key);
   }
 
-  function getResultByGoalReference(_arr, _key = 'qualifier', _multipleChoice) {
+  function getResultByGoalReference(_arr, _multipleChoice, _key = 'qualifier') {
     const idxForReference = handleGetProductQualifiers(_arr[0], _key)
-      .find((el) => el.includes('goal'))
+      .find((el) => el?.includes('goal'))
       .split('-')[1];
 
     const referenceGoal =
       _multipleChoice.length >= idxForReference
-        ? _multipleChoice[idxForReference - 1]?.answersQualifiers[0]?.name
-        : _multipleChoice.at(-1)?.answersQualifiers[0]?.name;
+        ? _multipleChoice[idxForReference - 1]?.qualifiers[0][_key]
+        : _multipleChoice.at(-1)?.qualifiers[0][_key];
 
     return handleGetProductsResultByAnswers(
       _arr,
@@ -103,6 +104,10 @@ export default function quizService(_quizModel = {}) {
       (res) =>
         !handleGetProductQualifiers(res, _key).some((e) => e.includes('goal')),
     );
+  }
+
+  function uniq(data, key) {
+    return [...new Map(data.map((x) => [key(x), x])).values()];
   }
 
   function handleGetAdvancedResults(
@@ -116,43 +121,46 @@ export default function quizService(_quizModel = {}) {
     let arrResult = [];
 
     _advancedArr.forEach((adv) => {
-      const hasGoalRef = adv?.quizAttributes?.qualifiers?.some((e) =>
+      let hasGoalRef = adv?.quizAttributes?.qualifiers?.some((e) =>
         e[_key].includes('goal'),
       );
 
       if (hasGoalRef) {
-        let idxForReference = '';
+        let idxForReference;
 
-        adv.quizAttributes.qualifiers.forEach((e) =>
-          e[_key].includes('goal')
-            ? (idxForReference = +e[_key].split('-')[1])
-            : null,
-        );
+        adv.quizAttributes.qualifiers.forEach((e) => {
+          if (e[_key].includes('goal')) {
+            const value = +e[_key].split('-')[1];
+            idxForReference = value;
+            return;
+          }
+          return null;
+        });
 
         const referenceGoal =
           _multipleChoice.length >= idxForReference
-            ? _multipleChoice[idxForReference - 1]?.answersQualifiers[0]?.name
-            : _multipleChoice.at(-1)?.answersQualifiers[0]?.name;
+            ? _multipleChoice[idxForReference - 1]?.qualifiers[0][_key]
+            : _multipleChoice.at(-1)?.qualifiers[0][_key];
 
         const hasProductByReference = _results
           .filter((ele) =>
             ele.quizAttributes.qualifiers?.some(
-              (el) => el.name.toLowerCase() === referenceGoal.toLowerCase(),
+              (el) => el[_key].toLowerCase() === referenceGoal.toLowerCase(),
             ),
           )[0]
-          ?.quizAttributes.qualifiers?.some((e) => !e.name.includes('goal'));
+          ?.quizAttributes.qualifiers?.some((e) => !e[_key].includes('goal'));
 
         if (hasProductByReference) {
           let returnObj = _results
             .filter((ele) =>
               ele.quizAttributes.qualifiers?.some(
-                (el) => el.name.toLowerCase() === referenceGoal.toLowerCase(),
+                (el) => el[_key].toLowerCase() === referenceGoal.toLowerCase(),
               ),
             )
             .filter(
               (el) =>
                 !el.quizAttributes.qualifiers?.some((e) =>
-                  e.name.includes('goal'),
+                  e[_key].includes('goal'),
                 ),
             )[0];
 
@@ -179,9 +187,11 @@ export default function quizService(_quizModel = {}) {
         ),
       ].includes(ele?.productId);
 
-      const coverAllAnswers = ele.quizAttributes.qualifiers
-        .map((el) => el.name.toLowerCase())
-        .every((item) => _answers.includes(item.toLowerCase()));
+      const coverAllAnswers =
+        !ele.quizAttributes?.qualifiers ||
+        ele.quizAttributes?.qualifiers
+          ?.map((el) => el[_key].toLowerCase())
+          ?.every((item) => _answers.includes(item.toLowerCase()));
 
       if (!includeProductID && coverAllAnswers) {
         acc.push(ele);
@@ -194,11 +204,14 @@ export default function quizService(_quizModel = {}) {
       (a, b) => a.quizAttributes.priorityOrder - b.quizAttributes.priorityOrder,
     );
 
-    function uniq(data, key) {
-      return [...new Map(data.map((x) => [key(x), x])).values()];
-    }
-
     return uniq(arrResult, (it) => it?.productId);
+  }
+
+  function handleAddSubQuestionIntoQuestionsQueue(_questionsArray, _answer) {
+    if (!_questionsArray.includes(_answer.subQuestion)) {
+      _questionsArray.push(_answer.subQuestion);
+      return _questionsArray;
+    }
   }
 
   return {
@@ -209,5 +222,7 @@ export default function quizService(_quizModel = {}) {
     handleGetProductQualifiers: handleGetProductQualifiers,
     handleGetProductsResultByAnswers: handleGetProductsResultByAnswers,
     handleGetRegularResultsByCategory: handleGetRegularResultsByCategory,
+    handleAddSubQuestionIntoQuestionsQueue:
+      handleAddSubQuestionIntoQuestionsQueue,
   };
 }

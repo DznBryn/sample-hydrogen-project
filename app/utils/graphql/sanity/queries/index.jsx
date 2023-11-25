@@ -1774,6 +1774,28 @@ export const QUIZ_CONTENT = gql`
             qualifier
             type
           }
+          subQuestion {
+            questionText
+            questionType
+            multipleChoice
+            textBoxRaw
+            answers {
+              name
+              answerText
+              answerType
+              qualifiers {
+                name
+                qualifier
+                type
+              }
+              images {
+                asset {
+                  _id
+                  url
+                }
+              }
+            }
+          }
           images {
             asset {
               _id

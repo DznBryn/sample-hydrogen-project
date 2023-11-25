@@ -1,33 +1,35 @@
 import {useState, useEffect} from 'react';
-import classnames from 'classnames';
 
-import PortableTextCustom from '~/modules/portableTextCustom';
 import {useCollection} from '~/hooks/useCollection';
 import quizzService from '~/utils/services/quizz';
 
-import SkinQuizAgeEmailOptIn, {
-  links as skinQuizAgeEmailStyles,
-} from '~/modules/quiz/skinQuizAgeEmailOptIn';
+import LandingCover, {
+  links as landingCoverStyles,
+} from '~/modules/quiz/components/landingCover';
 
-import ProductBox, {
-  links as productBoxStyles,
-} from '~/modules/plp/plpHorizontalProductBox';
+import MainContentQuizView, {
+  links as mainContentQuizViewStyles,
+} from '~/modules/quiz/components/mainContent';
+
+import ResultView, {
+  links as resultViewStyles,
+} from '~/modules/quiz/components/resultView';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     {rel: 'stylesheet', href: styles},
-    ...skinQuizAgeEmailStyles(),
-    ...productBoxStyles(),
+    ...landingCoverStyles(),
+    ...mainContentQuizViewStyles(),
+    ...resultViewStyles(),
   ];
 };
 
 const SKIN_QUIZ_MODEL = {
   quizID: 'US-skin-quiz',
   marketAvailability: ['US'],
-  // categories: ['eye-balm', 'moisturizer', 'treat&prep', 'cleanser', 'spf'],
-  categories: ['morning', 'night'],
+  categories: ['eye-balm', 'moisturizer', 'treat&prep', 'cleanser', 'spf'],
   resultTypes: ['regular', 'advanced'],
   quizType: 'skin-quiz',
 };
@@ -35,19 +37,25 @@ const SKIN_QUIZ_MODEL = {
 const productQualifierKey = 'qualifier';
 
 const SkinQuiz = ({content}) => {
+  const {quizBannerContent, quizQuestions, quizResults, quizAdvancedResults} =
+    content;
+
+  const [advancedResultsState, setAdvancedResultsState] = useState([]);
+  const [questionsState, setQuestionsState] = useState(quizQuestions);
   const [multipleChoiceState, setMultipleChoiceState] = useState([]);
   const [answerState, setAnswerState] = useState([]);
   const [resultState, setResultState] = useState({});
-  const [rangeAge, setRangeAge] = useState();
+
   const [step, setStep] = useState(0);
 
   const {products} = useCollection('all');
 
   const quizz = quizzService(SKIN_QUIZ_MODEL);
 
-  const {quizBannerContent, quizQuestions, quizResults} = content;
+  const questionStep =
+    questionsState.length > step ? step : questionsState.length - 1;
 
-  const {questionText, answers, multipleChoice} = quizQuestions[0];
+  const {questionText, answers, multipleChoice} = questionsState[questionStep];
 
   const {
     backgroundColor,
@@ -58,6 +66,7 @@ const SkinQuiz = ({content}) => {
     headerFontColor,
     skinQuizCopy,
     backgroundImage,
+    images,
   } = quizBannerContent;
 
   function increaseStep() {
@@ -84,12 +93,33 @@ const SkinQuiz = ({content}) => {
   }
 
   function handleAnswersSubmit(answer) {
+    /* Manage status bar fill */
+
+    const questionPercent = Math.floor(100 / questionsState.length);
+    const statusBarWidth = step + 1;
+
+    const statusBar = document.querySelector('.status');
+
+    questionsState.length === step + 1
+      ? (statusBar.style.width = '100%')
+      : (statusBar.style.width = statusBarWidth * questionPercent + '%');
+
     let arr = answerState;
+    let questions = structuredClone(questionsState);
 
     if (multipleChoice) {
       arr[step] = [];
       answer.forEach((ans) => {
         arr[step] = [...arr[step], ...ans.qualifiers];
+
+        if (ans.subQuestion) {
+          const returnQuestions = quizz.handleAddSubQuestionIntoQuestionsQueue(
+            questions,
+            ans,
+          );
+
+          setQuestionsState(returnQuestions);
+        }
 
         setAnswerState(arr);
       });
@@ -98,6 +128,15 @@ const SkinQuiz = ({content}) => {
     }
 
     arr[step] = answer.qualifiers;
+
+    if (answer.subQuestion) {
+      const returnQuestions = quizz.handleAddSubQuestionIntoQuestionsQueue(
+        questions,
+        answer,
+      );
+
+      setQuestionsState(returnQuestions);
+    }
 
     setAnswerState(arr);
 
@@ -109,25 +148,61 @@ const SkinQuiz = ({content}) => {
     return product;
   }
 
+  function getAdvancedRoutine(_answersArr, _coreRoutine) {
+    const advancedRoutine = quizz.handleGetAdvancedResults(
+      quizAdvancedResults,
+      _answersArr,
+      quizResults,
+      _coreRoutine,
+      multipleChoiceState,
+      productQualifierKey,
+    );
+
+    return advancedRoutine;
+  }
+
   function getResult() {
     let answersArr = quizz.handleGetUserAnswers(
       answerState,
       productQualifierKey,
     );
 
-    answersArr =
-      answersArr.length < 2
-        ? [...answersArr, 'no-care', rangeAge]
-        : [...answersArr, rangeAge];
-
-    const catProducts = quizz.handleGetRegularResultsByCategory(
+    const result = quizz.handleGetRegularResultsByCategory(
       quizResults,
       answersArr,
-      productQualifierKey,
       multipleChoiceState,
+      productQualifierKey,
     );
 
-    return catProducts;
+    const advancedResult = getAdvancedRoutine(answersArr, result);
+
+    return {result, advancedResult, answersArr};
+  }
+
+  function handleRestart() {
+    setQuestionsState(quizQuestions);
+    setAdvancedResultsState([]);
+    setMultipleChoiceState([]);
+    setResultState({});
+    setAnswerState([]);
+    setStep(0);
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+
+    document.querySelector('.status').style.width = '0%';
+  }
+
+  function stepBack() {
+    setStep((oldState) => (oldState > 0 ? oldState - 1 : oldState));
+
+    /* Manage status fill going back */
+    const questionPercent = Math.floor(100 / questionsState.length);
+    const statusBarWidth = step - 1;
+    const statusBar = document.querySelector('.status');
+    statusBar.style.width = statusBarWidth * questionPercent + '%';
   }
 
   const calloutFontColor = {
@@ -165,6 +240,8 @@ const SkinQuiz = ({content}) => {
     backgroundImage,
   };
 
+  const hasStatusBar = true;
+
   const mainQuizContent = {
     step,
     questionText,
@@ -174,27 +251,47 @@ const SkinQuiz = ({content}) => {
     multipleChoiceState,
     handleClick,
     handleAnswersSubmit,
+    stepBack,
+    hasStatusBar,
   };
 
-  const resultContent = {setRangeAge, resultState, handleGetProductByID};
+  const advancedQuizContent = {
+    advancedResultsState,
+    answerState,
+    images,
+    handleGetProductByID,
+    handleRestart,
+  };
+
+  let resultContent = {
+    setRangeAge: () => {},
+    resultState,
+    handleGetProductByID,
+    advancedResultsState,
+  };
+
+  if (advancedResultsState.length) {
+    resultContent = {...resultContent, advancedQuizContent};
+  }
 
   useEffect(() => {
-    if (quizQuestions.length === step && rangeAge) {
-      const result = getResult();
+    if (questionsState.length === step) {
+      const {result, advancedResult} = getResult();
 
       setResultState(result);
+      setAdvancedResultsState(advancedResult);
     }
-  }, [step, rangeAge]);
+  }, [step]);
 
   return (
     <main id="skinQuizLandingWrapper" className="minHeight">
       <LandingCover content={landingCoverContent} />
 
       <div id="quizWrapper" className="container">
-        {quizQuestions.length - 1 < step ? (
+        {questionsState.length - 1 < step ? (
           <ResultView content={resultContent} />
         ) : (
-          <MainContentQuiz content={mainQuizContent} />
+          <MainContentQuizView content={mainQuizContent} />
         )}
       </div>
     </main>
@@ -202,194 +299,3 @@ const SkinQuiz = ({content}) => {
 };
 
 export default SkinQuiz;
-
-const LandingCover = ({content}) => {
-  const {
-    landingBackgroundColor,
-    calloutBackgroundColor,
-    calloutFontColor,
-    skinQuizCopy,
-    quizHeaderFontColor,
-    quizCtaFontColor,
-    quizCtaButtonColor,
-    backgroundImage,
-  } = content;
-
-  useEffect(() => {
-    const handleClick = () => {
-      document.querySelector('#landingCover').style.display = 'none';
-      document.querySelector('#quizWrapper').style.display = 'flex';
-    };
-
-    document
-      .querySelector('#startQuizBtn')
-      .addEventListener('click', handleClick);
-
-    return () =>
-      document
-        .querySelector('#startQuizBtn')
-        .removeEventListener('click', handleClick);
-  }, []);
-
-  return (
-    <main id="landingCover" className="fixedWidthPage">
-      <section className="skinQuizWrapper" style={{...landingBackgroundColor}}>
-        <aside className="left">
-          <div className="textWrapper">
-            <p
-              className="calloutPill"
-              style={{...calloutFontColor, ...calloutBackgroundColor}}
-            >
-              <PortableTextCustom value={skinQuizCopy[0].richTextBlockRaw} />
-            </p>
-            <header className="header" style={{...quizHeaderFontColor}}>
-              <PortableTextCustom value={skinQuizCopy[1].richTextBlockRaw} />
-            </header>
-            <button
-              id="startQuizBtn"
-              style={{...quizCtaFontColor, ...quizCtaButtonColor}}
-            >
-              <PortableTextCustom value={skinQuizCopy[2].richTextBlockRaw} />
-            </button>
-          </div>
-        </aside>
-        <aside className="right">
-          <img id="desktop" src={backgroundImage[0].asset.url} />
-          <img id="mobile" src={backgroundImage[1].asset.url} />
-        </aside>
-      </section>
-    </main>
-  );
-};
-
-const MainContentQuiz = ({content}) => {
-  const {
-    step,
-    questionText,
-    multipleChoice,
-    answers,
-    answerState,
-    multipleChoiceState,
-    handleClick,
-    handleAnswersSubmit,
-  } = content;
-
-  function handleOnClick(element) {
-    handleClick(element);
-    if (!multipleChoice) {
-      window.scrollTo(0, 0);
-    }
-  }
-
-  const AnswerBtn = ({element}) => {
-    const name = answerState.length > 0 && answerState[0][0]?.name;
-    const btnClassName = classnames(
-      multipleChoice ? 'smallerBtn' : 'biggerBtn',
-      answers.length === 2 ? 'booleanBtn' : null,
-      ((answerState.length > step &&
-        element?.qualifiers[0]?.name === answerState[step][0]?.name) ||
-        (multipleChoice && multipleChoiceState.includes(element))) &&
-        'checkedButton',
-      name,
-    );
-    return (
-      (name !== element?.qualifiers[0]?.name || step === 0) && (
-        <button className={btnClassName} onClick={() => handleOnClick(element)}>
-          {multipleChoiceState.includes(element) ? (
-            <div className="priority">
-              {multipleChoiceState.indexOf(element) + 1}
-            </div>
-          ) : null}
-          {element?.images?.length ? (
-            <img src={element.images[0].asset.url} />
-          ) : null}
-          <div
-            className={
-              element?.images?.length
-                ? 'answerWrapper'
-                : ['textCentered', 'answerWrapper'].join(' ')
-            }
-          >
-            <span className="answerText">{element.answerText}</span>
-            <br />
-            {element.answerSubCopy && (
-              <span className="answerSubCopy">{element.answerSubCopy}</span>
-            )}
-          </div>
-        </button>
-      )
-    );
-  };
-
-  return (
-    <main>
-      <p className="step">Step {step + 1}</p>
-
-      <p className="question">{questionText}</p>
-      {multipleChoice ? (
-        <p className="multipleChoiceDek">
-          Select up to {multipleChoice} in order of priority.
-        </p>
-      ) : null}
-      <br />
-      <section className="buttons_grid">
-        {answers.map((el) => (
-          <AnswerBtn element={el} key={el?.qualifiers[0]?.name} />
-        ))}
-      </section>
-
-      {multipleChoice && multipleChoiceState.length > 0 ? (
-        <button
-          onClick={() => handleAnswersSubmit(multipleChoiceState)}
-          className="multipleChoiceBtn"
-        >
-          Next
-        </button>
-      ) : null}
-    </main>
-  );
-};
-
-const ResultView = ({content}) => {
-  const {setRangeAge, resultState, handleGetProductByID} = content;
-  return (
-    <main className="finalWrapper">
-      <SkinQuizAgeEmailOptIn setRangeAge={setRangeAge} />
-
-      <section className="quizResults">
-        <h2>We’ve found your perfect eye care routine.</h2>
-
-        <br />
-
-        <div className="resultsProductGrid">
-          {Object.keys(resultState).map((item, idx) => (
-            <div key={item} className="productWrapper">
-              <h4>
-                <span>
-                  {(idx + 1).toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                  })}
-                </span>
-                <br />
-                <br />
-                {item}
-              </h4>
-
-              {resultState[item][0] && (
-                <ProductBox
-                  product={handleGetProductByID(resultState[item][0].productId)}
-                  ctaOpensBlank={
-                    handleGetProductByID(resultState[item][0].productId)
-                      .variants.length > 1
-                  }
-                  is2Columns={true}
-                  key={resultState[item][0].productId}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
-  );
-};
