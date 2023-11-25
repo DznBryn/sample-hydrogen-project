@@ -1,3 +1,19 @@
+.backBtn::before {
+  background-size: 6px 6px;
+  content: '\3008';
+  display: inline-block;
+  margin-right: 4px;
+  padding: 0;
+}
+
+.userAnswers {
+  border: 1px dashed red;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 1em;
+  display: none;
+}
+
 .skinQuizWrapper {
   width: 100%;
   height: 607px;
@@ -34,7 +50,6 @@
   justify-content: center;
   align-items: flex-start;
 }
-
 .skinQuizWrapper .textWrapper {
   display: flex;
   flex-direction: column;
@@ -75,11 +90,9 @@
   letter-spacing: 0.015em;
   text-align: left;
 }
-
 .skinQuizWrapper .header {
   margin-bottom: 39px;
 }
-
 .skinQuizWrapper .header h1 {
   font-size: 53px;
   font-style: normal;
@@ -101,11 +114,9 @@
   align-items: center;
   border: none;
 }
-
 .skinQuizWrapper a {
   text-decoration: none !important;
 }
-
 .skinQuizWrapper #startQuizBtn p {
   color: inherit;
   font-size: 16px;
@@ -131,117 +142,6 @@
   max-width: 1040px;
   width: 100%;
   margin: auto;
-}
-
-.backBtn {
-  border: none;
-  background-color: rgba(255, 255, 255, 0);
-  position: absolute;
-  left: 10px;
-  top: 0px;
-}
-
-.container .question {
-  font-family: inherit;
-  color: inherit;
-  margin: 60px auto 10px;
-  font-size: 21px;
-  font-weight: 700;
-}
-
-.container .multipleChoiceDek {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0;
-  line-height: 21px;
-  margin: 2px 2px 40px 2px;
-  text-align: center;
-  color: inherit;
-}
-
-.buttons_grid {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  max-width: 850px;
-  width: 100%;
-  margin: 0 auto;
-}
-
-.buttons_grid button {
-  height: 90px;
-  width: calc(50% - 12px);
-  max-width: 342px;
-  border: 1px solid rgb(224, 224, 224);
-  font-size: 14px;
-  padding: 42px 34px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  font-family: inherit;
-  font-weight: 500;
-  line-height: 18px;
-  margin-right: 12px;
-  margin-bottom: 14px;
-  text-align: left;
-  color: inherit;
-}
-
-.buttons_grid button .answerWrapper {
-  width: 100%;
-  font-family: inherit;
-}
-
-.buttons_grid button .answerText {
-  font-weight: 700;
-  color: inherit;
-}
-
-.buttons_grid button .answerSubCopy {
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: normal;
-  letter-spacing: normal;
-  color: #4b4e55 !important;
-}
-
-.buttons_grid .smallerBtn {
-  width: 156px;
-  height: 137px;
-  padding: 0;
-  text-align: center;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding-top: 25px;
-}
-
-.buttons_grid .smallerBtn .answerWrapper {
-  margin-top: 25px;
-}
-
-.buttons_grid button .priority {
-  background-color: #48c6d9;
-  color: #fff;
-  height: 1.5em;
-  width: 1.5em;
-  border-radius: 50%;
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  margin-right: 0.5em;
-  padding-top: 2px;
-}
-
-.buttons_grid button img {
-  height: 54px;
-  width: 54px;
-  margin-right: 17px;
 }
 
 .resultsProductGrid,
@@ -278,6 +178,7 @@
 }
 
 .productWrapper {
+  // width: 250px;
   min-height: 565px;
   margin-bottom: 3em;
 }
@@ -444,7 +345,7 @@
 
 .advanceRoutineResults .reviewQuizAnswers .expandBtn {
   color: inherit;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: #fff0;
   border: none;
   cursor: pointer;
   font-size: 35px;
@@ -474,7 +375,6 @@
   letter-spacing: 0;
   text-transform: uppercase;
 }
-
 .quizAnswersWrapper .answers {
   margin-bottom: 20px;
 }
@@ -492,7 +392,7 @@
 
 .quizAnswersWrapper button {
   border: none;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: #fff0;
   font-size: 12px;
   font-weight: 700;
   line-height: 35px;
@@ -513,10 +413,10 @@
   height: fit-content;
   padding: 15px;
 }
-
 /* TEST */
+
 .checkedButton {
-  border-color: rgb(255, 121, 163) !important;
+  border-color: rgba(255, 121, 163) !important;
   color: #48c6d9 !important;
 }
 
@@ -525,13 +425,15 @@
 */
 @media all and (min-width: 768px) {
   .buttons_grid button:hover {
-    border-color: rgb(255, 121, 163);
+    border-color: rgba(255, 121, 163);
     transition: all 0.25s;
   }
+
   .buttons_grid button:hover .answerText {
     color: #48c6d9;
   }
 }
+
 @media all and (max-width: 768px) {
   .skinQuizWrapper .right #desktop {
     display: none;
@@ -541,6 +443,7 @@
     height: 100%;
     width: 100%;
   }
+
   .skinQuizWrapper {
     flex-direction: column-reverse;
     height: fit-content;
@@ -551,6 +454,7 @@
     height: 280px;
     width: 100%;
   }
+
   .skinQuizWrapper .left {
     min-height: 280px;
     padding: 0 34px;
@@ -559,7 +463,9 @@
   #skinQuizLandingWrapper {
     min-height: 674px;
     margin-top: 0;
+    // top: 114px;
   }
+
   #skinQuizLandingWrapper .fixedWidthPage {
     padding: 0;
   }
@@ -595,71 +501,42 @@
   #skinQuizLandingWrapper #quizContainer {
     margin-top: 3em;
   }
+
   .container {
     width: 100vw;
+    // margin: 0 auto 50px;
   }
-  .buttons_grid {
-    padding: 0 15px;
-    justify-content: center;
-  }
-  .buttons_grid button {
-    width: 100%;
-    margin-right: 0;
-    height: 70px;
-  }
-  .backBtn {
-    font-size: 11px;
-    top: 81px;
-    letter-spacing: 2px;
-    color: inherit;
-  }
-  .container .question {
-    text-align: center;
-    padding: 0 25px;
-    margin: 40px auto 10px;
-  }
-  .textBox {
-    width: calc(100% - 30px);
-    margin: 1.25em auto;
-  }
-  .textBox p {
-    font-size: 12px;
-    font-family: inherit;
-    line-height: 20px;
-  }
-  .buttons_grid .smallerBtn {
-    width: calc(50% - 12px);
-    margin-right: 12px;
-    padding: 18px 10px 0;
-  }
-  .buttons_grid .smallerBtn:nth-child(even) {
-    margin-right: 0px;
-  }
+
   .finalWrapper .quizResults {
     margin-bottom: 0;
   }
+
   .finalWrapper .quizResults h2 {
     font-size: 22px;
     font-weight: bold;
     letter-spacing: 0;
     line-height: 27px;
   }
+
   .finalWrapper .quizResults .dek {
     font-size: 14px;
     font-weight: normal;
     letter-spacing: 0;
     line-height: 17px;
   }
+
   .productWrapper {
     width: 100%;
     margin-right: 0;
     margin-bottom: 0;
   }
+
   .productWrapper h4 {
     font-size: 16px;
     letter-spacing: 0.5px;
     line-height: 19px;
   }
+
   .advanceRoutineResults {
     margin-top: 60px;
   }
@@ -675,9 +552,8 @@
   .advanceRoutineResults .reviewQuizAnswers p {
     font-size: 12px;
   }
+
   .resultsProductGrid .infoContainer a {
     font-size: 14px !important;
   }
 }
-
-/*# sourceMappingURL=styles.css.map */

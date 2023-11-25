@@ -1,25 +1,28 @@
 import {useState, useEffect} from 'react';
-import classnames from 'classnames';
 
-import PortableTextCustom from '~/modules/portableTextCustom';
 import {useCollection} from '~/hooks/useCollection';
 import quizzService from '~/utils/services/quizz';
 
-import SkinQuizAgeEmailOptIn, {
-  links as skinQuizAgeEmailStyles,
-} from '~/modules/quiz/skinQuizAgeEmailOptIn';
+import LandingCover, {
+  links as landingCoverStyles,
+} from '~/modules/quiz/components/landingCover';
 
-import ProductBox, {
-  links as productBoxStyles,
-} from '~/modules/plp/plpHorizontalProductBox';
+import MainContentQuizView, {
+  links as mainContentQuizViewStyles,
+} from '~/modules/quiz/components/mainContent';
+
+import ResultView, {
+  links as resultViewStyles,
+} from '~/modules/quiz/components/resultView';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     {rel: 'stylesheet', href: styles},
-    ...skinQuizAgeEmailStyles(),
-    ...productBoxStyles(),
+    ...landingCoverStyles(),
+    ...mainContentQuizViewStyles(),
+    ...resultViewStyles(),
   ];
 };
 
@@ -121,8 +124,8 @@ const EyeQuiz = ({content}) => {
     const catProducts = quizz.handleGetRegularResultsByCategory(
       quizResults,
       answersArr,
-      productQualifierKey,
       multipleChoiceState,
+      productQualifierKey,
     );
 
     return catProducts;
@@ -192,7 +195,7 @@ const EyeQuiz = ({content}) => {
         {quizQuestions.length - 1 < step ? (
           <ResultView content={resultContent} />
         ) : (
-          <MainContentQuiz content={mainQuizContent} />
+          <MainContentQuizView content={mainQuizContent} />
         )}
       </div>
     </main>
@@ -200,194 +203,3 @@ const EyeQuiz = ({content}) => {
 };
 
 export default EyeQuiz;
-
-const LandingCover = ({content}) => {
-  const {
-    landingBackgroundColor,
-    calloutBackgroundColor,
-    calloutFontColor,
-    skinQuizCopy,
-    quizHeaderFontColor,
-    quizCtaFontColor,
-    quizCtaButtonColor,
-    backgroundImage,
-  } = content;
-
-  useEffect(() => {
-    const handleClick = () => {
-      document.querySelector('#landingCover').style.display = 'none';
-      document.querySelector('#quizWrapper').style.display = 'flex';
-    };
-
-    document
-      .querySelector('#startQuizBtn')
-      .addEventListener('click', handleClick);
-
-    return () =>
-      document
-        .querySelector('#startQuizBtn')
-        .removeEventListener('click', handleClick);
-  }, []);
-
-  return (
-    <main id="landingCover" className="fixedWidthPage">
-      <section className="skinQuizWrapper" style={{...landingBackgroundColor}}>
-        <aside className="left">
-          <div className="textWrapper">
-            <p
-              className="calloutPill"
-              style={{...calloutFontColor, ...calloutBackgroundColor}}
-            >
-              <PortableTextCustom value={skinQuizCopy[0].richTextBlockRaw} />
-            </p>
-            <header className="header" style={{...quizHeaderFontColor}}>
-              <PortableTextCustom value={skinQuizCopy[1].richTextBlockRaw} />
-            </header>
-            <button
-              id="startQuizBtn"
-              style={{...quizCtaFontColor, ...quizCtaButtonColor}}
-            >
-              <PortableTextCustom value={skinQuizCopy[2].richTextBlockRaw} />
-            </button>
-          </div>
-        </aside>
-        <aside className="right">
-          <img id="desktop" src={backgroundImage[0].asset.url} />
-          <img id="mobile" src={backgroundImage[1].asset.url} />
-        </aside>
-      </section>
-    </main>
-  );
-};
-
-const MainContentQuiz = ({content}) => {
-  const {
-    step,
-    questionText,
-    multipleChoice,
-    answers,
-    answerState,
-    multipleChoiceState,
-    handleClick,
-    handleAnswersSubmit,
-  } = content;
-
-  function handleOnClick(element) {
-    handleClick(element);
-    if (!multipleChoice) {
-      window.scrollTo(0, 0);
-    }
-  }
-
-  const AnswerBtn = ({element}) => {
-    const name = answerState.length > 0 && answerState[0][0]?.name;
-    const btnClassName = classnames(
-      multipleChoice ? 'smallerBtn' : 'biggerBtn',
-      answers.length === 2 ? 'booleanBtn' : null,
-      ((answerState.length > step &&
-        element?.qualifiers[0]?.name === answerState[step][0]?.name) ||
-        (multipleChoice && multipleChoiceState.includes(element))) &&
-        'checkedButton',
-      name,
-    );
-    return (
-      (name !== element?.qualifiers[0]?.name || step === 0) && (
-        <button className={btnClassName} onClick={() => handleOnClick(element)}>
-          {multipleChoiceState.includes(element) ? (
-            <div className="priority">
-              {multipleChoiceState.indexOf(element) + 1}
-            </div>
-          ) : null}
-          {element?.images?.length ? (
-            <img src={element.images[0].asset.url} />
-          ) : null}
-          <div
-            className={
-              element?.images?.length
-                ? 'answerWrapper'
-                : ['textCentered', 'answerWrapper'].join(' ')
-            }
-          >
-            <span className="answerText">{element.answerText}</span>
-            <br />
-            {element.answerSubCopy && (
-              <span className="answerSubCopy">{element.answerSubCopy}</span>
-            )}
-          </div>
-        </button>
-      )
-    );
-  };
-
-  return (
-    <main>
-      <p className="step">Step {step + 1}</p>
-
-      <p className="question">{questionText}</p>
-      {multipleChoice ? (
-        <p className="multipleChoiceDek">
-          Select up to {multipleChoice} in order of priority.
-        </p>
-      ) : null}
-      <br />
-      <section className="buttons_grid">
-        {answers.map((el) => (
-          <AnswerBtn element={el} key={el?.qualifiers[0]?.name} />
-        ))}
-      </section>
-
-      {multipleChoice && multipleChoiceState.length > 0 ? (
-        <button
-          onClick={() => handleAnswersSubmit(multipleChoiceState)}
-          className="multipleChoiceBtn"
-        >
-          Next
-        </button>
-      ) : null}
-    </main>
-  );
-};
-
-const ResultView = ({content}) => {
-  const {setRangeAge, resultState, handleGetProductByID} = content;
-  return (
-    <main className="finalWrapper">
-      <SkinQuizAgeEmailOptIn setRangeAge={setRangeAge} />
-
-      <section className="quizResults">
-        <h2>We’ve found your perfect eye care routine.</h2>
-
-        <br />
-
-        <div className="resultsProductGrid">
-          {Object.keys(resultState).map((item, idx) => (
-            <div key={item} className="productWrapper">
-              <h4>
-                <span>
-                  {(idx + 1).toLocaleString('en-US', {
-                    minimumIntegerDigits: 2,
-                  })}
-                </span>
-                <br />
-                <br />
-                {item}
-              </h4>
-
-              {resultState[item][0] && (
-                <ProductBox
-                  product={handleGetProductByID(resultState[item][0].productId)}
-                  ctaOpensBlank={
-                    handleGetProductByID(resultState[item][0].productId)
-                      .variants.length > 1
-                  }
-                  is2Columns={true}
-                  key={resultState[item][0].productId}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    </main>
-  );
-};

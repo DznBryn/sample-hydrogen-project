@@ -11,7 +11,7 @@ export const links = () => quizStyles();
 
 export async function loader({context}) {
   const quizContent = await getCMSContent(context, QUIZ_CONTENT, {
-    id: 'drafts.009c980b-4e24-4ba7-ac8f-7b3dc342cbf9',
+    id: '009c980b-4e24-4ba7-ac8f-7b3dc342cbf9',
   });
 
   return {
