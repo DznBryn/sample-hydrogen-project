@@ -1,32 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import classNames from 'classnames/bind';
 import getApiKeys from '~/utils/functions/getApiKeys';
 // import { Slider } from 'Components/UploadReceipt';
 import styles from './styles.css';
-import { useStore } from '~/hooks/useStore';
-import RedeemProductsSection, { links as redeemProductsSectionStyles } from '~/modules/redeemProductsSection';
-import { mock } from '~/modules/redeemProductsSection/mock';
+import {useStore} from '~/hooks/useStore';
+import RedeemProductsSection, {
+  links as redeemProductsSectionStyles,
+} from '~/modules/redeemProductsSection';
+import {mock} from '~/modules/redeemProductsSection/mock';
 
 const MOCK_QUESTION_LIST = [
-  { question: 'Question #1', answer: 'Answer #1 ' },
-  { question: 'Question #2', answer: 'Answer #2' },
-  { question: 'Question #3', answer: 'Answer #3' },
-  { question: 'Question #4', answer: 'Answer #4' },
+  {question: 'Question #1', answer: 'Answer #1 '},
+  {question: 'Question #2', answer: 'Answer #2'},
+  {question: 'Question #3', answer: 'Answer #3'},
+  {question: 'Question #4', answer: 'Answer #4'},
 ];
 
 export function links() {
-  return [
-    { rel: 'stylesheet', href: styles },
-    ...redeemProductsSectionStyles()
-  ];
+  return [{rel: 'stylesheet', href: styles}, ...redeemProductsSectionStyles()];
 }
 
-const LoyaltyRewardsTab = ({ products = mock, yotpoFAQ = MOCK_QUESTION_LIST }) => {
-  const data = useStore(store => store?.account?.data ?? null);
-  const isLoggedIn = data?.id !== '' || data?.id !== null || data?.id !== undefined;
+const LoyaltyRewardsTab = ({
+  products = mock,
+  yotpoFAQ = MOCK_QUESTION_LIST,
+}) => {
+  const data = useStore((store) => store?.account?.data ?? null);
+  const isLoggedIn =
+    data?.id !== '' || data?.id !== null || data?.id !== undefined;
 
   useEffect(() => {
-    const slider = document.querySelectorAll('[id=\'slider-divider\']');
+    const slider = document.querySelectorAll("[id='slider-divider']");
     for (const element of slider) {
       element.style.marginInline = 'auto';
     }
@@ -36,7 +39,11 @@ const LoyaltyRewardsTab = ({ products = mock, yotpoFAQ = MOCK_QUESTION_LIST }) =
     <div className={'myRewards__container'}>
       <div className="yotpo-widget-instance" data-yotpo-instance-id="300765" />
 
-      {isLoggedIn && <a className={'myRewards__textLink'} href="#receipt_uploader">upload a receipt</a>}
+      {isLoggedIn && (
+        <a className={'myRewards__textLink'} href="#receipt_uploader">
+          upload a receipt
+        </a>
+      )}
       <RedeemProductList products={products} />
 
       <div className="yotpo-widget-instance" data-yotpo-instance-id="295798" />
@@ -48,7 +55,8 @@ const LoyaltyRewardsTab = ({ products = mock, yotpoFAQ = MOCK_QUESTION_LIST }) =
 
       <p className={'receipt__message'}>
         <h3>upload a receipt</h3>
-        Shopping in person? Don’t forget to submit your receipt and earn points for your purchase!
+        Shopping in person? Don’t forget to submit your receipt and earn points
+        for your purchase!
       </p>
 
       {/* <Slider /> */}
@@ -57,7 +65,7 @@ const LoyaltyRewardsTab = ({ products = mock, yotpoFAQ = MOCK_QUESTION_LIST }) =
 
       <div
         className="yotpo-widget-instance"
-        data-yotpo-instance-id={getApiKeys().YOTPO_LOYALTY_WIDGETS.receipt_uploader}
+        data-yotpo-instance-id={'264193'}
         logged-out-store-login-url="/account/login"
         logged-out-store-sign-up-url="/account/register"
       />
@@ -67,14 +75,14 @@ const LoyaltyRewardsTab = ({ products = mock, yotpoFAQ = MOCK_QUESTION_LIST }) =
   );
 };
 
-
-
-export const RedeemProductList = ({ products = null }) => (
+export const RedeemProductList = ({products = null}) => (
   <div className={'redeemSectionContainer'}>
     <h1>your available rewards</h1>
     <div className={'faq__divider'} />
     <h3>redeem for full-size products</h3>
-    <p>Add your product to cart then click “redeem” to receive your code to use at checkout.
+    <p>
+      Add your product to cart then click “redeem” to receive your code to use
+      at checkout.
       <br />
       <span>Must be redeemed with purchase.</span>
     </p>
@@ -83,12 +91,7 @@ export const RedeemProductList = ({ products = null }) => (
   </div>
 );
 
-const AccordionItem = ({
-  showDescription,
-  ariaExpanded,
-  item,
-  onClick,
-}) => {
+const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
   const cx = classNames.bind(styles);
 
   return (
@@ -100,22 +103,32 @@ const AccordionItem = ({
           onClick={onClick}
         >
           <span>{item.question}</span>
-          <span className={cx('faq__questionCloseButton', showDescription && 'faq__questionCloseButtonRotate')}>+</span>
+          <span
+            className={cx(
+              'faq__questionCloseButton',
+              showDescription && 'faq__questionCloseButtonRotate',
+            )}
+          >
+            +
+          </span>
         </button>
       </dt>
       <dd>
         <div
-          className={cx('faq__answer', showDescription && 'faq_showDescription')}
+          className={cx(
+            'faq__answer',
+            showDescription && 'faq_showDescription',
+          )}
         >
           <div className={'faq__divider'} />
-          <p dangerouslySetInnerHTML={{ __html: item.answer }} />
+          <p dangerouslySetInnerHTML={{__html: item.answer}} />
         </div>
       </dd>
     </div>
   );
 };
 
-export const RewardsFAQSection = ({ yotpoFAQ }) => {
+export const RewardsFAQSection = ({yotpoFAQ}) => {
   const [activeIndex, setActiveIndex] = useState();
 
   function handleToggleAccordion(index) {
@@ -150,7 +163,6 @@ export const RewardsFAQSection = ({ yotpoFAQ }) => {
       <dl className="faq__list">
         <RenderedQuestionsAnswers />
       </dl>
-
     </div>
   );
 };
