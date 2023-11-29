@@ -1,20 +1,29 @@
-import LoadingSkeleton, { links as loadingSkeletonStyles } from '~/modules/loadingSkeleton';
+import {useEffect} from 'react';
+import LoadingSkeleton, {
+  links as loadingSkeletonStyles,
+} from '~/modules/loadingSkeleton';
+import {useYotpo} from '~/hooks/useYotpo';
 import styles from './styles.css';
 
 export function links() {
-  return [
-    ...loadingSkeletonStyles(),
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [...loadingSkeletonStyles(), {rel: 'stylesheet', href: styles}];
 }
 
 export default function ReferralWidget() {
+  const {refreshWidgets} = useYotpo();
+
+  useEffect(() => {
+    refreshWidgets();
+  }, []);
   return (
     <div className={'container'}>
       <div className={'loadingSkeleton'}>
         <ReferralsLoading />
       </div>
-      <div className={'yotpo-widget-instance'} data-yotpo-instance-id="266415"></div>
+      <div
+        className={'yotpo-widget-instance'}
+        data-yotpo-instance-id="266415"
+      ></div>
     </div>
   );
 }

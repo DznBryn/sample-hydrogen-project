@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unknown-property */
 import React, {useState, useEffect} from 'react';
+import {useYotpo} from '~/hooks/useYotpo';
 import classNames from 'classnames/bind';
-import getApiKeys from '~/utils/functions/getApiKeys';
 // import { Slider } from 'Components/UploadReceipt';
 import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
@@ -25,14 +26,17 @@ const LoyaltyRewardsTab = ({
   yotpoFAQ = MOCK_QUESTION_LIST,
 }) => {
   const data = useStore((store) => store?.account?.data ?? null);
+  const {refreshWidgets} = useYotpo();
   const isLoggedIn =
     data?.id !== '' || data?.id !== null || data?.id !== undefined;
 
   useEffect(() => {
-    const slider = document.querySelectorAll("[id='slider-divider']");
+    const slider = document.querySelectorAll('[id=\'slider-divider\']');
     for (const element of slider) {
       element.style.marginInline = 'auto';
     }
+
+    refreshWidgets();
   }, []);
 
   return (
