@@ -22,26 +22,28 @@ const PDPBenefits = ({data}) => {
           (content = null) =>
             content && <Content data={content} key={content.title} />,
         )}
-      <SliderPanel id={`tab-${data?.tabName.replace(/\s/g, '')}`}>
-        <div
-          id={'pdpBenefits_closeButton'}
-          onClick={() =>
-            switchSliderPanelVisibility(
-              `tab-${data?.tabName.replace(/\s/g, '')}`,
-            )
-          }
-        >
-          <span>close</span>
-        </div>
-        <div className={'pdpBenefits_panel_container'}>
-          <PDPPanelTitle title={data?.button?.slideContent?.title} />
-          <div className={'pdpBenefits_panel_body'}>
-            <PortableTextCustom
-              value={data?.button?.slideContent?.contentRaw}
-            />
+      {data?.button?.slideContent && (
+        <SliderPanel id={`tab-${data?.tabName.replace(/\s/g, '')}`}>
+          <div
+            id={'pdpBenefits_closeButton'}
+            onClick={() =>
+              switchSliderPanelVisibility(
+                `tab-${data?.tabName.replace(/\s/g, '')}`,
+              )
+            }
+          >
+            <span>close</span>
           </div>
-        </div>
-      </SliderPanel>
+          <div className={'pdpBenefits_panel_container'}>
+            <PDPPanelTitle title={data?.button?.slideContent?.title} />
+            <div className={'pdpBenefits_panel_body'}>
+              <PortableTextCustom
+                value={data?.button?.slideContent?.contentRaw}
+              />
+            </div>
+          </div>
+        </SliderPanel>
+      )}
     </PDPSliderPanel>
   );
 };
@@ -73,14 +75,10 @@ const Content = ({data}) =>
                   <p>{ct.body}</p>
                 </div>
               ) : (
-                ct?.htmlBody !== '' &&
-                ct?.htmlBody !== undefined && (
+                ct?.htmlBodyRaw !== '' &&
+                ct?.htmlBodyRaw !== undefined && (
                   <div className={'pdpBenefits_content_body'}>
-                    <p
-                      dangerouslySetInnerHTML={{
-                        __html: ct?.htmlBody,
-                      }}
-                    ></p>
+                    <PortableTextCustom value={ct?.htmlBodyRaw} />
                   </div>
                 )
               )}

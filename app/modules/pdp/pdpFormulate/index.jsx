@@ -12,8 +12,6 @@ export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
-const scriptTags = /(<script\b[^>]*>([\s\S]*?)<\/script>)/gm;
-
 const PDPFormulate = ({data}) => {
   return (
     <PDPSliderPanel
@@ -25,26 +23,28 @@ const PDPFormulate = ({data}) => {
           (content = null) =>
             content && <Content data={content} key={content?.title} />,
         )}
-      <SliderPanel id={`tab-${data?.tabName.replace(/\s/g, '')}`}>
-        <div
-          id={'pdpFormulate_closeButton'}
-          onClick={() =>
-            switchSliderPanelVisibility(
-              `tab-${data?.tabName.replace(/\s/g, '')}`,
-            )
-          }
-        >
-          <span>close</span>
-        </div>
-        <div className={'pdpFormulate_panel_container'}>
-          <PDPPanelTitle title={data?.button?.slideContent?.title} />
-          <div className={'pdpFormulate_panel_body'}>
-            <PortableTextCustom
-              value={data?.button?.slideContent?.contentRaw}
-            />
+      {data?.button?.slideContent && (
+        <SliderPanel id={`tab-${data?.tabName.replace(/\s/g, '')}`}>
+          <div
+            id={'pdpFormulate_closeButton'}
+            onClick={() =>
+              switchSliderPanelVisibility(
+                `tab-${data?.tabName.replace(/\s/g, '')}`,
+              )
+            }
+          >
+            <span>close</span>
           </div>
-        </div>
-      </SliderPanel>
+          <div className={'pdpFormulate_panel_container'}>
+            <PDPPanelTitle title={data?.button?.slideContent?.title} />
+            <div className={'pdpFormulate_panel_body'}>
+              <PortableTextCustom
+                value={data?.button?.slideContent?.contentRaw}
+              />
+            </div>
+          </div>
+        </SliderPanel>
+      )}
     </PDPSliderPanel>
   );
 };
@@ -60,7 +60,7 @@ const Content = ({data}) => {
               className={
                 data?.contents.length !== 1
                   ? 'pdpFormulate_content_wrapper'
-                  : undefined
+                  : 'pdpFormulate_content_wrapper_center'
               }
               key={ct?.name}
             >
@@ -74,7 +74,7 @@ const Content = ({data}) => {
                     : 'pdpFormulate_content_container'
                 }
               >
-                {ct?.header !== undefined ? (
+                {ct?.headerRaw && ct?.headerRaw[0].children[0].text !== '' ? (
                   <div className={'pdpFormulate_content_header'}>
                     <PortableTextCustom value={ct?.headerRaw} />
                   </div>
@@ -90,15 +90,13 @@ const Content = ({data}) => {
                 ) : null}
                 {ct?.body !== '' && (
                   <div className={'pdpFormulate_content_body'}>
-                    {ct?.htmlSubtitle ? (
-                      <div
-                        className={'pdpFormulate_subtitle'}
-                        dangerouslySetInnerHTML={{
-                          __html: ct?.htmlSubtitle?.replace(scriptTags, ''),
-                        }}
-                      />
+                    {ct?.htmlSubtitleRaw &&
+                    ct?.htmlSubtitleRaw[0].children[0].text !== '' ? (
+                      <div className={'pdpFormulate_subtitle'}>
+                        <PortableTextCustom value={ct?.htmlSubtitleRaw} />
+                      </div>
                     ) : (
-                      <span>{ct.subtitle}</span>
+                      ct.subtitle && <span>{ct.subtitle}</span>
                     )}
                     <p
                       className={
@@ -114,14 +112,10 @@ const Content = ({data}) => {
                     </p>
                   </div>
                 )}
-                {ct?.htmlBody !== '' && (
-                  <div
-                    className={'pdpFormulate_content_htmlbody'}
-                    dangerouslySetInnerHTML={{
-                      __html: ct?.htmlBody?.replace(scriptTags, ''),
-                    }}
-                  />
-                )}
+                {ct?.htmlBodyRaw &&
+                  ct?.htmlBodyRaw[0].children[0].text !== '' && (
+                    <PortableTextCustom value={ct?.htmlBodyRaw} />
+                  )}
               </div>
             </div>
           ))}
