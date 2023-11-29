@@ -66,6 +66,7 @@
 
 .pdpFormulate_panel_container {
   padding: 1em;
+  overflow: auto;
 }
 
 .pdpFormulate_panel_body ul {
@@ -101,7 +102,7 @@
   line-height: 28px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 @media (min-width: 500px) {
@@ -113,6 +114,14 @@
 
   .pdpFormulate_content_wrapper {
     max-width: 350px;
+  }
+
+  .pdpFormulate_content_wrapper_center {
+    margin: 0 auto;
+  }
+
+  .pdpFormulate_content_wrapper_center .pdpFormulate_content_body {
+    margin-left: 0;
   }
 
   .pdpFormulate_content_body {

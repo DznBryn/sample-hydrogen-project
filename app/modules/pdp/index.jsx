@@ -7,7 +7,6 @@ import {
 } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {useYotpo} from '~/hooks/useYotpo';
-import PortableTextCustom from '../portableTextCustom';
 import PDPGallery, {links as pdpGalleryStyles} from './pdpGallery';
 import PDPDetails, {links as pdpDetailsStyles} from './pdpDetails';
 import PDPMoreDetailsList, {
@@ -383,7 +382,9 @@ const PDP = ({
           ) : (
             <div className={'giftcard_description__container'}>
               <div className={'giftcard_description'}>
-                <PortableTextCustom value={details.descriptionHtmlRaw} />
+                <div
+                  dangerouslySetInnerHTML={{__html: details.descriptionHtml}}
+                />
               </div>
             </div>
           )}

@@ -18,6 +18,10 @@
   align-items: center;
 }
 
+.pdpHowtoUse_content_wrapper_center {
+  margin: 0 auto;
+}
+
 .pdpHowtoUse_content_container {
   width: 100%;
   height: 100%;
@@ -28,7 +32,7 @@
   padding: 1em;
 }
 
-.pdpHowtoUse_mWidth_100{
+.pdpHowtoUse_mWidth_100 {
   align-items: center;
   max-width: 100%;
 }
@@ -59,16 +63,16 @@
   width: 100%;
 }
 
-.pdpHowtoUse_content_htmlbody div{
+.pdpHowtoUse_content_htmlbody div {
   width: 100%;
   margin-bottom: 1.5em;
 }
-.pdpHowtoUse_content_htmlbody div h4{
+.pdpHowtoUse_content_htmlbody div h4 {
   font-weight: 700;
   font-size: 16px;
   text-align: center;
 }
-.pdpHowtoUse_content_htmlbody div p{
+.pdpHowtoUse_content_htmlbody div p {
   text-align: center;
 }
 
@@ -99,7 +103,7 @@
   line-height: 28px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 @media (min-width: 500px) {

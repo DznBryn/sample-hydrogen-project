@@ -55,6 +55,8 @@
   margin-bottom: 4em;
   display: flex;
   justify-content: center;
+  max-width: 1140px;
+  padding: 0 1em;
 }
 
 .giftcard_description .desc_header {
@@ -113,11 +115,9 @@
 }
 
 @media (min-width: 500px) {
-
   .pdp_page__container,
   .section__product_details {
     background-color: #f8f8f8;
-    
   }
 }
 
