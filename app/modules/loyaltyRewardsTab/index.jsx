@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import {useState, useEffect} from 'react';
+import {useYotpo} from '~/hooks/useYotpo';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     {
-      rel: 'stylesheet', href: styles
-    },];
+      rel: 'stylesheet',
+      href: styles,
+    },
+  ];
 };
-const RewardsFAQSection = ({ yotpoFAQ }) => {
+const RewardsFAQSection = ({yotpoFAQ}) => {
+  const {refreshWidgets} = useYotpo();
   const [activeIndex, setActiveIndex] = useState();
+
+  useEffect(() => {
+    refreshWidgets();
+  }, []);
 
   const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
     return (
@@ -23,9 +31,11 @@ const RewardsFAQSection = ({ yotpoFAQ }) => {
             <span>{item.questions}</span>
             <span
               className={`loyaltyRewardsTab_faq__questionCloseButton
-              ${showDescription && 'loyaltyRewardsTab_faq__questionCloseButtonRotate'}
-            `
-                }
+              ${
+                showDescription &&
+                'loyaltyRewardsTab_faq__questionCloseButtonRotate'
+              }
+            `}
             >
               +
             </span>
@@ -33,9 +43,9 @@ const RewardsFAQSection = ({ yotpoFAQ }) => {
         </dt>
         <dd>
           <div
-            className={
-             `loyaltyRewardsTab_faq__answer ${showDescription && 'loyaltyRewardsTab_faq_showDescription'}`        
-              }
+            className={`loyaltyRewardsTab_faq__answer ${
+              showDescription && 'loyaltyRewardsTab_faq_showDescription'
+            }`}
           >
             <div className={'loyaltyRewardsTab_faq__divider'} />
             <p dangerouslySetInnerHTML={{__html: item.answers}} />
@@ -50,23 +60,23 @@ const RewardsFAQSection = ({ yotpoFAQ }) => {
     setActiveIndex(tab);
   }
 
-  const RenderedQuestionsAnswers = ({ item, index }) => {
-      const showDescription = index === activeIndex ? true : false;
-      const ariaExpanded = index === activeIndex ? true : false;
+  const RenderedQuestionsAnswers = ({item, index}) => {
+    const showDescription = index === activeIndex ? true : false;
+    const ariaExpanded = index === activeIndex ? true : false;
 
-      return (
-        <>
-          <AccordionItem
-            showDescription={showDescription}
-            ariaExpanded={ariaExpanded}
-            item={item}
-            teste={item}
-            index={index}
-            onClick={() => handleToggleAccordion(index)}
-          />
-          <div className={'loyaltyRewardsTab_faq__divider'} />
-        </>
-      );
+    return (
+      <>
+        <AccordionItem
+          showDescription={showDescription}
+          ariaExpanded={ariaExpanded}
+          item={item}
+          teste={item}
+          index={index}
+          onClick={() => handleToggleAccordion(index)}
+        />
+        <div className={'loyaltyRewardsTab_faq__divider'} />
+      </>
+    );
   };
 
   return (
@@ -75,7 +85,13 @@ const RewardsFAQSection = ({ yotpoFAQ }) => {
       <div className={'loyaltyRewardsTab_faq__divider'} />
 
       <dl className="loyaltyRewardsTab_faq__list">
-        {yotpoFAQ[0]?.yotpoQuestions?.map((item, index) => <RenderedQuestionsAnswers key={item.questions} index={index} item={item}/>)}
+        {yotpoFAQ[0]?.yotpoQuestions?.map((item, index) => (
+          <RenderedQuestionsAnswers
+            key={item.questions}
+            index={index}
+            item={item}
+          />
+        ))}
       </dl>
     </div>
   );
