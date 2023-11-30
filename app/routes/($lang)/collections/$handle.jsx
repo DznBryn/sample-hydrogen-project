@@ -1,6 +1,3 @@
-import Layouts from '~/layouts';
-import {flattenConnection} from '@shopify/hydrogen-react';
-import {useLoaderData} from 'react-router';
 import {
   NAV_COLLECTION_CAROUSEL,
   PRODUCTS_QUERY,
@@ -9,14 +6,17 @@ import {
   GET_PLP_FILTER_MENU,
   GET_PRODUCT_COLLECTIONS,
 } from '~/utils/graphql/sanity/queries';
-import {json} from '@shopify/remix-oxygen';
-import PLP, {links as plpStyles} from '../../../modules/plp';
 import {
   getCMSContent,
   getCMSDoc,
   getCollectionWithCMSData,
 } from '~/utils/functions/eventFunctions';
+import PLP, {links as plpStyles} from '../../../modules/plp';
+import {flattenConnection} from '@shopify/hydrogen-react';
 import {useMatches} from '@remix-run/react';
+import {useLoaderData} from 'react-router';
+import {json} from '@shopify/remix-oxygen';
+import Layouts from '~/layouts';
 import {useMemo} from 'react';
 
 export const links = () => {
