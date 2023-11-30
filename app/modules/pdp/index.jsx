@@ -1,9 +1,10 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {Suspense, useCallback, useEffect, useMemo} from 'react';
 import classnames from 'classnames';
 import {
   isProductMetafield,
   getProductMetafield,
   handleProductMetafieldData,
+  getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {useYotpo} from '~/hooks/useYotpo';
@@ -26,6 +27,7 @@ import FireWorkPDPCarousel, {
 } from './fireWorkPDPCarousel';
 
 import styles from './styles.css';
+import {Await, useMatches} from '@remix-run/react';
 
 export const links = () => {
   return [
@@ -47,12 +49,12 @@ export const links = () => {
 const PDP = ({
   product = {},
   cart = {},
-  listrak,
   autoDeliveryInfo,
   shadeVariantsOos,
   exclusiveProductBannerContent,
   concealerImages,
 }) => {
+  const [root] = useMatches();
   const {refreshWidgets} = useYotpo();
 
   const details = useMemo(() => getDetailsObj(product), [product]);
@@ -373,7 +375,13 @@ const PDP = ({
         </ContentSection>
 
         <ContentSection>
-          <PDPListrakRec listrak={listrak} />
+          <Suspense>
+            <Await resolve={root.data.listrakRec}>
+              {(listrakRec) => (
+                <PDPListrakRec listrak={getCMSDoc(listrakRec, 'PDP')} />
+              )}
+            </Await>
+          </Suspense>
         </ContentSection>
 
         <ContentSection>

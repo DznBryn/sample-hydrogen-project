@@ -39,16 +39,16 @@ export const loader = async ({params, context, request}) => {
       query = PRODUCTS_QUERY;
   }
 
-  const {collection} = await context.storefront.query(query, {
-    variables: {handle},
-    cache: context.storefront.CacheLong(),
-  });
-  if (!collection) throw new Response(null, {status: 404});
-
-  const [filtersOptions, collectionsCMSData] = await Promise.all([
+  const [{collection}, filtersOptions, collectionsCMSData] = await Promise.all([
+    context.storefront.query(query, {
+      variables: {handle},
+      cache: context.storefront.CacheLong(),
+    }),
     getCMSContent(context, GET_PLP_FILTER_MENU),
     getCMSContent(context, GET_PRODUCT_COLLECTIONS),
   ]);
+
+  if (!collection) throw new Response(null, {status: 404});
 
   return json({
     filtersOptions,
@@ -64,6 +64,7 @@ export const loader = async ({params, context, request}) => {
     },
   });
 };
+
 export default function PLPPage() {
   const [root] = useMatches();
   const productsCMSData = root.data.globalCMSData.products;

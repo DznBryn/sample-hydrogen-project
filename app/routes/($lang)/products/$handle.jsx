@@ -18,7 +18,6 @@ import {
   GET_CART_PAGE_CONFIG,
   GET_CONCEALER_SHADE_IMAGES,
   GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT,
-  GET_LISTRAK_REC,
   GET_VARIANTS_OOS,
 } from '~/utils/graphql/sanity/queries';
 
@@ -28,10 +27,21 @@ export const links = () => {
 
 export const loader = async ({params, context}) => {
   const {handle} = params;
-  const {product} = await context.storefront.query(PRODUCT_QUERY, {
-    variables: {handle},
-    cache: context.storefront.CacheLong(),
-  });
+  const queries = [
+    GET_AUTO_DELIVERY_INFO_MESSAGE,
+    GET_VARIANTS_OOS,
+    GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT,
+    GET_CONCEALER_SHADE_IMAGES,
+    GET_CART_PAGE_CONFIG,
+  ];
+
+  const [{product}, contents] = await Promise.all([
+    context.storefront.query(PRODUCT_QUERY, {
+      variables: {handle},
+      cache: context.storefront.CacheLong(),
+    }),
+    getGroupOfCMSContent(context, queries),
+  ]);
 
   if (!product) {
     throw new Response(null, {status: 404});
@@ -55,21 +65,6 @@ export const loader = async ({params, context}) => {
       }
     : null;
 
-  //
-
-  const queries = [
-    GET_AUTO_DELIVERY_INFO_MESSAGE,
-    GET_VARIANTS_OOS,
-    GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT,
-    GET_CONCEALER_SHADE_IMAGES,
-    GET_LISTRAK_REC,
-    GET_CART_PAGE_CONFIG,
-  ];
-
-  const contents = await getGroupOfCMSContent(context, queries);
-
-  //
-
   return json({
     product: data,
     ...contents,
@@ -81,7 +76,6 @@ export default function PDPPage() {
   const {
     CartPageConfig,
     product,
-    ListrakRec,
     ConcealerShadeImages,
     AutoDeliveryInfoMessage,
     VariantsOOS,
@@ -100,7 +94,6 @@ export default function PDPPage() {
       <PDP
         product={currentProduct}
         cart={getCMSDoc(CartPageConfig, 'DefaultCart')}
-        listrak={getCMSDoc(ListrakRec, 'PDP')}
         autoDeliveryInfo={getCMSDoc(
           AutoDeliveryInfoMessage,
           'Auto Delivery Details',

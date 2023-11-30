@@ -1,89 +1,86 @@
-import { useEffect, useMemo } from 'react';
-import { useCollection } from '~/hooks/useCollection';
-import ListrakRec, { links as listrakRecStyles } from '../listrakRec';
-import ProductBoxLoading, { links as productBoxLoadingStyles } from '../productBoxLoading';
-import PLPProductBox, { links as plpProductBoxStyles } from '../plp/plpProductBox';
-import { useYotpo } from '~/hooks/useYotpo';
-import { useSearch } from '~/hooks/useSearch';
+import {Suspense, useEffect, useMemo} from 'react';
+import {useCollection} from '~/hooks/useCollection';
+import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
+import ProductBoxLoading, {
+  links as productBoxLoadingStyles,
+} from '../productBoxLoading';
+import PLPProductBox, {
+  links as plpProductBoxStyles,
+} from '../plp/plpProductBox';
+import {useYotpo} from '~/hooks/useYotpo';
+import {useSearch} from '~/hooks/useSearch';
 
 import styles from './styles.css';
+import {Await, useMatches} from '@remix-run/react';
+import {getCMSDoc} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [
-    { rel: 'stylesheet', href: styles },
+    {rel: 'stylesheet', href: styles},
     ...listrakRecStyles(),
     ...productBoxLoadingStyles(),
     ...plpProductBoxStyles(),
   ];
 };
 
-
-const SearchPage = ({ listrak, searchQuery, algoliaKeys }) => {
-
+const SearchPage = ({searchQuery, algoliaKeys}) => {
+  const [root] = useMatches();
   const {refreshWidgets} = useYotpo();
 
-  const { state, products: allProducts } = useCollection('all');
-  const { search, status, hits } = useSearch(algoliaKeys);
-  
-  const results = useMemo(
-    () => (getResults() || []),
-    [hits, state]
-  );
+  const {state, products: allProducts} = useCollection('all');
+  const {search, status, hits} = useSearch(algoliaKeys);
+
+  const results = useMemo(() => getResults() || [], [hits, state]);
 
   useEffect(() => {
-
     refreshWidgets();
-
   });
 
   useEffect(() => {
-
     if (status === 'idle' && searchQuery !== '') search(searchQuery);
-
   }, [status]);
 
-  function getResults(){
-
-    if (hits.length > 0 && state === 'loaded'){
-
+  function getResults() {
+    if (hits.length > 0 && state === 'loaded') {
       const titles = hits.map((hit) => hit.title);
-      
-      return allProducts.filter((product) => (titles.indexOf(product.title) !== -1));
 
+      return allProducts.filter(
+        (product) => titles.indexOf(product.title) !== -1,
+      );
     }
-
   }
 
   return (
-
     <div className={'searchPage'}>
-      {
-        (
-          (status === 'searching') || 
-          (status === 'completed' && hits.length > 0 && results.length === 0)
-        ) &&
+      {(status === 'searching' ||
+        (status === 'completed' &&
+          hits.length > 0 &&
+          results.length === 0)) && (
         <div className={'searchPageProducts'}>
-          {
-            Array.from(Array(4), (value, index) => <ProductBoxLoading key={index} />)
-          }
+          {Array.from(Array(4), (value, index) => (
+            <ProductBoxLoading key={index} />
+          ))}
         </div>
-      }
+      )}
 
-      {
-        (
-          (searchQuery === '') ||
-          (status === 'completed' && hits.length === 0)
-        ) &&
+      {(searchQuery === '' ||
+        (status === 'completed' && hits.length === 0)) && (
         <div className={'searchTitle'}>
           <h1>
-            Your search for <strong>&quot;{searchQuery}&quot;</strong> did not yield any results.
+            Your search for <strong>&quot;{searchQuery}&quot;</strong> did not
+            yield any results.
           </h1>
-          <ListrakRec listrak={listrak} />
+          <Suspense>
+            <Await resolve={root.data.listrakRec}>
+              {(listrakRec) => (
+                <ListrakRec listrak={getCMSDoc(listrakRec, 'Search')} />
+              )}
+            </Await>
+          </Suspense>
         </div>
-      }
+      )}
 
-      {
-        (status === 'completed' && hits.length > 0 && results.length > 0) &&
+      {status === 'completed' && hits.length > 0 && results.length > 0 && (
         <>
           <div className={'searchTitle'}>
             <h1>
@@ -99,10 +96,8 @@ const SearchPage = ({ listrak, searchQuery, algoliaKeys }) => {
             })}
           </div>
         </>
-      }
-
+      )}
     </div>
-
   );
 };
 export default SearchPage;
