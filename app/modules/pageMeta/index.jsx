@@ -17,6 +17,20 @@ const PageMeta = () => {
     <>
       <script
         defer
+        src={`https://cdn-loyalty.yotpo.com/loader/${
+          getApiKeys().YOTPO_LOYALTY_GUID
+        }.js`}
+      ></script>
+
+      <script
+        defer
+        src={`https://cdn-widgetsrepository.yotpo.com/v1/loader/${
+          getApiKeys().YOTPO_LOYALTY_GUID
+        }`}
+      ></script>
+
+      <script
+        defer
         src={`https://staticw2.yotpo.com/${getApiKeys().YOTPO_KEY}/widget.js`}
       ></script>
 
