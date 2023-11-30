@@ -1,6 +1,6 @@
 import SkinQuizAgeEmailOptIn, {
   links as skinQuizAgeEmailStyles,
-} from '~/modules/quiz/skinQuizAgeEmailOptIn';
+} from '~/modules/quiz/components/skinQuizAgeEmailOptIn';
 
 import ProductBox, {
   links as productBoxStyles,
@@ -26,12 +26,37 @@ const ResultView = ({content}) => {
     setRangeAge,
     resultState,
     handleGetProductByID,
+    answers,
     advancedResultsState,
     advancedQuizContent,
   } = content;
+
+  function getLTPostResult() {
+    let aResults = [];
+    let aAdvResults = [];
+
+    for (let i in resultState) {
+      if (resultState[i][0]) {
+        aResults.push(handleGetProductByID(resultState[i][0].productId));
+      }
+    }
+
+    aAdvResults = advancedResultsState
+      ? advancedResultsState
+          .slice(0, 3)
+          .map((prod) => handleGetProductByID(prod.productId))
+      : [];
+
+    return [...aResults, ...aAdvResults];
+  }
+
   return (
     <main className="finalWrapper">
-      <SkinQuizAgeEmailOptIn setRangeAge={setRangeAge} />
+      <SkinQuizAgeEmailOptIn
+        setRangeAge={setRangeAge}
+        quizAnswers={answers}
+        concatResults={getLTPostResult()}
+      />
 
       <section className="quizResults">
         <h2>We’ve found your perfect eye care routine.</h2>

@@ -94,7 +94,6 @@ const SkinQuiz = ({content}) => {
 
   function handleAnswersSubmit(answer) {
     /* Manage status bar fill */
-
     const questionPercent = Math.floor(100 / questionsState.length);
     const statusBarWidth = step + 1;
 
@@ -104,30 +103,30 @@ const SkinQuiz = ({content}) => {
       ? (statusBar.style.width = '100%')
       : (statusBar.style.width = statusBarWidth * questionPercent + '%');
 
-    let arr = answerState;
+    let answersArray = answerState;
     let questions = structuredClone(questionsState);
 
     if (multipleChoice) {
-      arr[step] = [];
-      answer.forEach((ans) => {
-        arr[step] = [...arr[step], ...ans.qualifiers];
+      answersArray[step] = [];
+      answer.forEach((a) => {
+        answersArray[step] = [...answersArray[step], ...a.qualifiers];
 
-        if (ans.subQuestion) {
+        if (a.subQuestion) {
           const returnQuestions = quizz.handleAddSubQuestionIntoQuestionsQueue(
             questions,
-            ans,
+            a,
           );
 
           setQuestionsState(returnQuestions);
         }
 
-        setAnswerState(arr);
+        setAnswerState(answersArray);
       });
 
       return increaseStep();
     }
 
-    arr[step] = answer.qualifiers;
+    answersArray[step] = answer.qualifiers;
 
     if (answer.subQuestion) {
       const returnQuestions = quizz.handleAddSubQuestionIntoQuestionsQueue(
@@ -138,7 +137,7 @@ const SkinQuiz = ({content}) => {
       setQuestionsState(returnQuestions);
     }
 
-    setAnswerState(arr);
+    setAnswerState(answersArray);
 
     increaseStep();
   }
@@ -272,6 +271,12 @@ const SkinQuiz = ({content}) => {
 
   if (advancedResultsState.length) {
     resultContent = {...resultContent, advancedQuizContent};
+  }
+
+  if (Object.keys(resultState).length) {
+    const {answersArr} = getResult();
+
+    resultContent = {...resultContent, answers: answersArr};
   }
 
   useEffect(() => {
