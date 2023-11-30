@@ -121,14 +121,14 @@ const EyeQuiz = ({content}) => {
         ? [...answersArr, 'no-care', rangeAge]
         : [...answersArr, rangeAge];
 
-    const catProducts = quizz.handleGetRegularResultsByCategory(
+    const result = quizz.handleGetRegularResultsByCategory(
       quizResults,
       answersArr,
       multipleChoiceState,
       productQualifierKey,
     );
 
-    return catProducts;
+    return {result, answersArr};
   }
 
   const calloutFontColor = {
@@ -177,11 +177,17 @@ const EyeQuiz = ({content}) => {
     handleAnswersSubmit,
   };
 
-  const resultContent = {setRangeAge, resultState, handleGetProductByID};
+  let resultContent = {setRangeAge, resultState, handleGetProductByID};
+
+  if (Object.keys(resultState).length) {
+    const {answersArr} = getResult();
+
+    resultContent = {...resultContent, answers: answersArr};
+  }
 
   useEffect(() => {
     if (quizQuestions.length === step && rangeAge) {
-      const result = getResult();
+      const {result} = getResult();
 
       setResultState(result);
     }
