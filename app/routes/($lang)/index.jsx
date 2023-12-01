@@ -73,30 +73,7 @@ export const action = async ({request, context}) => {
 };
 
 export async function loader({context}) {
-  const [
-    carouselSlidesGroup,
-    hpRecs,
-    concerns,
-    homepageWhyProbioticsContent,
-    homepageSkinQuizContent,
-    homepageCollectionCallout,
-  ] = await Promise.all([
-    getCMSContent(context, GET_CAROUSEL_SLIDES_GROUP),
-    getCMSContent(context, GET_HOME_PAGE_RECOMMENDATIONS),
-    getCMSContent(context, GET_HOMEPAGE_SHOP_BY_CONCERN),
-    getCMSContent(context, GET_HOMEPAGE_WHY_PROBIOTICS),
-    getCMSContent(context, GET_HOMEPAGE_SKIN_QUIZ),
-    getCMSContent(context, GET_HOMEPAGE_COLLECTION_CALLOUT),
-  ]);
-
-  return {
-    carouselSlidesGroup,
-    hpRecs,
-    concerns,
-    homepageWhyProbioticsContent,
-    homepageSkinQuizContent,
-    homepageCollectionCallout,
-  };
+  return {...(await fetchContentData(context))};
 }
 
 export default function Index() {
@@ -127,4 +104,33 @@ export default function Index() {
       />
     </Layouts.MainNavFooter>
   );
+}
+
+//
+
+async function fetchContentData(context) {
+  const [
+    carouselSlidesGroup,
+    hpRecs,
+    concerns,
+    homepageWhyProbioticsContent,
+    homepageSkinQuizContent,
+    homepageCollectionCallout,
+  ] = await Promise.all([
+    getCMSContent(context, GET_CAROUSEL_SLIDES_GROUP),
+    getCMSContent(context, GET_HOME_PAGE_RECOMMENDATIONS),
+    getCMSContent(context, GET_HOMEPAGE_SHOP_BY_CONCERN),
+    getCMSContent(context, GET_HOMEPAGE_WHY_PROBIOTICS),
+    getCMSContent(context, GET_HOMEPAGE_SKIN_QUIZ),
+    getCMSContent(context, GET_HOMEPAGE_COLLECTION_CALLOUT),
+  ]);
+
+  return {
+    carouselSlidesGroup,
+    hpRecs,
+    concerns,
+    homepageWhyProbioticsContent,
+    homepageSkinQuizContent,
+    homepageCollectionCallout,
+  };
 }
