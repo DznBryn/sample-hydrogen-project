@@ -2,7 +2,7 @@ import {useEffect, useMemo} from 'react';
 import {useFetcher, useMatches} from '@remix-run/react';
 import {getCollectionWithCMSData} from '~/utils/functions/eventFunctions';
 
-export function useCollection(slug, customQuery) {
+export function useCollection(slug, customQueryName) {
   const [root] = useMatches();
   const productsCMSData = root.data.globalCMSData.products;
 
@@ -11,8 +11,8 @@ export function useCollection(slug, customQuery) {
 
   useEffect(() => {
     if (slug && state === 'idle' && data === undefined) {
-      const endpoint = customQuery
-        ? `/collections/${slug}?query=${customQuery}`
+      const endpoint = customQueryName
+        ? `/collections/${slug}?query=${customQueryName}`
         : `/collections/${slug}`;
       fetcher.load(endpoint);
     }

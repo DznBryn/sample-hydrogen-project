@@ -180,3 +180,55 @@ export const NAV_COLLECTION_CAROUSEL = `#graphql
   }
 }
 `;
+
+export const HOMEPAGE_RECS_PRODUCTS_QUERY = `#graphql
+  query Collection($handle: String!) {
+  collection(handle: $handle){
+    handle
+    title
+    description
+    metafields(identifiers:[
+      { namespace: "global", key: "sub_title"},
+    ]) {
+      key
+      value
+    }
+    products(first: 4){
+      nodes {
+        id
+        title
+        handle
+        tags
+        productType
+        images(first: 2) {
+          nodes {
+            url
+            altText
+            height
+            width
+          }
+        }
+        variants(first: 10){
+          nodes {
+            id
+            price{
+              amount
+            }
+          }
+        }
+        priceRange{
+          minVariantPrice {
+            ...MoneyFragment
+          }
+          maxVariantPrice {
+            ...MoneyFragment
+          }
+        }
+        availableForSale
+        totalInventory
+      }
+    }
+  }
+}
+${MONEY_FRAGMENT}
+`;

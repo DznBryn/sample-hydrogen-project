@@ -1,4 +1,5 @@
 import {
+  HOMEPAGE_RECS_PRODUCTS_QUERY,
   NAV_COLLECTION_CAROUSEL,
   PRODUCTS_QUERY,
 } from '~/utils/graphql/shopify/queries/collections';
@@ -33,6 +34,10 @@ export const loader = async ({params, context, request}) => {
   switch (customQueryName) {
     case 'NAV_COLLECTION_CAROUSEL':
       query = NAV_COLLECTION_CAROUSEL;
+      break;
+
+    case 'HOMEPAGE_RECS_PRODUCTS_QUERY':
+      query = HOMEPAGE_RECS_PRODUCTS_QUERY;
       break;
 
     default:
