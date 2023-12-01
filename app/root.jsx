@@ -80,14 +80,14 @@ export async function loader({context, request}) {
 }
 
 export default function App() {
-  const loaderData = useLoaderData();
+  const {cart} = useLoaderData();
   const {setData: setCartData = () => {}, data = null} = useStore(
     (store) => store?.cart ?? null,
   );
 
   useEffect(() => {
-    if (loaderData?.cart?.id && loaderData?.cart?.id !== data?.id) {
-      setCartData(loaderData.cart);
+    if (cart?.id && cart?.id !== data?.id) {
+      setCartData(cart);
     }
   }, []);
 
