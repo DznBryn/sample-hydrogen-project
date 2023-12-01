@@ -5,6 +5,19 @@ import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection} from '@shopify/hydrogen';
 import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
+import {getCollectionProducts} from '../graphql/shopify/queries/collections';
+import {
+  GET_FOOTERS,
+  GET_EMAIL_SMS_SIGNUP_CONTENT,
+  GET_CART_PAGE_CONFIG,
+  GET_ANNOUNCEMENT_HEADER,
+  GET_MOBILE_NAV_BAR,
+  GET_HEADER_CONFIG,
+  GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
+  GET_ANNOUNCEMENT_TOP_BANNER,
+  GET_SITE_WIDE_SETTINGS,
+  GET_SEARCH_CONFIG,
+} from '~/utils/graphql/sanity/queries';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US')
   ? 'afterpay'
@@ -584,19 +597,6 @@ export async function getCMSContent(context, query, variables) {
   return Object.values(result.data)[0];
 }
 
-export async function getGroupOfCMSContent(context, queries = []) {
-  const promises = queries.map((querie) => getCMSContent(context, querie));
-  const values = await Promise.all(promises);
-  const result = values.reduce((accumulator, curValue) => {
-    const contentTypeName = curValue[0].__typename;
-    accumulator[contentTypeName] = curValue;
-
-    return accumulator;
-  }, {});
-
-  return result;
-}
-
 export function getCMSDoc(content, docName) {
   return content.find((doc) => doc.name === docName);
 }
@@ -660,6 +660,48 @@ export function getPageOnCMSBySlug(pagesOnCMS, slug) {
     page = pagesOnCMS.find((data) => data.pageSlug === slug);
 
   return page;
+}
+
+export async function getMainNavFooterCMSData(context) {
+  const [
+    collection,
+    Footers,
+    EmailSmsSignupContent,
+    CartPageConfig,
+    AnnouncementHeaders,
+    MobileNavbar,
+    HeaderConfig,
+    MobileNavFooterMainButton,
+    AnnouncementTopBanner,
+    SiteWideSettings,
+    SearchConfig,
+  ] = await Promise.all([
+    getCollectionProducts(context, 'all'),
+    getCMSContent(context, GET_FOOTERS),
+    getCMSContent(context, GET_EMAIL_SMS_SIGNUP_CONTENT),
+    getCMSContent(context, GET_CART_PAGE_CONFIG),
+    getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
+    getCMSContent(context, GET_MOBILE_NAV_BAR),
+    getCMSContent(context, GET_HEADER_CONFIG),
+    getCMSContent(context, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON),
+    getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER),
+    getCMSContent(context, GET_SITE_WIDE_SETTINGS),
+    getCMSContent(context, GET_SEARCH_CONFIG),
+  ]);
+
+  return {
+    collection,
+    Footers,
+    EmailSmsSignupContent,
+    CartPageConfig,
+    AnnouncementHeaders,
+    MobileNavbar,
+    HeaderConfig,
+    MobileNavFooterMainButton,
+    AnnouncementTopBanner,
+    SiteWideSettings,
+    SearchConfig,
+  };
 }
 
 /**

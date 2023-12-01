@@ -1,16 +1,8 @@
-import {useEffect} from 'react';
-import {useStore} from './hooks/useStore';
-import PageMeta from './modules/pageMeta';
-import favicon from '../public/favicon.ico';
-import {defer} from '@shopify/remix-oxygen';
-import {links as layoutsStyles} from '~/layouts';
-import {redirect} from '@remix-run/server-runtime';
-import getApiKeys from './utils/functions/getApiKeys';
-import {getMainNavFooterCMSData} from './layouts/MainNavFooter';
 import {
   getCMSContent,
   getCartData,
   getCustomerData,
+  getMainNavFooterCMSData,
 } from './utils/functions/eventFunctions';
 import {
   Links,
@@ -32,7 +24,15 @@ import CatchContent, {
   links as catchBoundaryStyles,
 } from './boundaries/catchContent';
 import {useRouteError, isRouteErrorResponse} from '@remix-run/react';
+import getApiKeys from './utils/functions/getApiKeys';
+import {redirect} from '@remix-run/server-runtime';
+import {links as layoutsStyles} from '~/layouts';
+import favicon from '../public/favicon.ico';
+import {defer} from '@shopify/remix-oxygen';
+import {useStore} from './hooks/useStore';
+import PageMeta from './modules/pageMeta';
 import styles from './styles/app.css';
+import {useEffect} from 'react';
 
 export const links = () => {
   return [
@@ -92,7 +92,8 @@ export async function loader({context, request}) {
     cart,
     customer,
     listrakRec,
-    globalCMSData: {mainNavFooter, products},
+    mainNavFooterCMSData: mainNavFooter,
+    productsCMSData: products,
   });
 }
 

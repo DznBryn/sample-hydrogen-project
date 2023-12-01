@@ -1,18 +1,8 @@
-import Layouts from '~/layouts';
-
-import {flattenConnection} from '@shopify/hydrogen-react';
-import {useLoaderData} from 'react-router';
-import {PRODUCT_QUERY} from '~/utils/graphql/shopify/queries/collections';
-import {json} from '@shopify/remix-oxygen';
-
-import PDP, {links as pdpStyles} from '~/modules/pdp';
-import {useMatches} from '@remix-run/react';
 import {
+  getCMSContent,
   getCMSDoc,
-  getGroupOfCMSContent,
   getProductWithCMSData,
 } from '~/utils/functions/eventFunctions';
-import {useMemo} from 'react';
 import {
   GET_AUTO_DELIVERY_INFO_MESSAGE,
   GET_CART_PAGE_CONFIG,
@@ -20,6 +10,14 @@ import {
   GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT,
   GET_VARIANTS_OOS,
 } from '~/utils/graphql/sanity/queries';
+import {PRODUCT_QUERY} from '~/utils/graphql/shopify/queries/collections';
+import {flattenConnection} from '@shopify/hydrogen-react';
+import PDP, {links as pdpStyles} from '~/modules/pdp';
+import {useMatches} from '@remix-run/react';
+import {useLoaderData} from 'react-router';
+import {json} from '@shopify/remix-oxygen';
+import Layouts from '~/layouts';
+import {useMemo} from 'react';
 
 export const links = () => {
   return [...pdpStyles()];
@@ -27,20 +25,24 @@ export const links = () => {
 
 export const loader = async ({params, context}) => {
   const {handle} = params;
-  const queries = [
-    GET_AUTO_DELIVERY_INFO_MESSAGE,
-    GET_VARIANTS_OOS,
-    GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT,
-    GET_CONCEALER_SHADE_IMAGES,
-    GET_CART_PAGE_CONFIG,
-  ];
 
-  const [{product}, contents] = await Promise.all([
+  const [
+    {product},
+    AutoDeliveryInfoMessage,
+    VariantsOOS,
+    ExclusiveProductBannerReleaseContent,
+    ConcealerShadeImages,
+    CartPageConfig,
+  ] = await Promise.all([
     context.storefront.query(PRODUCT_QUERY, {
       variables: {handle},
       cache: context.storefront.CacheLong(),
     }),
-    getGroupOfCMSContent(context, queries),
+    getCMSContent(context, GET_AUTO_DELIVERY_INFO_MESSAGE),
+    getCMSContent(context, GET_VARIANTS_OOS),
+    getCMSContent(context, GET_EXCLUSIVE_PRODUCT_BANNER_RELEASE_CONTENT),
+    getCMSContent(context, GET_CONCEALER_SHADE_IMAGES),
+    getCMSContent(context, GET_CART_PAGE_CONFIG),
   ]);
 
   if (!product) {
@@ -67,7 +69,11 @@ export const loader = async ({params, context}) => {
 
   return json({
     product: data,
-    ...contents,
+    AutoDeliveryInfoMessage,
+    VariantsOOS,
+    ExclusiveProductBannerReleaseContent,
+    ConcealerShadeImages,
+    CartPageConfig,
   });
 };
 
@@ -82,7 +88,7 @@ export default function PDPPage() {
     ExclusiveProductBannerReleaseContent,
   } = useLoaderData();
 
-  const productsCMSData = root.data.globalCMSData.products;
+  const {productsCMSData} = root.data;
 
   const currentProduct = useMemo(
     () => getProductWithCMSData(product, productsCMSData),

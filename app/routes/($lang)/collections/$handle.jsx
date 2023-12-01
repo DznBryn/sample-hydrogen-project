@@ -72,8 +72,8 @@ export const loader = async ({params, context, request}) => {
 
 export default function PLPPage() {
   const [root] = useMatches();
-  const productsCMSData = root.data.globalCMSData.products;
-  const {CartPageConfig} = root.data.globalCMSData.mainNavFooter;
+  const {productsCMSData, mainNavFooterCMSData} = root.data;
+  const {CartPageConfig} = mainNavFooterCMSData;
 
   const {filtersOptions, collectionsCMSData, collection} = useLoaderData();
 

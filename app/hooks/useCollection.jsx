@@ -4,7 +4,7 @@ import {getCollectionWithCMSData} from '~/utils/functions/eventFunctions';
 
 export function useCollection(slug, customQueryName) {
   const [root] = useMatches();
-  const productsCMSData = root.data.globalCMSData.products;
+  const {productsCMSData} = root.data;
 
   const fetcher = useFetcher();
   const {state, data} = fetcher;

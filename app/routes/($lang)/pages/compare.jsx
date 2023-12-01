@@ -52,7 +52,7 @@ export default function Compare() {
   const [root] = useMatches();
   const {collection, collectionsCMSData, productsToShow} = useLoaderData();
 
-  const productsCMSData = root.data.globalCMSData.products;
+  const productsCMSData = root.data;
 
   const collectionWithCMSData = useMemo(
     () =>

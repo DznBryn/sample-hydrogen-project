@@ -1,32 +1,18 @@
 import SliderAccount, {
   links as sliderAccountStyles,
 } from '~/modules/sliderAccount';
-import SliderCart, {links as sliderCartStyles} from '~/modules/sliderCart';
-import MainNav, {links as mainNavStyles} from '~/modules/mainNav';
-import Footer, {links as footerStyles} from '~/modules/footer';
-import BodyBottom, {links as BodyBottomStyles} from '~/modules/bodyBottom';
 import NavPlaceholder, {
   links as NavPlaceholderStyles,
 } from '~/modules/navPlaceholder';
-import {useMatches} from '@remix-run/react';
 import {
-  getGroupOfCMSContent,
   getCMSDoc,
   getCollectionWithCMSData,
 } from '~/utils/functions/eventFunctions';
-import {getCollectionProducts} from '~/utils/graphql/shopify/queries/collections';
-import {
-  GET_FOOTERS,
-  GET_EMAIL_SMS_SIGNUP_CONTENT,
-  GET_CART_PAGE_CONFIG,
-  GET_ANNOUNCEMENT_HEADER,
-  GET_MOBILE_NAV_BAR,
-  GET_HEADER_CONFIG,
-  GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
-  GET_ANNOUNCEMENT_TOP_BANNER,
-  GET_SITE_WIDE_SETTINGS,
-  GET_SEARCH_CONFIG,
-} from '~/utils/graphql/sanity/queries';
+import SliderCart, {links as sliderCartStyles} from '~/modules/sliderCart';
+import BodyBottom, {links as BodyBottomStyles} from '~/modules/bodyBottom';
+import MainNav, {links as mainNavStyles} from '~/modules/mainNav';
+import Footer, {links as footerStyles} from '~/modules/footer';
+import {useMatches} from '@remix-run/react';
 import {useMemo} from 'react';
 
 export const links = () => {
@@ -42,8 +28,7 @@ export const links = () => {
 
 const MainNavFooter = ({children}) => {
   const [root] = useMatches();
-  const CMSData = root.data.globalCMSData.mainNavFooter;
-  const productsCMSData = root.data.globalCMSData.products;
+  const {mainNavFooterCMSData, productsCMSData} = root.data;
 
   const {
     Footers,
@@ -57,7 +42,7 @@ const MainNavFooter = ({children}) => {
     // SiteWideSettings,
     SearchConfig,
     collection,
-  } = CMSData;
+  } = mainNavFooterCMSData;
 
   const collectionWithCMSData = useMemo(
     () => getCollectionWithCMSData(collection, productsCMSData),
@@ -116,32 +101,3 @@ const MainNavFooter = ({children}) => {
 };
 
 export default MainNavFooter;
-
-/**
- * add query here to get content on globalCMSData obj;
- */
-
-export async function getMainNavFooterCMSData(context) {
-  const queries = [
-    GET_FOOTERS,
-    GET_EMAIL_SMS_SIGNUP_CONTENT,
-    GET_CART_PAGE_CONFIG,
-    GET_ANNOUNCEMENT_HEADER,
-    GET_MOBILE_NAV_BAR,
-    GET_HEADER_CONFIG,
-    GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
-    GET_ANNOUNCEMENT_TOP_BANNER,
-    GET_SITE_WIDE_SETTINGS,
-    GET_SEARCH_CONFIG,
-  ];
-
-  const [contents, collection] = await Promise.all([
-    getGroupOfCMSContent(context, queries),
-    getCollectionProducts(context, 'all'),
-  ]);
-
-  return {
-    ...contents,
-    collection,
-  };
-}
