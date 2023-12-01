@@ -25,10 +25,9 @@ import CatchContent, {
 } from './boundaries/catchContent';
 import {useRouteError, isRouteErrorResponse} from '@remix-run/react';
 import getApiKeys from './utils/functions/getApiKeys';
-import {redirect} from '@remix-run/server-runtime';
+import {defer, redirect} from '@remix-run/server-runtime';
 import {links as layoutsStyles} from '~/layouts';
 import favicon from '../public/favicon.ico';
-import {defer} from '@shopify/remix-oxygen';
 import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
 import styles from './styles/app.css';
@@ -64,29 +63,12 @@ export const meta = () => [
 ];
 
 export async function loader({context, request}) {
-  //redirects handle
-  const {pathname} = new URL(request.url);
+  const {destination, statusCode} = await checkRedirect(context, request);
 
-  if (pathname.length > 1) {
-    const redirectObj = await getCMSContent(context, GET_REDIRECTS, {
-      source: pathname,
-    });
+  if (destination && statusCode) return redirect(destination, statusCode);
 
-    if (redirectObj[0]?.destination) {
-      const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
-      return redirect(redirectObj[0]?.destination, statusCode);
-    }
-  }
-  //
-
-  const listrakRec = getCMSContent(context, GET_LISTRAK_REC);
-
-  const [cart, customer, mainNavFooter, products] = await Promise.all([
-    getCartData(context),
-    getCustomerData(context),
-    getMainNavFooterCMSData(context),
-    getCMSContent(context, GET_PRODUCTS),
-  ]);
+  const {cart, customer, listrakRec, mainNavFooter, products} =
+    await fetchContentData(context);
 
   return defer({
     cart,
@@ -162,4 +144,43 @@ function RootStructure({children}) {
       </body>
     </html>
   );
+}
+
+//
+
+async function checkRedirect(context, request) {
+  const {pathname} = new URL(request.url);
+  let redirect = {};
+
+  if (pathname.length > 1) {
+    const redirectObj = await getCMSContent(context, GET_REDIRECTS, {
+      source: pathname,
+    });
+
+    if (redirectObj[0]?.destination) {
+      const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
+      redirect = {destination: redirectObj[0]?.destination, statusCode};
+    }
+  }
+
+  return redirect;
+}
+
+async function fetchContentData(context) {
+  const listrakRec = getCMSContent(context, GET_LISTRAK_REC);
+
+  const [cart, customer, mainNavFooter, products] = await Promise.all([
+    getCartData(context),
+    getCustomerData(context),
+    getMainNavFooterCMSData(context),
+    getCMSContent(context, GET_PRODUCTS),
+  ]);
+
+  return {
+    cart,
+    customer,
+    listrakRec,
+    mainNavFooter,
+    products,
+  };
 }
