@@ -368,7 +368,7 @@ const PLP = ({
         </div>
         {BestSellerProductRecommendation()}
         {isInfluencerPage === false ? (
-          <FireWorkPLPCarousel collectionSlug={collection.handle} />
+          <FireWorkPLPCarousel collectionSlug={slug} />
         ) : null}
         {collection.description && (
           <p className={'description'}>{collection.description}</p>
