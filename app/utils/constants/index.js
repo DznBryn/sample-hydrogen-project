@@ -2,6 +2,7 @@ export const API_METHODS = {
   GET: 'GET',
   POST: 'POST',
   UPDATE: 'UPDATE',
+  PATCH: 'PATCH',
   DELETE: 'DELETE',
 };
 
@@ -53,7 +54,7 @@ export const MESSAGE_ERROR = {
       'The email address you entered is too long. Please enter a valid email address.',
     TOO_SHORT: 'Please enter a valid email address.',
     UNIDENTIFIED_CUSTOMER:
-      "The email address you entered don't match any TULA account. Please try again.",
+      'The email address you entered don\'t match any TULA account. Please try again.',
   },
   PASSWORD: {
     ALREADY_ENABLED:
@@ -71,7 +72,7 @@ export const MESSAGE_ERROR = {
     TOO_SHORT:
       'For safety purposes, passwords must be a minimum of 5 characters. Please re-enter.',
     UNIDENTIFIED_CUSTOMER:
-      "The password you entered don't match any TULA account. Please try again.",
+      'The password you entered don\'t match any TULA account. Please try again.',
   },
 };
 

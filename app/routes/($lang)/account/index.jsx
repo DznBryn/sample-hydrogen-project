@@ -3,6 +3,7 @@ import {
   CacheShort,
   flattenConnection,
   generateCacheControlHeader,
+  parseGid,
 } from '@shopify/hydrogen';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {
@@ -20,6 +21,13 @@ import {
   UPDATE_ADDRESS_MUTATION,
   UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from '~/utils/graphql/shopify/mutations/customer';
+import {
+  getCollectionProducts,
+  getCustomerAddresses,
+  getCustomerOrders,
+  getCustomerSubscription,
+  reactivateSubscription,
+} from '~/utils/services/subscription';
 
 export function links() {
   return [...accountStyles()];
@@ -28,10 +36,8 @@ export function links() {
 export async function action({request, context}) {
   const {storefront, session} = context;
 
-  const [formData, customerAccessToken] = await Promise.all([
-    request.formData(),
-    session.get('customerAccessToken'),
-  ]);
+  const formData = await request.formData();
+  const customerAccessToken = await session.get('customerAccessToken');
 
   if (typeof customerAccessToken !== 'string') {
     return {
@@ -42,6 +48,41 @@ export async function action({request, context}) {
   const addressId = formData.get('addressId');
   const formAction = formData.get('formAction');
 
+  // SUBSCRIPTION
+  if (formAction.includes('SUBSCRIPTION')) {
+    if (formAction === 'SUBSCRIPTION_REACTIVATE') {
+      const resubscribe = {
+        public_id: formData.get('publicId'),
+        customer: formData.get('customerId'),
+        every: formData.get('every'),
+        every_period: formData.get('everyPeriod'),
+        start_Date: formData.get('startDate'),
+      };
+      const res = await reactivateSubscription(resubscribe);
+      if (!res?.customer) {
+        return {
+          message: res,
+          status: 400,
+        };
+      }
+
+      const activeSubscription = await getCustomerSubscription(
+        res.customer,
+        true,
+      );
+      const inactiveSubscription = await getCustomerSubscription(res.customer);
+      const subscriptionOrders = await getCustomerOrders(res.customer);
+
+      return {
+        resubscribeItem: res,
+        activeSubscription,
+        inactiveSubscription,
+        subscriptionOrders,
+      };
+    }
+  }
+
+  // ADDRESSES
   const normalizeAddress = {
     firstName: formData?.get('firstName') ?? '',
     lastName: formData?.get('lastName') ?? '',
@@ -252,10 +293,29 @@ export async function loader({request, context, params}) {
       : 'Welcome to your account'
     : 'Account Page';
 
+  const customerId = parseGid(customer?.id)?.id ?? null;
+  const products = await getCollectionProducts(context, 'all');
+  let activeSubscription = {};
+  let inactiveSubscription = {};
+  let subscriptionOrders = {};
+  let subscriptionAddresses = {};
+
+  if (customerId) {
+    activeSubscription = await getCustomerSubscription(customerId, true);
+    inactiveSubscription = await getCustomerSubscription(customerId);
+    subscriptionOrders = await getCustomerOrders(customerId);
+    subscriptionAddresses = await getCustomerAddresses(customerId);
+  }
+
   return defer(
     {
       header,
       customer,
+      activeSubscription,
+      inactiveSubscription,
+      subscriptionOrders,
+      subscriptionAddresses,
+      products,
     },
     {
       headers: {
@@ -266,13 +326,26 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {customer} = useLoaderData();
+  const {
+    customer,
+    activeSubscription,
+    inactiveSubscription,
+    subscriptionOrders,
+    subscriptionAddresses,
+  } = useLoaderData();
   const {data, setCustomerData} = useStore((store) => store?.account);
   useEffect(() => {
     if (data.id === '') {
+      customer.subscription = {};
+      subscriptionAddresses &&
+        (customer.subscription.addresses = subscriptionAddresses);
+      activeSubscription && (customer.subscription.active = activeSubscription);
+      inactiveSubscription &&
+        (customer.subscription.inactive = inactiveSubscription);
+      subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
       setCustomerData(customer);
     }
-  }, []);
+  }, [subscriptionOrders]);
 
   return (
     <Layouts.MainNavFooter>

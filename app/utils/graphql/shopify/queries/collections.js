@@ -80,6 +80,56 @@ export const PRODUCTS_QUERY = `#graphql
 ${MONEY_FRAGMENT}
 `;
 
+export const SUBSCRIPTION_PRODUCTS_QUERY = `#graphql
+  query Collection($handle: String!) {
+  collection(handle: $handle){
+    products(first: 250){
+      nodes {
+        id
+        title
+        handle
+        tags
+        images(first: 2) {
+          nodes {
+            id
+            url
+            altText
+            height
+            width
+          }
+        }
+        variants(first: 25){
+          nodes {
+            id
+            sku
+            image{ 
+              id
+              url
+              altText
+              height
+              width    
+            }
+            price{
+              amount
+            }
+            compareAtPrice{
+              amount
+            }
+            unitPrice{
+              amount
+            }
+            quantityAvailable
+            availableForSale
+          }
+        }
+				
+      }
+    }
+  }
+}
+
+`;
+
 export const PRODUCT_QUERY = `#graphql
   query Product($handle: String!) {
   product(handle: $handle) {
