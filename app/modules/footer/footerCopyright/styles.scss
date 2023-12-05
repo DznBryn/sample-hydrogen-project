@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   font-size: 14px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .footerCopyright p {
@@ -20,14 +20,19 @@
 .footerCopyright #tula-ot-button-container button:hover {
   border: none;
   background-color: #fff0;
-  color: #4C4E56;
+  color: #4c4e56;
   text-transform: capitalize;
   text-decoration: underline;
   font-size: 13.5px;
   display: flex;
   margin-left: 5px;
-  padding: 0;
-  width: 230px;
+  padding: 0 5px 0 0;
+  width: fit-content;
+}
+
+.footerCopyright #privacy-options {
+  height: 13px;
+  width: 27px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -61,4 +66,8 @@
     width: 100%;
   }
 
+  .footerCopyright #privacy-options {
+    height: 9px;
+    width: 18px;
+  }
 }
