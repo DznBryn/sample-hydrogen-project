@@ -21,7 +21,7 @@
 }
 
 .homepageRecProductCard .imgPlaceholder {
-  background: #C9C9C9;
+  background: #c9c9c9;
   height: 255px;
   width: 205px;
   object-fit: cover;
@@ -68,8 +68,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #48C6D9;
-  color: #FFFFFF;
+  background-color: #48c6d9;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 800;
   line-height: 18px;
@@ -86,6 +86,22 @@
   display: none;
 }
 
+.productPlaceholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 498px;
+  margin: 0 3px;
+}
+.productPlaceholder div:first-child {
+  height: 328px;
+}
+.productPlaceholder div:first-child,
+.productPlaceholder div:last-child {
+  width: 270px;
+}
+
 @media all and (max-width: 768px) {
   .homepageRecProducts {
     overflow: scroll;
@@ -95,6 +111,16 @@
     width: 201px;
     margin-right: 16px;
     margin-bottom: 48px;
+  }
+  .productPlaceholder {
+    height: 379px;
+  }
+  .productPlaceholder div:first-child {
+    height: 209px;
+    width: 169px;
+  }
+  .productPlaceholder div:last-child {
+    width: 130px;
   }
 }
 

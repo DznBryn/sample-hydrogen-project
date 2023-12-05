@@ -35,9 +35,10 @@ export function links() {
 
 export async function action({request, context}) {
   const {storefront, session} = context;
-  const formData = await request.formData();
 
+  const formData = await request.formData();
   const customerAccessToken = await session.get('customerAccessToken');
+
   if (typeof customerAccessToken !== 'string') {
     return {
       message: 'You must be logged in to edit your account.',
