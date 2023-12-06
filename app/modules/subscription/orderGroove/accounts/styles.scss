@@ -1,3 +1,40 @@
+.activeProducts ul .modal {
+  height: auto;
+  padding: 2em;
+  width: 100%;
+  max-width: 660px;
+  box-shadow: none;
+  &__container {
+    width: 100%;
+    height: auto;
+    display: grid;
+    gap: 1em;
+  }
+  &__header h3 {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  &__body {
+    width: 100%;
+    height: auto;
+    display: grid;
+    gap: 1em;
+
+    textarea {
+      width: 100%;
+      height: auto;
+      border: 1px solid;
+    }
+  }
+  &__footer {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+  }
+}
+
 .noAutoFound {
   border: #dddddd solid 1px;
   padding: 34px 40px;
@@ -29,6 +66,27 @@
 .hidden {
   display: none;
 }
+.noSubscription {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2em;
+  border: 1px solid #4c4e56;
+  margin: 2em auto;
+  &__container {
+    width: 100%;
+    max-width: 1100px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+  }
+}
+
 .activeProducts,
 .inactiveProducts {
   width: 100%;
@@ -74,11 +132,11 @@
     height: auto;
     width: auto;
     display: grid;
+    gap: 0.5em;
   }
   .itemTitle {
     font-size: 1.1em;
     text-decoration: none;
-    margin-bottom: 0.5em;
   }
   a.itemTitle:hover {
     color: #48c6d9;
@@ -166,6 +224,22 @@
     }
   }
 }
+
+.reasons {
+  width: 100%;
+  height: auto;
+  display: grid;
+  gap: 0.5em;
+  .reason {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 0.5em;
+  }
+}
+
 .col-span-2 {
   grid-column: span 2 / span 2;
 }

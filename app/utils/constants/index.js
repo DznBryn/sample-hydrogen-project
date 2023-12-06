@@ -129,3 +129,16 @@ export const US_STATES = [
   'Wisconsin',
   'Wyoming',
 ];
+
+// SUBSCRIPTIONS
+
+export const CANCEL_REASONS = [
+  'I stopped using this product',
+  'I no longer have any use for this product and I will not need it in the near future',
+  'I wanted to switch to a different product',
+  'I had trouble managing my subscription',
+  'I don\'t like this product',
+  'This product is too expensive',
+  'I have too many of this product',
+  'Other (please specify)',
+];
