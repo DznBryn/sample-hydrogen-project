@@ -1,4 +1,5 @@
 import {flattenConnection} from '@shopify/hydrogen';
+import {API_METHODS} from '~/utils/constants';
 import {SUBSCRIPTION_PRODUCTS_QUERY} from '~/utils/graphql/shopify/queries/collections';
 
 const CryptoJS = require('crypto-js'); // npm install crypto-js
@@ -192,7 +193,7 @@ export async function reactivateSubscription(subscriptionItem) {
 
   try {
     const response = await fetch(url, {
-      method: 'PATCH',
+      method: API_METHODS.PATCH,
       headers,
       body: JSON.stringify({
         every: subscriptionItem.every,
@@ -207,6 +208,88 @@ export async function reactivateSubscription(subscriptionItem) {
     }
     const subscription = await response.json();
     return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function changeFrequency(subscriptionItem) {
+  const url = `https://restapi.ordergroove.com/subscriptions/${subscriptionItem.public_id}/change_frequency`;
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+  console.log('subscriptionItem', subscriptionItem);
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
+      body: JSON.stringify({
+        every: subscriptionItem.every,
+        every_period: subscriptionItem.every_period,
+      }),
+    });
+
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function skipSubscriptionOrder(subscriptionItem) {
+  const url =
+    'https://restapi.ordergroove.com/orders/order_id/skip_subscription/';
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
+      body: JSON.stringify({subscription: subscriptionItem.public_id}),
+    });
+
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function changeProduct(subscriptionItem, newProduct) {
+  const url = `https://restapi.ordergroove.com/subscriptions/${subscriptionItem.public_id}/change_product/`;
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
+      body: JSON.stringify({product: newProduct}),
+    });
+
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const cancelOrder = await response.json();
+    return cancelOrder;
   } catch (error) {
     return error.message;
   }

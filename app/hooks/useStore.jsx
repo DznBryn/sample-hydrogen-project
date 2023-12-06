@@ -49,6 +49,20 @@ export const useStore = create((set) => ({
         };
       });
     },
+    updateCustomerSubscription: (subscription = null) => {
+      return set((state) => {
+        return {
+          ...state,
+          account: {
+            ...state.account,
+            data: {
+              ...state.account.data,
+              subscription,
+            },
+          },
+        };
+      });
+    },
     updateAddresses: (addresses) =>
       set((state) => {
         return {

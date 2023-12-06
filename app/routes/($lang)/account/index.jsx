@@ -27,6 +27,7 @@ import {
   getCustomerOrders,
   getCustomerSubscription,
   reactivateSubscription,
+  skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 
 export function links() {
@@ -75,6 +76,33 @@ export async function action({request, context}) {
 
       return {
         resubscribeItem: res,
+        activeSubscription,
+        inactiveSubscription,
+        subscriptionOrders,
+      };
+    }
+    if (formAction === 'SUBSCRIPTION_SKIP_ORDER') {
+      const res = await skipSubscriptionOrder({
+        public_id: formData.get('publicId'),
+        customer: formData.get('customerId'),
+      });
+
+      if (!res?.customer) {
+        return {
+          message: res,
+          status: 400,
+        };
+      }
+
+      const activeSubscription = await getCustomerSubscription(
+        res.customer,
+        true,
+      );
+      const inactiveSubscription = await getCustomerSubscription(res.customer);
+      const subscriptionOrders = await getCustomerOrders(res.customer);
+
+      return {
+        skippedOrder: res,
         activeSubscription,
         inactiveSubscription,
         subscriptionOrders,
@@ -334,6 +362,7 @@ export default function AccountPage() {
     subscriptionAddresses,
   } = useLoaderData();
   const {data, setCustomerData} = useStore((store) => store?.account);
+
   useEffect(() => {
     if (data.id === '') {
       customer.subscription = {};
@@ -345,7 +374,7 @@ export default function AccountPage() {
       subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
       setCustomerData(customer);
     }
-  }, [subscriptionOrders]);
+  }, []);
 
   return (
     <Layouts.MainNavFooter>
