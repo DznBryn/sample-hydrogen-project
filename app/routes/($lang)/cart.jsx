@@ -1,12 +1,15 @@
-import { Link, useFetcher, useLoaderData } from '@remix-run/react';
-import { json } from '@shopify/remix-oxygen';
-import { useEffect } from 'react';
-import { API_METHODS } from '~/utils/constants';
-import { cartAddItems, cartCreate, cartRemoveItems, cartUpdate, cartUpdateCustomerIdentity } from '~/utils/graphql/shopify/mutations/cart';
-import { getCart } from '~/utils/graphql/shopify/queries/cart';
+import {redirect} from '@remix-run/server-runtime';
+import {json} from '@shopify/remix-oxygen';
+import {
+  cartAddItems,
+  cartCreate,
+  cartRemoveItems,
+  cartUpdate,
+  cartUpdateCustomerIdentity,
+} from '~/utils/graphql/shopify/mutations/cart';
 
-export async function action({ request, context }) {
-  const { session, storefront } = context;
+export async function action({request, context}) {
+  const {session, storefront} = context;
   const headers = new Headers();
 
   const [formData, storedCartId, customerAccessToken] = await Promise.all([
@@ -23,17 +26,18 @@ export async function action({ request, context }) {
   const countryCode = formData?.get('countryCode') ?? null;
 
   if (!cartAction || cartAction === '') {
-    return json({ message: 'Cart action not found' }, { status: 400 });
+    return json({message: 'Cart action not found'}, {status: 400});
   }
 
   if (cartAction === 'ADD_TO_CART') {
-    const lines = formData.get('lines') ? JSON.parse(String(formData.get('lines')))
+    const lines = formData.get('lines')
+      ? JSON.parse(String(formData.get('lines')))
       : [];
 
     // console.log('LINES:', lines);
     if (!cartId) {
       result = await cartCreate({
-        input: countryCode ? { lines, buyerIdentity: { countryCode } } : { lines },
+        input: countryCode ? {lines, buyerIdentity: {countryCode}} : {lines},
         storefront,
       });
     } else {
@@ -44,7 +48,6 @@ export async function action({ request, context }) {
       });
     }
     cartId = result?.cart?.id;
-
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
@@ -66,39 +69,45 @@ export async function action({ request, context }) {
   }
 
   if (cartAction === 'UPDATE_CART') {
-    const updatesLines = formData.get('lines') ? JSON.parse(String(formData.get('lines'))) : [];
+    const updatesLines = formData.get('lines')
+      ? JSON.parse(String(formData.get('lines')))
+      : [];
     if (updatesLines.length === 0) {
-      return json({ message: 'No lines to update' }, { status: 400 });
+      return json({message: 'No lines to update'}, {status: 400});
     }
 
     result = await cartUpdate({
       cartId,
       lines: updatesLines,
-      storefront
+      storefront,
     });
 
     cartId = result?.cart?.id;
   }
 
   if (cartAction === 'UPDATE_BUYER_IDENTITY') {
-    const customer = formData.get('buyerIdentity') ? JSON.parse(String(formData.get('buyerIdentity'))) : {};
+    const customer = formData.get('buyerIdentity')
+      ? JSON.parse(String(formData.get('buyerIdentity')))
+      : {};
     console.log('BUYER ID:', customer);
 
-    result = cartId ? await cartUpdateCustomerIdentity({
-      cartId,
-      buyerIdentity: {
-        ...customer,
-        customerAccessToken
-      }
-    }) : await cartCreate({
-      input: {
-        buyerIdentity: {
-          ...customer,
-          customerAccessToken
-        }
-      },
-      storefront
-    });
+    result = cartId
+      ? await cartUpdateCustomerIdentity({
+          cartId,
+          buyerIdentity: {
+            ...customer,
+            customerAccessToken,
+          },
+        })
+      : await cartCreate({
+          input: {
+            buyerIdentity: {
+              ...customer,
+              customerAccessToken,
+            },
+          },
+          storefront,
+        });
 
     cartId = result?.cart?.id;
   }
@@ -122,58 +131,10 @@ export async function action({ request, context }) {
     headers.set('Location', redirectTo);
   }
 
-  const { cart, errors } = result;
-  return json({ cart, errors }, { status, headers });
+  const {cart, errors} = result;
+  return json({cart, errors}, {status, headers});
 }
 
-export async function loader({ context }) {
-  const cart = await getCart(context);
-  return { cart };
-}
-
-export default function Cart() {
-  const { cart } = useLoaderData();
-
-  return cart?.totalQuantity > 0 ? (
-    <div>
-      <pre>{JSON.stringify(cart, null, 2)}</pre>
-    </div>
-  ) : (
-    <div className="">
-      <h2 className="">
-        Your cart is empty
-      </h2>
-      <Link
-        to="/"
-        className=""
-      >
-        Continue shopping
-      </Link>
-    </div>
-  );
-}
-
-export function UpdateCartButton({ /*children,*/ lines }) {
-  const fetcher = useFetcher();
-  useEffect(() => {
-    console.log(fetcher.state);
-    if (fetcher.state === 'submitting') {
-      console.log(fetcher);
-    }
-  }, [fetcher.state]);
-  return (
-    <fetcher.Form action="/cart" method={API_METHODS.POST}>
-      <input type="hidden" name="cartAction" value={'UPDATE_CART'} />
-      <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button
-        className="plus"
-        name="increase-quantity"
-        type='submit'
-        aria-label="Increase quantity"
-      >
-        <span></span><span style={{ display: 'none' }} className="ae-compliance-indent"> Increase Quantity </span>
-        <span style={{ display: 'none' }} className="ae-compliance-indent">  </span>
-      </button>
-    </fetcher.Form>
-  );
+export async function loader() {
+  return redirect('/?cart=show', 301);
 }
