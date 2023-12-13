@@ -1,22 +1,34 @@
-import { useEffect } from 'react';
-import { useCollection } from '~/hooks/useCollection';
-import { useCustomerState } from '~/hooks/useCostumer';
+import {useEffect} from 'react';
+import {useCollection} from '~/hooks/useCollection';
+import {useCustomerState} from '~/hooks/useCostumer';
 
-import RewardEarnPoints, { links as rewardEarnPointsStyles } from '../rewardsEarnPoints';
-import RewardPerks, { links as rewardPerksStyles } from '../rewardPerks'; 
-import RewardsFAQSection, { links as loyaltyRewardsTabStyles } from '../loyaltyRewardsTab';
-import RewardsHowItWorks, { links as rewardsHowItWorksStyles } from '../rewardsHowItWorks';
-import RewardsHowToRedeem, { links as rewardsHowToRedeemStyles} from '../rewardsHowToRedeem';
-import RedeemProductsSection, { links as redeemProductsSectionStyles } from '../redeemProductsSection';
-import RewardChooseYourRewards, { links as rewardChooseYourRewards } from '../rewardChooseYourRewards';
-
+import RewardEarnPoints, {
+  links as rewardEarnPointsStyles,
+} from '../rewardsEarnPoints';
+import RewardPerks, {links as rewardPerksStyles} from '../rewardPerks';
+import RewardsFAQSection, {
+  links as loyaltyRewardsTabStyles,
+} from '../loyaltyRewardsTab';
+import RewardsHowItWorks, {
+  links as rewardsHowItWorksStyles,
+} from '../rewardsHowItWorks';
+import RewardsHowToRedeem, {
+  links as rewardsHowToRedeemStyles,
+} from '../rewardsHowToRedeem';
+import RedeemProductsSection, {
+  links as redeemProductsSectionStyles,
+} from '../redeemProductsSection';
+import RewardChooseYourRewards, {
+  links as rewardChooseYourRewards,
+} from '../rewardChooseYourRewards';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     {
-      rel: 'stylesheet', href: styles
+      rel: 'stylesheet',
+      href: styles,
     },
     ...rewardEarnPointsStyles(),
     ...rewardPerksStyles(),
@@ -24,33 +36,36 @@ export const links = () => {
     ...rewardsHowItWorksStyles(),
     ...rewardsHowToRedeemStyles(),
     ...redeemProductsSectionStyles(),
-    ...rewardChooseYourRewards()
+    ...rewardChooseYourRewards(),
   ];
 };
 
-
-const RewardsPage = ({ context, yotpoFaq }) => {
-  
-  const { isLoggedIn } = useCustomerState();
+const RewardsPage = ({context, yotpoFaq}) => {
+  const {isLoggedIn} = useCustomerState();
   const {state, products} = useCollection('all');
-  
+
   function handleGetProductByID(_productId) {
     const product = products.find((prod) => prod.handle === _productId);
     return product;
   }
-  
+
   useEffect(() => {
     if (state === 'loaded') {
-      const productData = handleGetProductByID(context[0]?.products[0]?.productId);
+      const productData = handleGetProductByID(
+        context[0]?.products[0]?.productId,
+      );
 
       delete context[0].products;
       context[0].products = productData;
     }
-
   }, [state]);
 
   return (
-    <section id={'rewards'} className={'section__rewards'} data-isloggedin={isLoggedIn}>
+    <section
+      id={'rewards'}
+      className={'section__rewards'}
+      data-isloggedin={isLoggedIn}
+    >
       <script
         src="https://cdn-widgetsrepository.yotpo.com/v1/loader/qfEoWaPmtkBoUMwPAGu1ow"
         async
@@ -69,7 +84,10 @@ const RewardsPage = ({ context, yotpoFaq }) => {
               <MobileRewardsContentSVG />
             </div>
           </div>
-          <div className="yotpo-widget-instance" data-yotpo-instance-id="300578"></div>
+          <div
+            className="yotpo-widget-instance"
+            data-yotpo-instance-id="300578"
+          ></div>
         </LoadingSkeleton>
       ) : (
         <LoadingSkeleton minHeight={300}>
@@ -87,10 +105,12 @@ const RewardsPage = ({ context, yotpoFaq }) => {
           <div className={'wrapper__redeem-products'}>
             <div className={'container__redeem-products'}>
               <div className={'section__heading-container'}>
-                <p className={'section__heading'}>redeem for full-size products</p>
+                <p className={'section__heading'}>
+                  redeem for full-size products
+                </p>
                 <p className={'section__heading-body'}>
-                  Add your product to cart then click “redeem” to receive your code to use at
-                  checkout.
+                  Add your product to cart then click “redeem” to receive your
+                  code to use at checkout.
                 </p>
                 <small className={'section__heading-subtext'}>
                   Must be redeemed with purchase.
@@ -101,16 +121,11 @@ const RewardsPage = ({ context, yotpoFaq }) => {
           </div>
           <div className={'content__container'}>
             <LoadingSkeleton minHeight={100}>
-              <div className={'yotpo-widget-instance'} data-yotpo-instance-id="295798"></div>
+              <div
+                className={'yotpo-widget-instance'}
+                data-yotpo-instance-id="295798"
+              ></div>
             </LoadingSkeleton>
-            <p className={'content'}>
-              <span className={'content__heading'}>
-                Have an active auto-delivery subscription?
-              </span>
-              <br />
-              Redeem your points above and the discount will be auto-applied to your existing
-              subscription! If not, simply use the dropdown at checkout to redeem your points.
-            </p>
           </div>
         </>
       ) : (
@@ -119,13 +134,19 @@ const RewardsPage = ({ context, yotpoFaq }) => {
 
       <RewardEarnPoints />
       <LoadingSkeleton minHeight={300}>
-        <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295796"></div>
+        <div
+          className={'yotpo-widget-instance '}
+          data-yotpo-instance-id="295796"
+        ></div>
       </LoadingSkeleton>
       {isLoggedIn ? (
         <div className={'wrapper'}>
           <div className={'container'}>
             <LoadingSkeleton minHeight={300}>
-              <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295799"></div>
+              <div
+                className={'yotpo-widget-instance '}
+                data-yotpo-instance-id="295799"
+              ></div>
             </LoadingSkeleton>
           </div>
         </div>
@@ -135,7 +156,9 @@ const RewardsPage = ({ context, yotpoFaq }) => {
           <div className={'wrapper__redeem-products'}>
             <div className={'container__redeem-products'}>
               <div className={'section__heading-container'}>
-                <p className={'section__heading'}>redeem for full-size products</p>
+                <p className={'section__heading'}>
+                  redeem for full-size products
+                </p>
                 <p className={'section__heading-body body-2'}>
                   Redeem with your next purchase.
                 </p>
@@ -145,16 +168,11 @@ const RewardsPage = ({ context, yotpoFaq }) => {
           </div>
           <div id={'redemption__wrapper'} className={'content__container'}>
             <LoadingSkeleton minHeight={100}>
-              <div className={'yotpo-widget-instance '} data-yotpo-instance-id="295798"></div>
+              <div
+                className={'yotpo-widget-instance '}
+                data-yotpo-instance-id="295798"
+              ></div>
             </LoadingSkeleton>
-            <p className={'content'}>
-              <span className={'content__heading'}>
-                Have an active auto-delivery subscription?
-              </span>
-              <br />
-              Redeem your points above and the discount will be auto-applied to your existing
-              subscription! If not, simply use the dropdown at checkout to redeem your points.
-            </p>
           </div>
         </>
       )}
@@ -164,9 +182,9 @@ const RewardsPage = ({ context, yotpoFaq }) => {
   );
 };
 
-const LoadingSkeleton = ({ width, minHeight, style = {}, children }) => {
+const LoadingSkeleton = ({width, minHeight, style = {}, children}) => {
   return (
-    <div className={'skeleton loading'} style={{ ...style, width, minHeight }}>
+    <div className={'skeleton loading'} style={{...style, width, minHeight}}>
       <div className={'widget__container'}>{children}</div>
     </div>
   );
@@ -243,7 +261,10 @@ const MobileRewardsContentSVG = () => (
           d="m16.89,50.22h-4.64v-1.89l4.33-6.6h2.46v6.6h1.37v1.89h-1.37v2.13h-2.16v-2.13Zm0-5.55h-.03l-2.36,3.66h2.39v-3.66Z"
         />
         <path fill="#fff" d="m28.59,49.51h-3.69v-1.8h3.69v1.8Z" />
-        <path fill="#fff" d="m38.52,43.8h-5.25v-2.07h7.77v1.98l-4.25,8.64h-2.62l4.35-8.55Z" />
+        <path
+          fill="#fff"
+          d="m38.52,43.8h-5.25v-2.07h7.77v1.98l-4.25,8.64h-2.62l4.35-8.55Z"
+        />
         <path
           fill="#fff"
           d="m54.62,41.73h4.11c.54,0,1.05.05,1.54.16.48.11.91.28,1.27.53s.66.58.87.99.32.93.32,1.55c0,.75-.19,1.39-.58,1.91-.39.53-.96.86-1.71,1l2.7,4.49h-2.8l-2.22-4.25h-1.16v4.25h-2.34v-10.62Zm2.34,4.4h1.38c.21,0,.43,0,.67-.02.24-.02.45-.06.64-.14.19-.07.35-.19.47-.35.12-.16.19-.38.19-.67,0-.27-.05-.48-.17-.64s-.25-.28-.42-.37-.37-.14-.58-.17c-.22-.03-.43-.04-.64-.04h-1.53v2.42Z"
