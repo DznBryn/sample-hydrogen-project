@@ -3,7 +3,7 @@ import styles from './styles.css';
 import {Link, useFetcher, useLoaderData} from '@remix-run/react';
 import {useStore} from '~/hooks/useStore';
 import {Image, flattenConnection, parseGid} from '@shopify/hydrogen';
-import {API_METHODS, CANCEL_REASONS} from '~/utils/constants';
+import {API_METHODS, CANCEL_REASONS, FETCHER} from '~/utils/constants';
 import {
   changeFrequency,
   changeProduct,
@@ -11,7 +11,6 @@ import {
   getCustomerSubscription,
 } from '~/utils/services/subscription';
 import ModalGeneric from '~/modules/modalGeneric';
-//let loaded = false;
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}];
@@ -44,6 +43,28 @@ const handleDateFormatter = (date) => {
   const day = dateObject.getDate();
   const year = dateObject.getFullYear();
   return `${month} ${day}, ${year}`;
+};
+
+export const handleUpdateCustomerSubcription = async (
+  subscription,
+  {customer, updateCustomerSubscription},
+) => {
+  const activeSubscription = await getCustomerSubscription(
+    subscription.customer,
+    true,
+  );
+  const inactiveSubscription = await getCustomerSubscription(
+    subscription.customer,
+  );
+
+  const subscriptionOrders = await getCustomerOrders(subscription.customer);
+
+  activeSubscription && (customer.subscription.active = activeSubscription);
+  inactiveSubscription &&
+    (customer.subscription.inactive = inactiveSubscription);
+  subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
+
+  updateCustomerSubscription(customer.subscription);
 };
 
 const AccountSubscription = ({active}) => {
@@ -190,21 +211,10 @@ function ActiveProductItem({address, order, subscription}) {
       }
 
       if (res.customer) {
-        const activeSubscription = await getCustomerSubscription(
-          res.customer,
-          true,
-        );
-        const inactiveSubscription = await getCustomerSubscription(
-          res.customer,
-        );
-
-        const subscriptionOrders = await getCustomerOrders(res.customer);
-        activeSubscription && (data.subscription.active = activeSubscription);
-        inactiveSubscription &&
-          (data.subscription.inactive = inactiveSubscription);
-        subscriptionOrders && (data.subscription.orders = subscriptionOrders);
-
-        updateCustomerSubscription(data.subscription);
+        return handleUpdateCustomerSubcription(res, {
+          customer: data,
+          updateCustomerSubscription,
+        });
       }
     } catch (error) {
       return console.log({
@@ -293,13 +303,34 @@ function ActiveProductItem({address, order, subscription}) {
               )}
               {data?.subscription?.inactive?.results.length > 0 && (
                 <select value={selectedProductId} onChange={handleSwapProduct}>
-                  <option value={selectedProductId}>{selectedProductId}</option>
+                  <option value={selectedProductId}>
+                    (swap all upcoming deliveries) {product?.title ?? ''}
+                  </option>
                   {data.subscription.inactive.results.map(
-                    (subscription, index) => (
-                      <option key={index} value={subscription.product}>
-                        {subscription.product}
-                      </option>
-                    ),
+                    (subscription, index) => {
+                      const product = all.products.find((product) => {
+                        const variants = flattenConnection(product.variants);
+                        return variants.find(
+                          (variant) =>
+                            parseGid(variant.id).id === subscription.product,
+                        );
+                      });
+                      const variant = product?.variants
+                        ? flattenConnection(product.variants).find(
+                            (variant) =>
+                              parseGid(variant.id).id === subscription.product,
+                          )
+                        : null;
+
+                      return (
+                        <option key={index} value={subscription.product}>
+                          {variant &&
+                            `${product?.title} - $${Number(
+                              variant?.price?.amount ?? '0',
+                            ).toFixed(2)}`}
+                        </option>
+                      );
+                    },
                   )}
                 </select>
               )}
@@ -397,122 +428,6 @@ function ActiveProductItem({address, order, subscription}) {
   );
 }
 
-function CancelSubscription({handleModalClose, ...subscription}) {
-  const fetcher = useFetcher();
-  const [selectedReason, setSelectedReason] = useState(null);
-  const [customReason, setCustomReason] = useState('');
-
-  const handleReasonChange = (event) => {
-    setSelectedReason(event.target.value);
-  };
-
-  const handleCustomReasonChange = (event) => {
-    setCustomReason(event.target.value);
-  };
-
-  return (
-    <div className="modal__container">
-      <div className="modal__header">
-        <h3>Cancel My Auto-Delivery</h3>
-      </div>
-      <div className="modal__body">
-        <p>
-          We hate to see you go. You can also skip or edit the date of your next
-          shipment. If you&apos;d still like to cancel, kindly share with us why
-          you&apos;re opting out?
-        </p>
-        <div className="reasons">
-          {CANCEL_REASONS.map((reason, index) => (
-            <div key={index} className="reason">
-              <input
-                type="radio"
-                id={`reason${index}`}
-                name="cancelReason"
-                value={index}
-                checked={selectedReason === index.toString()}
-                onChange={handleReasonChange}
-              />
-              <label htmlFor={`reason${index}`}>{reason}</label>
-            </div>
-          ))}
-        </div>
-        <div>
-          <textarea
-            rows={4}
-            cols={50}
-            value={customReason}
-            onChange={handleCustomReasonChange}
-          />
-        </div>
-      </div>
-      <div className="modal__footer">
-        <button
-          className="outline-btn"
-          type="submit"
-          onClick={() => handleModalClose()}
-        >
-          Nevermind
-        </button>
-        <fetcher.Form action="/account" method={API_METHODS.PATCH}>
-          <input
-            type="hidden"
-            name="formAction"
-            value={'SUBSCRIPTION_CANCEL'}
-          />
-          <input type="hidden" name={'reason'} value={selectedReason} />
-          <input type="hidden" name="customReason" value={customReason} />
-          <input type="hidden" name="publicId" value={subscription.public_id} />
-          <button className="outline-btn" type="submit">
-            Cancel Auto-delivery
-          </button>
-        </fetcher.Form>
-      </div>
-    </div>
-  );
-}
-
-function SkipOrderSubscription({handleModalClose, ...subscription}) {
-  const fetcher = useFetcher();
-  return (
-    <div className="modal__container">
-      <div className="modal__header">
-        <h3>Skip Order</h3>
-      </div>
-      <div className="modal__body">
-        <p>
-          Do you want to skip this shipment? Your next shipment will be
-          scheduled according to your auto-delivery preferences.
-        </p>
-      </div>
-      <div className="modal__footer">
-        <button
-          className="outline-btn"
-          type="button"
-          onClick={() => handleModalClose()}
-        >
-          Cancel
-        </button>
-        <fetcher.Form action="/account" method={API_METHODS.PATCH}>
-          <input
-            type="hidden"
-            name="formAction"
-            value={'SUBSCRIPTION_SKIP_ORDER'}
-          />
-          <input type="hidden" name="publicId" value={subscription.public_id} />
-          <input
-            type="hidden"
-            name="customerId"
-            value={subscription.customer}
-          />
-          <button className="outline-btn" type="submit">
-            Skip Shipment
-          </button>
-        </fetcher.Form>
-      </div>
-    </div>
-  );
-}
-
 function InactiveProductItem({products, subscription}) {
   const {products: all} = useLoaderData();
   const [product, setProduct] = useState(
@@ -588,16 +503,167 @@ function InactiveProductItem({products, subscription}) {
   );
 }
 
-function ReactivateButton({product, subscription}) {
-  const {data, setCustomerData} = useStore((store) => store?.account);
+function CancelSubscription({handleModalClose, ...subscription}) {
   const fetcher = useFetcher();
+  const {data: customer, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  const [selectedReason, setSelectedReason] = useState(null);
+  const [customReason, setCustomReason] = useState('');
+
   useEffect(() => {
-    if (data.id === '') {
-      fetcher.data?.subscription &&
-        (data.subscription = fetcher.data?.subscription);
-      fetcher.data?.subscriptionOrders &&
-        (data.subscription.orders = fetcher.data?.subscriptionOrders);
-      setCustomerData(data);
+    if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      if (fetcher.data?.customer) {
+        handleUpdateCustomerSubcription(fetcher.data, {
+          customer,
+          updateCustomerSubscription,
+        });
+        handleModalClose();
+      }
+    }
+  }, [fetcher.type]);
+
+  const handleReasonChange = (event) => {
+    setSelectedReason(event.target.value);
+  };
+
+  const handleCustomReasonChange = (event) => {
+    setCustomReason(event.target.value);
+  };
+
+  return (
+    <div className="modal__container">
+      <div className="modal__header">
+        <h3>Cancel My Auto-Delivery</h3>
+      </div>
+      <div className="modal__body">
+        <p>
+          We hate to see you go. You can also skip or edit the date of your next
+          shipment. If you&apos;d still like to cancel, kindly share with us why
+          you&apos;re opting out?
+        </p>
+        <div className="reasons">
+          {CANCEL_REASONS.map((reason, index) => (
+            <div key={index} className="reason">
+              <input
+                type="radio"
+                id={`reason${index}`}
+                name="cancelReason"
+                value={index}
+                checked={selectedReason === index.toString()}
+                onChange={handleReasonChange}
+              />
+              <label htmlFor={`reason${index}`}>{reason}</label>
+            </div>
+          ))}
+        </div>
+        <div>
+          <textarea
+            rows={4}
+            cols={50}
+            value={customReason ?? ''}
+            onChange={handleCustomReasonChange}
+          />
+        </div>
+      </div>
+      <div className="modal__footer">
+        <button
+          className="outline-btn"
+          type="submit"
+          onClick={() => handleModalClose()}
+        >
+          Nevermind
+        </button>
+        <fetcher.Form action="/account" method={API_METHODS.PATCH}>
+          <input
+            type="hidden"
+            name="formAction"
+            value={'SUBSCRIPTION_CANCEL'}
+          />
+          <input
+            type="hidden"
+            name={'cancelReason'}
+            value={selectedReason ?? ''}
+          />
+          <input type="hidden" name="customReason" value={customReason ?? ''} />
+          <input
+            type="hidden"
+            name="publicId"
+            value={subscription?.public_id ?? ''}
+          />
+          <input
+            type="hidden"
+            name="customerId"
+            value={subscription?.customer ?? ''}
+          />
+          <button
+            className="outline-btn"
+            type="submit"
+            disabled={!selectedReason}
+          >
+            Cancel Auto-delivery
+          </button>
+        </fetcher.Form>
+      </div>
+    </div>
+  );
+}
+
+function SkipOrderSubscription({handleModalClose, ...subscription}) {
+  const fetcher = useFetcher();
+  return (
+    <div className="modal__container">
+      <div className="modal__header">
+        <h3>Skip Order</h3>
+      </div>
+      <div className="modal__body">
+        <p>
+          Do you want to skip this shipment? Your next shipment will be
+          scheduled according to your auto-delivery preferences.
+        </p>
+      </div>
+      <div className="modal__footer">
+        <button
+          className="outline-btn"
+          type="button"
+          onClick={() => handleModalClose()}
+        >
+          Cancel
+        </button>
+        <fetcher.Form action="/account" method={API_METHODS.PATCH}>
+          <input
+            type="hidden"
+            name="formAction"
+            value={'SUBSCRIPTION_SKIP_ORDER'}
+          />
+          <input type="hidden" name="publicId" value={subscription.public_id} />
+          <input
+            type="hidden"
+            name="customerId"
+            value={subscription.customer}
+          />
+          <button className="outline-btn" type="submit">
+            Skip Shipment
+          </button>
+        </fetcher.Form>
+      </div>
+    </div>
+  );
+}
+
+function ReactivateButton({product, subscription}) {
+  const fetcher = useFetcher();
+  const {data: customer, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      if (fetcher.data?.customer) {
+        handleUpdateCustomerSubcription(fetcher.data, {
+          customer,
+          updateCustomerSubscription,
+        });
+      }
     }
   }, [fetcher.type]);
 
@@ -621,13 +687,15 @@ function ReactivateButton({product, subscription}) {
         className="outline-btn"
         type="submit"
         disabled={!subscription.public_id || !product}
-        // onClick={async () => await reactivateSubscription(subscription)}
       >
-        Reactivate Auto-delivery
+        {fetcher.state === 'loading'
+          ? 'Reactivate...'
+          : 'Reactivate Auto-delivery'}
       </button>
     </fetcher.Form>
   );
 }
+
 export default React.memo(AccountSubscription, () => {
   return false;
 });

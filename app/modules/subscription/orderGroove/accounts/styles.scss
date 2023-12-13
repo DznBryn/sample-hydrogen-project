@@ -112,14 +112,25 @@
   height: auto;
   margin-bottom: 1rem;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   align-items: end;
+  gap: 1em;
   .deliveryActions {
     width: auto;
     height: auto;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
     gap: 1em;
+  }
+  @media (min-width: 767px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: 0em;
+    .deliveryActions {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
   }
 }
 .productDetail {
@@ -127,30 +138,45 @@
   height: auto;
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: 1em;
   .productDescription {
     height: auto;
-    width: auto;
+    width: 100%;
     display: grid;
     gap: 0.5em;
+    select {
+      width: 100%;
+    }
   }
   .itemTitle {
     font-size: 1.1em;
     text-decoration: none;
+    text-align: center;
   }
   a.itemTitle:hover {
     color: #48c6d9;
+  }
+  .itemQuantity {
+    text-align: center;
+  }
+  @media screen and (min-width: 767px) {
+    flex-direction: row;
+    .itemQuantity,
+    .itemTitle {
+      text-align: left;
+    }
   }
 }
 .subcriptionItem {
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   align-items: center;
   border: 1px solid #ccc;
   padding: 0.5em;
-
+  gap: 1em;
   p {
     color: #4c4e56;
   }
@@ -180,10 +206,17 @@
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      align-items: flex-start;
+      align-items: center;
     }
     p {
       text-align: center;
+    }
+  }
+  @media screen and (min-width: 767px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0em;
+    .actionButtons {
+      align-items: flex-start;
     }
   }
 }
@@ -191,14 +224,15 @@
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 
   .shippingDetails {
     width: auto;
     height: auto;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(1, minmax(0, 1fr));
     padding: 1em;
+    order: 1;
     .shipping {
       width: auto;
       height: auto;
@@ -215,12 +249,25 @@
     display: grid;
     background-color: #f0f0f0;
     gap: 0.5em;
+    order: 0;
     .costDetail {
       width: 100%;
       height: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+  }
+
+  @media screen and (min-width: 767px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0em;
+    .shippingDetails {
+      order: 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .costDetails {
+      order: 1;
     }
   }
 }
@@ -241,7 +288,9 @@
 }
 
 .col-span-2 {
-  grid-column: span 2 / span 2;
+  @media screen and (min-width: 767px) {
+    grid-column: span 2 / span 2;
+  }
 }
 
 .outline-btn {

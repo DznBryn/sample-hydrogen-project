@@ -119,15 +119,28 @@
   height: auto;
   margin-bottom: 1rem;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   align-items: end;
+  gap: 1em;
 }
 .subcriptionDelivery .deliveryActions {
   width: auto;
   height: auto;
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 1em;
+}
+@media (min-width: 767px) {
+  .subcriptionDelivery {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    gap: 0em;
+  }
+  .subcriptionDelivery .deliveryActions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
 }
 
 .productDetail {
@@ -135,30 +148,48 @@
   height: auto;
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: 1em;
 }
 .productDetail .productDescription {
   height: auto;
-  width: auto;
+  width: 100%;
   display: grid;
   gap: 0.5em;
+}
+.productDetail .productDescription select {
+  width: 100%;
 }
 .productDetail .itemTitle {
   font-size: 1.1em;
   text-decoration: none;
+  text-align: center;
 }
 .productDetail a.itemTitle:hover {
   color: #48c6d9;
+}
+.productDetail .itemQuantity {
+  text-align: center;
+}
+@media screen and (min-width: 767px) {
+  .productDetail {
+    flex-direction: row;
+  }
+  .productDetail .itemQuantity,
+  .productDetail .itemTitle {
+    text-align: left;
+  }
 }
 
 .subcriptionItem {
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   align-items: center;
   border: 1px solid #ccc;
   padding: 0.5em;
+  gap: 1em;
 }
 .subcriptionItem p {
   color: #4c4e56;
@@ -189,24 +220,34 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  align-items: flex-start;
+  align-items: center;
 }
 .subcriptionItem .subscriptionActionContainer p {
   text-align: center;
+}
+@media screen and (min-width: 767px) {
+  .subcriptionItem {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0em;
+  }
+  .subcriptionItem .actionButtons {
+    align-items: flex-start;
+  }
 }
 
 .subscriptionDetails {
   width: 100%;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 .subscriptionDetails .shippingDetails {
   width: auto;
   height: auto;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(1, minmax(0, 1fr));
   padding: 1em;
+  order: 1;
 }
 .subscriptionDetails .shippingDetails .shipping {
   width: auto;
@@ -223,6 +264,7 @@
   display: grid;
   background-color: #f0f0f0;
   gap: 0.5em;
+  order: 0;
 }
 .subscriptionDetails .costDetails .costDetail {
   width: 100%;
@@ -230,6 +272,19 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+@media screen and (min-width: 767px) {
+  .subscriptionDetails {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0em;
+  }
+  .subscriptionDetails .shippingDetails {
+    order: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .subscriptionDetails .costDetails {
+    order: 1;
+  }
 }
 
 .reasons {
@@ -247,8 +302,10 @@
   gap: 0.5em;
 }
 
-.col-span-2 {
-  grid-column: span 2/span 2;
+@media screen and (min-width: 767px) {
+  .col-span-2 {
+    grid-column: span 2/span 2;
+  }
 }
 
 .outline-btn {
