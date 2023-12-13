@@ -220,7 +220,7 @@ export async function changeFrequency(subscriptionItem) {
     'Content-Type': 'application/json',
     Authorization: generateOGAuthorization(subscriptionItem.customer),
   };
-  console.log('subscriptionItem', subscriptionItem);
+
   try {
     const response = await fetch(url, {
       method: API_METHODS.PATCH,
@@ -290,6 +290,31 @@ export async function changeProduct(subscriptionItem, newProduct) {
     }
     const cancelOrder = await response.json();
     return cancelOrder;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function cancelSubscription(subscriptionItem) {
+  const url = `https://restapi.ordergroove.com/subscriptions/${subscriptionItem.public_id}/cancel`;
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
+      body: JSON.stringify({cancel_reason: subscriptionItem.cancelReason}),
+    });
+
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
   } catch (error) {
     return error.message;
   }
