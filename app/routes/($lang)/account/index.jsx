@@ -23,6 +23,7 @@ import {
 } from '~/utils/graphql/shopify/mutations/customer';
 import {
   cancelSubscription,
+  changeSubscriptionDate,
   getCollectionProducts,
   getCustomerAddresses,
   getCustomerOrders,
@@ -30,6 +31,7 @@ import {
   reactivateSubscription,
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
+import {format} from 'date-fns';
 
 export function links() {
   return [...accountStyles()];
@@ -108,6 +110,26 @@ export async function action({request, context}) {
         public_id: formData.get('publicId'),
         customer: formData.get('customerId'),
         cancelReason,
+      });
+
+      if (!res?.customer) {
+        return {
+          message: res,
+          status: 400,
+        };
+      }
+
+      return res;
+    }
+    if (formAction === 'SUBSCRIPTION_CHANGE_DATE') {
+      const formatDate = format(
+        new Date(formData.get('changeDate')),
+        'yyyy-MM-dd',
+      );
+      const res = await changeSubscriptionDate({
+        public_id: formData.get('publicId'),
+        customer: formData.get('customerId'),
+        changeDate: String(formatDate),
       });
 
       if (!res?.customer) {

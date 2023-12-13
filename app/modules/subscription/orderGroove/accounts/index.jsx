@@ -11,9 +11,16 @@ import {
   getCustomerSubscription,
 } from '~/utils/services/subscription';
 import ModalGeneric from '~/modules/modalGeneric';
+import DatePicker from 'react-date-picker';
+import datePickerStyles from 'react-date-picker/dist/DatePicker.css';
+import calendarStyles from 'react-calendar/dist/Calendar.css';
 
 export function links() {
-  return [{rel: 'stylesheet', href: styles}];
+  return [
+    {rel: 'stylesheet', href: styles},
+    {rel: 'stylesheet', href: datePickerStyles},
+    {rel: 'stylesheet', href: calendarStyles},
+  ];
 }
 
 const handleDateFormatter = (date) => {
@@ -225,6 +232,20 @@ function ActiveProductItem({address, order, subscription}) {
 
   const handleModalClose = useCallback(() => setShowModal(null), []);
   const mapActionToComponent = {
+    changeDate: (
+      <ChangeSubscriptionDate
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
+      />
+    ),
+    pause: (
+      <PauseSubscription
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
+      />
+    ),
     skip: (
       <SkipOrderSubscription handleModalClose={handleModalClose} {...order} />
     ),
@@ -244,13 +265,19 @@ function ActiveProductItem({address, order, subscription}) {
             Shipment On: {handleDateFormatter(order?.place)}
           </p>
           <div className="deliveryActions">
-            <button className="outline-btn" type="submit">
+            <button
+              className="outline-btn"
+              type="submit"
+              onClick={() => setShowModal('changeDate')}
+              disabled={showModal !== null}
+            >
               Change Date
             </button>
             <button
               className="outline-btn"
               type="button"
               onClick={() => setShowModal('skip')}
+              disabled={showModal !== null}
             >
               Skip Order
             </button>
@@ -356,7 +383,11 @@ function ActiveProductItem({address, order, subscription}) {
                 >
                   Cancel Auto-delivery
                 </button>
-                <button className="underline-btn" type="submit">
+                <button
+                  className="underline-btn"
+                  type="submit"
+                  onClick={() => setShowModal('pause')}
+                >
                   Pause Auto-delivery
                 </button>
               </div>
@@ -644,6 +675,129 @@ function SkipOrderSubscription({handleModalClose, ...subscription}) {
           />
           <button className="outline-btn" type="submit">
             Skip Shipment
+          </button>
+        </fetcher.Form>
+      </div>
+    </div>
+  );
+}
+
+function ChangeSubscriptionDate({handleModalClose, subscription, order}) {
+  const fetcher = useFetcher();
+  const {data: customer, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  const [dateChange, setDateChange] = useState(order?.place ?? new Date());
+
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      if (fetcher.data?.customer) {
+        handleUpdateCustomerSubcription(fetcher.data, {
+          customer,
+          updateCustomerSubscription,
+        });
+        handleModalClose();
+      }
+    }
+  }, [fetcher.type]);
+  return (
+    <div className="modal__container">
+      <div className="modal__header">
+        <h3>Select a Shipment Date</h3>
+      </div>
+      <div className="modal__body">
+        <DatePicker
+          onChange={setDateChange}
+          value={dateChange}
+          isOpen={true}
+          closeCalendar={false}
+          calendarClassName={'changeDateCalendar'}
+        />
+      </div>
+      <div className="modal__footer">
+        <button
+          className="outline-btn"
+          type="submit"
+          onClick={() => handleModalClose()}
+        >
+          Cancel
+        </button>
+        <fetcher.Form action="/account" method={API_METHODS.PATCH}>
+          <input
+            type="hidden"
+            name="formAction"
+            value={'SUBSCRIPTION_CHANGE_DATE'}
+          />
+          <input type="hidden" name="changeDate" value={dateChange} />
+          <input
+            type="hidden"
+            name="publicId"
+            value={subscription?.public_id ?? ''}
+          />
+          <input
+            type="hidden"
+            name="customerId"
+            value={subscription?.customer ?? ''}
+          />
+          <button className="outline-btn" type="submit">
+            Save Shipment Date
+          </button>
+        </fetcher.Form>
+      </div>
+    </div>
+  );
+}
+
+function PauseSubscription({handleModalClose, subscription, order}) {
+  const fetcher = useFetcher();
+  const {data: customer, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  const [dateChange, setDateChange] = useState(order?.place ?? new Date());
+
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      if (fetcher.data?.customer) {
+        handleUpdateCustomerSubcription(fetcher.data, {
+          customer,
+          updateCustomerSubscription,
+        });
+        handleModalClose();
+      }
+    }
+  }, [fetcher.type]);
+  return (
+    <div className="modal__container">
+      <div className="modal__header">
+        <h3>Pause Auto-delivery</h3>
+      </div>
+      <div className="modal__body">
+        <p>Please select the date you would like your shipments to resume.</p>
+        <DatePicker
+          onChange={setDateChange}
+          value={dateChange}
+          isOpen={true}
+          closeCalendar={false}
+          calendarClassName={'changeDateCalendar'}
+        />
+      </div>
+      <div className="modal__footer">
+        <div></div>
+        <fetcher.Form action="/account" method={API_METHODS.PATCH}>
+          <input type="hidden" name="formAction" value={'SUBSCRIPTION_PAUSE'} />
+          <input type="hidden" name="changeDate" value={dateChange} />
+          <input
+            type="hidden"
+            name="publicId"
+            value={subscription?.public_id ?? ''}
+          />
+          <input
+            type="hidden"
+            name="customerId"
+            value={subscription?.customer ?? ''}
+          />
+          <button className="outline-btn" type="submit">
+            Pause Subscription
           </button>
         </fetcher.Form>
       </div>

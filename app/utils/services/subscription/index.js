@@ -319,3 +319,29 @@ export async function cancelSubscription(subscriptionItem) {
     return error.message;
   }
 }
+
+export async function changeSubscriptionDate(subscriptionItem) {
+  const url = `https://restapi.ordergroove.com/subscriptions/${subscriptionItem.public_id}/change_next_order_date`;
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
+      body: JSON.stringify({
+        order_date: subscriptionItem.changeDate,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
