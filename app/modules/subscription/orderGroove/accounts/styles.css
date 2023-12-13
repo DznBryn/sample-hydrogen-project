@@ -222,6 +222,11 @@
   gap: 0.25rem;
   align-items: center;
 }
+@media screen and (min-width: 767px) {
+  .subcriptionItem .subscriptionActionContainer .actionButtons {
+    align-items: flex-start;
+  }
+}
 .subcriptionItem .subscriptionActionContainer p {
   text-align: center;
 }
@@ -229,9 +234,6 @@
   .subcriptionItem {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0em;
-  }
-  .subcriptionItem .actionButtons {
-    align-items: flex-start;
   }
 }
 
@@ -300,6 +302,38 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 0.5em;
+}
+
+.react-calendar button,
+.react-calendar__tile--now {
+  background-color: #fff;
+  color: #4c4e56;
+}
+
+.react-date-picker .react-date-picker__wrapper {
+  display: none;
+}
+.react-date-picker .react-date-picker__calendar {
+  position: unset !important;
+  width: 100%;
+}
+.react-date-picker .react-date-picker__calendar.react-date-picker__calendar--closed {
+  display: block;
+}
+.react-date-picker .react-date-picker__calendar .react-calendar {
+  width: 100%;
+  border: 0;
+}
+.react-date-picker .react-date-picker__calendar .react-calendar__tile--active {
+  background-color: #48c6d9;
+  color: #fff;
+}
+.react-date-picker .react-date-picker__calendar .react-calendar__tile--active:hover {
+  background-color: #48c6d9;
+  color: #fff;
+}
+.react-date-picker .react-date-picker__calendar .react-calendar__month-view__days__day--weekend {
+  color: #4c4e56;
 }
 
 @media screen and (min-width: 767px) {
