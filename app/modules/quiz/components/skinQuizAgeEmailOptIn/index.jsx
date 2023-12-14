@@ -329,67 +329,67 @@ const SkinQuizAgeEmailOptIn = ({
       },
       {
         segmentationFieldId: 18336,
-        value: concatResults[0]?.reviewsAverage,
+        value: concatResults[0]?.reviews_average,
       },
       {
         segmentationFieldId: 18337,
-        value: concatResults[1]?.reviewsAverage,
+        value: concatResults[1]?.reviews_average,
       },
       {
         segmentationFieldId: 18338,
-        value: concatResults[2]?.reviewsAverage,
+        value: concatResults[2]?.reviews_average,
       },
       {
         segmentationFieldId: 18339,
-        value: concatResults[3]?.reviewsAverage,
+        value: concatResults[3]?.reviews_average,
       },
       {
         segmentationFieldId: 18340,
-        value: concatResults[4]?.reviewsAverage,
+        value: concatResults[4]?.reviews_average,
       },
       {
         segmentationFieldId: 18341,
-        value: concatResults[5]?.reviewsAverage,
+        value: concatResults[5]?.reviews_average,
       },
       {
         segmentationFieldId: 18342,
-        value: concatResults[6]?.reviewsAverage,
+        value: concatResults[6]?.reviews_average,
       },
       {
         segmentationFieldId: 18343,
-        value: concatResults[7]?.reviewsAverage,
+        value: concatResults[7]?.reviews_average,
       },
       {
         segmentationFieldId: 18344,
-        value: concatResults[0]?.reviewsCount,
+        value: concatResults[0]?.reviews_count,
       },
       {
         segmentationFieldId: 18345,
-        value: concatResults[1]?.reviewsCount,
+        value: concatResults[1]?.reviews_count,
       },
       {
         segmentationFieldId: 18346,
-        value: concatResults[2]?.reviewsCount,
+        value: concatResults[2]?.reviews_count,
       },
       {
         segmentationFieldId: 18347,
-        value: concatResults[3]?.reviewsCount,
+        value: concatResults[3]?.reviews_count,
       },
       {
         segmentationFieldId: 18348,
-        value: concatResults[4]?.reviewsCount,
+        value: concatResults[4]?.reviews_count,
       },
       {
         segmentationFieldId: 18349,
-        value: concatResults[5]?.reviewsCount,
+        value: concatResults[5]?.reviews_count,
       },
       {
         segmentationFieldId: 18350,
-        value: concatResults[6]?.reviewsCount,
+        value: concatResults[6]?.reviews_count,
       },
       {
         segmentationFieldId: 18351,
-        value: concatResults[7]?.reviewsCount,
+        value: concatResults[7]?.reviews_count,
       },
       {
         segmentationFieldId: 18352,
