@@ -51,7 +51,6 @@ export async function action({request, context}) {
   }
 
   if (cartAction === 'REMOVE_FROM_CART') {
-    console.log('Remove', formData.get('linesIds'));
     const lineIds = formData.get('linesIds')
       ? JSON.parse(String(formData.get('linesIds')))
       : [];
@@ -75,7 +74,6 @@ export async function action({request, context}) {
     if (updatesLines.length === 0) {
       return json({message: 'No lines to update'}, {status: 400});
     }
-
     result = await cartUpdate({
       cartId,
       lines: updatesLines,
@@ -89,7 +87,6 @@ export async function action({request, context}) {
     const customer = formData.get('buyerIdentity')
       ? JSON.parse(String(formData.get('buyerIdentity')))
       : {};
-    console.log('BUYER ID:', customer);
 
     result = cartId
       ? await cartUpdateCustomerIdentity({
