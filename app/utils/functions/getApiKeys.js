@@ -45,7 +45,7 @@ function getApiKeys() {
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
-          // birthday_segment_id: 431,
+          birthday_segment_id: 431,
           externalEventName: 11771,
           fieldGroupName: 51,
           fieldName: 7810,
@@ -106,8 +106,8 @@ function getApiKeys() {
           'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
-          // list_id: 345013,
-          // birthday_segment_id: 431,
+          list_id: 345013,
+          birthday_segment_id: 431,
           externalEventName: 11771,
           fieldGroupName: 51,
           fieldName: 7810,
@@ -165,8 +165,8 @@ function getApiKeys() {
           'CXLFa98xjLun0wo4c4Fm9Nk21ZwpFiM5sRLIHL-Bzvc',
         RETURNS_HREF: 'https://returns.tulaskincare.ca/',
         LISTRAK_IDS: {
-          // list_id: 346002,
-          // birthday_segment_id: 25869,
+          list_id: 346002,
+          birthday_segment_id: 25869,
           externalEventName: 13307,
           fieldGroupName: 2873,
           fieldName: 26307,
@@ -219,8 +219,8 @@ function getApiKeys() {
         RETURNS_HREF:
           '/pages/faq?a=What-is-your-return-policy---id--8SHAtr2IT0GpnbwAdBP50Q',
         LISTRAK_IDS: {
-          // list_id: 346019,
-          // birthday_segment_id: 26799,
+          list_id: 346019,
+          birthday_segment_id: 26799,
           externalEventName: 13330,
           fieldGroupName: 2948,
           fieldName: 26886,
