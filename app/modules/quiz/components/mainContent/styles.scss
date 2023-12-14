@@ -3,14 +3,6 @@
   width: 100%;
 }
 
-.backBtn::before {
-  background-size: 6px 6px;
-  content: '\3008';
-  display: inline-block;
-  margin-right: 4px;
-  padding: 0;
-}
-
 .userAnswers {
   border: 1px dashed red;
   border-radius: 10px;
@@ -45,20 +37,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-#skinQuizLandingWrapper {
-  margin-top: 50px;
-  position: relative;
-  min-height: 655px;
-  color: #4c4e56;
-}
-
-#skinQuizLandingWrapper #landingCover {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
 }
 
 .skinQuizWrapper .left,
@@ -151,13 +129,13 @@
   text-decoration: none;
 }
 
-.container h1,
-.container p {
+.mainContentContainer h1,
+.mainContentContainer p {
   font-family: inherit;
   margin: 2px;
 }
 
-.container {
+.mainContentContainer {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -166,14 +144,6 @@
   max-width: 1040px;
   width: 100%;
   margin: auto;
-}
-
-.backBtn {
-  border: none;
-  background-color: #fff0;
-  position: absolute;
-  left: 10px;
-  top: 0px;
 }
 
 .mainContentContainer .step {
@@ -197,7 +167,7 @@
   font-weight: 700;
 }
 
-.container .multipleChoiceDek {
+.mainContentContainer .multipleChoiceDek {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
@@ -608,15 +578,7 @@
     padding: 0 34px;
     justify-content: flex-end;
   }
-  #skinQuizLandingWrapper {
-    min-height: 674px;
-    margin-top: 0;
-    // top: 114px;
-  }
 
-  #skinQuizLandingWrapper .fixedWidthPage {
-    padding: 0;
-  }
   .skinQuizWrapper .calloutPill {
     margin-bottom: 11px;
     padding: 7px 9px;
@@ -646,9 +608,6 @@
     width: calc(100vw - 68px);
     margin-bottom: 34px;
   }
-  #skinQuizLandingWrapper #quizContainer {
-    margin-top: 3em;
-  }
 
   .container {
     width: 100vw;
@@ -664,18 +623,11 @@
     margin-right: 0;
     height: 70px;
   }
-  .container .step {
+  .mainContentContainer .step {
     font-size: 10px;
   }
 
-  .backBtn {
-    font-size: 11px;
-    top: 81px;
-    letter-spacing: 2px;
-    color: inherit;
-  }
-
-  .container .question {
+  .mainContentContainer .question {
     padding: 0 25px;
     margin: 40px auto 10px;
   }

@@ -17,7 +17,7 @@
   flex-direction: column;
   width: 100%;
   background-color: #fff;
-  margin-top: 92px;
+  margin-top: 0px;
 }
 
 .bannerBlock {
@@ -46,7 +46,7 @@
   font-size: 24px;
   line-height: 27px;
   max-width: 60%;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
 }
 
 .influencerDescription {
@@ -110,6 +110,12 @@
   }
   .bannerBlock > img {
     width: 30vw;
+  }
+  .noBannerHeader {
+    margin-top: 92px;
+  }
+  .influencerTitle {
+    margin-bottom: 15px;
   }
 }
 @media all and (min-width: 769px) {

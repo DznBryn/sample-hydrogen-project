@@ -14,7 +14,7 @@ import Layouts from '~/layouts';
 import Account, {links as accountStyles} from '~/modules/accounts';
 import {useStore} from '~/hooks/useStore';
 import {useEffect} from 'react';
-import {FORM_ACTIONS} from '~/utils/constants';
+import {CANCEL_REASONS, FORM_ACTIONS} from '~/utils/constants';
 import {
   CREATE_ADDRESS_MUTATION,
   DELETE_ADDRESS_MUTATION,
@@ -22,6 +22,8 @@ import {
   UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from '~/utils/graphql/shopify/mutations/customer';
 import {
+  cancelSubscription,
+  changeSubscriptionDate,
   getCollectionProducts,
   getCustomerAddresses,
   getCustomerOrders,
@@ -29,6 +31,7 @@ import {
   reactivateSubscription,
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
+import {format} from 'date-fns';
 
 export function links() {
   return [...accountStyles()];
@@ -67,19 +70,7 @@ export async function action({request, context}) {
         };
       }
 
-      const activeSubscription = await getCustomerSubscription(
-        res.customer,
-        true,
-      );
-      const inactiveSubscription = await getCustomerSubscription(res.customer);
-      const subscriptionOrders = await getCustomerOrders(res.customer);
-
-      return {
-        resubscribeItem: res,
-        activeSubscription,
-        inactiveSubscription,
-        subscriptionOrders,
-      };
+      return res;
     }
     if (formAction === 'SUBSCRIPTION_SKIP_ORDER') {
       const res = await skipSubscriptionOrder({
@@ -107,6 +98,48 @@ export async function action({request, context}) {
         inactiveSubscription,
         subscriptionOrders,
       };
+    }
+    if (formAction === 'SUBSCRIPTION_CANCEL') {
+      const reasonNumber = formData.get('cancelReason');
+      const cancelReason = `${reasonNumber}|${
+        String(CANCEL_REASONS.length - 1) === reasonNumber
+          ? formData.get('customReason')
+          : CANCEL_REASONS[formData.get('cancelReason')]
+      }`;
+      const res = await cancelSubscription({
+        public_id: formData.get('publicId'),
+        customer: formData.get('customerId'),
+        cancelReason,
+      });
+
+      if (!res?.customer) {
+        return {
+          message: res,
+          status: 400,
+        };
+      }
+
+      return res;
+    }
+    if (formAction === 'SUBSCRIPTION_CHANGE_DATE') {
+      const formatDate = format(
+        new Date(formData.get('changeDate')),
+        'yyyy-MM-dd',
+      );
+      const res = await changeSubscriptionDate({
+        public_id: formData.get('publicId'),
+        customer: formData.get('customerId'),
+        changeDate: String(formatDate),
+      });
+
+      if (!res?.customer) {
+        return {
+          message: res,
+          status: 400,
+        };
+      }
+
+      return res;
     }
   }
 

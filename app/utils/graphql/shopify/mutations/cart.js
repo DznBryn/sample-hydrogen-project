@@ -1,4 +1,4 @@
-import { IMAGE_FRAGMENT, MONEY_FRAGMENT } from "../fragments";
+import {IMAGE_FRAGMENT, MONEY_FRAGMENT} from '../fragments';
 
 export async function cartCreate({input, storefront}) {
   const {cartCreate} = await storefront.mutate(CREATE_CART_MUTATION, {

@@ -29,7 +29,7 @@ export const links = () => {
 const SKIN_QUIZ_MODEL = {
   quizID: 'US-skin-quiz',
   marketAvailability: ['US'],
-  categories: ['eye-balm', 'moisturizer', 'treat&prep', 'cleanser', 'spf'],
+  categories: ['cleanser', 'treat&prep', 'moisturizer', 'eye-balm', 'spf'],
   resultTypes: ['regular', 'advanced'],
   quizType: 'skin-quiz',
 };
@@ -75,6 +75,14 @@ const SkinQuiz = ({content}) => {
     }, 500);
   }
 
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
   function handleClick(el) {
     if (multipleChoice) {
       if (multipleChoiceState.includes(el)) {
@@ -92,16 +100,26 @@ const SkinQuiz = ({content}) => {
     handleAnswersSubmit(el);
   }
 
-  function handleAnswersSubmit(answer) {
-    /* Manage status bar fill */
+  function handleStatusBar(direction) {
+    let statusBarWidth = 0;
+    if (direction === 'back') {
+      statusBarWidth = step - 1;
+    } else {
+      statusBarWidth = step + 1;
+    }
+
     const questionPercent = Math.floor(100 / questionsState.length);
-    const statusBarWidth = step + 1;
 
     const statusBar = document.querySelector('.status');
 
     questionsState.length === step + 1
       ? (statusBar.style.width = '100%')
       : (statusBar.style.width = statusBarWidth * questionPercent + '%');
+  }
+
+  function handleAnswersSubmit(answer) {
+    /* Manage status bar fill */
+    handleStatusBar('next');
 
     let answersArray = answerState;
     let questions = structuredClone(questionsState);
@@ -123,6 +141,8 @@ const SkinQuiz = ({content}) => {
         setAnswerState(answersArray);
       });
 
+      scrollToTop();
+
       return increaseStep();
     }
 
@@ -140,6 +160,8 @@ const SkinQuiz = ({content}) => {
     setAnswerState(answersArray);
 
     increaseStep();
+
+    scrollToTop();
   }
 
   function handleGetProductByID(_productId) {
@@ -185,11 +207,7 @@ const SkinQuiz = ({content}) => {
     setResultState({});
     setAnswerState([]);
     setStep(0);
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
+    scrollToTop();
 
     document.querySelector('.status').style.width = '0%';
   }
@@ -198,10 +216,7 @@ const SkinQuiz = ({content}) => {
     setStep((oldState) => (oldState > 0 ? oldState - 1 : oldState));
 
     /* Manage status fill going back */
-    const questionPercent = Math.floor(100 / questionsState.length);
-    const statusBarWidth = step - 1;
-    const statusBar = document.querySelector('.status');
-    statusBar.style.width = statusBarWidth * questionPercent + '%';
+    handleStatusBar('back');
   }
 
   const calloutFontColor = {
@@ -250,8 +265,6 @@ const SkinQuiz = ({content}) => {
     multipleChoiceState,
     handleClick,
     handleAnswersSubmit,
-    stepBack,
-    hasStatusBar,
   };
 
   const advancedQuizContent = {
@@ -293,6 +306,17 @@ const SkinQuiz = ({content}) => {
       <LandingCover content={landingCoverContent} />
 
       <div id="quizWrapper" className="container">
+        {hasStatusBar && (
+          <div className="statusBar">
+            <div className="status" step={step} />
+          </div>
+        )}
+
+        {step > 0 && (
+          <button onClick={stepBack} className="backBtn">
+            BACK
+          </button>
+        )}
         {questionsState.length - 1 < step ? (
           <ResultView content={resultContent} />
         ) : (

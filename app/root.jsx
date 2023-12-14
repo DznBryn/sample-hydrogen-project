@@ -54,6 +54,7 @@ export const links = () => {
 
 export const meta = () => [
   {charset: 'utf-8'},
+  {name: 'robots', content: 'noindex'},
   {name: 'viewport', content: 'width=device-width,initial-scale=1'},
   {title: 'TULA Skincare: Probiotic Skin Care Products'},
   {
@@ -76,19 +77,24 @@ export async function loader({context, request}) {
     listrakRec,
     mainNavFooterCMSData: mainNavFooter,
     productsCMSData: products,
+    showSliderCart: checkShowSliderCart(request),
   });
 }
 
 export default function App() {
-  const {cart} = useLoaderData();
-  const {setData: setCartData = () => {}, data = null} = useStore(
-    (store) => store?.cart ?? null,
-  );
+  const {cart, showSliderCart} = useLoaderData();
+  const {
+    setData: setCartData = () => {},
+    data = null,
+    toggleCart,
+  } = useStore((store) => store?.cart ?? null);
 
   useEffect(() => {
     if (cart?.id && cart?.id !== data?.id) {
       setCartData(cart);
     }
+
+    if (showSliderCart) toggleCart(true);
   }, []);
 
   return (
@@ -183,4 +189,11 @@ async function fetchContentData(context) {
     mainNavFooter,
     products,
   };
+}
+
+function checkShowSliderCart(request) {
+  const url = new URL(request.url);
+  const cart = url.searchParams.get('cart');
+
+  return cart === 'show';
 }

@@ -9,13 +9,17 @@ import InfluencerPage, {
 import {
   GET_CART_PAGE_CONFIG,
   GET_INFLUENCER_PAGE,
+  GET_PRODUCT_COLLECTIONS,
 } from '~/utils/graphql/sanity/queries';
 import {
   getCMSContent,
   getCMSDoc,
   getCMSProductsWithShopifyData,
+  getCollectionWithCMSData,
   getPageOnCMSBySlug,
 } from '~/utils/functions/eventFunctions';
+import {useMatches} from '@remix-run/react';
+import {useMemo} from 'react';
 
 export const links = () => {
   return [...influencerPageStyles()];
@@ -26,10 +30,12 @@ export const loader = async ({params, context}) => {
 
   const {handle} = params;
 
-  const [cartPageConfig, influencerPagesOnCMS] = await Promise.all([
-    getCMSContent(context, GET_CART_PAGE_CONFIG),
-    getCMSContent(context, GET_INFLUENCER_PAGE),
-  ]);
+  const [cartPageConfig, influencerPagesOnCMS, collectionsCMSData] =
+    await Promise.all([
+      getCMSContent(context, GET_CART_PAGE_CONFIG),
+      getCMSContent(context, GET_INFLUENCER_PAGE),
+      getCMSContent(context, GET_PRODUCT_COLLECTIONS),
+    ]);
 
   const influencerPage = getPageOnCMSBySlug(influencerPagesOnCMS, handle);
 
@@ -78,11 +84,24 @@ export const loader = async ({params, context}) => {
       },
     },
     cartPageConfig,
+    collectionsCMSData,
   });
 };
 
 export default function PLPPage() {
-  const {pageContent, cartPageConfig} = useLoaderData();
+  const [root] = useMatches();
+  const {productsCMSData} = root.data;
+  const {pageContent, cartPageConfig, collectionsCMSData} = useLoaderData();
+
+  pageContent.plpCollection = useMemo(
+    () =>
+      getCollectionWithCMSData(
+        pageContent.plpCollection,
+        productsCMSData,
+        collectionsCMSData,
+      ),
+    [pageContent.plpCollection, productsCMSData],
+  );
 
   return (
     <Layouts.MainNavFooter>

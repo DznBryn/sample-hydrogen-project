@@ -106,13 +106,16 @@ export const useStore = create((set) => ({
           },
         };
       }),
-    toggleCart: () =>
+    toggleCart: (openIt) =>
       set((state) => {
         return {
           ...state,
           cart: {
             ...state.cart,
-            isSliderCartOpen: !state.cart.isSliderCartOpen,
+            isSliderCartOpen:
+              openIt === true || openIt === false
+                ? openIt
+                : !state.cart.isSliderCartOpen,
           },
         };
       }),

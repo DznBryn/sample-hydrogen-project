@@ -1,3 +1,4 @@
+/* eslint-disable quotes */
 import SkinQuizAgeEmailOptIn, {
   links as skinQuizAgeEmailStyles,
 } from '~/modules/quiz/components/skinQuizAgeEmailOptIn';
@@ -31,6 +32,21 @@ const ResultView = ({content}) => {
     advancedQuizContent,
   } = content;
 
+  const provisionalH2 = advancedQuizContent
+    ? "We've found your perfect skincare routine to:"
+    : "We've found your perfect eye care routine.";
+
+  function resultSubTitle() {
+    const goalsArray = answers?.slice(3);
+    const answersArr = {
+      1: goalsArray[0],
+      2: `${goalsArray[0]}, and ${goalsArray[1]}`,
+      3: `${goalsArray[0]},  ${goalsArray[1]}, and ${goalsArray[2]}`,
+    };
+
+    return answersArr[goalsArray.length];
+  }
+
   function getLTPostResult() {
     let aResults = [];
     let aAdvResults = [];
@@ -50,6 +66,12 @@ const ResultView = ({content}) => {
     return [...aResults, ...aAdvResults];
   }
 
+  function parserCategory(category) {
+    const parsedCategory = category.replace('-', ' ').replace('&', ' & ');
+
+    return parsedCategory;
+  }
+
   return (
     <main className="finalWrapper">
       <SkinQuizAgeEmailOptIn
@@ -59,7 +81,8 @@ const ResultView = ({content}) => {
       />
 
       <section className="quizResults">
-        <h2>We’ve found your perfect eye care routine.</h2>
+        <h2>{provisionalH2}</h2>
+        {advancedQuizContent ? <p className="dek">{resultSubTitle()}</p> : null}
 
         <br />
 
@@ -74,7 +97,7 @@ const ResultView = ({content}) => {
                 </span>
                 <br />
                 <br />
-                {item}
+                {parserCategory(item)}
               </h4>
 
               {resultState[item][0] && (
