@@ -31,17 +31,17 @@ const AdvancedResultsView = ({content}) => {
   }
 
   return (
-    <section className={'advanceRoutineResults'}>
-      <p className={'preHedCaption'}>
+    <section className="advanceRoutineResults">
+      <p className="preHedCaption">
         For best results, try all these
         <br />
         essentials in your routine.
       </p>
 
-      <div className={'hedWrapper'}>
-        <h2 className={'hed'}>STEP UP YOUR SKINCARE EVEN MORE</h2>
-        <p className={'dek'}>These work well with your essentials</p>
-        <button onClick={handleShowAdvanceRoutine} className={'expandBtn'}>
+      <div className="hedWrapper">
+        <h2 className="hed">STEP UP YOUR SKINCARE EVEN MORE</h2>
+        <p className="dek">These work well with your essentials</p>
+        <button onClick={handleShowAdvanceRoutine} className="expandBtn">
           {isAdvRoutineActive ? '-' : '+'}
         </button>
       </div>
@@ -59,7 +59,7 @@ const AdvancedResultsView = ({content}) => {
         {Object.keys(advancedResultsState)
           .slice(0, 3)
           .map((item) => (
-            <div key={item} className={'productWrapper'}>
+            <div key={item} className="productWrapper">
               <h4>BOOST</h4>
 
               {advancedResultsState[item] && (
@@ -79,10 +79,10 @@ const AdvancedResultsView = ({content}) => {
           ))}
       </div>
 
-      <div className={'reviewQuizAnswers'}>
-        <div className={'expansionBar'}>
+      <div className="reviewQuizAnswers">
+        <div className="expansionBar">
           <p>REVIEW AND MODIFY YOUR ANSWERS</p>
-          <button onClick={handleUserAnswers} className={'expandBtn'}>
+          <button onClick={handleUserAnswers} className="expandBtn">
             {isUserAnswersActive ? '-' : '+'}
           </button>
         </div>
@@ -94,41 +94,33 @@ const AdvancedResultsView = ({content}) => {
               : 'quizAnswersWrapper'
           }
         >
-          <div className={'answers'}>
-            <h4 className={'answerHeader'}>Feel</h4>
+          <div className="answers">
+            <h4 className="answerHeader">Feel</h4>
             <ul>
-              <li className={'questionType'}>{answerState[0][0].name}</li>
+              <li className="questionType">{answerState[0][0].name}</li>
             </ul>
           </div>
 
-          <div className={'answers'}>
-            <h4 className={'answerHeader'}>Sensitive</h4>
+          <div className="answers">
+            <h4 className="answerHeader">Sensitive</h4>
             <ul>
-              <li className={'questionType'}>{answerState[1][0].name}</li>
+              <li className="questionType">{answerState[1][0].name}</li>
             </ul>
           </div>
 
-          <div className={'answers'}>
-            <h4 className={'answerHeader'}>Skin Tone</h4>
+          <div className="answers">
+            <h4 className="answerHeader">Skin Tone</h4>
             <ul>
-              <li className={'questionType'}>{answerState[2][0].name}</li>
+              <li className="questionType">{answerState[2][0].name}</li>
             </ul>
           </div>
 
-          {/* <div className={'answers'}>
-            <h4 className={'answerHeader'}>Primary Goal</h4>
+          <div className="answers">
+            <h4 className="answerHeader">Primary Goal</h4>
             <ul>
-              {answerState.at(answerState.length -1).map(answer)
-                ans.map((an, idx) =>
-                  an.type === 'treat&prep' ? (
-                    <li key={idx} className={'questionType'}>
-                      {an.name}
-                    </li>
-                  ) : null,
-                ),
-              )}
+              <li className="questionType">{answerState[3][0].name}</li>
             </ul>
-          </div> */}
+          </div>
 
           <button onClick={handleRestart}>CHANGE YOUR ANSWERS</button>
         </div>
