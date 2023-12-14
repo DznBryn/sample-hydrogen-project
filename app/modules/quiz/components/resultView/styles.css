@@ -1,136 +1,9 @@
-@charset "UTF-8";
-.backBtn::before {
-  background-size: 6px 6px;
-  content: "〈";
-  display: inline-block;
-  margin-right: 4px;
-  padding: 0;
-}
-
 .userAnswers {
   border: 1px dashed red;
   border-radius: 10px;
   padding: 15px;
   margin: 1em;
   display: none;
-}
-
-.skinQuizWrapper {
-  width: 100%;
-  height: 607px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
-#skinQuizLandingWrapper {
-  margin-top: 50px;
-  position: relative;
-  min-height: 655px;
-  color: #4c4e56;
-}
-
-#skinQuizLandingWrapper #landingCover {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
-
-.skinQuizWrapper .left,
-.skinQuizWrapper .right {
-  width: 50%;
-  height: 100%;
-}
-
-.skinQuizWrapper .left {
-  padding-left: 9%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.skinQuizWrapper .textWrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.skinQuizWrapper .right {
-  overflow: hidden;
-}
-
-.skinQuizWrapper .right img {
-  object-fit: cover;
-  height: 607px;
-}
-
-.skinQuizWrapper .right #mobile {
-  display: none;
-}
-
-.skinQuizWrapper .calloutPill {
-  padding: 8px 15px;
-  border-radius: 2px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  margin-bottom: 32px;
-}
-
-.skinQuizWrapper .calloutPill p {
-  color: inherit;
-  margin-top: 3px;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 900;
-  letter-spacing: 0.015em;
-  text-align: left;
-}
-
-.skinQuizWrapper .header {
-  margin-bottom: 39px;
-}
-
-.skinQuizWrapper .header h1 {
-  font-size: 53px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: 62px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: inherit;
-}
-
-.skinQuizWrapper #startQuizBtn {
-  margin-bottom: 144px;
-  height: 51px;
-  width: 196px;
-  border-radius: 3px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  border: none;
-}
-
-.skinQuizWrapper a {
-  text-decoration: none !important;
-}
-
-.skinQuizWrapper #startQuizBtn p {
-  color: inherit;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 800;
-  letter-spacing: 0em;
-  text-align: left;
-  text-decoration: none;
 }
 
 .container h1,
@@ -426,6 +299,25 @@
   color: #48c6d9 !important;
 }
 
+.statusBar {
+  margin-top: 50px;
+  width: 100%;
+  border: 1px solid #eaeaea;
+  background-color: #eaeaea;
+  height: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.statusBar .status {
+  background-color: #ff589b;
+  height: 10px;
+  width: 0%;
+  transition: all 0.5s ease-out;
+}
+
 /**
  MEDIA TO ENABLE HOVER STYLES AT BIGGER SCREEN
 */
@@ -439,68 +331,6 @@
   }
 }
 @media all and (max-width: 768px) {
-  .skinQuizWrapper .right #desktop {
-    display: none;
-  }
-  .skinQuizWrapper .right #mobile {
-    display: block;
-    height: 100%;
-    width: 100%;
-  }
-  .skinQuizWrapper {
-    flex-direction: column-reverse;
-    height: fit-content;
-    margin-top: 0;
-  }
-  .skinQuizWrapper .left,
-  .skinQuizWrapper .right {
-    height: 280px;
-    width: 100%;
-  }
-  .skinQuizWrapper .left {
-    min-height: 280px;
-    padding: 0 34px;
-    justify-content: flex-end;
-  }
-  #skinQuizLandingWrapper {
-    min-height: 674px;
-    margin-top: 0;
-  }
-  #skinQuizLandingWrapper .fixedWidthPage {
-    padding: 0;
-  }
-  .skinQuizWrapper .calloutPill {
-    margin-bottom: 11px;
-    padding: 7px 9px;
-    height: 25px;
-  }
-  .skinQuizWrapper .calloutPill p {
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 900;
-    line-height: 56px;
-    letter-spacing: 0.015em;
-    text-align: left;
-  }
-  .skinQuizWrapper .header {
-    margin-bottom: 15px;
-  }
-  .skinQuizWrapper .header h1 {
-    font-size: 33px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 42px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: inherit;
-  }
-  .skinQuizWrapper #startQuizBtn {
-    width: calc(100vw - 68px);
-    margin-bottom: 34px;
-  }
-  #skinQuizLandingWrapper #quizContainer {
-    margin-top: 3em;
-  }
   .container {
     width: 100vw;
   }

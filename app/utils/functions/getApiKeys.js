@@ -44,7 +44,7 @@ function getApiKeys() {
           'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
-          // list_id: 345013,
+          list_id: 345013,
           // birthday_segment_id: 431,
           externalEventName: 11771,
           fieldGroupName: 51,
