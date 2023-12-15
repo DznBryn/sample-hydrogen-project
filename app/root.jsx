@@ -64,9 +64,11 @@ export const meta = () => [
 ];
 
 export async function loader({context, request}) {
-  const {destination, statusCode} = await checkRedirect(context, request);
-
-  if (destination && statusCode) return redirect(destination, statusCode);
+  const referer = request.headers.get('referer');
+  if (!referer) {
+    const {destination, statusCode} = await checkRedirect(context, request);
+    if (destination && statusCode) return redirect(destination, statusCode);
+  }
 
   const {cart, customer, listrakRec, mainNavFooter, products} =
     await fetchContentData(context);
