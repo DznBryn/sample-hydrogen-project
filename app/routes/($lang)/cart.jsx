@@ -1,4 +1,5 @@
 import {redirect} from '@remix-run/server-runtime';
+import {parseGid} from '@shopify/hydrogen';
 import {json} from '@shopify/remix-oxygen';
 import {
   cartAddItems,
@@ -7,6 +8,7 @@ import {
   cartUpdate,
   cartUpdateCustomerIdentity,
 } from '~/utils/graphql/shopify/mutations/cart';
+import {getCart} from '~/utils/graphql/shopify/queries/cart';
 
 export async function action({request, context}) {
   const {session, storefront} = context;
@@ -129,7 +131,11 @@ export async function action({request, context}) {
   }
 
   const {cart, errors} = result;
-  return json({cart, errors}, {status, headers});
+  let cartData = null;
+  if (cart?.id && parseGid(cart.id)?.id) {
+    cartData = await getCart(context, cart.id);
+  }
+  return json({cart: cartData, errors}, {status, headers});
 }
 
 export async function loader() {
