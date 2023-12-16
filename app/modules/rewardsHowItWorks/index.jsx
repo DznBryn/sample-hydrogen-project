@@ -3,7 +3,8 @@ import styles from './styles.css';
 export const links = () => {
   return [
     {
-      rel: 'stylesheet', href: styles
+      rel: 'stylesheet',
+      href: styles,
     },
   ];
 };
@@ -11,7 +12,9 @@ export const links = () => {
 const RewardsHowItWorks = () => (
   <div className={'howitworks_section'}>
     <div className={'howitworks_container'}>
-      <h2 className={'howitworks_section__heading howitworks_mobile'}>how it works</h2>
+      <h2 className={'howitworks_section__heading howitworks_mobile'}>
+        how it works
+      </h2>
       <div className={'howitworks_image__container'}>
         <picture>
           <source
@@ -28,27 +31,36 @@ const RewardsHowItWorks = () => (
         </picture>
       </div>
       <div className={'howitworks_content'}>
-        <h2 className={'howitworks_section__heading'}>how it works</h2>
+        <h2 className={'howitworks_section__heading howitworks_desktop'}>
+          how it works
+        </h2>
         <div className={'howitworks_list'}>
           <div className={'howitworks_list__container'}>
             <div className={'howitworks_list__icon'}>
               <IconAccount />
             </div>
             <div className={'howitworks_list__item'}>
-              <p className={'howitworks_content__subheading'}>create an account</p>
+              <p className={'howitworks_content__subheading'}>
+                create an account
+              </p>
               <p className={'howitworks_content__body'}>
-                Choose your favorite perks from our exclusive members-only benefits.
+                Choose your favorite perks from our exclusive members-only
+                benefits.
               </p>
             </div>
           </div>
           <div className={'howitworks_list__container'}>
-            <div className={'howitworks_list__icon'} style={{ marginTop: '.5em' }}>
+            <div
+              className={'howitworks_list__icon'}
+              style={{marginTop: '.5em'}}
+            >
               <IconUptrend />
             </div>
             <div className={'howitworks_list__item'}>
               <p className={'howitworks_content__subheading'}>earn points</p>
               <p className={'howitworks_content__body'}>
-                Earn online and in-store! Plus earn bonus points for engaging with TULA online.
+                Earn online and in-store! Plus earn bonus points for engaging
+                with TULA online.
               </p>
             </div>
           </div>
@@ -71,7 +83,8 @@ const RewardsHowItWorks = () => (
             <div className={'howitworks_list__item'}>
               <p className={'howitworks_content__subheading'}>redeem rewards</p>
               <p className={'howitworks_content__body'}>
-                Redeem your points for full-size products, discounts, and members-only perks.
+                Redeem your points for full-size products, discounts, and
+                members-only perks.
               </p>
             </div>
           </div>
@@ -92,7 +105,12 @@ const IconUptrend = () => (
   >
     <rect width="26" height="15" fill="url(#pattern0)" />
     <defs>
-      <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+      <pattern
+        id="pattern0"
+        patternContentUnits="objectBoundingBox"
+        width="1"
+        height="1"
+      >
         <use
           xlinkHref="#image0_3136_9840"
           transform="matrix(0.00874126 0 0 0.0151515 0.0236014 0)"
@@ -117,10 +135,23 @@ const IconAccount = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >
-    <rect id="updated icon - blue 1" width="23" height="23" fill="url(#patternIconUser)" />
+    <rect
+      id="updated icon - blue 1"
+      width="23"
+      height="23"
+      fill="url(#patternIconUser)"
+    />
     <defs>
-      <pattern id="patternIconUser" patternContentUnits="objectBoundingBox" width="1" height="1">
-        <use xlinkHref="#image0_3136_9842" transform="translate(-0.00462963) scale(0.00925926)" />
+      <pattern
+        id="patternIconUser"
+        patternContentUnits="objectBoundingBox"
+        width="1"
+        height="1"
+      >
+        <use
+          xlinkHref="#image0_3136_9842"
+          transform="translate(-0.00462963) scale(0.00925926)"
+        />
       </pattern>
       <image
         id="image0_3136_9842"

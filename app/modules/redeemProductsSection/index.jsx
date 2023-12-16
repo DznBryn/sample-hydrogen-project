@@ -1,12 +1,14 @@
-import { useRef, useState } from 'react';
-import { useStore } from '~/hooks/useStore';
-import { switchSliderPanelVisibility } from '../sliderPanel';
-import { triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
-import YotpoProductBox, { links as yotpoRedeemProductBoxStyles } from '../yotpoRedeemProductBox';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import {useRef, useState} from 'react';
+import {useStore} from '~/hooks/useStore';
+import {switchSliderPanelVisibility} from '../sliderPanel';
+import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
+import YotpoProductBox, {
+  links as yotpoRedeemProductBoxStyles,
+} from '../yotpoRedeemProductBox';
+import {Swiper, SwiperSlide} from 'swiper/react';
 import styles from './styles.css';
-import { mock } from './mock';
-import { Navigation, Pagination } from 'swiper/modules';
+import {mock} from './mock';
+import {Navigation, Pagination} from 'swiper/modules';
 import swiperStyles from 'swiper/css';
 import swiperNavigationStyles from 'swiper/css/navigation';
 import swiperPaginationStyles from 'swiper/css/pagination';
@@ -14,35 +16,38 @@ import swiperPaginationStyles from 'swiper/css/pagination';
 export const links = () => {
   return [
     {
-      rel: 'stylesheet', href: styles,
-
+      rel: 'stylesheet',
+      href: styles,
     },
     {
-      rel: 'stylesheet', href: swiperStyles,
+      rel: 'stylesheet',
+      href: swiperStyles,
     },
     {
-      rel: 'stylesheet', href: swiperNavigationStyles,
+      rel: 'stylesheet',
+      href: swiperNavigationStyles,
     },
     {
-      rel: 'stylesheet', href: swiperPaginationStyles,
+      rel: 'stylesheet',
+      href: swiperPaginationStyles,
     },
     {
       rel: 'stylesheet',
       href: 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css',
       media: 'screen',
     },
-    ...yotpoRedeemProductBoxStyles()];
+    ...yotpoRedeemProductBoxStyles(),
+  ];
 };
 
-
-const RedeemProductsSection = ({ products = mock }) => {
-  const data = useStore(store => store?.account?.data ?? null);
-  const isLoggedIn = data?.id !== '' || data?.id !== null || data?.id !== undefined;
+const RedeemProductsSection = ({products = mock}) => {
+  const data = useStore((store) => store?.account?.data || null);
   const [buttonDisabled, setButtonDisabled] = useState('prev');
-
   const navigationNextRef = useRef(null);
   const navigationPrevRef = useRef(null);
   const swiperRef = useRef(null);
+
+  const isLoggedIn = Boolean(data?.id);
 
   function handleMovePrevSlide() {
     swiperRef.current?.swiper?.slidePrev();
@@ -80,18 +85,17 @@ const RedeemProductsSection = ({ products = mock }) => {
           nextEl: navigationNextRef.current,
         }}
         onInit={(swiper) => {
-          swiper.params.navigation.prevEl = navigationPrevRef.current,
-            swiper.params.navigation.nextEl = navigationNextRef.current;
+          (swiper.params.navigation.prevEl = navigationPrevRef.current),
+            (swiper.params.navigation.nextEl = navigationNextRef.current);
 
           swiper.navigation.update();
         }}
         breakpoints={{
           500: {
             slidesPerView: 4,
-            spaceBetween: 27
-          }
+            spaceBetween: 27,
+          },
         }}
-
       >
         {products.map((item) => (
           <SwiperSlide key={item._id}>
@@ -103,7 +107,7 @@ const RedeemProductsSection = ({ products = mock }) => {
       </Swiper>
       <div className={'arrowsContainer'}>
         <button
-          id='prev-btn'
+          id="prev-btn"
           ref={navigationPrevRef}
           disabled={isPrevDisabled}
           onClick={handleMovePrevSlide}
@@ -111,7 +115,7 @@ const RedeemProductsSection = ({ products = mock }) => {
           <LeftArrow />
         </button>
         <button
-          id='next-btn'
+          id="next-btn"
           ref={navigationNextRef}
           disabled={isNextDisabled}
           onClick={handleMoveNextSlide}
@@ -120,7 +124,6 @@ const RedeemProductsSection = ({ products = mock }) => {
         </button>
       </div>
       {!isLoggedIn && <YotpoLoginButton />}
-  
     </div>
   );
 };
@@ -133,7 +136,9 @@ const YotpoLoginButton = () => (
     type="button"
     onClick={() => {
       switchSliderPanelVisibility('SliderAccount');
-      triggerAnalyticsLoyaltyEvents('LoginBtnClick', { source: 'landingRedeemProduct' });
+      triggerAnalyticsLoyaltyEvents('LoginBtnClick', {
+        source: 'landingRedeemProduct',
+      });
     }}
   >
     Login to redeem

@@ -16,17 +16,10 @@ const MainContentQuiz = ({content}) => {
     multipleChoiceState,
     handleClick,
     handleAnswersSubmit,
-    stepBack,
-    hasStatusBar,
   } = content;
 
   function handleOnClick(element) {
     handleClick(element);
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
   }
 
   const AnswerBtn = ({element}) => {
@@ -82,18 +75,6 @@ const MainContentQuiz = ({content}) => {
 
   return (
     <section className="mainContentContainer">
-      {hasStatusBar && (
-        <div className="statusBar">
-          <div className="status" step={step} />
-        </div>
-      )}
-
-      {step > 0 && (
-        <button onClick={stepBack} className="backBtn">
-          BACK
-        </button>
-      )}
-
       <p className="step">Step {step + 1}</p>
 
       <p className="question">{questionText}</p>

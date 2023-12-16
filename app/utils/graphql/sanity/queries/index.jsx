@@ -1768,6 +1768,7 @@ export const QUIZ_CONTENT = gql`
         answers {
           name
           answerText
+          answerSubCopy
           answerType
           qualifiers {
             name
@@ -1782,6 +1783,7 @@ export const QUIZ_CONTENT = gql`
             answers {
               name
               answerText
+              answerSubCopy
               answerType
               qualifiers {
                 name
