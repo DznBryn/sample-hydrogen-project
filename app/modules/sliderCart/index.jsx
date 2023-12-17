@@ -1,15 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
-  // updateListrakCart,
-  // updateListrakCartGraphQL,
   isAutoCart,
   isAutoCartGraphQL,
-  getCartQuantity,
   convertStorefrontIdToExternalId,
   getLoyaltyCustomerData,
 } from '../../utils/functions/eventFunctions';
-import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
-import {useCartState, useCartActions} from '../../hooks/useCart';
+import {isFreeGitPromoActivate} from './utils/index';
+import {useCartActions} from '../../hooks/useCart';
 import {useCustomerState} from '../../hooks/useCostumer';
 import {PortableText} from '@portabletext/react';
 import getApiKeys from '../../utils/functions/getApiKeys';
@@ -20,7 +17,7 @@ import styles from './styles.css';
 import ProgressBar from './modules/ProgressBar';
 import Checkout from './modules/Checkout';
 import LoyaltyTooltipModal from './modules/LoyaltyTooltipModal';
-// import FreeGiftPromoProduct from './modules/FreeGiftPromoProduct';
+import FreeGiftPromoProduct from './modules/FreeGiftPromoProduct';
 import {GearIcon} from '../icons/index';
 import {mockCartConfig, mockProductRecs} from '../../utils/functions/mocks';
 import {useStore} from '~/hooks/useStore';
@@ -32,6 +29,7 @@ import Banner, {
   SkinQuizCartBanner,
   links as loyaltyBannerStyles,
 } from '../loyalty/banner';
+import {flattenConnection, parseGid} from '@shopify/hydrogen';
 
 export const links = () => {
   return [
@@ -44,7 +42,7 @@ export const links = () => {
 
 const apiType = getApiKeys().API_TYPE;
 
-let prevState = null;
+// let prevState = null;
 
 const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
   const cartConfig = cartPageConfig?.emptyCartMessage
@@ -53,18 +51,16 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
   const productRecList = productRecs?.productList
     ? productRecs
     : mockProductRecs;
-  const {items, inventory, subtotalPrice} = useCartState()
-    ? useCartState()
-    : [];
-  const cart = useStore((store) => store?.cart?.data ?? {});
 
+  const cart = useStore((store) => store?.cart?.data ?? {});
+  const [items, setItems] = useState(null);
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const isSliderCartOpen = useStore(
     (store) => store?.cart?.isSliderCartOpen ?? false,
   );
   const {addItems, removeItems} = useCartActions();
   const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
-  const carbonOffsetItem = items.filter(
+  const carbonOffsetItem = items?.filter(
     (item) =>
       (apiType === 'graphql'
         ? convertStorefrontIdToExternalId(item.variant.product.id)
@@ -80,7 +76,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
     (product) => product.externalId === GWP_PRODUCT_EXTERNAL_ID,
   )[0];
   const GWP_PRODUCT_VARIANT_ID = GWP_PRODUCT?.variants[0].externalId;
-  const IS_GWP_PRODUCT_ON_CART = items.some(
+  const IS_GWP_PRODUCT_ON_CART = items?.some(
     (product) =>
       (apiType === 'graphql'
         ? convertStorefrontIdToExternalId(product.variant.product.id)
@@ -89,8 +85,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
 
   const MIN_POINTS_AMOUNT = 2000;
 
-  const totalCart =
-    apiType === 'graphql' ? Number(subtotalPrice) : subtotalPrice / 100;
+  const totalCart = Number(cart?.cost?.subtotalAmount?.amount ?? 0);
 
   const setRewardsPoints = () => {}; //mock
 
@@ -102,49 +97,53 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
         ? isAutoCartGraphQL(cart.items)
         : isAutoCart(cart.items)
     ) {
-      const autoDeliveryItems =
-        apiType === 'graphql'
-          ? items.filter((item) =>
-              item.customAttributes.find((el) => el.key === 'selling_plan'),
-            )
-          : items.filter((item) => item.selling_plan_allocation !== undefined);
+      const autoDeliveryItems = items?.filter((item) => {
+        return item?.sellingPlanAllocation?.sellingPlan;
+      });
 
-      const valuesToStore = autoDeliveryItems.map((item) => ({
-        id: apiType === 'graphql' ? item.variant.product.id : item.variant_id,
+      const valuesToStore = autoDeliveryItems?.map((item) => ({
+        id: item?.merchandise?.product?.id,
       }));
 
       localStorage.setItem('ADItems', JSON.stringify(valuesToStore));
     } else localStorage.removeItem('ADItems');
-  }, [items]);
+  }, [items?.length]);
+
+  useEffect(() => {
+    if (cart?.totalQuantity) {
+      const items = flattenConnection(cart.lines).map((item) => item);
+      setItems(items);
+    }
+
+    if (typeof window.unlockABTasty === 'function') {
+      if (cart?.totalQuantity) {
+        window.unlockABTasty();
+      }
+    }
+
+    const isGWPPromoToggleOn = isFreeGitPromoActivate(cartConfig);
+
+    if (cart?.totalQuantity && isGWPPromoToggleOn) checkGWPThreshold();
+  }, [cart?.totalQuantity]);
 
   React.useEffect(() => {
     if (
-      apiType === 'graphql'
-        ? isAutoCartGraphQL(cart.items)
-        : isAutoCart(cart.items)
+      items?.some((item) => {
+        return item?.sellingPlanAllocation?.sellingPlan;
+      })
     ) {
-      const autoDeliveryItems =
-        apiType === 'graphql'
-          ? items.filter((item) =>
-              item.customAttributes.find((el) => el.key === 'selling_plan'),
-            )
-          : items.filter((item) => item.selling_plan_allocation !== undefined);
+      const autoDeliveryItems = items?.filter((item) => {
+        return item?.sellingPlanAllocation?.sellingPlan;
+      });
 
       let totalCartWithoutDiscount = 0;
 
       const ADdiscount = Number(cartPageConfig?.autoDeliveryDiscount ?? 0);
-      const ADPointsBonus = autoDeliveryItems.length * 300;
+      const ADPointsBonus = autoDeliveryItems?.length * 300;
 
       for (let item of items) {
-        if (
-          apiType === 'graphql'
-            ? item.customAttributes.find((el) => el.key === 'selling_plan')
-            : item.selling_plan_allocation !== undefined
-        ) {
-          const itemPrice =
-            apiType === 'graphql'
-              ? item.variant.price
-              : item?.original_line_price / 100;
+        if (item?.sellingPlanAllocation?.sellingPlan) {
+          const itemPrice = item?.cost?.amountPerQuantity?.amount / 100;
           const itemDiscount = itemPrice * (ADdiscount / 100);
 
           const discountedPrice = Math.floor(itemPrice - itemDiscount) * 10;
@@ -152,7 +151,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
           totalCartWithoutDiscount += discountedPrice;
         } else {
           totalCartWithoutDiscount +=
-            Math.floor(item?.original_line_price / 100) * 10;
+            Math.floor(item?.cost?.amountPerQuantity?.amount / 100) * 10;
         }
       }
 
@@ -162,22 +161,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
     } else {
       setRewardsPoints(Math.floor(totalCart) * 10);
     }
-  }, [items]);
-
-  React.useEffect(() => {
-    if (typeof window.unlockABTasty === 'function') {
-      if (inventory.status === 'loaded') {
-        window.unlockABTasty();
-      }
-    }
-  }, [inventory.status]);
-
-  React.useEffect(() => {
-    const isGWPPromoToggleOn = isFreeGitPromoActivate(cartConfig);
-
-    if (inventory.status === 'loaded' && isGWPPromoToggleOn)
-      checkGWPThreshold();
-  }, [items, inventory.status]);
+  }, [items?.length]);
 
   function checkGWPThreshold() {
     const GWP_THRESHOLD = cartConfig.freeGiftPromoThreshold;
@@ -195,27 +179,18 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
 
     function getTotalValueOnCart() {
       const FILTERED_ITEMS = {
-        noAD:
-          apiType === 'graphql'
-            ? items.filter(
-                (data) =>
-                  !data.customAttributes.find(
-                    (el) => el.key === 'selling_plan',
-                  ),
-              )
-            : items.filter((data) => !data.selling_plan_allocation),
-        withAD:
-          apiType === 'graphql'
-            ? items.filter((data) =>
-                data.customAttributes.find((el) => el.key === 'selling_plan'),
-              )
-            : items.filter((data) => data.selling_plan_allocation),
+        noAD: items?.filter((item) => {
+          return !item?.sellingPlanAllocation?.sellingPlan;
+        }),
+        withAD: items?.filter((item) => {
+          return item?.sellingPlanAllocation?.sellingPlan;
+        }),
       };
 
-      const NO_AD_TOTAL_VALUE = getSum(FILTERED_ITEMS.noAD);
+      const NO_AD_TOTAL_VALUE = getSum(FILTERED_ITEMS?.noAD);
 
       if (cartConfig.freeGiftPromoCombineAD) {
-        const AD_TOTAL_VALUE = getADSum(FILTERED_ITEMS.withAD);
+        const AD_TOTAL_VALUE = getADSum(FILTERED_ITEMS?.withAD);
         return AD_TOTAL_VALUE + NO_AD_TOTAL_VALUE;
       } else {
         return NO_AD_TOTAL_VALUE;
@@ -225,7 +200,8 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
         return parseFloat(
           (
             obj.reduce(
-              (accumulator, product) => accumulator + product.final_line_price,
+              (accumulator, product) =>
+                accumulator + Number(product?.cost?.totalAmount?.amount),
               0,
             ) / 100
           ).toFixed(2),
@@ -239,8 +215,8 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
             .reduce(
               (accumulator, product) =>
                 accumulator +
-                (product.original_line_price / 100 -
-                  (product?.original_line_price / 100) *
+                (product?.cost?.totalAmount?.amount -
+                  product?.cost?.totalAmount?.amount *
                     (parseInt(AD_DISCOUNT) / 100)),
               0,
             )
@@ -252,18 +228,20 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
 
   function hasOnlyGiftCards() {
     const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
-    const ITEMS_WITH_NO_GWP = items.filter(
-      (product) => product.variant_id !== GWP_PRODUCT_VARIANT_ID,
+    const ITEMS_WITH_NO_GWP = items?.filter(
+      (item) => parseGid(item?.merchandise?.id)?.id !== GWP_PRODUCT_VARIANT_ID,
     );
 
-    return ITEMS_WITH_NO_GWP.every((product) =>
-      GIFT_CARDS_VARIANTS_IDS.some((id) => id === product.variant_id),
+    return ITEMS_WITH_NO_GWP?.every((item) =>
+      GIFT_CARDS_VARIANTS_IDS.some(
+        (id) => id === parseGid(item?.merchandise?.id)?.id,
+      ),
     );
   }
 
   function getTotalItemsOnCart() {
     const EXCEPTIONS = [carbonOffsetItem, IS_GWP_PRODUCT_ON_CART];
-    let total = getCartQuantity(items);
+    let total = cart?.totalQuantity ?? 0;
 
     EXCEPTIONS.forEach((exception) => {
       if (exception) total -= 1;
@@ -279,7 +257,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
   }, []);
 
   productRecList.productList = productRecList.productList.filter((product) => {
-    for (let it = 0; it < items.length; it++) {
+    for (let it = 0; it < items?.length; it++) {
       if (apiType === 'graphql') {
         if (product.variants[0].storefrontId === items[it].variant.product.id) {
           return false;
@@ -313,39 +291,25 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
     }
   }, [status]);
 
-  if (prevState === null && items.length > 0) {
-    prevState = items;
-    // if (apiType === 'graphql') {
-    //   updateListrakCartGraphQL(
-    //     items,
-    //     cart.id,
-    //     cart.checkoutUrl,
-    //     isAutoCartGraphQL(items),
-    //   );
-    // } else {
-    //   updateListrakCart(items, cart.id, cart.checkoutUrl, isAutoCart(items));
-    // }
-  }
+  // if (prevState === null && items?.length > 0) {
+  //   prevState = items;
 
-  if (prevState !== null && compareItemsState(items, prevState)) {
-    if (items.length === 0 && prevState.length > 0) {
-      if (typeof _ltk !== 'undefined') {
-        // _ltk.SCA.ClearCart();
-      }
-    } else {
-      // if (apiType === 'graphql') {
-      //   updateListrakCartGraphQL(
-      //     items,
-      //     cart.id,
-      //     cart.checkoutUrl,
-      //     isAutoCartGraphQL(items),
-      //   );
-      // } else {
-      //   updateListrakCart(items, cart.id, cart.checkoutUrl, isAutoCart(items));
-      // }
-      prevState = items;
-    }
-  }
+  //   updateListrakCartGraphQL(cart.id, cart.checkoutUrl);
+  // }
+
+  // if (items?.length !== 0) {
+  //   if (prevState !== null) {
+  //     if (items?.length === 0 && prevState.length > 0) {
+  //       if (typeof _ltk !== 'undefined') {
+  //         _ltk?.SCA?.ClearCart();
+  //       }
+  //     } else {
+  //       updateListrakCartGraphQL(cart.id, cart.checkoutUrl);
+
+  //       prevState = items;
+  //     }
+  //   }
+  // }
 
   useEffect(() => {}, [isSliderCartOpen]);
   const cartContentProps = {
@@ -387,7 +351,6 @@ const CartContent = ({
   items,
   cartConfig,
   productRecs,
-  quantity = 1,
   hasOnlyGiftCards,
   handleClick,
   carbonOffsetItem,
@@ -410,6 +373,7 @@ const CartContent = ({
     items,
     cartConfig,
     carbonOffsetItem,
+    hasOnlyGiftCards: () => hasOnlyGiftCards(),
     ...props,
   };
 
@@ -420,22 +384,22 @@ const CartContent = ({
     productRecList,
   };
 
-  return items.length === 0 ? (
+  return items?.length === 0 ? (
     <EmptyCart {...emptyCartProps} />
   ) : (
     <>
       <div className={'cartHeader'}>
-        <h3>{'My Cart (' + quantity + ')'}</h3>
+        <h3>{'My Cart (' + cart?.totalQuantity + ')'}</h3>
         <div className={'cartClose'} onClick={handleClick}>
           CLOSE
         </div>
       </div>
 
       {!hasOnlyGiftCards() && (
-        <ProgressBar cart={cart} cartConfig={cartConfig} />
+        <ProgressBar cart={cart} items={items} cartConfig={cartConfig} />
       )}
 
-      {cartConfig?.cartTemporaryWarnRaw && (
+      {cartConfig?.showTemporaryWarn && (
         <div
           className={'temporaryWarn'}
           style={{marginTop: hasOnlyGiftCards() ? '20px' : '0'}}
@@ -510,50 +474,39 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => (
     <Checkout message="Start Shopping" url="/collections/all" />
   </>
 );
-const ItemsList = ({items, cartConfig, setLoading, products, ...props}) => {
-  // const cart = useStore((store) => store?.cart?.data ?? {});
+const ItemsList = ({cartConfig, setLoading, products, ...props}) => {
+  const cart = useStore((store) => store?.cart?.data ?? {});
+  const items = cart?.lines ? flattenConnection(cart?.lines) : [];
   const getRecItemsLimit = () => {
-    if (items.length === 2) return 2;
-    if (items.length === 3) return 1;
-    if (items.length > 4) return 0;
+    if (items?.length === 2) return 2;
+    if (items?.length === 3) return 1;
+    if (items?.length > 4) return 0;
     return 3;
   };
 
   const filteredItems = {
-    noAD:
-      apiType === 'graphql'
-        ? items.filter(
-            (data) =>
-              !data.customAttributes.find((el) => el.key === 'selling_plan'),
-          )
-        : items.filter((data) => !data.selling_plan_allocation),
-    withAD:
-      apiType === 'graphql'
-        ? items.filter((data) =>
-            data.customAttributes.find((el) => el.key === 'selling_plan'),
-          )
-        : items.filter((data) => data.selling_plan_allocation),
+    noAD: items?.filter((data) => !data?.sellingPlanAllocation?.sellingPlan),
+    withAD: items?.filter((data) => data?.sellingPlanAllocation?.sellingPlan),
   };
 
-  // const shouldActivateFreeGift = () => {
-  //   let cartTotal = Number(cart?.cost?.subtotalAmount?.amount ?? '0.00');
-  //   if (!cartConfig?.freeGiftPromoCombineAD) {
-  //     cartTotal = items
-  //       .filter(
-  //         (item) =>
-  //           !item?.customAttributes?.some((el) => el.key === 'selling_plan'),
-  //       )
-  //       .reduce((total, value) => (total += Number(value?.variant?.price)), 0);
-  //   }
-  //   return cartTotal >= cartConfig?.freeGiftPromoThreshold;
-  // };
+  const shouldActivateFreeGift = () => {
+    let cartTotal = Number(cart?.cost?.subtotalAmount?.amount ?? '0.00');
+    if (!cartConfig?.freeGiftPromoCombineAD) {
+      cartTotal = items
+        .filter((item) => !item?.sellingPlanAllocation?.sellingPlan)
+        .reduce((total, value) => {
+          return (total += Number(value?.cost?.amountPerQuantity?.amount ?? 0));
+        }, 0);
+    }
+    return cartTotal >= cartConfig?.freeGiftPromoThreshold;
+  };
 
   /**
    * this code bellow is the code for Loyalty products
    * TODO => implement a method to add 'loyalty_redeem' at the redeemed product
    */
 
-  const loyaltyProduct = items.find((item) =>
+  const loyaltyProduct = items?.find((item) =>
     item?.customAttributes?.some((el) => el.key === 'loyalty_redeem'),
   );
 
@@ -574,8 +527,10 @@ const ItemsList = ({items, cartConfig, setLoading, products, ...props}) => {
               }
             />
           )}
-          {filteredItems.withAD.length > 0 && <p>Your auto-delivery items:</p>}
-          {filteredItems.withAD.map((item) => {
+          {filteredItems?.withAD?.length > 0 && (
+            <p>Your auto-delivery items:</p>
+          )}
+          {filteredItems?.withAD?.map((item) => {
             const product =
               apiType === 'graphql'
                 ? products?.products?.filter(
@@ -623,10 +578,11 @@ const ItemsList = ({items, cartConfig, setLoading, products, ...props}) => {
           })}
         </div>
         <div>
-          {filteredItems.noAD.length > 0 && filteredItems.withAD.length > 0 && (
-            <p>Your one-time purchase items:</p>
-          )}
-          {filteredItems.noAD.map((item) => {
+          {filteredItems?.noAD?.length > 0 &&
+            filteredItems?.withAD?.length > 0 && (
+              <p>Your one-time purchase items:</p>
+            )}
+          {filteredItems?.noAD?.map((item) => {
             const product =
               apiType === 'graphql'
                 ? products?.products?.filter(
@@ -675,25 +631,24 @@ const ItemsList = ({items, cartConfig, setLoading, products, ...props}) => {
         </div>
       </div>
 
-      {/* {
-      isFreeGitPromoActivate(cartConfig) &&
-          !hasOnlyGiftCards() &&
-          products.products
-            .filter(
-              (product) =>
-                product.externalId.toString() ===
-                cartConfig?.freeGiftPromoProductExternalID,
-            )
-            .map((data, index) => (
-              <FreeGiftPromoProduct
-                key={index}
-                product={data}
-                isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
-                anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage.src}
-                productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
-                active={shouldActivateFreeGift()}
-              />
-            ))} */}
+      {isFreeGitPromoActivate(cartConfig) &&
+        !props?.hasOnlyGiftCards() &&
+        products.products
+          .filter(
+            (product) =>
+              product.externalId.toString() ===
+              cartConfig?.freeGiftPromoProductExternalID,
+          )
+          .map((data, index) => (
+            <FreeGiftPromoProduct
+              key={index}
+              product={data}
+              isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
+              anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage.src}
+              productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
+              active={shouldActivateFreeGift()}
+            />
+          ))}
 
       <SliderCartRec
         productRecs={props?.productRecList}

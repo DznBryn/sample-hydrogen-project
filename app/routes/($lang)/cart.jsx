@@ -36,7 +36,6 @@ export async function action({request, context}) {
       ? JSON.parse(String(formData.get('lines')))
       : [];
 
-    // console.log('LINES:', lines);
     if (!cartId) {
       result = await cartCreate({
         input: countryCode ? {lines, buyerIdentity: {countryCode}} : {lines},
@@ -59,7 +58,6 @@ export async function action({request, context}) {
     if (!lineIds.length) {
       throw new Error('No line items to remove');
     }
-
     result = await cartRemoveItems({
       cartId,
       lineIds,
@@ -76,6 +74,7 @@ export async function action({request, context}) {
     if (updatesLines.length === 0) {
       return json({message: 'No lines to update'}, {status: 400});
     }
+
     result = await cartUpdate({
       cartId,
       lines: updatesLines,
@@ -132,10 +131,13 @@ export async function action({request, context}) {
 
   const {cart, errors} = result;
   let cartData = null;
-  if (cart?.id && parseGid(cart.id)?.id) {
-    cartData = await getCart(context, cart.id);
+
+  if (!cart?.lines) {
+    if (cart?.id && parseGid(cart.id)?.id) {
+      cartData = await getCart(context, cart.id);
+    }
   }
-  return json({cart: cartData, errors}, {status, headers});
+  return json({cart: cartData ?? cart, errors}, {status, headers});
 }
 
 export async function loader() {
