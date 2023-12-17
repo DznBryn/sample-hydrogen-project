@@ -37,6 +37,7 @@ export default function PDPAddToCart({
   const {setData: setCartData = () => {}, data = null} = useStore(
     (store) => store?.cart ?? null,
   );
+
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
 
@@ -52,7 +53,13 @@ export default function PDPAddToCart({
     ? 'plpExclusive'
     : 'pdpExclusive';
   const lineItems = [
-    {merchandiseId: addItem?.variantId, quantity: addItem?.quantity || 1},
+    {
+      merchandiseId: addItem?.variantId,
+      quantity: addItem?.quantity || 1,
+      sellingPlanId: addItem?.selling_plan_id
+        ? `gid://shopify/SellingPlan/${addItem?.selling_plan_id}`
+        : null,
+    },
   ];
 
   useEffect(() => {
@@ -91,6 +98,7 @@ export default function PDPAddToCart({
   }, [
     addItem?.quantity,
     addItem?.variantId,
+    addItem?.selling_plan_id,
     isLoggedIn,
     addToCart.type,
     availableForSale,

@@ -1,21 +1,10 @@
-import getApiKeys from '../../../utils/functions/getApiKeys';
-import {
-
-  isAutoCart,
-  isAutoCartGraphQL,
-  getCurrency,
-  getCartTotalForFreeShipping,
-  getCartTotalForFreeShippingGraphQL,
-} from '../../../utils/functions/eventFunctions';
+import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {isFreeGitPromoActivate} from '../utils';
-const apiType = getApiKeys().API_TYPE;
+
 let initState = 0;
 
-const ProgressBar = ({ cart, cartConfig }) => {
-  let cartTotal =
-    apiType === 'graphql'
-      ? getCartTotalForFreeShippingGraphQL()
-      : getCartTotalForFreeShipping();
+const ProgressBar = ({cart, items, cartConfig}) => {
+  let cartTotal = cart?.cost?.subtotalAmount?.amount ?? 0;
   let progressMsg = null;
   let progressMsgFreeGift = null;
   let leftTillFree = 0;
@@ -25,9 +14,9 @@ const ProgressBar = ({ cart, cartConfig }) => {
   initState = ++initState;
 
   if (
-    apiType === 'graphql'
-      ? isAutoCartGraphQL(cart.items)
-      : isAutoCart(cart.items)
+    items?.some((item) => {
+      return item?.selling_plan_allocation !== undefined;
+    })
   ) {
     progressMsg = (
       <p className={'freeShip'}>
@@ -61,25 +50,11 @@ const ProgressBar = ({ cart, cartConfig }) => {
 
   if (isFreeGitPromoActivate(cartConfig)) {
     if (!cartConfig.freeGiftPromoCombineAD) {
-      cartTotal =
-        apiType === 'graphql'
-          ? cart.items
-            .filter(
-              (item) =>
-                !item.customAttributes.some(
-                  (el) => el.key === 'selling_plan',
-                ),
-            )
-            .reduce(
-              (total, value) => (total += Number(value.variant.price)),
-              0,
-            )
-          : cart.items
-            .filter((item) => item.selling_plan_allocation === undefined)
-            .reduce(
-              (total, value) => (total += value.final_line_price / 100),
-              0,
-            );
+      cartTotal = items
+        .filter((item) => !item?.sellingPlanAllocation?.sellingPlan)
+        .reduce((total, value) => {
+          return (total += Number(value?.cost?.amountPerQuantity?.amount ?? 0));
+        }, 0);
     }
     if (cartTotal >= cartConfig.freeGiftPromoThreshold) {
       progressMsgFreeGift = (
@@ -112,22 +87,17 @@ const ProgressBar = ({ cart, cartConfig }) => {
             isFreeGitPromoActivate(cartConfig) ? '' : 'shortGoal',
           ].join(' ')}
         >
-          <div
-            className={'progress'}
-            style={{ width: percentage + '%' }}
-          ></div>
+          <div className={'progress'} style={{width: percentage + '%'}}></div>
         </div>
       </div>
 
       {isFreeGitPromoActivate(cartConfig) && (
-        <div
-          className={['progressWrap', 'pinkProgressWrap'].join(' ')}
-        >
+        <div className={['progressWrap', 'pinkProgressWrap'].join(' ')}>
           {progressMsgFreeGift}
           <div className={'goal'}>
             <div
               className={'progress'}
-              style={{ width: percentageFreeGift + '%' }}
+              style={{width: percentageFreeGift + '%'}}
             ></div>
           </div>
         </div>

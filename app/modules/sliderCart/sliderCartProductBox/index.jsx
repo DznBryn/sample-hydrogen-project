@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {Link, useFetcher} from '@remix-run/react';
 import {useCartActions} from '../../../hooks/useCart';
 import {getCurrency} from '../../../utils/functions/eventFunctions';
@@ -30,7 +30,7 @@ const SliderCartProductBox = ({
 
   const changeCartQty = async (qty) => {
     try {
-      await updateItems({id: item.line_item_id, quantity: qty});
+      await updateItems({id: item?.id, quantity: qty});
     } catch (e) {
       console.log(e);
     }
@@ -50,24 +50,16 @@ const SliderCartProductBox = ({
     }
   };
 
-  if (
-    item?.customAttributes?.some(
-      (atribute) => atribute.key === 'loyalty_redeem',
-    )
-  ) {
+  if (item?.attributes?.some((atribute) => atribute.key === 'loyalty_redeem')) {
     isLoyaltyRedeem = true;
   }
 
-  if (
-    item?.customAttributes?.some((atribute) => atribute.key === 'selling_plan')
-  ) {
+  if (item?.sellingPlanAllocation?.sellingPlan) {
     isSellingPlan = true;
     for (let it = 0; it < cartPageConfig.sellingPlans.length; it++) {
       if (
         cartPageConfig.sellingPlans[it].sellingPlanID ===
-        Number(
-          item?.customAttributes.find((el) => el.key === 'selling_plan').value,
-        )
+        Number(item.sellingPlanAllocation.sellingPlan.id)
       ) {
         const currentPlan = cartPageConfig.sellingPlans[it];
         sellingPlanName = currentPlan?.name;
@@ -75,31 +67,29 @@ const SliderCartProductBox = ({
     }
   }
 
-  if (item?.selling_plan_allocation !== undefined) {
+  if (item?.sellingPlanAllocation !== undefined) {
     isSellingPlan = true;
     for (let it = 0; it < cartPageConfig.sellingPlans.length; it++) {
       if (
         cartPageConfig.sellingPlans[it].sellingPlanID ===
-        item?.selling_plan_allocation?.selling_plan?.id
+        item?.sellingPlanAllocation?.selling_plan?.id
       ) {
         const currentPlan = cartPageConfig.sellingPlans[it];
         sellingPlanName = currentPlan?.name.replace(' (recommended)', '');
       }
     }
   }
+
   function getSellingPlan() {
     const recommendedSellingPlan =
-      item?.customAttributes?.find((el) => el?.key === 'selling_plan') &&
-      Number(
-        item.customAttributes.find((el) => el?.key === 'selling_plan')?.value,
-      );
+      item?.sellingPlanAllocation?.sellingPlan?.id &&
+      Number(item.sellingPlanAllocation.sellingPlan.id);
 
     const hasRecommendedSellingPlan =
       recommendedSellingPlan !== undefined && recommendedSellingPlan !== 0;
 
-    const itemCurrentSellingPlan = Number(
-      item?.customAttributes?.find((el) => el?.key === 'selling_plan')?.value,
-    );
+    const itemCurrentSellingPlan = item?.sellingPlanAllocation?.sellingPlan;
+
     const dropdownValue = parseInt(sellingPlansDropdown?.current?.value);
 
     const defaultSellingPlan =
@@ -107,7 +97,11 @@ const SliderCartProductBox = ({
         hasRecommendedSellingPlan ? recommendedSellingPlan : 0
       ]?.sellingPlanID;
 
-    return dropdownValue || itemCurrentSellingPlan || defaultSellingPlan;
+    return dropdownValue
+      ? dropdownValue
+      : itemCurrentSellingPlan
+      ? itemCurrentSellingPlan
+      : defaultSellingPlan;
   }
 
   useEffect(() => {
@@ -120,10 +114,14 @@ const SliderCartProductBox = ({
   const LoyaltyProduct = () => (
     <div className={'sliderCartProduct'}>
       <div className={'productImage'}>
-        <Link to={`products/${item?.handle}?variant=${item?.variant_id}`}>
+        <Link
+          to={`products/${item?.merchandise?.product?.handle}?variant=${
+            parseGid(item?.merchandise?.id)?.id
+          }`}
+        >
           <Image
             className="productImage"
-            data={item?.image}
+            data={item?.merchandise?.image}
             sizes="(min-width: 45em) 50vw, 100vw"
             aspectRatio="4/5"
           />
@@ -141,7 +139,7 @@ const SliderCartProductBox = ({
           </h6>
         </div>
         <div className={'productTitle'}>
-          <h6> {item?.title} </h6>
+          <h6> {item?.merchandise?.product?.title} </h6>
         </div>
       </div>
     </div>
@@ -162,7 +160,7 @@ const SliderCartProductBox = ({
       sellingPlansDropdown,
       switcherInput,
       cartPageConfig,
-      getSellingPlan,
+      getSellingPlan: useCallback(() => getSellingPlan(), []),
     },
   };
 
@@ -193,10 +191,14 @@ const RegularProduct = ({
 }) => (
   <div className={'sliderCartProduct'}>
     <div className={'productImage'}>
-      <Link to={`products/${item?.handle}?variant=${item?.variant_id}`}>
+      <Link
+        to={`products/${item?.merchandise?.product?.handle}?variant=${
+          parseGid(item?.merchandise?.id)?.id
+        }`}
+      >
         <Image
           className="productImage"
-          data={item?.image}
+          data={item?.merchandise?.image}
           sizes="(min-width: 45em) 50vw, 100vw"
           aspectRatio="4/5"
         />
@@ -204,16 +206,16 @@ const RegularProduct = ({
     </div>
     <div className={'productInfo'}>
       <div className={'productTitle'}>
-        <h6> {item?.title} </h6>
+        <h6> {item?.merchandise?.product?.title} </h6>
         {isSellingPlan && (
           <h6 className={'autoDeliver'}>
             Auto-Deliver every {sellingPlanName}
           </h6>
         )}
 
-        {!isNaN(Number(item?.variant?.price)) && (
+        {!isNaN(Number(item?.cost?.totalAmount?.amount)) && (
           <YotpoProductPrice
-            price={Number(item?.variant?.price) * 10}
+            price={Number(item?.cost?.totalAmount?.amount) * 10}
             isSellingPlan={isSellingPlan}
           />
         )}
@@ -223,7 +225,7 @@ const RegularProduct = ({
           <UpdateItemButton
             lineIds={[
               {
-                id: item?.line_item_id,
+                id: item?.id,
                 quantity:
                   item?.quantity && item.quantity > 1
                     ? Number(Math.max(0, item.quantity - 1).toFixed(0))
@@ -251,13 +253,13 @@ const RegularProduct = ({
             readOnly="readonly"
             name="updates[33187716673:307c12b24eaffc6df04a594677e63385]"
             className="product-quantity"
-            id={`quantity--${item.id}`}
+            id={`quantity--${item?.merchandise?.id}`}
             aria-label="Quantity"
           />
           <UpdateItemButton
             lineIds={[
               {
-                id: item?.line_item_id,
+                id: item?.id,
                 quantity: Number((item?.quantity + 1).toFixed(0)),
               },
             ]}
@@ -293,8 +295,8 @@ const RegularProduct = ({
         </div>
       </div>
     </div>
-    <RemoveItemButton lineId={item?.line_item_id} />
-    {item.hasSellingPlans && (
+    <RemoveItemButton lineId={item?.id} />
+    {item?.hasSellingPlans && (
       <ADSwitcherContent item={item} {...AutoDelivery} />
     )}
   </div>
@@ -308,7 +310,7 @@ const Price = ({item, promo, product, cartPageConfig}) => {
         promo?.variantIds?.find(
           (variantId) => Number(variantId) === item?.variant_id,
         ))) &&
-    item.selling_plan_allocation === null &&
+    item.sellingPlanAllocation === null &&
     !item.title.includes('E-Gift Card')
   ) {
     const line_price =
@@ -371,7 +373,7 @@ const Price = ({item, promo, product, cartPageConfig}) => {
         )}
       </div>
     );
-  } else if (item.selling_plan_allocation !== null) {
+  } else if (item.sellingPlanAllocation !== null) {
     const ADdiscount = Number(cartPageConfig?.autoDeliveryDiscount ?? 0) / 100;
     const line_price =
       Number(item?.cost?.totalAmount?.amount) -
@@ -421,17 +423,16 @@ const ADSwitcherContent = ({
     const changeToAD = switcherInput.current.checked;
 
     const lineItem = {
-      id: item?.line_item_id,
+      id: item?.id,
       quantity: item?.quantity ?? 1,
       sellingPlanId: changeToAD
         ? `gid://shopify/SellingPlan/${getSellingPlan()}`
         : null,
     };
-    console.log('lineItem', {lineItem, sell: getSellingPlan()});
+
     const formData = new FormData();
     formData.append('cartAction', 'UPDATE_CART');
     formData.append('lines', JSON.stringify([lineItem]));
-
     try {
       // Using fetcher.submit() for form submission
       await fetcher.submit(formData, {
@@ -443,6 +444,7 @@ const ADSwitcherContent = ({
       console.error('Auto-delivery Request Failed', error);
     }
   }
+
   return (
     <div className={'switcherContainer'}>
       <label className={'switcher'}>
@@ -452,27 +454,23 @@ const ADSwitcherContent = ({
           type="checkbox"
           onChange={switchProductAD}
           checked={
-            item.selling_plan_allocation !== null &&
-            item.selling_plan_allocation
+            item.sellingPlanAllocation !== null && item.sellingPlanAllocation
           }
           ref={switcherInput}
         />
         <span className={'slider'}></span>
       </label>
-      {item.selling_plan_allocation !== null ? (
+      {item.sellingPlanAllocation !== null ? (
         <div className={'selectContainer'}>
           <label htmlFor="adOptions">ship every </label>
           <select
             ref={sellingPlansDropdown}
             id="adOptions"
             onChange={switchProductAD}
+            value={getSellingPlan()}
           >
             {cartPageConfig?.sellingPlans?.map((plan) => (
-              <option
-                key={plan._id}
-                value={plan.sellingPlanID}
-                selected={plan.sellingPlanID === getSellingPlan()}
-              >
+              <option key={plan.sellingPlanID} value={plan.sellingPlanID}>
                 {plan.name}
                 {plan.sellingPlanID ===
                   cartPageConfig.sellingPlans[item?.recommendedSellingPlan - 1]

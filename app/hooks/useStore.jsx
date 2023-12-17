@@ -1,9 +1,86 @@
 import {create} from 'zustand';
 
 export const useStore = create((set) => ({
-  store: {},
+  store: {
+    cartActions: {
+      data: {
+        id: '',
+        quantity: 0,
+        sellingPlanId: null,
+      },
+      setAddToCartItem: (item) => {
+        set((state) => {
+          const lineItem = state?.store?.cartActions?.data;
+
+          if (item?.id !== '' || item?.id !== null || item?.id !== undefined) {
+            Object.keys(item).forEach((key) => (lineItem[key] = item[key]));
+
+            return {
+              ...state,
+              store: {
+                ...state.store,
+                cartActions: {
+                  ...state.store.cartActions,
+                  data: lineItem,
+                },
+              },
+            };
+          }
+
+          return console.error(
+            'No item "id" found. Cannot add to cart. Item object requires: ',
+            lineItem,
+          );
+        });
+      },
+      updateAddToCartItem: ({item}) => {
+        set((state) => {
+          const lineItem = state?.store?.cartActions?.data;
+          let didUpdate = false;
+          if (
+            lineItem?.id !== '' ||
+            lineItem?.id !== null ||
+            lineItem?.id !== undefined
+          ) {
+            Object.keys(item).forEach((key) => {
+              if (lineItem[key] !== item[key]) {
+                didUpdate = true;
+                lineItem[key] = item[key];
+              }
+            });
+
+            if (didUpdate) {
+              return {
+                ...state,
+                store: {
+                  ...state.store,
+                  cartActions: {
+                    ...state.store.cartActions,
+                    data: lineItem,
+                  },
+                },
+              };
+            }
+          }
+
+          return console.error(
+            'No item "id" found. Cannot add to cart. Item object requires: ',
+            lineItem,
+          );
+        });
+      },
+    },
+  },
   setStore: (obj) => {
-    set({store: obj});
+    set((state) => {
+      return {
+        ...state,
+        store: {
+          ...state.store,
+          ...obj,
+        },
+      };
+    });
   },
   account: {
     data: {
