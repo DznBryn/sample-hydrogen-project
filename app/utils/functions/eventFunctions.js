@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {getCustomer} from '~/utils/graphql/shopify/queries/customer';
-import {getCart} from '~/utils/graphql/shopify/queries/cart';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection} from '@shopify/hydrogen';
 import {useCartState} from '~/hooks/useCart';
@@ -708,7 +707,7 @@ export async function getMainNavFooterCMSData(context) {
  * Shopify data functions
  */
 
-export async function getCustomerData(context) {
+export async function getCustomerData(context, customerAccessToken) {
   let customer = {
     id: '',
     firstName: '',
@@ -716,7 +715,6 @@ export async function getCustomerData(context) {
     phone: '',
   };
 
-  const customerAccessToken = await context.session.get('customerAccessToken');
   console.log('customerAccessToken', customerAccessToken);
   if (typeof customerAccessToken === 'string') {
     customer = await getCustomer(context, customerAccessToken);
@@ -726,11 +724,4 @@ export async function getCustomerData(context) {
   }
 
   return customer;
-}
-
-export async function getCartData(context) {
-  const cartId = await context.session.get('cartId');
-  const cart = cartId ? await getCart(context, cartId) : {};
-
-  return cart;
 }
