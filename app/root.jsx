@@ -1,6 +1,5 @@
 import {
   getCMSContent,
-  getCartData,
   getCustomerData,
   getMainNavFooterCMSData,
 } from './utils/functions/eventFunctions';
@@ -32,6 +31,7 @@ import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
 import styles from './styles/app.css';
 import {useEffect} from 'react';
+import {getCart} from './utils/graphql/shopify/queries/cart';
 
 export const links = () => {
   return [
@@ -63,17 +63,65 @@ export const meta = () => [
   },
 ];
 
+let mainNavFooter;
+let products;
+let listrakRec;
+let customer = {data: undefined, accessToken: undefined};
+
 export async function loader({context, request}) {
-  const {destination, statusCode} = await checkRedirect(context, request);
+  const referer = request.headers.get('referer');
 
-  if (destination && statusCode) return redirect(destination, statusCode);
+  /**
+   * REDIRECT
+   */
 
-  const {cart, customer, listrakRec, mainNavFooter, products} =
-    await fetchContentData(context);
+  if (!referer) {
+    const {destination, statusCode} = await checkRedirect(context, request);
+    if (destination && statusCode) return redirect(destination, statusCode);
+  }
+
+  /**
+   * SHOPIFY DATA
+   */
+  const [cartId, curCustomerAccessToken] = await Promise.all([
+    context.session.get('cartId'),
+    context.session.get('customerAccessToken'),
+  ]);
+
+  const cart = cartId ? await getCart(context, cartId) : {};
+
+  if (
+    customer.accessToken !== curCustomerAccessToken ||
+    customer.data === undefined
+  ) {
+    customer.data = await getCustomerData(context, curCustomerAccessToken);
+    customer.accessToken = curCustomerAccessToken;
+  }
+
+  /**
+   * CMS DATA
+   */
+
+  if (
+    !referer ||
+    mainNavFooter === undefined ||
+    products === undefined ||
+    listrakRec === undefined
+  ) {
+    listrakRec = getCMSContent(context, GET_LISTRAK_REC);
+
+    const CMSData = await Promise.all([
+      getMainNavFooterCMSData(context),
+      getCMSContent(context, GET_PRODUCTS),
+    ]);
+
+    mainNavFooter = CMSData[0];
+    products = CMSData[1];
+  }
 
   return defer({
     cart,
-    customer,
+    customer: customer.data,
     listrakRec,
     mainNavFooterCMSData: mainNavFooter,
     productsCMSData: products,
@@ -170,25 +218,6 @@ async function checkRedirect(context, request) {
   }
 
   return redirect;
-}
-
-async function fetchContentData(context) {
-  const listrakRec = getCMSContent(context, GET_LISTRAK_REC);
-
-  const [cart, customer, mainNavFooter, products] = await Promise.all([
-    getCartData(context),
-    getCustomerData(context),
-    getMainNavFooterCMSData(context),
-    getCMSContent(context, GET_PRODUCTS),
-  ]);
-
-  return {
-    cart,
-    customer,
-    listrakRec,
-    mainNavFooter,
-    products,
-  };
 }
 
 function checkShowSliderCart(request) {
