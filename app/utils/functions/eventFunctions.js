@@ -587,9 +587,9 @@ export function getCartTotalForFreeShippingGraphQL() {
  */
 
 export async function getCMSContent(context, query, variables) {
-  const {SANITY_DATASET_DOMAIN, SANITY_API_TOKEN} = context.env;
+  const {SANITY_CDN_DATASET_DOMAIN, SANITY_API_TOKEN} = context.env;
   const result = await apolloClient(
-    SANITY_DATASET_DOMAIN,
+    SANITY_CDN_DATASET_DOMAIN,
     SANITY_API_TOKEN,
   ).query({query, variables});
 
