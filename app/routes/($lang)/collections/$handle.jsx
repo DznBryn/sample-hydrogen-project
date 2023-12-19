@@ -1,8 +1,4 @@
-import {
-  HOMEPAGE_RECS_PRODUCTS_QUERY,
-  NAV_COLLECTION_CAROUSEL,
-  PRODUCTS_QUERY,
-} from '~/utils/graphql/shopify/queries/collections';
+import {PRODUCTS_QUERY} from '~/utils/graphql/shopify/queries/collections';
 import {
   GET_PLP_FILTER_MENU,
   GET_PRODUCT_COLLECTIONS,
@@ -24,28 +20,11 @@ export const links = () => {
   return [...plpStyles()];
 };
 
-export const loader = async ({params, context, request}) => {
+export const loader = async ({params, context}) => {
   const {handle} = params;
-  const searchParams = new URLSearchParams(request.url.split('?')[1]);
-  const customQueryName = searchParams.get('query');
-
-  let query;
-
-  switch (customQueryName) {
-    case 'NAV_COLLECTION_CAROUSEL':
-      query = NAV_COLLECTION_CAROUSEL;
-      break;
-
-    case 'HOMEPAGE_RECS_PRODUCTS_QUERY':
-      query = HOMEPAGE_RECS_PRODUCTS_QUERY;
-      break;
-
-    default:
-      query = PRODUCTS_QUERY;
-  }
 
   const [{collection}, filtersOptions, collectionsCMSData] = await Promise.all([
-    context.storefront.query(query, {
+    context.storefront.query(PRODUCTS_QUERY, {
       variables: {handle},
       cache: context.storefront.CacheLong(),
     }),

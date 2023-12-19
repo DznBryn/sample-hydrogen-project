@@ -11,10 +11,7 @@ export const links = () => {
 };
 
 const HomepageRecs = ({active, collection}) => {
-  const {state, products} = useCollection(
-    collection.collectionId,
-    'HOMEPAGE_RECS_PRODUCTS_QUERY',
-  );
+  const {state, products} = useCollection(collection.collectionId);
 
   // Analytics stuff
   const homeRecContainer = useRef(null);
@@ -33,7 +30,7 @@ const HomepageRecs = ({active, collection}) => {
       className={active ? 'homepageRecProducts' : 'homepageRecProducts hidden'}
     >
       {state === 'loaded' ? (
-        products.map((product, index) => {
+        products.slice(0, 4).map((product, index) => {
           return (
             <Product
               product={product}

@@ -18,10 +18,7 @@ export const links = () => {
 const NavCollectionCarousel = ({collection, navItem}) => {
   const carouselRef = useRef(null);
   const collectionRef = useRef(null);
-  const {state, products} = useCollection(
-    collection.collectionId,
-    'NAV_COLLECTION_CAROUSEL',
-  );
+  const {state, products} = useCollection(collection.collectionId);
 
   let isDown = false;
   let startX;
