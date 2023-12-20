@@ -100,6 +100,10 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
     visibility: 'hidden',
   };
 
+  const yotpoCustomerIdentifier = yotpoId
+    ? yotpoId?.split('/Customer/')[1]
+    : '';
+
   return (
     <div className={'navPlaceholder minHeight'} id="navPlaceholder">
       <noscript>
@@ -124,7 +128,7 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
           id="swell-customer-identification"
           data-authenticated={isLoggedIn}
           data-email={email}
-          data-id={yotpoId}
+          data-id={yotpoCustomerIdentifier}
           style={{display: 'none'}}
         ></div>
       }

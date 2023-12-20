@@ -1,10 +1,6 @@
 /*
 *  MY REWARDS SECTION STYLES ## BEGIN ##
 */
-.myRewards__container {
-  margin-top: 7em;
-}
-
 .receipt__message {
   max-width: 80%;
   margin: 0 auto;
@@ -89,11 +85,26 @@
   position: relative;
 }
 
-.myRewards__container :global(.yotpo-loyalty-popup-overlay) {
+.myRewards__container .yotpo-background {
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
+  padding: 65px 0 50px;
+}
+.myRewards__container .yotpo-widget-my-rewards-widget .yotpo-logged-in-view {
+  background: inherit;
+}
+.myRewards__container .yotpo-widget-my-rewards-widget .yotpo-logged-in-view .yotpo-headline:before {
+  display: none;
+}
+.myRewards__container yotpo-widget-my-rewards-widget .yotpo-logged-in-view {
+  background: inherit;
+}
+.myRewards__container .yotpo-widget-my-rewards-widget .yotpo-logged-in-view .yotpo-headline:before {
+  display: none;
+}
+.myRewards__container .yotpo-loyalty-popup-overlay {
   margin-top: 117px;
 }
-
-.myRewards__container :global(.yotpo-widget-my-rewards-widget .yotpo-is-mobile .yotpo-grid) {
+.myRewards__container .yotpo-widget-my-rewards-widget .yotpo-is-mobile .yotpo-grid {
   height: calc(90vh - 180px);
 }
 
