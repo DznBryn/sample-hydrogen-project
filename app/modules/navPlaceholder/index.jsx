@@ -53,8 +53,10 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
     if (typeof window !== 'undefined') {
       let customerId = id;
 
-      const parsedCustomerId = window?.atob(id);
-      customerId = parsedCustomerId?.split('/Customer/')[1] || '';
+      if (getApiKeys().API_TYPE === 'rest') {
+        const parsedCustomerId = window?.atob(id);
+        customerId = parsedCustomerId?.split('/Customer/')[1] || '';
+      }
 
       setYotpoId(customerId);
     }
