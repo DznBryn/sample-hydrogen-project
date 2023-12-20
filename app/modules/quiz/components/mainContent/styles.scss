@@ -143,7 +143,8 @@
   position: relative;
   max-width: 1040px;
   width: 100%;
-  margin: auto;
+
+  margin: 12px auto 50px;
 }
 
 .mainContentContainer .step {
@@ -609,11 +610,6 @@
     margin-bottom: 34px;
   }
 
-  .container {
-    width: 100vw;
-    // margin: 0 auto 50px;
-  }
-
   .buttons_grid {
     padding: 0 15px;
     justify-content: center;
@@ -623,6 +619,11 @@
     margin-right: 0;
     height: 70px;
   }
+
+  .mainContentContainer {
+    margin: 100px auto;
+  }
+
   .mainContentContainer .step {
     font-size: 10px;
   }

@@ -38,13 +38,20 @@ const ResultView = ({content}) => {
 
   function resultSubTitle() {
     const goalsArray = answers?.slice(3);
+
     const answersArr = {
-      1: goalsArray[0],
-      2: `${goalsArray[0]}, and ${goalsArray[1]}`,
-      3: `${goalsArray[0]},  ${goalsArray[1]}, and ${goalsArray[2]}`,
+      1: parserCategory(goalsArray[0]),
+      2: `${parserCategory(goalsArray[0])}, and ${parserCategory(
+        goalsArray[1],
+      )}`,
+      3: `${parserCategory(goalsArray[0])},  ${parserCategory(
+        goalsArray[1],
+      )}, and ${parserCategory(goalsArray[2])}`,
     };
 
-    return answersArr[goalsArray.length];
+    const answersIndex = goalsArray.length > 3 ? 3 : goalsArray.length;
+
+    return answersArr[answersIndex];
   }
 
   function getLTPostResult() {
@@ -67,9 +74,14 @@ const ResultView = ({content}) => {
   }
 
   function parserCategory(category) {
-    const parsedCategory = category.replace('-', ' ').replace('&', ' & ');
+    const parsedCategory = category
+      ?.replaceAll('-', ' ')
+      ?.replaceAll('&', ' & ');
 
-    return parsedCategory;
+    const capitalized =
+      parsedCategory?.charAt(0)?.toUpperCase() + parsedCategory?.slice(1);
+
+    return capitalized;
   }
 
   return (
