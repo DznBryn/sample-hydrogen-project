@@ -1,23 +1,22 @@
-import { useState, useEffect } from 'react';
-import ReferralsLoading, { links as referralsLoadingStyles } from '../referralsLoading';
+import {useState} from 'react';
+import ReferralsLoading, {
+  links as referralsLoadingStyles,
+} from '../referralsLoading';
 
 import styles from './styles.css';
 
 export const links = () => {
   return [
     {
-      rel: 'stylesheet', href: styles
+      rel: 'stylesheet',
+      href: styles,
     },
-    ...referralsLoadingStyles()
+    ...referralsLoadingStyles(),
   ];
 };
 
 const Referrals = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setInterval(() => setIsLoading(false), 6000);
-  }, []);
+  const [isLoading] = useState(false);
 
   return (
     <div className={'referrals'}>
@@ -27,7 +26,10 @@ const Referrals = () => {
         </div>
       )}
 
-      <div className="yotpo-widget-instance" data-yotpo-instance-id="266415"></div>
+      <div
+        className="yotpo-widget-instance"
+        data-yotpo-instance-id="266415"
+      ></div>
     </div>
   );
 };
