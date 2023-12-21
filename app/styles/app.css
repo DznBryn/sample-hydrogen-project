@@ -36,15 +36,15 @@
 }
 
 :root {
-  --color-primary: #47C6D9;
-  --color-primary-black: #4C4E56;
-  --color-secondary: #B0A2F9;
-  --color-secondary-white: #FFF;
+  --color-primary: #47c6d9;
+  --color-primary-black: #4c4e56;
+  --color-secondary: #b0a2f9;
+  --color-secondary-white: #fff;
   --color-secondary-black: #000;
-  --color-secondary-pink: #FF5483;
+  --color-secondary-pink: #ff5483;
   --color-bright-yellow: #fff953;
-  --color-light-pink: #F5CFD9;
-  --color-light-purple: #DCBFE4;
+  --color-light-pink: #f5cfd9;
+  --color-light-purple: #dcbfe4;
 }
 
 html {
@@ -67,7 +67,7 @@ h4,
 h5,
 h6 {
   font-family: "Avenir LT Pro", sans-serif;
-  color: #4C4E56;
+  color: #4c4e56;
   /* IE does not support CSS variable, this is a the breakup value */
   color: var(--color-primary-black);
   font-weight: 800;
@@ -93,7 +93,7 @@ p,
 a,
 label,
 select {
-  color: #4C4E56;
+  color: #4c4e56;
   /* IE does not support CSS variable, this is a the breakup value */
   color: var(--color-primary-black);
 }
@@ -110,8 +110,8 @@ li img {
 }
 
 .btn {
-  background-color: #48C6D9;
-  color: #FFFFFF;
+  background-color: #48c6d9;
+  color: #ffffff;
   font-size: 18px;
   font-weight: 800;
   line-height: 18px;
@@ -153,11 +153,15 @@ li img {
   font-size: 13px;
 }
 
+.plpReviews .yotpo {
+  pointer-events: none;
+}
+
 .plpReviews .yotpo-bottomline.pull-left.star-clickable .text-m {
   margin-left: 0.5em;
   -webkit-font-smoothing: antialiased;
   font-size: 10px !important;
-  color: #4D4D4D !important;
+  color: #4d4d4d !important;
 }
 
 .plpReviews .yotpo-bottomline.pull-left.star-clickable .yotpo-stars .yotpo-icon {
@@ -167,7 +171,7 @@ li img {
 @media (max-width: 550px) {
   .pdpReviews .yotpo-bottomline.pull-left.star-clickable .text-m {
     font-size: 10px !important;
-    color: #4D4D4D !important;
+    color: #4d4d4d !important;
   }
   .pdpReviews .yotpo-bottomline.pull-left.star-clickable .yotpo-stars .yotpo-icon {
     font-size: 15px !important;
