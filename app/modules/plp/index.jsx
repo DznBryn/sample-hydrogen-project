@@ -251,7 +251,8 @@ const PLP = ({
 
   const titleContent = {
     title: collection.title,
-    subTitle: metafields?.find((meta) => meta.key === 'sub_title')?.value || '',
+    subTitle:
+      metafields?.find((meta) => meta?.key === 'sub_title')?.value || '',
   };
 
   const BestSellerProductRecommendation = () => {
