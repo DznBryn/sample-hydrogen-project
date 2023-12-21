@@ -63,6 +63,7 @@ const PDPVariants = ({classes, details = {}}) => {
         addToCart: {
           ...store?.productPage?.addToCart,
           quantity: 1,
+          discount: 0,
         },
       },
     });
@@ -197,21 +198,23 @@ const VariantsContainer = ({data = null}) => {
     );
 
   const Variants = () => {
-    return Boolean(TypeShade) && (
-      <div className={'variants'} ref={variantsWraper}>
-        {Boolean(TypeSize) &&
-          variants.map(
-            (variant) =>
-              variant.title.includes(store?.productPage?.selectedTypeSize) && (
-                <Variant key={variant._id} variant={variant} />
-              ),
-          )}
-        {Boolean(!TypeSize) &&
-          variants.map((variant) => (
-            <Variant key={variant._id} variant={variant} />
-          ))}
-        <CustomVariant />
-      </div>
+    return (
+      Boolean(TypeShade) && (
+        <div className={'variants'} ref={variantsWraper}>
+          {Boolean(TypeSize) &&
+            variants.map(
+              (variant) =>
+                variant.title.includes(
+                  store?.productPage?.selectedTypeSize,
+                ) && <Variant key={variant._id} variant={variant} />,
+            )}
+          {Boolean(!TypeSize) &&
+            variants.map((variant) => (
+              <Variant key={variant._id} variant={variant} />
+            ))}
+          <CustomVariant />
+        </div>
+      )
     );
   };
 
