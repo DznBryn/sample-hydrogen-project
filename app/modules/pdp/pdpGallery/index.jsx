@@ -161,10 +161,11 @@ const PDPGallery = ({
   }
 
   function getDefaultImgs() {
-    return productImages.filter((img) => img?.url.includes('default')).length >
-      0
-      ? productImages.filter((img) => img.url.includes('default'))
-      : productImages;
+    // return productImages.filter((img) => img?.url.includes('default')).length >
+    //   0
+    //   ? productImages.filter((img) => img.url.includes('default'))
+    // : productImages;
+    return productImages;
   }
 
   function isShadeFinderRendering() {
