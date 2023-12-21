@@ -4,12 +4,10 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-export const CertifiedBadge = ({ image, title, ...rest }) => {
+export const CertifiedBadge = ({image, title, ...rest}) => {
   return (
     <div className={'certifiedBadge'} {...rest}>
       <img
@@ -22,79 +20,107 @@ export const CertifiedBadge = ({ image, title, ...rest }) => {
   );
 };
 
-export const ExclusiveMemberBadge = ({ ...rest }) => (
+export const ExclusiveMemberBadge = ({...rest}) => (
   <div className={'exclusiveMemberBadgeContainer'} {...rest}>
     <p>MEMBER EXCLUSIVE</p>
   </div>
 );
 
-export const PDPBadges = ({ productDetails = [], selectedVariant }) => {
+export const PDPBadges = ({productDetails = [], selectedVariant}) => {
   const firstVariantObj = productDetails.variants[0];
   const selectedVariantObj =
     selectedVariant > 0
-      ? productDetails.variants.find(data => data.externalId === selectedVariant)
-      : null;
+      ? productDetails.variants.find(
+          (data) => data.externalId === selectedVariant,
+        )
+      : firstVariantObj;
 
-  const price = selectedVariantObj?.price || firstVariantObj?.price || 0;
-  const originalPrice = selectedVariantObj?.originalPrice || firstVariantObj?.originalPrice || 0;
+  const price = parseFloat(selectedVariantObj?.price.amount) || 0;
+  const originalPrice =
+    parseFloat(selectedVariantObj?.compareAtPrice.amount) || 0;
 
   const showTheBadge = originalPrice > price;
 
-  const showHolidayBadge = productDetails.tags.some(tag => (tag.toLowerCase().split('badge:')[1]?.match(/^holiday$/) || tag.toLowerCase().match(/^holiday$/)));
+  const showHolidayBadge = productDetails.tags.some(
+    (tag) =>
+      tag
+        .toLowerCase()
+        .split('badge:')[1]
+        ?.match(/^holiday$/) || tag.toLowerCase().match(/^holiday$/),
+  );
 
   const pdpSpecificBadgeTags = productDetails.tags
-    .filter(tag => tag.toLowerCase().includes('pdp-badge'))
-    .map(badge => badge.toLowerCase().split('badge:')[1]);
+    .filter((tag) => tag.toLowerCase().includes('pdp-badge'))
+    .map((badge) => badge.toLowerCase().split('badge:')[1]);
 
   const badgeTags = productDetails.tags
-    .filter(tag => tag.toLowerCase().includes('badge') && !tag.toLowerCase().includes('pdp') && !tag.toLowerCase().includes('holiday'))
-    .map(badge => badge.toLowerCase().split('badge:')[1]);
+    .filter(
+      (tag) =>
+        tag.toLowerCase().includes('badge') &&
+        !tag.toLowerCase().includes('pdp') &&
+        !tag.toLowerCase().includes('holiday'),
+    )
+    .map((badge) => badge.toLowerCase().split('badge:')[1]);
 
   const roseGlowTagsFromShopify = productDetails.tags
-    .filter(tag => tag.toLowerCase().includes('badge-chrome:'))
-    .map(badge => badge.toLowerCase().split('badge-chrome:')[1]);
+    .filter((tag) => tag.toLowerCase().includes('badge-chrome:'))
+    .map((badge) => badge.toLowerCase().split('badge-chrome:')[1]);
 
-  if (badgeTags.includes('limited edition')) sendToInitOfArray(badgeTags, 'limited-edition');
-  if (badgeTags.includes('bestseller')) sendToInitOfArray(badgeTags, 'bestseller');
+  if (badgeTags.includes('limited edition'))
+    sendToInitOfArray(badgeTags, 'limited-edition');
+  if (badgeTags.includes('bestseller'))
+    sendToInitOfArray(badgeTags, 'bestseller');
   if (badgeTags.includes('new')) sendToInitOfArray(badgeTags, 'new');
 
   function sendToInitOfArray(array, value) {
     array.unshift(
       array.splice(
-        array.findIndex(e => e === value),
+        array.findIndex((e) => e === value),
         1,
       )[0],
     );
   }
 
   return (
-    (badgeTags.length > 0 || showTheBadge || showHolidayBadge || roseGlowTagsFromShopify.length > 0) && (
+    (badgeTags.length > 0 ||
+      showTheBadge ||
+      showHolidayBadge ||
+      roseGlowTagsFromShopify.length > 0) && (
       <div className={'badgeContainer2'}>
-
         {showHolidayBadge && <HolidayBadge />}
 
-        {pdpSpecificBadgeTags && pdpSpecificBadgeTags.map(value => (
-          <div key={value?.replace(' ', '-')} className={'pdp_badges'}>
-            {value}
-          </div>
-        ))}
-        {badgeTags.length > 0 && badgeTags.map(value => {
-          if (value?.length > 0) {
-            return (<div key={value?.replace(' ', '-')} className={'pdp_badges'}>
+        {pdpSpecificBadgeTags &&
+          pdpSpecificBadgeTags.map((value) => (
+            <div key={value?.replace(' ', '-')} className={'pdp_badges'}>
               {value}
-            </div>);
-          }
+            </div>
+          ))}
+        {badgeTags.length > 0 &&
+          badgeTags.map((value) => {
+            if (value?.length > 0) {
+              return (
+                <div key={value?.replace(' ', '-')} className={'pdp_badges'}>
+                  {value}
+                </div>
+              );
+            }
 
-          return null;
-        })}
+            return null;
+          })}
 
-        {getApiKeys().CURRENT_ENV.includes('US') && roseGlowTagsFromShopify.map(tag => (
-          <div key={tag.replace(' ', '-')} className={'roseGlowBadgeContainer'}>
-            {tag}
-          </div>
-        ))}
+        {getApiKeys().CURRENT_ENV.includes('US') &&
+          roseGlowTagsFromShopify.map((tag) => (
+            <div
+              key={tag.replace(' ', '-')}
+              className={'roseGlowBadgeContainer'}
+            >
+              {tag}
+            </div>
+          ))}
         {showTheBadge && (
-          <SavingsBadges message={`Save ${Math.round((1 - price / originalPrice) * 100)}%`} />
+          <SavingsBadges
+            message={`Save ${Math.round((1 - price / originalPrice) * 100)}%`}
+          />
         )}
       </div>
     )
@@ -125,7 +151,11 @@ const HolidayBadge = () => {
   );
 };
 
-const SavingsBadges = ({ message = 'Save 40%', type = 'savings', smallStyleOnMobile }) => {
+const SavingsBadges = ({
+  message = 'Save 40%',
+  type = 'savings',
+  smallStyleOnMobile,
+}) => {
   const badgesStyle = classnames(
     'badgeContainer',
     smallStyleOnMobile && 'smallBadgeOnMobile',
@@ -135,7 +165,9 @@ const SavingsBadges = ({ message = 'Save 40%', type = 'savings', smallStyleOnMob
     return <p className={badgesStyle}>{message}</p>;
   }
   if (type.toLowerCase() === 'limited') {
-    return <span className={classnames('badgeContainer primary')}>{message}</span>;
+    return (
+      <span className={classnames('badgeContainer primary')}>{message}</span>
+    );
   }
 
   return <p className={badgesStyle}>{message}</p>;
