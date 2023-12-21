@@ -4,7 +4,7 @@
   gap: 5px;
   padding: 9px;
   padding-bottom: 4px;
-  background: linear-gradient(94.2deg, #EBF9FB 3.45%, #FAF7FF 103.07%);
+  background: linear-gradient(94.2deg, #ebf9fb 3.45%, #faf7ff 103.07%);
   border: 0.5px solid rgba(71, 198, 217, 0.4);
   border-radius: 3px;
   margin: 16px 0;
@@ -15,7 +15,7 @@
   font-size: 14px;
   line-height: 18px;
   letter-spacing: 0.01em;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .loyaltyMessageContainer__action {
@@ -30,7 +30,7 @@
   font-size: 13px;
   letter-spacing: 0.01em;
   text-decoration-line: underline;
-  color: #47C6D9;
+  color: #47c6d9;
 }
 
 .loyaltyMessageContainer__joinButton svg {
@@ -46,7 +46,7 @@
   gap: 11px;
   font-size: 14px;
   line-height: 24px;
-  color: #4C4E56;
+  color: #4c4e56;
   text-align: center;
 }
 
@@ -56,7 +56,7 @@
   font-weight: 900;
   font-size: 14px;
   line-height: 17px;
-  color: #4C4E56;
+  color: #4c4e56;
   display: flex;
   margin-bottom: 8px;
 }
@@ -65,7 +65,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #E8E8E9;
+  border-bottom: 1px solid #e8e8e9;
 }
 
 .viewIcon {
@@ -115,11 +115,11 @@
   cursor: pointer;
   font-size: 14px;
   line-height: 19px;
-  color: #4C4E56;
+  color: #4c4e56;
   height: 42px;
   left: 860px;
   top: 727px;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid rgba(76, 78, 86, 0.8);
   border-radius: 3px;
   display: flex;
@@ -242,11 +242,11 @@
   font-weight: 800;
 }
 
-.stickyAtc .add_to_cart {
+.stickyAtc.add_to_cart {
   max-height: 35px;
 }
 
-.stickyAtc .add_to_cart span {
+.stickyAtc.add_to_cart span {
   font-size: 12px;
 }
 
