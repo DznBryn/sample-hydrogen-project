@@ -236,9 +236,6 @@
     align-self: center;
     display: block;
   }
-  .title {
-    pointer-events: none;
-  }
   .title__container {
     font-size: 18px;
     line-height: 24.59ppx;
