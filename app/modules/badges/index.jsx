@@ -35,9 +35,9 @@ export const PDPBadges = ({productDetails = [], selectedVariant}) => {
         )
       : firstVariantObj;
 
-  const price = parseFloat(selectedVariantObj?.price.amount) || 0;
+  const price = parseFloat(selectedVariantObj?.price?.amount) || 0;
   const originalPrice =
-    parseFloat(selectedVariantObj?.compareAtPrice.amount) || 0;
+    parseFloat(selectedVariantObj?.compareAtPrice?.amount) || 0;
 
   const showTheBadge = originalPrice > price;
 
