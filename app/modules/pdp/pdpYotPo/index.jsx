@@ -2,17 +2,15 @@ import PDPYotPoReviews from '../pdpYotPoReviews';
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-const PDPYotPo = ({ product, YotpoRef }) => {
+const PDPYotPo = ({product, YotpoRef}) => {
   let curProduct;
   curProduct = product;
 
   return (
-    <div ref={YotpoRef} className={'yotpoWrapper'}>
+    <div ref={YotpoRef} id={'yotpoWrapper'} className={'yotpoWrapper'}>
       <PDPYotPoReviews {...curProduct} />
     </div>
   );

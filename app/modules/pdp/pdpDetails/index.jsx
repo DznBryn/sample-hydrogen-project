@@ -29,6 +29,9 @@ import ConcealerVariant, {
 import ShadeFinderVariant, {
   links as shadeFinderVariantStyles,
 } from '../shadeFinderVariant';
+import YotpoStarReviews, {
+  links as YotpoStarReviewsStyles,
+} from '~/modules/YotpoStarReviews';
 
 import styles from './styles.css';
 
@@ -48,6 +51,7 @@ export const links = () => {
     ...shadeFinderVariantStyles(),
     ...concealerVariantStyles(),
     ...modalGenericStyles(),
+    ...YotpoStarReviewsStyles(),
   ];
 };
 
@@ -515,7 +519,7 @@ const PDPReviews = ({product}) => {
 
   return (
     <div className={'pdpReviews'}>
-      <div className="yotpo bottomLine" data-yotpo-product-id={productID} />
+      <YotpoStarReviews productExternalID={productID} />
     </div>
   );
 };
