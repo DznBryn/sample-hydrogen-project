@@ -1,0 +1,61 @@
+#yotpoStarsReviews__container {
+  display: flex;
+  gap: 8px;
+  font-family: "Open Sans";
+  cursor: pointer;
+}
+#yotpoStarsReviews__container.hideStarReviews {
+  display: none;
+}
+@media screen and (max-width: 500px) {
+  #yotpoStarsReviews__container {
+    gap: 6px;
+  }
+}
+#yotpoStarsReviews__container #yotpoStarsReview__stars {
+  display: flex;
+  margin-left: -0.8px;
+  gap: 1.8px;
+}
+@media screen and (max-width: 500px) {
+  #yotpoStarsReviews__container #yotpoStarsReview__stars {
+    zoom: 0.86;
+  }
+}
+#yotpoStarsReviews__container span {
+  font-size: 13px;
+}
+@media screen and (max-width: 500px) {
+  #yotpoStarsReviews__container span {
+    font-size: 10px;
+  }
+}
+#yotpoStarsReviews__container .skeleton {
+  width: 161.31px;
+  height: 18px;
+}
+@media screen and (max-width: 500px) {
+  #yotpoStarsReviews__container .skeleton {
+    width: 143.17px;
+    height: 14px;
+  }
+}
+
+.plpReviews #yotpoStarsReviews__container {
+  gap: 6px;
+  pointer-events: none;
+}
+.plpReviews #yotpoStarsReviews__container span {
+  font-size: 10px;
+  margin-top: 1px;
+}
+.plpReviews #yotpoStarsReviews__container #yotpoStarsReview__stars {
+  zoom: 0.85;
+  gap: 1.7px;
+}
+.plpReviews #yotpoStarsReviews__container .skeleton {
+  width: 141.97px;
+  height: 15px;
+}
+
+/*# sourceMappingURL=styles.css.map */

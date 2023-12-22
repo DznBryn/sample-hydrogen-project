@@ -30,7 +30,6 @@ import HorizontalProduct, {
 import ComparisonModal, {
   links as comparisonModalStyles,
 } from './comparisonModal';
-import {useYotpo} from '~/hooks/useYotpo';
 
 import styles from './styles.css';
 import {Link} from '@remix-run/react';
@@ -54,8 +53,6 @@ const PLP = ({
   isInfluencerPage = false,
   cartConfig,
 }) => {
-  const {refreshWidgets} = useYotpo();
-
   const sortOptions = mockSortOptions;
   collection = collection || mockCollection;
   filtersOptions = getSortedFilterOptions(filtersOptions || mockFilterOptions);
@@ -293,10 +290,6 @@ const PLP = ({
       </p>
     </div>
   );
-
-  useEffect(() => {
-    refreshWidgets();
-  });
 
   return filteredProducts.length > 0 ? (
     <div className={'plpWrapper minHeight'}>

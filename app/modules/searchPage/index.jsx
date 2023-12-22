@@ -7,7 +7,6 @@ import ProductBoxLoading, {
 import PLPProductBox, {
   links as plpProductBoxStyles,
 } from '../plp/plpProductBox';
-import {useYotpo} from '~/hooks/useYotpo';
 import {useSearch} from '~/hooks/useSearch';
 
 import styles from './styles.css';
@@ -25,16 +24,11 @@ export const links = () => {
 
 const SearchPage = ({searchQuery, algoliaKeys}) => {
   const [root] = useMatches();
-  const {refreshWidgets} = useYotpo();
 
   const {state, products: allProducts} = useCollection('all');
   const {search, status, hits} = useSearch(algoliaKeys);
 
   const results = useMemo(() => getResults() || [], [hits, state]);
-
-  useEffect(() => {
-    refreshWidgets();
-  });
 
   useEffect(() => {
     if (status === 'idle' && searchQuery !== '') search(searchQuery);

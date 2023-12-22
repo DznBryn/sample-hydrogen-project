@@ -1,0 +1,64 @@
+$smallScreen: 500px;
+
+#yotpoStarsReviews__container {
+  display: flex;
+  gap: 8px;
+  font-family: 'Open Sans';
+  cursor: pointer;
+
+  &.hideStarReviews {
+    display: none;
+  }
+
+  @media screen and (max-width: $smallScreen) {
+    gap: 6px;
+  }
+
+  #yotpoStarsReview__stars {
+    display: flex;
+    margin-left: -0.8px;
+    gap: 1.8px;
+
+    @media screen and (max-width: $smallScreen) {
+      zoom: 0.86;
+    }
+  }
+
+  span {
+    font-size: 13px;
+
+    @media screen and (max-width: $smallScreen) {
+      font-size: 10px;
+    }
+  }
+
+  .skeleton {
+    width: 161.31px;
+    height: 18px;
+
+    @media screen and (max-width: $smallScreen) {
+      width: 143.17px;
+      height: 14px;
+    }
+  }
+}
+
+.plpReviews #yotpoStarsReviews__container {
+  gap: 6px;
+  pointer-events: none;
+
+  span {
+    font-size: 10px;
+    margin-top: 1px;
+  }
+
+  #yotpoStarsReview__stars {
+    zoom: 0.85;
+    gap: 1.7px;
+  }
+
+  .skeleton {
+    width: 141.97px;
+    height: 15px;
+  }
+}

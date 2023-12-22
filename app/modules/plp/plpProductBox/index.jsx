@@ -9,11 +9,18 @@ import {comparisonUtils} from '../comparisonModal';
 import {Link} from '@remix-run/react';
 import classNames from 'classnames';
 import {useComparisonModalStore} from '~/hooks/useStore';
+import YotpoStarReviews, {
+  links as YotpoStarReviewsStyles,
+} from '~/modules/YotpoStarReviews';
 
 import styles from './styles.css';
 
 export const links = () => {
-  return [{rel: 'stylesheet', href: styles}, ...pdpAddToCartStyles()];
+  return [
+    {rel: 'stylesheet', href: styles},
+    ...pdpAddToCartStyles(),
+    ...YotpoStarReviewsStyles(),
+  ];
 };
 
 let sitewide = false;
@@ -237,7 +244,7 @@ const PLPProductBox2 = ({
 
     return (
       <div className={'plpReviews'}>
-        <div className="yotpo bottomLine" data-yotpo-product-id={productID} />
+        <YotpoStarReviews productExternalID={productID} hideIfNoReview={true} />
       </div>
     );
   };
