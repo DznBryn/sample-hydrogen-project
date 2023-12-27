@@ -1,6 +1,7 @@
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import LoadingSkeleton from '../global/loadingSkeleton';
 import {useYotpo} from '~/hooks/useYotpo';
+import {useLayoutEffect} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 
@@ -20,7 +21,7 @@ const cacheData = {};
 
 const YotpoStarReviews = ({productExternalID, hideIfNoReview = false}) => {
   const {getProductReviewsData} = useYotpo();
-  const [reviewsObj, setReviewsObj] = useState(getCache() || null);
+  const [reviewsObj, setReviewsObj] = useState(getCache());
 
   const fetchData = useCallback(() => {
     getProductReviewsData(productExternalID).then((data) => {
@@ -29,7 +30,7 @@ const YotpoStarReviews = ({productExternalID, hideIfNoReview = false}) => {
     });
   }, [productExternalID]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!getCache()) fetchData();
   }, []);
 
@@ -44,7 +45,7 @@ const YotpoStarReviews = ({productExternalID, hideIfNoReview = false}) => {
   }
 
   function getCache() {
-    return cacheData[productExternalID];
+    return cacheData[productExternalID] || null;
   }
 
   return (

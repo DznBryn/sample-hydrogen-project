@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import HomepageRecs, {links as HomepageRecsStyles} from '../homepageRecs';
+import {Link} from '@remix-run/react';
 
 import styles from './styles.css';
 
@@ -141,7 +142,7 @@ const HomepageRecommendations = ({hpRecs}) => {
               </div>
 
               <div className={'recommendationTab'}>
-                <a href="/collections/all">See All &gt;</a>
+                <Link to="/collections/all">See All &gt;</Link>
               </div>
             </div>
           </div>
