@@ -80,7 +80,10 @@ const ReviewsInfo = ({totalReviews = 0}) => {
 
 //
 
+const ROUND_THRESHOLD = 0.7;
+
 const PLPStarsAverage = ({average = '0'}) => {
+  average = checkRoundUp(average);
   const intPart = parseInt(average);
   const decimalPart = Number(average) % 1 > 0;
   const emptyPart = 5 - intPart - Number(decimalPart);
@@ -95,6 +98,13 @@ const PLPStarsAverage = ({average = '0'}) => {
     return Array.from(new Array(num)).map((_, index) => (
       <Component key={`${num}_${index}`} />
     ));
+  }
+
+  function checkRoundUp() {
+    const decimal = Number(average.toString().split('.')[1]) / 10;
+    const decimalIsHigerThanRoundThreshold = decimal > ROUND_THRESHOLD;
+
+    return decimalIsHigerThanRoundThreshold ? Math.round(average) : average;
   }
 
   return (
