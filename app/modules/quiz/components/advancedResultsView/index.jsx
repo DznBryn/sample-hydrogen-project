@@ -126,7 +126,10 @@ const AdvancedResultsView = ({content}) => {
         </div>
       </div>
 
-      <img src={images[0].asset.url} alt={images[0].asset.alt} />
+      <img
+        src={images[0].asset.url + '?auto=format'}
+        alt={images[0].asset.alt}
+      />
     </section>
   );
 };

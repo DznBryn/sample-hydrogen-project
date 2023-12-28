@@ -56,7 +56,7 @@ const MainContentQuiz = ({content}) => {
             </div>
           ) : null}
           {element?.images?.length ? (
-            <img src={element.images[0].asset.url} />
+            <img src={element.images[0].asset.url + '?auto=format'} />
           ) : null}
           <div className={imgClassName}>
             <span className="answerText">{element.answerText}</span>

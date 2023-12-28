@@ -208,10 +208,15 @@ export default function quizService(_quizModel = {}) {
   }
 
   function handleAddSubQuestionIntoQuestionsQueue(_questionsArray, _answer) {
-    if (!_questionsArray.includes(_answer.subQuestion)) {
+    const isDuplicated = _questionsArray
+      .map((q) => q.questionText)
+      .includes(_answer.subQuestion.questionText);
+
+    if (!isDuplicated) {
       _questionsArray.push(_answer.subQuestion);
-      return _questionsArray;
     }
+
+    return _questionsArray;
   }
 
   return {

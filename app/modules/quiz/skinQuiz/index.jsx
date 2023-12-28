@@ -83,23 +83,6 @@ const SkinQuiz = ({content}) => {
     });
   }
 
-  function handleClick(el) {
-    if (multipleChoice) {
-      if (multipleChoiceState.includes(el)) {
-        return setMultipleChoiceState((oldState) =>
-          oldState.filter((old) => old !== el),
-        );
-      }
-
-      if (multipleChoiceState.length < multipleChoice) {
-        return setMultipleChoiceState((oldState) => [...oldState, el]);
-      }
-      return;
-    }
-
-    handleAnswersSubmit(el);
-  }
-
   function handleStatusBar(direction) {
     let statusBarWidth = 0;
     if (direction === 'back') {
@@ -115,6 +98,23 @@ const SkinQuiz = ({content}) => {
     questionsState.length === step + 1
       ? (statusBar.style.width = '100%')
       : (statusBar.style.width = statusBarWidth * questionPercent + '%');
+  }
+
+  function handleClick(el) {
+    if (multipleChoice) {
+      if (multipleChoiceState.includes(el)) {
+        return setMultipleChoiceState((oldState) =>
+          oldState.filter((old) => old !== el),
+        );
+      }
+
+      if (multipleChoiceState.length < multipleChoice) {
+        return setMultipleChoiceState((oldState) => [...oldState, el]);
+      }
+      return;
+    }
+
+    handleAnswersSubmit(el);
   }
 
   function handleAnswersSubmit(answer) {
@@ -215,6 +215,9 @@ const SkinQuiz = ({content}) => {
   function stepBack() {
     setStep((oldState) => (oldState > 0 ? oldState - 1 : oldState));
 
+    if (step === quizQuestions.length) {
+      setQuestionsState(quizQuestions);
+    }
     /* Manage status fill going back */
     handleStatusBar('back');
   }
@@ -317,6 +320,7 @@ const SkinQuiz = ({content}) => {
             BACK
           </button>
         )}
+
         {questionsState.length - 1 < step ? (
           <ResultView content={resultContent} />
         ) : (
