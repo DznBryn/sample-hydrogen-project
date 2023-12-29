@@ -59,8 +59,14 @@ const LandingCover = ({content}) => {
           </div>
         </aside>
         <aside className="right">
-          <img id="desktop" src={backgroundImage[0].asset.url} />
-          <img id="mobile" src={backgroundImage[1].asset.url} />
+          <img
+            id="desktop"
+            src={backgroundImage[0].asset.url + '?auto=format'}
+          />
+          <img
+            id="mobile"
+            src={backgroundImage[1].asset.url + '?auto=format'}
+          />
         </aside>
       </section>
     </main>
