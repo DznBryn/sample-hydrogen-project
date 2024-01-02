@@ -29,11 +29,6 @@ const LandingCover = ({content}) => {
     document
       .querySelector('#startQuizBtn')
       .addEventListener('click', handleClick);
-
-    return () =>
-      document
-        .querySelector('#startQuizBtn')
-        .removeEventListener('click', handleClick);
   }, []);
 
   return (

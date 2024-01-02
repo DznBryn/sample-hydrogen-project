@@ -37,26 +37,23 @@ const ResultView = ({content}) => {
     ? "We've found your perfect skincare routine to:"
     : "We've found your perfect eye care routine.";
 
-  function parserCategory(category, capitalize = false) {
+  function parserCategory(category) {
     const parsedCategory = category
       ?.replaceAll('-', ' ')
       ?.replaceAll('&', ' & ');
 
-    const capitalized =
-      parsedCategory?.charAt(0)?.toUpperCase() + parsedCategory?.slice(1);
-
-    return capitalize ? capitalized : parsedCategory;
+    return parsedCategory;
   }
 
-  function resultSubTitle() {
+  function parseResultSubTitle() {
     const answersArr = {
-      1: multipleChoiceState[0].answerText,
+      1: multipleChoiceState[0]?.answerText,
       2: `${
-        multipleChoiceState[0].answerText
-      }, and ${multipleChoiceState[1].answerText.toLowerCase()}`,
+        multipleChoiceState[0]?.answerText
+      }, and ${multipleChoiceState[1]?.answerText.toLowerCase()}`,
       3: `${
-        multipleChoiceState[0].answerText
-      }, and ${multipleChoiceState[1].answerText.toLowerCase()}, and ${multipleChoiceState[2].answerText.toLowerCase()}`,
+        multipleChoiceState[0]?.answerText
+      }, and ${multipleChoiceState[1]?.answerText.toLowerCase()}, and ${multipleChoiceState[2]?.answerText.toLowerCase()}`,
     };
 
     const answersIndex = multipleChoiceState.length;
@@ -93,7 +90,9 @@ const ResultView = ({content}) => {
 
       <section className="quizResults">
         <h2>{provisionalH2}</h2>
-        {advancedQuizContent ? <p className="dek">{resultSubTitle()}</p> : null}
+        {advancedQuizContent ? (
+          <p className="dek">{parseResultSubTitle()}</p>
+        ) : null}
 
         <br />
 
