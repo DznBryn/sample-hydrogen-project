@@ -28,6 +28,7 @@ const ResultView = ({content}) => {
     resultState,
     handleGetProductByID,
     answers,
+    multipleChoiceState,
     advancedResultsState,
     advancedQuizContent,
   } = content;
@@ -36,20 +37,29 @@ const ResultView = ({content}) => {
     ? "We've found your perfect skincare routine to:"
     : "We've found your perfect eye care routine.";
 
-  function resultSubTitle() {
-    const goalsArray = answers?.slice(3);
+  function parserCategory(category, capitalize = false) {
+    const parsedCategory = category
+      ?.replaceAll('-', ' ')
+      ?.replaceAll('&', ' & ');
 
+    const capitalized =
+      parsedCategory?.charAt(0)?.toUpperCase() + parsedCategory?.slice(1);
+
+    return capitalize ? capitalized : parsedCategory;
+  }
+
+  function resultSubTitle() {
     const answersArr = {
-      1: parserCategory(goalsArray[0]),
-      2: `${parserCategory(goalsArray[0])}, and ${parserCategory(
-        goalsArray[1],
-      )}`,
-      3: `${parserCategory(goalsArray[0])},  ${parserCategory(
-        goalsArray[1],
-      )}, and ${parserCategory(goalsArray[2])}`,
+      1: multipleChoiceState[0].answerText,
+      2: `${
+        multipleChoiceState[0].answerText
+      }, and ${multipleChoiceState[1].answerText.toLowerCase()}`,
+      3: `${
+        multipleChoiceState[0].answerText
+      }, and ${multipleChoiceState[1].answerText.toLowerCase()}, and ${multipleChoiceState[2].answerText.toLowerCase()}`,
     };
 
-    const answersIndex = goalsArray.length > 3 ? 3 : goalsArray.length;
+    const answersIndex = multipleChoiceState.length;
 
     return answersArr[answersIndex];
   }
@@ -71,17 +81,6 @@ const ResultView = ({content}) => {
       : [];
 
     return [...aResults, ...aAdvResults];
-  }
-
-  function parserCategory(category) {
-    const parsedCategory = category
-      ?.replaceAll('-', ' ')
-      ?.replaceAll('&', ' & ');
-
-    const capitalized =
-      parsedCategory?.charAt(0)?.toUpperCase() + parsedCategory?.slice(1);
-
-    return capitalized;
   }
 
   return (
