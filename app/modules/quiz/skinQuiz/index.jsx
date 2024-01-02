@@ -281,6 +281,7 @@ const SkinQuiz = ({content}) => {
   let resultContent = {
     setRangeAge: () => {},
     resultState,
+    multipleChoiceState,
     handleGetProductByID,
     advancedResultsState,
   };
