@@ -50,9 +50,8 @@ export async function loader({request, context}) {
 
 export default function Compare() {
   const [root] = useMatches();
+  const {productsCMSData} = root.data;
   const {collection, collectionsCMSData, productsToShow} = useLoaderData();
-
-  const productsCMSData = root.data;
 
   const collectionWithCMSData = useMemo(
     () =>
