@@ -145,7 +145,7 @@ export default function quizService(_quizModel = {}) {
         const hasProductByReference = _results
           .filter((ele) =>
             ele.quizAttributes.qualifiers?.some(
-              (el) => el[_key].toLowerCase() === referenceGoal.toLowerCase(),
+              (el) => el[_key].toLowerCase() === referenceGoal?.toLowerCase(),
             ),
           )[0]
           ?.quizAttributes.qualifiers?.some((e) => !e[_key].includes('goal'));
