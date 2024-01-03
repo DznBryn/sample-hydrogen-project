@@ -1,5 +1,4 @@
 import {useRef, useState} from 'react';
-import {useStore} from '~/hooks/useStore';
 import {switchSliderPanelVisibility} from '../sliderPanel';
 import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
 import YotpoProductBox, {
@@ -9,6 +8,8 @@ import {Swiper, SwiperSlide} from 'swiper/react';
 import styles from './styles.css';
 import {mock} from './mock';
 import {Navigation, Pagination} from 'swiper/modules';
+import {useCustomerState} from '~/hooks/useCostumer';
+
 import swiperStyles from 'swiper/css';
 import swiperNavigationStyles from 'swiper/css/navigation';
 import swiperPaginationStyles from 'swiper/css/pagination';
@@ -41,14 +42,12 @@ export const links = () => {
 };
 
 const RedeemProductsSection = ({products = mock}) => {
-  const data = useStore((store) => store?.account?.data || null);
   const [buttonDisabled, setButtonDisabled] = useState('prev');
   const navigationNextRef = useRef(null);
   const navigationPrevRef = useRef(null);
   const swiperRef = useRef(null);
 
-  const isLoggedIn = Boolean(data?.id);
-
+  const {isLoggedIn} = useCustomerState();
   function handleMovePrevSlide() {
     swiperRef.current?.swiper?.slidePrev();
     if (swiperRef.current?.isBeginning) {
