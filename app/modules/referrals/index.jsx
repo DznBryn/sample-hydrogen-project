@@ -16,7 +16,7 @@ export const links = () => {
 };
 
 const Referrals = () => {
-  const [isLoading] = useState(false);
+  const [isLoading] = useState(true);
 
   return (
     <div className={'referrals'}>
