@@ -17,7 +17,7 @@
   font-weight: 800;
   font-size: 21px;
   line-height: 14px;
-  color: #4C4E56;
+  color: #4c4e56;
   padding: 19px 24px 16px 24px;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   font-size: 14px;
   line-height: 21px;
   letter-spacing: 0.15px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .sliderAccount_header > span {
@@ -43,7 +43,7 @@
   letter-spacing: 0em;
   text-align: left;
   text-transform: lowercase;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .form {
@@ -72,11 +72,11 @@
   line-height: 28px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .disabledButton {
-  background-color: #DBDCDD !important;
+  background-color: #dbdcdd !important;
   color: rgba(76, 78, 86, 0.4) !important;
   cursor: default !important;
   border: none !important;
@@ -133,7 +133,7 @@
   line-height: 24px;
   letter-spacing: 0.15px;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -142,7 +142,7 @@
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.15px;
-  color: #4C4E56;
+  color: #4c4e56;
   cursor: pointer;
   width: fit-content;
 }
@@ -162,7 +162,7 @@
   gap: 11px;
   padding: 20px 0 20px 24px;
   background: rgba(248, 248, 248, 0.8);
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 #createNewAccRewards > p {
@@ -177,11 +177,11 @@
   gap: 11px;
   padding: 20px 24px;
   background: rgb(239, 249, 251);
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 #createNewAcc > p {
-  color: #4C4E56;
+  color: #4c4e56;
   font-weight: 800;
   font-size: 16px;
   line-height: 21px;
@@ -194,7 +194,7 @@
   width: 100%;
   border-radius: 3px;
   border: 1px solid rgb(72, 198, 217);
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 10px;
   font-weight: 800;
   font-size: 14px;
@@ -206,7 +206,7 @@
 
 #createNewAccRewards > p > span {
   font-weight: 800;
-  color: #47C6D9;
+  color: #47c6d9;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -327,7 +327,7 @@
   font-size: 14px;
   letter-spacing: 0.15px;
   text-transform: lowercase;
-  color: #4C4E56;
+  color: #4c4e56;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -335,7 +335,7 @@
 }
 
 #links > a > span {
-  background: #47C6D9;
+  background: #47c6d9;
   border-radius: 2px;
   font-size: 9px;
   color: white;
@@ -359,7 +359,7 @@
   line-height: 21px;
   text-align: center;
   letter-spacing: 0.15px;
-  color: #4C4E56;
+  color: #4c4e56;
   height: 100%;
 }
 
@@ -369,7 +369,7 @@
   font-size: 21px;
   line-height: 24px;
   text-align: center;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 #createAccountSuccess #createAccountBannersContainer {
@@ -402,7 +402,7 @@
 }
 
 #createAccountSuccess #createAccountBannersContainer > a > span {
-  background: #47C6D9;
+  background: #47c6d9;
   border-radius: 2px;
   padding: 2px 5px 0 5px;
   margin-bottom: 5px;
@@ -450,7 +450,7 @@
 
 .welcomeButtonsWrap .welcomeButton {
   background: rgb(235, 249, 251);
-  background: #EBF9FB;
+  background: #ebf9fb;
   background-size: cover;
   border-radius: 3px;
   padding: 10px;
@@ -466,7 +466,7 @@
   line-height: 18px;
   display: flex;
   align-items: center;
-  color: #4C4E56;
+  color: #4c4e56;
   justify-content: space-between;
 }
 
@@ -476,7 +476,7 @@
   line-height: 16px;
   display: flex;
   align-items: center;
-  color: #4C4E56;
+  color: #4c4e56;
   padding-right: 8px;
 }
 
@@ -491,6 +491,8 @@
   width: 100%;
   text-align: center;
   cursor: pointer;
+  border: 0;
+  background-color: transparent;
 }
 
 .errorHighlight {
@@ -512,7 +514,7 @@
 .form .checkInput > label {
   font-weight: 300;
   font-size: 12px;
-  color: #4C4E56;
+  color: #4c4e56;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -539,7 +541,7 @@
 }
 
 .form .checkInput > label > input:checked ~ .checkmarkSliderAccount {
-  background-color: #47C6D9;
+  background-color: #47c6d9;
   border: none;
 }
 
@@ -569,7 +571,7 @@
 .errorText {
   text-align: left;
   margin-top: 10px;
-  color: #FF5483;
+  color: #ff5483;
   font-size: 12px;
 }
 

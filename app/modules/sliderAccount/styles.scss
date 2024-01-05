@@ -6,7 +6,7 @@
 }
 
 #sliderAccWraper input {
-  font-family: "Avenir LT Pro", sans-serif !important;
+  font-family: 'Avenir LT Pro', sans-serif !important;
 }
 
 #sliderAccWraper a {
@@ -17,7 +17,7 @@
   font-weight: 800;
   font-size: 21px;
   line-height: 14px;
-  color: #4C4E56;
+  color: #4c4e56;
   padding: 19px 24px 16px 24px;
   display: flex;
   flex-direction: column;
@@ -29,21 +29,21 @@
   font-size: 14px;
   line-height: 21px;
   letter-spacing: 0.15px;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
-.sliderAccount_header>span {
+.sliderAccount_header > span {
   text-transform: capitalize;
 }
 
-.sliderAccount_header>span>span {
+.sliderAccount_header > span > span {
   font-size: 21px;
   font-weight: 400;
   line-height: 14px;
   letter-spacing: 0em;
   text-align: left;
   text-transform: lowercase;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .form {
@@ -53,7 +53,7 @@
   padding: 16px 24px 24px 24px;
 }
 
-.form>span {
+.form > span {
   font-weight: 300;
   font-size: 11px;
   letter-spacing: 0.15px;
@@ -72,11 +72,11 @@
   line-height: 28px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 .disabledButton {
-  background-color: #DBDCDD !important;
+  background-color: #dbdcdd !important;
   color: rgba(76, 78, 86, 0.4) !important;
   cursor: default !important;
   border: none !important;
@@ -135,7 +135,7 @@
   line-height: 24px;
   letter-spacing: 0.15px;
   text-transform: uppercase;
-  color: #FFFFFF;
+  color: #ffffff;
 
   cursor: pointer;
 }
@@ -145,7 +145,7 @@
   font-size: 11px;
   line-height: 16px;
   letter-spacing: 0.15px;
-  color: #4C4E56;
+  color: #4c4e56;
   cursor: pointer;
   width: fit-content;
 }
@@ -155,7 +155,7 @@
   cursor: auto;
 }
 
-.subText>a {
+.subText > a {
   text-decoration: underline !important;
 }
 
@@ -165,10 +165,10 @@
   gap: 11px;
   padding: 20px 0 20px 24px;
   background: rgba(248, 248, 248, 0.8);
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
-#createNewAccRewards>p {
+#createNewAccRewards > p {
   font-weight: 500;
   font-size: 14px;
   line-height: 21px;
@@ -180,11 +180,11 @@
   gap: 11px;
   padding: 20px 24px;
   background: rgba(239, 249, 251, 1);
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
-#createNewAcc>p {
-  color: #4C4E56;
+#createNewAcc > p {
+  color: #4c4e56;
   font-weight: 800;
   font-size: 16px;
   line-height: 21px;
@@ -198,7 +198,7 @@
   width: 100%;
   border-radius: 3px;
   border: 1px solid rgba(72, 198, 217, 1);
-  background: #FFFFFF;
+  background: #ffffff;
   padding: 10px;
 
   font-weight: 800;
@@ -209,9 +209,9 @@
   color: rgba(72, 198, 217, 1);
 }
 
-#createNewAccRewards>p>span {
+#createNewAccRewards > p > span {
   font-weight: 800;
-  color: #47C6D9;
+  color: #47c6d9;
   text-decoration: underline;
   cursor: pointer;
 }
@@ -236,7 +236,7 @@
   color: white;
 }
 
-.rewardsBannerContainer>a {
+.rewardsBannerContainer > a {
   min-width: 257px;
   height: 151px;
   border-radius: 3px;
@@ -250,21 +250,21 @@
   color: white;
 }
 
-.rewardsBannerContainer>a:nth-child(1) {
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_1.jpg?v=1668635657");
+.rewardsBannerContainer > a:nth-child(1) {
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_1.jpg?v=1668635657');
 }
 
-.rewardsBannerContainer>a:nth-child(2) {
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_2.jpg?v=1668635656");
+.rewardsBannerContainer > a:nth-child(2) {
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_2.jpg?v=1668635656');
 }
 
-.rewardsBannerContainer>a:nth-child(3) {
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_3.jpg?v=1668635656");
+.rewardsBannerContainer > a:nth-child(3) {
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/Slider_Image_3.jpg?v=1668635656');
   margin-right: 16px;
 }
 
-.rewardsBannerContainer>a>span,
-.welcomeButton>div>span {
+.rewardsBannerContainer > a > span,
+.welcomeButton > div > span {
   background: rgba(71, 198, 217, 0.7);
   border-radius: 2px;
   padding: 5px;
@@ -279,26 +279,26 @@
 }
 
 .welcomeButton.rewards {
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/banner-bg.png?v=1669932469") !important;
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/banner-bg.png?v=1669932469') !important;
   background-size: cover !important;
 }
 
-.welcomeButton.rewards>div {
+.welcomeButton.rewards > div {
   color: white !important;
   align-items: flex-start !important;
 }
 
-.welcomeButton.rewards>div>span {
+.welcomeButton.rewards > div > span {
   padding: 2px 5px 1px 5px !important;
 }
 
-.welcomeButton.rewards>p {
+.welcomeButton.rewards > p {
   color: white !important;
   font-weight: 800 !important;
   font-size: 13px !important;
 }
 
-.welcomeButton.rewards>p>svg {
+.welcomeButton.rewards > p > svg {
   margin-top: -4px;
   margin-right: 3px;
 }
@@ -307,18 +307,18 @@
   margin: 2px 3px;
 }
 
-.rewardsBannerContainer>a>div:first-of-type {
+.rewardsBannerContainer > a > div:first-of-type {
   font-weight: 800;
   font-size: 20px;
 }
 
-.rewardsBannerContainer>a>div:last-of-type {
+.rewardsBannerContainer > a > div:last-of-type {
   font-weight: 500;
   font-size: 14px;
 }
 
-.rewardsBannerContainer>a>div:last-of-type>span>b {
-  text-decoration: underline
+.rewardsBannerContainer > a > div:last-of-type > span > b {
+  text-decoration: underline;
 }
 
 #links {
@@ -328,20 +328,20 @@
   gap: 18px;
 }
 
-#links>a {
+#links > a {
   font-weight: 600;
   font-size: 14px;
   letter-spacing: 0.15px;
   text-transform: lowercase;
-  color: #4C4E56;
+  color: #4c4e56;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
 }
 
-#links>a>span {
-  background: #47C6D9;
+#links > a > span {
+  background: #47c6d9;
   border-radius: 2px;
   font-size: 9px;
   color: white;
@@ -349,7 +349,7 @@
   text-transform: uppercase;
 }
 
-#links>a>svg {
+#links > a > svg {
   margin-left: auto;
 }
 
@@ -366,7 +366,7 @@
   line-height: 21px;
   text-align: center;
   letter-spacing: 0.15px;
-  color: #4C4E56;
+  color: #4c4e56;
 
   height: 100%;
 }
@@ -377,7 +377,7 @@
   font-size: 21px;
   line-height: 24px;
   text-align: center;
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 #createAccountSuccess #createAccountBannersContainer {
@@ -391,12 +391,12 @@
   cursor: pointer;
 }
 
-#createAccountSuccess>svg {
+#createAccountSuccess > svg {
   width: 42px;
   height: 42px;
 }
 
-#createAccountSuccess #createAccountBannersContainer>a {
+#createAccountSuccess #createAccountBannersContainer > a {
   height: 154px;
   border-radius: 7px;
   background-size: cover;
@@ -409,8 +409,8 @@
   color: white;
 }
 
-#createAccountSuccess #createAccountBannersContainer>a>span {
-  background: #47C6D9;
+#createAccountSuccess #createAccountBannersContainer > a > span {
+  background: #47c6d9;
   border-radius: 2px;
   padding: 2px 5px 0 5px;
   margin-bottom: 5px;
@@ -420,25 +420,25 @@
   text-transform: uppercase;
 }
 
-#createAccountSuccess #createAccountBannersContainer>a>div:last-of-type {
+#createAccountSuccess #createAccountBannersContainer > a > div:last-of-type {
   font-weight: 500;
   font-size: 14px;
 }
 
-#createAccountSuccess #createAccountBannersContainer>a>div:first-of-type,
-#createAccountSuccess #createAccountBannersContainer>a>div:only-child {
+#createAccountSuccess #createAccountBannersContainer > a > div:first-of-type,
+#createAccountSuccess #createAccountBannersContainer > a > div:only-child {
   font-weight: 800;
   font-size: 24px;
 }
 
-#createAccountSuccess #createAccountBannersContainer>.rewardsBanner {
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Account_Slider_Confirmation_Image_1.jpg?v=1668715516");
+#createAccountSuccess #createAccountBannersContainer > .rewardsBanner {
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/Account_Slider_Confirmation_Image_1.jpg?v=1668715516');
 }
 
-#createAccountSuccess #createAccountBannersContainer>.skinquizBanner {
+#createAccountSuccess #createAccountBannersContainer > .skinquizBanner {
   align-items: flex-end;
   text-align: right;
-  background-image: url("https://cdn.shopify.com/s/files/1/1736/9637/files/Account_Slider_Confirmation_Image_2.jpg?v=1668715516");
+  background-image: url('https://cdn.shopify.com/s/files/1/1736/9637/files/Account_Slider_Confirmation_Image_2.jpg?v=1668715516');
 }
 
 .viewMyAccountLink {
@@ -458,7 +458,7 @@
 
 .welcomeButtonsWrap .welcomeButton {
   background: rgba(235, 249, 251, 1);
-  background: #EBF9FB;
+  background: #ebf9fb;
   background-size: cover;
   border-radius: 3px;
   padding: 10px;
@@ -474,7 +474,7 @@
   line-height: 18px;
   display: flex;
   align-items: center;
-  color: #4C4E56;
+  color: #4c4e56;
   justify-content: space-between;
 }
 
@@ -484,7 +484,7 @@
   line-height: 16px;
   display: flex;
   align-items: center;
-  color: #4C4E56;
+  color: #4c4e56;
   padding-right: 8px;
 }
 
@@ -499,6 +499,8 @@
   width: 100%;
   text-align: center;
   cursor: pointer;
+  border: 0;
+  background-color: transparent;
 }
 
 .errorHighlight {
@@ -517,10 +519,10 @@
   padding: 14px 0 6px 0;
 }
 
-.form .checkInput>label {
+.form .checkInput > label {
   font-weight: 300;
   font-size: 12px;
-  color: #4C4E56;
+  color: #4c4e56;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -530,7 +532,7 @@
   align-items: center;
 }
 
-.form .checkInput>label>input {
+.form .checkInput > label > input {
   opacity: 0;
   height: 0;
   width: 0;
@@ -546,21 +548,21 @@
   margin-right: 6px;
 }
 
-.form .checkInput>label>input:checked~.checkmarkSliderAccount {
-  background-color: #47C6D9;
+.form .checkInput > label > input:checked ~ .checkmarkSliderAccount {
+  background-color: #47c6d9;
   border: none;
 }
 
 .checkmarkSliderAccount:after {
-  content: "";
+  content: '';
   display: none;
 }
 
-.form .checkInput>label>input:checked~.checkmarkSliderAccount:after {
+.form .checkInput > label > input:checked ~ .checkmarkSliderAccount:after {
   display: block;
 }
 
-.form .checkInput>label>.checkmarkSliderAccount:after {
+.form .checkInput > label > .checkmarkSliderAccount:after {
   width: 5px;
   height: 8px;
   border: solid white;
@@ -577,7 +579,7 @@
 .errorText {
   text-align: left;
   margin-top: 10px;
-  color: #FF5483;
+  color: #ff5483;
   font-size: 12px;
 }
 
