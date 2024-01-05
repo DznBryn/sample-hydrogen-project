@@ -13,11 +13,7 @@ const ProgressBar = ({cart, items, cartConfig}) => {
   let percentageFreeGift = 0;
   initState = ++initState;
 
-  if (
-    items?.some((item) => {
-      return item?.selling_plan_allocation !== undefined;
-    })
-  ) {
+  if (items.find((item) => item?.sellingPlanAllocation?.sellingPlan?.id)) {
     progressMsg = (
       <p className={'freeShip'}>
         Congrats! Enjoy FREE SHIPPING with auto-delivery

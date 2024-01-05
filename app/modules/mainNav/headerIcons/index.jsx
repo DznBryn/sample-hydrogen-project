@@ -2,11 +2,9 @@ import {useRef, useEffect} from 'react';
 import classname from 'classnames';
 import {
   bindCustomEvent,
-  isAutoCart,
   getCurrency,
   getCartTotalForFreeShipping,
 } from '~/utils/functions/eventFunctions';
-// import getApiKeys from '~/utils/functions/getApiKeys';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
 
 import IconSearch, {
@@ -14,10 +12,9 @@ import IconSearch, {
 } from '~/modules/mainNav/iconSearch';
 import IconCart, {links as iconCartStyles} from '~/modules/mainNav/iconCart';
 
-import {useCartState} from '~/hooks/useCart';
-
 import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
+import {flattenConnection} from '@shopify/hydrogen';
 
 export const links = () => {
   return [
@@ -35,13 +32,8 @@ const classes = {
 const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
   const cartPageConfig = cartConfig;
   const alertRef = useRef();
-  const {items} = useCartState();
-  const cart = useCartState() ? useCartState() : {};
-  // const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
-  // const carbonOffsetIsOnCart = items.filter(
-  //   (item) => item.id === carbonOffsetVariant,
-  // )[0];
-
+  const cart = useStore((store) => store?.cart?.data ?? (() => {}));
+  const items = cart?.lines ? flattenConnection(cart.lines) : [];
   const cartTotal = parseFloat(getCartTotalForFreeShipping());
   let progressMsg = null;
 
@@ -52,7 +44,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
     }),
   );
 
-  if (isAutoCart(items)) {
+  if (items.find((item) => item?.sellingPlanAllocation?.sellingPlan?.id)) {
     progressMsg = <p> Enjoy FREE SHIPPING with auto-delivery</p>;
   } else {
     if (cartTotal >= cartPageConfig?.freeShippingThreshold) {
@@ -70,31 +62,6 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
       );
     }
   }
-
-  // function getTotalItemsOnCart() {
-  //   const GWP_PRODUCT_EXTERNAL_ID = parseInt(
-  //     cartConfig?.freeGiftPromoProductExternalID,
-  //   );
-  //   const GWP_PRODUCT = products?.products.filter(
-  //     (product) => product.externalId === GWP_PRODUCT_EXTERNAL_ID,
-  //   )[0];
-  //   const GWP_PRODUCT_VARIANT_ID = GWP_PRODUCT?.variants[0].externalId;
-  //   const IS_GWP_PRODUCT_ON_CART = items.some(
-  //     (product) =>
-  //       product.variant_id !== undefined &&
-  //       product.variant_id === GWP_PRODUCT_VARIANT_ID,
-  //   );
-
-  //   const EXCEPTIONS = [carbonOffsetIsOnCart, IS_GWP_PRODUCT_ON_CART];
-
-  //   let total = getCartQuantity(items);
-
-  //   EXCEPTIONS.forEach((exception) => {
-  //     if (exception) total -= 1;
-  //   });
-
-  //   return total;
-  // }
 
   return (
     <>
@@ -127,7 +94,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
             </li>
           ) : null}
           <li className={classes.iconContainer}>
-            <IconCart />
+            <IconCart cartConfig={cartConfig} />
           </li>
         </ul>
       ) : (
@@ -141,7 +108,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
             </li>
           ) : null}
           <li className={classes.iconContainer}>
-            <IconCart />
+            <IconCart cartConfig={cartConfig} />
           </li>
         </ul>
       )}
