@@ -161,7 +161,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
     } else {
       setRewardsPoints(Math.floor(totalCart) * 10);
     }
-  }, [items?.length]);
+  }, [cart?.totalQuantity]);
 
   function checkGWPThreshold() {
     const GWP_THRESHOLD = cartConfig.freeGiftPromoThreshold;
@@ -384,7 +384,7 @@ const CartContent = ({
     productRecList,
   };
 
-  return items?.length === 0 ? (
+  return items?.length === 0 || !items || cart?.totalQuantity === 0 ? (
     <EmptyCart {...emptyCartProps} />
   ) : (
     <>
@@ -474,6 +474,7 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => (
     <Checkout message="Start Shopping" url="/collections/all" />
   </>
 );
+
 const ItemsList = ({cartConfig, setLoading, products, ...props}) => {
   const cart = useStore((store) => store?.cart?.data ?? {});
   const items = cart?.lines ? flattenConnection(cart?.lines) : [];

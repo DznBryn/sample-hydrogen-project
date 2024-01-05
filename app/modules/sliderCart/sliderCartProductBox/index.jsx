@@ -408,7 +408,13 @@ const Price = ({item, promo, product, cartPageConfig}) => {
         <h6 className={'strikeThrough'}>
           {getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}
         </h6>
-        <h6 className={(promo ? 'promo' : '', 'salePrice')}>
+        <h6
+          className={
+            promo || item.sellingPlanAllocation
+              ? 'promo salePrice'
+              : 'salePrice'
+          }
+        >
           {getCurrency() + parseFloat(line_price)?.toFixed(2)}
         </h6>
       </div>
@@ -560,17 +566,18 @@ function RemoveItemButton({lineId}) {
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
-      if (
-        fetcher?.data?.cart?.totalQuantity &&
-        fetcher?.data?.cart?.totalQuantity !== data?.totalQuantity
-      ) {
+      if (fetcher?.data?.cart?.totalQuantity >= 0) {
         removeItemData(fetcher.data.cart);
       }
     }
   }, [fetcher.type]);
 
   return (
-    <fetcher.Form action="/cart" method={API_METHODS.POST}>
+    <fetcher.Form
+      action="/cart"
+      className={'removeButton'}
+      method={API_METHODS.POST}
+    >
       <input type="hidden" name="cartAction" value={'REMOVE_FROM_CART'} />
       <input type="hidden" name="linesIds" value={linesIds} required />
       <button
