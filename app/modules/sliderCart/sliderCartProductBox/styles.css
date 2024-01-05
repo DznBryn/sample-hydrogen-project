@@ -1,5 +1,5 @@
 .sliderCartProduct {
-  border-bottom: 1px solid #DCDCDC;
+  border-bottom: 1px solid #dcdcdc;
   display: flex;
   width: 100%;
   padding: 20px;
@@ -37,6 +37,7 @@
 }
 
 .productTotal h6 {
+  font-size: 14px;
   font-weight: 400;
   line-height: 16px;
   display: inline;
@@ -96,6 +97,10 @@
   border: 0;
 }
 
+.removeButton {
+  display: flex;
+}
+
 .autoDeliver {
   color: rgba(76, 78, 86, 0.4);
 }
@@ -135,7 +140,7 @@
   justify-content: center;
   width: 135px;
   height: 20px;
-  background: linear-gradient(93.9deg, #DFF8FC -16.99%, #F6F0FF 144.24%);
+  background: linear-gradient(93.9deg, #dff8fc -16.99%, #f6f0ff 144.24%);
   /* background: linear-gradient(91.54deg, #A5A3CD -10.95%, #B0D3ED 106.65%); */
   border-radius: 2px;
 }
@@ -144,12 +149,15 @@
   font-weight: 900;
   font-size: 11px;
   line-height: 15px;
-  color: #47C6D9;
+  color: #47c6d9;
   margin-top: 1px;
 }
 
 .promo {
-  color: #FF338D;
+  color: #ff338d;
+}
+.promo.salePrice {
+  font-size: 14px;
 }
 
 .switcherContainer {
@@ -183,7 +191,7 @@
   bottom: 0;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-  border: solid 1px #48C6D9;
+  border: solid 1px #48c6d9;
   border-radius: 34px;
   min-width: 34px;
   width: auto;
@@ -203,20 +211,20 @@
 }
 
 .switcherContainer input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 .switcherContainer input:checked + .slider:before {
   -webkit-transform: translateX(17px);
   -ms-transform: translateX(17px);
   transform: translateX(17px);
-  background-color: #48C6D9;
+  background-color: #48c6d9;
 }
 
 .switcherContainer > span {
   font-weight: 300;
   font-size: 12px;
-  color: #48C6D9;
+  color: #48c6d9;
   line-height: 17px;
 }
 
@@ -257,7 +265,7 @@
 }
 
 .yotpoProductPriceContainer {
-  color: #48C6D9;
+  color: #48c6d9;
   font-weight: 900;
   font-size: 12px;
   line-height: 16px;
