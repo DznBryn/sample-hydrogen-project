@@ -32,6 +32,7 @@ import {
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
+import logout from './__private/logout';
 
 export function links() {
   return [...accountStyles()];
@@ -52,6 +53,9 @@ export async function action({request, context}) {
   const addressId = formData.get('addressId');
   const formAction = formData.get('formAction');
 
+  if (formAction === 'LOGOUT') {
+    return await logout({request, context});
+  }
   // SUBSCRIPTION
   if (formAction.includes('SUBSCRIPTION')) {
     if (formAction === 'SUBSCRIPTION_REACTIVATE') {

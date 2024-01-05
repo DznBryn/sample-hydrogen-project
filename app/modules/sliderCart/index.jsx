@@ -423,7 +423,7 @@ const CartContent = ({
       <ItemsList {...itemsListProps} />
 
       <Checkout
-        cart={cart}
+        cartConfig={cartConfig}
         valueToSubtract={
           carbonOffsetItem &&
           (apiType === 'graphql'

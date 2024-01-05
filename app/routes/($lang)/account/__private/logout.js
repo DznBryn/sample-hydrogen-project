@@ -1,21 +1,21 @@
 import {redirect} from '@shopify/remix-oxygen';
 
-export default async function logout(context) {
-  const {session} = context;
+export default async function logout({request, context}) {
+  const {session, storefront} = context;
   session.unset('customerAccessToken');
-
-  // The only file where I have to explicitly type cast i18n to pass typecheck
-  return redirect(`${context.storefront.i18n.pathPrefix}/account/login`, {
+  console.log('logout', {storefront, request: request.url});
+  // Redirect to the current page
+  return redirect(request.url.includes('/account') ? '/' : request.url, {
     headers: {
       'Set-Cookie': await session.commit(),
     },
   });
 }
 
-export async function loader({context}) {
-  return redirect(context?.storefront?.i18n?.pathPrefix);
+export async function loader({request, context}) {
+  return logout({request, context});
 }
 
-export const action = async ({context}) => {
-  return logout(context);
+export const action = async ({request, context}) => {
+  return logout({request, context});
 };
