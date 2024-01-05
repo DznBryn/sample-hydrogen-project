@@ -12,7 +12,6 @@ import SliderPanel, {
 import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '../loadingSkeleton';
-import {useCustomerActions, useCustomerState} from '~/hooks/useCostumer';
 import {Link, useFetcher} from '@remix-run/react';
 
 import styles from './styles.css';
@@ -57,12 +56,13 @@ const MainContent = () => {
   const recoverPassword = useFetcher();
   const recoverPasswordButtonRef = useRef(null);
   const registerFetcher = useFetcher();
+  const signoutFetcher = useFetcher();
+  const customerData = useStore((store) => store?.account?.data ?? null);
   const {setCustomerData} = useStore((store) => store?.account ?? null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
 
-  const {id, firstName, email, isLoggedIn} = useCustomerState();
-  const {logout} = useCustomerActions();
+  const {id: customerId = '', firstName, email} = customerData;
 
   const forgotEmail = useRef(null);
   const errorElement = useRef(null);
@@ -77,6 +77,11 @@ const MainContent = () => {
     if (!initialized.current) init();
     getCustomerData();
   }, []);
+
+  useEffect(() => {
+    setMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
+    getCustomerData();
+  }, [customerId]);
 
   useEffect(() => {
     if (loginButtonRef.current) {
@@ -104,8 +109,8 @@ const MainContent = () => {
         errorElement.current.innerHTML = login.data?.message;
         return signInPassword.current.parentElement.after(errorElement.current);
       }
-      console.log('Account Slider: ', login);
-      changeMainContent(isLoggedIn ? 'welcomeBack' : 'signIn');
+
+      changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
     }
   }, [login.state]);
 
@@ -131,7 +136,6 @@ const MainContent = () => {
     }
     return;
   }, [recoverPassword.state]);
-  /**/
 
   useEffect(() => {
     if (
@@ -145,18 +149,22 @@ const MainContent = () => {
     }
   }, [registerFetcher.state]);
 
+  useEffect(() => {
+    if (signoutFetcher.state === FETCHER.STATE.LOADING) {
+      setCustomerData();
+    }
+  }, [signoutFetcher.state]);
+
   function init() {
     initialized.current = true;
-    setMainContent(isLoggedIn ? 'welcomeBack' : 'signIn');
+    setMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
   }
 
   async function getCustomerData() {
-    // const env = getApiKeys().CURRENT_ENV;
     const env = 'US_PROD';
+    const data = {email, customerId, env, useCache: false};
 
-    const data = {email, customerId: id, env, useCache: false};
-
-    if (email || id) {
+    if (email || customerId) {
       getLoyaltyCustomerData(data)
         .then((res) => {
           setPoints(res.pointsBalance);
@@ -208,17 +216,6 @@ const MainContent = () => {
     }
   }
 
-  async function handleLogout() {
-    const {errors} = await logout();
-
-    if (!errors || errors.length === 0) {
-      changeMainContent('loading');
-      sessionStorage.setItem(openedStateID, '0');
-      window.location.reload();
-    }
-  }
-  /**/
-
   const SwellPointBalance = () => {
     return (
       <div className={'pointsDisplay'}>
@@ -255,7 +252,7 @@ const MainContent = () => {
       },
       {
         label: 'redeem rewards',
-        to: isLoggedIn ? '/account?c=rewards' : '/rewards',
+        to: customerId !== '' ? '/account?c=rewards' : '/rewards',
         new: true,
         showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
       },
@@ -516,12 +513,12 @@ const MainContent = () => {
 
         <Links />
 
-        <div
-          className={'welcomeBottomButton'}
-          onClick={handleLogout.bind(this)}
-        >
-          sign out
-        </div>
+        <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
+          <input type="hidden" name="formAction" value={'LOGOUT'} />
+          <button type="submit" className={'welcomeBottomButton'}>
+            sign out
+          </button>
+        </signoutFetcher.Form>
       </>
     ),
 
@@ -577,7 +574,7 @@ const MainContent = () => {
             className={'button'}
             onClick={() => {
               switchSliderPanelVisibility('SliderAccount');
-              changeMainContent(isLoggedIn ? 'welcomeBack' : 'signIn');
+              changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
             }}
           >
             close
@@ -658,7 +655,7 @@ const MainContent = () => {
         id={'closeButton'}
         onClick={() => {
           switchSliderPanelVisibility('SliderAccount');
-          changeMainContent(isLoggedIn ? 'welcomeBack' : 'signIn');
+          changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
         }}
       >
         <span>close</span>
