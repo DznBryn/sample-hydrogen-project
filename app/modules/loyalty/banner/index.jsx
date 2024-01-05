@@ -1,16 +1,28 @@
 import React from 'react';
-import { switchSliderPanelVisibility } from '~/modules/sliderPanel';
+import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
 import styles from './styles.css';
-import { triggerAnalyticsLoyaltyEvents } from '~/utils/functions/eventFunctions';
+import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
+import {useStore} from '~/hooks/useStore';
 
 export function links() {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 }
 
-export default function Banner({ loggedIn = false, points = 200, isEmpty = false, isAbleToRedeem = true, userName = 'Jane', onClick = () => { } }) {
-  return isEmpty ? EmptyCart() : isAbleToRedeem ? AbleToRedeem({ userName, onClick}) : FullCart({ loggedIn, points, onClick});
+export default function Banner({
+  points = 200,
+  isEmpty = false,
+  isAbleToRedeem = true,
+  userName = 'Jane',
+  onClick = () => {},
+}) {
+  const {id: customerId = ''} = useStore(
+    (store) => store?.account?.data ?? null,
+  );
+  return isEmpty
+    ? EmptyCart()
+    : isAbleToRedeem
+    ? AbleToRedeem({userName, onClick})
+    : FullCart({loggedIn: customerId !== '', points, onClick});
 }
 
 export const SkinQuizCartBanner = () => (
@@ -21,37 +33,59 @@ export const SkinQuizCartBanner = () => (
 );
 
 const EmptyCart = () => (
-  <a href={'/rewards'} className={'emptyCartBannerContainer'} onClick={() => triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', { source: 'emptySliderCart' })}>
-    <span className={'emptyCartBadge'}>
-      INTRODUCING
-    </span>
+  <a
+    href={'/rewards'}
+    className={'emptyCartBannerContainer'}
+    onClick={() =>
+      triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
+        source: 'emptySliderCart',
+      })
+    }
+  >
+    <span className={'emptyCartBadge'}>INTRODUCING</span>
     <h2>TULA 24-7 Rewards</h2>
     <p>Sign up and earn points, rewards & exclusive access</p>
   </a>
 );
 
-const FullCart = ({ points = 200, loggedIn = false, onClick = () => { } }) => loggedIn ? (
-  <div className={'loyaltyBannerContainer loggedinContainer'}>
-    <p>Awesome! You’re earning{' '}
-      <span className={'pointSentence'}>{points} points</span>
-      {' '}on this purchase with TULA 24-7 Rewards!
-    </p>
-    <ExclamationIcon onClick={onClick} />
-  </div>
-) : (
-  <div className={'loyaltyBannerContainer'}>
-    <p>Earn points, rewards, and exclusive access with TULA 24-7 Rewards </p>
-    <div className={'bannerButton'} onClick={() => { switchSliderPanelVisibility('SliderAccount'); triggerAnalyticsLoyaltyEvents('SignupBtnClick', { source: 'sliderCart' }); }}><span>Join now</span><LeftArrow /></div>
-  </div>
-);
+const FullCart = ({points = 200, loggedIn = false, onClick = () => {}}) => {
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
+  return loggedIn ? (
+    <div className={'loyaltyBannerContainer loggedinContainer'}>
+      <p>
+        Awesome! You’re earning{' '}
+        <span className={'pointSentence'}>{points} points</span> on this
+        purchase with TULA 24-7 Rewards!
+      </p>
+      <ExclamationIcon onClick={onClick} />
+    </div>
+  ) : (
+    <div className={'loyaltyBannerContainer'}>
+      <p>Earn points, rewards, and exclusive access with TULA 24-7 Rewards </p>
+      <div
+        className={'bannerButton'}
+        onClick={() => {
+          toggleCart();
+          switchSliderPanelVisibility('SliderAccount');
+          triggerAnalyticsLoyaltyEvents('SignupBtnClick', {
+            source: 'sliderCart',
+          });
+        }}
+      >
+        <span>Join now</span>
+        <LeftArrow />
+      </div>
+    </div>
+  );
+};
 
-
-const AbleToRedeem = ({userName = 'Jane', onClick = () => { }}) => (
+const AbleToRedeem = ({userName = 'Jane', onClick = () => {}}) => (
   <div className={'loyaltyBannerContainer ableToRedeemContainer'}>
     <div>
       <h3>{userName}, ready to redeem your free rewards product?</h3>
       <p>
-        make sure to copy the code from your account & paste at checkout to redeem!
+        make sure to copy the code from your account & paste at checkout to
+        redeem!
       </p>
     </div>
     <QuestionMarkIcon onClick={onClick} />
@@ -76,9 +110,14 @@ const LeftArrow = () => (
   </svg>
 );
 
-export const ExclamationIcon = ({ color = 'white', onClick, size = 15, ...rest }) => (
+export const ExclamationIcon = ({
+  color = 'white',
+  onClick,
+  size = 15,
+  ...rest
+}) => (
   <svg
-    style={{ cursor: 'pointer' }}
+    style={{cursor: 'pointer'}}
     onClick={onClick}
     width={size}
     height={size}
@@ -105,9 +144,9 @@ export const ExclamationIcon = ({ color = 'white', onClick, size = 15, ...rest }
   </svg>
 );
 
-const QuestionMarkIcon = ({ onClick, ...rest }) => (
+const QuestionMarkIcon = ({onClick, ...rest}) => (
   <svg
-    style={{ cursor: 'pointer' }}
+    style={{cursor: 'pointer'}}
     onClick={onClick}
     width={16}
     height={16}

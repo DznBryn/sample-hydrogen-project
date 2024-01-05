@@ -1,7 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  isAutoCart,
-  isAutoCartGraphQL,
   convertStorefrontIdToExternalId,
   getLoyaltyCustomerData,
 } from '../../utils/functions/eventFunctions';
@@ -91,28 +89,11 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
 
   const {id, email, status} = useCustomerState();
 
-  const addAutoDeliveryItemsToLocalStorage = useCallback(() => {
-    if (
-      apiType === 'graphql'
-        ? isAutoCartGraphQL(cart.items)
-        : isAutoCart(cart.items)
-    ) {
-      const autoDeliveryItems = items?.filter((item) => {
-        return item?.sellingPlanAllocation?.sellingPlan;
-      });
-
-      const valuesToStore = autoDeliveryItems?.map((item) => ({
-        id: item?.merchandise?.product?.id,
-      }));
-
-      localStorage.setItem('ADItems', JSON.stringify(valuesToStore));
-    } else localStorage.removeItem('ADItems');
-  }, [items?.length]);
-
   useEffect(() => {
     if (cart?.totalQuantity) {
       const items = flattenConnection(cart.lines).map((item) => item);
       setItems(items);
+      addAutoDeliveryItemsToLocalStorage();
     }
 
     if (typeof window.unlockABTasty === 'function') {
@@ -250,11 +231,20 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
     return total;
   }
 
-  React.useEffect(() => {
-    addAutoDeliveryItemsToLocalStorage();
+  const addAutoDeliveryItemsToLocalStorage = () => {
+    if (cart?.lines) {
+      const items = flattenConnection(cart.lines);
+      const autoDeliveryItems = items?.filter((item) => {
+        return item?.sellingPlanAllocation?.sellingPlan;
+      });
 
-    return function cleanup() {};
-  }, []);
+      const valuesToStore = autoDeliveryItems?.map((item) => ({
+        id: item?.merchandise?.product?.id,
+      }));
+
+      localStorage.setItem('ADItems', JSON.stringify(valuesToStore));
+    } else localStorage.removeItem('ADItems');
+  };
 
   productRecList.productList = productRecList.productList.filter((product) => {
     for (let it = 0; it < items?.length; it++) {
