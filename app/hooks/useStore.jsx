@@ -110,11 +110,12 @@ export const useStore = create((set) => ({
         orders: [],
         subscription: null,
       };
-
-      Object.keys(data).forEach((key) => {
-        if (customerData?.[key] && data[key] !== customerData[key])
-          data[key] = customerData[key];
-      });
+      if (customerData !== null) {
+        Object.keys(data).forEach((key) => {
+          if (customerData?.[key] && data[key] !== customerData[key])
+            data[key] = customerData[key];
+        });
+      }
 
       return set((state) => {
         return {

@@ -59,7 +59,7 @@ const SliderCartProductBox = ({
     for (let it = 0; it < cartPageConfig.sellingPlans.length; it++) {
       if (
         cartPageConfig.sellingPlans[it].sellingPlanID ===
-        Number(item.sellingPlanAllocation.sellingPlan.id)
+        Number(parseGid(item.sellingPlanAllocation.sellingPlan.id)?.id)
       ) {
         const currentPlan = cartPageConfig.sellingPlans[it];
         sellingPlanName = currentPlan?.name;
@@ -180,7 +180,6 @@ const YotpoProductPrice = ({price, isSellingPlan = false}) => (
 
 const RegularProduct = ({
   item,
-  isSellingPlan = false,
   sellingPlanName,
   inputQtyRef,
   AutoDelivery,
@@ -188,119 +187,145 @@ const RegularProduct = ({
   promo,
   product,
   cartPageConfig,
-}) => (
-  <div className={'sliderCartProduct'}>
-    <div className={'productImage'}>
-      <Link
-        to={`products/${item?.merchandise?.product?.handle}?variant=${
-          parseGid(item?.merchandise?.id)?.id
-        }`}
-      >
-        <Image
-          className="productImage"
-          data={item?.merchandise?.image}
-          sizes="(min-width: 45em) 50vw, 100vw"
-          aspectRatio="4/5"
-        />
-      </Link>
-    </div>
-    <div className={'productInfo'}>
-      <div className={'productTitle'}>
-        <h6> {item?.merchandise?.product?.title} </h6>
-        {isSellingPlan && (
-          <h6 className={'autoDeliver'}>
-            Auto-Deliver every {sellingPlanName}
-          </h6>
-        )}
-
-        {!isNaN(Number(item?.cost?.totalAmount?.amount)) && (
-          <YotpoProductPrice
-            price={Number(item?.cost?.totalAmount?.amount) * 10}
-            isSellingPlan={isSellingPlan}
+}) => {
+  const {id: customerId = ''} = useStore(
+    (store) => store?.account?.data ?? null,
+  );
+  return (
+    <div className={'sliderCartProduct'}>
+      <div className={'productImage'}>
+        <Link
+          to={`products/${item?.merchandise?.product?.handle}?variant=${
+            parseGid(item?.merchandise?.id)?.id
+          }`}
+        >
+          <Image
+            className="productImage"
+            data={item?.merchandise?.image}
+            sizes="(min-width: 45em) 50vw, 100vw"
+            aspectRatio="4/5"
           />
-        )}
+        </Link>
       </div>
-      <div className={'productQty'}>
-        <div className={'product_input'}>
-          <UpdateItemButton
-            lineIds={[
-              {
-                id: item?.id,
-                quantity:
-                  item?.quantity && item.quantity > 1
-                    ? Number(Math.max(0, item.quantity - 1).toFixed(0))
-                    : 1,
-              },
-            ]}
-          >
-            <button type="submit" className={'minus'}>
-              <span></span>
-              <span style={{display: 'none'}} className="ae-compliance-indent">
-                {' '}
-                Reduce Quantity{' '}
-              </span>
-              <span style={{display: 'none'}} className="ae-compliance-indent">
-                {' '}
-                {item?.title}{' '}
-              </span>
-            </button>
-          </UpdateItemButton>
-          <input
-            type="text"
-            value={item?.quantity}
-            min="0"
-            ref={inputQtyRef}
-            readOnly="readonly"
-            name="updates[33187716673:307c12b24eaffc6df04a594677e63385]"
-            className="product-quantity"
-            id={`quantity--${item?.merchandise?.id}`}
-            aria-label="Quantity"
-          />
-          <UpdateItemButton
-            lineIds={[
-              {
-                id: item?.id,
-                quantity: Number((item?.quantity + 1).toFixed(0)),
-              },
-            ]}
-          >
-            <button type="submit" className={'plus'}>
-              <span></span>
-              <span style={{display: 'none'}} className="ae-compliance-indent">
-                {' '}
-                Increase Quantity{' '}
-              </span>
-              <span style={{display: 'none'}} className="ae-compliance-indent">
-                {' '}
-                {item?.title}{' '}
-              </span>
-            </button>
-          </UpdateItemButton>
-          <div className={'productTotal'}>
-            {forceChange ? (
-              <Price
-                isSellingPlan={isSellingPlan}
-                item={item}
-                promo={promo}
-                product={product}
-                cartPageConfig={cartPageConfig}
-              />
-            ) : (
-              <h6>
-                {getCurrency() +
-                  Number(item?.cost?.totalAmount?.amount).toFixed(2)}
-              </h6>
-            )}
+      <div className={'productInfo'}>
+        <div className={'productTitle'}>
+          <h6> {item?.merchandise?.product?.title} </h6>
+          {item.sellingPlanAllocation && (
+            <h6 className={'autoDeliver'}>
+              Auto-Deliver every {sellingPlanName}
+            </h6>
+          )}
+
+          {!isNaN(Number(item?.cost?.totalAmount?.amount)) &&
+          customerId !== '' ? (
+            <YotpoProductPrice
+              price={
+                (item.sellingPlanAllocation
+                  ? parseInt(
+                      Number(item?.cost?.totalAmount?.amount) *
+                        ((100 - cartPageConfig?.autoDeliveryDiscount ?? 0) /
+                          100),
+                    )
+                  : Number(item?.cost?.totalAmount?.amount)) * 10
+              }
+              isSellingPlan={item.sellingPlanAllocation}
+            />
+          ) : null}
+        </div>
+        <div className={'productQty'}>
+          <div className={'product_input'}>
+            <UpdateItemButton
+              lineIds={[
+                {
+                  id: item?.id,
+                  quantity:
+                    item?.quantity && item.quantity > 1
+                      ? Number(Math.max(0, item.quantity - 1).toFixed(0))
+                      : 1,
+                },
+              ]}
+            >
+              <button type="submit" className={'minus'}>
+                <span></span>
+                <span
+                  style={{display: 'none'}}
+                  className="ae-compliance-indent"
+                >
+                  {' '}
+                  Reduce Quantity{' '}
+                </span>
+                <span
+                  style={{display: 'none'}}
+                  className="ae-compliance-indent"
+                >
+                  {' '}
+                  {item?.title}{' '}
+                </span>
+              </button>
+            </UpdateItemButton>
+            <input
+              type="text"
+              value={item?.quantity}
+              min="0"
+              ref={inputQtyRef}
+              readOnly="readonly"
+              name="updates[33187716673:307c12b24eaffc6df04a594677e63385]"
+              className="product-quantity"
+              id={`quantity--${item?.merchandise?.id}`}
+              aria-label="Quantity"
+            />
+            <UpdateItemButton
+              lineIds={[
+                {
+                  id: item?.id,
+                  quantity: Number((item?.quantity + 1).toFixed(0)),
+                },
+              ]}
+            >
+              <button type="submit" className={'plus'}>
+                <span></span>
+                <span
+                  style={{display: 'none'}}
+                  className="ae-compliance-indent"
+                >
+                  {' '}
+                  Increase Quantity{' '}
+                </span>
+                <span
+                  style={{display: 'none'}}
+                  className="ae-compliance-indent"
+                >
+                  {' '}
+                  {item?.title}{' '}
+                </span>
+              </button>
+            </UpdateItemButton>
+            <div className={'productTotal'}>
+              {forceChange ? (
+                <Price
+                  isSellingPlan={item.sellingPlanAllocation}
+                  item={item}
+                  promo={promo}
+                  product={product}
+                  cartPageConfig={cartPageConfig}
+                />
+              ) : (
+                <h6>
+                  {getCurrency() +
+                    Number(item?.cost?.totalAmount?.amount).toFixed(2)}
+                </h6>
+              )}
+            </div>
           </div>
         </div>
       </div>
+      <RemoveItemButton lineId={item?.id} />
+      {item?.hasSellingPlans && (
+        <ADSwitcherContent item={item} {...AutoDelivery} />
+      )}
     </div>
-    <RemoveItemButton lineId={item?.id} />
-    {item?.hasSellingPlans && (
-      <ADSwitcherContent item={item} {...AutoDelivery} />
-    )}
-  </div>
-);
+  );
+};
 
 const Price = ({item, promo, product, cartPageConfig}) => {
   if (
@@ -598,4 +623,5 @@ function UpdateItemButton({lineIds, children}) {
     </fetcher.Form>
   );
 }
+
 export default SliderCartProductBox;

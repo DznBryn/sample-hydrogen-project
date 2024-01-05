@@ -1,4 +1,4 @@
-import {json, redirect} from '@shopify/remix-oxygen';
+import {json} from '@shopify/remix-oxygen';
 import {
   login,
   recoverPassword,
@@ -6,7 +6,11 @@ import {
 import Layouts from '~/layouts';
 import Homepage, {links as homePageStyles} from '~/modules/homepage';
 import {SIGN_IN_EMAIL, SIGN_IN_PASSWORD, FORGOT_EMAIL} from '~/utils/constants';
-import {getCMSContent, getCMSDoc} from '~/utils/functions/eventFunctions';
+import {
+  getCMSContent,
+  getCMSDoc,
+  getCustomerData,
+} from '~/utils/functions/eventFunctions';
 import {
   GET_CAROUSEL_SLIDES_GROUP,
   GET_HOMEPAGE_SHOP_BY_CONCERN,
@@ -37,11 +41,17 @@ export const action = async ({request, context}) => {
 
     if (data?.accessToken) {
       context.session.set('customerAccessToken', data.accessToken);
-      return redirect('/', {
-        headers: {
-          'Set-Cookie': await context.session.commit(),
+      const customer = await getCustomerData(context, data.accessToken);
+      return json(
+        {
+          customer,
         },
-      });
+        {
+          headers: {
+            'Set-Cookie': await context.session.commit(),
+          },
+        },
+      );
     }
 
     return {

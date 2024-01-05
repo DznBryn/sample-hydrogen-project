@@ -175,6 +175,8 @@
   text-align: center;
   text-decoration-line: underline !important;
   padding-top: 3px;
+  border: 0;
+  background-color: transparent;
 }
 
 .extraButton {
