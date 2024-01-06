@@ -893,9 +893,12 @@ export const GET_SITE_WIDE_SETTINGS = gql`
     allSiteWideSettings {
       _id
       name
-      promoDiscountMessage
-      promoDiscount
-      excludeList
+      activeSitewideSettings {
+        name
+        promoDiscountMessage
+        promoDiscount
+        excludeList
+      }
     }
   }
 `;
@@ -1672,7 +1675,7 @@ export const GET_EYE_QUIZ_QUESTIONS = gql`
 
 export const GET_REWARDS_PRODUCT_CONTENT = gql`
   query GetRewardsContent {
-    allRedeemProducts{
+    allRedeemProducts {
       name
       yotpo_points_value
       variant_id
@@ -1694,7 +1697,7 @@ export const GET_REWARDS_FAQ_CONTENT = gql`
         name
         questions
         answers
-      } 
+      }
     }
   }
 `;

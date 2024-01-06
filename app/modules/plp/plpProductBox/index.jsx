@@ -133,7 +133,7 @@ const PLPProductBox2 = ({
         return `${getPriceToShow()}+`;
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId))
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle))
         newPrice =
           productPromos && productPromos.showPromo
             ? price
@@ -148,7 +148,7 @@ const PLPProductBox2 = ({
         return `${getPriceToShow()}`;
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId))
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle))
         newPrice =
           productPromos && productPromos.showPromo
             ? price
@@ -171,7 +171,7 @@ const PLPProductBox2 = ({
         return `${getPriceToShow()}+`;
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId))
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle))
         newPrice = Number(price);
 
       return `${getPriceToShow()}+`;
@@ -181,7 +181,7 @@ const PLPProductBox2 = ({
         return `${getPriceToShow()}`;
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId))
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle))
         return getCurrency() + price;
     }
   };
@@ -194,7 +194,7 @@ const PLPProductBox2 = ({
     const noPromoPrice =
       (sitewide === false && !product?.productPromos?.showPromo) ||
       noPromo ||
-      sitewide?.excludeList?.includes(product.externalId);
+      sitewide?.excludeList?.includes(product.handle);
     if (noPromoPrice) {
       return originalPriceHigher ? (
         <p className={'plpBox_compared_price'}>
@@ -223,7 +223,7 @@ const PLPProductBox2 = ({
 
   const PromoComp = ({product, sitewide}) => {
     if (!noPromo) {
-      if (!sitewide?.excludeList?.includes(product.externalId)) {
+      if (!sitewide?.excludeList?.includes(product.handle)) {
         return (
           <span className="promoText">
             {product?.productPromos && productPromos.showPromo

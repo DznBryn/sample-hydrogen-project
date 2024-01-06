@@ -150,7 +150,7 @@ const PLPHorizontalProductBox = ({
           getCurrency() + (endPrice % 1 !== 0 ? endPrice.toFixed(2) : endPrice)
         }`;
       }
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle)) {
         startPrice =
           product.productPromos && product.productPromos.showPromo
             ? product.variants[0].price
@@ -182,7 +182,7 @@ const PLPHorizontalProductBox = ({
         return getCurrency() + (price % 1 !== 0 ? price.toFixed(2) : price);
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle)) {
         price =
           product.productPromos && product.productPromos.showPromo
             ? product.variants[0].price
@@ -220,7 +220,7 @@ const PLPHorizontalProductBox = ({
         }`;
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle)) {
         startPrice = Number(product.variants[0].price);
         endPrice = Number(variants[product.variants.length - 1].price);
         return `${
@@ -239,7 +239,7 @@ const PLPHorizontalProductBox = ({
         return getCurrency() + (price % 1 !== 0 ? price.toFixed(2) : price);
       }
 
-      if (sitewide && !sitewide?.excludeList?.includes(product.externalId)) {
+      if (sitewide && !sitewide?.excludeList?.includes(product.handle)) {
         return getCurrency() + product.variants[0].price;
       }
     }
@@ -310,7 +310,7 @@ const PLPHorizontalProductBox = ({
 
   const PromoComp = ({product, sitewide}) => {
     if (!noPromo) {
-      if (!sitewide?.excludeList?.includes(product.externalId)) {
+      if (!sitewide?.excludeList?.includes(product.handle)) {
         return (
           <span className="value promoMessage promo">
             {product?.productPromos && product.productPromos.showPromo
