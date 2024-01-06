@@ -39,7 +39,7 @@ const MainNavFooter = ({children}) => {
     HeaderConfig,
     MobileNavFooterMainButton,
     AnnouncementTopBanner,
-    // SiteWideSettings,
+    SiteWideSettings,
     SearchConfig,
     collection,
   } = mainNavFooterCMSData;
@@ -52,7 +52,10 @@ const MainNavFooter = ({children}) => {
   return (
     <>
       <NavPlaceholder
-        // siteWideSettings={getCMSDoc(SiteWideSettings, 'Black Friday')}
+        siteWideSettings={
+          getCMSDoc(SiteWideSettings, 'SiteWideSettings')
+            ?.activeSitewideSettings
+        }
         searchConfig={getCMSDoc(SearchConfig, 'Default')}
       />
 

@@ -330,13 +330,13 @@ const RegularProduct = ({
 const Price = ({item, promo, product, cartPageConfig}) => {
   if (
     ((sitewide &&
-      !sitewide?.excludeList?.includes(parseGid(product?.id)?.id)) ||
+      !sitewide?.excludeList?.includes(item.merchandise.product.handle)) ||
       (promo &&
         promo?.variantIds?.find(
           (variantId) => Number(variantId) === item?.variant_id,
         ))) &&
     item.sellingPlanAllocation === null &&
-    !item.title.includes('E-Gift Card')
+    !item.merchandise.product.title.includes('E-Gift Card')
   ) {
     const line_price =
       promo && promo.showPromo
@@ -357,11 +357,11 @@ const Price = ({item, promo, product, cartPageConfig}) => {
           {getCurrency() + origPrice?.toFixed(2)}
         </h6>
         {sitewide &&
-        !sitewide?.excludeList?.includes(parseGid(product?.id)?.id) ? (
+        !sitewide?.excludeList?.includes(item.merchandise.product.handle) ? (
           <h6
             className={
               sitewide &&
-              !sitewide?.excludeList?.includes(parseGid(product?.id)?.id)
+              !sitewide?.excludeList?.includes(item.merchandise.product.handle)
                 ? 'promo'
                 : ''
             }
@@ -380,11 +380,11 @@ const Price = ({item, promo, product, cartPageConfig}) => {
           {getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}
         </h6>
         {sitewide &&
-        !sitewide?.excludeList?.includes(parseGid(product?.id)?.id) ? (
+        !sitewide?.excludeList?.includes(item.merchandise.product.handle) ? (
           <h6
             className={
               sitewide &&
-              !sitewide?.excludeList?.includes(parseGid(product?.id)?.id)
+              !sitewide?.excludeList?.includes(item.merchandise.product.handle)
                 ? 'promo'
                 : ''
             }
