@@ -2,13 +2,13 @@
 import React, {useState, useEffect} from 'react';
 import {useYotpo} from '~/hooks/useYotpo';
 import classNames from 'classnames/bind';
-// import { Slider } from 'Components/UploadReceipt';
 import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
 import RedeemProductsSection, {
   links as redeemProductsSectionStyles,
 } from '~/modules/redeemProductsSection';
 import {mock} from '~/modules/redeemProductsSection/mock';
+import {brandLogos} from '~/modules/rewardsEarnPoints';
 
 const MOCK_QUESTION_LIST = [
   {question: 'Question #1', answer: 'Answer #1 '},
@@ -20,6 +20,23 @@ const MOCK_QUESTION_LIST = [
 export function links() {
   return [{rel: 'stylesheet', href: styles}, ...redeemProductsSectionStyles()];
 }
+
+const Slider = () => (
+  <div className="carousel-container">
+    <div className="carousel-track">
+      {Object.values(brandLogos).map((svg, index) => (
+        <div key={index} className={'earn_points_svg'}>
+          {svg}
+        </div>
+      ))}
+      {Object.values(brandLogos).map((svg, index) => (
+        <div key={index} className={'earn_points_svg'}>
+          {svg}
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 const LoyaltyRewardsTab = ({
   products = mock,
@@ -62,8 +79,10 @@ const LoyaltyRewardsTab = ({
         Shopping in person? Don’t forget to submit your receipt and earn points
         for your purchase!
       </p>
+      <div className={'faq__divider'} style={{marginTop: 48}} />
 
-      {/* <Slider /> */}
+      <Slider />
+      <div className={'faq__divider'} style={{marginBottom: 58}} />
 
       <div id="receipt_uploader" />
 
