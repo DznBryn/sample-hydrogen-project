@@ -141,7 +141,7 @@ const RewardEarnPoints = () => {
   );
 };
 
-const brandLogos = {
+export const brandLogos = {
   ulta_beauty: (
     <svg
       width={76}
