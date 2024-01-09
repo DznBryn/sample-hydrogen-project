@@ -20,7 +20,7 @@ import PDPExclusiveProductBannerRelease, {
 import PDPBenefits, {links as pdpBenefitsStyles} from './pdpBenefits';
 import PDPFormulate, {links as pdpFormulateStyles} from './pdpFormulate';
 import PDPHowToUse, {links as pdpHowToUseStyles} from './pdpHowToUse';
-import PDPListrakRec, {links as pdpListrakRecStyles} from './pdpListrakRec';
+import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
 import PDPYotPo, {links as pdpYotPoStyles} from './pdpYotPo';
 import FireWorkPDPCarousel, {
   links as fireWorkPDPCarouselStyles,
@@ -40,7 +40,7 @@ export const links = () => {
     ...pdpBenefitsStyles(),
     ...pdpFormulateStyles(),
     ...pdpHowToUseStyles(),
-    ...pdpListrakRecStyles(),
+    ...listrakRecStyles(),
     ...pdpYotPoStyles(),
     ...fireWorkPDPCarouselStyles(),
   ];
@@ -215,7 +215,7 @@ const PDP = ({
       return [
         {
           _id: 0,
-          label: 'What\'s In & Out',
+          label: 'What&#39;s In & Out',
           contents: [
             getData('ingredients_list'),
             getData('free_from'),
@@ -305,10 +305,6 @@ const PDP = ({
     [exclusiveProductBannerContent],
   );
 
-  const ContentSection = ({children}) => {
-    return <div className={classnames('pdpSection')}>{children}</div>;
-  };
-
   //render
 
   return (
@@ -374,15 +370,15 @@ const PDP = ({
           <FireWorkPDPCarousel playlist="g4P8eg" />
         </ContentSection>
 
-        <ContentSection>
-          <Suspense>
-            <Await resolve={root.data.listrakRec}>
-              {(listrakRec) => (
-                <PDPListrakRec listrak={getCMSDoc(listrakRec, 'PDP')} />
-              )}
-            </Await>
-          </Suspense>
-        </ContentSection>
+        <Suspense>
+          <Await resolve={root.data.listrakRec}>
+            {(listrakRec) => (
+              <ContentSection>
+                <ListrakRec listrak={getCMSDoc(listrakRec, 'PDP')} />
+              </ContentSection>
+            )}
+          </Await>
+        </Suspense>
 
         <ContentSection>
           {!isGiftCard ? (
@@ -400,6 +396,10 @@ const PDP = ({
       </div>
     </div>
   );
+};
+
+const ContentSection = ({children}) => {
+  return <div className={classnames('pdpSection')}>{children}</div>;
 };
 
 export default PDP;

@@ -19,18 +19,12 @@ export const links = () => {
   ];
 };
 
-const mockListrak = {
-  listrakId: 'fb44285e-a4de-45ab-97a5-46db11bced2c',
-  title: 'BOOST YOUR TULA ROUTINE WITH THESE',
-  name: 'Shopping Cart',
-};
-
 let listLoading = false;
 let recs = [];
 let recProducts = [];
 
 const ListrakRec = ({listrak}) => {
-  const listrackConfig = listrak?.listrakId ? listrak : mockListrak;
+  const listrackConfig = listrak;
   let [loader, setLoader] = useState(0);
   const {state, products} = useCollection('all');
   let [handles, setHandles] = useState([]);
@@ -86,7 +80,7 @@ const ListrakRec = ({listrak}) => {
       <div className={'listrackWrap'}>
         <div
           className="product-grid product_list"
-          data-ltk-merchandiseblock={346002}
+          data-ltk-merchandiseblock={listrak?.listrakId}
           data-quickbuy-wrapper
         >
           <script type="text/html">
