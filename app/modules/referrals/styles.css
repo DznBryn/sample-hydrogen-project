@@ -4,6 +4,10 @@
   min-height: 781px;
 }
 
+.referrals * {
+  height: auto !important;
+}
+
 .referrals_loadingSkeleton {
   max-width: 1000px;
   margin: 0 auto;

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import ReferralsLoading, {
   links as referralsLoadingStyles,
 } from '../referralsLoading';
@@ -16,7 +16,13 @@ export const links = () => {
 };
 
 const Referrals = () => {
-  const [isLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+  }, []);
 
   return (
     <div className={'referrals'}>
