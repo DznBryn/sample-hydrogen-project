@@ -66,7 +66,7 @@
 }
 
 .searchTag {
-  background-color: #D7F0F4;
+  background-color: #d7f0f4;
   border-radius: 42px;
   font-size: 12px;
   font-weight: 400;
@@ -90,8 +90,8 @@
 }
 
 .searchProduct {
-  background-color: #FFF;
-  border: 1px solid #EEE;
+  background-color: #fff;
+  border: 1px solid #eee;
   margin-bottom: 20px;
   width: 100%;
 }
@@ -108,7 +108,7 @@
   margin-left: 8px;
 }
 
-.productInfo {
+.productInfoSearch {
   margin: auto 10px;
 }
 

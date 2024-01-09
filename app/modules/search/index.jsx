@@ -22,7 +22,7 @@ const SearchProduct = (product) => {
           src={thumbnail?.url + '&width=60'}
           alt={thumbnail.altText || ''}
         />
-        <div className={'productInfo'}>
+        <div className={'productInfoSearch'}>
           {product.alt_title !== undefined && (
             <div className={'productAltSearch'}>{product.alt_title}</div>
           )}
