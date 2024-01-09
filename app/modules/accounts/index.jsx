@@ -1,6 +1,5 @@
-import {Form, Link} from '@remix-run/react';
+/* eslint-disable no-unused-vars */
 import {useStore} from '~/hooks/useStore';
-import {API_METHODS} from '~/utils/constants';
 import styles from './styles.css';
 import {useEffect, useState} from 'react';
 import getApiKeys from '~/utils/functions/getApiKeys';
@@ -11,6 +10,7 @@ import LoyaltyRewardsTab, {links as loyaltyStyles} from './loyalty';
 import AccountSubscription, {
   links as subscriptionStyles,
 } from '~/modules/subscription/orderGroove/accounts';
+import {useYotpo} from '~/hooks/useYotpo';
 
 export function links() {
   return [
@@ -25,6 +25,7 @@ export function links() {
 
 export default function Account() {
   const {data} = useStore((store) => store.account);
+
   const {id} = data;
 
   return id !== '' ? (
@@ -55,6 +56,7 @@ function Tabs({data}) {
   const showAddressTab = true;
   const showReferralTab = true;
   const [active, setActive] = useState(1);
+  const {refreshWidgets} = useYotpo();
 
   const tabsID = {
     ad: 1,
@@ -88,6 +90,7 @@ function Tabs({data}) {
 
   function handleActiveTab(tab) {
     setActive(tab);
+    refreshWidgets();
     setURLQuery(tab);
   }
 

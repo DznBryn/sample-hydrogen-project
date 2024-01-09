@@ -4,11 +4,19 @@
   min-height: 781px;
 }
 
+.referrals * {
+  height: auto !important;
+}
+
 .referrals_loadingSkeleton {
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
   z-index: -1;
+}
+
+.yotpo-background {
+  min-height: 100% !important;
 }
 
 @media (min-width: 769px) {
