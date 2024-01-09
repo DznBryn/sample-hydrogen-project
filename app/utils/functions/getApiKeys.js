@@ -50,7 +50,7 @@ function getApiKeys() {
           fieldGroupName: 51,
           fieldName: 7810,
         },
-        YOTTA_KEY: 'zZisVju12QIJQg',
+        YOTTA_KEY: 'NhJw4378TzDpkA',
         YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
         YOTPO_LOYALTY_GUID: 'qfEoWaPmtkBoUMwPAGu1ow',
         YOTPO_LOYALTY_WIDGETS: {
