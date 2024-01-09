@@ -4,10 +4,6 @@ import SearchPage, {links as searchPageStyles} from '~/modules/searchPage';
 
 export const links = () => searchPageStyles();
 
-export const meta = () => {
-  return [{title: 'Search'}, {description: 'Search page'}];
-};
-
 export async function loader({context, request}) {
   const {ALGOLIA_WRITE_API_KEY} = context.env;
 

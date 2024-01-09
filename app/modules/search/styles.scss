@@ -1,5 +1,5 @@
 .searchOverlay {
-  background-color: rgba(0, 0, 0, .35);
+  background-color: rgba(0, 0, 0, 0.35);
   height: 100%;
   width: 100vw;
   position: fixed;
@@ -66,7 +66,7 @@
 }
 
 .searchTag {
-  background-color: #D7F0F4;
+  background-color: #d7f0f4;
   border-radius: 42px;
   font-size: 12px;
   font-weight: 400;
@@ -90,8 +90,8 @@
 }
 
 .searchProduct {
-  background-color: #FFF;
-  border: 1px solid #EEE;
+  background-color: #fff;
+  border: 1px solid #eee;
   margin-bottom: 20px;
   width: 100%;
 }
@@ -102,13 +102,13 @@
   text-decoration: none;
 }
 
-.searchProductLink img{
+.searchProductLink img {
   width: 60px;
   height: 75px;
   margin-left: 8px;
 }
 
-.productInfo {
+.productInfoSearch {
   margin: auto 10px;
 }
 
@@ -123,20 +123,20 @@
 }
 
 .visibleSearch {
-  transition: all .3s linear;
+  transition: all 0.3s linear;
   top: 0px;
 }
 
 .hiddenSearch {
   /* visibility: hidden;
   opacity: 0; */
-  transition: all .3s linear;
+  transition: all 0.3s linear;
   top: -810px;
 }
 
 @media only screen and (min-width: 768px) {
   .hiddenSearch {
-    transition: all .4s linear;
+    transition: all 0.4s linear;
   }
 
   /* .search {
