@@ -1,15 +1,17 @@
 /* eslint-disable quotes */
 /* eslint-disable react/no-unknown-property */
-import {Link} from '@remix-run/react';
+import {Await, Link, useMatches} from '@remix-run/react';
 
-import PDPListrakRec, {
-  links as pdpListrakRecStyles,
-} from '~/modules/pdp/pdpListrakRec';
+import ListrakRec, {links as listrakRecStyles} from '~/modules/listrakRec';
 import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '~/modules/loadingSkeleton';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
-import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
+import {
+  getCMSDoc,
+  triggerAnalyticsLoyaltyEvents,
+} from '~/utils/functions/eventFunctions';
+import {Suspense} from 'react';
 
 import styles from './styles.css';
 
@@ -19,7 +21,7 @@ export const links = () => {
       rel: 'stylesheet',
       href: styles,
     },
-    ...pdpListrakRecStyles(),
+    ...listrakRecStyles(),
     ...loadingSkeletonStyles(),
   ];
 };
@@ -45,6 +47,7 @@ export const Slider = () => {
 };
 
 const UploadReceipt = () => {
+  const [root] = useMatches();
   return (
     <div className={'uploadReceipt_mainContainer'}>
       <section className={'uploadReceipt_header'}>
@@ -98,7 +101,15 @@ const UploadReceipt = () => {
       </section>
 
       <section className={'uploadReceipt_recommendations'}>
-        <PDPListrakRec />
+        <Suspense>
+          <Await resolve={root.data.listrakRec}>
+            {(listrakRec) => (
+              <ListrakRec
+                listrak={getCMSDoc(listrakRec, 'LoyaltyUploadReceipt')}
+              />
+            )}
+          </Await>
+        </Suspense>
       </section>
     </div>
   );

@@ -24,7 +24,7 @@ const PDPVariants = ({classes, details = {}}) => {
 
   useEffect(() => {
     setStoreInitialValue();
-  }, []);
+  }, [details]);
 
   function setStoreInitialValue() {
     function getSelectedVariant() {
