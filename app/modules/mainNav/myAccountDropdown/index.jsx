@@ -6,7 +6,7 @@ import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {Link, useFetcher} from '@remix-run/react';
 import {
-  // getLoyaltyCustomerData,
+  getLoyaltyCustomerData,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
 
@@ -290,15 +290,14 @@ const SwellPointBalance = () => {
   async function getCustomerData() {
     const env = 'US_PROD';
     const data = {email, customerId: id, env, useCache: false};
-    return data;
-    // @TODO: Uncomment this when loyalty is ready and CORS FIXED
-    // if (email || id) {
-    //   getLoyaltyCustomerData(data)
-    //     .then((res) => {
-    //       setPoints(res.pointsBalance);
-    //     })
-    //     .catch((err) => err);
-    // }
+
+    if (email || id) {
+      getLoyaltyCustomerData(data)
+        .then((res) => {
+          setPoints(res.pointsBalance);
+        })
+        .catch((err) => err);
+    }
   }
   return (
     <div className={'pointsDisplay'}>
