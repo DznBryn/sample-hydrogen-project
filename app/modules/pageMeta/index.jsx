@@ -73,9 +73,9 @@ const PageMeta = () => {
 
       <script
         defer
-        src={`https://cdn.yottaa.com/rapid.min.6.1.0.js?key=${
+        src={`https://rapid-cdn.yottaa.com/rapid/lib/${
           getApiKeys().YOTTA_KEY
-        }`}
+        }.js`}
       ></script>
 
       <script
