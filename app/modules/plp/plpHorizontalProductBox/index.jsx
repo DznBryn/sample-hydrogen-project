@@ -330,8 +330,8 @@ const PLPHorizontalProductBox = ({
   // const secImg = getResponsiveImageSrc(media[1]?.details.src, {
   //   width: media[1]?.details.width,
   // });
-  const mainImg = media[0]?.details.asset.url + '?auto=format';
-  const secImg = media[1]?.details.asset.url + '?auto=format';
+  const mainImg = media[0]?.details?.asset?.url + '?auto=format';
+  const secImg = media[1]?.details?.asset?.url + '?auto=format';
 
   const triggerAnalyticsProductClick = (analytics) => {
     if (window?.dataLayer) {
