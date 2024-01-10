@@ -8,6 +8,10 @@ import ProductBoxLoading, {
 import PLPProductBox, {
   links as plpProductBoxStyles,
 } from '../plp/plpProductBox';
+import {
+  PDPSliderPanelTitle,
+  links as pdpPanelSliderStyles,
+} from '../pdp/pdpPanelSlider';
 
 import styles from './styles.css';
 
@@ -16,6 +20,7 @@ export const links = () => {
     {rel: 'stylesheet', href: styles},
     ...productBoxLoadingStyles(),
     ...plpProductBoxStyles(),
+    ...pdpPanelSliderStyles(),
   ];
 };
 
@@ -113,9 +118,7 @@ const ListrakRec = ({listrak}) => {
       </div>
       {listLoading && (
         <div className={'listrakRec'}>
-          <div className={'listHeader'}>
-            <h2>{listrackConfig.title}</h2>
-          </div>
+          <PDPSliderPanelTitle data={{title: listrackConfig.title}} />
           <div className={'listProducts'}>
             {recProducts.length === 0 &&
               [1, 2, 3, 4].map((n) => {
