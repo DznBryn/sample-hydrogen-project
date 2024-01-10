@@ -1,22 +1,18 @@
-import { json } from '@shopify/remix-oxygen';
-import { resetPassword } from '~/utils/graphql/shopify/mutations/customer';
-import ResetPasswordForm, { links as resetPasswordStyles } from '~/modules/accounts/resetPassword';
+import {json} from '@shopify/remix-oxygen';
+import {resetPassword} from '~/utils/graphql/shopify/mutations/customer';
+import ResetPasswordForm, {
+  links as resetPasswordStyles,
+} from '~/modules/accounts/resetPassword';
 import Layouts from '~/layouts';
 
 export function links() {
-  return [
-    ...resetPasswordStyles(),
-  ];
+  return [...resetPasswordStyles()];
 }
-
-export const meta = () => [
-   {title: 'Reset Password',}
-];
 
 export const action = async ({
   request,
   context,
-  params: { lang, id, resetToken },
+  params: {lang, id, resetToken},
 }) => {
   if (
     !id ||
@@ -28,7 +24,7 @@ export const action = async ({
       {
         message: 'Wrong token. Please try to reset your password again.',
       },
-      { status: 400 },
+      {status: 400},
     );
   }
 
@@ -48,7 +44,7 @@ export const action = async ({
       {
         message: 'Please provide matching passwords',
       },
-      { status: 400 },
+      {status: 400},
     );
   }
 
@@ -66,9 +62,9 @@ export const action = async ({
 };
 
 export default function Reset() {
-  return <Layouts.MainNavFooter>
-    <ResetPasswordForm />
-  </Layouts.MainNavFooter>;
+  return (
+    <Layouts.MainNavFooter>
+      <ResetPasswordForm />
+    </Layouts.MainNavFooter>
+  );
 }
-
-
