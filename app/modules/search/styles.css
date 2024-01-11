@@ -147,7 +147,7 @@
   .searchTrendingProducts {
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 10px;
   }
   .searchProduct {
     flex-basis: 32.5%;
