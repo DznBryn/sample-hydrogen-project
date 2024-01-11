@@ -10,6 +10,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useLocation,
 } from '@remix-run/react';
 import {
   GET_LISTRAK_REC,
@@ -70,6 +71,10 @@ let customer = {data: undefined, accessToken: undefined};
 
 export async function loader({context, request}) {
   const referer = request.headers.get('referer');
+  const headers = new Headers();
+  const url = new URL(request.url);
+
+  togglePreviewVersion(context, url, referer);
 
   /**
    * REDIRECT
@@ -119,18 +124,28 @@ export async function loader({context, request}) {
     products = CMSData[1];
   }
 
-  return defer({
-    cart,
-    customer: customer.data,
-    listrakRec,
-    mainNavFooterCMSData: mainNavFooter,
-    productsCMSData: products,
-    showSliderCart: checkShowSliderCart(request),
-  });
+  headers.set('Set-Cookie', await context.session.commit());
+
+  return defer(
+    {
+      cart,
+      previewVersion: context.session.get('previewVersion') === 'true',
+      customer: customer.data,
+      listrakRec,
+      mainNavFooterCMSData: mainNavFooter,
+      productsCMSData: products,
+      showSliderCart: checkShowSliderCart(request),
+    },
+    {
+      status: 200,
+      headers,
+    },
+  );
 }
 
 export default function App() {
-  const {cart, showSliderCart} = useLoaderData();
+  const location = useLocation();
+  const {cart, showSliderCart, previewVersion} = useLoaderData();
   const {
     setData: setCartData = () => {},
     data = null,
@@ -144,6 +159,10 @@ export default function App() {
 
     if (showSliderCart) toggleCart(true);
   }, []);
+
+  useEffect(() => {
+    if (previewVersion) updatePreviewVersionURL();
+  }, [location]);
 
   return (
     <RootStructure>
@@ -225,4 +244,21 @@ function checkShowSliderCart(request) {
   const cart = url.searchParams.get('cart');
 
   return cart === 'show';
+}
+
+function togglePreviewVersion(context, url, referer) {
+  const {session} = context;
+  const queryParam = url.searchParams.get('previewVersion');
+
+  if (queryParam === 'true') {
+    session.set('previewVersion', 'true');
+  } else if (!referer) {
+    session.unset('previewVersion');
+  }
+}
+
+function updatePreviewVersionURL() {
+  var newurl =
+    window.origin + window.location.pathname + '?previewVersion=true';
+  window.history.replaceState({path: newurl}, '', newurl);
 }
