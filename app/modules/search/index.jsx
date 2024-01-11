@@ -94,7 +94,7 @@ const Search = ({searchConfig}) => {
         )[0];
       });
 
-      setSearchProducts(filteredProds);
+      setSearchProducts(filteredProds.filter(Boolean));
     }
   }, [state]);
 
