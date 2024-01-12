@@ -745,3 +745,10 @@ export function getIsLocal() {
   }
   return false;
 }
+
+export function pushQueryParam(key, value) {
+  const url = new URL(location.href);
+  url.searchParams.set(key.toString(), value.toString());
+
+  window.history.replaceState(null, null, url.search);
+}

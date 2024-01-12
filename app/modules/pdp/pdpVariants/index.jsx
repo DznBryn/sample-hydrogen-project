@@ -1,11 +1,14 @@
 import {useEffect, useRef} from 'react';
-import {useLayoutEffect} from '~/utils/functions/eventFunctions';
+import {
+  pushQueryParam,
+  useLayoutEffect,
+} from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
 import SavingsBadges, {links as badgesStyles} from '../../badges';
+import {useSearchParams} from '@remix-run/react';
 import classnames from 'classnames';
 
 import styles from './styles.css';
-import {useSearchParams} from '@remix-run/react';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...badgesStyles()];
@@ -621,7 +624,7 @@ const ShadeVariant = ({
 };
 
 function updateSearchParams(id) {
-  window.history.replaceState(null, null, `?variant=${getFormatedID(id)}`);
+  pushQueryParam('variant', getFormatedID(id));
 }
 
 function getFormatedID(id) {

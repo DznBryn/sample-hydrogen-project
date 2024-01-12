@@ -2,6 +2,7 @@ import {
   getCMSContent,
   getCustomerData,
   getMainNavFooterCMSData,
+  pushQueryParam,
 } from './utils/functions/eventFunctions';
 import {
   Links,
@@ -30,9 +31,10 @@ import {links as layoutsStyles} from '~/layouts';
 import favicon from '../public/favicon.ico';
 import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
-import styles from './styles/app.css';
 import {useEffect} from 'react';
 import {getCart} from './utils/graphql/shopify/queries/cart';
+
+import styles from './styles/app.css';
 
 export const links = () => {
   return [
@@ -249,15 +251,15 @@ function checkShowSliderCart(request) {
 function togglePreviewMode(context, url, referer) {
   const {session} = context;
   const queryParam = url.searchParams.get('previewMode');
+  const isSiteFirstRender = !referer;
 
   if (queryParam === 'true') {
     session.set('previewMode', 'true');
-  } else if (!referer) {
+  } else if (isSiteFirstRender) {
     session.unset('previewMode');
   }
 }
 
 function updatePreviewModeURL() {
-  var newurl = window.origin + window.location.pathname + '?previewMode=true';
-  window.history.replaceState({path: newurl}, '', newurl);
+  pushQueryParam('previewMode', 'true');
 }
