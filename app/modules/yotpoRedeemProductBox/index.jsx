@@ -6,13 +6,14 @@ import {
 import AddToCartButton, {
   links as addToCartButtonStyles,
 } from '../addToCartButton';
-import {mockProduct} from './mock';
-import {useStore} from '~/hooks/useStore';
 import styles from './styles.css';
+import {useCustomerState} from '~/hooks/useCostumer';
 
 const getLinkToObj = (slug, product) => {
   return {pathname: `/products/${slug}`, state: {product: product}};
 };
+
+const stringToBeReplacedOnProductVariant = 'gid://shopify/ProductVariant/';
 
 export const links = () => {
   return [
@@ -24,31 +25,28 @@ export const links = () => {
   ];
 };
 
-const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
-  const data = useStore((store) => store?.account?.data ?? null);
-  const isLoggedIn = Boolean(data?.id);
+const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
+  const {isLoggedIn} = useCustomerState();
 
-  const {
-    product,
-    yotpoPointsValue,
-    widgetId,
-    variantId = '',
-    variantName = '',
-  } = yotpoProducts;
-  const {media, alt_title: altTitle, handle: slug, name} = product;
+  const {product, yotpo_points_value, variant_id, variant_name, widget_id} =
+    yotpoProduct;
 
-  const yotpoVariant = product?.variants?.length
-    ? product.variants.find(
-        (variant) => variant.externalId === Number(variantId),
-      )
+  const {images = [], alt_title = '', handle: slug = '', name = ''} = product;
+
+  const yotpoVariant = product?.variants?.nodes.length
+    ? product?.variants.nodes.find((variant) => {
+        const externalId = variant?.id.replace(
+          stringToBeReplacedOnProductVariant,
+          '',
+        );
+
+        return externalId === variant_id;
+      })
     : null;
-  const currentProductName = yotpoVariant ? `${name} - ${variantName}` : name;
+  const currentProductName = yotpoVariant ? `${name} - ${variant_name}` : name;
 
   return (
-    <div
-      className={'redeemProductsSection_plpWrapper'}
-      id={`product-${product?.handle ? product.handle : slug}`}
-    >
+    <div className={'redeemProductsSection_plpWrapper'} id={`product-${slug}`}>
       <div className="redeemProductsSection_container">
         <Link
           className="redeemProductsSection_imageContainer"
@@ -58,8 +56,14 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
         >
           <img
             className="redeemProductsSection_productImage"
-            src={media[0]?.details.src}
-            alt={media[0]?.details?.alt}
+            src={images?.nodes[0]?.url}
+            alt={images?.nodes[0]?.altText}
+          />
+
+          <img
+            className="redeemProductsSection_productImage dinamicImage"
+            src={images?.nodes[1]?.url}
+            alt={images?.nodes[1]?.altText}
           />
         </Link>
 
@@ -70,7 +74,7 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
             prefetch="false"
             onClick={() => triggerAnalyticsProductClick(null)}
           >
-            {altTitle}
+            {alt_title}
           </Link>
 
           <Link
@@ -85,7 +89,7 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
 
         <span className={'redeemProductsSection_yotpoPoints'}>
           <PointsIcon />
-          {yotpoPointsValue.toLocaleString()} points
+          {yotpo_points_value.toLocaleString()} points
         </span>
 
         {isLoggedIn && (
@@ -107,7 +111,7 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
             <span>step two:</span>
             <div
               className="yotpo-widget-instance"
-              data-yotpo-instance-id={widgetId}
+              data-yotpo-instance-id={widget_id.toString()}
             />
           </>
         )}
@@ -119,13 +123,17 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
 export default YotpoRedeemProductBox;
 
 const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
-  const {variants, tags, slug} = product;
-  const hasVariants = variants?.length > 1;
+  const {variants, tags, handle: slug} = product;
+
+  const hasVariants = variants?.nodes?.length > 1;
   const hasYotpoVariant = Boolean(yotpoVariant);
+  const forceSoldOut = product && tags.includes('force_sold_out');
 
   if (hasYotpoVariant) {
     const addYotpoVariantItem = {
-      variantId: yotpoVariant.externalId,
+      variantId: Number(
+        yotpoVariant.id.replace(stringToBeReplacedOnProductVariant, ''),
+      ),
       quantity: 1,
       selling_plan_id: 0,
       product,
@@ -142,17 +150,18 @@ const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
 
   const outOfStock =
     !hasVariants &&
-    (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') ||
-      variants[0]?.quantity < 1);
+    !!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK');
+
   const addItem = outOfStock
     ? {}
     : {
-        variantId: variants[0].externalId,
+        variantId: Number(
+          variants.nodes[0].id.replace(stringToBeReplacedOnProductVariant, ''),
+        ),
         quantity: 1,
         selling_plan_id: 0,
         product,
       };
-  const forceSoldOut = product && tags.includes('force_sold_out');
 
   return hasVariants ? (
     <Link

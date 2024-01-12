@@ -4,7 +4,7 @@
   min-height: 781px;
 }
 
-.referrals * {
+.yotpo-widget-referral-widget .yotpo-screen-friends_emails .yotpo-background.yotpo-right-align-background {
   height: auto !important;
 }
 
