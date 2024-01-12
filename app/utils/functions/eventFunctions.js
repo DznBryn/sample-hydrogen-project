@@ -732,3 +732,23 @@ export async function getCustomerData(context, customerAccessToken) {
 
   return customer;
 }
+
+/**
+ *
+ */
+
+export function getIsLocal() {
+  if (typeof window === 'object') {
+    if (window.location.hostname === 'localhost') {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function pushQueryParam(key, value) {
+  const url = new URL(location.href);
+  url.searchParams.set(key.toString(), value.toString());
+
+  window.history.replaceState(null, null, url.search);
+}
