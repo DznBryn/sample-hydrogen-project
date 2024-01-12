@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {switchSliderPanelVisibility} from '../sliderPanel';
 import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
 import YotpoProductBox, {
@@ -6,13 +6,13 @@ import YotpoProductBox, {
 } from '../yotpoRedeemProductBox';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import styles from './styles.css';
-import {mock} from './mock';
 import {Navigation, Pagination} from 'swiper/modules';
 import {useCustomerState} from '~/hooks/useCostumer';
 
 import swiperStyles from 'swiper/css';
 import swiperNavigationStyles from 'swiper/css/navigation';
 import swiperPaginationStyles from 'swiper/css/pagination';
+import {isArray} from '@apollo/client/utilities';
 
 export const links = () => {
   return [
@@ -41,7 +41,15 @@ export const links = () => {
   ];
 };
 
-const RedeemProductsSection = ({products = mock}) => {
+const RedeemProductsSection = (props) => {
+  const [isProductsLoaded, SetIsProductLoaded] = useState(false);
+
+  useEffect(() => {
+    if (props?.products && isArray(props.products)) {
+      SetIsProductLoaded(true);
+    }
+  }, [props]);
+
   const [buttonDisabled, setButtonDisabled] = useState('prev');
   const navigationNextRef = useRef(null);
   const navigationPrevRef = useRef(null);
@@ -96,13 +104,18 @@ const RedeemProductsSection = ({products = mock}) => {
           },
         }}
       >
-        {products.map((item) => (
-          <SwiperSlide key={item._id}>
-            <div className={'redeemProductItem'}>
-              <YotpoProductBox />
-            </div>
-          </SwiperSlide>
-        ))}
+        {isProductsLoaded
+          ? props?.products.map((item, i) => (
+              <SwiperSlide key={i}>
+                <div className={'redeemProductItem'}>
+                  <YotpoProductBox
+                    yotpoProduct={item}
+                    teste={props?.products}
+                  />
+                </div>
+              </SwiperSlide>
+            ))
+          : null}
       </Swiper>
       <div className={'arrowsContainer'}>
         <button

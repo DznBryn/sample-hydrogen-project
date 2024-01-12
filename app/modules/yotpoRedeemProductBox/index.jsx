@@ -1,12 +1,11 @@
 import {Link} from '@remix-run/react';
 import {
   triggerAnalyticsProductClick,
-  triggerAnalyticsLoyaltyEvents,
+  // triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
-import AddToCartButton, {
-  links as addToCartButtonStyles,
-} from '../addToCartButton';
-import {mockProduct} from './mock';
+// import AddToCartButton, {
+//   links as addToCartButtonStyles,
+// } from '../addToCartButton';
 import {useStore} from '~/hooks/useStore';
 import styles from './styles.css';
 
@@ -20,35 +19,28 @@ export const links = () => {
       rel: 'stylesheet',
       href: styles,
     },
-    ...addToCartButtonStyles(),
+    // ...addToCartButtonStyles(),
   ];
 };
 
-const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
+const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
   const data = useStore((store) => store?.account?.data ?? null);
   const isLoggedIn = Boolean(data?.id);
 
-  const {
-    product,
-    yotpoPointsValue,
-    widgetId,
-    variantId = '',
-    variantName = '',
-  } = yotpoProducts;
-  const {media, alt_title: altTitle, handle: slug, name} = product;
+  const {product, yotpo_points_value, variant_id, variant_name, widget_id} =
+    yotpoProduct;
+
+  const {images = [], alt_title = '', handle: slug = '', name = ''} = product;
 
   const yotpoVariant = product?.variants?.length
-    ? product.variants.find(
-        (variant) => variant.externalId === Number(variantId),
+    ? product?.variants.find(
+        (variant) => variant.externalId === Number(variant_id),
       )
     : null;
-  const currentProductName = yotpoVariant ? `${name} - ${variantName}` : name;
+  const currentProductName = yotpoVariant ? `${name} - ${variant_name}` : name;
 
   return (
-    <div
-      className={'redeemProductsSection_plpWrapper'}
-      id={`product-${product?.handle ? product.handle : slug}`}
-    >
+    <div className={'redeemProductsSection_plpWrapper'} id={`product-${slug}`}>
       <div className="redeemProductsSection_container">
         <Link
           className="redeemProductsSection_imageContainer"
@@ -58,8 +50,14 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
         >
           <img
             className="redeemProductsSection_productImage"
-            src={media[0]?.details.src}
-            alt={media[0]?.details?.alt}
+            src={images?.nodes[0]?.url}
+            alt={images?.nodes[0]?.altText}
+          />
+
+          <img
+            className="redeemProductsSection_productImage dinamicImage"
+            src={images?.nodes[1]?.url}
+            alt={images?.nodes[1]?.altText}
           />
         </Link>
 
@@ -70,7 +68,7 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
             prefetch="false"
             onClick={() => triggerAnalyticsProductClick(null)}
           >
-            {altTitle}
+            {alt_title}
           </Link>
 
           <Link
@@ -85,7 +83,7 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
 
         <span className={'redeemProductsSection_yotpoPoints'}>
           <PointsIcon />
-          {yotpoPointsValue.toLocaleString()} points
+          {yotpo_points_value.toLocaleString()} points
         </span>
 
         {isLoggedIn && (
@@ -93,7 +91,7 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
             <span>step one:</span>
 
             <div className="redeemProductsSection_ctaContainer">
-              <Button
+              {/* <Button
                 className="redeemProductsSection_productButton"
                 product={product}
                 analytics={null}
@@ -102,12 +100,12 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
                 onClick={() => {
                   triggerAnalyticsLoyaltyEvents('AddToCart', {source: null});
                 }}
-              />
+              /> */}
             </div>
             <span>step two:</span>
             <div
               className="yotpo-widget-instance"
-              data-yotpo-instance-id={widgetId}
+              data-yotpo-instance-id={widget_id}
             />
           </>
         )}
@@ -118,55 +116,55 @@ const YotpoRedeemProductBox = ({yotpoProducts = mockProduct}) => {
 
 export default YotpoRedeemProductBox;
 
-const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
-  const {variants, tags, slug} = product;
-  const hasVariants = variants?.length > 1;
-  const hasYotpoVariant = Boolean(yotpoVariant);
+// const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
+//   const {variants, tags, slug} = product;
+//   const hasVariants = variants?.length > 1;
+//   const hasYotpoVariant = Boolean(yotpoVariant);
 
-  if (hasYotpoVariant) {
-    const addYotpoVariantItem = {
-      variantId: yotpoVariant.externalId,
-      quantity: 1,
-      selling_plan_id: 0,
-      product,
-    };
+//   if (hasYotpoVariant) {
+//     const addYotpoVariantItem = {
+//       variantId: yotpoVariant.externalId,
+//       quantity: 1,
+//       selling_plan_id: 0,
+//       product,
+//     };
 
-    return (
-      <AddToCartButton
-        addItem={addYotpoVariantItem}
-        forceSoldOut={forceSoldOut}
-        {...rest}
-      />
-    );
-  }
+//     return (
+//       <AddToCartButton
+//         addItem={addYotpoVariantItem}
+//         forceSoldOut={forceSoldOut}
+//         {...rest}
+//       />
+//     );
+//   }
 
-  const outOfStock =
-    !hasVariants &&
-    (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') ||
-      variants[0]?.quantity < 1);
-  const addItem = outOfStock
-    ? {}
-    : {
-        variantId: variants[0].externalId,
-        quantity: 1,
-        selling_plan_id: 0,
-        product,
-      };
-  const forceSoldOut = product && tags.includes('force_sold_out');
+//   const outOfStock =
+//     !hasVariants &&
+//     (!!tags?.find((tag) => tag?.toUpperCase() === 'OUT_OF_STOCK') ||
+//       variants[0]?.quantity < 1);
+//   const addItem = outOfStock
+//     ? {}
+//     : {
+//         variantId: variants[0].externalId,
+//         quantity: 1,
+//         selling_plan_id: 0,
+//         product,
+//       };
+//   const forceSoldOut = product && tags.includes('force_sold_out');
 
-  return hasVariants ? (
-    <Link
-      prefetch={false}
-      target={opensBlank ? '_blank' : '_self'}
-      to={getLinkToObj(slug, product)}
-      {...rest}
-    >
-      Shop Options
-    </Link>
-  ) : (
-    <AddToCartButton addItem={addItem} forceSoldOut={forceSoldOut} {...rest} />
-  );
-};
+//   return hasVariants ? (
+//     <Link
+//       prefetch={false}
+//       target={opensBlank ? '_blank' : '_self'}
+//       to={getLinkToObj(slug, product)}
+//       {...rest}
+//     >
+//       Shop Options
+//     </Link>
+//   ) : (
+//     <AddToCartButton addItem={addItem} forceSoldOut={forceSoldOut} {...rest} />
+//   );
+// };
 
 const PointsIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width={13} height={13} fill="none">
