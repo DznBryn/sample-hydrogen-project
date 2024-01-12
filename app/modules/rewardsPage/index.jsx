@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useCollection} from '~/hooks/useCollection';
 import {useCustomerState} from '~/hooks/useCostumer';
 
@@ -43,20 +43,30 @@ export const links = () => {
 const RewardsPage = ({context, yotpoFaq}) => {
   const {isLoggedIn} = useCustomerState();
   const {state, products} = useCollection('all');
+  const [data, setData] = useState({});
 
   function handleGetProductByID(_productId) {
-    const product = products.find((prod) => prod.handle === _productId);
+    const product = products?.find((prod) => prod.handle === _productId);
     return product;
   }
 
   useEffect(() => {
     if (state === 'loaded') {
-      const productData = handleGetProductByID(
-        context[0]?.products[0]?.productId,
-      );
+      const productData =
+        context &&
+        context?.map((product) => {
+          const productWithDetails = handleGetProductByID(
+            product?.products[0]?.productId,
+          );
 
-      delete context[0].products;
-      context[0].products = productData;
+          delete product.products;
+
+          product.product = productWithDetails;
+
+          return product;
+        });
+
+      setData(productData);
     }
   }, [state]);
 
@@ -116,7 +126,7 @@ const RewardsPage = ({context, yotpoFaq}) => {
                   Must be redeemed with purchase.
                 </small>
               </div>
-              {context ? <RedeemProductsSection products={context} /> : null}
+              {context && <RedeemProductsSection products={data} />}
             </div>
           </div>
           <div className={'content__container'}>
@@ -140,8 +150,8 @@ const RewardsPage = ({context, yotpoFaq}) => {
         ></div>
       </LoadingSkeleton>
       {isLoggedIn ? (
-        <div className={'wrapper'}>
-          <div className={'container'}>
+        <div className={'wrapper_rewards_page'}>
+          <div className={'container_rewards_page'}>
             <LoadingSkeleton minHeight={300}>
               <div
                 className={'yotpo-widget-instance '}
