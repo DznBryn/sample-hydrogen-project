@@ -31,7 +31,12 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
   const {product, yotpo_points_value, variant_id, variant_name, widget_id} =
     yotpoProduct;
 
-  const {images = [], alt_title = '', handle: slug = '', name = ''} = product;
+  const {
+    images = {},
+    alt_title = '',
+    handle: slug = '',
+    name = '',
+  } = product || {};
 
   const yotpoVariant = product?.variants?.nodes.length
     ? product?.variants.nodes.find((variant) => {
@@ -54,17 +59,21 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
           prefetch="false"
           onClick={() => triggerAnalyticsProductClick(null)}
         >
-          <img
-            className="redeemProductsSection_productImage"
-            src={images?.nodes[0]?.url}
-            alt={images?.nodes[0]?.altText}
-          />
+          {images?.nodes ? (
+            <>
+              <img
+                className="redeemProductsSection_productImage"
+                src={images?.nodes[0]?.url}
+                alt={images?.nodes[0]?.altText}
+              />
 
-          <img
-            className="redeemProductsSection_productImage dinamicImage"
-            src={images?.nodes[1]?.url}
-            alt={images?.nodes[1]?.altText}
-          />
+              <img
+                className="redeemProductsSection_productImage dinamicImage"
+                src={images?.nodes[1]?.url}
+                alt={images?.nodes[1]?.altText}
+              />
+            </>
+          ) : null}
         </Link>
 
         <div className="redeemProductsSection_infoContainer">
