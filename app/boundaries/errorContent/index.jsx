@@ -1,9 +1,8 @@
-import {Suspense} from 'react';
 import Layouts from '~/layouts';
+import {links as listrakRecStyles} from '~/modules/listrakRec';
+import {getIsLocal} from '~/utils/functions/eventFunctions';
+
 import styles from './styles.css';
-import ListrakRec, {links as listrakRecStyles} from '~/modules/listrakRec';
-import {Await, useMatches} from '@remix-run/react';
-import {getCMSDoc} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...listrakRecStyles()];
@@ -12,15 +11,24 @@ export const links = () => {
 let notThrowed = true;
 
 export default function ErrorContent({error}) {
-  const [root] = useMatches();
+  const isLocal = getIsLocal();
 
   if (notThrowed) {
     // eslint-disable-next-line no-console
     console.error(error);
+    // eslint-disable-next-line no-console
+    console.log(error);
     notThrowed = false;
   }
 
-  return (
+  return isLocal ? (
+    <div className={'errorMessage'}>
+      <h6>More details in console.</h6>
+      <code>
+        {new Error(error).stack.replaceAll(' at', '\n\u00A0 \u00A0 at')}
+      </code>
+    </div>
+  ) : (
     <Layouts.MainNavFooter>
       <div className={'errorPage'}>
         <h2>oops, something&apos;s gone wrong!</h2>
@@ -48,13 +56,6 @@ export default function ErrorContent({error}) {
           </button>
         </form>
       </div>
-      <Suspense>
-        <Await resolve={root.data.listrakRec}>
-          {(listrakRec) => (
-            <ListrakRec listrak={getCMSDoc(listrakRec, '404')} />
-          )}
-        </Await>
-      </Suspense>
     </Layouts.MainNavFooter>
   );
 }

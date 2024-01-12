@@ -12,7 +12,7 @@
   font-family: Lato-Tula, sans-serif;
   font-weight: 400;
   letter-spacing: 2px;
-  margin: 0 0 .5em;
+  margin: 0 0 0.5em;
   line-height: 1.4;
   text-transform: uppercase;
 }
@@ -63,7 +63,7 @@
   padding: 7px 15px;
   border: 1px solid #c9cacc;
   border-left: 0;
-  transition: background .3s, color .3s, border ease-in-out;
+  transition: background 0.3s, color 0.3s, border ease-in-out;
 }
 
 .searchButton:hover {
@@ -79,4 +79,19 @@
   margin-right: 9px;
   margin-top: 4px;
   fill: #48c6d9;
+}
+
+.errorMessage {
+  width: 100%;
+  padding: 25px;
+
+  code {
+    display: block;
+    white-space: pre-line;
+    border: solid 1px red;
+    width: 100%;
+    background-color: rgb(247, 196, 196);
+    color: red;
+    padding: 15px;
+  }
 }

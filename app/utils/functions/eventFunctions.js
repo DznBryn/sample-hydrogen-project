@@ -732,3 +732,16 @@ export async function getCustomerData(context, customerAccessToken) {
 
   return customer;
 }
+
+/**
+ *
+ */
+
+export function getIsLocal() {
+  if (typeof window === 'object') {
+    if (window.location.hostname === 'localhost') {
+      return true;
+    }
+  }
+  return false;
+}
