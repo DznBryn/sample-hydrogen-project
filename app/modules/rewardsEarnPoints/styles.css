@@ -223,12 +223,18 @@
 .earn_points_cta__container .yotpo-widget-campaign-widget-container {
   padding: 0 !important;
 }
-.earn_points_cta__container .yotpo-container-headline {
-  display: none !important;
-}
-.earn_points_cta__container .yotpo-widget-campaign-widget .flexified-wrapper {
+
+.yotpo-widget-campaign-widget .flexified-wrapper {
   padding: 0 !important;
   width: 100% !important;
+}
+
+.yotpo-container-headline::before {
+  display: none !important;
+}
+
+.yotpo-widget-campaign-widget-container .yotpo-container-headline {
+  padding: 0 !important;
 }
 
 .carousel-container {

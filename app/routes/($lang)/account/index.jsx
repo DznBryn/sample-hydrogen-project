@@ -10,6 +10,11 @@ import {
   getAddresses,
   getCustomer,
 } from '~/utils/graphql/shopify/queries/customer';
+import {getCMSContent} from '~/utils/functions/eventFunctions';
+import {
+  GET_REWARDS_PRODUCT_CONTENT,
+  GET_REWARDS_FAQ_CONTENT,
+} from '~/utils/graphql/sanity/queries';
 import Layouts from '~/layouts';
 import Account, {links as accountStyles} from '~/modules/accounts';
 import {useStore} from '~/hooks/useStore';
@@ -365,6 +370,11 @@ export async function loader({request, context, params}) {
   let subscriptionOrders = {};
   let subscriptionAddresses = {};
 
+  const [yotpoProducts, faqContent] = await Promise.all([
+    getCMSContent(context, GET_REWARDS_PRODUCT_CONTENT),
+    getCMSContent(context, GET_REWARDS_FAQ_CONTENT),
+  ]);
+
   if (customerId) {
     activeSubscription = await getCustomerSubscription(customerId, true);
     inactiveSubscription = await getCustomerSubscription(customerId);
@@ -381,6 +391,8 @@ export async function loader({request, context, params}) {
       subscriptionOrders,
       subscriptionAddresses,
       products,
+      faqContent,
+      yotpoProducts,
     },
     {
       headers: {
@@ -397,7 +409,10 @@ export default function AccountPage() {
     inactiveSubscription,
     subscriptionOrders,
     subscriptionAddresses,
+    faqContent,
+    yotpoProducts,
   } = useLoaderData();
+
   const {data, setCustomerData} = useStore((store) => store?.account);
 
   useEffect(() => {
@@ -415,7 +430,7 @@ export default function AccountPage() {
 
   return (
     <Layouts.MainNavFooter>
-      <Account />
+      <Account yotpoFaq={faqContent} yotpoProducts={yotpoProducts} />
     </Layouts.MainNavFooter>
   );
 }
