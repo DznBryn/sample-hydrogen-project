@@ -22,6 +22,8 @@ import RewardChooseYourRewards, {
   links as rewardChooseYourRewards,
 } from '../rewardChooseYourRewards';
 
+import {handleGetProductByID} from '~/utils/functions/eventFunctions';
+
 import styles from './styles.css';
 
 export const links = () => {
@@ -45,11 +47,6 @@ const RewardsPage = ({context, yotpoFaq}) => {
   const {state, products} = useCollection('all');
   const [data, setData] = useState({});
 
-  function handleGetProductByID(_productId) {
-    const product = products?.find((prod) => prod.handle === _productId);
-    return product;
-  }
-
   useEffect(() => {
     if (state === 'loaded') {
       const productData =
@@ -57,6 +54,7 @@ const RewardsPage = ({context, yotpoFaq}) => {
         context?.map((product) => {
           const productWithDetails = handleGetProductByID(
             product?.products[0]?.productId,
+            products,
           );
 
           delete product.products;
@@ -173,7 +171,7 @@ const RewardsPage = ({context, yotpoFaq}) => {
                   Redeem with your next purchase.
                 </p>
               </div>
-              {context ? <RedeemProductsSection products={context} /> : null}
+              {context && <RedeemProductsSection products={data} />}
             </div>
           </div>
           <div id={'redemption__wrapper'} className={'content__container'}>
