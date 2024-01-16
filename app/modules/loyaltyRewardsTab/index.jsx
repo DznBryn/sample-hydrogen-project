@@ -1,6 +1,4 @@
-import {useState, useEffect} from 'react';
-import {useYotpo} from '~/hooks/useYotpo';
-
+import {useState} from 'react';
 import styles from './styles.css';
 
 export const links = () => {
@@ -12,12 +10,7 @@ export const links = () => {
   ];
 };
 const RewardsFAQSection = ({yotpoFAQ}) => {
-  const {refreshWidgets} = useYotpo();
   const [activeIndex, setActiveIndex] = useState();
-
-  useEffect(() => {
-    refreshWidgets();
-  }, []);
 
   const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
     return (
