@@ -142,6 +142,11 @@ export function getProductMetafield(product = {}, key = '') {
   );
 }
 
+export function handleGetProductByID(_productId, products) {
+  const product = products?.find((prod) => prod.handle === _productId);
+  return product;
+}
+
 export function handleProductMetafieldData(
   product = {},
   key = '',
