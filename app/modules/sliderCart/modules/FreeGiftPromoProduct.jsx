@@ -1,22 +1,36 @@
-import { UnlockedIcon, LockedIcon } from '../../icons';
-import { getCurrency } from '../../../utils/functions/eventFunctions';
+import {UnlockedIcon, LockedIcon} from '../../icons';
+import {getCurrency} from '../../../utils/functions/eventFunctions';
+import {Image, flattenConnection} from '@shopify/hydrogen';
 
 const FreeGiftPromoProduct = ({
   product,
   isMystery,
-  // anonymousImageSrc,
+  anonymousImageSrc,
   active,
   productPrice,
 }) => {
-  // const IMG_SRC = isMystery ? anonymousImageSrc : product.media[0].details.src;
-  
+  const shopifyProductImages = product?.images
+    ? flattenConnection(product.images)
+    : [];
+  const Img =
+    isMystery && anonymousImageSrc?.asset ? (
+      <img
+        src={anonymousImageSrc?.asset?.url}
+        alt={anonymousImageSrc?.asset?.altText ?? 'Mystery gift'}
+        sizes="(min-width: 45em) 50vw, 100vw"
+      />
+    ) : (
+      <Image
+        className="productImage"
+        data={shopifyProductImages?.[0]}
+        sizes="(min-width: 45em) 50vw, 100vw"
+        aspectRatio="1/1"
+      />
+    );
+
   return (
-    <div
-      className={['freeGiftPromo', active ? '' : 'disabled'].join(
-        ' ',
-      )}
-    >
-      {/* <ResponsiveImage src={IMG_SRC} /> */}
+    <div className={['freeGiftPromo', active ? '' : 'disabled'].join(' ')}>
+      {Img}
       <div className={'info'}>
         <div className={'badge'}>
           {active ? (

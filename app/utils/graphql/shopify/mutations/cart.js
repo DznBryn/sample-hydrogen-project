@@ -171,6 +171,7 @@ export const REMOVE_LINE_ITEMS_MUTATION = `#graphql
                     handle
                     title
                     id
+                    tags
                   }
                   selectedOptions {
                     name
@@ -260,6 +261,7 @@ export const UPDATE_LINE_ITEMS_MUTATION = `#graphql
                     handle
                     title
                     id
+                    tags
                   }
                   selectedOptions {
                     name

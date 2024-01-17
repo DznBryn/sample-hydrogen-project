@@ -118,7 +118,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
 export default HeaderIcons;
 
 const AccIcon = () => {
-  const {id: customerId = ''} = useStore((store) => store?.account?.data ?? {});
+  const {id: customerId} = useStore((store) => store?.account?.data ?? {});
 
   return (
     <div

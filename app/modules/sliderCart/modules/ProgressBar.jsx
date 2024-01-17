@@ -1,10 +1,12 @@
+import {flattenConnection} from '@shopify/hydrogen';
 import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {isFreeGitPromoActivate} from '../utils';
 
 let initState = 0;
 
-const ProgressBar = ({cart, items, cartConfig}) => {
+const ProgressBar = ({cart, cartConfig}) => {
   let cartTotal = cart?.cost?.subtotalAmount?.amount ?? 0;
+  const items = cart?.lines ? flattenConnection(cart.lines) : [];
   let progressMsg = null;
   let progressMsgFreeGift = null;
   let leftTillFree = 0;

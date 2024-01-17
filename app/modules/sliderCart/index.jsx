@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {
   convertStorefrontIdToExternalId,
   getLoyaltyCustomerData,
+  isAutoDeliveryInCart,
+  updateListrakCart,
 } from '../../utils/functions/eventFunctions';
-import {isFreeGitPromoActivate} from './utils/index';
+import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
 import {useCartActions} from '../../hooks/useCart';
 import {useCustomerState} from '../../hooks/useCostumer';
 import {PortableText} from '@portabletext/react';
@@ -17,7 +19,6 @@ import Checkout from './modules/Checkout';
 import LoyaltyTooltipModal from './modules/LoyaltyTooltipModal';
 import FreeGiftPromoProduct from './modules/FreeGiftPromoProduct';
 import {GearIcon} from '../icons/index';
-import {mockCartConfig, mockProductRecs} from '../../utils/functions/mocks';
 import {useStore} from '~/hooks/useStore';
 import SliderCartRec, {links as sliderCartRecStyles} from './sliderCartRec';
 import SliderCartProductBox, {
@@ -40,16 +41,10 @@ export const links = () => {
 
 const apiType = getApiKeys().API_TYPE;
 
-// let prevState = null;
+let prevState = null;
 
-const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
-  const cartConfig = cartPageConfig?.emptyCartMessage
-    ? cartPageConfig
-    : mockCartConfig;
-  const productRecList = productRecs?.productList
-    ? productRecs
-    : mockProductRecs;
-
+const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
+  const productRecList = recommendations;
   const cart = useStore((store) => store?.cart?.data ?? {});
   const [items, setItems] = useState(null);
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
@@ -101,13 +96,14 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
         window.unlockABTasty();
       }
     }
-
-    const isGWPPromoToggleOn = isFreeGitPromoActivate(cartConfig);
-
-    if (cart?.totalQuantity && isGWPPromoToggleOn) checkGWPThreshold();
   }, [cart?.totalQuantity]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const isGWPPromoToggleOn = isFreeGitPromoActivate(cartConfig);
+    if (cart?.totalQuantity && isGWPPromoToggleOn) checkGWPThreshold();
+  }, JSON.stringify(cart?.lines));
+
+  useEffect(() => {
     if (
       items?.some((item) => {
         return item?.sellingPlanAllocation?.sellingPlan;
@@ -119,7 +115,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
 
       let totalCartWithoutDiscount = 0;
 
-      const ADdiscount = Number(cartPageConfig?.autoDeliveryDiscount ?? 0);
+      const ADdiscount = Number(cartConfig?.autoDeliveryDiscount ?? 0);
       const ADPointsBonus = autoDeliveryItems?.length * 300;
 
       for (let item of items) {
@@ -145,6 +141,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
   }, [cart?.totalQuantity]);
 
   function checkGWPThreshold() {
+    const items = cart?.lines ? flattenConnection(cart.lines) : [];
     const GWP_THRESHOLD = cartConfig.freeGiftPromoThreshold;
 
     if (getTotalValueOnCart() >= GWP_THRESHOLD) {
@@ -190,7 +187,7 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
       }
 
       function getADSum(obj) {
-        const AD_DISCOUNT = Number(cartPageConfig?.autoDeliveryDiscount || 0);
+        const AD_DISCOUNT = Number(cartConfig?.autoDeliveryDiscount || 0);
         return parseFloat(
           obj
             .reduce(
@@ -247,15 +244,12 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
   };
 
   productRecList.productList = productRecList.productList.filter((product) => {
+    const variants = product?.variants
+      ? flattenConnection(product.variants)
+      : [];
     for (let it = 0; it < items?.length; it++) {
-      if (apiType === 'graphql') {
-        if (product.variants[0].storefrontId === items[it].variant.product.id) {
-          return false;
-        }
-      } else {
-        if (product.variants[0].externalId === items[it].id) {
-          return false;
-        }
+      if (variants?.[0]?.id === items[it].id) {
+        return false;
       }
     }
     return true;
@@ -275,38 +269,46 @@ const SliderCart = ({cartPageConfig, productRecs, products, ...props}) => {
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (status === 'loaded' || status === 'error') {
       getCustomerData();
     }
   }, [status]);
 
-  // if (prevState === null && items?.length > 0) {
-  //   prevState = items;
+  if (prevState === null && items?.length > 0) {
+    prevState = cart?.lines ? flattenConnection(cart.lines) : items;
 
-  //   updateListrakCartGraphQL(cart.id, cart.checkoutUrl);
-  // }
+    updateListrakCart(
+      items,
+      cart.id,
+      cart.checkoutUrl,
+      isAutoDeliveryInCart(items),
+    );
+  }
 
-  // if (items?.length !== 0) {
-  //   if (prevState !== null) {
-  //     if (items?.length === 0 && prevState.length > 0) {
-  //       if (typeof _ltk !== 'undefined') {
-  //         _ltk?.SCA?.ClearCart();
-  //       }
-  //     } else {
-  //       updateListrakCartGraphQL(cart.id, cart.checkoutUrl);
-
-  //       prevState = items;
-  //     }
-  //   }
-  // }
+  if (prevState !== null && compareItemsState(items, prevState)) {
+    if (items.length === 0 && prevState.length > 0) {
+      if (typeof _ltk !== 'undefined') {
+        // eslint-disable-next-line no-undef
+        _ltk.SCA.ClearCart();
+      }
+    } else {
+      updateListrakCart(
+        items,
+        cart.id,
+        cart.checkoutUrl,
+        isAutoDeliveryInCart(items),
+      );
+      prevState = items;
+    }
+  }
 
   useEffect(() => {}, [isSliderCartOpen]);
   const cartContentProps = {
     cart,
     items,
     cartConfig,
-    productRecs,
+    productRecs: recommendations,
     carbonOffsetItem,
     quantity: getTotalItemsOnCart(),
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
@@ -351,10 +353,8 @@ const CartContent = ({
   const account = useStore((store) => store?.account?.data ?? {});
   const cart = useStore((store) => store?.cart?.data ?? {});
   const totalCart = Number(cart?.cost?.subtotalAmount?.amount ?? 0);
-  const productRecList = productRecs?.productList
-    ? productRecs
-    : mockProductRecs;
-  const {isLoggedIn} = useCustomerState();
+  const productRecList = productRecs;
+
   function toggleModal() {
     setShowModal(!showModal);
   }
@@ -363,6 +363,7 @@ const CartContent = ({
     items,
     cartConfig,
     carbonOffsetItem,
+    productRecList,
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
     ...props,
   };
@@ -370,7 +371,7 @@ const CartContent = ({
   const emptyCartProps = {
     cartConfig,
     handleClick,
-    isLoggedIn,
+    isLoggedIn: account?.id !== '',
     productRecList,
   };
 
@@ -386,7 +387,7 @@ const CartContent = ({
       </div>
 
       {!hasOnlyGiftCards() && (
-        <ProgressBar cart={cart} items={items} cartConfig={cartConfig} />
+        <ProgressBar cart={cart} cartConfig={cartConfig} />
       )}
 
       {cartConfig?.showTemporaryWarn && (
@@ -465,7 +466,13 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => (
   </>
 );
 
-const ItemsList = ({cartConfig, setLoading, products, ...props}) => {
+const ItemsList = ({
+  cartConfig,
+  setLoading,
+  products,
+  productRecList,
+  ...props
+}) => {
   const cart = useStore((store) => store?.cart?.data ?? {});
   const items = cart?.lines ? flattenConnection(cart?.lines) : [];
   const getRecItemsLimit = () => {
@@ -624,29 +631,24 @@ const ItemsList = ({cartConfig, setLoading, products, ...props}) => {
 
       {isFreeGitPromoActivate(cartConfig) &&
         !props?.hasOnlyGiftCards() &&
-        products.products
-          .filter(
-            (product) =>
-              product.externalId.toString() ===
-              cartConfig?.freeGiftPromoProductExternalID,
-          )
-          .map((data, index) => (
-            <FreeGiftPromoProduct
-              key={index}
-              product={data}
-              isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
-              anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage.src}
-              productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
-              active={shouldActivateFreeGift()}
-            />
-          ))}
-
+        products.products.find((product) =>
+          product.id.includes(cartConfig.freeGiftPromoProductExternalID),
+        ) && (
+          <FreeGiftPromoProduct
+            product={products.products.find((product) =>
+              product.id.includes(cartConfig.freeGiftPromoProductExternalID),
+            )}
+            isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
+            anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage}
+            productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
+            active={shouldActivateFreeGift()}
+          />
+        )}
       <SliderCartRec
-        productRecs={props?.productRecList}
+        productRecs={productRecList}
         limit={getRecItemsLimit()}
         gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
       />
-
       {getApiKeys().CURRENT_ENV.includes('US') && (
         <div className={'discount'}>
           *300 rewards points applicable for every new Auto Delivery

@@ -57,6 +57,16 @@ export const action = async ({request, context}) => {
     return {
       data,
     };
+  } else if (
+    formData.get(SIGN_IN_EMAIL) === '' ||
+    !formData.get(SIGN_IN_EMAIL)
+  ) {
+    errorMessage = 'Please enter an email.';
+  } else if (
+    formData.get(SIGN_IN_PASSWORD) === '' ||
+    !formData.get(SIGN_IN_PASSWORD)
+  ) {
+    errorMessage = 'Please enter a password.';
   } else {
     errorMessage = 'Email and password are required.';
   }
@@ -76,9 +86,8 @@ export const action = async ({request, context}) => {
       });
     }
     return json({message: 'Success', status: 200});
-  } else {
-    errorMessage = 'Email is required.';
   }
+
   return json({message: errorMessage, status: 400});
 };
 
