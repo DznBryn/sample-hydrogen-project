@@ -23,10 +23,12 @@ export function links() {
   ];
 }
 
-export default function Account() {
+export default function Account(props) {
   const {data} = useStore((store) => store.account);
 
   const {id} = data;
+
+  data.yotpoFAQ = props?.yotpoFaq[0].yotpoQuestions || null;
 
   return id !== '' ? (
     <div className={'fullWidth minHeight'}>
@@ -68,6 +70,7 @@ function Tabs({data}) {
 
   useEffect(() => {
     checkURLQuerys();
+    refreshWidgets();
   }, []);
 
   function checkURLQuerys() {
@@ -84,13 +87,13 @@ function Tabs({data}) {
     const urlTogo = Object.entries(tabsID).filter(
       ([key, value]) => value === tab,
     )[0];
-    if (urlTogo)
-      window.history.pushState('tab', '', `/account?c=${urlTogo[0]}`);
+
+    if (urlTogo);
+    window.history.pushState('tab', '', `/account?c=${urlTogo[0]}`);
   }
 
   function handleActiveTab(tab) {
     setActive(tab);
-    refreshWidgets();
     setURLQuery(tab);
   }
 
@@ -149,10 +152,18 @@ function Tabs({data}) {
           active={active}
         />
       ) : null}
-      {active === 2 ? <OrderHistory /> : null}
-      {active === 3 ? <ReferralWidget /> : null}
-      {showAddressTab && active === 4 ? <Addresses /> : null}
-      {active === 5 ? <LoyaltyRewardsTab /> : null}
+      <div style={{display: active === 2 ? 'flex' : 'none'}}>
+        <OrderHistory />
+      </div>
+      <div style={{display: active === 3 ? 'flex' : 'none'}}>
+        <ReferralWidget />
+      </div>
+      <div style={{display: showAddressTab && active === 4 ? 'flex' : 'none'}}>
+        <Addresses />
+      </div>
+      <div style={{display: active === 5 ? 'block' : 'none'}}>
+        <LoyaltyRewardsTab yotpoFAQ={data?.yotpoFAQ} />
+      </div>
     </div>
   );
 }

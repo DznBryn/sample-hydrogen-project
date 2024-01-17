@@ -98,7 +98,7 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
 
         <span className={'redeemProductsSection_yotpoPoints'}>
           <PointsIcon />
-          {yotpo_points_value.toLocaleString()} points
+          {yotpo_points_value?.toLocaleString()} points
         </span>
 
         {isLoggedIn && (
@@ -120,7 +120,7 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
             <span>step two:</span>
             <div
               className="yotpo-widget-instance"
-              data-yotpo-instance-id={widget_id.toString()}
+              data-yotpo-instance-id={widget_id?.toString()}
             />
           </>
         )}
@@ -132,7 +132,7 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
 export default YotpoRedeemProductBox;
 
 const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
-  const {variants, tags, handle: slug} = product;
+  const {variants, tags, handle: slug} = product || {};
 
   const hasVariants = variants?.nodes?.length > 1;
   const hasYotpoVariant = Boolean(yotpoVariant);
@@ -165,7 +165,10 @@ const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
     ? {}
     : {
         variantId: Number(
-          variants.nodes[0].id.replace(stringToBeReplacedOnProductVariant, ''),
+          variants?.nodes[0]?.id.replace(
+            stringToBeReplacedOnProductVariant,
+            '',
+          ),
         ),
         quantity: 1,
         selling_plan_id: 0,

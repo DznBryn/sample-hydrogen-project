@@ -4,17 +4,14 @@ import {useYotpo} from '~/hooks/useYotpo';
 import classNames from 'classnames/bind';
 import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
-import RedeemProductsSection, {
-  links as redeemProductsSectionStyles,
-} from '~/modules/redeemProductsSection';
-import {mock} from '~/modules/redeemProductsSection/mock';
+import {links as redeemProductsSectionStyles} from '~/modules/redeemProductsSection';
 import {brandLogos} from '~/modules/rewardsEarnPoints';
 
 const MOCK_QUESTION_LIST = [
-  {question: 'Question #1', answer: 'Answer #1 '},
-  {question: 'Question #2', answer: 'Answer #2'},
-  {question: 'Question #3', answer: 'Answer #3'},
-  {question: 'Question #4', answer: 'Answer #4'},
+  {questions: 'Question #1', answers: 'Answer #1 '},
+  {questions: 'Question #2', answers: 'Answer #2'},
+  {questions: 'Question #3', answers: 'Answer #3'},
+  {questions: 'Question #4', answers: 'Answer #4'},
 ];
 
 export function links() {
@@ -38,10 +35,7 @@ const Slider = () => (
   </div>
 );
 
-const LoyaltyRewardsTab = ({
-  products = mock,
-  yotpoFAQ = MOCK_QUESTION_LIST,
-}) => {
+const LoyaltyRewardsTab = ({yotpoFAQ = MOCK_QUESTION_LIST}) => {
   const data = useStore((store) => store?.account?.data ?? null);
   const {refreshWidgets} = useYotpo();
   const isLoggedIn =
@@ -65,7 +59,7 @@ const LoyaltyRewardsTab = ({
           upload a receipt
         </a>
       )}
-      <RedeemProductList products={products} />
+      {/* <RedeemProductList products={yotpoProducts} /> */}
 
       <div className="yotpo-widget-instance" data-yotpo-instance-id="295798" />
 
@@ -98,7 +92,7 @@ const LoyaltyRewardsTab = ({
   );
 };
 
-export const RedeemProductList = ({products = null}) => (
+export const RedeemProductList = () => (
   <div className={'redeemSectionContainer'}>
     <h1>your available rewards</h1>
     <div className={'faq__divider'} />
@@ -110,7 +104,7 @@ export const RedeemProductList = ({products = null}) => (
       <span>Must be redeemed with purchase.</span>
     </p>
 
-    <RedeemProductsSection products={products} />
+    {/* <RedeemProductsSection products={products} /> */}
   </div>
 );
 
@@ -118,14 +112,14 @@ const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
   const cx = classNames.bind(styles);
 
   return (
-    <div key={item.question}>
+    <div key={item.questions}>
       <dt>
         <button
           aria-expanded={ariaExpanded}
           className={'faq__questionButton'}
           onClick={onClick}
         >
-          <span>{item.question}</span>
+          <span>{item.questions}</span>
           <span
             className={cx(
               'faq__questionCloseButton',
@@ -144,7 +138,7 @@ const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
           )}
         >
           <div className={'faq__divider'} />
-          <p dangerouslySetInnerHTML={{__html: item.answer}} />
+          <p dangerouslySetInnerHTML={{__html: item.answers}} />
         </div>
       </dd>
     </div>
