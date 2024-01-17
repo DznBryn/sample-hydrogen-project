@@ -601,8 +601,21 @@ export const GET_CART_PAGE_CONFIG = gql`
       freeGiftPromoProductPrice
       freeGiftPromoIsMisteryProductToggle
       freeGiftPromoMysteryImage {
+        _key
+        _type
         asset {
-          _id
+          originalFilename
+          label
+          title
+          description
+          altText
+          sha1hash
+          extension
+          mimeType
+          size
+          assetId
+          uploadId
+          path
           url
         }
       }
@@ -1839,6 +1852,22 @@ export const QUIZ_CONTENT = gql`
             type
           }
         }
+      }
+    }
+  }
+`;
+
+export const PRODUCT_RECOMMENDATIONS = gql`
+  query ProductRecommendation($id: ID!) {
+    ProductRecommendation(id: $id) {
+      title
+      name
+      Products {
+        _id
+        name
+        richRaw
+        alt_title
+        productId
       }
     }
   }

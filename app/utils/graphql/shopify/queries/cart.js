@@ -78,6 +78,7 @@ const CART_FRAGMENT = `#graphql
                 handle
                 title
                 id
+                tags
               }
               selectedOptions {
                 name

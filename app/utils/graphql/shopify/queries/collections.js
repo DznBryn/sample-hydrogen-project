@@ -16,6 +16,17 @@ export async function getCollectionProducts(context, collectiontitle) {
   };
 }
 
+export async function getProductByHandle(context, handle) {
+  const {product} = await context.storefront.query(PRODUCT_QUERY, {
+    variables: {handle},
+    cache: context.storefront.CacheLong(),
+  });
+
+  if (!product) throw new Response(null, {status: 404});
+
+  return {product};
+}
+
 export const COLLECTIONS_QUERY = `#graphql
   query Collections {
     collections(first: 10) {

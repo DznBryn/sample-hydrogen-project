@@ -104,7 +104,6 @@ export async function loader({context, request}) {
     customer.data = await getCustomerData(context, curCustomerAccessToken);
     customer.accessToken = curCustomerAccessToken;
   }
-
   /**
    * CMS DATA
    */
@@ -147,16 +146,23 @@ export async function loader({context, request}) {
 
 export default function App() {
   const location = useLocation();
-  const {cart, showSliderCart, previewMode} = useLoaderData();
+  const {cart, showSliderCart, previewMode, customer} = useLoaderData();
   const {
     setData: setCartData = () => {},
     data = null,
     toggleCart,
   } = useStore((store) => store?.cart ?? null);
+  const {data: customerData, setCustomerData} = useStore(
+    (store) => store?.account ?? {},
+  );
 
   useEffect(() => {
-    if (cart?.id && cart?.id !== data?.id) {
+    if (cart?.id && JSON.stringify(cart) !== JSON.stringify(data)) {
       setCartData(cart);
+    }
+
+    if (customerData && customer?.id !== customerData.id) {
+      setCustomerData(customer);
     }
 
     if (showSliderCart) toggleCart(true);

@@ -81,26 +81,17 @@ const SliderCartProductBox = ({
   }
 
   function getSellingPlan() {
-    const recommendedSellingPlan =
-      item?.sellingPlanAllocation?.sellingPlan?.id &&
-      Number(item.sellingPlanAllocation.sellingPlan.id);
-
-    const hasRecommendedSellingPlan =
-      recommendedSellingPlan !== undefined && recommendedSellingPlan !== 0;
-
-    const itemCurrentSellingPlan = item?.sellingPlanAllocation?.sellingPlan;
+    const itemCurrentSellingPlan = parseGid(
+      item?.sellingPlanAllocation?.sellingPlan?.id,
+    )?.id;
 
     const dropdownValue = parseInt(sellingPlansDropdown?.current?.value);
+    const defaultSellingPlan = cartPageConfig.sellingPlans[0]?.sellingPlanID;
 
-    const defaultSellingPlan =
-      cartPageConfig.sellingPlans[
-        hasRecommendedSellingPlan ? recommendedSellingPlan : 0
-      ]?.sellingPlanID;
-
-    return dropdownValue
-      ? dropdownValue
-      : itemCurrentSellingPlan
+    return itemCurrentSellingPlan
       ? itemCurrentSellingPlan
+      : dropdownValue
+      ? dropdownValue
       : defaultSellingPlan;
   }
 
@@ -191,6 +182,11 @@ const RegularProduct = ({
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
+  const hasSellingPlans =
+    item?.merchandise?.product?.tags?.find((tag) =>
+      tag.includes('subscriptioneligible'),
+    ) || item.hasSellingPlans;
+
   return (
     <div className={'sliderCartProduct'}>
       <div className={'productImage'}>
@@ -300,29 +296,27 @@ const RegularProduct = ({
                 </span>
               </button>
             </UpdateItemButton>
-            <div className={'productTotal'}>
-              {forceChange ? (
-                <Price
-                  isSellingPlan={item.sellingPlanAllocation}
-                  item={item}
-                  promo={promo}
-                  product={product}
-                  cartPageConfig={cartPageConfig}
-                />
-              ) : (
-                <h6>
-                  {getCurrency() +
-                    Number(item?.cost?.totalAmount?.amount).toFixed(2)}
-                </h6>
-              )}
-            </div>
           </div>
+        </div>
+        <div className={'productTotal'}>
+          {forceChange ? (
+            <Price
+              isSellingPlan={item.sellingPlanAllocation}
+              item={item}
+              promo={promo}
+              product={product}
+              cartPageConfig={cartPageConfig}
+            />
+          ) : (
+            <h6>
+              {getCurrency() +
+                Number(item?.cost?.totalAmount?.amount).toFixed(2)}
+            </h6>
+          )}
         </div>
       </div>
       <RemoveItemButton lineId={item?.id} />
-      {item?.hasSellingPlans && (
-        <ADSwitcherContent item={item} {...AutoDelivery} />
-      )}
+      {hasSellingPlans && <ADSwitcherContent item={item} {...AutoDelivery} />}
     </div>
   );
 };
@@ -457,7 +451,7 @@ const ADSwitcherContent = ({
       id: item?.id,
       quantity: item?.quantity ?? 1,
       sellingPlanId: changeToAD
-        ? `gid://shopify/SellingPlan/${getSellingPlan()}`
+        ? `gid://shopify/SellingPlan/${sellingPlansDropdown?.current?.value}`
         : null,
     };
 
@@ -466,21 +460,19 @@ const ADSwitcherContent = ({
     formData.append('lines', JSON.stringify([lineItem]));
     try {
       // Using fetcher.submit() for form submission
-      await fetcher.submit(formData, {
+      return await fetcher.submit(formData, {
         method: API_METHODS.POST,
         action: '/cart',
       });
     } catch (error) {
       // Handle errors
-      console.error('Auto-delivery Request Failed', error);
+      return console.error('Auto-delivery Request Failed', error);
     }
   }
 
   return (
     <div className={'switcherContainer'}>
       <label className={'switcher'}>
-        {item.hasSellingPlans}
-
         <input
           type="checkbox"
           onChange={switchProductAD}
@@ -498,7 +490,8 @@ const ADSwitcherContent = ({
             ref={sellingPlansDropdown}
             id="adOptions"
             onChange={switchProductAD}
-            value={getSellingPlan()}
+            value={sellingPlansDropdown?.current?.value}
+            defaultValue={getSellingPlan()}
           >
             {cartPageConfig?.sellingPlans?.map((plan) => (
               <option key={plan.sellingPlanID} value={plan.sellingPlanID}>
@@ -512,9 +505,11 @@ const ADSwitcherContent = ({
         </div>
       ) : (
         <span>
-          Switch to Auto Delivery &{' '}
+          Switch to Auto Delivery:{' '}
           <b>
-            get 15% off & free shipping + <span>300 rewards points!*</span>
+            {cartPageConfig?.autoDeliveryMessage?.promoMessage ??
+              'get 15% off & free shipping'}{' '}
+            + <span>300 rewards points!*</span>
           </b>
         </span>
       )}

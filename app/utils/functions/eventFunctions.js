@@ -4,7 +4,10 @@ import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection} from '@shopify/hydrogen';
 import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
-import {getCollectionProducts} from '../graphql/shopify/queries/collections';
+import {
+  getCollectionProducts,
+  getProductByHandle,
+} from '../graphql/shopify/queries/collections';
 import {
   GET_FOOTERS,
   GET_EMAIL_SMS_SIGNUP_CONTENT,
@@ -16,6 +19,7 @@ import {
   GET_ANNOUNCEMENT_TOP_BANNER,
   GET_SITE_WIDE_SETTINGS,
   GET_SEARCH_CONFIG,
+  PRODUCT_RECOMMENDATIONS,
 } from '~/utils/graphql/sanity/queries';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US')
@@ -168,26 +172,6 @@ export function handleProductMetafieldData(
       return console.log(
         `Object attribute '${attribute}' not available. Please select out of these attributes: "id","key","namespace","value" `,
       );
-  }
-}
-
-export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
-  var _ltk = _ltk || null;
-  if (typeof _ltk === 'object') {
-    // const variantInfo = items.map((item) => {
-    //   const curTotal = (item.line_price / 100).toFixed(2);
-    //   _ltk.SCA.AddItemWithLinks(item.product_id, item.quantity, curTotal, item.title, item.featured_image.url, 'http://www.tula.com/' + item.url);
-    // });
-    _ltk.SCA.Meta1 = token;
-    _ltk.SCA.CartLink = encodeURI(
-      JSON.stringify(cartLink).replace(/:/gi, '-'),
-    ).replace(/,/gi, '%2C');
-    if (isAutoDelivery) {
-      _ltk.SCA.Meta1 = 'Auto-Delivery';
-    }
-    _ltk.SCA.Submit();
-  } else {
-    return false;
   }
 }
 
@@ -539,12 +523,7 @@ export function convertStorefrontIdToExternalId(str) {
   return Number(result.split('Product/')[1]);
 }
 
-export function updateListrakCartGraphQL(
-  items,
-  token,
-  cartLink,
-  isAutoDelivery,
-) {
+export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
   var _ltk = _ltk || null;
   if (typeof _ltk === 'object') {
     _ltk.SCA.Meta1 = token;
@@ -560,12 +539,10 @@ export function updateListrakCartGraphQL(
   }
 }
 
-export function isAutoCartGraphQL(items) {
-  return items.some((item) => {
-    return item?.customAttributes.some(
-      (atribute) => atribute.key === 'selling_plan',
-    );
-  });
+export function isAutoDeliveryInCart(items) {
+  return (
+    items?.find((item) => item?.sellingPlanAllocation?.sellingPlan?.id) ?? false
+  );
 }
 
 export function getCartTotalForFreeShippingGraphQL() {
@@ -681,6 +658,7 @@ export async function getMainNavFooterCMSData(context) {
     AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
+    ProductRecommendation,
   ] = await Promise.all([
     getCollectionProducts(context, 'all'),
     getCMSContent(context, GET_FOOTERS),
@@ -693,8 +671,23 @@ export async function getMainNavFooterCMSData(context) {
     getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER),
     getCMSContent(context, GET_SITE_WIDE_SETTINGS),
     getCMSContent(context, GET_SEARCH_CONFIG),
+    getCMSContent(context, PRODUCT_RECOMMENDATIONS, {
+      id: '51e2980f-ea26-4fd5-878d-cf57dfa63208',
+    }),
   ]);
-
+  const recommendations = {
+    productList: [],
+    name: ProductRecommendation?.name ?? '',
+    title: ProductRecommendation?.title ?? '',
+  };
+  if (ProductRecommendation) {
+    await ProductRecommendation.Products.forEach(async (product) => {
+      if (product && product?.productId) {
+        const response = await getProductByHandle(context, product?.productId);
+        return recommendations.productList.push(response?.product);
+      }
+    });
+  }
   return {
     collection,
     Footers,
@@ -707,6 +700,7 @@ export async function getMainNavFooterCMSData(context) {
     AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
+    ProductRecommendation: recommendations,
   };
 }
 
@@ -722,7 +716,6 @@ export async function getCustomerData(context, customerAccessToken) {
     phone: '',
   };
 
-  console.log('customerAccessToken', customerAccessToken);
   if (typeof customerAccessToken === 'string') {
     customer = await getCustomer(context, customerAccessToken);
 

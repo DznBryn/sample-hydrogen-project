@@ -16,7 +16,7 @@
   margin-bottom: 5px;
 }
 .productInfo {
-  color:var(--color-primary-black);
+  color: var(--color-primary-black);
   font-size: 12px;
   font-weight: normal;
   line-height: 16px;
@@ -33,29 +33,29 @@
   display: none;
 }
 .product :global(.add_to_cart:after) {
-  content: "+ ADD";
+  content: '+ ADD';
 }
 .product .addToCartContainer {
   margin: auto 10px auto auto;
 }
 .addToCart {
-    width: 55px;
-    height: 24px;
-    background: var(--color-primary);
-    color: var(--color-secondary-white);
-    border: 2px solid var(--color-primary);
-    margin: auto 10px auto auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
-    font: 800 12px avenir;
-    line-height: 16px;
-    transition: background .3s, color .3s, border ease-in-out;
+  width: 55px;
+  height: 24px;
+  background: var(--color-primary);
+  color: var(--color-secondary-white);
+  border: 2px solid var(--color-primary);
+  margin: auto 10px auto auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  font: 800 12px avenir;
+  line-height: 16px;
+  transition: background 0.3s, color 0.3s, border ease-in-out;
 }
 .addToCart:hover {
-    color: var(--color-primary);
-    background: var(--color-secondary-white);
+  color: var(--color-primary);
+  background: var(--color-secondary-white);
 }
 
 @media only screen and (min-width: 768px) {
@@ -64,11 +64,3 @@
     height: 24px;
   }
 }
-
-/* @media only screen and (max-height: 800px) {
- .sliderCartRec div:nth-of-type(2),
- .sliderCartRec div:nth-of-type(3),
- .sliderCartRec div:nth-of-type(4) {
-   display: none;
- } 
-} */

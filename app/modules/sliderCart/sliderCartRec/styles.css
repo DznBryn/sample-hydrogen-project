@@ -74,12 +74,5 @@
     height: 24px;
   }
 }
-/* @media only screen and (max-height: 800px) {
- .sliderCartRec div:nth-of-type(2),
- .sliderCartRec div:nth-of-type(3),
- .sliderCartRec div:nth-of-type(4) {
-   display: none;
- } 
-} */
 
 /*# sourceMappingURL=styles.css.map */

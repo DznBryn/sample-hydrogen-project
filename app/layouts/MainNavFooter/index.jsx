@@ -42,6 +42,7 @@ const MainNavFooter = ({children}) => {
     SiteWideSettings,
     SearchConfig,
     collection,
+    ProductRecommendation,
   } = mainNavFooterCMSData;
 
   const collectionWithCMSData = useMemo(
@@ -77,6 +78,7 @@ const MainNavFooter = ({children}) => {
       />
       <SliderCart
         cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        recommendations={ProductRecommendation}
         products={collectionWithCMSData}
       />
       <SliderAccount />
