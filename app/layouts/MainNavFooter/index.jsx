@@ -32,13 +32,13 @@ const MainNavFooter = ({children}) => {
     emailSmsSignupContent,
     cartPageConfig,
     mobileNavFooterMainButton,
+    announcementTopBanner,
   } = root.data;
 
   const {
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
     ProductRecommendation,
@@ -63,10 +63,7 @@ const MainNavFooter = ({children}) => {
         mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
         mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
         mobileNavMainButton={mobileNavFooterMainButton}
-        annoucementTopBannerContent={getCMSDoc(
-          AnnouncementTopBanner,
-          'rose glow',
-        )}
+        annoucementTopBannerContent={announcementTopBanner}
         desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
       />
 

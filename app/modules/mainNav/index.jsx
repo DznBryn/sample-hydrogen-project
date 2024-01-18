@@ -125,7 +125,18 @@ const MainNav = ({
           </Await>
         </Suspense>
 
-        <AnnouncementTopBanner content={annoucementTopBannerContent} />
+        <Suspense>
+          <Await resolve={annoucementTopBannerContent}>
+            {(annoucementTopBannerContentSolved) => (
+              <AnnouncementTopBanner
+                content={getCMSDoc(
+                  annoucementTopBannerContentSolved,
+                  'rose glow',
+                )}
+              />
+            )}
+          </Await>
+        </Suspense>
       </div>
       <div className={'mainNavWrap mainNav'}>
         <div className={'relativeNav'}>

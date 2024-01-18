@@ -14,6 +14,7 @@ import {
   useLocation,
 } from '@remix-run/react';
 import {
+  GET_ANNOUNCEMENT_TOP_BANNER,
   GET_CART_PAGE_CONFIG,
   GET_EMAIL_SMS_SIGNUP_CONTENT,
   GET_FOOTERS,
@@ -77,6 +78,7 @@ let footers;
 let emailSmsSignupContent;
 let cartPageConfig;
 let mobileNavFooterMainButton;
+let announcementTopBanner;
 let customer = {data: undefined, accessToken: undefined};
 
 export async function loader({context, request}) {
@@ -124,11 +126,13 @@ export async function loader({context, request}) {
     footers === undefined ||
     cartPageConfig === undefined ||
     mobileNavFooterMainButton === undefined ||
+    announcementTopBanner === undefined ||
     emailSmsSignupContent === undefined
   ) {
     listrakRec = getCMSContent(context, GET_LISTRAK_REC);
     footers = getCMSContent(context, GET_FOOTERS);
     cartPageConfig = getCMSContent(context, GET_CART_PAGE_CONFIG);
+    announcementTopBanner = getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER);
     mobileNavFooterMainButton = getCMSContent(
       context,
       GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
@@ -159,6 +163,7 @@ export async function loader({context, request}) {
       cartPageConfig,
       mobileNavFooterMainButton,
       emailSmsSignupContent,
+      announcementTopBanner,
       mainNavFooterCMSData: {
         ...mainNavFooter,
       },

@@ -9,7 +9,6 @@ import {
   GET_ANNOUNCEMENT_HEADER,
   GET_MOBILE_NAV_BAR,
   GET_HEADER_CONFIG,
-  GET_ANNOUNCEMENT_TOP_BANNER,
   GET_SITE_WIDE_SETTINGS,
   GET_SEARCH_CONFIG,
   PRODUCT_RECOMMENDATIONS,
@@ -648,7 +647,7 @@ export async function getMainNavFooterCMSData(context) {
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    AnnouncementTopBanner,
+
     SiteWideSettings,
     SearchConfig,
     ProductRecommendation,
@@ -656,7 +655,6 @@ export async function getMainNavFooterCMSData(context) {
     getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
     getCMSContent(context, GET_MOBILE_NAV_BAR),
     getCMSContent(context, GET_HEADER_CONFIG),
-    getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER),
     getCMSContent(context, GET_SITE_WIDE_SETTINGS),
     getCMSContent(context, GET_SEARCH_CONFIG),
     getCMSContent(context, PRODUCT_RECOMMENDATIONS, {
@@ -681,7 +679,6 @@ export async function getMainNavFooterCMSData(context) {
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
     ProductRecommendation: recommendations,
