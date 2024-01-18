@@ -29,6 +29,7 @@ export default function Account(props) {
   const {id} = data;
 
   data.yotpoFAQ = props?.yotpoFaq[0].yotpoQuestions || null;
+  data.yotpoProducts = props?.yotpoProducts || null;
 
   return id !== '' ? (
     <div className={'fullWidth minHeight'}>
@@ -162,7 +163,10 @@ function Tabs({data}) {
         <Addresses />
       </div>
       <div style={{display: active === 5 ? 'block' : 'none'}}>
-        <LoyaltyRewardsTab yotpoFAQ={data?.yotpoFAQ} />
+        <LoyaltyRewardsTab
+          yotpoFAQ={data?.yotpoFAQ}
+          yotpoProducts={data?.yotpoProducts}
+        />
       </div>
     </div>
   );

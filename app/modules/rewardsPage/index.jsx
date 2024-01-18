@@ -51,17 +51,16 @@ const RewardsPage = ({context, yotpoFaq}) => {
     if (state === 'loaded') {
       const productData =
         context &&
-        context?.map((product) => {
+        context?.map((yotpoProduct) => {
           const productWithDetails = handleGetProductByID(
-            product?.products[0]?.productId,
+            yotpoProduct?.products[0]?.productId,
             products,
           );
 
-          delete product.products;
-
-          product.product = productWithDetails;
-
-          return product;
+          return {
+            ...yotpoProduct,
+            product: productWithDetails,
+          };
         });
 
       setData(productData);

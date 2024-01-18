@@ -53,6 +53,9 @@
   .redeemProductItem :global(.yotpo-button-standard-size) {
     width: 230px !important;
   }
+  .redeemProductsSection_plpWrapper .redeemProductsSection_container {
+    width: 230px !important;
+  }
   .redeemProductsListContainer {
     padding-inline: 50px;
     position: relative;
