@@ -1,6 +1,9 @@
 import {useEffect} from 'react';
+import {useCollection} from '~/hooks/useCollection';
 
-const Listrack = ({productList}) => {
+const Listrack = () => {
+  const {products: productList, state} = useCollection('all');
+
   const triggerListrak = () => {
     window._ltk.Signup.New(
       'Footer',
@@ -17,9 +20,7 @@ const Listrack = ({productList}) => {
     if (window.location.href.includes('/products/')) {
       const handle = window.location.pathname.replace('/products/', '');
 
-      const product = productList.products.find(
-        (prod) => prod.handle === handle,
-      );
+      const product = productList.find((prod) => prod.handle === handle);
 
       if (product) {
         const splittedID = product.id.split('/');
@@ -33,7 +34,7 @@ const Listrack = ({productList}) => {
   };
 
   useEffect(() => {
-    if (typeof window._ltk === 'object') {
+    if (typeof window._ltk === 'object' && state === 'loaded') {
       triggerListrak();
     }
   });

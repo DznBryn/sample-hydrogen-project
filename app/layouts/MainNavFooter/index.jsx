@@ -4,16 +4,13 @@ import SliderAccount, {
 import NavPlaceholder, {
   links as NavPlaceholderStyles,
 } from '~/modules/navPlaceholder';
-import {
-  getCMSDoc,
-  getCollectionWithCMSData,
-} from '~/utils/functions/eventFunctions';
+import {getCMSDoc} from '~/utils/functions/eventFunctions';
 import SliderCart, {links as sliderCartStyles} from '~/modules/sliderCart';
 import BodyBottom, {links as BodyBottomStyles} from '~/modules/bodyBottom';
 import MainNav, {links as mainNavStyles} from '~/modules/mainNav';
 import Footer, {links as footerStyles} from '~/modules/footer';
 import {useMatches} from '@remix-run/react';
-import {useMemo} from 'react';
+import {useCollection} from '~/hooks/useCollection';
 
 export const links = () => {
   return [
@@ -28,7 +25,7 @@ export const links = () => {
 
 const MainNavFooter = ({children}) => {
   const [root] = useMatches();
-  const {mainNavFooterCMSData, productsCMSData} = root.data;
+  const {mainNavFooterCMSData} = root.data;
 
   const {
     Footers,
@@ -41,14 +38,11 @@ const MainNavFooter = ({children}) => {
     AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
-    collection,
     ProductRecommendation,
   } = mainNavFooterCMSData;
 
-  const collectionWithCMSData = useMemo(
-    () => getCollectionWithCMSData(collection, productsCMSData),
-    [collection, productsCMSData],
-  );
+  /* TODO: Remove products property from sliderCart and remove this custom hook */
+  const {products: allCollection, state} = useCollection('all');
 
   return (
     <>
@@ -74,13 +68,17 @@ const MainNavFooter = ({children}) => {
           'rose glow',
         )}
         desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
-        products={collectionWithCMSData}
       />
-      <SliderCart
-        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
-        recommendations={ProductRecommendation}
-        products={collectionWithCMSData}
-      />
+
+      {/* TODO: Remove products property from sliderCart */}
+      {state === 'loaded' && (
+        <SliderCart
+          cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+          recommendations={ProductRecommendation}
+          products={{products: allCollection}}
+        />
+      )}
+
       <SliderAccount />
 
       {children}
@@ -93,7 +91,6 @@ const MainNavFooter = ({children}) => {
       >
         <BodyBottom
           emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
-          productList={collectionWithCMSData}
         />
 
         <Footer

@@ -58,7 +58,6 @@ const MainNav = ({
   searchConfig,
   promoContent,
   mobileNavMainButton,
-  products,
   annoucementTopBannerContent,
 }) => {
   const mainContainer = useRef(null);
@@ -119,9 +118,7 @@ const MainNav = ({
       </div>
       <div className={'mainNavWrap mainNav'}>
         <div className={'relativeNav'}>
-          <NavTopHeader
-            announcementHeader={announcementHeader}
-          />
+          <NavTopHeader announcementHeader={announcementHeader} />
 
           <div className={'navItemsWrap'}>
             <div className={'menu'}>
@@ -149,11 +146,7 @@ const MainNav = ({
                 />
               ))}
             </div>
-            <HeaderIcons
-              cartConfig={cartConfig}
-              searchConfig={searchConfig}
-              products={products}
-            />
+            <HeaderIcons cartConfig={cartConfig} searchConfig={searchConfig} />
           </div>
         </div>
       </div>

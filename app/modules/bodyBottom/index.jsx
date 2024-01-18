@@ -20,7 +20,7 @@ export const links = () => {
   ];
 };
 
-const BodyBottom = ({emailSmsSignupContent, productList}) => {
+const BodyBottom = ({emailSmsSignupContent}) => {
   const {id, email, phone} = useCustomerState;
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const BodyBottom = ({emailSmsSignupContent, productList}) => {
   return (
     <div className={'bodyBottom'}>
       <PDPSkeleton />
-      <Listrack productList={productList} />
+      <Listrack />
       <EmailSmsSignup emailSmsSignupContent={emailSmsSignupContent} />
       <GladlySidekick />
       <SiteSwitcherPopUp />

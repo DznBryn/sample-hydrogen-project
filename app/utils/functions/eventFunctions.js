@@ -4,10 +4,7 @@ import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection} from '@shopify/hydrogen';
 import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
-import {
-  getCollectionProducts,
-  getProductByHandle,
-} from '../graphql/shopify/queries/collections';
+import {getProductByHandle} from '../graphql/shopify/queries/collections';
 import {
   GET_FOOTERS,
   GET_EMAIL_SMS_SIGNUP_CONTENT,
@@ -652,7 +649,6 @@ export function getPageOnCMSBySlug(pagesOnCMS, slug) {
 
 export async function getMainNavFooterCMSData(context) {
   const [
-    collection,
     Footers,
     EmailSmsSignupContent,
     CartPageConfig,
@@ -665,7 +661,6 @@ export async function getMainNavFooterCMSData(context) {
     SearchConfig,
     ProductRecommendation,
   ] = await Promise.all([
-    getCollectionProducts(context, 'all'),
     getCMSContent(context, GET_FOOTERS),
     getCMSContent(context, GET_EMAIL_SMS_SIGNUP_CONTENT),
     getCMSContent(context, GET_CART_PAGE_CONFIG),
@@ -694,7 +689,6 @@ export async function getMainNavFooterCMSData(context) {
     });
   }
   return {
-    collection,
     Footers,
     EmailSmsSignupContent,
     CartPageConfig,
