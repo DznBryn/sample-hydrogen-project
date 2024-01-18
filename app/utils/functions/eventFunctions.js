@@ -6,7 +6,6 @@ import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 import {getProductByHandle} from '../graphql/shopify/queries/collections';
 import {
-  GET_CART_PAGE_CONFIG,
   GET_ANNOUNCEMENT_HEADER,
   GET_MOBILE_NAV_BAR,
   GET_HEADER_CONFIG,
@@ -647,7 +646,6 @@ export function getPageOnCMSBySlug(pagesOnCMS, slug) {
 
 export async function getMainNavFooterCMSData(context) {
   const [
-    CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
@@ -657,7 +655,6 @@ export async function getMainNavFooterCMSData(context) {
     SearchConfig,
     ProductRecommendation,
   ] = await Promise.all([
-    getCMSContent(context, GET_CART_PAGE_CONFIG),
     getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
     getCMSContent(context, GET_MOBILE_NAV_BAR),
     getCMSContent(context, GET_HEADER_CONFIG),
@@ -684,7 +681,6 @@ export async function getMainNavFooterCMSData(context) {
   }
 
   return {
-    CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,

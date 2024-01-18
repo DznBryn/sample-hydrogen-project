@@ -4,6 +4,7 @@ import {
   bindCustomEvent,
   getCurrency,
   getCartTotalForFreeShipping,
+  getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
 
@@ -29,8 +30,9 @@ const classes = {
   iconContainer: classname('icon__container'),
 };
 
+let cartPageConfig;
+
 const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
-  const cartPageConfig = cartConfig;
   const alertRef = useRef();
   const cart = useStore((store) => store?.cart?.data ?? (() => {}));
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
@@ -43,6 +45,12 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
       visible: 'visible',
     }),
   );
+
+  useEffect(() => {
+    cartConfig.then((data) => {
+      cartPageConfig = getCMSDoc(data, 'DefaultCart');
+    });
+  }, []);
 
   if (items.find((item) => item?.sellingPlanAllocation?.sellingPlan?.id)) {
     progressMsg = <p> Enjoy FREE SHIPPING with auto-delivery</p>;

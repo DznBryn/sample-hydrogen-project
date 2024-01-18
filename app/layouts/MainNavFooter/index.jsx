@@ -26,10 +26,10 @@ export const links = () => {
 
 const MainNavFooter = ({children}) => {
   const [root] = useMatches();
-  const {mainNavFooterCMSData, footers, emailSmsSignupContent} = root.data;
+  const {mainNavFooterCMSData, footers, emailSmsSignupContent, cartPageConfig} =
+    root.data;
 
   const {
-    CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
@@ -54,7 +54,7 @@ const MainNavFooter = ({children}) => {
       />
 
       <MainNav
-        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        cartConfig={cartPageConfig}
         announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')}
         mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
         mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
@@ -71,11 +71,17 @@ const MainNavFooter = ({children}) => {
 
       {/* TODO: Remove products property from sliderCart */}
       {state === 'loaded' && (
-        <SliderCart
-          cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
-          recommendations={ProductRecommendation}
-          products={{products: allCollection}}
-        />
+        <Suspense>
+          <Await resolve={cartPageConfig}>
+            {(CartPageConfigSolved) => (
+              <SliderCart
+                cartConfig={getCMSDoc(CartPageConfigSolved, 'DefaultCart')}
+                recommendations={ProductRecommendation}
+                products={{products: allCollection}}
+              />
+            )}
+          </Await>
+        </Suspense>
       )}
 
       <SliderAccount />

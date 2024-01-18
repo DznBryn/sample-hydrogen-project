@@ -1,5 +1,6 @@
 import {PRODUCTS_QUERY} from '~/utils/graphql/shopify/queries/collections';
 import {
+  GET_CART_PAGE_CONFIG,
   GET_PLP_FILTER_MENU,
   GET_PRODUCT_COLLECTIONS,
 } from '~/utils/graphql/sanity/queries';
@@ -23,20 +24,23 @@ export const links = () => {
 export const loader = async ({params, context}) => {
   const {handle} = params;
 
-  const [{collection}, filtersOptions, collectionsCMSData] = await Promise.all([
-    context.storefront.query(PRODUCTS_QUERY, {
-      variables: {handle},
-      cache: context.storefront.CacheLong(),
-    }),
-    getCMSContent(context, GET_PLP_FILTER_MENU),
-    getCMSContent(context, GET_PRODUCT_COLLECTIONS),
-  ]);
+  const [{collection}, filtersOptions, collectionsCMSData, cartPageConfig] =
+    await Promise.all([
+      context.storefront.query(PRODUCTS_QUERY, {
+        variables: {handle},
+        cache: context.storefront.CacheLong(),
+      }),
+      getCMSContent(context, GET_PLP_FILTER_MENU),
+      getCMSContent(context, GET_PRODUCT_COLLECTIONS),
+      getCMSContent(context, GET_CART_PAGE_CONFIG),
+    ]);
 
   if (!collection) throw new Response(null, {status: 404});
 
   return json({
     filtersOptions,
     collectionsCMSData,
+    cartPageConfig,
     collection: {
       ...collection,
       handle,
@@ -51,10 +55,9 @@ export const loader = async ({params, context}) => {
 
 export default function PLPPage() {
   const [root] = useMatches();
-  const {productsCMSData, mainNavFooterCMSData} = root.data;
-  const {CartPageConfig} = mainNavFooterCMSData;
-
-  const {filtersOptions, collectionsCMSData, collection} = useLoaderData();
+  const {productsCMSData} = root.data;
+  const {filtersOptions, collectionsCMSData, collection, cartPageConfig} =
+    useLoaderData();
 
   const collectionWithCMSData = useMemo(
     () =>
@@ -67,7 +70,7 @@ export default function PLPPage() {
       <PLP
         collection={collectionWithCMSData}
         filtersOptions={filtersOptions}
-        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        cartConfig={getCMSDoc(cartPageConfig, 'DefaultCart')}
       />
     </Layouts.MainNavFooter>
   );
