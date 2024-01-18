@@ -1,9 +1,10 @@
-import {useEffect, useRef} from 'react';
-import {Link} from '@remix-run/react';
+import {Suspense, useEffect, useRef} from 'react';
+import {Await, Link} from '@remix-run/react';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {
   bindCustomEvent,
   createCustomEvent,
+  getCMSDoc,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
 
@@ -35,45 +36,62 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
 
       <FooterButtons />
 
-      <Link
-        reloadDocument
-        to={mobileNavMainButton.linkURL}
-        id={'footer'}
-        onClick={() => {
-          getApiKeys().FEATURE_FLAGS.LOYALTY &&
-            triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
-              source: 'mobileBanner',
-            });
-        }}
-        style={
-          getApiKeys().FEATURE_FLAGS.LOYALTY
-            ? {
-                backgroundImage:
-                  'url(' +
-                  mobileNavMainButton.imageBackground.asset.url +
-                  '?auto=format' +
-                  ')',
-              }
-            : {}
-        }
-      >
-        <div
-          className={[
-            'content',
-            getApiKeys().FEATURE_FLAGS.LOYALTY ? 'whiteColor' : '',
-          ].join(' ')}
-          onClick={handleClickOnLink}
-        >
-          <p className={getApiKeys().FEATURE_FLAGS.LOYALTY && 'whiteColor'}>
-            {mobileNavMainButton.header}
-          </p>
-          {mobileNavMainButton.contentText}
-        </div>
+      <Suspense>
+        <Await resolve={mobileNavMainButton}>
+          {(mobileNavMainButtonSolved) => {
+            const {linkURL, imageBackground, header, contentText} = getCMSDoc(
+              mobileNavMainButtonSolved,
+              'Main Button',
+            );
 
-        {getApiKeys().FEATURE_FLAGS.LOYALTY
-          ? icons['round_arrow']
-          : icons['arrow']}
-      </Link>
+            return (
+              <Link
+                reloadDocument
+                to={linkURL}
+                id={'footer'}
+                onClick={() => {
+                  getApiKeys().FEATURE_FLAGS.LOYALTY &&
+                    triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
+                      source: 'mobileBanner',
+                    });
+                }}
+                style={
+                  getApiKeys().FEATURE_FLAGS.LOYALTY
+                    ? {
+                        backgroundImage:
+                          'url(' +
+                          imageBackground.asset.url +
+                          '?auto=format' +
+                          ')',
+                      }
+                    : {}
+                }
+              >
+                <div
+                  className={[
+                    'content',
+                    getApiKeys().FEATURE_FLAGS.LOYALTY ? 'whiteColor' : '',
+                  ].join(' ')}
+                  onClick={handleClickOnLink}
+                >
+                  <p
+                    className={
+                      getApiKeys().FEATURE_FLAGS.LOYALTY && 'whiteColor'
+                    }
+                  >
+                    {header}
+                  </p>
+                  {contentText}
+                </div>
+
+                {getApiKeys().FEATURE_FLAGS.LOYALTY
+                  ? icons['round_arrow']
+                  : icons['arrow']}
+              </Link>
+            );
+          }}
+        </Await>
+      </Suspense>
     </div>
   );
 };

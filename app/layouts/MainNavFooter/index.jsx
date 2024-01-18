@@ -26,14 +26,18 @@ export const links = () => {
 
 const MainNavFooter = ({children}) => {
   const [root] = useMatches();
-  const {mainNavFooterCMSData, footers, emailSmsSignupContent, cartPageConfig} =
-    root.data;
+  const {
+    mainNavFooterCMSData,
+    footers,
+    emailSmsSignupContent,
+    cartPageConfig,
+    mobileNavFooterMainButton,
+  } = root.data;
 
   const {
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    MobileNavFooterMainButton,
     AnnouncementTopBanner,
     SiteWideSettings,
     SearchConfig,
@@ -58,10 +62,7 @@ const MainNavFooter = ({children}) => {
         announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')}
         mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
         mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
-        mobileNavMainButton={getCMSDoc(
-          MobileNavFooterMainButton,
-          'Main Button',
-        )}
+        mobileNavMainButton={mobileNavFooterMainButton}
         annoucementTopBannerContent={getCMSDoc(
           AnnouncementTopBanner,
           'rose glow',
