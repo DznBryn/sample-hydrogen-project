@@ -6,8 +6,6 @@ import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 import {getProductByHandle} from '../graphql/shopify/queries/collections';
 import {
-  GET_FOOTERS,
-  GET_EMAIL_SMS_SIGNUP_CONTENT,
   GET_CART_PAGE_CONFIG,
   GET_ANNOUNCEMENT_HEADER,
   GET_MOBILE_NAV_BAR,
@@ -649,8 +647,6 @@ export function getPageOnCMSBySlug(pagesOnCMS, slug) {
 
 export async function getMainNavFooterCMSData(context) {
   const [
-    Footers,
-    EmailSmsSignupContent,
     CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
@@ -661,8 +657,6 @@ export async function getMainNavFooterCMSData(context) {
     SearchConfig,
     ProductRecommendation,
   ] = await Promise.all([
-    getCMSContent(context, GET_FOOTERS),
-    getCMSContent(context, GET_EMAIL_SMS_SIGNUP_CONTENT),
     getCMSContent(context, GET_CART_PAGE_CONFIG),
     getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
     getCMSContent(context, GET_MOBILE_NAV_BAR),
@@ -688,9 +682,8 @@ export async function getMainNavFooterCMSData(context) {
       }
     });
   }
+
   return {
-    Footers,
-    EmailSmsSignupContent,
     CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,

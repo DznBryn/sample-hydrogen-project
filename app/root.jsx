@@ -14,6 +14,8 @@ import {
   useLocation,
 } from '@remix-run/react';
 import {
+  GET_EMAIL_SMS_SIGNUP_CONTENT,
+  GET_FOOTERS,
   GET_LISTRAK_REC,
   GET_PRODUCTS,
   GET_REDIRECTS,
@@ -69,6 +71,8 @@ export const meta = () => [
 let mainNavFooter;
 let products;
 let listrakRec;
+let footers;
+let emailSmsSignupContent;
 let customer = {data: undefined, accessToken: undefined};
 
 export async function loader({context, request}) {
@@ -112,9 +116,16 @@ export async function loader({context, request}) {
     !referer ||
     mainNavFooter === undefined ||
     products === undefined ||
-    listrakRec === undefined
+    listrakRec === undefined ||
+    footers === undefined ||
+    emailSmsSignupContent === undefined
   ) {
     listrakRec = getCMSContent(context, GET_LISTRAK_REC);
+    footers = getCMSContent(context, GET_FOOTERS);
+    emailSmsSignupContent = getCMSContent(
+      context,
+      GET_EMAIL_SMS_SIGNUP_CONTENT,
+    );
 
     const CMSData = await Promise.all([
       getMainNavFooterCMSData(context),
@@ -133,7 +144,11 @@ export async function loader({context, request}) {
       previewMode: context.session.get('previewMode') === 'true',
       customer: customer.data,
       listrakRec,
-      mainNavFooterCMSData: mainNavFooter,
+      footers,
+      emailSmsSignupContent,
+      mainNavFooterCMSData: {
+        ...mainNavFooter,
+      },
       productsCMSData: products,
       showSliderCart: checkShowSliderCart(request),
     },

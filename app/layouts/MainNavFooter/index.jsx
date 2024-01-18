@@ -9,8 +9,9 @@ import SliderCart, {links as sliderCartStyles} from '~/modules/sliderCart';
 import BodyBottom, {links as BodyBottomStyles} from '~/modules/bodyBottom';
 import MainNav, {links as mainNavStyles} from '~/modules/mainNav';
 import Footer, {links as footerStyles} from '~/modules/footer';
-import {useMatches} from '@remix-run/react';
+import {Await, useMatches} from '@remix-run/react';
 import {useCollection} from '~/hooks/useCollection';
+import {Suspense} from 'react';
 
 export const links = () => {
   return [
@@ -25,11 +26,9 @@ export const links = () => {
 
 const MainNavFooter = ({children}) => {
   const [root] = useMatches();
-  const {mainNavFooterCMSData} = root.data;
+  const {mainNavFooterCMSData, footers, emailSmsSignupContent} = root.data;
 
   const {
-    Footers,
-    EmailSmsSignupContent,
     CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
@@ -89,14 +88,29 @@ const MainNavFooter = ({children}) => {
           marginTop: 'auto',
         }}
       >
-        <BodyBottom
-          emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
-        />
+        <Suspense>
+          <Await resolve={emailSmsSignupContent}>
+            {(EmailSmsSignupContentSolved) => (
+              <BodyBottom
+                emailSmsSignupContent={getCMSDoc(
+                  EmailSmsSignupContentSolved,
+                  'Content',
+                )}
+              />
+            )}
+          </Await>
+        </Suspense>
 
-        <Footer
-          desktopFooter={getCMSDoc(Footers, 'Desktop')}
-          mobileFooter={getCMSDoc(Footers, 'Mobile')}
-        />
+        <Suspense>
+          <Await resolve={footers}>
+            {(FootersSolved) => (
+              <Footer
+                desktopFooter={getCMSDoc(FootersSolved, 'Desktop')}
+                mobileFooter={getCMSDoc(FootersSolved, 'Mobile')}
+              />
+            )}
+          </Await>
+        </Suspense>
       </div>
     </>
   );
