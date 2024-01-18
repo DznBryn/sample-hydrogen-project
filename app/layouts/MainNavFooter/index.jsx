@@ -4,16 +4,14 @@ import SliderAccount, {
 import NavPlaceholder, {
   links as NavPlaceholderStyles,
 } from '~/modules/navPlaceholder';
-import {
-  getCMSDoc,
-  getCollectionWithCMSData,
-} from '~/utils/functions/eventFunctions';
+import {getCMSDoc} from '~/utils/functions/eventFunctions';
 import SliderCart, {links as sliderCartStyles} from '~/modules/sliderCart';
 import BodyBottom, {links as BodyBottomStyles} from '~/modules/bodyBottom';
 import MainNav, {links as mainNavStyles} from '~/modules/mainNav';
 import Footer, {links as footerStyles} from '~/modules/footer';
-import {useMatches} from '@remix-run/react';
-import {useMemo} from 'react';
+import {Await, useMatches} from '@remix-run/react';
+import {useCollection} from '~/hooks/useCollection';
+import {Suspense} from 'react';
 
 export const links = () => {
   return [
@@ -28,27 +26,26 @@ export const links = () => {
 
 const MainNavFooter = ({children}) => {
   const [root] = useMatches();
-  const {mainNavFooterCMSData, productsCMSData} = root.data;
+  const {
+    mainNavFooterCMSData,
+    footers,
+    emailSmsSignupContent,
+    cartPageConfig,
+    mobileNavFooterMainButton,
+    announcementTopBanner,
+    searchConfig,
+  } = root.data;
 
   const {
-    Footers,
-    EmailSmsSignupContent,
-    CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    MobileNavFooterMainButton,
-    AnnouncementTopBanner,
     SiteWideSettings,
-    SearchConfig,
-    collection,
     ProductRecommendation,
   } = mainNavFooterCMSData;
 
-  const collectionWithCMSData = useMemo(
-    () => getCollectionWithCMSData(collection, productsCMSData),
-    [collection, productsCMSData],
-  );
+  /* TODO: Remove products property from sliderCart and remove this custom hook */
+  const {products: allCollection, state} = useCollection('all');
 
   return (
     <>
@@ -57,30 +54,34 @@ const MainNavFooter = ({children}) => {
           getCMSDoc(SiteWideSettings, 'SiteWideSettings')
             ?.activeSitewideSettings
         }
-        searchConfig={getCMSDoc(SearchConfig, 'Default')}
+        searchConfig={searchConfig}
       />
 
       <MainNav
-        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
+        cartConfig={cartPageConfig}
         announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')}
         mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
         mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
-        mobileNavMainButton={getCMSDoc(
-          MobileNavFooterMainButton,
-          'Main Button',
-        )}
-        annoucementTopBannerContent={getCMSDoc(
-          AnnouncementTopBanner,
-          'rose glow',
-        )}
+        mobileNavMainButton={mobileNavFooterMainButton}
+        annoucementTopBannerContent={announcementTopBanner}
         desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
-        products={collectionWithCMSData}
       />
-      <SliderCart
-        cartConfig={getCMSDoc(CartPageConfig, 'DefaultCart')}
-        recommendations={ProductRecommendation}
-        products={collectionWithCMSData}
-      />
+
+      {/* TODO: Remove products property from sliderCart */}
+      {state === 'loaded' && (
+        <Suspense>
+          <Await resolve={cartPageConfig}>
+            {(CartPageConfigSolved) => (
+              <SliderCart
+                cartConfig={getCMSDoc(CartPageConfigSolved, 'DefaultCart')}
+                recommendations={ProductRecommendation}
+                products={{products: allCollection}}
+              />
+            )}
+          </Await>
+        </Suspense>
+      )}
+
       <SliderAccount />
 
       {children}
@@ -91,15 +92,29 @@ const MainNavFooter = ({children}) => {
           marginTop: 'auto',
         }}
       >
-        <BodyBottom
-          emailSmsSignupContent={getCMSDoc(EmailSmsSignupContent, 'Content')}
-          productList={collectionWithCMSData}
-        />
+        <Suspense>
+          <Await resolve={emailSmsSignupContent}>
+            {(EmailSmsSignupContentSolved) => (
+              <BodyBottom
+                emailSmsSignupContent={getCMSDoc(
+                  EmailSmsSignupContentSolved,
+                  'Content',
+                )}
+              />
+            )}
+          </Await>
+        </Suspense>
 
-        <Footer
-          desktopFooter={getCMSDoc(Footers, 'Desktop')}
-          mobileFooter={getCMSDoc(Footers, 'Mobile')}
-        />
+        <Suspense>
+          <Await resolve={footers}>
+            {(FootersSolved) => (
+              <Footer
+                desktopFooter={getCMSDoc(FootersSolved, 'Desktop')}
+                mobileFooter={getCMSDoc(FootersSolved, 'Mobile')}
+              />
+            )}
+          </Await>
+        </Suspense>
       </div>
     </>
   );

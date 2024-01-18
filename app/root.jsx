@@ -14,9 +14,15 @@ import {
   useLocation,
 } from '@remix-run/react';
 import {
+  GET_ANNOUNCEMENT_TOP_BANNER,
+  GET_CART_PAGE_CONFIG,
+  GET_EMAIL_SMS_SIGNUP_CONTENT,
+  GET_FOOTERS,
   GET_LISTRAK_REC,
+  GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
   GET_PRODUCTS,
   GET_REDIRECTS,
+  GET_SEARCH_CONFIG,
 } from './utils/graphql/sanity/queries';
 import ErrorContent, {
   links as errorBoundaryStyles,
@@ -69,6 +75,12 @@ export const meta = () => [
 let mainNavFooter;
 let products;
 let listrakRec;
+let footers;
+let emailSmsSignupContent;
+let cartPageConfig;
+let mobileNavFooterMainButton;
+let announcementTopBanner;
+let searchConfig;
 let customer = {data: undefined, accessToken: undefined};
 
 export async function loader({context, request}) {
@@ -112,9 +124,27 @@ export async function loader({context, request}) {
     !referer ||
     mainNavFooter === undefined ||
     products === undefined ||
-    listrakRec === undefined
+    listrakRec === undefined ||
+    footers === undefined ||
+    cartPageConfig === undefined ||
+    mobileNavFooterMainButton === undefined ||
+    announcementTopBanner === undefined ||
+    searchConfig === undefined ||
+    emailSmsSignupContent === undefined
   ) {
     listrakRec = getCMSContent(context, GET_LISTRAK_REC);
+    footers = getCMSContent(context, GET_FOOTERS);
+    cartPageConfig = getCMSContent(context, GET_CART_PAGE_CONFIG);
+    searchConfig = getCMSContent(context, GET_SEARCH_CONFIG);
+    announcementTopBanner = getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER);
+    mobileNavFooterMainButton = getCMSContent(
+      context,
+      GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
+    );
+    emailSmsSignupContent = getCMSContent(
+      context,
+      GET_EMAIL_SMS_SIGNUP_CONTENT,
+    );
 
     const CMSData = await Promise.all([
       getMainNavFooterCMSData(context),
@@ -133,7 +163,15 @@ export async function loader({context, request}) {
       previewMode: context.session.get('previewMode') === 'true',
       customer: customer.data,
       listrakRec,
-      mainNavFooterCMSData: mainNavFooter,
+      footers,
+      cartPageConfig,
+      searchConfig,
+      mobileNavFooterMainButton,
+      emailSmsSignupContent,
+      announcementTopBanner,
+      mainNavFooterCMSData: {
+        ...mainNavFooter,
+      },
       productsCMSData: products,
       showSliderCart: checkShowSliderCart(request),
     },

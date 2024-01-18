@@ -4,21 +4,12 @@ import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection} from '@shopify/hydrogen';
 import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
+import {getProductByHandle} from '../graphql/shopify/queries/collections';
 import {
-  getCollectionProducts,
-  getProductByHandle,
-} from '../graphql/shopify/queries/collections';
-import {
-  GET_FOOTERS,
-  GET_EMAIL_SMS_SIGNUP_CONTENT,
-  GET_CART_PAGE_CONFIG,
   GET_ANNOUNCEMENT_HEADER,
   GET_MOBILE_NAV_BAR,
   GET_HEADER_CONFIG,
-  GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
-  GET_ANNOUNCEMENT_TOP_BANNER,
   GET_SITE_WIDE_SETTINGS,
-  GET_SEARCH_CONFIG,
   PRODUCT_RECOMMENDATIONS,
 } from '~/utils/graphql/sanity/queries';
 
@@ -652,30 +643,16 @@ export function getPageOnCMSBySlug(pagesOnCMS, slug) {
 
 export async function getMainNavFooterCMSData(context) {
   const [
-    collection,
-    Footers,
-    EmailSmsSignupContent,
-    CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    MobileNavFooterMainButton,
-    AnnouncementTopBanner,
     SiteWideSettings,
-    SearchConfig,
     ProductRecommendation,
   ] = await Promise.all([
-    getCollectionProducts(context, 'all'),
-    getCMSContent(context, GET_FOOTERS),
-    getCMSContent(context, GET_EMAIL_SMS_SIGNUP_CONTENT),
-    getCMSContent(context, GET_CART_PAGE_CONFIG),
     getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
     getCMSContent(context, GET_MOBILE_NAV_BAR),
     getCMSContent(context, GET_HEADER_CONFIG),
-    getCMSContent(context, GET_MOBILE_NAV_FOOTER_MAIN_BUTTON),
-    getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER),
     getCMSContent(context, GET_SITE_WIDE_SETTINGS),
-    getCMSContent(context, GET_SEARCH_CONFIG),
     getCMSContent(context, PRODUCT_RECOMMENDATIONS, {
       id: '51e2980f-ea26-4fd5-878d-cf57dfa63208',
     }),
@@ -693,18 +670,12 @@ export async function getMainNavFooterCMSData(context) {
       }
     });
   }
+
   return {
-    collection,
-    Footers,
-    EmailSmsSignupContent,
-    CartPageConfig,
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-    MobileNavFooterMainButton,
-    AnnouncementTopBanner,
     SiteWideSettings,
-    SearchConfig,
     ProductRecommendation: recommendations,
   };
 }

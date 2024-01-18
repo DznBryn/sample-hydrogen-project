@@ -1,5 +1,5 @@
-import {useRef, useEffect} from 'react';
-import {createCustomEvent} from '~/utils/functions/eventFunctions';
+import {useRef, useEffect, Suspense} from 'react';
+import {createCustomEvent, getCMSDoc} from '~/utils/functions/eventFunctions';
 import DesktopNavItem, {
   links as desktopNavItemStyles,
 } from '~/modules/mainNav/desktopNavItem';
@@ -30,6 +30,7 @@ import CountdownTimerBar, {
 import AnnouncementTopBanner, {
   links as announcementTopBannerStyles,
 } from '~/modules/mainNav/announcementTopBanner';
+import {Await} from '@remix-run/react';
 
 import styles from './styles.css';
 
@@ -58,17 +59,9 @@ const MainNav = ({
   searchConfig,
   promoContent,
   mobileNavMainButton,
-  products,
   annoucementTopBannerContent,
 }) => {
   const mainContainer = useRef(null);
-  const {
-    enableCountdownTimerPromo,
-    countdownTimerPromoESTDeadlineDate,
-    countdownTimerPromoESTDeadlineHour,
-    countdownTimerPromoCopy,
-    countdownTimerPromoBannerColor,
-  } = cartConfig;
 
   const handleClick = (e) => {
     const dataEvent = createCustomEvent();
@@ -106,22 +99,48 @@ const MainNav = ({
     <section className={'mainNav'} ref={mainContainer}>
       <div id="promoBannersWrap" className={'promoBannersWrap'}>
         <PromoOfferBar content={promoContent} />
-        <CountdownTimerBar
-          enable={enableCountdownTimerPromo}
-          copy={countdownTimerPromoCopy}
-          bgColor={countdownTimerPromoBannerColor}
-          deadline={{
-            date: countdownTimerPromoESTDeadlineDate,
-            hour: countdownTimerPromoESTDeadlineHour,
-          }}
-        />
-        <AnnouncementTopBanner content={annoucementTopBannerContent} />
+        <Suspense>
+          <Await resolve={cartConfig}>
+            {(cartConfigSolved) => {
+              const {
+                enableCountdownTimerPromo,
+                countdownTimerPromoCopy,
+                countdownTimerPromoBannerColor,
+                countdownTimerPromoESTDeadlineDate,
+                countdownTimerPromoESTDeadlineHour,
+              } = getCMSDoc(cartConfigSolved, 'DefaultCart');
+
+              return (
+                <CountdownTimerBar
+                  enable={enableCountdownTimerPromo}
+                  copy={countdownTimerPromoCopy}
+                  bgColor={countdownTimerPromoBannerColor}
+                  deadline={{
+                    date: countdownTimerPromoESTDeadlineDate,
+                    hour: countdownTimerPromoESTDeadlineHour,
+                  }}
+                />
+              );
+            }}
+          </Await>
+        </Suspense>
+
+        <Suspense>
+          <Await resolve={annoucementTopBannerContent}>
+            {(annoucementTopBannerContentSolved) => (
+              <AnnouncementTopBanner
+                content={getCMSDoc(
+                  annoucementTopBannerContentSolved,
+                  'rose glow',
+                )}
+              />
+            )}
+          </Await>
+        </Suspense>
       </div>
       <div className={'mainNavWrap mainNav'}>
         <div className={'relativeNav'}>
-          <NavTopHeader
-            announcementHeader={announcementHeader}
-          />
+          <NavTopHeader announcementHeader={announcementHeader} />
 
           <div className={'navItemsWrap'}>
             <div className={'menu'}>
@@ -149,11 +168,7 @@ const MainNav = ({
                 />
               ))}
             </div>
-            <HeaderIcons
-              cartConfig={cartConfig}
-              searchConfig={searchConfig}
-              products={products}
-            />
+            <HeaderIcons cartConfig={cartConfig} searchConfig={searchConfig} />
           </div>
         </div>
       </div>

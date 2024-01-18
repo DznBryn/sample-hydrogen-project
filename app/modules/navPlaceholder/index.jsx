@@ -1,13 +1,15 @@
-import {useEffect, useState, useRef} from 'react';
+import {useEffect, useState, useRef, Suspense} from 'react';
 import {
   getCookie,
   eraseCookie,
   addClickEventOnWidgetElement,
   appendScript,
+  getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {useCustomerState} from '~/hooks/useCostumer';
 import Search, {links as searchStyles} from '~/modules/search';
+import {Await} from '@remix-run/react';
 
 import styles from './styles.css';
 
@@ -121,7 +123,13 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
         </div>
       )}
 
-      <Search searchConfig={searchConfig} />
+      <Suspense>
+        <Await resolve={searchConfig}>
+          {(searchConfigSolved) => (
+            <Search searchConfig={getCMSDoc(searchConfigSolved, 'Default')} />
+          )}
+        </Await>
+      </Suspense>
 
       {
         <div
