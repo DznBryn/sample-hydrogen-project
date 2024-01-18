@@ -10,7 +10,6 @@ import {
   GET_MOBILE_NAV_BAR,
   GET_HEADER_CONFIG,
   GET_SITE_WIDE_SETTINGS,
-  GET_SEARCH_CONFIG,
   PRODUCT_RECOMMENDATIONS,
 } from '~/utils/graphql/sanity/queries';
 
@@ -647,16 +646,13 @@ export async function getMainNavFooterCMSData(context) {
     AnnouncementHeaders,
     MobileNavbar,
     HeaderConfig,
-
     SiteWideSettings,
-    SearchConfig,
     ProductRecommendation,
   ] = await Promise.all([
     getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
     getCMSContent(context, GET_MOBILE_NAV_BAR),
     getCMSContent(context, GET_HEADER_CONFIG),
     getCMSContent(context, GET_SITE_WIDE_SETTINGS),
-    getCMSContent(context, GET_SEARCH_CONFIG),
     getCMSContent(context, PRODUCT_RECOMMENDATIONS, {
       id: '51e2980f-ea26-4fd5-878d-cf57dfa63208',
     }),
@@ -680,7 +676,6 @@ export async function getMainNavFooterCMSData(context) {
     MobileNavbar,
     HeaderConfig,
     SiteWideSettings,
-    SearchConfig,
     ProductRecommendation: recommendations,
   };
 }

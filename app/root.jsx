@@ -22,6 +22,7 @@ import {
   GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
   GET_PRODUCTS,
   GET_REDIRECTS,
+  GET_SEARCH_CONFIG,
 } from './utils/graphql/sanity/queries';
 import ErrorContent, {
   links as errorBoundaryStyles,
@@ -79,6 +80,7 @@ let emailSmsSignupContent;
 let cartPageConfig;
 let mobileNavFooterMainButton;
 let announcementTopBanner;
+let searchConfig;
 let customer = {data: undefined, accessToken: undefined};
 
 export async function loader({context, request}) {
@@ -127,11 +129,13 @@ export async function loader({context, request}) {
     cartPageConfig === undefined ||
     mobileNavFooterMainButton === undefined ||
     announcementTopBanner === undefined ||
+    searchConfig === undefined ||
     emailSmsSignupContent === undefined
   ) {
     listrakRec = getCMSContent(context, GET_LISTRAK_REC);
     footers = getCMSContent(context, GET_FOOTERS);
     cartPageConfig = getCMSContent(context, GET_CART_PAGE_CONFIG);
+    searchConfig = getCMSContent(context, GET_SEARCH_CONFIG);
     announcementTopBanner = getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER);
     mobileNavFooterMainButton = getCMSContent(
       context,
@@ -161,6 +165,7 @@ export async function loader({context, request}) {
       listrakRec,
       footers,
       cartPageConfig,
+      searchConfig,
       mobileNavFooterMainButton,
       emailSmsSignupContent,
       announcementTopBanner,

@@ -33,6 +33,7 @@ const MainNavFooter = ({children}) => {
     cartPageConfig,
     mobileNavFooterMainButton,
     announcementTopBanner,
+    searchConfig,
   } = root.data;
 
   const {
@@ -40,7 +41,6 @@ const MainNavFooter = ({children}) => {
     MobileNavbar,
     HeaderConfig,
     SiteWideSettings,
-    SearchConfig,
     ProductRecommendation,
   } = mainNavFooterCMSData;
 
@@ -54,7 +54,7 @@ const MainNavFooter = ({children}) => {
           getCMSDoc(SiteWideSettings, 'SiteWideSettings')
             ?.activeSitewideSettings
         }
-        searchConfig={getCMSDoc(SearchConfig, 'Default')}
+        searchConfig={searchConfig}
       />
 
       <MainNav
