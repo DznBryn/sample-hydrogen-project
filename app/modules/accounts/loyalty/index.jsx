@@ -4,15 +4,12 @@ import {useYotpo} from '~/hooks/useYotpo';
 import classNames from 'classnames/bind';
 import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
-import {links as redeemProductsSectionStyles} from '~/modules/redeemProductsSection';
+import RedeemProductsSection, {
+  links as redeemProductsSectionStyles,
+} from '~/modules/redeemProductsSection';
 import {brandLogos} from '~/modules/rewardsEarnPoints';
-
-const MOCK_QUESTION_LIST = [
-  {questions: 'Question #1', answers: 'Answer #1 '},
-  {questions: 'Question #2', answers: 'Answer #2'},
-  {questions: 'Question #3', answers: 'Answer #3'},
-  {questions: 'Question #4', answers: 'Answer #4'},
-];
+import {useCollection} from '~/hooks/useCollection';
+import {handleGetProductByID} from '~/utils/functions/eventFunctions';
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}, ...redeemProductsSectionStyles()];
@@ -35,20 +32,37 @@ const Slider = () => (
   </div>
 );
 
-const LoyaltyRewardsTab = ({yotpoFAQ = MOCK_QUESTION_LIST}) => {
+const LoyaltyRewardsTab = (props) => {
+  const yotpoFAQ = props?.yotpoFAQ;
+
   const data = useStore((store) => store?.account?.data ?? null);
   const {refreshWidgets} = useYotpo();
   const isLoggedIn =
     data?.id !== '' || data?.id !== null || data?.id !== undefined;
 
-  useEffect(() => {
-    const slider = document.querySelectorAll('[id=\'slider-divider\']');
-    for (const element of slider) {
-      element.style.marginInline = 'auto';
-    }
+  const {state, products} = useCollection('all');
+  const [datax, setDatax] = useState({});
 
-    refreshWidgets();
-  }, []);
+  useEffect(() => {
+    if (state === 'loaded') {
+      const productData =
+        props &&
+        props?.yotpoProducts?.map((yotpoProduct) => {
+          const productWithDetails = handleGetProductByID(
+            yotpoProduct?.products[0]?.productId,
+            products,
+          );
+
+          return {
+            ...yotpoProduct,
+            product: productWithDetails,
+          };
+        });
+
+      setDatax(productData);
+      refreshWidgets();
+    }
+  }, [state]);
 
   return (
     <div className={'myRewards__container'}>
@@ -59,7 +73,7 @@ const LoyaltyRewardsTab = ({yotpoFAQ = MOCK_QUESTION_LIST}) => {
           upload a receipt
         </a>
       )}
-      {/* <RedeemProductList products={yotpoProducts} /> */}
+      <RedeemProductList products={datax} />
 
       <div className="yotpo-widget-instance" data-yotpo-instance-id="295798" />
 
@@ -92,7 +106,7 @@ const LoyaltyRewardsTab = ({yotpoFAQ = MOCK_QUESTION_LIST}) => {
   );
 };
 
-export const RedeemProductList = () => (
+export const RedeemProductList = (props) => (
   <div className={'redeemSectionContainer'}>
     <h1>your available rewards</h1>
     <div className={'faq__divider'} />
@@ -103,8 +117,9 @@ export const RedeemProductList = () => (
       <br />
       <span>Must be redeemed with purchase.</span>
     </p>
-
-    {/* <RedeemProductsSection products={products} /> */}
+    <div className="container__redeem-products-tab">
+      <RedeemProductsSection products={props?.products} />
+    </div>
   </div>
 );
 
@@ -119,7 +134,7 @@ const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
           className={'faq__questionButton'}
           onClick={onClick}
         >
-          <span>{item.questions}</span>
+          <span>{item?.questions}</span>
           <span
             className={cx(
               'faq__questionCloseButton',
@@ -138,7 +153,7 @@ const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
           )}
         >
           <div className={'faq__divider'} />
-          <p dangerouslySetInnerHTML={{__html: item.answers}} />
+          <p dangerouslySetInnerHTML={{__html: item?.answers}} />
         </div>
       </dd>
     </div>

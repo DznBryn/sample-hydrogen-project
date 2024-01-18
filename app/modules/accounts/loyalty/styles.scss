@@ -36,6 +36,13 @@
     left: -175%;
   }
 }
+.swiperContainer :global(.swiper-slide) {
+  width: inherit;
+}
+
+.swiper-slide {
+  margin-right: 25px;
+}
 
 .receipt__message {
   max-width: 80%;
@@ -249,15 +256,12 @@
 }
 
 .redeemProductsListContainer {
-  display: grid;
-  grid: 1fr / repeat(2, 1fr);
-  row-gap: 25px;
+  display: flex;
 }
 
 @media (min-width: 768px) {
-  .redeemProductsListContainer {
-    grid: 1fr / repeat(4, 1fr);
-    padding-inline: 3.4rem;
+  .redeemProductItem .yotpo-button-standard-size {
+    width: 230px !important;
   }
 
   .redeemSectionContainer > h1 {
@@ -387,8 +391,32 @@
     margin-bottom: 80px;
     text-transform: capitalize;
   }
+
+  .redeemProductItem .yotpo-button-standard-size {
+    width: 230px !important;
+  }
+}
+
+.container__redeem-products-tab {
+  width: 100%;
+  height: auto;
+  max-width: 1300px;
 }
 
 /*
 *  REWARDS FAQ SECTION STYLES ## END ##
 */
+
+.redeemProductItem .yotpo-button-standard-size {
+  width: 149px !important;
+  height: 37px !important;
+  margin-inline: 18px !important;
+  border: 1px solid rgb(71, 198, 217) !important;
+  color: rgb(71, 198, 217) !important;
+}
+
+.redeemProductItem :global(.yotpo-button-standard-size) > span {
+  font-weight: 900 !important;
+  font-size: 16px !important;
+  line-height: 38px !important;
+}
