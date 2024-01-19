@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef, Suspense} from 'react';
+import {useEffect, useState, useRef, Suspense, lazy} from 'react';
 import {
   getCookie,
   eraseCookie,
@@ -8,7 +8,8 @@ import {
 } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {useCustomerState} from '~/hooks/useCostumer';
-import Search, {links as searchStyles} from '~/modules/search';
+const Search = lazy(() => import('~/modules/search'));
+import {links as searchStyles} from '~/modules/search';
 import {Await} from '@remix-run/react';
 
 import styles from './styles.css';

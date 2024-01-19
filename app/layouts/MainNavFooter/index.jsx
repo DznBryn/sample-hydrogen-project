@@ -1,17 +1,19 @@
-import SliderAccount, {
-  links as sliderAccountStyles,
-} from '~/modules/sliderAccount';
+const SliderAccount = lazy(() => import('~/modules/sliderAccount'));
+import {links as sliderAccountStyles} from '~/modules/sliderAccount';
 import NavPlaceholder, {
   links as NavPlaceholderStyles,
 } from '~/modules/navPlaceholder';
 import {getCMSDoc} from '~/utils/functions/eventFunctions';
-import SliderCart, {links as sliderCartStyles} from '~/modules/sliderCart';
-import BodyBottom, {links as BodyBottomStyles} from '~/modules/bodyBottom';
+const SliderCart = lazy(() => import('~/modules/sliderCart'));
+import {links as sliderCartStyles} from '~/modules/sliderCart';
+const BodyBottom = lazy(() => import('~/modules/bodyBottom'));
+import {links as BodyBottomStyles} from '~/modules/bodyBottom';
 import MainNav, {links as mainNavStyles} from '~/modules/mainNav';
-import Footer, {links as footerStyles} from '~/modules/footer';
+const Footer = lazy(() => import('~/modules/footer'));
+import {links as footerStyles} from '~/modules/footer';
 import {Await, useMatches} from '@remix-run/react';
 import {useCollection} from '~/hooks/useCollection';
-import {Suspense} from 'react';
+import {Suspense, lazy} from 'react';
 
 export const links = () => {
   return [
@@ -82,7 +84,9 @@ const MainNavFooter = ({children}) => {
         </Suspense>
       )}
 
-      <SliderAccount />
+      <Suspense>
+        <SliderAccount />
+      </Suspense>
 
       {children}
 
