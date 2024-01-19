@@ -1,4 +1,4 @@
-import {useRef, useEffect, Suspense} from 'react';
+import {useRef, useEffect, Suspense, lazy} from 'react';
 import {createCustomEvent, getCMSDoc} from '~/utils/functions/eventFunctions';
 import DesktopNavItem, {
   links as desktopNavItemStyles,
@@ -15,9 +15,10 @@ import NavTopHeader, {
 import MobileNavbar, {
   links as mobileNavbarStyles,
 } from '~/modules/mainNav/mobileNavbar';
-import MainNavMobileOverlay, {
-  links as mainNavMobileOverlayStyles,
-} from '~/modules/mainNav/mainNavMobileOverlay';
+const MainNavMobileOverlay = lazy(() =>
+  import('~/modules/mainNav/mainNavMobileOverlay'),
+);
+import {links as mainNavMobileOverlayStyles} from '~/modules/mainNav/mainNavMobileOverlay';
 import PromoOfferBar, {
   links as promoOfferBarStyles,
 } from '~/modules/mainNav/promoOfferBar';
@@ -175,10 +176,12 @@ const MainNav = ({
 
       <MobileNavbar content={mobileNavbar} />
 
-      <MainNavMobileOverlay
-        mobileOverlayItems={mobileOverlayNav?.headerNavItems}
-        mobileNavMainButton={mobileNavMainButton}
-      />
+      <Suspense>
+        <MainNavMobileOverlay
+          mobileOverlayItems={mobileOverlayNav?.headerNavItems}
+          mobileNavMainButton={mobileNavMainButton}
+        />
+      </Suspense>
     </section>
   );
 };
