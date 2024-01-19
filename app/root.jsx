@@ -72,16 +72,8 @@ export const meta = () => [
   },
 ];
 
-let mainNavFooter;
-let products;
-let listrakRec;
-let footers;
-let emailSmsSignupContent;
-let cartPageConfig;
-let mobileNavFooterMainButton;
-let announcementTopBanner;
-let searchConfig;
-let customer = {data: undefined, accessToken: undefined};
+const CMSDataCache = {};
+const customerCache = {accessToken: undefined, data: undefined};
 
 export async function loader({context, request}) {
   const referer = request.headers.get('referer');
@@ -100,8 +92,16 @@ export async function loader({context, request}) {
   }
 
   /**
+   * CMS DATA
+   */
+  if (!referer || shouldRequestCMSData(CMSDataCache)) {
+    await requestCMSData(context, CMSDataCache);
+  }
+
+  /**
    * SHOPIFY DATA
    */
+
   const [cartId, curCustomerAccessToken] = await Promise.all([
     context.session.get('cartId'),
     context.session.get('customerAccessToken'),
@@ -110,70 +110,32 @@ export async function loader({context, request}) {
   const cart = cartId ? await getCart(context, cartId) : {};
 
   if (
-    customer.accessToken !== curCustomerAccessToken ||
-    customer.data === undefined
+    customerCache.accessToken !== curCustomerAccessToken ||
+    customerCache.data === undefined
   ) {
-    customer.data = await getCustomerData(context, curCustomerAccessToken);
-    customer.accessToken = curCustomerAccessToken;
+    customerCache.data = await getCustomerData(context, curCustomerAccessToken);
+    customerCache.accessToken = curCustomerAccessToken;
   }
-  /**
-   * CMS DATA
-   */
 
-  if (
-    !referer ||
-    mainNavFooter === undefined ||
-    products === undefined ||
-    listrakRec === undefined ||
-    footers === undefined ||
-    cartPageConfig === undefined ||
-    mobileNavFooterMainButton === undefined ||
-    announcementTopBanner === undefined ||
-    searchConfig === undefined ||
-    emailSmsSignupContent === undefined
-  ) {
-    listrakRec = getCMSContent(context, GET_LISTRAK_REC);
-    footers = getCMSContent(context, GET_FOOTERS);
-    cartPageConfig = getCMSContent(context, GET_CART_PAGE_CONFIG);
-    searchConfig = getCMSContent(context, GET_SEARCH_CONFIG);
-    announcementTopBanner = getCMSContent(context, GET_ANNOUNCEMENT_TOP_BANNER);
-    mobileNavFooterMainButton = getCMSContent(
-      context,
-      GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
-    );
-    emailSmsSignupContent = getCMSContent(
-      context,
-      GET_EMAIL_SMS_SIGNUP_CONTENT,
-    );
-
-    const CMSData = await Promise.all([
-      getMainNavFooterCMSData(context),
-      getCMSContent(context, GET_PRODUCTS),
-    ]);
-
-    mainNavFooter = CMSData[0];
-    products = CMSData[1];
-  }
+  //
 
   headers.set('Set-Cookie', await context.session.commit());
 
   return defer(
     {
       cart,
-      previewMode: context.session.get('previewMode') === 'true',
-      customer: customer.data,
-      listrakRec,
-      footers,
-      cartPageConfig,
-      searchConfig,
-      mobileNavFooterMainButton,
-      emailSmsSignupContent,
-      announcementTopBanner,
-      mainNavFooterCMSData: {
-        ...mainNavFooter,
-      },
-      productsCMSData: products,
+      customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
+      previewMode: context.session.get('previewMode') === 'true',
+      footers: CMSDataCache.footers,
+      listrakRec: CMSDataCache.listrakRec,
+      searchConfig: CMSDataCache.searchConfig,
+      productsCMSData: CMSDataCache.productsCMS,
+      cartPageConfig: CMSDataCache.cartPageConfig,
+      mainNavFooterCMSData: CMSDataCache.mainNavFooterCMSData,
+      announcementTopBanner: CMSDataCache.announcementTopBanner,
+      emailSmsSignupContent: CMSDataCache.emailSmsSignupContent,
+      mobileNavFooterMainButton: CMSDataCache.mobileNavFooterMainButton,
     },
     {
       status: 200,
@@ -266,6 +228,14 @@ function RootStructure({children}) {
 }
 
 //
+//
+//
+//
+//
+
+/**
+ * UTILS
+ */
 
 async function checkRedirect(context, request) {
   const {pathname} = new URL(request.url);
@@ -306,4 +276,37 @@ function togglePreviewMode(context, url, referer) {
 
 function updatePreviewModeURL() {
   pushQueryParam('previewMode', 'true');
+}
+
+function shouldRequestCMSData(cacheObj) {
+  const props = Object.values(cacheObj);
+  return props.some((data) => data === undefined) || props.length === 0;
+}
+
+async function requestCMSData(context, cacheObj) {
+  cacheObj.cartPageConfig = getCMSContent(context, GET_CART_PAGE_CONFIG);
+  cacheObj.searchConfig = getCMSContent(context, GET_SEARCH_CONFIG);
+  cacheObj.listrakRec = getCMSContent(context, GET_LISTRAK_REC);
+  cacheObj.footers = getCMSContent(context, GET_FOOTERS);
+
+  cacheObj.announcementTopBanner = getCMSContent(
+    context,
+    GET_ANNOUNCEMENT_TOP_BANNER,
+  );
+  cacheObj.mobileNavFooterMainButton = getCMSContent(
+    context,
+    GET_MOBILE_NAV_FOOTER_MAIN_BUTTON,
+  );
+  cacheObj.emailSmsSignupContent = getCMSContent(
+    context,
+    GET_EMAIL_SMS_SIGNUP_CONTENT,
+  );
+
+  const data = await Promise.all([
+    getMainNavFooterCMSData(context),
+    getCMSContent(context, GET_PRODUCTS),
+  ]);
+
+  cacheObj.mainNavFooterCMSData = data[0];
+  cacheObj.productsCMS = data[1];
 }
