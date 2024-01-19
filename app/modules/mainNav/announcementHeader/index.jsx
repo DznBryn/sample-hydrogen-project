@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react';
-import { PortableText } from '@portabletext/react';
-import ModalGeneric, { links as modalGenericStyles } from '~/modules/modalGeneric';
-import { Link } from '@remix-run/react';
+import {useState, useEffect} from 'react';
+import {PortableText} from '@portabletext/react';
+import ModalGeneric, {
+  links as modalGenericStyles,
+} from '~/modules/modalGeneric';
+import {Link} from '@remix-run/react';
 
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-    ...modalGenericStyles(),
-  ];
+  return [{rel: 'stylesheet', href: styles}, ...modalGenericStyles()];
 };
 
-const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
+const AnnouncementHeader = ({announcementMessages, fontColor}) => {
   const [index, setIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -27,7 +26,8 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
     linkToGo,
   } = announcementMessages[index];
 
-  const getFirstPromoRichText = (messages) => messages[0] ? [messages[0]] : [];
+  const getFirstPromoRichText = (messages) =>
+    messages[0] ? [messages[0]] : [];
 
   const nextMessage = () => {
     if (announcementMessages[index + 1]) setIndex(index + 1);
@@ -48,27 +48,28 @@ const AnnouncementHeader = ({ announcementMessages, fontColor }) => {
   return (
     <>
       <div key={index} className={'messageBox'}>
-        <Link reloadDocument className={'messageLink'} style={{ fontColor: fontColor }} to={announcementURL}>
+        <Link
+          className={'messageLink'}
+          style={{fontColor: fontColor}}
+          to={announcementURL}
+        >
           <PortableText value={getFirstPromoRichText(announcementTextRaw)} />
-          {emoji && (
-            <img src={emoji.src} />
-          )}
+          {emoji && <img src={emoji.src} />}
         </Link>
         {shouldOpenModal && (
           <p
             className={'seeDetailsMessage'}
             onClick={handleModal}
-            style={{ color: fontColor }}
+            style={{color: fontColor}}
           >
             {modalLinkText}
           </p>
         )}
         {shouldOpenLink && (
           <Link
-            reloadDocument
             to={linkToGo}
             className={'seeDetailsMessage'}
-            style={{ color: fontColor }}
+            style={{color: fontColor}}
           >
             {modalLinkText}
           </Link>
