@@ -163,7 +163,7 @@ export const PRODUCT_QUERY = `#graphql
       key
       value
     }
-    images(first: 50) {
+    images(first: 200) {
       nodes {
         id
         url

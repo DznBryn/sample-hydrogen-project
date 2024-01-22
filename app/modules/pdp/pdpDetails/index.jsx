@@ -127,12 +127,12 @@ const PDPDetails = ({
                 shadeVariantsOos={shadeVariantsOos}
                 concealerImages={concealerImages}
               />
-              <div
+              {/* <div
                 className={'openSFButton'}
                 onClick={() => switchSliderPanelVisibility('ShadeFinderSlider')}
               >
                 find my shade <OpenSFButtonIcon />
-              </div>
+              </div> */}
             </>
           )}
         </>
@@ -590,19 +590,19 @@ const PDPDescription = ({classes, descriptionHtml, size}) => (
 
 export default PDPDetails;
 
-const OpenSFButtonIcon = () => (
-  <svg
-    width={26}
-    height={12}
-    viewBox="0 0 26 12"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <circle cx={6} cy={6} r={5.5} fill="#38241D" stroke="white" />
-    <circle cx={13} cy={6} r={5.5} fill="#B7875A" stroke="white" />
-    <circle cx={20} cy={6} r={5.5} fill="#F2D1B8" stroke="white" />
-  </svg>
-);
+// const OpenSFButtonIcon = () => (
+//   <svg
+//     width={26}
+//     height={12}
+//     viewBox="0 0 26 12"
+//     fill="none"
+//     xmlns="http://www.w3.org/2000/svg"
+//   >
+//     <circle cx={6} cy={6} r={5.5} fill="#38241D" stroke="white" />
+//     <circle cx={13} cy={6} r={5.5} fill="#B7875A" stroke="white" />
+//     <circle cx={20} cy={6} r={5.5} fill="#F2D1B8" stroke="white" />
+//   </svg>
+// );
 const QuestionMarkIcon = () => (
   <svg
     width={12}
