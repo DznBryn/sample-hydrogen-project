@@ -23,14 +23,18 @@ const PDPGallery = ({
   details,
 }) => {
   const {store} = useStore();
+  const hasSelectedVariant = !!store?.productPage?.selectedVariant ?? false;
   const images = getFilteredImages();
 
   function getFilteredImages() {
-    if (isShadeFinderRendering() || isConcealerFinderRendering()) {
+    if (
+      (isShadeFinderRendering() || isConcealerFinderRendering()) &&
+      hasSelectedVariant
+    ) {
       return getFindersFilteredImages();
     } else if (variants?.length <= 1) {
       return getSingleVariantFilteredImages();
-    } else if (variants?.length > 1 && store?.productPage?.selectedVariant) {
+    } else if (variants?.length > 1 && hasSelectedVariant) {
       return getVariantsFilteredImages();
     } else {
       return getDefaultImgs();
@@ -155,17 +159,15 @@ const PDPGallery = ({
   }
 
   function getFindersFilteredImages() {
-    return productImages.filter((img) =>
-      img?.url.includes(store?.productPage?.selectedVariant),
-    );
+    const shade = `shade${store?.productPage?.selectedShade}`;
+    return productImages.filter((img) => img?.url.includes(shade));
   }
 
   function getDefaultImgs() {
-    // return productImages.filter((img) => img?.url.includes('default')).length >
-    //   0
-    //   ? productImages.filter((img) => img.url.includes('default'))
-    // : productImages;
-    return productImages;
+    return productImages.filter((img) => img?.url.includes('default')).length >
+      0
+      ? productImages.filter((img) => img.url.includes('default'))
+      : productImages;
   }
 
   function isShadeFinderRendering() {

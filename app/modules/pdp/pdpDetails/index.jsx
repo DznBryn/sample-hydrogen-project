@@ -66,9 +66,9 @@ const PDPDetails = ({
   );
   const [viewType, setViewType] = useState('LIST');
   const shouldRenderSkinFinder =
-    product?.slug === 'radiant-skin-brightening-serum-skin-tint-spf-30';
+    product?.handle === 'radiant-skin-brightening-serum-skin-tint-spf-30';
   const shouldRenderConcealer =
-    product?.slug === 'radiant-skin-brightening-serum-concealer';
+    product?.handle === 'radiant-skin-brightening-serum-concealer';
 
   var {certifiedBadges} = product;
   certifiedBadges = certifiedBadges ? certifiedBadges[0]?.badges : [];
@@ -111,12 +111,12 @@ const PDPDetails = ({
                 shadeVariantsOos={shadeVariantsOos}
                 concealerImages={concealerImages}
               />
-              <div
+              {/* <div
                 className={'openSFButton'}
                 onClick={() => switchSliderPanelVisibility('ConcealerSlider')}
               >
                 find my shade <OpenSFButtonIcon />
-              </div>
+              </div> */}
             </>
           ) : (
             <>
