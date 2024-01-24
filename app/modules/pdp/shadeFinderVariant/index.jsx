@@ -328,6 +328,11 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     }),
       [store?.selectedShade];
 
+    const shadeVariantsSorted = mockedShadeResult.sort(
+      (a, b) =>
+        a.shadeRecommended.split(' - ')[0] - b.shadeRecommended.split(' - ')[0],
+    );
+
     return (
       <>
         {viewType === 'LIST' ? (
@@ -336,7 +341,7 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
             ref={variantsWraper}
             id="sfVariantsContainer"
           >
-            {mockedShadeResult.map(({shadeRecommended, shadeBackground}) => {
+            {shadeVariantsSorted.map(({shadeRecommended, shadeBackground}) => {
               return (
                 <>
                   {renderVariants(
@@ -351,17 +356,19 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
         ) : (
           <div className={'sfVariantsGridContainer'}>
             <div className={'sf_rowContainer'}>
-              {mockedShadeResult.map(({shadeRecommended, shadeBackground}) => {
-                return (
-                  <>
-                    {renderVariants(
-                      shadeRecommended,
-                      shadeBackground,
-                      selectedShade,
-                    )}
-                  </>
-                );
-              })}
+              {shadeVariantsSorted.map(
+                ({shadeRecommended, shadeBackground}) => {
+                  return (
+                    <>
+                      {renderVariants(
+                        shadeRecommended,
+                        shadeBackground,
+                        selectedShade,
+                      )}
+                    </>
+                  );
+                },
+              )}
             </div>
             <div className={'sf_shade'}>{shade}</div>
           </div>
