@@ -11,11 +11,11 @@ export function isFreeGitPromoActivate(cartConfig) {
 }
 
 export const compareItemsState = (curState, prevState) => {
-  if (curState.length !== prevState.length) {
+  if (curState?.length !== prevState?.length) {
     return true;
   }
-  for (let it = 0; it < curState.length; it++) {
-    if (curState[it].quantity !== prevState[it].quantity) {
+  for (let it = 0; it < curState?.length; it++) {
+    if (curState[it]?.quantity !== prevState[it]?.quantity) {
       return true;
     }
   }

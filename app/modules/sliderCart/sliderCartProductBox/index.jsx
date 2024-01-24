@@ -7,6 +7,7 @@ import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import styles from './styles.css';
+import {PortableText} from '@portabletext/react';
 
 let sitewide = false;
 export const links = () => {
@@ -182,10 +183,9 @@ const RegularProduct = ({
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
-  const hasSellingPlans =
-    item?.merchandise?.product?.tags?.find((tag) =>
-      tag.includes('subscriptioneligible'),
-    ) || item.hasSellingPlans;
+  const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
+    tag.includes('subscriptionEligible'),
+  );
 
   return (
     <div className={'sliderCartProduct'}>
@@ -446,18 +446,22 @@ const ADSwitcherContent = ({
 
   async function switchProductAD() {
     const changeToAD = switcherInput.current.checked;
+    const sellingPlanId = sellingPlansDropdown.current
+      ? sellingPlansDropdown?.current?.value
+      : getSellingPlan();
 
     const lineItem = {
       id: item?.id,
       quantity: item?.quantity ?? 1,
       sellingPlanId: changeToAD
-        ? `gid://shopify/SellingPlan/${sellingPlansDropdown?.current?.value}`
+        ? `gid://shopify/SellingPlan/${sellingPlanId}`
         : null,
     };
 
     const formData = new FormData();
     formData.append('cartAction', 'UPDATE_CART');
     formData.append('lines', JSON.stringify([lineItem]));
+
     try {
       // Using fetcher.submit() for form submission
       return await fetcher.submit(formData, {
@@ -503,20 +507,19 @@ const ADSwitcherContent = ({
             ))}
           </select>
         </div>
+      ) : cartPageConfig?.switchAutoDeliveryMessageRaw?.[0] ? (
+        <PortableText value={cartPageConfig.switchAutoDeliveryMessageRaw[0]} />
       ) : (
         <span>
           Switch to Auto Delivery:{' '}
           <b>
-            {cartPageConfig?.autoDeliveryMessage?.promoMessage ??
-              'get 15% off & free shipping'}{' '}
-            + <span>300 rewards points!*</span>
+            {'get 15% off & free shipping'} + <span>300 rewards points!*</span>
           </b>
         </span>
       )}
     </div>
   );
 };
-
 const LoyaltyBadgeIcon = () => (
   <svg
     width={12}
