@@ -221,7 +221,8 @@
   background-color: #48c6d9;
 }
 
-.switcherContainer > span {
+.switcherContainer > span,
+.switcherContainer > p {
   font-weight: 300;
   font-size: 12px;
   color: #48c6d9;

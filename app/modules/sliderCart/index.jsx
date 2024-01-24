@@ -101,7 +101,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   useEffect(() => {
     const isGWPPromoToggleOn = isFreeGitPromoActivate(cartConfig);
     if (cart?.totalQuantity && isGWPPromoToggleOn) checkGWPThreshold();
-  }, JSON.stringify(cart?.lines));
+  }, [JSON.stringify(cart?.lines)]);
 
   useEffect(() => {
     if (
@@ -287,10 +287,10 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   }
 
   if (prevState !== null && compareItemsState(items, prevState)) {
-    if (items.length === 0 && prevState.length > 0) {
+    if (items?.length === 0 && prevState?.length > 0) {
       if (typeof _ltk !== 'undefined') {
         // eslint-disable-next-line no-undef
-        _ltk.SCA.ClearCart();
+        _ltk?.SCA?.ClearCart();
       }
     } else {
       updateListrakCart(

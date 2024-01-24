@@ -1,5 +1,4 @@
 import {redirect} from '@remix-run/server-runtime';
-import {parseGid} from '@shopify/hydrogen';
 import {json} from '@shopify/remix-oxygen';
 import {
   cartAddItems,
@@ -74,7 +73,6 @@ export async function action({request, context}) {
     if (updatesLines.length === 0) {
       return json({message: 'No lines to update'}, {status: 400});
     }
-
     result = await cartUpdate({
       cartId,
       lines: updatesLines,
@@ -133,7 +131,7 @@ export async function action({request, context}) {
   let cartData = null;
 
   if (!cart?.lines) {
-    if (cart?.id && parseGid(cart.id)?.id) {
+    if (cart?.id) {
       cartData = await getCart(context, cart.id);
     }
   }

@@ -88,22 +88,23 @@ const AccountSubscription = ({active}) => {
               our customer service a call (844-545-1236).
             </p>
 
-            {data?.subscription?.active?.results.length === 0 &&
-              data.subscription?.inactive?.results.length === 0 && (
-                <div className="noSubscription">
-                  <div className="noSubscription__container">
-                    <p>
-                      Currently, you do not have any products on auto-delivery
-                      yet. Start receiving your TULA favorites on your schedule
-                      & save 15% on each delivery (plus all the other perks!).
-                      Enroll now—your skin will thank you.
-                    </p>
-                    <Link to={'/collections/all'} className="underline-btn">
-                      Shop Now
-                    </Link>
-                  </div>
+            {((data?.subscription?.active?.results.length === 0 &&
+              data.subscription?.inactive?.results.length === 0) ||
+              !data.subscription) && (
+              <div className="noSubscription">
+                <div className="noSubscription__container">
+                  <p>
+                    Currently, you do not have any products on auto-delivery
+                    yet. Start receiving your TULA favorites on your schedule &
+                    save 15% on each delivery (plus all the other perks!).
+                    Enroll now—your skin will thank you.
+                  </p>
+                  <Link to={'/collections/all'} className="underline-btn">
+                    Shop Now
+                  </Link>
                 </div>
-              )}
+              </div>
+            )}
             {data?.subscription?.inactive?.results.length > 0 && (
               <div className={'activeProducts'}>
                 <h3>

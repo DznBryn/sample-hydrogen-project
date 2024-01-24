@@ -522,14 +522,16 @@ export function convertStorefrontIdToExternalId(str) {
 export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
   var _ltk = _ltk || null;
   if (typeof _ltk === 'object') {
-    _ltk.SCA.Meta1 = token;
-    _ltk.SCA.CartLink = encodeURI(
-      JSON.stringify(cartLink).replace(/:/gi, '-'),
-    ).replace(/,/gi, '%2C');
-    if (isAutoDelivery) {
-      _ltk.SCA.Meta1 = 'Auto-Delivery';
+    if (_ltk?.SCA) {
+      _ltk.SCA.Meta1 = token;
+      _ltk.SCA.CartLink = encodeURI(
+        JSON.stringify(cartLink).replace(/:/gi, '-'),
+      ).replace(/,/gi, '%2C');
+      if (isAutoDelivery) {
+        _ltk.SCA.Meta1 = 'Auto-Delivery';
+      }
+      _ltk.SCA.Submit();
     }
-    _ltk.SCA.Submit();
   } else {
     return false;
   }
