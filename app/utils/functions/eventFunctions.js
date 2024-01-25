@@ -523,6 +523,17 @@ export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
   var _ltk = _ltk || null;
   if (typeof _ltk === 'object') {
     if (_ltk?.SCA) {
+      items.forEach((item) => {
+        const curTotal = item.cost.totalAmount.amount;
+        _ltk.SCA.AddItemWithLinks(
+          item.merchandise.product.id,
+          item.quantity,
+          curTotal,
+          item.merchandise.product.title,
+          item.merchandise.image.url,
+          'http://www.tula.com/' + item.merchandise.product.handle,
+        );
+      });
       _ltk.SCA.Meta1 = token;
       _ltk.SCA.CartLink = encodeURI(
         JSON.stringify(cartLink).replace(/:/gi, '-'),
@@ -598,7 +609,7 @@ export function getCollectionWithCMSData(
 
   if (collectionCopy?.products) {
     collectionCopy.products = collectionCopy?.products.map((product) => {
-      const CMSData = productsCMSData.find(
+      const CMSData = productsCMSData?.find(
         (data) => product.handle === data.productId,
       );
       return {...product, ...CMSData};

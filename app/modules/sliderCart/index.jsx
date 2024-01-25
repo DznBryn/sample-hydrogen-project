@@ -275,35 +275,41 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     }
   }, [status]);
 
-  if (prevState === null && items?.length > 0) {
-    prevState = cart?.lines ? flattenConnection(cart.lines) : items;
+  (function setupListrakCart() {
+    const {lines, id, checkoutUrl} = cart;
 
-    updateListrakCart(
-      items,
-      cart.id,
-      cart.checkoutUrl,
-      isAutoDeliveryInCart(items),
-    );
-  }
+    const cartProducts = flattenConnection(lines);
+    const isCartEmpty = cartProducts?.length === 0;
+    const isCartUpdated = compareItemsState(cartProducts, prevState);
 
-  if (prevState !== null && compareItemsState(items, prevState)) {
-    if (items?.length === 0 && prevState?.length > 0) {
-      if (typeof _ltk !== 'undefined') {
-        // eslint-disable-next-line no-undef
-        _ltk?.SCA?.ClearCart();
-      }
-    } else {
+    if (prevState === null && !isCartEmpty) {
+      prevState = cartProducts;
+
       updateListrakCart(
-        items,
-        cart.id,
-        cart.checkoutUrl,
-        isAutoDeliveryInCart(items),
+        cartProducts,
+        id,
+        checkoutUrl,
+        isAutoDeliveryInCart(cartProducts),
       );
+    }
+
+    if (prevState !== null && isCartUpdated) {
+      if (isCartEmpty && prevState?.length > 0) {
+        if (typeof window !== 'undefined') {
+          window._ltk?.SCA?.ClearCart();
+        }
+      } else {
+        updateListrakCart(
+          cartProducts,
+          id,
+          checkoutUrl,
+          isAutoDeliveryInCart(cartProducts),
+        );
+      }
       prevState = items;
     }
-  }
+  })();
 
-  useEffect(() => {}, [isSliderCartOpen]);
   const cartContentProps = {
     cart,
     items,
