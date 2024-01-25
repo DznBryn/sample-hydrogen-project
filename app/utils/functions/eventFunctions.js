@@ -642,7 +642,7 @@ export function getCMSProductsWithShopifyData(
     });
   }
 
-  return newArray;
+  return newArray.filter((data) => data.id); //only products found in Shopify all collection
 }
 
 export function getPageOnCMSBySlug(pagesOnCMS, slug) {
