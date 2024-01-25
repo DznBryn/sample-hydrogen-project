@@ -23,13 +23,13 @@ export function useCollection(slug) {
     }
   }, []);
 
-  useEffect(() => {
+  (function cacheCollection() {
     if (data !== undefined && !collectionIsCached()) {
       cachedCollections.push(
         getCollectionWithCMSData(data?.collection, productsCMSData),
       );
     }
-  }, [data]);
+  })();
 
   function collectionIsCached() {
     return cachedCollections.some((collection) => collection.handle === slug);
