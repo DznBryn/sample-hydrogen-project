@@ -115,6 +115,7 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
                 onClick={() => {
                   triggerAnalyticsLoyaltyEvents('AddToCart', {source: null});
                 }}
+                availableForSale={product?.totalInventory > 0}
               />
             </div>
             <span>step two:</span>
