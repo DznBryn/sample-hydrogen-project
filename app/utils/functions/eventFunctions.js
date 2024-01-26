@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {getCustomer} from '~/utils/graphql/shopify/queries/customer';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
-import {flattenConnection} from '@shopify/hydrogen';
+import {flattenConnection, parseGid} from '@shopify/hydrogen';
 import {useCartState} from '~/hooks/useCart';
 import getApiKeys from './getApiKeys';
 import {getProductByHandle} from '../graphql/shopify/queries/collections';
@@ -520,13 +520,12 @@ export function convertStorefrontIdToExternalId(str) {
 }
 
 export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
-  var _ltk = _ltk || null;
-  if (typeof _ltk === 'object') {
-    if (_ltk?.SCA) {
+  if (typeof window === 'object') {
+    if (window._ltk?.SCA) {
       items.forEach((item) => {
         const curTotal = item.cost.totalAmount.amount;
-        _ltk.SCA.AddItemWithLinks(
-          item.merchandise.product.id,
+        window._ltk.SCA.AddItemWithLinks(
+          parseGid(item.merchandise.product.id).id,
           item.quantity,
           curTotal,
           item.merchandise.product.title,
@@ -534,14 +533,17 @@ export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
           'http://www.tula.com/' + item.merchandise.product.handle,
         );
       });
-      _ltk.SCA.Meta1 = token;
-      _ltk.SCA.CartLink = encodeURI(
+
+      window._ltk.SCA.Meta1 = token;
+      window._ltk.SCA.CartLink = encodeURI(
         JSON.stringify(cartLink).replace(/:/gi, '-'),
       ).replace(/,/gi, '%2C');
+
       if (isAutoDelivery) {
-        _ltk.SCA.Meta1 = 'Auto-Delivery';
+        window._ltk.SCA.Meta1 = 'Auto-Delivery';
       }
-      _ltk.SCA.Submit();
+
+      window._ltk.SCA.Submit();
     }
   } else {
     return false;
