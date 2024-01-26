@@ -72,6 +72,9 @@ export const PRODUCTS_QUERY = `#graphql
             price{
               amount
             }
+            compareAtPrice{
+              amount
+            }
           }
         }
         priceRange{
