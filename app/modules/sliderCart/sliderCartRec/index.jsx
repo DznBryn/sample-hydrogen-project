@@ -51,7 +51,11 @@ const SliderCartRec = ({productRecs, limit, gwpProductId}) => {
                     </div>
                   </div>
                   <div className={'addToCartContainer'}>
-                    <PDPAddToCart addItem={addItem} classes={['addToCart']} />
+                    <PDPAddToCart
+                      addItem={addItem}
+                      classes={['addToCart']}
+                      availableForSale={addItem?.product?.totalInventory > 0}
+                    />
                   </div>
                 </div>
               );
