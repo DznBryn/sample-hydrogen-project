@@ -17,6 +17,12 @@ const PageMeta = () => {
     <>
       <script
         defer
+        src="//cdn.storerocket.io/widget.js"
+        id="storelocatorescript"
+      ></script>
+
+      <script
+        defer
         src={`https://cdn-loyalty.yotpo.com/loader/${
           getApiKeys().YOTPO_LOYALTY_GUID
         }.js`}
