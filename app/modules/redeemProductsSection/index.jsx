@@ -50,6 +50,14 @@ const RedeemProductsSection = (props) => {
     }
   }, [props]);
 
+  useEffect(() => {
+    if (typeof window?.yotpoWidgetsContainer === 'object') {
+      if (typeof window?.yotpoWidgetsContainer?.initWidgets === 'function') {
+        window?.yotpoWidgetsContainer?.initWidgets();
+      }
+    }
+  });
+
   const [buttonDisabled, setButtonDisabled] = useState('prev');
   const navigationNextRef = useRef(null);
   const navigationPrevRef = useRef(null);
