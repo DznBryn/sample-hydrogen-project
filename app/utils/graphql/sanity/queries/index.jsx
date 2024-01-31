@@ -196,11 +196,8 @@ export const GET_PRESS_PAGE = gql`
       productRecommendations {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
@@ -281,11 +278,8 @@ export const GET_AUTO_DELIVERY = gql`
       featuredCollection {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
@@ -733,11 +727,8 @@ export const GET_HEADER_CONFIG = gql`
           carouselProductCollection {
             name
             promoPosition1
-            promoOneLink
             promoPosition2
-            promoTwoLink
             promoPosition3
-            promoThreeLink
             additionalProductsTitle
             additionalProducts
             showCompareButton
@@ -829,11 +820,8 @@ export const GET_HEADER_CONFIG = gql`
             imageCollectionLink {
               name
               promoPosition1
-              promoOneLink
               promoPosition2
-              promoTwoLink
               promoPosition3
-              promoThreeLink
               additionalProductsTitle
               additionalProducts
               showCompareButton
@@ -843,11 +831,8 @@ export const GET_HEADER_CONFIG = gql`
             menuCollections {
               name
               promoPosition1
-              promoOneLink
               promoPosition2
-              promoTwoLink
               promoPosition3
-              promoThreeLink
               additionalProductsTitle
               additionalProducts
               showCompareButton
@@ -1073,11 +1058,8 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
       collectionOne {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
@@ -1094,11 +1076,8 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
       collectionTwo {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
@@ -1115,11 +1094,8 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
       collectionThree {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
@@ -1136,11 +1112,8 @@ export const GET_HOME_PAGE_RECOMMENDATIONS = gql`
       collectionFour {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
@@ -1365,16 +1338,59 @@ export const GET_PRODUCT_COLLECTIONS = gql`
   query GetAllProductCollections {
     allProductCollections {
       name
+      promoBanner1 {
+        imageMobile {
+          asset {
+            _id
+            url
+          }
+        }
+        imageDesktop {
+          asset {
+            _id
+            url
+          }
+        }
+        url
+      }
       promoPosition1
-      promoOneLink
+      promoBanner2 {
+        imageMobile {
+          asset {
+            _id
+            url
+          }
+        }
+        imageDesktop {
+          asset {
+            _id
+            url
+          }
+        }
+        url
+      }
       promoPosition2
-      promoTwoLink
+      promoBanner3 {
+        imageMobile {
+          asset {
+            _id
+            url
+          }
+        }
+        imageDesktop {
+          asset {
+            _id
+            url
+          }
+        }
+        url
+      }
       promoPosition3
-      promoThreeLink
+      fireworkStoryBannerID
+      fireworkStoryPosition
       additionalProductsTitle
       additionalProducts
       showCompareButton
-      fireworkStoryPosition
       collectionId
     }
   }
@@ -1562,11 +1578,8 @@ export const GET_INFLUENCER_PAGE = gql`
       plpCollection {
         name
         promoPosition1
-        promoOneLink
         promoPosition2
-        promoTwoLink
         promoPosition3
-        promoThreeLink
         additionalProductsTitle
         additionalProducts
         showCompareButton
