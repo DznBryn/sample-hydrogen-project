@@ -275,7 +275,11 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     }
   }, [status]);
 
-  (function setupListrakCart() {
+  useEffect(() => {
+    setupListrakCart();
+  }, [cart.lines]);
+
+  function setupListrakCart() {
     const {lines, id, checkoutUrl} = cart;
 
     const cartProducts = flattenConnection(lines);
@@ -284,16 +288,13 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
 
     if (prevState === null && !isCartEmpty) {
       prevState = cartProducts;
-
       updateListrakCart(
         cartProducts,
         id,
         checkoutUrl,
         isAutoDeliveryInCart(cartProducts),
       );
-    }
-
-    if (prevState !== null && isCartUpdated) {
+    } else if (prevState !== null && isCartUpdated) {
       if (isCartEmpty && prevState?.length > 0) {
         if (typeof window !== 'undefined') {
           window._ltk?.SCA?.ClearCart();
@@ -306,9 +307,9 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
           isAutoDeliveryInCart(cartProducts),
         );
       }
-      prevState = items;
+      prevState = cartProducts;
     }
-  })();
+  }
 
   const cartContentProps = {
     cart,
