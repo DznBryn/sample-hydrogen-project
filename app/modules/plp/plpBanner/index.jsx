@@ -52,6 +52,7 @@ const BannerMobile = ({banner = {}, ...rest}) => {
 
 const PLPBanner = ({banner, ...rest}) => {
   const [isMobile, setIsMobile] = useState();
+  const bannerData = getFormatedBannerData(banner);
 
   useEffect(() => {
     if (window?.innerWidth < 500) {
@@ -74,12 +75,6 @@ const PLPBanner = ({banner, ...rest}) => {
     };
   }, []);
 
-  let bannerData = {};
-  banner[1]?.forEach((field) => {
-    let newKeyValue = field.key.split('-')[field.key.split('-').length - 1];
-    bannerData[newKeyValue] = field.value;
-  });
-
   return Object.keys(bannerData).length > 0 ? (
     isMobile ? (
       <BannerMobile banner={bannerData} {...rest} />
@@ -88,5 +83,22 @@ const PLPBanner = ({banner, ...rest}) => {
     )
   ) : null;
 };
+
+function getFormatedBannerData(banner) {
+  let bannerObj = {};
+  const {id, imageDesktop, imageMobile, url} = banner;
+
+  if (id) {
+    bannerObj = {id};
+  } else {
+    bannerObj = {
+      desktop: imageDesktop.asset.url + '?auto=format',
+      mobile: imageMobile.asset.url + '?auto=format',
+      url,
+    };
+  }
+
+  return bannerObj;
+}
 
 export default PLPBanner;
