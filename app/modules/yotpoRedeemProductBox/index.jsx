@@ -141,9 +141,7 @@ const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
 
   if (hasYotpoVariant) {
     const addYotpoVariantItem = {
-      variantId: Number(
-        yotpoVariant.id.replace(stringToBeReplacedOnProductVariant, ''),
-      ),
+      variantId: yotpoVariant.id,
       quantity: 1,
       selling_plan_id: 0,
       product,
@@ -165,12 +163,7 @@ const Button = ({product, opensBlank = false, yotpoVariant, ...rest}) => {
   const addItem = outOfStock
     ? {}
     : {
-        variantId: Number(
-          variants?.nodes[0]?.id.replace(
-            stringToBeReplacedOnProductVariant,
-            '',
-          ),
-        ),
+        variantId: variants?.nodes[0]?.id,
         quantity: 1,
         selling_plan_id: 0,
         product,
