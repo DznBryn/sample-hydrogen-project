@@ -41,6 +41,12 @@ import {useEffect} from 'react';
 import {getCart} from './utils/graphql/shopify/queries/cart';
 
 import styles from './styles/app.css';
+import {parseGid} from '@shopify/hydrogen';
+import {
+  getCustomerAddresses,
+  getCustomerOrders,
+  getCustomerSubscription,
+} from './utils/services/subscription';
 
 export const links = () => {
   return [
@@ -108,21 +114,39 @@ export async function loader({context, request}) {
   ]);
 
   const cart = cartId ? await getCart(context, cartId) : {};
-
+  let activeSubscription = {};
+  let inactiveSubscription = {};
+  let subscriptionOrders = {};
+  let subscriptionAddresses = {};
   if (
     customerCache.accessToken !== curCustomerAccessToken ||
     customerCache.data === undefined
   ) {
     customerCache.data = await getCustomerData(context, curCustomerAccessToken);
     customerCache.accessToken = curCustomerAccessToken;
-  }
+    customerCache.data.subscription = {};
+    const customerId = parseGid(customerCache.data.id).id;
 
-  //
+    activeSubscription = await getCustomerSubscription(customerId, true);
+    inactiveSubscription = await getCustomerSubscription(customerId);
+    subscriptionOrders = await getCustomerOrders(customerId);
+    subscriptionAddresses = await getCustomerAddresses(customerId);
+
+    subscriptionAddresses &&
+      (customerCache.data.subscription.addresses = subscriptionAddresses);
+    activeSubscription &&
+      (customerCache.data.subscription.active = activeSubscription);
+    inactiveSubscription &&
+      (customerCache.data.subscription.inactive = inactiveSubscription);
+    subscriptionOrders &&
+      (customerCache.data.subscription.orders = subscriptionOrders);
+  }
 
   headers.set('Set-Cookie', await context.session.commit());
 
   return defer(
     {
+      request,
       cart,
       customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
@@ -152,6 +176,7 @@ export default function App() {
     data = null,
     toggleCart,
   } = useStore((store) => store?.cart ?? null);
+
   const {data: customerData, setCustomerData} = useStore(
     (store) => store?.account ?? {},
   );
@@ -246,12 +271,15 @@ async function checkRedirect(context, request) {
       source: pathname,
     });
 
+    console.log('redirect', {
+      pathname,
+      redirectObj,
+    });
     if (redirectObj[0]?.destination) {
       const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
       redirect = {destination: redirectObj[0]?.destination, statusCode};
     }
   }
-
   return redirect;
 }
 
