@@ -102,8 +102,8 @@ const Navigation = ({overlayItems}) => {
   function handleClickOnOption(e) {
     const menuOption = e.currentTarget.parentNode;
     const icon = menuOption.querySelector('.navIcon');
-    const subItems = menuOption.querySelector('.navGroupItems');
-    const isItOpen = menuOption.classList.contains('active');
+    const subItems = menuOption?.querySelector('.navGroupItems');
+    const isItOpen = menuOption?.classList?.contains('active');
 
     if (menuOption) {
       optionOffsetHeight = optionOffsetHeight || menuOption.offsetHeight;
@@ -114,7 +114,7 @@ const Navigation = ({overlayItems}) => {
           : optionOffsetHeight + subItems.offsetHeight) + 'px';
       const iconToShow = isItOpen ? '+' : '–';
 
-      menuOption.classList[isItOpen ? 'remove' : 'add']('active');
+      menuOption?.classList[isItOpen ? 'remove' : 'add']('active');
       menuOption.style.height = heightToGo;
       icon.textContent = iconToShow;
     }
@@ -281,13 +281,13 @@ const handleClickOnLink = () => {
   const containerElem = document.querySelector('#frontend-root');
   const menuElem = document.querySelector('.styles_menu__1eESF ');
   const menuWraper = document.querySelector('[data-visible-state]');
-  const isActive = containerElem.classList.contains(activeOverlayClassName);
+  const isActive = containerElem?.classList?.contains(activeOverlayClassName);
 
-  if (isActive) containerElem.classList.remove(activeOverlayClassName);
+  if (isActive) containerElem.classList?.remove(activeOverlayClassName);
 
-  if (menuElem) menuElem.classList.remove('styles_opened__3TPmZ');
-  menuWraper.setAttribute('data-visible-state', 'hide');
-  menuWraper.dispatchEvent(dataEvent);
+  if (menuElem) menuElem.classList?.remove('styles_opened__3TPmZ');
+  menuWraper?.setAttribute('data-visible-state', 'hide');
+  menuWraper?.dispatchEvent(dataEvent);
 };
 
 const icons = {

@@ -56,23 +56,23 @@ const MobileNavbar = ({content}) => {
   function handleOnScroll() {
     if (avoidScrollEffect()) return;
 
-    const scrollTop = document.documentElement.scrollTop;
+    const scrollTop = document?.documentElement?.scrollTop;
     const mobileWrap = document.querySelector('.mobileNavBar_container');
 
     if (!initScroll && scrollTop > 30) {
-      mobileWrap.classList.add('inactive');
+      mobileWrap?.classList.add('inactive');
       initScroll = true;
       prevScrollTop = scrollTop;
     } else {
-      if (document.documentElement.scrollTop > 10) {
+      if (document?.documentElement.scrollTop > 10) {
         if (prevScrollTop < scrollTop) {
-          if (!mobileWrap.classList.contains('inactive')) {
-            mobileWrap.classList.add('inactive');
+          if (!mobileWrap?.classList?.contains('inactive')) {
+            mobileWrap?.classList?.add('inactive');
           }
         }
         if (prevScrollTop > scrollTop) {
-          if (mobileWrap.classList.contains('inactive')) {
-            mobileWrap.classList.remove('inactive');
+          if (mobileWrap?.classList?.contains('inactive')) {
+            mobileWrap?.classList?.remove('inactive');
           }
         }
       }
