@@ -3,7 +3,6 @@ import {
   CacheShort,
   flattenConnection,
   generateCacheControlHeader,
-  parseGid,
 } from '@shopify/hydrogen';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {
@@ -17,8 +16,6 @@ import {
 } from '~/utils/graphql/sanity/queries';
 import Layouts from '~/layouts';
 import Account, {links as accountStyles} from '~/modules/accounts';
-import {useStore} from '~/hooks/useStore';
-import {useEffect} from 'react';
 import {CANCEL_REASONS, FORM_ACTIONS} from '~/utils/constants';
 import {
   CREATE_ADDRESS_MUTATION,
@@ -30,7 +27,6 @@ import {
   cancelSubscription,
   changeSubscriptionDate,
   getCollectionProducts,
-  getCustomerAddresses,
   getCustomerOrders,
   getCustomerSubscription,
   reactivateSubscription,
@@ -363,7 +359,6 @@ export async function loader({request, context, params}) {
       : 'Welcome to your account'
     : 'Account Page';
 
-  const customerId = parseGid(customer?.id)?.id ?? null;
   const products = await getCollectionProducts(context, 'all');
   let activeSubscription = {};
   let inactiveSubscription = {};
@@ -374,13 +369,6 @@ export async function loader({request, context, params}) {
     getCMSContent(context, GET_REWARDS_PRODUCT_CONTENT),
     getCMSContent(context, GET_REWARDS_FAQ_CONTENT),
   ]);
-
-  if (customerId) {
-    activeSubscription = await getCustomerSubscription(customerId, true);
-    inactiveSubscription = await getCustomerSubscription(customerId);
-    subscriptionOrders = await getCustomerOrders(customerId);
-    subscriptionAddresses = await getCustomerAddresses(customerId);
-  }
 
   return defer(
     {
@@ -403,31 +391,7 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {
-    customer,
-    activeSubscription,
-    inactiveSubscription,
-    subscriptionOrders,
-    subscriptionAddresses,
-    faqContent,
-    yotpoProducts,
-  } = useLoaderData();
-
-  const {data, setCustomerData} = useStore((store) => store?.account);
-
-  useEffect(() => {
-    if (data.id === '') {
-      customer.subscription = {};
-      subscriptionAddresses &&
-        (customer.subscription.addresses = subscriptionAddresses);
-      activeSubscription && (customer.subscription.active = activeSubscription);
-      inactiveSubscription &&
-        (customer.subscription.inactive = inactiveSubscription);
-      subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-      setCustomerData(customer);
-    }
-  }, []);
-
+  const {faqContent, yotpoProducts} = useLoaderData();
   return (
     <Layouts.MainNavFooter>
       <Account yotpoFaq={faqContent} yotpoProducts={yotpoProducts} />
