@@ -1,5 +1,7 @@
 const SliderAccount = lazy(() => import('~/modules/sliderAccount'));
 import {links as sliderAccountStyles} from '~/modules/sliderAccount';
+const ShadeFinderSlider = lazy(() => import('~/modules/pdp/shadeFinderSlider'));
+import {links as shadeFinderSliderStyles} from '~/modules/pdp/shadeFinderSlider';
 import NavPlaceholder, {
   links as NavPlaceholderStyles,
 } from '~/modules/navPlaceholder';
@@ -18,6 +20,7 @@ import {Suspense, lazy} from 'react';
 export const links = () => {
   return [
     ...sliderAccountStyles(),
+    ...shadeFinderSliderStyles(),
     ...sliderCartStyles(),
     ...BodyBottomStyles(),
     ...footerStyles(),
@@ -86,6 +89,9 @@ const MainNavFooter = ({children}) => {
 
       <Suspense>
         <SliderAccount />
+      </Suspense>
+      <Suspense>
+        <ShadeFinderSlider />
       </Suspense>
 
       {children}

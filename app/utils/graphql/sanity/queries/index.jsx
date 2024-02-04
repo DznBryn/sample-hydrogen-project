@@ -1885,3 +1885,174 @@ export const PRODUCT_RECOMMENDATIONS = gql`
     }
   }
 `;
+
+export const GET_SHADE_FINDER_CONTENT = gql`
+  query GetShadeFinderContent($id: ID!) {
+    ShadeFinderQuizContent(id: $id) {
+      name
+      shadeFinderQuizQuestions {
+        name
+        questionText
+        multipleChoice
+        answers {
+          name
+          answerText
+          helpingText
+          image {
+            name
+            labelColor
+            skinTone
+            alt
+            helpingText
+            image {
+              asset {
+                _id
+                url
+              }
+            }
+          }
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+          subQuestion {
+            name
+            questionText
+            multipleChoice
+            answers {
+              name
+              answerText
+              helpingText
+              image {
+                name
+                labelColor
+                skinTone
+                alt
+                helpingText
+                image {
+                  asset {
+                    _id
+                    url
+                  }
+                }
+              }
+              qualifiers {
+                name
+                qualifier
+                type
+              }
+              subQuestion {
+                name
+                questionText
+                multipleChoice
+                answers {
+                  name
+                  answerText
+                  helpingText
+                  image {
+                    name
+                    labelColor
+                    skinTone
+                    alt
+                    helpingText
+                    image {
+                      asset {
+                        _id
+                        url
+                      }
+                    }
+                  }
+                  qualifiers {
+                    name
+                    qualifier
+                    type
+                  }
+                  subQuestion {
+                    name
+                    questionText
+                    multipleChoice
+                    answers {
+                      name
+                      answerText
+                      helpingText
+                      image {
+                        name
+                        labelColor
+                        skinTone
+                        alt
+                        helpingText
+                        image {
+                          asset {
+                            _id
+                            url
+                          }
+                        }
+                      }
+                      qualifiers {
+                        name
+                        qualifier
+                        type
+                      }
+                    }
+                  }
+                  subQuestion {
+                    name
+                    questionText
+                    multipleChoice
+                    answers {
+                      name
+                      answerText
+                      helpingText
+                      image {
+                        name
+                        labelColor
+                        skinTone
+                        alt
+                        helpingText
+                        image {
+                          asset {
+                            _id
+                            url
+                          }
+                        }
+                      }
+                      qualifiers {
+                        name
+                        qualifier
+                        type
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      shadeFinderQuizResults {
+        name
+        shadeRecommended
+        additionalRecommendation
+        backgroundColor
+        resultImage {
+          asset {
+            _id
+            url
+          }
+        }
+        quizAttributes {
+          name
+          category
+          default
+          priorityOrder
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+        }
+      }
+    }
+  }
+`;
