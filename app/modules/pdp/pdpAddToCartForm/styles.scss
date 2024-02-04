@@ -1,6 +1,6 @@
 .atc__container {
   width: 100%;
-  padding-bottom: .25em;
+  padding-bottom: 0.25em;
 }
 
 .ctaContainer {
@@ -29,7 +29,7 @@
 
 .quantity_container {
   width: 95%;
-  padding: .25em;
+  padding: 0.25em;
   border: 1px solid #4c4e564d;
   border-radius: 3px;
   background-color: var(--color-secondary-white);
@@ -52,7 +52,7 @@
   height: 100%;
   border: 0;
   background-color: var(--color-secondary-white);
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 /* Modal Learn More */
@@ -60,22 +60,22 @@
   position: absolute;
   transform: translateY(-110%);
   background-color: var(--color-secondary-white);
-  padding: .5em .75em 1.5em;
+  padding: 0.5em 0.75em 1.5em;
   max-width: 450px;
   z-index: 99;
   line-height: 20px;
   box-shadow: 4px 4px 0 0 rgb(72 198 217 / 50%);
   border: 1px solid var(--color-primary);
-  transition: all .45s;
+  transition: all 0.45s;
 }
 
 .learn_more__text {
-  padding: .5em;
+  padding: 0.5em;
 }
 
 .close__container {
   width: 100%;
-  padding: .5em;
+  padding: 0.5em;
   display: flex;
   justify-content: flex-end;
 }
@@ -90,10 +90,10 @@
   margin-top: 20px;
   margin-bottom: 50px;
   padding: 20px;
-  width: 100%
+  width: 100%;
 }
 
-.openSFButton {
+.openSFButtonForm {
   cursor: pointer;
   font-size: 14px;
   font-weight: 800;
@@ -125,7 +125,7 @@
   font-size: 11px;
 }
 
-@media(min-width: 768px) {
+@media (min-width: 768px) {
   .atc__container {
     border-bottom: 0;
     padding-bottom: 0;

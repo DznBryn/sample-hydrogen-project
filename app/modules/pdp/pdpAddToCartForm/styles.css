@@ -52,7 +52,7 @@
   height: 100%;
   border: 0;
   background-color: var(--color-secondary-white);
-  color: #4C4E56;
+  color: #4c4e56;
 }
 
 /* Modal Learn More */
@@ -93,7 +93,7 @@
   width: 100%;
 }
 
-.openSFButton {
+.openSFButtonForm {
   cursor: pointer;
   font-size: 14px;
   font-weight: 800;

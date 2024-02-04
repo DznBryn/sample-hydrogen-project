@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect, useRef, Fragment} from 'react';
 import {useLayoutEffect} from '~/utils/functions/eventFunctions';
 import {useCartActions} from '~/hooks/useCart';
 import {useStore} from '~/hooks/useStore';
@@ -117,24 +117,6 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
 
   const haveShadeRecommendation = !!store?.selectedShade;
 
-  const HalfCircle = () => (
-    <div className={'sf_halfCircle'}>
-      <svg
-        width="36"
-        height="11"
-        viewBox="0 0 36 11"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          opacity="0.9"
-          d="M35.1216 0.240479C33.5706 3.46456 31.1407 6.18519 28.1117 8.08928C25.0827 9.99338 21.5777 11.0036 17.9999 11.0036C14.4221 11.0036 10.9171 9.99338 7.88805 8.08928C4.85905 6.18519 2.42922 3.46456 0.878174 0.240479H35.1216Z"
-          fill="white"
-        />
-      </svg>
-    </div>
-  );
-
   const types = useRef(getVariantTypes(details.variants));
 
   const handleRecommendation = (shadeRecommended) => {
@@ -151,11 +133,10 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
       variantsWraperScrollTop.current = variantsWraper.current.scrollTop;
     }
 
-    setShade(shadeRecommended);
+    // setShade(shadeRecommended);
     setIsSelected(shadeRecommended);
     setStore({
       ...store,
-      product,
       productPage: {
         ...store.productPage,
         selectedShade,
@@ -195,11 +176,7 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     return shadeName?.split(' ')[0] ?? '';
   };
 
-  const ListViewVariants = (
-    shadeRecommended,
-    shadeBackground,
-    selectedShade,
-  ) => {
+  const ListViewVariants = (shadeRecommended, shadeBackground) => {
     const currentVariantNumber = getShadeNumberByName(shadeRecommended);
     const hasOOS = oosVariants?.length > 0 ?? false;
     const isOOSVariant =
@@ -220,7 +197,7 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
           <OOSItem />
           {shadeRecommended}
           {isSelected === shadeRecommended && <Selected oos />}
-          {selectedShade === shadeRecommended && (
+          {shade === shadeRecommended && (
             <div className={'shadeRecommendedContainer'}>
               <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
             </div>
@@ -242,7 +219,7 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
           ></div>
           {shadeRecommended}
           {isSelected === shadeRecommended && <Selected />}
-          {selectedShade === shadeRecommended && (
+          {shade === shadeRecommended && (
             <div className={'shadeRecommendedContainer'}>
               <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
             </div>
@@ -319,14 +296,14 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     });
 
     useEffect(() => {
-      if (viewType === 'LIST' && !!store?.selectedShade) {
-        document.getElementById(selectedShade).scrollIntoView({
+      const recommended = store?.productPage?.recommendedShade;
+      if (viewType === 'LIST' && !!recommended) {
+        document.getElementById(recommended).scrollIntoView({
           behavior: 'smooth',
           block: 'center',
         });
       }
-    }),
-      [store?.selectedShade];
+    }, [store?.productPage?.recommendedShade]);
 
     const shadeVariantsSorted = mockedShadeResult.sort(
       (a, b) =>
@@ -343,13 +320,13 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
           >
             {shadeVariantsSorted.map(({shadeRecommended, shadeBackground}) => {
               return (
-                <>
+                <Fragment key={shadeRecommended}>
                   {renderVariants(
                     shadeRecommended,
                     shadeBackground,
                     selectedShade,
                   )}
-                </>
+                </Fragment>
               );
             })}
           </div>
@@ -359,13 +336,13 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
               {shadeVariantsSorted.map(
                 ({shadeRecommended, shadeBackground}) => {
                   return (
-                    <>
+                    <Fragment key={shadeRecommended}>
                       {renderVariants(
                         shadeRecommended,
                         shadeBackground,
                         selectedShade,
                       )}
-                    </>
+                    </Fragment>
                   );
                 },
               )}
@@ -381,7 +358,31 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     if (window?.innerWidth && window?.innerWidth < 600) {
       setIsMobile(true);
     }
-  }, []);
+
+    const product = details.product;
+
+    if (!store.product) {
+      setStore({
+        ...store,
+        product,
+        productPage: {
+          ...store.productPage,
+          addToCart: {
+            ...store?.productPage?.addToCart,
+            quantity: 1,
+            discount: 0,
+          },
+        },
+      });
+    }
+
+    if (store.productPage?.recommendedShade && shade === '') {
+      const {recommendedShade} = store.productPage;
+      setShade(recommendedShade);
+      // setIsSelected(recommendedShade);
+      // handleRecommendation(recommendedShade);
+    }
+  }, [store.productPage?.recommendedShade]);
 
   const shadeVariantsOOOS = shadeVariantsOos[0]?.storefrontId ?? [];
 
@@ -598,5 +599,23 @@ const mockedShadeResult = [
     externalId: 40872243003565,
   },
 ];
+
+const HalfCircle = () => (
+  <div className={'sf_halfCircle'}>
+    <svg
+      width="36"
+      height="11"
+      viewBox="0 0 36 11"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        opacity="0.9"
+        d="M35.1216 0.240479C33.5706 3.46456 31.1407 6.18519 28.1117 8.08928C25.0827 9.99338 21.5777 11.0036 17.9999 11.0036C14.4221 11.0036 10.9171 9.99338 7.88805 8.08928C4.85905 6.18519 2.42922 3.46456 0.878174 0.240479H35.1216Z"
+        fill="white"
+      />
+    </svg>
+  </div>
+);
 
 export default PDPVariants;

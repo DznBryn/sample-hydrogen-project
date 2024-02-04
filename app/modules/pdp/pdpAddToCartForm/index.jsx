@@ -79,7 +79,7 @@ const PDPAddToCartForm = ({
           {renderingShadeFinder &&
             store?.productPage?.selectedVariant === undefined && (
               <div
-                className={'openSFButton'}
+                className={'openSFButtonForm'}
                 onClick={() => switchSliderPanelVisibility('ShadeFinderSlider')}
               >
                 Find my shade
@@ -89,7 +89,7 @@ const PDPAddToCartForm = ({
           {renderingConcealer &&
             store?.productPage?.selectedVariant === undefined && (
               <div
-                className={'openSFButton'}
+                className={'openSFButtonForm'}
                 onClick={() => switchSliderPanelVisibility('ConcealerSlider')}
               >
                 Find my shade

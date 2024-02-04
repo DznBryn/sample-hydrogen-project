@@ -45,7 +45,6 @@ const SkinQuiz = ({content}) => {
   const [multipleChoiceState, setMultipleChoiceState] = useState([]);
   const [answerState, setAnswerState] = useState([]);
   const [resultState, setResultState] = useState({});
-
   const [step, setStep] = useState(0);
 
   const {products} = useCollection('all');

@@ -1,0 +1,674 @@
+.sf-wrapper {
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  width: 400px;
+  background-color: #fff;
+}
+
+.mainHeader {
+  background-color: #f8f8f8;
+  padding: 50px 33px 23px 24px;
+  position: relative;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.sfQuestion {
+  font-size: 15px;
+  font-family: "Avenir";
+  font-weight: bold;
+  color: #4c4e56;
+}
+
+.closeBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: "Avenir";
+  font-weight: 900;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  right: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.startOverBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: "Avenir";
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-decoration: underline;
+  left: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.quizContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 0 18px 0 20px;
+}
+
+.resultWrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.quizItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 78px;
+  margin-bottom: 11px;
+  background-color: #e1f0f5;
+  cursor: pointer;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.quizItemFinal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 100px;
+  margin-bottom: 11px;
+  background-color: #fdfdfe;
+  cursor: pointer;
+}
+
+.sfItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px 0px 0px 3px;
+  font-size: 14px;
+  font-family: "Avenir";
+  font-weight: 800;
+  line-height: 19.12px;
+  min-width: 72px;
+  height: 92px;
+  margin-right: 16px;
+}
+
+.item {
+  width: 40%;
+  color: #4c4e56;
+  font-weight: 800;
+  font-size: 14px;
+  margin-left: 41px;
+}
+
+.quizContent {
+  text-align: center;
+}
+
+.itemBorder {
+  height: 100%;
+  width: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.img {
+  height: 100%;
+  min-width: 167px;
+  object-fit: cover;
+}
+
+.goBackButton {
+  text-align: center;
+  background-color: #c1c1c1;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Avenir";
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.selectShadeButton {
+  text-align: center;
+  background-color: #48c6d9;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Avenir";
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.arrow {
+  margin-right: 6px;
+}
+
+.infoText {
+  color: #4c4e56;
+  font-family: "Avenir";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 14px 0 13px;
+}
+
+.additionalShadeContainer {
+  padding-left: 29px;
+}
+
+.additionalShade {
+  margin: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.recommendedBadge {
+  background-color: #48c6d9;
+  font-size: 10px;
+  height: 17px;
+  color: #fff;
+  font-family: "Avenir";
+  font-weight: 900;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.recommendedShadeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.recommendedShade {
+  font-family: "Avenir";
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.shadeIcon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.shadeFound {
+  color: #4c4e56;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: "Avenir";
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.selected {
+  z-index: 10;
+  border: 1px solid #48c6d9;
+  height: 36px;
+  width: 36px;
+  background: transparent;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.shadeIconContainer {
+  position: relative;
+  padding-left: 5px;
+}
+
+.startOverArrow {
+  margin-right: 4px;
+}
+
+.otherShades {
+  font-size: 15px;
+  font-family: "Avenir";
+  background-color: #4c4e56;
+  font-weight: 800;
+}
+
+.resultContainer {
+  position: relative;
+  background: #f8f8f8;
+  margin-bottom: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.helpingText {
+  font-weight: 800;
+  font-size: 15px;
+  color: #4c4e56;
+  font-family: "Avenir";
+  margin-bottom: 9px;
+}
+
+.undertoneInfo {
+  font-family: "Avenir";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-left: 18px;
+  color: rgba(76, 78, 86, 0.8);
+}
+
+.undertoneContainer {
+  display: flex;
+  align-items: center;
+}
+
+.shadeImage {
+  width: 293px;
+  height: 283px;
+  margin-bottom: 18px;
+}
+
+.dotsContainer {
+  display: flex;
+  margin-bottom: 18px;
+}
+
+.dots {
+  width: 7.14px;
+  height: 7.19px;
+  margin-right: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sf-wrapper {
+    width: 100%;
+  }
+  .closeBtn {
+    right: 34px;
+  }
+  .startOverBtn {
+    left: 34px;
+  }
+}
+.rightArrow {
+  position: absolute;
+  top: 30%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.leftArrow {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  cursor: pointer;
+}
+
+.sf-wrapper {
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  width: 400px;
+  background-color: #fff;
+}
+
+.mainHeader {
+  background-color: #f8f8f8;
+  padding: 50px 33px 23px 24px;
+  position: relative;
+  display: block;
+}
+
+.sfQuestion {
+  font-size: 15px;
+  font-family: "Avenir";
+  font-weight: bold;
+  color: #4c4e56;
+}
+
+.closeBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: "Avenir";
+  font-weight: 900;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  right: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.startOverBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: "Avenir";
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-decoration: underline;
+  left: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.quizContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 0 18px 0 20px;
+}
+
+.resultWrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.quizItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 78px;
+  margin-bottom: 11px;
+  background-color: #e1f0f5;
+  cursor: pointer;
+}
+
+.quizItemFinal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 100px;
+  margin-bottom: 11px;
+  background-color: #fdfdfe;
+  cursor: pointer;
+}
+
+.sfItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px 0px 0px 3px;
+  font-size: 14px;
+  font-family: "Avenir";
+  font-weight: 800;
+  line-height: 19.12px;
+  min-width: 72px;
+  height: 92px;
+  margin-right: 16px;
+}
+
+.item {
+  width: 40%;
+  color: #4c4e56;
+  font-weight: 800;
+  font-size: 14px;
+  margin-left: 41px;
+}
+
+.quizContent {
+  text-align: center;
+}
+
+.itemBorder {
+  height: 100%;
+  width: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.img {
+  height: 100%;
+  min-width: 167px;
+  object-fit: cover;
+}
+
+.goBackButton {
+  text-align: center;
+  background-color: #c1c1c1;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Avenir";
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.selectShadeButton {
+  text-align: center;
+  background-color: #48c6d9;
+  color: #fff;
+  font-size: 16px;
+  font-family: "Avenir";
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.arrow {
+  margin-right: 6px;
+}
+
+.infoText {
+  color: #4c4e56;
+  font-family: "Avenir";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 14px 0 13px;
+}
+
+.additionalShadeContainer {
+  padding-left: 29px;
+}
+
+.additionalShade {
+  margin: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.recommendedBadge {
+  background-color: #48c6d9;
+  font-size: 10px;
+  height: 17px;
+  color: #fff;
+  font-family: "Avenir";
+  font-weight: 900;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.recommendedShadeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.recommendedShade {
+  font-family: "Avenir";
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.shadeIcon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.shadeFound {
+  color: #4c4e56;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: "Avenir";
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.selected {
+  z-index: 10;
+  border: 1px solid #48c6d9;
+  height: 36px;
+  width: 36px;
+  background: transparent;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.shadeIconContainer {
+  position: relative;
+  padding-left: 5px;
+}
+
+.startOverArrow {
+  margin-right: 4px;
+}
+
+.otherShades {
+  font-size: 15px;
+  font-family: "Avenir";
+  background-color: #4c4e56;
+  font-weight: 800;
+}
+
+.resultContainer {
+  position: relative;
+  background: #f8f8f8;
+  margin-bottom: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.helpingText {
+  font-weight: 800;
+  font-size: 15px;
+  color: #4c4e56;
+  font-family: "Avenir";
+  margin-bottom: 9px;
+}
+
+.undertoneInfo {
+  font-family: "Avenir";
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-left: 18px;
+  color: rgba(76, 78, 86, 0.8);
+}
+
+.undertoneContainer {
+  display: flex;
+  align-items: center;
+}
+
+.shadeImage {
+  width: 293px;
+  height: 283px;
+  margin-bottom: 18px;
+}
+
+.dotsContainer {
+  display: flex;
+  margin-bottom: 18px;
+}
+
+.dots {
+  width: 7.14px;
+  height: 7.19px;
+  margin-right: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .sf-wrapper {
+    width: 100%;
+  }
+  .closeBtn {
+    right: 34px;
+  }
+  .startOverBtn {
+    left: 34px;
+  }
+}
+.rightArrow {
+  position: absolute;
+  top: 30%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.leftArrow {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=styles.css.map */
