@@ -22,7 +22,7 @@ export async function getProductByHandle(context, handle) {
     cache: context.storefront.CacheLong(),
   });
 
-  if (!product) throw new Response(null, {status: 404});
+  if (!product) return null;
 
   return {product};
 }
