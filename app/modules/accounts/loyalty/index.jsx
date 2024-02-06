@@ -59,7 +59,7 @@ const LoyaltyRewardsTab = (props) => {
           };
         });
 
-      setDatax(productData);
+      setDatax(productData.filter((data) => data.product));
       refreshWidgets();
     }
   }, [state]);
