@@ -679,7 +679,8 @@ export async function getMainNavFooterCMSData(context) {
     await ProductRecommendation.Products.forEach(async (product) => {
       if (product && product?.productId) {
         const response = await getProductByHandle(context, product?.productId);
-        return recommendations.productList.push(response?.product);
+        if (response)
+          return recommendations.productList.push(response?.product);
       }
     });
   }

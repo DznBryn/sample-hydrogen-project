@@ -63,7 +63,7 @@ const RewardsPage = ({context, yotpoFaq}) => {
           };
         });
 
-      setData(productData);
+      setData(productData.filter((data) => data.product));
     }
   }, [state]);
 
