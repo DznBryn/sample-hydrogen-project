@@ -535,9 +535,7 @@ export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
       });
 
       window._ltk.SCA.Meta1 = token;
-      window._ltk.SCA.CartLink = encodeURI(
-        JSON.stringify(cartLink).replace(/:/gi, '-'),
-      ).replace(/,/gi, '%2C');
+      window._ltk.SCA.CartLink = cartLink;
 
       if (isAutoDelivery) {
         window._ltk.SCA.Meta1 = 'Auto-Delivery';
