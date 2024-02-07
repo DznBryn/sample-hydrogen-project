@@ -39,15 +39,15 @@
   cursor: pointer;
 }
 
-.MAMenu .selected {
-  color: #47C6D9;
+.MAMenu .tab-selected {
+  color: #47c6d9;
   font-weight: bold;
-  border-bottom: #47C6D9 solid 3px;
+  border-bottom: #47c6d9 solid 3px;
 }
 
 .myHr {
   margin: 0px 0 32.15px;
-  color: #D7E1EA;
+  color: #d7e1ea;
 }
 
 @media all and (min-width: 768px) {
