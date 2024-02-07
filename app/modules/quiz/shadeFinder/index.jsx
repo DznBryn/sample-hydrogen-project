@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import {useMatches} from '@remix-run/react';
 
 import {useStore} from '~/hooks/useStore';
-import quizzService from '~/utils/services/quizz';
+import quizService from '~/utils/services/quiz';
 
 import styles from './styles.css';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
@@ -24,8 +24,8 @@ const productQualifierKey = 'qualifier';
 
 const ShadeFinder = () => {
   const [root] = useMatches();
-  const {shadeFinderQuizQuestions, shadeFinderQuizResults} =
-    root.data.shadeFinder;
+  const {ShadeFinder} = root.data.mainNavFooterCMSData;
+  const {shadeFinderQuizQuestions, shadeFinderQuizResults} = ShadeFinder;
 
   const [questionsState, setQuestionsState] = useState(
     shadeFinderQuizQuestions,
@@ -38,7 +38,7 @@ const ShadeFinder = () => {
 
   const {store, setStore} = useStore();
 
-  const quizz = quizzService(SKIN_QUIZ_MODEL);
+  const quiz = quizService(SKIN_QUIZ_MODEL);
 
   const hasResult = !!resultState.shadeRecommended;
 
@@ -54,7 +54,7 @@ const ShadeFinder = () => {
     answersArray[step] = answer.qualifiers;
 
     if (answer.subQuestion) {
-      const returnQuestions = quizz.handleAddSubQuestionIntoQuestionsQueue(
+      const returnQuestions = quiz.handleAddSubQuestionIntoQuestionsQueue(
         questions,
         answer,
       );
@@ -77,11 +77,11 @@ const ShadeFinder = () => {
     return (
       <>
         <div className="mainHeader">
-          <p className="closeBtn" onClick={() => handleClose()}>
+          <p className="sf-closeBtn" onClick={() => handleClose()}>
             Close
           </p>
           {hasResult ? (
-            <span className="startOverBtn" onClick={() => handleRestart()}>
+            <span className="sf-startOverBtn" onClick={() => handleRestart()}>
               <StartOverArrow />
               Start over
             </span>
@@ -101,7 +101,6 @@ const ShadeFinder = () => {
     setSelectedImage(0);
   }
 
-  // DONE
   function handleClose() {
     switchSliderPanelVisibility('ShadeFinderSlider');
     setTimeout(() => {
@@ -110,7 +109,6 @@ const ShadeFinder = () => {
     return;
   }
 
-  // DONE
   function stepBack() {
     if (step === 0) {
       switchSliderPanelVisibility('ShadeFinderSlider');
@@ -123,7 +121,6 @@ const ShadeFinder = () => {
     setQuestionsState((oldState) => oldState.slice(0, -1));
   }
 
-  // DONE
   const GoBackButton = () => {
     return (
       <div className="goBackButton" onClick={() => stepBack()}>
@@ -170,6 +167,7 @@ const ShadeFinder = () => {
         ...store.productPage,
         recommendedShade: selectedShade,
         selectedShade: selected,
+        newRecommendedShade: true,
         selectedVariant,
         addToCart: {
           ...store?.productPage?.addToCart,
@@ -182,7 +180,6 @@ const ShadeFinder = () => {
     switchSliderPanelVisibility('ShadeFinderSlider');
   };
 
-  // DONE
   const SelectShadeButton = () => {
     return (
       <div className="selectShadeButton" onClick={sendSelectedShadeToStore}>
@@ -191,13 +188,11 @@ const ShadeFinder = () => {
     );
   };
 
-  // DONE
   const handleShade = (shade) => {
     setSelectedImage(0);
     setSelectedShade(shade);
   };
 
-  // DONE+-
   const handleArrowAction = (imgsLength, action) => {
     const lastPositionImage = imgsLength - 1;
     switch (true) {
@@ -219,12 +214,12 @@ const ShadeFinder = () => {
   };
 
   function getResult() {
-    let answersArr = quizz.handleGetUserAnswers(
+    let answersArr = quiz.handleGetUserAnswers(
       answerState,
       productQualifierKey,
     );
 
-    const result = quizz.handleGetRegularResultsByCategory(
+    const result = quiz.handleGetRegularResultsByCategory(
       shadeFinderQuizResults,
       answersArr,
       [],
