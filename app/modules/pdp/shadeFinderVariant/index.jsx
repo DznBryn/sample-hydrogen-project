@@ -367,6 +367,7 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
         product,
         productPage: {
           ...store.productPage,
+          newRecommendedShade: false,
           addToCart: {
             ...store?.productPage?.addToCart,
             quantity: 1,
@@ -376,11 +377,13 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
       });
     }
 
-    if (store.productPage?.recommendedShade && shade === '') {
+    if (
+      store.productPage?.recommendedShade &&
+      store.productPage?.newRecommendedShade
+    ) {
       const {recommendedShade} = store.productPage;
       setShade(recommendedShade);
-      // setIsSelected(recommendedShade);
-      // handleRecommendation(recommendedShade);
+      setIsSelected(recommendedShade);
     }
   }, [store.productPage?.recommendedShade]);
 
