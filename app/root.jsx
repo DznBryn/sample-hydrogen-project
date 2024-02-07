@@ -23,7 +23,6 @@ import {
   GET_PRODUCTS,
   GET_REDIRECTS,
   GET_SEARCH_CONFIG,
-  GET_SHADE_FINDER_CONTENT,
 } from './utils/graphql/sanity/queries';
 import ErrorContent, {
   links as errorBoundaryStyles,
@@ -342,9 +341,6 @@ async function requestCMSData(context, cacheObj) {
   const data = await Promise.all([
     getMainNavFooterCMSData(context),
     getCMSContent(context, GET_PRODUCTS),
-    getCMSContent(context, GET_SHADE_FINDER_CONTENT, {
-      id: 'b8a6cf0d-b106-49bb-926d-a2b3d6473694',
-    }),
   ]);
 
   cacheObj.mainNavFooterCMSData = data[0];

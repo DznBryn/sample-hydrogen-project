@@ -1,34 +1,45 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import PDPAddToCartForm from '../pdp/pdpAddToCartForm';
-import { useStore } from '~/hooks/useStore';
+import {useStore} from '~/hooks/useStore';
 import classnames from 'classnames';
 
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-const StickyMobile = ({ isScroll, exclusiveProductAtcColor, exclusiveProductTextColor, isGated }) => {
+const StickyMobile = ({
+  isScroll,
+  exclusiveProductAtcColor,
+  exclusiveProductTextColor,
+  isGated,
+}) => {
   const {store} = useStore();
-  const shouldRenderSkinFinder = store?.product?.slug === 'radiant-skin-brightening-serum-skin-tint-spf-30';
-  const shouldRenderConcealer = store?.product?.slug === 'radiant-skin-brightening-serum-concealer';
+  const shouldRenderSkinFinder =
+    store?.product?.handle ===
+    'radiant-skin-brightening-serum-skin-tint-spf-30';
+  const shouldRenderConcealer =
+    store?.product?.handle === 'radiant-skin-brightening-serum-concealer';
 
   return (
     <div
-      id='stickyMobileCta'
+      id="stickyMobileCta"
       className={
         isScroll === true
           ? classnames(
-            'stickyATC_mobile',
-            'stickyATC_wrapper',
-            'stickyATC_show',
-            'stickyATC_show_mobile'
-          )
-          : classnames('stickyATC_mobile', 'stickyATC_wrapper', 'stickyATC_show_mobile')
-      }>
+              'stickyATC_mobile',
+              'stickyATC_wrapper',
+              'stickyATC_show',
+              'stickyATC_show_mobile',
+            )
+          : classnames(
+              'stickyATC_mobile',
+              'stickyATC_wrapper',
+              'stickyATC_show_mobile',
+            )
+      }
+    >
       <div className={'stickyATCContainer'}>
         <PDPAddToCartForm
           renderingShadeFinder={shouldRenderSkinFinder}
@@ -42,18 +53,23 @@ const StickyMobile = ({ isScroll, exclusiveProductAtcColor, exclusiveProductText
   );
 };
 
-const StickyDesktop = ({ product, Component, PriceComponent, isScroll }) => (
+const StickyDesktop = ({product, Component, PriceComponent, isScroll}) => (
   <div
     className={
       isScroll === true
         ? classnames(
-          'stickyATC_desktop',
-          'stickyATC_wrapper',
-          'stickyATC_show',
-          'stickyATC_show_desktop'
-        )
-        : classnames('stickyATC_desktop', 'stickyATC_wrapper', 'stickyATC_show_desktop')
-    }>
+            'stickyATC_desktop',
+            'stickyATC_wrapper',
+            'stickyATC_show',
+            'stickyATC_show_desktop',
+          )
+        : classnames(
+            'stickyATC_desktop',
+            'stickyATC_wrapper',
+            'stickyATC_show_desktop',
+          )
+    }
+  >
     <div className={'stickyATCContainer'}>
       <p className={'product_title'}>
         {product?.title?.name || 'Product Title Here'}
@@ -70,7 +86,7 @@ const StickyAddToCart = ({
   PriceComponent = (Component = <div>N/A</div>),
   exclusiveProductAtcColor,
   exclusiveProductTextColor,
-  isGated
+  isGated,
 }) => {
   const [isScroll, setIsScroll] = useState(false);
 
@@ -106,13 +122,13 @@ const StickyAddToCart = ({
       rect.top < 0 &&
       rect.left >= 0 &&
       rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
+        (window.innerHeight || document.documentElement.clientHeight) &&
       rect.right <= window.innerWidth
     );
   };
 
   return (
-    (typeof (window) !== 'undefined') && (
+    typeof window !== 'undefined' && (
       <>
         <StickyMobile
           product={product}
@@ -135,6 +151,5 @@ const StickyAddToCart = ({
       </>
     )
   );
-
 };
 export default StickyAddToCart;

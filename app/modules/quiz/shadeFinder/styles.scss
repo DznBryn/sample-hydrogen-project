@@ -21,7 +21,7 @@
   color: #4c4e56;
 }
 
-.closeBtn {
+.sf-closeBtn {
   position: absolute;
   font-size: 12px;
   font-family: 'Avenir';
@@ -34,7 +34,7 @@
   cursor: pointer;
 }
 
-.startOverBtn {
+.sf-startOverBtn {
   position: absolute;
   font-size: 12px;
   font-family: 'Avenir';
@@ -316,11 +316,11 @@
     width: 100%;
   }
 
-  .closeBtn {
+  .sf-closeBtn {
     right: 34px;
   }
 
-  .startOverBtn {
+  .sf-startOverBtn {
     left: 34px;
   }
 }
@@ -361,7 +361,7 @@
   color: #4c4e56;
 }
 
-.closeBtn {
+.sf-closeBtn {
   position: absolute;
   font-size: 12px;
   font-family: 'Avenir';
@@ -374,7 +374,7 @@
   cursor: pointer;
 }
 
-.startOverBtn {
+.sf-startOverBtn {
   position: absolute;
   font-size: 12px;
   font-family: 'Avenir';
@@ -654,11 +654,11 @@
     width: 100%;
   }
 
-  .closeBtn {
+  .sf-closeBtn {
     right: 34px;
   }
 
-  .startOverBtn {
+  .sf-startOverBtn {
     left: 34px;
   }
 }
