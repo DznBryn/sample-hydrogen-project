@@ -128,10 +128,17 @@ export async function loader({context, request}) {
     customerCache.data.subscription = {};
     const customerId = parseGid(customerCache.data.id).id;
 
-    activeSubscription = await getCustomerSubscription(customerId, true);
-    inactiveSubscription = await getCustomerSubscription(customerId);
-    subscriptionOrders = await getCustomerOrders(customerId);
-    subscriptionAddresses = await getCustomerAddresses(customerId);
+    [
+      activeSubscription,
+      inactiveSubscription,
+      subscriptionOrders,
+      subscriptionAddresses,
+    ] = await Promise.all([
+      getCustomerSubscription(customerId, true),
+      getCustomerSubscription(customerId),
+      getCustomerOrders(customerId),
+      getCustomerAddresses(customerId),
+    ]);
 
     subscriptionAddresses &&
       (customerCache.data.subscription.addresses = subscriptionAddresses);

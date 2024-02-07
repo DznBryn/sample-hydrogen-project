@@ -20,6 +20,12 @@ import {
   GET_HOMEPAGE_COLLECTION_CALLOUT,
 } from '~/utils/graphql/sanity/queries';
 import {useLoaderData} from '@remix-run/react';
+import {parseGid} from '@shopify/hydrogen';
+import {
+  getCustomerAddresses,
+  getCustomerOrders,
+  getCustomerSubscription,
+} from '~/utils/services/subscription';
 
 export const links = () => homePageStyles();
 
@@ -42,6 +48,37 @@ export const action = async ({request, context}) => {
     if (data?.accessToken) {
       context.session.set('customerAccessToken', data.accessToken);
       const customer = await getCustomerData(context, data.accessToken);
+      let activeSubscription = {};
+      let inactiveSubscription = {};
+      let subscriptionOrders = {};
+      let subscriptionAddresses = {};
+
+      if (customer?.id) {
+        customer.subscription = {};
+        const customerId = parseGid(customer.id).id;
+
+        [
+          activeSubscription,
+          inactiveSubscription,
+          subscriptionOrders,
+          subscriptionAddresses,
+        ] = await Promise.all([
+          getCustomerSubscription(customerId, true),
+          getCustomerSubscription(customerId),
+          getCustomerOrders(customerId),
+          getCustomerAddresses(customerId),
+        ]);
+
+        subscriptionAddresses &&
+          (customer.subscription.addresses = subscriptionAddresses);
+        activeSubscription &&
+          (customer.subscription.active = activeSubscription);
+        inactiveSubscription &&
+          (customer.subscription.inactive = inactiveSubscription);
+        subscriptionOrders &&
+          (customer.subscription.orders = subscriptionOrders);
+      }
+      console.log('customer.accessToken', customer);
       return json(
         {
           customer,

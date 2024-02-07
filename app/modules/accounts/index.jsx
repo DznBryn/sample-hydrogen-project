@@ -104,7 +104,7 @@ function Tabs({data}) {
         {showRewardsTab && (
           <div
             className={
-              active === 5 ? 'navigationTab selected' : 'navigationTab'
+              active === 5 ? 'navigationTab tab-selected' : 'navigationTab'
             }
             onClick={() => handleActiveTab(5)}
           >
@@ -112,13 +112,17 @@ function Tabs({data}) {
           </div>
         )}
         <div
-          className={active === 1 ? 'navigationTab selected' : 'navigationTab'}
+          className={
+            active === 1 ? 'navigationTab tab-selected' : 'navigationTab'
+          }
           onClick={() => handleActiveTab(1)}
         >
           Auto-Deliveries
         </div>
         <div
-          className={active === 2 ? 'navigationTab selected' : 'navigationTab'}
+          className={
+            active === 2 ? 'navigationTab tab-selected' : 'navigationTab'
+          }
           onClick={() => handleActiveTab(2)}
         >
           Order History
@@ -126,7 +130,7 @@ function Tabs({data}) {
         {showReferralTab && (
           <div
             className={
-              active === 3 ? 'navigationTab selected' : 'navigationTab'
+              active === 3 ? 'navigationTab tab-selected' : 'navigationTab'
             }
             onClick={() => handleActiveTab(3)}
           >
@@ -136,7 +140,7 @@ function Tabs({data}) {
         {showAddressTab && (
           <div
             className={
-              active === 4 ? 'navigationTab selected' : 'navigationTab'
+              active === 4 ? 'navigationTab tab-selected' : 'navigationTab'
             }
             onClick={() => handleActiveTab(4)}
           >
