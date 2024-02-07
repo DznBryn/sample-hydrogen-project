@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 
 import {useCollection} from '~/hooks/useCollection';
-import quizzService from '~/utils/services/quizz';
+import quizzService from '~/utils/services/quiz';
 
 import LandingCover, {
   links as landingCoverStyles,
