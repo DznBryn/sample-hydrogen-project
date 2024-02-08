@@ -29,7 +29,7 @@ export default function Account(props) {
   const {id} = data;
 
   data.yotpoFAQ = props?.yotpoFaq[0].yotpoQuestions || null;
-  data.yotpoProducts = props?.yotpoProducts || null;
+  data.yotpoProducts = props?.yotpoRedeemProducts[0]?.products || null;
 
   return id !== '' ? (
     <div className={'fullWidth minHeight'}>
@@ -104,7 +104,7 @@ function Tabs({data}) {
         {showRewardsTab && (
           <div
             className={
-              active === 5 ? 'navigationTab tab-selected' : 'navigationTab'
+              active === 5 ? 'navigationTab accounts_selected' : 'navigationTab'
             }
             onClick={() => handleActiveTab(5)}
           >
@@ -113,7 +113,7 @@ function Tabs({data}) {
         )}
         <div
           className={
-            active === 1 ? 'navigationTab tab-selected' : 'navigationTab'
+            active === 1 ? 'navigationTab accounts_selected' : 'navigationTab'
           }
           onClick={() => handleActiveTab(1)}
         >
@@ -121,7 +121,7 @@ function Tabs({data}) {
         </div>
         <div
           className={
-            active === 2 ? 'navigationTab tab-selected' : 'navigationTab'
+            active === 2 ? 'navigationTab accounts_selected' : 'navigationTab'
           }
           onClick={() => handleActiveTab(2)}
         >
@@ -130,7 +130,7 @@ function Tabs({data}) {
         {showReferralTab && (
           <div
             className={
-              active === 3 ? 'navigationTab tab-selected' : 'navigationTab'
+              active === 3 ? 'navigationTab accounts_selected' : 'navigationTab'
             }
             onClick={() => handleActiveTab(3)}
           >
@@ -140,7 +140,7 @@ function Tabs({data}) {
         {showAddressTab && (
           <div
             className={
-              active === 4 ? 'navigationTab tab-selected' : 'navigationTab'
+              active === 4 ? 'navigationTab accounts_selected' : 'navigationTab'
             }
             onClick={() => handleActiveTab(4)}
           >
