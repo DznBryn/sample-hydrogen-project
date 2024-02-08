@@ -205,7 +205,14 @@ const RegularProduct = ({
       </div>
       <div className={'productInfo'}>
         <div className={'productTitle'}>
-          <h6> {item?.merchandise?.product?.title} </h6>
+          <h6>
+            {item?.merchandise?.product?.title}{' '}
+            {`${
+              !item?.merchandise?.title?.toLowerCase().includes('default')
+                ? `- ${item?.merchandise?.title}`
+                : ''
+            }`}
+          </h6>
           {item.sellingPlanAllocation && (
             <h6 className={'autoDeliver'}>
               Auto-Deliver every {sellingPlanName}
@@ -436,6 +443,7 @@ const ADSwitcherContent = ({
   const {updateCart: updateItemData = () => {}} = useStore(
     (store) => store?.cart ?? {},
   );
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher?.data?.cart?.totalQuantity) {

@@ -24,10 +24,13 @@
   font-size: 12px;
   font-weight: normal;
   line-height: 16px;
-  margin: auto 10px auto;
+  margin: auto 10px;
+}
+.productInfo .productName {
+  font-size: 12px;
 }
 
-.product :global(.add_to_cart) {
+.product .addToCartContainer .add_to_cart {
   font: 800 12px avenir;
   line-height: 16px;
   width: 55px;
@@ -35,11 +38,11 @@
   border-radius: 2px;
 }
 
-.product :global(.add_to_cart span) {
+.product .addToCartContainer .add_to_cart span {
   display: none;
 }
 
-.product :global(.add_to_cart:after) {
+.product .addToCartContainer .add_to_cart:after {
   content: "+ ADD";
 }
 
@@ -69,7 +72,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .product :global(.add_to_cart) {
+  .product .addToCartContainer .add_to_cart {
     width: 62.16px;
     height: 24px;
   }
