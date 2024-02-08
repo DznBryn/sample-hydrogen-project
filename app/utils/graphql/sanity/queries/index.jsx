@@ -1699,23 +1699,6 @@ export const GET_EYE_QUIZ_QUESTIONS = gql`
   }
 `;
 
-export const GET_REWARDS_PRODUCT_CONTENT = gql`
-  query GetRewardsContent {
-    allYotpoProducts {
-      name
-      yotpo_points_value
-      variant_id
-      variant_name
-      widget_id
-      variant_image
-      products {
-        _id
-        productId
-      }
-    }
-  }
-`;
-
 export const GET_YOTPO_REDEEM_PRODUCTS = gql`
   query YotpoRedeemProducts {
     allYotpoRedeemProducts {
