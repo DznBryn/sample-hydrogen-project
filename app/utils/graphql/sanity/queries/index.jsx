@@ -1716,6 +1716,26 @@ export const GET_REWARDS_PRODUCT_CONTENT = gql`
   }
 `;
 
+export const GET_YOTPO_REDEEM_PRODUCTS = gql`
+  query YotpoRedeemProducts {
+    allYotpoRedeemProducts {
+      name
+      products {
+        name
+        _id
+        yotpo_points_value
+        variant_id
+        variant_name
+        widget_id
+        variant_image
+        products {
+          productId
+        }
+      }
+    }
+  }
+`;
+
 export const GET_REWARDS_FAQ_CONTENT = gql`
   query GetYotpoFaq {
     allYotpoFaq {

@@ -42,7 +42,7 @@ export const links = () => {
   ];
 };
 
-const RewardsPage = ({context, yotpoFaq}) => {
+const RewardsPage = ({yotpoFaq, yotpoRedeemProducts}) => {
   const {isLoggedIn} = useCustomerState();
   const {state, products} = useCollection('all');
   const [data, setData] = useState({});
@@ -50,8 +50,8 @@ const RewardsPage = ({context, yotpoFaq}) => {
   useEffect(() => {
     if (state === 'loaded') {
       const productData =
-        context &&
-        context?.map((yotpoProduct) => {
+        yotpoRedeemProducts &&
+        yotpoRedeemProducts[0]?.products?.map((yotpoProduct) => {
           const productWithDetails = handleGetProductByID(
             yotpoProduct?.products[0]?.productId,
             products,
@@ -123,7 +123,7 @@ const RewardsPage = ({context, yotpoFaq}) => {
                   Must be redeemed with purchase.
                 </small>
               </div>
-              {context && <RedeemProductsSection products={data} />}
+              {yotpoRedeemProducts && <RedeemProductsSection products={data} />}
             </div>
           </div>
           <div className={'content__container'}>
@@ -170,7 +170,7 @@ const RewardsPage = ({context, yotpoFaq}) => {
                   Redeem with your next purchase.
                 </p>
               </div>
-              {context && <RedeemProductsSection products={data} />}
+              {yotpoRedeemProducts && <RedeemProductsSection products={data} />}
             </div>
           </div>
           <div id={'redemption__wrapper'} className={'content__container'}>

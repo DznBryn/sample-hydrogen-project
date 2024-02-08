@@ -2,22 +2,22 @@ import Layouts from '~/layouts';
 
 import {getCMSContent} from '~/utils/functions/eventFunctions';
 import {
-  GET_REWARDS_PRODUCT_CONTENT,
   GET_REWARDS_FAQ_CONTENT,
+  GET_YOTPO_REDEEM_PRODUCTS,
 } from '~/utils/graphql/sanity/queries';
 import {useLoaderData} from '@remix-run/react';
 
 import RewardsPage, {links as rewardsPageStyles} from '~/modules/rewardsPage';
 
 export async function loader({context}) {
-  const [getRewardsContent, getRewardsFaqContent] = await Promise.all([
-    getCMSContent(context, GET_REWARDS_PRODUCT_CONTENT),
+  const [getRewardsFaqContent, getYotpoRedeemProducts] = await Promise.all([
     getCMSContent(context, GET_REWARDS_FAQ_CONTENT),
+    getCMSContent(context, GET_YOTPO_REDEEM_PRODUCTS),
   ]);
 
   return {
-    getRewardsContent,
     getRewardsFaqContent,
+    getYotpoRedeemProducts,
   };
 }
 
@@ -26,13 +26,13 @@ export const links = () => {
 };
 
 export default function RewardsComponent() {
-  const {getRewardsContent, getRewardsFaqContent} = useLoaderData();
+  const {getRewardsFaqContent, getYotpoRedeemProducts} = useLoaderData();
 
   return (
     <Layouts.MainNavFooter>
       <RewardsPage
-        context={getRewardsContent}
         yotpoFaq={getRewardsFaqContent}
+        yotpoRedeemProducts={getYotpoRedeemProducts}
       />
     </Layouts.MainNavFooter>
   );
