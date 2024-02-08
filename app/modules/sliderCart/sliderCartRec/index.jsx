@@ -34,7 +34,7 @@ const SliderCartRec = ({productRecs, limit, gwpProductId}) => {
                         className="productImage"
                         data={variants?.[0]?.image}
                         sizes="(min-width: 45em) 50vw, 100vw"
-                        aspectRatio="1/1"
+                        aspectRatio="4:5"
                       />
                     </div>
                   </a>
@@ -53,7 +53,9 @@ const SliderCartRec = ({productRecs, limit, gwpProductId}) => {
                   <div className={'addToCartContainer'}>
                     <PDPAddToCart
                       addItem={addItem}
-                      classes={['addToCart']}
+                      content={{
+                        addToCart: '+ ADD',
+                      }}
                       availableForSale={addItem?.product?.totalInventory > 0}
                     />
                   </div>

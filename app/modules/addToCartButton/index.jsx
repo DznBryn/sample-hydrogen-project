@@ -32,6 +32,7 @@ export default function PDPAddToCart({
   isGated = false,
   fromPLP = false,
   availableForSale,
+  content,
 }) {
   const [root] = useMatches();
   const {setData: setCartData = () => {}, data = null} = useStore(
@@ -186,7 +187,9 @@ export default function PDPAddToCart({
             disabled={addToCart?.state === 'submitting'}
           >
             <span>
-              {displayPrice === true && addItem?.product?.price
+              {content?.addToCart && content?.addToCart !== ''
+                ? content.addToCart
+                : displayPrice === true && addItem?.product?.price
                 ? `Add To Cart - $${addItem?.product?.price}`
                 : 'Add To Cart'}
             </span>
