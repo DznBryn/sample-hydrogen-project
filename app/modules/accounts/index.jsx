@@ -29,7 +29,7 @@ export default function Account(props) {
   const {id} = data;
 
   data.yotpoFAQ = props?.yotpoFaq[0].yotpoQuestions || null;
-  data.yotpoProducts = props?.yotpoProducts || null;
+  data.yotpoProducts = props?.yotpoRedeemProducts[0]?.products || null;
 
   return id !== '' ? (
     <div className={'fullWidth minHeight'}>

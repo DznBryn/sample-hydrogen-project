@@ -11,8 +11,8 @@ import {
 } from '~/utils/graphql/shopify/queries/customer';
 import {getCMSContent} from '~/utils/functions/eventFunctions';
 import {
-  GET_REWARDS_PRODUCT_CONTENT,
   GET_REWARDS_FAQ_CONTENT,
+  GET_YOTPO_REDEEM_PRODUCTS,
 } from '~/utils/graphql/sanity/queries';
 import Layouts from '~/layouts';
 import Account, {links as accountStyles} from '~/modules/accounts';
@@ -365,8 +365,8 @@ export async function loader({request, context, params}) {
   let subscriptionOrders = {};
   let subscriptionAddresses = {};
 
-  const [yotpoProducts, faqContent] = await Promise.all([
-    getCMSContent(context, GET_REWARDS_PRODUCT_CONTENT),
+  const [yotpoRedeemProducts, faqContent] = await Promise.all([
+    getCMSContent(context, GET_YOTPO_REDEEM_PRODUCTS),
     getCMSContent(context, GET_REWARDS_FAQ_CONTENT),
   ]);
 
@@ -380,7 +380,7 @@ export async function loader({request, context, params}) {
       subscriptionAddresses,
       products,
       faqContent,
-      yotpoProducts,
+      yotpoRedeemProducts,
     },
     {
       headers: {
@@ -391,10 +391,13 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {faqContent, yotpoProducts} = useLoaderData();
+  const {faqContent, yotpoRedeemProducts} = useLoaderData();
   return (
     <Layouts.MainNavFooter>
-      <Account yotpoFaq={faqContent} yotpoProducts={yotpoProducts} />
+      <Account
+        yotpoFaq={faqContent}
+        yotpoRedeemProducts={yotpoRedeemProducts}
+      />
     </Layouts.MainNavFooter>
   );
 }
