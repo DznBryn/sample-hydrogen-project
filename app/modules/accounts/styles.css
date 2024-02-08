@@ -38,7 +38,7 @@
   cursor: pointer;
 }
 
-.MAMenu .tab-selected {
+.MAMenu .accounts_selected {
   color: #47c6d9;
   font-weight: bold;
   border-bottom: #47c6d9 solid 3px;
