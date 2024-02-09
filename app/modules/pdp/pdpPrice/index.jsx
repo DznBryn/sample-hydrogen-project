@@ -69,13 +69,16 @@ const PDPPrice = ({pricing}) => {
       );
     }
 
+    const shouldShowPromoPrice =
+      tulaSiteWide.current?.promoDiscount &&
+      !tulaSiteWide.current?.excludeList?.includes(product.handle) &&
+      !promos?.showPromo &&
+      !tags.find((tag) => tag.toLowerCase() === 'no-promo');
+
     return (
       <h2 className={'price retail_price'}>
         {discount === 0 ? (
-          tulaSiteWide.current?.promoDiscount &&
-          !tulaSiteWide.current?.excludeList?.includes(product.handle) &&
-          !promos?.showPromo &&
-          !tags.find((tag) => tag.toLowerCase() === 'no-promo') ? (
+          shouldShowPromoPrice ? (
             <>
               <span className={'compared_price'}>
                 {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
