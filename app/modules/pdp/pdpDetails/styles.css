@@ -346,8 +346,10 @@
     margin: 1em 0;
   }
   .price {
+    display: flex;
     text-align: left;
     font-size: 24px;
+    align-items: center;
   }
   .compared_price {
     margin: 0;
