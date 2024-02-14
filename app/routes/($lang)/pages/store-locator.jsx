@@ -1,14 +1,17 @@
 import Layouts from '~/layouts';
 
-import StoreLocator, { links as storeLocatorStyles } from '~/modules/storeLocator';
+import StoreLocator, {
+  links as storeLocatorStyles,
+} from '~/modules/storeLocator';
 
 export const links = () => storeLocatorStyles();
 
-export default function StoreLocatorComponent() {
+export const meta = () => [{title: 'Store Locator - TULA Skincare'}];
 
+export default function StoreLocatorComponent() {
   return (
     <Layouts.MainNavFooter>
-       <StoreLocator />
+      <StoreLocator />
     </Layouts.MainNavFooter>
   );
 }

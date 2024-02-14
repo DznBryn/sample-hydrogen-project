@@ -8,6 +8,13 @@ import Quiz, {links as quizStyles} from '~/modules/quiz/skinQuiz';
 
 export const links = () => quizStyles();
 
+export const meta = () => [
+  {title: 'Skincare Finder | TULA Skincare'},
+  {
+    description: 'View the best TULA skincare products recommended for you based on your needs.',
+  },
+];
+
 export async function loader({context}) {
   const quizContent = await getCMSContent(context, QUIZ_CONTENT, {
     id: 'b10ae91d-1c63-4d29-bf68-5f14b9ecec7f',

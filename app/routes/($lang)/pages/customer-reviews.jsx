@@ -11,6 +11,13 @@ export const links = () => {
   return [...customerReviewsStyles()];
 };
 
+export const meta = () => [
+  {title: 'Customer Reviews- TULA Skincare'},
+  {
+    description: 'Look at what customers have to say about TULA products with more than 50,000 product reviews.',
+  },
+];
+
 export async function loader({context}) {
   const customerReviewsContent = await getCMSContent(
     context,

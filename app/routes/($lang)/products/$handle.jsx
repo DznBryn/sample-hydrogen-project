@@ -23,6 +23,13 @@ export const links = () => {
   return [...pdpStyles()];
 };
 
+export const meta = ({data}) => {
+  return [
+    {title: data?.product?.seo?.title || data?.product?.handle},
+    {description: data?.product?.seo?.description},
+  ];
+};
+
 export const loader = async ({params, context}) => {
   const {handle} = params;
 

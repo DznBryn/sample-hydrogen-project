@@ -21,6 +21,13 @@ export const links = () => {
   return [...plpStyles()];
 };
 
+export const meta = ({data}) => {
+  return [
+    {title: data?.collection?.seo?.title},
+    {description: data?.collection?.seo?.description},
+  ];
+};
+
 export const loader = async ({params, context}) => {
   const {handle} = params;
 

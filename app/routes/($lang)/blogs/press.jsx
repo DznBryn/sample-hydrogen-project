@@ -1,31 +1,34 @@
 import Layouts from '~/layouts';
 
-import { getCMSContent } from '~/utils/functions/eventFunctions';
-import { GET_PRESS_PAGE } from '~/utils/graphql/sanity/queries';
-import { useLoaderData } from '@remix-run/react';
+import {getCMSContent} from '~/utils/functions/eventFunctions';
+import {GET_PRESS_PAGE} from '~/utils/graphql/sanity/queries';
+import {useLoaderData} from '@remix-run/react';
 
-import PressPage, { links as pressPageStyles } from '~/modules/pressPage';
+import PressPage, {links as pressPageStyles} from '~/modules/pressPage';
 
 export const links = () => pressPageStyles();
 
-export async function loader({context}) {
+export const meta = () => [
+  {title: 'Tula Probiotics Skincare in the Press - TULA Skincare'},
+  {
+    description: 'Tula Probiotics Skincare in the Press - TULA Skincare',
+  },
+];
 
-    const pressPageContent = await getCMSContent(context, GET_PRESS_PAGE);
-  
-    return {
-        pressPageContent,
-    }
-  }
+export async function loader({context}) {
+  const pressPageContent = await getCMSContent(context, GET_PRESS_PAGE);
+
+  return {
+    pressPageContent,
+  };
+}
 
 export default function PressPageComponent() {
-
-    const { 
-        pressPageContent
-    } = useLoaderData();
+  const {pressPageContent} = useLoaderData();
 
   return (
     <Layouts.MainNavFooter>
-        <PressPage content={pressPageContent} />
+      <PressPage content={pressPageContent} />
     </Layouts.MainNavFooter>
   );
 }

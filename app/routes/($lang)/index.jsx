@@ -29,6 +29,14 @@ import {
 
 export const links = () => homePageStyles();
 
+export const meta = () => [
+  {title: 'TULA Skincare: Probiotic Skin Care Products'},
+  {
+    description:
+      'Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup.',
+  },
+];
+
 export const action = async ({request, context}) => {
   const [formData] = await Promise.all([request.formData()]);
   let errorMessage = 'Something went wrong. Please try again.';

@@ -67,17 +67,6 @@ export const links = () => {
   ];
 };
 
-export const meta = () => [
-  {charset: 'utf-8'},
-  {name: 'robots', content: 'noindex'},
-  {name: 'viewport', content: 'width=device-width,initial-scale=1'},
-  {title: 'TULA Skincare: Probiotic Skin Care Products'},
-  {
-    description:
-      'Clean + effective probiotic skincare products made with superfoods.',
-  },
-];
-
 const CMSDataCache = {};
 const customerCache = {accessToken: undefined, data: undefined};
 
@@ -247,9 +236,9 @@ function RootStructure({children}) {
   return (
     <html lang="en">
       <head>
+        <PageMeta />
         <Meta />
         <Links />
-        <PageMeta />
       </head>
       <body>
         {children}
@@ -279,10 +268,6 @@ async function checkRedirect(context, request) {
       source: pathname,
     });
 
-    console.log('redirect', {
-      pathname,
-      redirectObj,
-    });
     if (redirectObj[0]?.destination) {
       const statusCode = parseInt(redirectObj[0]?.statusCode) || 301;
       redirect = {destination: redirectObj[0]?.destination, statusCode};
