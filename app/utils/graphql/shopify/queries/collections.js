@@ -45,6 +45,10 @@ export const PRODUCTS_QUERY = `#graphql
     handle
     title
     description
+    seo{
+      title
+      description
+    }
     metafields(identifiers:[
       { namespace: "global", key: "sub_title"},
     ]) {
@@ -153,6 +157,10 @@ export const PRODUCT_QUERY = `#graphql
     description
     descriptionHtml
     handle
+    seo{
+      title
+      description
+    }
     metafields(identifiers:[
       {namespace: "global", key: "size_in_oz"},
       {namespace: "global", key: "videos"},

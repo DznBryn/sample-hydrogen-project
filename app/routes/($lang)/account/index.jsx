@@ -39,6 +39,13 @@ export function links() {
   return [...accountStyles()];
 }
 
+export const meta = () => [
+  {title: 'My Account - TULA Skincare'},
+  {
+    description: 'Log in and access your TULA account here',
+  },
+];
+
 export async function action({request, context}) {
   const {storefront, session} = context;
 
