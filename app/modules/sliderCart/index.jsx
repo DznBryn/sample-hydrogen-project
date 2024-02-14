@@ -62,19 +62,27 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const [loading, setLoading] = React.useState(false);
   const [isAbleToRedeem, setIsAbleToRedeem] = React.useState(false);
 
-  const GWP_PRODUCT_EXTERNAL_ID = parseInt(
-    cartConfig.freeGiftPromoProductExternalID,
-  );
+  const GWP_PRODUCT_EXTERNAL_ID = cartConfig.freeGiftPromoProductExternalID;
+
   const GWP_PRODUCT = products?.products?.filter(
-    (product) => product.externalId === GWP_PRODUCT_EXTERNAL_ID,
+    (product) => product?.id.split('Product/')[1] === GWP_PRODUCT_EXTERNAL_ID,
   )[0];
-  const GWP_PRODUCT_VARIANT_ID = GWP_PRODUCT?.variants[0].externalId;
-  const IS_GWP_PRODUCT_ON_CART = items?.some(
-    (product) =>
-      (apiType === 'graphql'
-        ? convertStorefrontIdToExternalId(product.variant.product.id)
-        : product.variant_id) === GWP_PRODUCT_VARIANT_ID,
+
+  const GWP_PRODUCT_VARIANT_ID = Number(
+    GWP_PRODUCT?.variants.nodes[0].id.split('ProductVariant/')[1],
   );
+
+  function checkIfIsGWPProductOnCart() {
+    return (
+      items?.some(
+        (product) =>
+          product?.merchandise.id.split('ProductVariant/')[1] ===
+          GWP_PRODUCT_VARIANT_ID,
+      ) || false
+    );
+  }
+
+  const IS_GWP_PRODUCT_ON_CART = checkIfIsGWPProductOnCart();
 
   const MIN_POINTS_AMOUNT = 2000;
 
@@ -205,6 +213,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   }
 
   function hasOnlyGiftCards() {
+    // ! TODO
     const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
     const ITEMS_WITH_NO_GWP = items?.filter(
       (item) => parseGid(item?.merchandise?.id)?.id !== GWP_PRODUCT_VARIANT_ID,
@@ -500,7 +509,9 @@ const ItemsList = ({
       cartTotal = items
         .filter((item) => !item?.sellingPlanAllocation?.sellingPlan)
         .reduce((total, value) => {
-          return (total += Number(value?.cost?.amountPerQuantity?.amount ?? 0));
+          return (total += Number(
+            value?.cost?.amountPerQuantity?.amount * value.quantity ?? 0,
+          ));
         }, 0);
     }
     return cartTotal >= cartConfig?.freeGiftPromoThreshold;
@@ -514,6 +525,13 @@ const ItemsList = ({
   const loyaltyProduct = items?.find((item) =>
     item?.customAttributes?.some((el) => el.key === 'loyalty_redeem'),
   );
+
+  const shouldRenderGiftProduct =
+    isFreeGitPromoActivate(cartConfig) &&
+    !props?.hasOnlyGiftCards() &&
+    products.products.find((product) =>
+      product.id.includes(cartConfig.freeGiftPromoProductExternalID),
+    );
 
   return (
     <div className={'innerContent'}>
@@ -636,21 +654,17 @@ const ItemsList = ({
         </div>
       </div>
 
-      {isFreeGitPromoActivate(cartConfig) &&
-        !props?.hasOnlyGiftCards() &&
-        products.products.find((product) =>
-          product.id.includes(cartConfig.freeGiftPromoProductExternalID),
-        ) && (
-          <FreeGiftPromoProduct
-            product={products.products.find((product) =>
-              product.id.includes(cartConfig.freeGiftPromoProductExternalID),
-            )}
-            isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
-            anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage}
-            productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
-            active={shouldActivateFreeGift()}
-          />
-        )}
+      {shouldRenderGiftProduct && (
+        <FreeGiftPromoProduct
+          product={products.products.find((product) =>
+            product.id.includes(cartConfig.freeGiftPromoProductExternalID),
+          )}
+          isMystery={cartConfig?.freeGiftPromoIsMisteryProductToggle}
+          anonymousImageSrc={cartConfig?.freeGiftPromoMysteryImage}
+          productPrice={cartConfig?.freeGiftPromoProductPrice || '0.00'}
+          active={shouldActivateFreeGift()}
+        />
+      )}
       <SliderCartRec
         productRecs={productRecList}
         limit={getRecItemsLimit()}
@@ -666,15 +680,17 @@ const ItemsList = ({
   );
 };
 
-const SkeletonLoader = () => {
-  const ItemLoader = () => (
-    <div>
-      <LoadingSkeleton width="60px" height="70px" />
-      <LoadingSkeleton width="249px" height="36px" />
-      <LoadingSkeleton width="200px" height="34px" />
-    </div>
-  );
+export default SliderCart;
 
+const ItemLoader = () => (
+  <div>
+    <LoadingSkeleton width="60px" height="70px" />
+    <LoadingSkeleton width="249px" height="36px" />
+    <LoadingSkeleton width="200px" height="34px" />
+  </div>
+);
+
+const SkeletonLoader = () => {
   return (
     <div className={'skeletonWrapper'}>
       <div>
@@ -695,5 +711,3 @@ const SkeletonLoader = () => {
     </div>
   );
 };
-
-export default SliderCart;
