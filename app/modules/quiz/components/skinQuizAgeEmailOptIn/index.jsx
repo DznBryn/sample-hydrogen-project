@@ -8,6 +8,7 @@ import {
 } from '~/utils/functions/listrakFunctions';
 
 import styles from './styles.css';
+import {handleSignUpTracking} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -75,6 +76,8 @@ const SkinQuizAgeEmailOptIn = ({
         response = await subscribeEmailOnLT(userEmail);
         break;
     }
+
+    handleSignUpTracking('skin_quiz');
 
     const isValidStatusCode = () =>
       [200, 201]?.some((validStatus) => validStatus === response.status);

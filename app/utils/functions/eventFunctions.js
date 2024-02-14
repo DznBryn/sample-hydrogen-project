@@ -52,6 +52,17 @@ export function createCustomEvent() {
   return false;
 }
 
+export function handleSignUpTracking(placement = '') {
+  if (window && window.dataLayer) {
+    window.dataLayer.push({
+      event: 'select_promotion',
+      signup: {
+        placement,
+      },
+    });
+  }
+}
+
 export function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: undefined,
@@ -249,6 +260,16 @@ export function useIsFirstRender() {
   return isFirstRender;
 }
 
+export function getIdFromGid(gid = '') {
+  if (gid === '') {
+    return gid;
+  }
+
+  const {id} = parseGid(gid);
+
+  return id;
+}
+
 export function isElementInView(el) {
   if (el?.getBoundingClientRect()) {
     const rect = el.getBoundingClientRect();
@@ -280,7 +301,7 @@ export function triggerAnalyticsOnScroll(
         ) {
           return inViewItems.push({
             name: `${prod?.title}`,
-            id: `${window.btoa(prod?.id)}`,
+            id: getIdFromGid(prod?.id),
             price: parseFloat(
               prod?.priceRange?.minVariantPrice?.amount,
             )?.toFixed(2),
@@ -320,7 +341,7 @@ export function triggerAnalyticsOnScroll(
             ) {
               return newInViewItems.push({
                 name: `${prod?.title}`,
-                id: `${window.btoa(prod?.id)}`,
+                id: getIdFromGid(prod?.id),
                 price: parseFloat(
                   prod?.priceRange?.minVariantPrice?.amount,
                 )?.toFixed(2),

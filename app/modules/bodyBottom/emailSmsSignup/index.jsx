@@ -1,14 +1,13 @@
 import React from 'react';
-import { submitFooterContact } from '~/utils/functions/listrakFunctions';
+import {submitFooterContact} from '~/utils/functions/listrakFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {PortableText} from '@portabletext/react';
 
 import styles from './styles.css';
+import {handleSignUpTracking} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
 const SuccessIcon = () => (
@@ -34,7 +33,7 @@ const SuccessIcon = () => (
   </svg>
 );
 
-const EmailSmsSignup = ({ emailSmsSignupContent }) => {
+const EmailSmsSignup = ({emailSmsSignupContent}) => {
   const communication = emailSmsSignupContent;
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   // const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -59,15 +58,21 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
           formatted += c;
         }
       } else if (mask) {
-        if (mask.split('')[i])
-          formatted += mask.split('')[i];
+        if (mask.split('')[i]) formatted += mask.split('')[i];
       }
     }
     return formatted;
   }
   function format() {
-    const val = doFormat(dateRef.current.value, dateRef.current.getAttribute('data-format'));
-    dateRef.current.value = doFormat(dateRef.current.value, dateRef.current.getAttribute('data-format'), dateRef.current.getAttribute('data-mask'));
+    const val = doFormat(
+      dateRef.current.value,
+      dateRef.current.getAttribute('data-format'),
+    );
+    dateRef.current.value = doFormat(
+      dateRef.current.value,
+      dateRef.current.getAttribute('data-format'),
+      dateRef.current.getAttribute('data-mask'),
+    );
     if (dateRef.current.createTextRange) {
       var range = dateRef.current.createTextRange();
       range.move('character', val.length);
@@ -78,9 +83,9 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
     }
   }
   const handleClick = async () => {
+    handleSignUpTracking('footer');
     if (!emailRef.current.classList.contains('hide')) {
       if (emailRef.current.value.match(emailRegex)) {
-
         const isUK = getApiKeys().CURRENT_ENV.includes('UK');
 
         if (!isUK) {
@@ -89,15 +94,19 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
 
           setTimeout(() => {
             dateRef.current.classList.remove('hide');
-            document.querySelector('#FooterNewsletterSubmit').innerText = 'get free gift!';
+            document.querySelector('#FooterNewsletterSubmit').innerText =
+              'get free gift!';
             dateRef.current.focus();
           }, 100);
-
         } else {
           const response = await submitFooterContact(emailRef.current.value);
-          const isValidStatusCode = () => [200, 201].some(validStatus => validStatus === response.status);
+          const isValidStatusCode = () =>
+            [200, 201].some((validStatus) => validStatus === response.status);
 
-          if (isValidStatusCode() || response.error === 'ERROR_UNSUBSCRIBED_EMAIL_ADDRESS') {
+          if (
+            isValidStatusCode() ||
+            response.error === 'ERROR_UNSUBSCRIBED_EMAIL_ADDRESS'
+          ) {
             document.querySelector('.email h1').classList.add('hide');
             document.querySelector('.formFootnote').classList.add('hide');
             document.querySelector('.emailButton').classList.add('hide');
@@ -107,11 +116,14 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
 
         emailRef.current.classList.add('hide');
 
-        if (!document.querySelector('.error_message').classList.contains('hide')) {
+        if (
+          !document.querySelector('.error_message').classList.contains('hide')
+        ) {
           document.querySelector('.error_message').classList.add('hide');
         }
       } else {
-        document.querySelector('.error_message').innerHTML = 'Please enter a valid Email';
+        document.querySelector('.error_message').innerHTML =
+          'Please enter a valid Email';
         document.querySelector('.error_message').classList.remove('hide');
       }
     }
@@ -119,31 +131,40 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
       let cutoff = new Date();
       cutoff = cutoff.setFullYear(cutoff.getFullYear() - 16);
       const birthDate = new Date(dateRef.current.value);
-      if (dateRef.current.value.match(dateRegex) && (birthDate < cutoff)) {
-        const response = await submitFooterContact(emailRef.current.value, birthDate);
-        const isValidStatusCode = () => [200, 201].some(validStatus => validStatus === response.status);
-        if (isValidStatusCode() || response.error === 'ERROR_UNSUBSCRIBED_EMAIL_ADDRESS') {
+      if (dateRef.current.value.match(dateRegex) && birthDate < cutoff) {
+        const response = await submitFooterContact(
+          emailRef.current.value,
+          birthDate,
+        );
+        const isValidStatusCode = () =>
+          [200, 201].some((validStatus) => validStatus === response.status);
+        if (
+          isValidStatusCode() ||
+          response.error === 'ERROR_UNSUBSCRIBED_EMAIL_ADDRESS'
+        ) {
           headerAfterEmailSubmit.current.style.display = 'none';
           dateRef.current.classList.add('hide');
           document.querySelector('.email h1').classList.add('hide');
           document.querySelector('.emailButton').classList.add('hide');
           document.querySelector('.formFootnote').classList.add('hide');
           document.querySelector('.success_message').classList.remove('hide');
-          if (!document.querySelector('.error_message').classList.contains('hide')) {
+          if (
+            !document.querySelector('.error_message').classList.contains('hide')
+          ) {
             document.querySelector('.error_message').classList.add('hide');
           }
-        }
-        else {
+        } else {
           document.querySelector('.error_message').innerHTML = response.message;
           document.querySelector('.error_message').classList.remove('hide');
         }
-      }
-      else {
+      } else {
         if (!dateRef.current.value.match(dateRegex)) {
-          document.querySelector('.error_message').innerHTML = 'Please enter a valid Birthdate';
+          document.querySelector('.error_message').innerHTML =
+            'Please enter a valid Birthdate';
         }
         if (!(birthDate < cutoff)) {
-          document.querySelector('.error_message').innerHTML = 'Must be over 16 to subscribe';
+          document.querySelector('.error_message').innerHTML =
+            'Must be over 16 to subscribe';
         }
         document.querySelector('.error_message').classList.remove('hide');
       }
@@ -152,22 +173,32 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
 
   return (
     <div className={'signupWrap'}>
-      <div className={'email'} >
+      <div className={'email'}>
         <div ref={headerBeforeEmailSubmit} className={'beforeEmailSubmit'}>
           <PortableText value={communication?.newsletterTextRaw} />
         </div>
         <div ref={headerAfterEmailSubmit} className={'afterEmailSubmit'}>
-          <PortableText value={communication?.newsletterTextAfterEmailSubmitRaw} />
-          <PortableText value={communication?.newsletterSubtextAfterEmailSubmitRaw} />
+          <PortableText
+            value={communication?.newsletterTextAfterEmailSubmitRaw}
+          />
+          <PortableText
+            value={communication?.newsletterSubtextAfterEmailSubmitRaw}
+          />
         </div>
         <div className={'emailFormWrap'}>
-          <form onSubmit={(e) => { e.preventDefault(); return false; }}>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              return false;
+            }}
+          >
             <input
               ref={emailRef}
               type="email"
               placeholder="enter your email"
               id="ltkSource"
-              className={'emailText'} />
+              className={'emailText'}
+            />
             <input
               ref={dateRef}
               type="text"
@@ -179,12 +210,14 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
               aria-label="MM/DD/YYYY"
               data-format="**/**/****"
               data-mask="MM/DD/YYYY"
-              onKeyUp={format} />
+              onKeyUp={format}
+            />
             <button
               className={'emailButton'}
               id="FooterNewsletterSubmit"
               type="submit"
-              onClick={() => handleClick()}>
+              onClick={() => handleClick()}
+            >
               {communication.newsletterButtonLabel}
             </button>
           </form>
@@ -192,7 +225,8 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
             <PortableText value={communication?.newsletterFooterRaw} />
           </div>
           <div className="submit_messages">
-            <div className={'success_message hide'}><SuccessIcon />
+            <div className={'success_message hide'}>
+              <SuccessIcon />
               <h1>Thanks for signing up!</h1>
               <p>Look out for us in your inbox to receive your 15% off.</p>
             </div>
@@ -200,7 +234,7 @@ const EmailSmsSignup = ({ emailSmsSignupContent }) => {
           </div>
         </div>
       </div>
-      <div className={'sms'} >
+      <div className={'sms'}>
         <div className={'topText'}>
           <PortableText value={communication?.smsText1Raw} />
         </div>
