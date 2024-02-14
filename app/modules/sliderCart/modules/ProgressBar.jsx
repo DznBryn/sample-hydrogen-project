@@ -51,7 +51,7 @@ const ProgressBar = ({cart, cartConfig}) => {
       cartTotal = items
         .filter((item) => !item?.sellingPlanAllocation?.sellingPlan)
         .reduce((total, value) => {
-          return (total += Number(value?.cost?.amountPerQuantity?.amount ?? 0));
+          return (total += Number(value?.cost?.amountPerQuantity?.amount * value.quantity ?? 0));
         }, 0);
     }
     if (cartTotal >= cartConfig.freeGiftPromoThreshold) {
