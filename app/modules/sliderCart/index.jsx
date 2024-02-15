@@ -63,21 +63,20 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const [isAbleToRedeem, setIsAbleToRedeem] = React.useState(false);
 
   const GWP_PRODUCT_EXTERNAL_ID = cartConfig.freeGiftPromoProductExternalID;
+  const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
 
   const GWP_PRODUCT = products?.products?.filter(
-    (product) => product?.id.split('Product/')[1] === GWP_PRODUCT_EXTERNAL_ID,
+    (product) => +parseGid(product?.id).id === GWP_PRODUCT_EXTERNAL_ID,
   )[0];
 
-  const GWP_PRODUCT_VARIANT_ID = Number(
-    GWP_PRODUCT?.variants.nodes[0].id.split('ProductVariant/')[1],
-  );
+  const GWP_PRODUCT_VARIANT_ID = +parseGid(GWP_PRODUCT?.variants.nodes[0].id)
+    .id;
 
   function checkIfIsGWPProductOnCart() {
     return (
       items?.some(
         (product) =>
-          product?.merchandise.id.split('ProductVariant/')[1] ===
-          GWP_PRODUCT_VARIANT_ID,
+          +parseGid(product?.merchandise.id).id === GWP_PRODUCT_VARIANT_ID,
       ) || false
     );
   }
@@ -213,16 +212,12 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   }
 
   function hasOnlyGiftCards() {
-    // ! TODO
-    const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
     const ITEMS_WITH_NO_GWP = items?.filter(
       (item) => parseGid(item?.merchandise?.id)?.id !== GWP_PRODUCT_VARIANT_ID,
     );
 
     return ITEMS_WITH_NO_GWP?.every((item) =>
-      GIFT_CARDS_VARIANTS_IDS.some(
-        (id) => id === parseGid(item?.merchandise?.id)?.id,
-      ),
+      GIFT_CARDS_VARIANTS_IDS.includes(+parseGid(item?.merchandise?.id)?.id),
     );
   }
 
