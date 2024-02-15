@@ -450,13 +450,14 @@ export function generateUUID() {
   return uuid;
 }
 
-export function getCartTotalForFreeShipping() {
-  const {items, subtotalPrice} = useCartState();
+export function getCartTotalForFreeShipping(cart) {
+  const items = cart?.lines ? flattenConnection(cart.lines) : [];
   const giftCardID = getApiKeys().GIFT_CARD_ID;
-  let totalPrice = subtotalPrice / 100;
+  let totalPrice = Number(cart?.cost?.totalAmount?.amount);
 
   items.forEach((item) => {
-    if (item.id === giftCardID) totalPrice -= item.price / 100;
+    if (item.merchandise.id.includes(giftCardID))
+      totalPrice -= Number(item?.cost?.totalAmount?.amount);
   });
 
   return totalPrice;
