@@ -122,12 +122,15 @@ export const useStore = create((set) => ({
           ...state,
           account: {
             ...state.account,
-            data,
+            data: {
+              ...state.account.data,
+              ...data,
+            },
           },
         };
       });
     },
-    updateCustomerSubscription: (subscription = null) => {
+    updateCustomerSubscription: (subscription) => {
       return set((state) => {
         return {
           ...state,

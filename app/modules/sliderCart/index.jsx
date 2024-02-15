@@ -663,6 +663,7 @@ const ItemsList = ({
       <SliderCartRec
         productRecs={productRecList}
         limit={getRecItemsLimit()}
+        items={items}
         gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
       />
       {getApiKeys().CURRENT_ENV.includes('US') && (

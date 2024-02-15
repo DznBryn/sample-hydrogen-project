@@ -36,14 +36,16 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
   const alertRef = useRef();
   const cart = useStore((store) => store?.cart?.data ?? (() => {}));
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
-  const cartTotal = parseFloat(getCartTotalForFreeShipping());
+  const cartTotal = parseFloat(getCartTotalForFreeShipping(cart));
   let progressMsg = null;
 
-  useEffect(() =>
-    bindCustomEvent(alertRef, 'data-alert-state', {
-      hidden: 'hidden',
-      visible: 'visible',
-    }),
+  useEffect(
+    () =>
+      bindCustomEvent(alertRef, 'data-alert-state', {
+        hidden: 'hidden',
+        visible: 'visible',
+      }),
+    [cart?.cost?.totalAmount?.amount],
   );
 
   useEffect(() => {

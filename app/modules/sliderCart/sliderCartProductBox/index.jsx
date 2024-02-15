@@ -115,7 +115,6 @@ const SliderCartProductBox = ({
             className="productImage"
             data={item?.merchandise?.image}
             sizes="(min-width: 45em) 50vw, 100vw"
-            aspectRatio="4/5"
           />
         </Link>
       </div>
@@ -199,7 +198,6 @@ const RegularProduct = ({
             className="productImage"
             data={item?.merchandise?.image}
             sizes="(min-width: 45em) 50vw, 100vw"
-            aspectRatio="4/5"
           />
         </Link>
       </div>

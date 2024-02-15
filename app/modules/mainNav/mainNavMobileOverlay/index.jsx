@@ -238,7 +238,12 @@ const FooterButtons = () => {
       link: '/pages/contact-us',
       showIt: true,
     },
-    {label: 'faq', icon: icons['question'], link: '/pages/faq', showIt: true},
+    {
+      label: 'faq',
+      icon: icons['question'],
+      link: 'https://help.tula.com/',
+      showIt: true,
+    },
     {
       label: 'accessibility',
       icon: icons['accessibility'],
