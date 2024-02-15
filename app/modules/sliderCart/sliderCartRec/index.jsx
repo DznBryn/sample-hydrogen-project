@@ -4,18 +4,30 @@ import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
 import {getCurrency} from '../../../utils/functions/eventFunctions';
 import styles from './styles.css';
 import {Image, flattenConnection} from '@shopify/hydrogen';
+import {useStore} from '~/hooks/useStore';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...pdpAddToCartStyles()];
 };
 
 const SliderCartRec = ({productRecs, limit, gwpProductId}) => {
+  const cart = useStore((state) => state.cart.data);
+  const items = cart?.lines ? flattenConnection(cart.lines) : [];
+
   if (limit > 0 && productRecs?.productList.length > 0) {
     return (
       <div className={'sliderCartRec'}>
         <h2>{productRecs?.title ?? 'Boost your TULA routine with'}</h2>
         {productRecs?.productList
-          ?.filter((product) => !product?.id?.includes(gwpProductId))
+          ?.filter((product) => {
+            const cartItem =
+              items?.find((item) =>
+                product.variants?.nodes.find(
+                  (variant) => variant.id === item.merchandise.id,
+                ),
+              ) ?? null;
+            return !product?.id?.includes(gwpProductId) && !cartItem;
+          })
           .map((product, index) => {
             const variants = product?.variants
               ? flattenConnection(product.variants)
