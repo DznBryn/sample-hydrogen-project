@@ -27,10 +27,7 @@ import {
   cancelSubscription,
   changeSubscriptionDate,
   getCollectionProducts,
-  getCustomerOrders,
-  getCustomerSubscription,
   reactivateSubscription,
-  skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
 import logout from './__private/logout';
@@ -85,9 +82,17 @@ export async function action({request, context}) {
       return res;
     }
     if (formAction === 'SUBSCRIPTION_SKIP_ORDER') {
-      const res = await skipSubscriptionOrder({
+      const formatDate = new Date(formData.get('changeDate'));
+      const every = formData.get('every');
+      const updateDate = new Date(
+        formatDate.setMonth(formatDate.getMonth() + Number(every)),
+      );
+      const newDate = format(updateDate, 'yyyy-MM-dd');
+
+      const res = await changeSubscriptionDate({
         public_id: formData.get('publicId'),
         customer: formData.get('customerId'),
+        changeDate: String(newDate),
       });
 
       if (!res?.customer) {
@@ -97,19 +102,7 @@ export async function action({request, context}) {
         };
       }
 
-      const activeSubscription = await getCustomerSubscription(
-        res.customer,
-        true,
-      );
-      const inactiveSubscription = await getCustomerSubscription(res.customer);
-      const subscriptionOrders = await getCustomerOrders(res.customer);
-
-      return {
-        skippedOrder: res,
-        activeSubscription,
-        inactiveSubscription,
-        subscriptionOrders,
-      };
+      return res;
     }
     if (formAction === 'SUBSCRIPTION_CANCEL') {
       const reasonNumber = formData.get('cancelReason');
@@ -138,6 +131,7 @@ export async function action({request, context}) {
         new Date(formData.get('changeDate')),
         'yyyy-MM-dd',
       );
+
       const res = await changeSubscriptionDate({
         public_id: formData.get('publicId'),
         customer: formData.get('customerId'),
