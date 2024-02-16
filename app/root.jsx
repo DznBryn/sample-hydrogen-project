@@ -113,6 +113,9 @@ export async function loader({context, request}) {
   ) {
     customerCache.data = await getCustomerData(context, curCustomerAccessToken);
     customerCache.accessToken = curCustomerAccessToken;
+  }
+
+  if (customerCache.data?.id) {
     customerCache.data.subscription = {};
     const customerId = parseGid(customerCache.data.id).id;
 
