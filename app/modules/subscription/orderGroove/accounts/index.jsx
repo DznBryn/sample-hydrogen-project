@@ -853,7 +853,11 @@ function PauseSubscription({handleModalClose, subscription, order}) {
       <div className="modal__footer">
         <div></div>
         <fetcher.Form action="/account" method={API_METHODS.PATCH}>
-          <input type="hidden" name="formAction" value={'SUBSCRIPTION_PAUSE'} />
+          <input
+            type="hidden"
+            name="formAction"
+            value={'SUBSCRIPTION_CHANGE_DATE'}
+          />
           <input type="hidden" name="changeDate" value={dateChange} />
           <input
             type="hidden"
