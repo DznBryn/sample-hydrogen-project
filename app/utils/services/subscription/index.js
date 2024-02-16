@@ -34,8 +34,41 @@ export async function getCustomerSubscription(customerId, live = false) {
       // Handle non-successful responses (e.g., 4xx or 5xx status codes)
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    const subscription = await response.json();
+    const responseJson = await response.json();
+    const subscriptions = {...responseJson};
+    if (responseJson.results.length > 0) {
+      subscriptions.results = await Promise.all(
+        responseJson.results.map(async (subscription) => {
+          if (subscription?.payment) {
+            const payment = await getSubscriptionPayment(
+              customerId,
+              subscription.payment,
+            );
+            subscription.payment = payment;
+          }
+          return subscription;
+        }),
+      );
+    }
+    return subscriptions;
+  } catch (error) {
+    return error.message;
+  }
+}
+export async function getSubscriptionPayment(customerId, payment_id) {
+  const url = `https://restapi.ordergroove.com/payments/${payment_id}/`;
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(customerId),
+  };
+  try {
+    const response = await fetch(url, {headers});
 
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
     return subscription;
   } catch (error) {
     return error.message;

@@ -116,6 +116,7 @@ export const SUBSCRIPTION_PRODUCTS_QUERY = `#graphql
           nodes {
             id
             sku
+            title
             image{ 
               id
               url

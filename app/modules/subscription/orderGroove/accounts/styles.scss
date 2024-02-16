@@ -240,6 +240,13 @@
       p {
         margin-bottom: 0.5rem;
       }
+      .underline-btn {
+        font-size: 16px;
+        &:disabled {
+          color: #4c4e56;
+          cursor: not-allowed;
+        }
+      }
     }
   }
   .costDetails {
