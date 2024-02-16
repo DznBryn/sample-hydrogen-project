@@ -76,7 +76,7 @@ export const handleUpdateCustomerSubcription = async (
 
 const AccountSubscription = ({active}) => {
   const {data} = useStore((store) => store?.account ?? null);
-
+  console.log(data);
   return (
     <div className={active === 1 ? 'menuWrapper' : 'menuWrapper hidden'}>
       <div id="autoTab">
@@ -105,7 +105,7 @@ const AccountSubscription = ({active}) => {
                 </div>
               </div>
             )}
-            {data?.subscription?.inactive?.results.length > 0 && (
+            {data?.subscription?.active?.results.length > 0 && (
               <div className={'activeProducts'}>
                 <h3>
                   <b>Upcoming Shipments</b>
