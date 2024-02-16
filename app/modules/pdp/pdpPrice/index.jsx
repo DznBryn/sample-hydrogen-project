@@ -1,11 +1,14 @@
 import {useState, useEffect, useRef} from 'react';
+
+import {parseGid} from '@shopify/hydrogen';
+import classnames from 'classnames';
+
 import {
   getCurrency,
   showPaymentPlanVendor,
 } from '~/utils/functions/eventFunctions';
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {useStore} from '~/hooks/useStore';
-import classnames from 'classnames';
 
 import styles from './styles.css';
 
@@ -42,6 +45,10 @@ const PDPPrice = ({pricing}) => {
     !sellingPlanID ||
     (sellingPlanID === 0 && !getApiKeys().CURRENT_ENV.includes('UK'));
 
+  const selectedVariantID = parseGid(selectedVariant).id;
+  const isSelectedVariantIncludedAtPromo =
+    promos?.variantIds?.includes(selectedVariantID);
+
   useEffect(() => {
     setDiscountedPrice(
       parseFloat(price).toFixed(2) -
@@ -70,10 +77,12 @@ const PDPPrice = ({pricing}) => {
     }
 
     const shouldShowPromoPrice =
-      tulaSiteWide.current?.promoDiscount &&
-      !tulaSiteWide.current?.excludeList?.includes(product.handle) &&
-      !promos?.showPromo &&
-      !tags.find((tag) => tag.toLowerCase() === 'no-promo');
+      (tulaSiteWide.current?.promoDiscount &&
+        !tulaSiteWide.current?.excludeList?.includes(product.handle)) ||
+      (promos?.showPromo &&
+        !tags.find((tag) => tag.toLowerCase() === 'no-promo'));
+
+    const promoPrice = tulaSiteWide.current?.promoDiscount || promos?.discount;
 
     return (
       <h2 className={'price retail_price'}>
@@ -88,7 +97,7 @@ const PDPPrice = ({pricing}) => {
                   isRemainder(
                     (
                       parseFloat(price).toFixed(2) -
-                      (parseFloat(tulaSiteWide.current?.promoDiscount) / 100) *
+                      (parseFloat(promoPrice) / 100) *
                         parseFloat(price).toFixed(2)
                     ).toFixed(2),
                   )}
@@ -104,9 +113,7 @@ const PDPPrice = ({pricing}) => {
             </>
           ) : promos?.showPromo &&
             !tags.find((tag) => tag.toLowerCase() === 'no-promo') &&
-            promos?.variantIds?.find(
-              (vId) => parseInt(vId) === parseInt(selectedVariant),
-            ) ? (
+            isSelectedVariantIncludedAtPromo ? (
             originalPrice > price ? (
               <>
                 <span className={'compared_price'}>
@@ -184,27 +191,27 @@ const PDPPrice = ({pricing}) => {
     if (isGiftCard) {
       return null;
     }
-    return discount === 0 ? (
+
+    const shouldShowSiteWidePromoMessage =
       tulaSiteWide.current?.promoDiscount &&
-      !tulaSiteWide.current?.excludeList?.includes(product.handle) &&
-      !promos?.showPromo &&
-      !tags.find((tag) => tag.toLowerCase() === 'no-promo') ? (
+      !tulaSiteWide.current?.excludeList?.includes(product.handle);
+
+    const shouldShowPromoMessage =
+      promos?.showPromo &&
+      !tags.find((tag) => tag.toLowerCase() === 'no-promo') &&
+      isSelectedVariantIncludedAtPromo;
+
+    return discount === 0 ? (
+      shouldShowSiteWidePromoMessage ? (
         <h2 className={promoTextStyles}>
           {tulaSiteWide.current?.promoDiscountMessage}
         </h2>
-      ) : promos?.showPromo &&
-        promos?.variantIds?.find(
-          (vId) => parseInt(vId) === parseInt(selectedVariant),
-        ) ? (
+      ) : shouldShowPromoMessage ? (
         <h2 className={promoTextStyles}>{promos?.promoMessage}</h2>
-      ) : (
-        <></>
-      )
+      ) : null
     ) : limitedOffer?.limitedTimeBadge && limitedOffer.limitedTimeBadge ? (
       <h2 className={promoTextStyles}>{limitedOffer?.promoMessage}</h2>
-    ) : (
-      <></>
-    );
+    ) : null;
   };
 
   return (
