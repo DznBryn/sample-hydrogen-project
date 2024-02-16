@@ -239,7 +239,7 @@ const MainContent = () => {
         to: getApiKeys().RETURNS_HREF,
         showIt: true,
       },
-      {label: 'faqs & help', to: '/pages/faq', showIt: true},
+      {label: 'faqs & help', to: 'https://help.tula.com/', showIt: true},
       {
         label: 'submit a receipt',
         to: '/pages/upload-receipt',
