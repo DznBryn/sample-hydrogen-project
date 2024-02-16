@@ -248,7 +248,11 @@ function ActiveProductItem({address, order, subscription}) {
       />
     ),
     skip: (
-      <SkipOrderSubscription handleModalClose={handleModalClose} {...order} />
+      <SkipOrderSubscription
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
+      />
     ),
     cancel: (
       <CancelSubscription
@@ -709,8 +713,25 @@ function CancelSubscription({handleModalClose, ...subscription}) {
   );
 }
 
-function SkipOrderSubscription({handleModalClose, ...subscription}) {
+function SkipOrderSubscription({handleModalClose, subscription, order}) {
   const fetcher = useFetcher();
+  const {data: customer, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  const [dateChange] = useState(order?.place);
+
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      if (fetcher.data?.customer) {
+        handleUpdateCustomerSubcription(fetcher.data, {
+          customer,
+          updateCustomerSubscription,
+        });
+        handleModalClose();
+      }
+    }
+  }, [fetcher.type]);
+
   return (
     <div className="modal__container">
       <div className="modal__header">
@@ -736,12 +757,10 @@ function SkipOrderSubscription({handleModalClose, ...subscription}) {
             name="formAction"
             value={'SUBSCRIPTION_SKIP_ORDER'}
           />
-          <input type="hidden" name="publicId" value={subscription.public_id} />
-          <input
-            type="hidden"
-            name="customerId"
-            value={subscription.customer}
-          />
+          <input type="hidden" name="changeDate" value={dateChange} />
+          <input type="hidden" name="every" value={subscription?.every ?? 1} />
+          <input type="hidden" name="publicId" value={order.public_id} />
+          <input type="hidden" name="customerId" value={order.customer} />
           <button className="outline-btn" type="submit">
             Skip Shipment
           </button>
@@ -823,7 +842,6 @@ function PauseSubscription({handleModalClose, subscription, order}) {
     (store) => store?.account ?? null,
   );
   const [dateChange, setDateChange] = useState(order?.place ?? new Date());
-
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.customer) {
