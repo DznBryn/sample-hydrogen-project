@@ -259,6 +259,13 @@
 .subscriptionDetails .shippingDetails .shipping p {
   margin-bottom: 0.5rem;
 }
+.subscriptionDetails .shippingDetails .shipping .underline-btn {
+  font-size: 16px;
+}
+.subscriptionDetails .shippingDetails .shipping .underline-btn:disabled {
+  color: #4c4e56;
+  cursor: not-allowed;
+}
 .subscriptionDetails .costDetails {
   padding: 1em;
   width: 100%;

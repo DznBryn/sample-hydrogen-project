@@ -314,7 +314,20 @@ function ActiveProductItem({address, order, subscription}) {
                   className="itemTitle"
                   role="link"
                 >
-                  {product.title}
+                  {product.title}{' '}
+                  {product?.variants?.length > 1
+                    ? flattenConnection(product?.variants).find(
+                        (variant) =>
+                          parseGid(variant.id).id === subscription.product,
+                      )?.title
+                      ? ` - ${
+                          flattenConnection(product?.variants).find(
+                            (variant) =>
+                              parseGid(variant.id).id === subscription.product,
+                          ).title
+                        }`
+                      : ''
+                    : ''}
                 </Link>
               ) : (
                 <p className="itemTitle">
@@ -332,7 +345,21 @@ function ActiveProductItem({address, order, subscription}) {
               {data?.subscription?.inactive?.results.length > 0 && (
                 <select value={selectedProductId} onChange={handleSwapProduct}>
                   <option value={selectedProductId}>
-                    (swap all upcoming deliveries) {product?.title ?? ''}
+                    (swap all upcoming deliveries) {product?.title ?? ''}{' '}
+                    {product?.variants?.length > 1
+                      ? flattenConnection(product?.variants).find(
+                          (variant) =>
+                            parseGid(variant.id)?.id === subscription.product,
+                        )?.title
+                        ? ` - ${
+                            flattenConnection(product.variants).find(
+                              (variant) =>
+                                parseGid(variant.id).id ===
+                                subscription.product,
+                            ).title
+                          }`
+                        : ''
+                      : ''}
                   </option>
                   {data.subscription.inactive.results.map(
                     (subscription, index) => {
@@ -401,6 +428,26 @@ function ActiveProductItem({address, order, subscription}) {
               <p>
                 <b>Billing</b>
               </p>
+              <div>
+                {subscription?.payment?.cc_number_ending ? (
+                  <>
+                    <p>
+                      ending in {subscription?.payment?.cc_number_ending ?? '-'}
+                    </p>
+                    <p>Expires {subscription?.payment?.cc_exp_date}</p>
+                    <button
+                      className="underline-btn"
+                      type="button"
+                      onClick={() => setShowModal('changePayment')}
+                      disabled={true}
+                    >
+                      Edit
+                    </button>
+                  </>
+                ) : (
+                  <p> No billing info found.</p>
+                )}
+              </div>
             </div>
             <div className="shipping">
               <p>
@@ -417,6 +464,14 @@ function ActiveProductItem({address, order, subscription}) {
                     {address?.city}, {address?.state_province_code}{' '}
                     {address?.zip_postal_code}{' '}
                   </p>
+                  <button
+                    className="underline-btn"
+                    type="button"
+                    onClick={() => setShowModal('changeShipping')}
+                    disabled={true}
+                  >
+                    Edit
+                  </button>
                 </div>
               )}
             </div>
@@ -515,6 +570,19 @@ function InactiveProductItem({products, subscription}) {
                 role="link"
               >
                 {product.title}
+                {product?.variants?.length > 1
+                  ? flattenConnection(product?.variants).find(
+                      (variant) =>
+                        parseGid(variant.id)?.id === subscription.product,
+                    )?.title
+                    ? ` - ${
+                        flattenConnection(product.variants).find(
+                          (variant) =>
+                            parseGid(variant.id).id === subscription.product,
+                        ).title
+                      }`
+                    : ''
+                  : ''}
               </Link>
             ) : (
               <p className="itemTitle">
@@ -785,7 +853,11 @@ function PauseSubscription({handleModalClose, subscription, order}) {
       <div className="modal__footer">
         <div></div>
         <fetcher.Form action="/account" method={API_METHODS.PATCH}>
-          <input type="hidden" name="formAction" value={'SUBSCRIPTION_PAUSE'} />
+          <input
+            type="hidden"
+            name="formAction"
+            value={'SUBSCRIPTION_CHANGE_DATE'}
+          />
           <input type="hidden" name="changeDate" value={dateChange} />
           <input
             type="hidden"
