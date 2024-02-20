@@ -55,6 +55,7 @@ const handleDateFormatter = (date) => {
 export const handleUpdateCustomerSubcription = async (
   subscription,
   {customer, updateCustomerSubscription},
+  callback,
 ) => {
   const activeSubscription = await getCustomerSubscription(
     subscription.customer,
@@ -72,11 +73,11 @@ export const handleUpdateCustomerSubcription = async (
   subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
 
   updateCustomerSubscription(customer.subscription);
+  if (callback) callback();
 };
 
 const AccountSubscription = ({active}) => {
   const {data} = useStore((store) => store?.account ?? null);
-  console.log(data);
   return (
     <div className={active === 1 ? 'menuWrapper' : 'menuWrapper hidden'}>
       <div id="autoTab">
@@ -118,9 +119,7 @@ const AccountSubscription = ({active}) => {
                         {...{
                           address: data.subscription.addresses.results.find(
                             (address) =>
-                              address.public_id ===
-                              data?.subscription?.active?.results[index]
-                                ?.shipping_address,
+                              address.public_id === order?.shipping_address,
                           ),
                           order,
                           subscription:
@@ -258,6 +257,13 @@ function ActiveProductItem({address, order, subscription}) {
       <CancelSubscription
         handleModalClose={handleModalClose}
         {...subscription}
+      />
+    ),
+    changeShipping: (
+      <EditShippingAddress
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
       />
     ),
   };
@@ -472,7 +478,7 @@ function ActiveProductItem({address, order, subscription}) {
                     className="underline-btn"
                     type="button"
                     onClick={() => setShowModal('changeShipping')}
-                    disabled={true}
+                    disabled={showModal !== null}
                   >
                     Edit
                   </button>
@@ -607,6 +613,140 @@ function InactiveProductItem({products, subscription}) {
   );
 }
 
+function EditShippingAddress({handleModalClose, subscription, order}) {
+  const fetcher = useFetcher();
+  const {data: customer, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  const addresses = customer?.subscription?.addresses?.results ?? [];
+  const [selectedShippingAddress, setSelectedShippingAddress] = useState(
+    order?.shipping_address ?? null,
+  );
+  const [isChecked, setIsChecked] = useState(false);
+  useEffect(() => {
+    if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      //@TODO: BUG - Response reutrns data but message is "Body is unusable" from fetcher
+      if (fetcher.data && subscription?.customer) {
+        handleUpdateCustomerSubcription(
+          {customer: subscription?.customer},
+          {
+            customer,
+            updateCustomerSubscription,
+          },
+          handleModalClose,
+        );
+      }
+    }
+  }, [fetcher.type]);
+
+  const handleShippingChange = (event) => {
+    setSelectedShippingAddress(event.target.value);
+  };
+  const handleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
+  return (
+    <div className="modal__container">
+      <div className="modal__header">
+        <h3>Change Shipping Address</h3>
+      </div>
+      <div className="modal__body">
+        <div className="addressList">
+          <div>
+            <p>Stored Address(es)</p>
+          </div>
+          <div className="addressList__container">
+            {addresses.length > 0 && (
+              <select
+                value={selectedShippingAddress}
+                onChange={handleShippingChange}
+              >
+                <option value={selectedShippingAddress}>
+                  {addresses.find(
+                    (address) => address.public_id === selectedShippingAddress,
+                  )?.address ?? 'Select an address'}
+                </option>
+                {addresses.map((address, index) => {
+                  return address?.public_id &&
+                    address.public_id !== selectedShippingAddress ? (
+                    <option key={index} value={address.public_id}>
+                      {address.address}
+                    </option>
+                  ) : null;
+                })}
+              </select>
+            )}
+            <label htmlFor="checkAllShipments" className="checkboxShippingAll">
+              <input
+                type="checkbox"
+                name="checkAllShipments"
+                id="checkAllShipments"
+                defaultChecked={isChecked}
+                value={isChecked}
+                onChange={handleCheckbox}
+              />
+              <span>Use for all shipments</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div className="modal__footer">
+        <button
+          className="outline-btn"
+          type="submit"
+          onClick={() => handleModalClose()}
+          disabled={true}
+        >
+          Add New Address
+        </button>
+        <div className="button__container">
+          <button
+            className="outline-btn"
+            type="submit"
+            onClick={() => handleModalClose()}
+          >
+            Cancel
+          </button>
+          <fetcher.Form action="/account" method={API_METHODS.PATCH}>
+            <input
+              type="hidden"
+              name="formAction"
+              value={'SUBSCRIPTION_CHANGE_SHIPPING'}
+            />
+            <input type="hidden" name="changeAllShipping" value={isChecked} />
+            <input
+              type="hidden"
+              name="publicId"
+              value={order?.public_id ?? ''}
+            />
+            <input
+              type="hidden"
+              name="shippingAddressId"
+              value={selectedShippingAddress ?? ''}
+            />
+            <input
+              type="hidden"
+              name="customerId"
+              value={subscription?.customer ?? ''}
+            />
+            <button
+              className="outline-btn"
+              type="submit"
+              disabled={
+                order?.shipping_address === selectedShippingAddress ||
+                fetcher.type === FETCHER.TYPE.ACTION_RELOAD ||
+                fetcher.type === FETCHER.TYPE.ACTION_SUBMISSION
+              }
+            >
+              Save Changes
+            </button>
+          </fetcher.Form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function CancelSubscription({handleModalClose, ...subscription}) {
   const fetcher = useFetcher();
   const {data: customer, updateCustomerSubscription} = useStore(
@@ -703,7 +843,11 @@ function CancelSubscription({handleModalClose, ...subscription}) {
           <button
             className="outline-btn"
             type="submit"
-            disabled={!selectedReason}
+            disabled={
+              !selectedReason ||
+              fetcher.type === FETCHER.TYPE.ACTION_RELOAD ||
+              fetcher.type === FETCHER.TYPE.ACTION_SUBMISSION
+            }
           >
             Cancel Auto-delivery
           </button>
@@ -718,7 +862,6 @@ function SkipOrderSubscription({handleModalClose, subscription, order}) {
   const {data: customer, updateCustomerSubscription} = useStore(
     (store) => store?.account ?? null,
   );
-  const [dateChange] = useState(order?.place);
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
@@ -757,11 +900,21 @@ function SkipOrderSubscription({handleModalClose, subscription, order}) {
             name="formAction"
             value={'SUBSCRIPTION_SKIP_ORDER'}
           />
-          <input type="hidden" name="changeDate" value={dateChange} />
-          <input type="hidden" name="every" value={subscription?.every ?? 1} />
+          <input
+            type="hidden"
+            name="subscriptionId"
+            value={subscription.public_id}
+          />
           <input type="hidden" name="publicId" value={order.public_id} />
           <input type="hidden" name="customerId" value={order.customer} />
-          <button className="outline-btn" type="submit">
+          <button
+            className="outline-btn"
+            type="submit"
+            disabled={
+              fetcher.type === FETCHER.TYPE.ACTION_RELOAD ||
+              fetcher.type === FETCHER.TYPE.ACTION_SUBMISSION
+            }
+          >
             Skip Shipment
           </button>
         </fetcher.Form>
@@ -827,7 +980,14 @@ function ChangeSubscriptionDate({handleModalClose, subscription, order}) {
             name="customerId"
             value={subscription?.customer ?? ''}
           />
-          <button className="outline-btn" type="submit">
+          <button
+            className="outline-btn"
+            type="submit"
+            disabled={
+              fetcher.type === FETCHER.TYPE.ACTION_RELOAD ||
+              fetcher.type === FETCHER.TYPE.ACTION_SUBMISSION
+            }
+          >
             Save Shipment Date
           </button>
         </fetcher.Form>
@@ -887,7 +1047,14 @@ function PauseSubscription({handleModalClose, subscription, order}) {
             name="customerId"
             value={subscription?.customer ?? ''}
           />
-          <button className="outline-btn" type="submit">
+          <button
+            className="outline-btn"
+            type="submit"
+            disabled={
+              fetcher.type === FETCHER.TYPE.ACTION_RELOAD ||
+              fetcher.type === FETCHER.TYPE.ACTION_SUBMISSION
+            }
+          >
             Pause Subscription
           </button>
         </fetcher.Form>
@@ -931,7 +1098,12 @@ function ReactivateButton({product, subscription}) {
       <button
         className="outline-btn"
         type="submit"
-        disabled={!subscription.public_id || !product}
+        disabled={
+          !subscription.public_id ||
+          !product ||
+          fetcher.type === FETCHER.TYPE.ACTION_RELOAD ||
+          fetcher.type === FETCHER.TYPE.ACTION_SUBMISSION
+        }
       >
         {fetcher.state === 'loading'
           ? 'Reactivate...'
