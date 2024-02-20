@@ -324,20 +324,7 @@ function ActiveProductItem({address, order, subscription}) {
                   className="itemTitle"
                   role="link"
                 >
-                  {product.title}{' '}
-                  {product?.variants?.length > 1
-                    ? flattenConnection(product?.variants).find(
-                        (variant) =>
-                          parseGid(variant.id).id === subscription.product,
-                      )?.title
-                      ? ` - ${
-                          flattenConnection(product?.variants).find(
-                            (variant) =>
-                              parseGid(variant.id).id === subscription.product,
-                          ).title
-                        }`
-                      : ''
-                    : ''}
+                  <ProductTitle product={product} subscription={subscription} />
                 </Link>
               ) : (
                 <p className="itemTitle">
@@ -355,21 +342,11 @@ function ActiveProductItem({address, order, subscription}) {
               {data?.subscription?.inactive?.results.length > 0 && (
                 <select value={selectedProductId} onChange={handleSwapProduct}>
                   <option value={selectedProductId}>
-                    (swap all upcoming deliveries) {product?.title ?? ''}{' '}
-                    {product?.variants?.length > 1
-                      ? flattenConnection(product?.variants).find(
-                          (variant) =>
-                            parseGid(variant.id)?.id === subscription.product,
-                        )?.title
-                        ? ` - ${
-                            flattenConnection(product.variants).find(
-                              (variant) =>
-                                parseGid(variant.id).id ===
-                                subscription.product,
-                            ).title
-                          }`
-                        : ''
-                      : ''}
+                    (swap all upcoming deliveries){' '}
+                    <ProductTitle
+                      product={product}
+                      subscription={subscription}
+                    />
                   </option>
                   {data.subscription.inactive.results.map(
                     (subscription, index) => {
@@ -579,20 +556,7 @@ function InactiveProductItem({products, subscription}) {
                 className="itemTitle"
                 role="link"
               >
-                {product.title}
-                {product?.variants?.length > 1
-                  ? flattenConnection(product?.variants).find(
-                      (variant) =>
-                        parseGid(variant.id)?.id === subscription.product,
-                    )?.title
-                    ? ` - ${
-                        flattenConnection(product.variants).find(
-                          (variant) =>
-                            parseGid(variant.id).id === subscription.product,
-                        ).title
-                      }`
-                    : ''
-                  : ''}
+                <ProductTitle product={product} subscription={subscription} />
               </Link>
             ) : (
               <p className="itemTitle">
@@ -611,6 +575,28 @@ function InactiveProductItem({products, subscription}) {
       </div>
     </li>
   );
+}
+
+function ProductTitle({product, subscription}) {
+  const [title, setTitle] = useState('');
+  useEffect(() => {
+    if (product && product?.title) {
+      setTitle(`${product.title} 
+      ${
+        product?.variants?.nodes?.length > 1 &&
+        flattenConnection(product?.variants).find(
+          (variant) => parseGid(variant.id).id === subscription.product,
+        )?.title
+          ? ` - ${
+              flattenConnection(product?.variants).find(
+                (variant) => parseGid(variant.id).id === subscription.product,
+              ).title
+            }`
+          : ''
+      }`);
+    }
+  }, [product?.title]);
+  return title;
 }
 
 function EditShippingAddress({handleModalClose, subscription, order}) {
