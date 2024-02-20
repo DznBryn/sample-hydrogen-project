@@ -549,15 +549,11 @@ const ItemsList = ({
             <p>Your auto-delivery items:</p>
           )}
           {filteredItems?.withAD?.map((item) => {
-            const product =
-              apiType === 'graphql'
-                ? products?.products?.filter(
-                    (product) =>
-                      product.storefrontId === item.variant.product.id,
-                  )[0]
-                : products?.products?.filter(
-                    (product) => product.externalId === item.product_id,
-                  )[0];
+            const product = products?.products?.filter(
+              (product) =>
+                parseGid(product.variants.nodes[0].id).id ===
+                parseGid(item.merchandise.id).id,
+            )[0];
 
             const promo =
               product &&
@@ -583,11 +579,7 @@ const ItemsList = ({
                   promo={promo}
                   cartPageConfig={cartConfig}
                   setSliderCartLoading={setLoading}
-                  product={
-                    products?.products?.filter(
-                      (product) => product.externalId === item.product_id,
-                    )[0]
-                  }
+                  product={product}
                 />
               );
             } else {
@@ -601,15 +593,11 @@ const ItemsList = ({
               <p>Your one-time purchase items:</p>
             )}
           {filteredItems?.noAD?.map((item) => {
-            const product =
-              apiType === 'graphql'
-                ? products?.products?.filter(
-                    (product) =>
-                      product.storefrontId === item.variant.product.id,
-                  )[0]
-                : products?.products?.filter(
-                    (product) => product.externalId === item.product_id,
-                  )[0];
+            const product = products?.products?.filter(
+              (product) =>
+                parseGid(product.variants.nodes[0].id).id ===
+                parseGid(item.merchandise.id).id,
+            )[0];
 
             const promo =
               product &&
@@ -635,11 +623,7 @@ const ItemsList = ({
                   promo={promo}
                   cartPageConfig={cartConfig}
                   setSliderCartLoading={setLoading}
-                  product={
-                    products?.products?.filter(
-                      (product) => product.externalId === item.product_id,
-                    )[0]
-                  }
+                  product={product}
                 />
               );
             } else {
