@@ -278,7 +278,38 @@
     }
   }
 }
-
+.modal {
+  .addressList {
+    &__container {
+      width: 100%;
+      height: auto;
+      display: flex;
+      gap: 1em;
+      select {
+        width: 100%;
+        max-width: 380px;
+      }
+      label {
+        width: auto;
+        height: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5em;
+      }
+    }
+  }
+  &__footer {
+    .button__container {
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.25em;
+    }
+  }
+}
 .reasons {
   width: 100%;
   height: auto;
@@ -350,6 +381,11 @@
   &:hover {
     background-color: #48c6d9;
     color: #fff;
+  }
+  &:disabled {
+    color: #a5a5a5;
+    background-color: #fff;
+    border-color: #a5a5a5;
   }
 }
 

@@ -25,9 +25,11 @@ import {
 } from '~/utils/graphql/shopify/mutations/customer';
 import {
   cancelSubscription,
+  changeShippingAddress,
   changeSubscriptionDate,
   getCollectionProducts,
   reactivateSubscription,
+  skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
 import logout from './__private/logout';
@@ -82,17 +84,10 @@ export async function action({request, context}) {
       return res;
     }
     if (formAction === 'SUBSCRIPTION_SKIP_ORDER') {
-      const formatDate = new Date(formData.get('changeDate'));
-      const every = formData.get('every');
-      const updateDate = new Date(
-        formatDate.setMonth(formatDate.getMonth() + Number(every)),
-      );
-      const newDate = format(updateDate, 'yyyy-MM-dd');
-
-      const res = await changeSubscriptionDate({
+      const res = await skipSubscriptionOrder({
         public_id: formData.get('publicId'),
+        subscription_id: formData.get('subscriptionId'),
         customer: formData.get('customerId'),
-        changeDate: String(newDate),
       });
 
       if (!res?.customer) {
@@ -136,6 +131,23 @@ export async function action({request, context}) {
         public_id: formData.get('publicId'),
         customer: formData.get('customerId'),
         changeDate: String(formatDate),
+      });
+
+      if (!res?.customer) {
+        return {
+          message: res,
+          status: 400,
+        };
+      }
+
+      return res;
+    }
+    if (formAction === 'SUBSCRIPTION_CHANGE_SHIPPING') {
+      // Note: changeAllShippingAddress API does not work on the backend Issue comes from OG API
+      const res = await changeShippingAddress({
+        public_id: formData.get('publicId'),
+        customer: formData.get('customerId'),
+        shipping_address: formData.get('shippingAddressId'),
       });
 
       if (!res?.customer) {

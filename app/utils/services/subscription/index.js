@@ -276,8 +276,7 @@ export async function changeFrequency(subscriptionItem) {
 }
 
 export async function skipSubscriptionOrder(subscriptionItem) {
-  const url =
-    'https://restapi.ordergroove.com/orders/order_id/skip_subscription/';
+  const url = `https://restapi.ordergroove.com/orders/${subscriptionItem.public_id}/skip_subscription/`;
   const headers = {
     accept: 'application/json',
     'Content-Type': 'application/json',
@@ -288,7 +287,7 @@ export async function skipSubscriptionOrder(subscriptionItem) {
     const response = await fetch(url, {
       method: API_METHODS.PATCH,
       headers,
-      body: JSON.stringify({subscription: subscriptionItem.public_id}),
+      body: JSON.stringify({subscription: subscriptionItem.subscription_id}),
     });
 
     if (!response.ok) {
@@ -371,6 +370,56 @@ export async function changeSubscriptionDate(subscriptionItem) {
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function changeShippingAddress(subscriptionItem) {
+  const url = `https://restapi.ordergroove.com/orders/${subscriptionItem.public_id}/change_shipping/`;
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
+      body: JSON.stringify({
+        shipping_address: subscriptionItem.shipping_address,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function changeAllShippingAddress(subscriptionItem) {
+  const url = `https://restapi.ordergroove.com/addresses/${subscriptionItem.shipping_address}/use_for_all/`;
+  const headers = {
+    accept: 'text/plain',
+    Authorization: generateOGAuthorization(subscriptionItem.customer),
+  };
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.POST,
+      headers,
+    });
+
+    if (!response.ok) {
+      const results = await response.json();
+      throw new Error(
+        `HTTP error! Status: ${response.status} - ${results?.detail}`,
+      );
     }
     const subscription = await response.json();
     return subscription;

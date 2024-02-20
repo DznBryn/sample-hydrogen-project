@@ -296,6 +296,33 @@
   }
 }
 
+.modal .addressList__container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  gap: 1em;
+}
+.modal .addressList__container select {
+  width: 100%;
+  max-width: 380px;
+}
+.modal .addressList__container label {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+.modal__footer .button__container {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.25em;
+}
+
 .reasons {
   width: 100%;
   height: auto;
@@ -366,6 +393,11 @@
 .outline-btn:hover {
   background-color: #48c6d9;
   color: #fff;
+}
+.outline-btn:disabled {
+  color: #a5a5a5;
+  background-color: #fff;
+  border-color: #a5a5a5;
 }
 
 .underline-btn {
