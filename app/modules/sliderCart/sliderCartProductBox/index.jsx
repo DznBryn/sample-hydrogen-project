@@ -327,15 +327,23 @@ const RegularProduct = ({
 };
 
 const Price = ({item, promo, product, cartPageConfig}) => {
+  const hasSitewidePromo =
+    sitewide &&
+    !sitewide?.excludeList?.includes(item.merchandise.product.handle);
+
+  const selectedVariantID = parseGid(item.merchandise.id).id;
+
+  const isSelectedVariantIncludedAtPromo =
+    promo.variantIds?.includes(selectedVariantID);
+
+  const hasPromoDiscount = promo && isSelectedVariantIncludedAtPromo;
+
+  const isGiftCard = item.merchandise.product.title.includes('E-Gift Card');
+
   if (
-    ((sitewide &&
-      !sitewide?.excludeList?.includes(item.merchandise.product.handle)) ||
-      (promo &&
-        promo?.variantIds?.find(
-          (variantId) => Number(variantId) === item?.variant_id,
-        ))) &&
+    (hasSitewidePromo || hasPromoDiscount) &&
     item.sellingPlanAllocation === null &&
-    !item.merchandise.product.title.includes('E-Gift Card')
+    !isGiftCard
   ) {
     const line_price =
       promo && promo.showPromo
