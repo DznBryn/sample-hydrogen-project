@@ -1,5 +1,6 @@
 import getApiKeys from '~/utils/functions/getApiKeys';
 import {showPaymentPlanVendor} from '~/utils/functions/eventFunctions';
+import logo from '../../../public/logo.png';
 import {useEffect} from 'react';
 
 const PageMeta = () => {
@@ -18,6 +19,22 @@ const PageMeta = () => {
       <meta charSet="utf-8" />
       <meta name="robots" content="noindex" />
       <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+      {/* <!-- Twitter Card data --> */}
+      <meta name="twitter:card" value="summary" />
+
+      {/* <!-- Open Graph data --> */}
+      <meta
+        property="og:title"
+        content="TULA Skincare: Probiotic Skin Care Products"
+      />
+      <meta property="og:type" content="article" />
+      <meta property="og:url" content="https://www.tula.com/" />
+      <meta property="og:image" content={logo} />
+      <meta
+        property="og:description"
+        content="Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup."
+      />
 
       <script
         defer
