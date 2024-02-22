@@ -89,7 +89,7 @@ export async function loader({context, request}) {
   /**
    * CMS DATA
    */
-  if (!referer || shouldRequestCMSData(CMSDataCache)) {
+  if (shouldRequestCMSData(CMSDataCache)) {
     await requestCMSData(context, CMSDataCache);
   }
 
@@ -159,7 +159,6 @@ export async function loader({context, request}) {
       announcementTopBanner: CMSDataCache.announcementTopBanner,
       emailSmsSignupContent: CMSDataCache.emailSmsSignupContent,
       mobileNavFooterMainButton: CMSDataCache.mobileNavFooterMainButton,
-      shadeFinder: CMSDataCache.shadeFinder,
     },
     {
       status: 200,
@@ -333,5 +332,4 @@ async function requestCMSData(context, cacheObj) {
 
   cacheObj.mainNavFooterCMSData = data[0];
   cacheObj.productsCMS = data[1];
-  cacheObj.shadeFinder = data[2];
 }
