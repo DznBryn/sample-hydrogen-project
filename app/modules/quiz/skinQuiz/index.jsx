@@ -296,11 +296,29 @@ const SkinQuiz = ({content}) => {
   }
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({
+        event: 'skinQuizStart',
+        quiz_type: 'skin',
+        quiz_id: SKIN_QUIZ_MODEL.quizID,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
     if (questionsState.length === step) {
       const {result, advancedResult} = getResult();
 
       setResultState(result);
       setAdvancedResultsState(advancedResult);
+
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({
+          event: 'skin_quiz_complete',
+          quiz_type: 'skin',
+          quiz_id: SKIN_QUIZ_MODEL.quizID,
+        });
+      }
     }
   }, [step]);
 
