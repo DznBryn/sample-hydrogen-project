@@ -28,6 +28,7 @@ import FireWorkPDPCarousel, {
 
 import styles from './styles.css';
 import {Await, useMatches} from '@remix-run/react';
+import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [
@@ -84,20 +85,20 @@ const PDP = ({
 
   function setUpAnalytics() {
     window.dataLayer.push({
-      event: 'productDetailView',
+      event: 'view_item',
       ecommerce: {
         currencyCode: 'USD',
         detail: {
           products: [
             {
               name: `${product?.title}`,
-              id: `${product.id}`,
+              id: `${getIdFromGid(product?.id)}`,
               price: `${parseFloat(
                 product?.priceRange?.minVariantPrice?.amount,
               )?.toFixed(2)}`,
               brand: 'TULA Skincare',
               category: `${product.productType}`,
-              variant: `${details.variants[0].id}`,
+              variant: `${getIdFromGid(details?.variants[0]?.id)}`,
               quantity: 1,
             },
           ],
