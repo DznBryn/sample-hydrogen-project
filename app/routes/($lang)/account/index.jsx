@@ -107,6 +107,15 @@ export async function action({request, context}) {
     }
     if (formAction === 'SUBSCRIPTION_CANCEL') {
       const reasonNumber = formData.get('cancelReason');
+      if (
+        String(CANCEL_REASONS.length - 1) === reasonNumber &&
+        (!formData.get('customReason') || !formData.get('customReason') === '')
+      ) {
+        return {
+          message: 'Please provide details.',
+          status: 400,
+        };
+      }
       const cancelReason = `${reasonNumber}|${
         String(CANCEL_REASONS.length - 1) === reasonNumber
           ? formData.get('customReason')

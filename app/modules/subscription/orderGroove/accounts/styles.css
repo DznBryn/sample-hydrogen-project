@@ -26,6 +26,9 @@
   height: auto;
   border: 1px solid;
 }
+.activeProducts ul .modal__body textarea.border-error {
+  border: 1px solid #ff0000;
+}
 .activeProducts ul .modal__footer {
   width: 100%;
   height: auto;
@@ -368,6 +371,11 @@
 }
 .react-date-picker .react-date-picker__calendar .react-calendar__month-view__days__day--weekend {
   color: #4c4e56;
+}
+
+.error {
+  color: #ff0000;
+  font-size: 14px;
 }
 
 @media screen and (min-width: 767px) {
