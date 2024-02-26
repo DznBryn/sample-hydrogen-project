@@ -53,12 +53,13 @@ export function createCustomEvent() {
   return false;
 }
 
-export function handleSignUpTracking(placement = '') {
+export function handleSignUpTracking(placement = '', email_address = '') {
   if (window && window.dataLayer) {
     window.dataLayer.push({
       event: 'select_promotion',
       signup: {
         placement,
+        email_address,
       },
     });
   }
