@@ -77,7 +77,7 @@ const SkinQuizAgeEmailOptIn = ({
         break;
     }
 
-    handleSignUpTracking('skin_quiz');
+    handleSignUpTracking('skin_quiz', userEmail);
 
     const isValidStatusCode = () =>
       [200, 201]?.some((validStatus) => validStatus === response.status);
