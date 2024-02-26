@@ -315,8 +315,9 @@ export function triggerAnalyticsOnScroll(
       }
     });
     if (window?.dataLayer && inViewItems.length > 0) {
+      window.dataLayer.push({ecommerce: null});
       window.dataLayer.push({
-        event: 'productImpression',
+        event: 'view_item_list',
         ecommerce: {
           currencyCode: 'USD',
           impressions: inViewItems,
@@ -362,9 +363,9 @@ export function triggerAnalyticsOnScroll(
           JSON.stringify(prevItems) !== JSON.stringify(newInViewItems)
         ) {
           inViewItems = inViewItems.concat(newInViewItems);
-
+          window.dataLayer.push({ecommerce: null});
           window.dataLayer.push({
-            event: 'productImpression',
+            event: 'view_item_list',
             ecommerce: {
               currencyCode: 'USD',
               impressions: newInViewItems,
