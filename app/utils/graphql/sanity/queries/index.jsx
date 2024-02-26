@@ -2059,3 +2059,19 @@ export const GET_SHADE_FINDER_CONTENT = gql`
     }
   }
 `;
+
+export const ALL_GLOBAL_PROMO_BAR = gql`
+  query AllGlobalPromoBar {
+    allGlobalPromoBar {
+      name
+      discountCodes
+      promoBackgroundColor {
+        hex
+      }
+      promoTextColor {
+        hex
+      }
+      promoMessage
+    }
+  }
+`;

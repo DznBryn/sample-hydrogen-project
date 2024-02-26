@@ -69,16 +69,16 @@ const SMSSignUp = ({content}) => {
           className={'section'}
           style={{
             backgroundImage: `url(${
-              content[0].backgroundImage.asset.url + '?auto=format'
+              content?.[0]?.backgroundImage.asset.url + '?auto=format'
             })`,
           }}
         >
-          <p className={'backgroundText'}>{content[0].imageText}</p>
+          <p className={'backgroundText'}>{content?.[0]?.imageText}</p>
         </div>
         <div className={'section'}>
-          <p className={'title'}>{content[0].headline}</p>
+          <p className={'title'}>{content?.[0]?.headline}</p>
           <p className={'description'}>
-            <PortableTextCustom value={content[0].subCopyRaw} />
+            <PortableTextCustom value={content?.[0]?.subCopyRaw} />
           </p>
           <form className={'form'} onSubmit={handleSubmit}>
             <input
@@ -91,11 +91,11 @@ const SMSSignUp = ({content}) => {
               required
             />
             <button id="btnSubmit" type="submit" className={'button'}>
-              {content[0].ctaLabel}
+              {content?.[0]?.ctaLabel}
             </button>
           </form>
           <div className={'note'}>
-            <PortableTextCustom value={content[0].disclaimerRaw} />
+            <PortableTextCustom value={content?.[0]?.disclaimerRaw} />
           </div>
         </div>
       </div>

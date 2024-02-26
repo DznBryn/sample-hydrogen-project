@@ -20,7 +20,7 @@
   text-align: left;
 }
 
-.promoOfferBar :global(#close-promotionBar) {
+.promoOfferBar #close-promotionBar {
   margin: 12px;
   font-size: 30px;
   font-weight: 300;
@@ -34,7 +34,7 @@
   color: #fff;
 }
 
-.promoOfferBar :global(.hidden) {
+.promoOfferBar .hidden {
   display: none !important;
 }
 
@@ -56,8 +56,8 @@
     text-align: left;
   }
 
-  .promoOfferBar :global(#close-promotionBar),
-  .promoOfferBar :global(#expand-promotionBar) {
+  .promoOfferBar #close-promotionBar,
+  .promoOfferBar #expand-promotionBar {
     right: 0px;
   }
 
@@ -66,7 +66,7 @@
     overflow: hidden;
   }
 
-  .promoOfferBar :global(#expand-promotionBar) {
+  .promoOfferBar #expand-promotionBar {
     margin: 12px;
     font-size: 22px;
     font-weight: 300;
@@ -81,7 +81,7 @@
   .promoOfferBar.expand,
   .promoOfferBar .textWrapper.expand {
     height: fit-content;
-    transition: .25s;
+    transition: 0.25s;
   }
 
   .promoBarCartAlert {

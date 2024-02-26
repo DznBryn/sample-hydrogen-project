@@ -6,14 +6,14 @@ export const links = () => {
 };
 
 const ContactUs = ({content}) => {
-  const emailAddress = 'mailto:' + content[0].emailAddress;
+  const emailAddress = 'mailto:' + content?.[0]?.emailAddress;
 
   return (
     <div id="contact-us" className="fixedWidthPage minHeight">
       <div className={'contactUsWrapper'}>
         <div className={'contacUsHeader'}>
-          <h1>{content[0].name}</h1>
-          <h2>{content[0].contactMessage}</h2>
+          <h1>{content?.[0]?.name}</h1>
+          <h2>{content?.[0]?.contactMessage}</h2>
         </div>
 
         <div className={'contactUsBody'}>
@@ -21,26 +21,26 @@ const ContactUs = ({content}) => {
             <div>
               <img
                 className={'contactIcon'}
-                src={content[0].contactEmailIcon.asset.url + '?auto=format'}
+                src={content?.[0]?.contactEmailIcon.asset.url + '?auto=format'}
               />
-              <h3>{content[0].contactEmailHeader}</h3>
-              <a href={emailAddress}>{content[0].emailAddress}</a>
+              <h3>{content?.[0]?.contactEmailHeader}</h3>
+              <a href={emailAddress}>{content?.[0]?.emailAddress}</a>
             </div>
             <div>
               <img
                 className={'contactIcon'}
-                src={content[0].contactPhoneIcon.asset.url + '?auto=format'}
+                src={content?.[0]?.contactPhoneIcon.asset.url + '?auto=format'}
               />
-              <h3>{content[0].contactPhoneHeader}</h3>
-              <p className={'secondHeader'}>{content[0].phoneNumber}</p>
-              <p>{content[0].officeHours}</p>
+              <h3>{content?.[0]?.contactPhoneHeader}</h3>
+              <p className={'secondHeader'}>{content?.[0]?.phoneNumber}</p>
+              <p>{content?.[0]?.officeHours}</p>
             </div>
             <div>
               <img
                 className={'contactIcon'}
-                src={content[0].contactSocialIcon.asset.url + '?auto=format'}
+                src={content?.[0]?.contactSocialIcon.asset.url + '?auto=format'}
               />
-              <h3>{content[0].ContactSocialHeader}</h3>
+              <h3>{content?.[0]?.ContactSocialHeader}</h3>
               <div className={'socialWrapper'}>
                 <Link to="https://www.instagram.com/tula/" target="_blank">
                   <svg

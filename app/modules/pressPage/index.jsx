@@ -10,7 +10,7 @@ const SMSSignUp = ({content}) => {
       <div
         style={{
           backgroundImage: `url(${
-            content[0].topBanner.asset.url + '?auto=format'
+            content?.[0]?.topBanner.asset.url + '?auto=format'
           })`,
         }}
         className={'pressPageTopBanner minHeight'}
@@ -28,61 +28,73 @@ const SMSSignUp = ({content}) => {
           <div className={'featuredBlock'}>
             <img
               className={'logo'}
-              src={content[0].featuredBlockOneLogo.asset.url + '?auto=format'}
+              src={
+                content?.[0]?.featuredBlockOneLogo.asset.url + '?auto=format'
+              }
               alt="Article logo"
             />
             <div className={'line'}></div>
-            <p>{content[0].featuredBlockOneText}</p>
+            <p>{content?.[0]?.featuredBlockOneText}</p>
           </div>
 
           <div className={'featuredBlock'}>
             <img
               className={'logo'}
-              src={content[0].featuredBlockTwoLogo.asset.url + '?auto=format'}
+              src={
+                content?.[0]?.featuredBlockTwoLogo.asset.url + '?auto=format'
+              }
               alt="Article logo"
             />
             <div className={'line'}></div>
-            <p>{content[0].featuredBlockTwoText}</p>
+            <p>{content?.[0]?.featuredBlockTwoText}</p>
           </div>
 
           <div className={'featuredBlock'}>
             <img
               className={'logo'}
-              src={content[0].featuredBlockThreeLogo.asset.url + '?auto=format'}
+              src={
+                content?.[0]?.featuredBlockThreeLogo.asset.url + '?auto=format'
+              }
               alt="Article logo"
             />
             <div className={'line'}></div>
-            <p>{content[0].featuredBlockThreeText}</p>
+            <p>{content?.[0]?.featuredBlockThreeText}</p>
           </div>
 
           <div className={'featuredBlock'}>
             <img
               className={'logo'}
-              src={content[0].featuredBlockFourLogo.asset.url + '?auto=format'}
+              src={
+                content?.[0]?.featuredBlockFourLogo.asset.url + '?auto=format'
+              }
               alt="Article logo"
             />
             <div className={'line'}></div>
-            <p>{content[0].featuredBlockFourText}</p>
+            <p>{content?.[0]?.featuredBlockFourText}</p>
           </div>
 
           <div className={'featuredBlock'}>
             <img
               className={'logo'}
-              src={content[0].featuredBlockFiveLogo.asset.url + '?auto=format'}
+              src={
+                content?.[0]?.featuredBlockFiveLogo.asset.url + '?auto=format'
+              }
               alt="Article logo"
             />
             <div className={'line'}></div>
-            <p>{content[0].featuredBlockFiveText}</p>
+            <p>{content?.[0]?.featuredBlockFiveText}</p>
           </div>
 
           <div className={'featuredBlock'}>
             <img
               className={'logo'}
-              src={content[0].featuredBlockSixLogo.asset.url + '?auto=format'}
+              src={
+                content?.[0]?.featuredBlockSixLogo.asset.url + '?auto=format'
+              }
               alt="Article logo"
             />
             <div className={'line'}></div>
-            <p>{content[0].featuredBlockSixText}</p>
+            <p>{content?.[0]?.featuredBlockSixText}</p>
           </div>
         </div>
       </div>
@@ -92,17 +104,17 @@ const SMSSignUp = ({content}) => {
           <div className={'article'}>
             <img
               className={'featuredImg'}
-              src={content[0].articleOneImage.asset.url + '?auto=format'}
+              src={content?.[0]?.articleOneImage.asset.url + '?auto=format'}
               alt="Article image"
             />
             <div>
               <img
                 className={'logo'}
-                src={content[0].articleOneLogo.asset.url + '?auto=format'}
+                src={content?.[0]?.articleOneLogo.asset.url + '?auto=format'}
                 alt="Article logo"
               />
-              <p>{content[0].articleOnePreviewText}</p>
-              <a className={'articleLink'} href={content[0].articleOneLink}>
+              <p>{content?.[0]?.articleOnePreviewText}</p>
+              <a className={'articleLink'} href={content?.[0]?.articleOneLink}>
                 <span>See full article</span> &gt;
               </a>
             </div>
@@ -111,17 +123,17 @@ const SMSSignUp = ({content}) => {
           <div className={'article'}>
             <img
               className={'featuredImg'}
-              src={content[0].articleTwoImage.asset.url + '?auto=format'}
+              src={content?.[0]?.articleTwoImage.asset.url + '?auto=format'}
               alt="Article image"
             />
             <div>
               <img
                 className={'logo'}
-                src={content[0].articleTwoLogo.asset.url + '?auto=format'}
+                src={content?.[0]?.articleTwoLogo.asset.url + '?auto=format'}
                 alt="Article logo"
               />
-              <p>{content[0].articleTwoPreviewText}</p>
-              <a className={'articleLink'} href={content[0].articleTwoLink}>
+              <p>{content?.[0]?.articleTwoPreviewText}</p>
+              <a className={'articleLink'} href={content?.[0]?.articleTwoLink}>
                 <span>See full article</span> &gt;
               </a>
             </div>
@@ -130,17 +142,20 @@ const SMSSignUp = ({content}) => {
           <div className={'article'}>
             <img
               className={'featuredImg'}
-              src={content[0].articleThreeImage.asset.url + '?auto=format'}
+              src={content?.[0]?.articleThreeImage.asset.url + '?auto=format'}
               alt="Article image"
             />
             <div>
               <img
                 className={'logo'}
-                src={content[0].articleThreeLogo.asset.url + '?auto=format'}
+                src={content?.[0]?.articleThreeLogo.asset.url + '?auto=format'}
                 alt="Article logo"
               />
-              <p>{content[0].articleThreePreviewText}</p>
-              <a className={'articleLink'} href={content[0].articleThreeLink}>
+              <p>{content?.[0]?.articleThreePreviewText}</p>
+              <a
+                className={'articleLink'}
+                href={content?.[0]?.articleThreeLink}
+              >
                 <span>See full article</span> &gt;
               </a>
             </div>
@@ -149,17 +164,17 @@ const SMSSignUp = ({content}) => {
           <div className={'article'}>
             <img
               className={'featuredImg'}
-              src={content[0].articleFourImage.asset.url + '?auto=format'}
+              src={content?.[0]?.articleFourImage.asset.url + '?auto=format'}
               alt="Article image"
             />
             <div>
               <img
                 className={'logo'}
-                src={content[0].articleFourLogo.asset.url + '?auto=format'}
+                src={content?.[0]?.articleFourLogo.asset.url + '?auto=format'}
                 alt="Article logo"
               />
-              <p>{content[0].articleFourPreviewText}</p>
-              <a className={'articleLink'} href={content[0].articleFourLink}>
+              <p>{content?.[0]?.articleFourPreviewText}</p>
+              <a className={'articleLink'} href={content?.[0]?.articleFourLink}>
                 <span>See full article</span> &gt;
               </a>
             </div>
@@ -168,17 +183,17 @@ const SMSSignUp = ({content}) => {
           <div className={'article'}>
             <img
               className={'featuredImg'}
-              src={content[0].articleFiveImage.asset.url + '?auto=format'}
+              src={content?.[0]?.articleFiveImage.asset.url + '?auto=format'}
               alt="Article image"
             />
             <div>
               <img
                 className={'logo'}
-                src={content[0].articleFiveLogo.asset.url + '?auto=format'}
+                src={content?.[0]?.articleFiveLogo.asset.url + '?auto=format'}
                 alt="Article logo"
               />
-              <p>{content[0].articleFivePreviewText}</p>
-              <a className={'articleLink'} href={content[0].articleFiveLink}>
+              <p>{content?.[0]?.articleFivePreviewText}</p>
+              <a className={'articleLink'} href={content?.[0]?.articleFiveLink}>
                 <span>See full article</span> &gt;
               </a>
             </div>
@@ -187,17 +202,17 @@ const SMSSignUp = ({content}) => {
           <div className={'article'}>
             <img
               className={'featuredImg'}
-              src={content[0].articleSixImage.asset.url + '?auto=format'}
+              src={content?.[0]?.articleSixImage.asset.url + '?auto=format'}
               alt="Article image"
             />
             <div>
               <img
                 className={'logo'}
-                src={content[0].articleSixLogo.asset.url + '?auto=format'}
+                src={content?.[0]?.articleSixLogo.asset.url + '?auto=format'}
                 alt="Article logo"
               />
-              <p>{content[0].articleSixPreviewText}</p>
-              <a className={'articleLink'} href={content[0].articleSixLink}>
+              <p>{content?.[0]?.articleSixPreviewText}</p>
+              <a className={'articleLink'} href={content?.[0]?.articleSixLink}>
                 <span>See full article</span> &gt;
               </a>
             </div>

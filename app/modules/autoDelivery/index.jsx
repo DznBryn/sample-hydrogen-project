@@ -8,7 +8,7 @@ export const links = () => {
 
 const AutoDelivery = ({content}) => {
   const {state, products} = useCollection(
-    content[0].featuredCollection.collectionId,
+    content?.[0]?.featuredCollection.collectionId,
   );
 
   return (
@@ -19,7 +19,7 @@ const AutoDelivery = ({content}) => {
           className={'backgroundImage'}
           style={{
             backgroundImage: `url("${
-              content[0].heroBackgroundImage.asset.url + '?auto=format'
+              content?.[0]?.heroBackgroundImage.asset.url + '?auto=format'
             }")`,
           }}
         >
@@ -40,7 +40,7 @@ const AutoDelivery = ({content}) => {
           className={'backgroundMobileImage'}
           style={{
             backgroundImage: `url("${
-              content[0].heroBackgroundMobileImage.asset.url + '?auto=format'
+              content?.[0]?.heroBackgroundMobileImage.asset.url + '?auto=format'
             }")`,
           }}
         >
@@ -63,13 +63,16 @@ const AutoDelivery = ({content}) => {
             <div className={'sectionLeft'}>
               <img
                 className={'sectionThreeBigImage'}
-                src={content[0].sectionThreeBigImage.asset.url + '?auto=format'}
+                src={
+                  content?.[0]?.sectionThreeBigImage.asset.url + '?auto=format'
+                }
                 alt={'Auto Delivery'}
               />
               <img
                 className={'sectionThreeSmallImage'}
                 src={
-                  content[0].sectionThreeSmallImage.asset.url + '?auto=format'
+                  content?.[0]?.sectionThreeSmallImage.asset.url +
+                  '?auto=format'
                 }
                 alt="Auto Delivery"
               />
@@ -80,7 +83,7 @@ const AutoDelivery = ({content}) => {
               <div className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -93,7 +96,7 @@ const AutoDelivery = ({content}) => {
               <div className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -106,7 +109,7 @@ const AutoDelivery = ({content}) => {
               <div className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -123,7 +126,7 @@ const AutoDelivery = ({content}) => {
               <div className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -139,7 +142,7 @@ const AutoDelivery = ({content}) => {
               <div className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -155,7 +158,7 @@ const AutoDelivery = ({content}) => {
               <div className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -171,7 +174,7 @@ const AutoDelivery = ({content}) => {
               <div id="lastCheckboxGrid" className={'checkboxGrid'}>
                 <div className={'checkbox'}>
                   <img
-                    src={content[0].checkmark.asset.url + '?auto=format'}
+                    src={content?.[0]?.checkmark.asset.url + '?auto=format'}
                     alt="Checkmark"
                   />
                 </div>
@@ -188,7 +191,7 @@ const AutoDelivery = ({content}) => {
         </div>
         <img
           className={'mobileImage'}
-          src={content[0].sectionThreeMobileImage.asset.url + '?auto=format'}
+          src={content?.[0]?.sectionThreeMobileImage.asset.url + '?auto=format'}
           alt="Auto delivery"
         />
       </div>
@@ -199,7 +202,7 @@ const AutoDelivery = ({content}) => {
           <div className={'wrapper'}>
             <div className={'contentBlock'}>
               <img
-                src={content[0].sectionTwoIconOne.asset.url + '?auto=format'}
+                src={content?.[0]?.sectionTwoIconOne.asset.url + '?auto=format'}
                 alt="Auto delivery subscription"
               />
               <p className={'step'}>Step 1</p>
@@ -211,7 +214,7 @@ const AutoDelivery = ({content}) => {
             </div>
             <div className={'contentBlock'}>
               <img
-                src={content[0].sectionTwoIconTwo.asset.url + '?auto=format'}
+                src={content?.[0]?.sectionTwoIconTwo.asset.url + '?auto=format'}
                 alt="Account icon"
               />
               <p className={'step'}>Step 2</p>
@@ -222,7 +225,9 @@ const AutoDelivery = ({content}) => {
             </div>
             <div id={styles.lastContentBlock} className={'contentBlock'}>
               <img
-                src={content[0].sectionTwoIconThree.asset.url + '?auto=format'}
+                src={
+                  content?.[0]?.sectionTwoIconThree.asset.url + '?auto=format'
+                }
                 alt="Delivery truck"
               />
               <p className={'step'}>Step 3</p>
@@ -239,7 +244,7 @@ const AutoDelivery = ({content}) => {
         className={'autoDeliverySectionFour'}
         style={{
           backgroundImage: `url("${
-            content[0].fullWidthBannerImage.asset.url + '?auto=format'
+            content?.[0]?.fullWidthBannerImage.asset.url + '?auto=format'
           }")`,
         }}
       >
@@ -247,7 +252,8 @@ const AutoDelivery = ({content}) => {
           <img
             className={'mobileImage'}
             src={
-              content[0].fullWidthBannerMobileImage.asset.url + '?auto=format'
+              content?.[0]?.fullWidthBannerMobileImage.asset.url +
+              '?auto=format'
             }
             alt="TULA Skincare Products"
           />
@@ -278,7 +284,7 @@ const AutoDelivery = ({content}) => {
           <div className={'recommendationWrapper'}>
             {/*
                     
-                    {content[0].featuredCollection.products.slice(0,4).map((product) => {
+                    {content?.[0]?.featuredCollection.products.slice(0,4).map((product) => {
                         return <Product product={product} key={product._id} className={styles.product}/>
                     })}
                     

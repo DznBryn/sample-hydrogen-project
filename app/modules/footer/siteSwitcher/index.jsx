@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import GetApiKeys from '~/utils/functions/getApiKeys';
 import classNames from 'classnames/bind';
 import {
@@ -10,22 +10,20 @@ import {
 import styles from './styles.css';
 
 export const links = () => {
-  return [
-    { rel: 'stylesheet', href: styles },
-  ];
+  return [{rel: 'stylesheet', href: styles}];
 };
 
-const SiteSwitcher = ({ isMobile }) => {
+const SiteSwitcher = ({isMobile}) => {
   const currentSite = useRef(getCurrentSite());
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
 
   const arrowFlipStyle = classNames.bind(styles)(
     'arrowSiteSwitcher',
-    isOptionsOpened && 'flipArrow'
+    isOptionsOpened && 'flipArrow',
   );
   const responsiveStyle = classNames.bind(styles)(
     'siteSwitcherContainer',
-    isMobile ? 'switcherOnMobile' : 'switcherOnDesktop'
+    isMobile ? 'switcherOnMobile' : 'switcherOnDesktop',
   );
 
   const options = {
@@ -33,21 +31,21 @@ const SiteSwitcher = ({ isMobile }) => {
       label: 'Canada',
       url: 'https://www.tulaskincare.ca/',
       icon: () => (
-        <img src='https://cdn.shopify.com/s/files/1/1736/9637/files/CAN-icon.png' />
+        <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/CAN-icon.png" />
       ),
     },
     unitedStates: {
       label: 'United States',
       url: 'https://tula.com/',
       icon: () => (
-        <img src='https://cdn.shopify.com/s/files/1/1736/9637/files/US-icon.png' />
+        <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/US-icon.png" />
       ),
     },
     unitedKingdom: {
       label: 'United Kingdom',
       url: 'http://tulaskincare.co.uk/',
       icon: () => (
-        <img src='https://cdn.shopify.com/s/files/1/1736/9637/files/UK_icon_2x-png.png' />
+        <img src="https://cdn.shopify.com/s/files/1/1736/9637/files/UK_icon_2x-png.png" />
       ),
     },
   };
@@ -74,7 +72,7 @@ const SiteSwitcher = ({ isMobile }) => {
     }
   };
 
-  const OptionCustomized = ({ Icon, label }) => {
+  const OptionCustomized = ({Icon, label}) => {
     return (
       <div className={'optionCustomized'}>
         <Icon />
@@ -163,13 +161,13 @@ export const SiteSwitcherPopUp = () => {
           },
           domain: 'tulaskincare.co.uk',
           regions: ['GB'],
-        }
+        },
       ];
 
       const getCorrectEnvironmentByLocation = () => {
         const iplocate = JSON.parse(decodeURIComponent(iplocateCookie));
         const environment = environments.find((env) =>
-          env.regions.includes(iplocate.country_code)
+          env.regions.includes(iplocate.country_code),
         );
 
         return environment;
@@ -200,9 +198,11 @@ export const SiteSwitcherPopUp = () => {
       const discountCookie = getCookie('discount_code');
 
       if (discountCookie && discountCookie !== '') {
+        console.log('discountCookie', discountCookie);
         const shopifyDiscountRoute = `/discount/${discountCookie}?redirect=`;
 
-        window.location.href = `https://${environment.domain + shopifyDiscountRoute + urlParameters
+        window.location.href = `https://${
+          environment.domain + shopifyDiscountRoute + urlParameters
         }`;
         return;
       }
@@ -235,7 +235,8 @@ export const SiteSwitcherPopUp = () => {
           <div className={styles.buttonsContainer}>
             <button
               onClick={() => goToSite()}
-              className={styles.positiveButton}>
+              className={styles.positiveButton}
+            >
               {`continue to ${environment.info.name} site`}
             </button>
             <button onClick={closePopup} className={styles.negativeButton}>

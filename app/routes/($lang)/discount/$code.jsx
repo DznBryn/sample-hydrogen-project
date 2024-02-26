@@ -14,13 +14,14 @@ export function loader({params, request}) {
       paramsArray.push(`${key}=${value}`);
     }
   });
-  const redirectLink = paramsArray.join('&').replace('?&', '?');
+  const redirectLink =
+    paramsArray.join('&').replace('?&', '?') + `&discount_code=${params.code}`;
 
   const cookies = {
-    tulaDiscountCode: `tulaDiscountCode=${params.code}; Path=/;  HttpOnly; Secure`,
+    tulaDiscountCode: `discount_code=${params.code};Path=/;HttpOnly;Secure`,
     tulaDiscountText: `tulaDiscountText=${
       params.code ? '' : ''
-    }; Path=/;  HttpOnly; Secure`,
+    };Path=/;HttpOnly;Secure`,
   };
   headers.append('Set-Cookie', cookies.tulaDiscountCode);
   headers.append('Set-Cookie', cookies.tulaDiscountText);
@@ -28,11 +29,4 @@ export function loader({params, request}) {
   return redirect(redirectLink ?? '/', {
     headers,
   });
-}
-export default function Discount() {
-  return (
-    <div>
-      <h1>Discount</h1>
-    </div>
-  );
 }
