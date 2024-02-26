@@ -740,10 +740,17 @@ function CancelSubscription({handleModalClose, ...subscription}) {
   );
   const [selectedReason, setSelectedReason] = useState(null);
   const [customReason, setCustomReason] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
+      if (fetcher.data?.message) {
+        setErrorMessage(fetcher.data.message);
+      }
       if (fetcher.data?.customer) {
+        if (errorMessage !== '') {
+          setErrorMessage('');
+        }
         handleUpdateCustomerSubcription(fetcher.data, {
           customer,
           updateCustomerSubscription,
@@ -772,6 +779,9 @@ function CancelSubscription({handleModalClose, ...subscription}) {
           shipment. If you&apos;d still like to cancel, kindly share with us why
           you&apos;re opting out?
         </p>
+        {errorMessage && errorMessage !== '' ? (
+          <p className="error">{errorMessage}</p>
+        ) : null}
         <div className="reasons">
           {CANCEL_REASONS.map((reason, index) => (
             <div key={index} className="reason">
@@ -790,6 +800,9 @@ function CancelSubscription({handleModalClose, ...subscription}) {
         <div>
           <textarea
             rows={4}
+            className={`${
+              errorMessage && errorMessage !== '' ? 'border-error' : ''
+            }`}
             cols={50}
             value={customReason ?? ''}
             onChange={handleCustomReasonChange}

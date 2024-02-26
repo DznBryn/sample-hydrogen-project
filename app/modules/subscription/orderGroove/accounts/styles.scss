@@ -24,6 +24,9 @@
       width: 100%;
       height: auto;
       border: 1px solid;
+      &.border-error {
+        border: 1px solid #ff0000;
+      }
     }
   }
   &__footer {
@@ -357,6 +360,11 @@
       color: #4c4e56;
     }
   }
+}
+
+.error {
+  color: #ff0000;
+  font-size: 14px;
 }
 
 .col-span-2 {
