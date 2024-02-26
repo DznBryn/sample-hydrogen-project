@@ -25,7 +25,7 @@ const EmbraceYourSkin = ({content}) => {
           </video>
           <a id="downArrow" href="#sectionTwo">
             <img
-              src={content[0].downArrow.asset.url + '?auto=format'}
+              src={content?.[0]?.downArrow.asset.url + '?auto=format'}
               alt="Scroll down"
             />
           </a>
@@ -193,7 +193,7 @@ const EmbraceYourSkin = ({content}) => {
 
         <div id="tulaHeart">
           <img
-            src={content[0].heartIcon.asset.url + '?auto=format'}
+            src={content?.[0]?.heartIcon.asset.url + '?auto=format'}
             alt="heart"
           />
           <p>TULA</p>
@@ -304,11 +304,11 @@ const EmbraceYourSkin = ({content}) => {
         <div className={'wrapper'}>
           <div className={'smsBubble'}>
             <img
-              src={content[0].heartSms.asset.url + '?auto=format'}
+              src={content?.[0]?.heartSms.asset.url + '?auto=format'}
               alt="SMS Bubble"
             />
             <img
-              src={content[0].heartIcon.asset.url + '?auto=format'}
+              src={content?.[0]?.heartIcon.asset.url + '?auto=format'}
               alt="heart"
             />
           </div>
@@ -349,7 +349,7 @@ const EmbraceYourSkin = ({content}) => {
       <div className={'sectionEight'}>
         <div className={'left'}>
           <img
-            src={content[0].drRaj.asset.url + '?auto=format'}
+            src={content?.[0]?.drRaj.asset.url + '?auto=format'}
             alt="Dr. Raj"
           />
           <p>Dr. Roshini Raj, TULA Founder</p>

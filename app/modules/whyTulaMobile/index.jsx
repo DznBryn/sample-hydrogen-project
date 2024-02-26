@@ -12,7 +12,7 @@ const WhyTulaMobile = ({content}) => {
       <div className={'blockOne'}>
         <img
           className={'whyImages'}
-          src={content[0].imageOneMobile.asset.url + '?auto=format'}
+          src={content?.[0]?.imageOneMobile.asset.url + '?auto=format'}
           alt="Why Tula"
         />
         <div className={'container'}>
@@ -28,7 +28,7 @@ const WhyTulaMobile = ({content}) => {
       <div className={'blockTwo'}>
         <img
           className={'whyImages'}
-          src={content[0].imageTwoMobile.asset.url + '?auto=format'}
+          src={content?.[0]?.imageTwoMobile.asset.url + '?auto=format'}
           alt="Why Tula"
         />
         <div className={'container'}>
@@ -48,7 +48,7 @@ const WhyTulaMobile = ({content}) => {
             look of irritation. That&apos;s why 100% of TULA skincare products
             are powered by probiotic extracts & superfoods.
           </p>
-          <Link to={content[0].sectionLinks[0]}>
+          <Link to={content?.[0]?.sectionLinks[0]}>
             <button className={'ctaBtn'}>Learn More</button>
           </Link>
         </div>
@@ -57,7 +57,7 @@ const WhyTulaMobile = ({content}) => {
       <div className={'blockThree'}>
         <img
           className={'whyImages'}
-          src={content[0].imageThreeMobile.asset.url + '?auto=format'}
+          src={content?.[0]?.imageThreeMobile.asset.url + '?auto=format'}
           alt="Why Tula"
         />
         <div className={'container'}>
@@ -68,7 +68,7 @@ const WhyTulaMobile = ({content}) => {
             clean isn&apos;t just a buzzword, it&apos;s part of our core
             philosophy.
           </p>
-          <Link to={content[0].sectionLinks[1]}>
+          <Link to={content?.[0]?.sectionLinks[1]}>
             <button className={'ctaBtn'}>Learn More</button>
           </Link>
         </div>
@@ -79,7 +79,7 @@ const WhyTulaMobile = ({content}) => {
             scientific research so your products deliver the results you
             deserve.
           </p>
-          <Link to={content[0].sectionLinks[2]}>
+          <Link to={content?.[0]?.sectionLinks[2]}>
             <button className={'ctaBtn'}>Learn More</button>
           </Link>
         </div>
@@ -88,7 +88,7 @@ const WhyTulaMobile = ({content}) => {
       <div className={'blockFour'}>
         <img
           className={'whyImages'}
-          src={content[0].imageFourMobile.asset.url + '?auto=format'}
+          src={content?.[0]?.imageFourMobile.asset.url + '?auto=format'}
           alt="Why Tula"
         />
         <div className={'container'}>
@@ -109,7 +109,7 @@ const WhyTulaMobile = ({content}) => {
           <p className={'slideText'}>Healthy, not “perfect.”</p>
           <p className={'slideSubheader'}>REIMAGINE skincare.</p>
 
-          <Link to={content[0].sectionLinks[3]}>
+          <Link to={content?.[0]?.sectionLinks[3]}>
             <button className={'ctaBtn'}>Learn More</button>
           </Link>
         </div>

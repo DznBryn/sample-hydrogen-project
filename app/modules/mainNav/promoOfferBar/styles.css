@@ -20,7 +20,7 @@
   text-align: left;
 }
 
-.promoOfferBar :global(#close-promotionBar) {
+.promoOfferBar #close-promotionBar {
   margin: 12px;
   font-size: 30px;
   font-weight: 300;
@@ -34,7 +34,7 @@
   color: #fff;
 }
 
-.promoOfferBar :global(.hidden) {
+.promoOfferBar .hidden {
   display: none !important;
 }
 
@@ -54,15 +54,15 @@
     letter-spacing: 0em;
     text-align: left;
   }
-  .promoOfferBar :global(#close-promotionBar),
-  .promoOfferBar :global(#expand-promotionBar) {
+  .promoOfferBar #close-promotionBar,
+  .promoOfferBar #expand-promotionBar {
     right: 0px;
   }
   .promoOfferBar .textWrapper {
     height: 18px;
     overflow: hidden;
   }
-  .promoOfferBar :global(#expand-promotionBar) {
+  .promoOfferBar #expand-promotionBar {
     margin: 12px;
     font-size: 22px;
     font-weight: 300;

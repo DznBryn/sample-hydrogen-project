@@ -12,6 +12,7 @@ import {
   GET_SITE_WIDE_SETTINGS,
   PRODUCT_RECOMMENDATIONS,
   GET_SHADE_FINDER_CONTENT,
+  ALL_GLOBAL_PROMO_BAR,
 } from '~/utils/graphql/sanity/queries';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US')
@@ -683,6 +684,7 @@ export async function getMainNavFooterCMSData(context) {
     MobileNavbar,
     HeaderConfig,
     SiteWideSettings,
+    GlobalPromoBar,
     ProductRecommendation,
     ShadeFinder,
   ] = await Promise.all([
@@ -690,6 +692,7 @@ export async function getMainNavFooterCMSData(context) {
     getCMSContent(context, GET_MOBILE_NAV_BAR),
     getCMSContent(context, GET_HEADER_CONFIG),
     getCMSContent(context, GET_SITE_WIDE_SETTINGS),
+    getCMSContent(context, ALL_GLOBAL_PROMO_BAR),
     getCMSContent(context, PRODUCT_RECOMMENDATIONS, {
       id: '51e2980f-ea26-4fd5-878d-cf57dfa63208',
     }),
@@ -717,6 +720,7 @@ export async function getMainNavFooterCMSData(context) {
     MobileNavbar,
     HeaderConfig,
     SiteWideSettings,
+    GlobalPromoBar,
     ProductRecommendation: recommendations,
     ShadeFinder,
   };

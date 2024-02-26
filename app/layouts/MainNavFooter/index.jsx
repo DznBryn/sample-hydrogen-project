@@ -46,6 +46,7 @@ const MainNavFooter = ({children}) => {
     MobileNavbar,
     HeaderConfig,
     SiteWideSettings,
+    GlobalPromoBar,
     ProductRecommendation,
   } = mainNavFooterCMSData;
 
@@ -70,6 +71,7 @@ const MainNavFooter = ({children}) => {
         mobileNavMainButton={mobileNavFooterMainButton}
         annoucementTopBannerContent={announcementTopBanner}
         desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
+        promoContent={GlobalPromoBar}
       />
 
       {/* TODO: Remove products property from sliderCart */}

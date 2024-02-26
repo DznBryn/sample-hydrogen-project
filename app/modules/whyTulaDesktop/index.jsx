@@ -83,25 +83,25 @@ const WhyTulaDesktop = ({content}) => {
             <img
               id="imgOne"
               className={'imgSlide'}
-              src={content[0].imageOne.asset.url + '?auto=format'}
+              src={content?.[0]?.imageOne.asset.url + '?auto=format'}
               alt="Why Tula"
             />
             <img
               id="imgTwo"
               className={'imgSlide'}
-              src={content[0].imageTwo.asset.url + '?auto=format'}
+              src={content?.[0]?.imageTwo.asset.url + '?auto=format'}
               alt="Why Tula"
             />
             <img
               id="imgThree"
               className={'imgSlide'}
-              src={content[0].imageThree.asset.url + '?auto=format'}
+              src={content?.[0]?.imageThree.asset.url + '?auto=format'}
               alt="Why Tula"
             />
             <img
               id="imgFour"
               className={'imgSlide'}
-              src={content[0].imageFour.asset.url + '?auto=format'}
+              src={content?.[0]?.imageFour.asset.url + '?auto=format'}
               alt="Why Tula"
             />
           </div>
@@ -154,7 +154,7 @@ const WhyTulaDesktop = ({content}) => {
               of TULA skincare products are powered by probiotic extracts &
               superfoods.
             </p>
-            <Link to={content[0].sectionLinks[0]}>
+            <Link to={content?.[0]?.sectionLinks[0]}>
               <button className={'ctaBtn'}>Learn More</button>
             </Link>
           </div>
@@ -171,7 +171,7 @@ const WhyTulaDesktop = ({content}) => {
               TULA, clean isn&apos;t just a buzzword, it&apos;s part of our core
               philosophy.
             </p>
-            <Link to={content[0].sectionLinks[1]}>
+            <Link to={content?.[0]?.sectionLinks[1]}>
               <button className={'ctaBtn'}>Learn More</button>
             </Link>
             <h2 style={{paddingTop: '1em'}} className={'fadeIn'}>
@@ -182,7 +182,7 @@ const WhyTulaDesktop = ({content}) => {
               scientific research so your products deliver the results you
               deserve.
             </p>
-            <Link to={content[0].sectionLinks[2]}>
+            <Link to={content?.[0]?.sectionLinks[2]}>
               <button className={'ctaBtn'}>Learn More</button>
             </Link>
           </div>
@@ -224,7 +224,7 @@ const WhyTulaDesktop = ({content}) => {
 
             <p className={'hideParaNine showParaNine'}>REIMAGINE skincare.</p>
 
-            <Link to={content[0].sectionLinks[3]}>
+            <Link to={content?.[0]?.sectionLinks[3]}>
               <button className={'ctaBtn'}>Learn More</button>
             </Link>
           </div>
