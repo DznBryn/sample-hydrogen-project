@@ -23,15 +23,8 @@ export function links() {
   ];
 }
 
-export default function Account(props) {
-  const {data} = useStore((store) => store.account);
-
-  const {id} = data;
-
-  data.yotpoFAQ = props?.yotpoFaq[0].yotpoQuestions || null;
-  data.yotpoProducts = props?.yotpoRedeemProducts[0]?.products || null;
-
-  return id !== '' ? (
+export default function Account({data}) {
+  return data?.id !== '' ? (
     <div className={'fullWidth minHeight'}>
       <Header
         data={{
@@ -48,7 +41,7 @@ function Header({data}) {
   return (
     <div className="myAccountHeaderWrapper">
       <h1 className={'myH1'}>
-        Welcome Back{data.firstName !== '' && ', ' + data.firstName}!
+        Welcome Back{data?.firstName !== '' && ', ' + data?.firstName}!
       </h1>
     </div>
   );

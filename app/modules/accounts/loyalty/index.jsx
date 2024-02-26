@@ -59,7 +59,7 @@ const LoyaltyRewardsTab = (props) => {
           };
         });
 
-      setDatax(productData.filter((data) => data.product));
+      setDatax(productData?.filter((data) => data.product));
       refreshWidgets();
     }
   }, [state]);
@@ -169,7 +169,7 @@ export const RewardsFAQSection = ({yotpoFAQ}) => {
   }
 
   const RenderedQuestionsAnswers = () =>
-    yotpoFAQ.map((item, index) => {
+    yotpoFAQ?.map((item, index) => {
       const showDescription = index === activeIndex ? true : false;
       const ariaExpanded = index === activeIndex ? true : false;
 
@@ -193,7 +193,7 @@ export const RewardsFAQSection = ({yotpoFAQ}) => {
       <div className={'faq__divider'} />
 
       <dl className="faq__list">
-        <RenderedQuestionsAnswers />
+        {yotpoFAQ?.length > 0 && <RenderedQuestionsAnswers />}
       </dl>
     </div>
   );

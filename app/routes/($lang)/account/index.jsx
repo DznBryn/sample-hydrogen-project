@@ -3,6 +3,7 @@ import {
   CacheShort,
   flattenConnection,
   generateCacheControlHeader,
+  parseGid,
 } from '@shopify/hydrogen';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {
@@ -28,11 +29,16 @@ import {
   changeShippingAddress,
   changeSubscriptionDate,
   getCollectionProducts,
+  getCustomerAddresses,
+  getCustomerOrders,
+  getCustomerSubscription,
   reactivateSubscription,
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
 import logout from './__private/logout';
+import {useEffect} from 'react';
+import {useStore} from '~/hooks/useStore';
 
 export function links() {
   return [...accountStyles()];
@@ -378,6 +384,30 @@ export async function loader({request, context, params}) {
   let subscriptionOrders = {};
   let subscriptionAddresses = {};
 
+  if (customer?.id) {
+    customer.subscription = {};
+    const customerId = parseGid(customer.id).id;
+
+    [
+      activeSubscription,
+      inactiveSubscription,
+      subscriptionOrders,
+      subscriptionAddresses,
+    ] = await Promise.all([
+      getCustomerSubscription(customerId, true),
+      getCustomerSubscription(customerId),
+      getCustomerOrders(customerId),
+      getCustomerAddresses(customerId),
+    ]);
+
+    subscriptionAddresses &&
+      (customer.subscription.addresses = subscriptionAddresses);
+    activeSubscription && (customer.subscription.active = activeSubscription);
+    inactiveSubscription &&
+      (customer.subscription.inactive = inactiveSubscription);
+    subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
+  }
+
   const [yotpoRedeemProducts, faqContent] = await Promise.all([
     getCMSContent(context, GET_YOTPO_REDEEM_PRODUCTS),
     getCMSContent(context, GET_REWARDS_FAQ_CONTENT),
@@ -387,10 +417,6 @@ export async function loader({request, context, params}) {
     {
       header,
       customer,
-      activeSubscription,
-      inactiveSubscription,
-      subscriptionOrders,
-      subscriptionAddresses,
       products,
       faqContent,
       yotpoRedeemProducts,
@@ -404,13 +430,23 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {faqContent, yotpoRedeemProducts} = useLoaderData();
+  const {faqContent, yotpoRedeemProducts, customer} = useLoaderData();
+  const {data: customerData, setCustomerData} = useStore(
+    (store) => store?.account ?? {},
+  );
+
+  useEffect(() => {
+    if (customerData && customer?.id !== customerData.id) {
+      customer.yotpoFAQ = faqContent?.[0]?.yotpoQuestions || null;
+      customer.yotpoProducts = yotpoRedeemProducts?.[0]?.products || null;
+
+      setCustomerData(customer);
+    }
+  }, [customerData.id]);
+
   return (
     <Layouts.MainNavFooter>
-      <Account
-        yotpoFaq={faqContent}
-        yotpoRedeemProducts={yotpoRedeemProducts}
-      />
+      <Account data={customerData} />
     </Layouts.MainNavFooter>
   );
 }
