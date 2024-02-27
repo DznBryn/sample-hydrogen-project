@@ -33,6 +33,7 @@ import ComparisonModal, {
 
 import styles from './styles.css';
 import {Link} from '@remix-run/react';
+import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [
@@ -344,7 +345,7 @@ const PLP = ({
                       products: [
                         {
                           name: product?.title,
-                          id: product?.id,
+                          id: getIdFromGid(product?.id),
                           price: parseFloat(
                             product?.priceRange?.minVariantPrice?.amount,
                           )?.toFixed(2),
