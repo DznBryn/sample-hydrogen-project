@@ -81,7 +81,16 @@ const PDPAddToCartForm = ({
             store?.productPage?.selectedVariant === undefined && (
               <div
                 className={'openSFButtonForm'}
-                onClick={() => switchSliderPanelVisibility('ShadeFinderSlider')}
+                onClick={() => {
+                  window?.dataLayer?.push({
+                    event: 'shadeFinderFindMyShade',
+                    details: {
+                      source: 'addToCart',
+                    },
+                  });
+
+                  switchSliderPanelVisibility('ShadeFinderSlider');
+                }}
               >
                 Find my shade
               </div>

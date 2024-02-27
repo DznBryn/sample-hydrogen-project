@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {getCustomer} from '~/utils/graphql/shopify/queries/customer';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection, parseGid} from '@shopify/hydrogen';
@@ -768,4 +768,30 @@ export function pushQueryParam(key, value) {
   url.searchParams.set(key.toString(), value.toString());
 
   window.history.replaceState(null, null, url.search);
+}
+
+export function useOnScreen(ref) {
+  const [isIntersecting, setIntersecting] = useState(0);
+  let observer;
+
+  if (typeof window !== 'undefined') {
+    observer = useMemo(
+      () =>
+        new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting && isIntersecting === 0) {
+            setIntersecting(1);
+          }
+        }),
+      [ref],
+    );
+  }
+
+  useEffect(() => {
+    if (ref.current !== null) {
+      observer.observe(ref.current);
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  return isIntersecting;
 }

@@ -99,7 +99,7 @@ export default function PDPAddToCart({
 
         if (window.dataLayer && product)
           window.dataLayer.push({
-            event: 'add_to_cart',
+            event: 'addToCart',
             ecommerce: {
               currencyCode: product?.priceRange?.minVariantPrice?.currencyCode,
               add: {
