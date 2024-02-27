@@ -772,20 +772,25 @@ export function pushQueryParam(key, value) {
 
 export function useOnScreen(ref) {
   const [isIntersecting, setIntersecting] = useState(0);
+  let observer;
 
-  const observer = useMemo(
-    () =>
-      new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting && isIntersecting === 0) {
-          setIntersecting(1);
-        }
-      }),
-    [ref],
-  );
+  if (typeof window !== 'undefined') {
+    observer = useMemo(
+      () =>
+        new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting && isIntersecting === 0) {
+            setIntersecting(1);
+          }
+        }),
+      [ref],
+    );
+  }
 
   useEffect(() => {
-    observer.observe(ref.current);
-    return () => observer.disconnect();
+    if (ref.current !== null) {
+      observer.observe(ref.current);
+      return () => observer.disconnect();
+    }
   }, []);
 
   return isIntersecting;

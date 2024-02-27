@@ -72,6 +72,7 @@ const PLPProductBox2 = ({
   analytics,
   compareButtonConfig = {showIt: false},
   ctaOpensBlank = false,
+  fromLt = false,
 }) => {
   const {
     images,
@@ -96,7 +97,12 @@ const PLPProductBox2 = ({
     }
   });
 
-  if (window.dataLayer && isVisible) {
+  if (
+    typeof window !== 'undefined' &&
+    window.dataLayer &&
+    isVisible &&
+    fromLt
+  ) {
     window.dataLayer.push({
       event: 'view_item',
       ecommerce: {

@@ -130,6 +130,7 @@ const ListrakRec = ({listrak}) => {
                   <PLPProductBox
                     product={prepProduct(product)}
                     key={product.handle}
+                    fromLt
                   />
                 );
               })}

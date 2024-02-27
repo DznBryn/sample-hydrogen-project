@@ -132,7 +132,16 @@ const PDPDetails = ({
               />
               <div
                 className={'openSFButton'}
-                onClick={() => switchSliderPanelVisibility('ShadeFinderSlider')}
+                onClick={() => {
+                  window?.dataLayer?.push({
+                    event: 'shadeFinderFindMyShade',
+                    details: {
+                      source: 'inlineCta',
+                    },
+                  });
+
+                  switchSliderPanelVisibility('ShadeFinderSlider');
+                }}
               >
                 find my shade <OpenSFButtonIcon />
               </div>
@@ -438,9 +447,16 @@ const PDPDetails = ({
                 store?.productPage?.selectedVariantId === undefined && (
                   <div
                     className={'openSFButtonSticky'}
-                    onClick={() =>
-                      switchSliderPanelVisibility('ShadeFinderSlider')
-                    }
+                    onClick={() => {
+                      window.dataLayer.push({
+                        event: 'shadeFinderFindMyShade',
+                        details: {
+                          source: 'stickyCta',
+                        },
+                      });
+
+                      switchSliderPanelVisibility('ShadeFinderSlider');
+                    }}
                   >
                     Find my shade
                   </div>
