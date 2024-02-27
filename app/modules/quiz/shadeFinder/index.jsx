@@ -99,6 +99,12 @@ const ShadeFinder = () => {
     setAnswerState([]);
     setStep(0);
     setSelectedImage(0);
+
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'shadeFinderStartOver',
+      });
+    }
   }
 
   function handleClose() {
