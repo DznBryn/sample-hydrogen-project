@@ -98,26 +98,12 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
     );
   }
 
-  const iframeStyle = {
-    display: 'none',
-    visibility: 'hidden',
-  };
-
   const yotpoCustomerIdentifier = yotpoId
     ? yotpoId?.split('/Customer/')[1]
     : '';
 
   return (
     <div className={'navPlaceholder minHeight'} id="navPlaceholder">
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-5ZXFRC"
-          height="0"
-          width="0"
-          style={iframeStyle}
-        ></iframe>
-      </noscript>
-
       {confirmationText !== '' && (
         <div className={'confirmationWrap'} ref={confirmRef}>
           {confirmationText}
