@@ -17,13 +17,13 @@ const AnnouncementHeader = ({announcementMessages, fontColor}) => {
 
   const {
     announcementTextRaw = [],
-    announcementURL,
+    announcementURL = '',
     emoji,
-    shouldOpenModal,
-    modalLinkText,
-    modalContentRaw,
-    shouldOpenLink,
-    linkToGo,
+    shouldOpenModal = false,
+    modalLinkText = '',
+    modalContentRaw = [],
+    shouldOpenLink = false,
+    linkToGo = '',
   } = announcementMessages[index];
 
   const getFirstPromoRichText = (messages) =>
