@@ -615,7 +615,7 @@ export async function getCMSContent(context, query, variables) {
   return Object.values(result.data)[0];
 }
 
-export function getCMSDoc(content, docName) {
+export function getCMSDoc(content = [], docName) {
   return content.find((doc) => doc.name === docName);
 }
 
@@ -645,7 +645,7 @@ export function getCollectionWithCMSData(
   return collectionCopy;
 }
 
-export function getProductWithCMSData(product, productsCMSData) {
+export function getProductWithCMSData(product, productsCMSData = []) {
   const CMSData = productsCMSData.find(
     (data) => data.productId === product.handle,
   );
