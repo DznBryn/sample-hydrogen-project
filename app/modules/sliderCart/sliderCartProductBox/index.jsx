@@ -427,7 +427,7 @@ const Price = ({item, promo, product, cartPageConfig}) => {
       </div>
     );
   } else {
-    const promoColorText = product.tags.find((tag) => tag.includes('promo:'))
+    const promoColorText = product?.tags?.find((tag) => tag.includes('promo:'))
       ? product.tags.find((tag) => tag.includes('promo:')).split(':')[1]
       : null;
     return (
