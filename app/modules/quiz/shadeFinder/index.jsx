@@ -183,6 +183,15 @@ const ShadeFinder = () => {
       },
     });
 
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'shadeFinderSelectShade',
+        details: {
+          recommendedShade: selectedShade,
+        },
+      });
+    }
+
     switchSliderPanelVisibility('ShadeFinderSlider');
   };
 
