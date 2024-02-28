@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-import {useStore} from '~/hooks/useStore';
 import styles from './styles.css';
 import {useEffect, useState} from 'react';
 import getApiKeys from '~/utils/functions/getApiKeys';
@@ -37,7 +35,6 @@ export default function Account({data}) {
 }
 
 function Header({data}) {
-  const [open, setOpen] = useState(false);
   return (
     <div className="myAccountHeaderWrapper">
       <h1 className={'myH1'}>
@@ -77,8 +74,8 @@ function Tabs({data}) {
   }
 
   function setURLQuery(tab) {
-    // eslint-disable-next-line no-unused-vars
     const urlTogo = Object.entries(tabsID).filter(
+      // eslint-disable-next-line no-unused-vars
       ([key, value]) => value === tab,
     )[0];
 
@@ -160,10 +157,7 @@ function Tabs({data}) {
         <Addresses />
       </div>
       <div style={{display: active === 5 ? 'block' : 'none'}}>
-        <LoyaltyRewardsTab
-          yotpoFAQ={data?.yotpoFAQ}
-          yotpoProducts={data?.yotpoProducts}
-        />
+        <LoyaltyRewardsTab />
       </div>
     </div>
   );

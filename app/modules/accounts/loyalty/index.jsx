@@ -10,6 +10,7 @@ import RedeemProductsSection, {
 import {brandLogos} from '~/modules/rewardsEarnPoints';
 import {useCollection} from '~/hooks/useCollection';
 import {handleGetProductByID} from '~/utils/functions/eventFunctions';
+import {useLoaderData} from '@remix-run/react';
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}, ...redeemProductsSectionStyles()];
@@ -32,9 +33,10 @@ const Slider = () => (
   </div>
 );
 
-const LoyaltyRewardsTab = (props) => {
-  const yotpoFAQ = props?.yotpoFAQ;
-
+const LoyaltyRewardsTab = () => {
+  const {faqContent, yotpoRedeemProducts} = useLoaderData();
+  const yotpoFAQ = faqContent?.[0]?.yotpoQuestions || null;
+  const yotpoProducts = yotpoRedeemProducts?.[0]?.products || null;
   const data = useStore((store) => store?.account?.data ?? null);
   const {refreshWidgets} = useYotpo();
   const isLoggedIn =
@@ -46,8 +48,8 @@ const LoyaltyRewardsTab = (props) => {
   useEffect(() => {
     if (state === 'loaded') {
       const productData =
-        props &&
-        props?.yotpoProducts?.map((yotpoProduct) => {
+        yotpoProducts &&
+        yotpoProducts?.map((yotpoProduct) => {
           const productWithDetails = handleGetProductByID(
             yotpoProduct?.products[0]?.productId,
             products,

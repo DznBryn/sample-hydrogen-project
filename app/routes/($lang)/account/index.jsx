@@ -1,4 +1,3 @@
-import {useLoaderData} from '@remix-run/react';
 import {
   CacheShort,
   flattenConnection,
@@ -37,7 +36,6 @@ import {
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
 import logout from './__private/logout';
-import {useEffect} from 'react';
 import {useStore} from '~/hooks/useStore';
 
 export function links() {
@@ -439,20 +437,7 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {faqContent, yotpoRedeemProducts, customer} = useLoaderData();
-  const {data: customerData, setCustomerData} = useStore(
-    (store) => store?.account ?? {},
-  );
-
-  useEffect(() => {
-    if (customerData && customer?.id !== customerData.id) {
-      customer.yotpoFAQ = faqContent?.[0]?.yotpoQuestions || null;
-      customer.yotpoProducts = yotpoRedeemProducts?.[0]?.products || null;
-
-      setCustomerData(customer);
-    }
-  }, [customerData.id]);
-
+  const {data: customerData} = useStore((store) => store?.account ?? {});
   return (
     <Layouts.MainNavFooter>
       <Account data={customerData} />
