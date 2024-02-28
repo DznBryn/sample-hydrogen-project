@@ -88,7 +88,7 @@ const Content = ({data}) =>
                     />
                   </div>
                 ) : null}
-                {ct?.body !== '' && (
+                {ct?.body && (
                   <div className={'pdpHowtoUse_content_body'}>
                     <p
                       className={

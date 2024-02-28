@@ -13,6 +13,9 @@ import YotpoStarReviews, {
   links as YotpoStarReviewsStyles,
 } from '~/modules/YotpoStarReviews';
 
+import {useOnScreen} from '~/utils/functions/eventFunctions';
+import {getIdFromGid} from '~/utils/functions/eventFunctions';
+
 import styles from './styles.css';
 
 export const links = () => {
@@ -69,6 +72,7 @@ const PLPProductBox2 = ({
   analytics,
   compareButtonConfig = {showIt: false},
   ctaOpensBlank = false,
+  fromLt = false,
 }) => {
   const {
     images,
@@ -79,6 +83,8 @@ const PLPProductBox2 = ({
   } = product;
   const media = images.nodes;
   const altTitle = product?.alt_title || '';
+  const ref = useRef(null);
+  const isVisible = useOnScreen(ref);
 
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
 
@@ -90,6 +96,35 @@ const PLPProductBox2 = ({
       sitewide = JSON.parse(window.localStorage.getItem('tulaSitewide'));
     }
   });
+
+  if (
+    typeof window !== 'undefined' &&
+    window.dataLayer &&
+    isVisible &&
+    fromLt
+  ) {
+    window.dataLayer.push({
+      event: 'view_item',
+      ecommerce: {
+        currencyCode: product?.priceRange?.minVariantPrice?.currencyCode,
+        detail: {
+          products: [
+            {
+              name: `${product?.title}`,
+              id: `${getIdFromGid(product?.id)}`,
+              price: `${parseFloat(
+                product?.priceRange?.minVariantPrice?.amount,
+              )?.toFixed(2)}`,
+              brand: 'TULA Skincare',
+              category: `${product.productType}`,
+              variant: `${getIdFromGid(product?.variants?.nodes[0]?.id)}`,
+              quantity: 1,
+            },
+          ],
+        },
+      },
+    });
+  }
 
   function getPrice() {
     const hasVariants = variants.nodes.length > 1;
@@ -241,7 +276,6 @@ const PLPProductBox2 = ({
 
   const PLPReviews = ({product}) => {
     const productID = product?.id.replace(/[^0-9]/g, '');
-
     return (
       <div className={'plpReviews'}>
         <YotpoStarReviews productExternalID={productID} hideIfNoReview={true} />
@@ -253,6 +287,7 @@ const PLPProductBox2 = ({
     <div
       className={'plpWrapperProductBox'}
       id={`product-${product?.handle ? product.handle : slug}`}
+      ref={ref}
     >
       <div className={classNames('plpProductBoxcontainer', {noHover: !secImg})}>
         <PLPBadges product={product} sitewide={sitewide} noPromo={noPromo} />

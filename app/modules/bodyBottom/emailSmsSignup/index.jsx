@@ -83,7 +83,7 @@ const EmailSmsSignup = ({emailSmsSignupContent}) => {
     }
   }
   const handleClick = async () => {
-    handleSignUpTracking('footer');
+    handleSignUpTracking('footer', emailRef?.current?.value);
     if (!emailRef.current.classList.contains('hide')) {
       if (emailRef.current.value.match(emailRegex)) {
         const isUK = getApiKeys().CURRENT_ENV.includes('UK');

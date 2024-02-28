@@ -8,6 +8,7 @@ import AddToCartButton, {
 } from '../addToCartButton';
 import styles from './styles.css';
 import {useCustomerState} from '~/hooks/useCostumer';
+import {useEffect, useState} from 'react';
 
 const getLinkToObj = (slug, product) => {
   return {pathname: `/products/${slug}`, state: {product: product}};
@@ -27,6 +28,7 @@ export const links = () => {
 
 const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
   const {isLoggedIn} = useCustomerState();
+  const [urlSource, setUrlSource] = useState('');
 
   const {product, yotpo_points_value, variant_id, variant_name, widget_id} =
     yotpoProduct;
@@ -49,6 +51,18 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
       })
     : null;
   const currentProductName = yotpoVariant ? `${name} - ${variant_name}` : name;
+
+  useEffect(() => {
+    const urlMapping = {
+      '/rewards': 'loyaltyLanding',
+      '/account': 'account',
+    };
+
+    if (typeof window !== 'undefined') {
+      const url = urlMapping[window.location.pathname] ?? null;
+      setUrlSource(url);
+    }
+  }, []);
 
   return (
     <div className={'redeemProductsSection_plpWrapper'} id={`product-${slug}`}>
@@ -105,16 +119,20 @@ const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
           <>
             <span>step one:</span>
 
-            <div className="redeemProductsSection_ctaContainer">
+            <div
+              className="redeemProductsSection_ctaContainer"
+              onClick={() => {
+                triggerAnalyticsLoyaltyEvents('loyaltyAddToCart', {
+                  source: urlSource,
+                });
+              }}
+            >
               <Button
                 className="redeemProductsSection_productButton"
                 product={product}
                 analytics={null}
                 opensBlank={null}
                 yotpoVariant={yotpoVariant}
-                onClick={() => {
-                  triggerAnalyticsLoyaltyEvents('AddToCart', {source: null});
-                }}
                 availableForSale={product?.totalInventory > 0}
               />
             </div>

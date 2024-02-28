@@ -88,7 +88,7 @@ const Content = ({data}) => {
                     />
                   </div>
                 ) : null}
-                {ct?.body !== '' && (
+                {ct?.body && (
                   <div className={'pdpFormulate_content_body'}>
                     {ct?.htmlSubtitleRaw &&
                     ct?.htmlSubtitleRaw[0].children[0].text !== '' ? (

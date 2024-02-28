@@ -3,7 +3,10 @@ import {useEffect, useState} from 'react';
 import {switchSliderPanelVisibility} from '../sliderPanel';
 import {Padlock} from '../icons';
 import {useCustomerState} from '~/hooks/useCostumer';
-import {createCustomEvent} from '~/utils/functions/eventFunctions';
+import {
+  createCustomEvent,
+  getIdFromGid,
+} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
 import {API_METHODS, FETCHER} from '~/utils/constants';
@@ -91,6 +94,31 @@ export default function PDPAddToCart({
         updateOGState();
         dispatchAlertEvent();
         setCartData(addToCart.data.cart);
+
+        const product = addItem?.product || null;
+
+        if (window.dataLayer && product)
+          window.dataLayer.push({
+            event: 'addToCart',
+            ecommerce: {
+              currencyCode: product?.priceRange?.minVariantPrice?.currencyCode,
+              add: {
+                products: [
+                  {
+                    name: product?.name,
+                    id: getIdFromGid(product?.id),
+                    price: `${parseFloat(
+                      product?.priceRange?.minVariantPrice?.amount,
+                    )?.toFixed(2)}`,
+                    brand: 'TULA Skincare',
+                    category: product?.productType,
+                    variant: getIdFromGid(addItem?.variantId),
+                    quantity: addItem?.quantity,
+                  },
+                ],
+              },
+            },
+          });
       }
       setButtonState(IDLE);
     }

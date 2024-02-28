@@ -42,12 +42,12 @@ const MainNavFooter = ({children}) => {
   } = root.data;
 
   const {
-    AnnouncementHeaders,
-    MobileNavbar,
-    HeaderConfig,
-    SiteWideSettings,
-    GlobalPromoBar,
-    ProductRecommendation,
+    AnnouncementHeaders = [],
+    MobileNavbar = [],
+    HeaderConfig = [],
+    SiteWideSettings = [],
+    GlobalPromoBar = [],
+    ProductRecommendation = [],
   } = mainNavFooterCMSData;
 
   /* TODO: Remove products property from sliderCart and remove this custom hook */

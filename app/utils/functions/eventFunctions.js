@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {getCustomer} from '~/utils/graphql/shopify/queries/customer';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection, parseGid} from '@shopify/hydrogen';
@@ -53,12 +53,13 @@ export function createCustomEvent() {
   return false;
 }
 
-export function handleSignUpTracking(placement = '') {
+export function handleSignUpTracking(placement = '', email_address = '') {
   if (window && window.dataLayer) {
     window.dataLayer.push({
       event: 'select_promotion',
       signup: {
         placement,
+        email_address,
       },
     });
   }
@@ -315,8 +316,9 @@ export function triggerAnalyticsOnScroll(
       }
     });
     if (window?.dataLayer && inViewItems.length > 0) {
+      window.dataLayer.push({ecommerce: null});
       window.dataLayer.push({
-        event: 'productImpression',
+        event: 'view_item_list',
         ecommerce: {
           currencyCode: 'USD',
           impressions: inViewItems,
@@ -362,9 +364,9 @@ export function triggerAnalyticsOnScroll(
           JSON.stringify(prevItems) !== JSON.stringify(newInViewItems)
         ) {
           inViewItems = inViewItems.concat(newInViewItems);
-
+          window.dataLayer.push({ecommerce: null});
           window.dataLayer.push({
-            event: 'productImpression',
+            event: 'view_item_list',
             ecommerce: {
               currencyCode: 'USD',
               impressions: newInViewItems,
@@ -613,7 +615,7 @@ export async function getCMSContent(context, query, variables) {
   return Object.values(result.data)[0];
 }
 
-export function getCMSDoc(content, docName) {
+export function getCMSDoc(content = [], docName) {
   return content.find((doc) => doc.name === docName);
 }
 
@@ -643,7 +645,7 @@ export function getCollectionWithCMSData(
   return collectionCopy;
 }
 
-export function getProductWithCMSData(product, productsCMSData) {
+export function getProductWithCMSData(product, productsCMSData = []) {
   const CMSData = productsCMSData.find(
     (data) => data.productId === product.handle,
   );
@@ -766,4 +768,30 @@ export function pushQueryParam(key, value) {
   url.searchParams.set(key.toString(), value.toString());
 
   window.history.replaceState(null, null, url.search);
+}
+
+export function useOnScreen(ref) {
+  const [isIntersecting, setIntersecting] = useState(0);
+  let observer;
+
+  if (typeof window !== 'undefined') {
+    observer = useMemo(
+      () =>
+        new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting && isIntersecting === 0) {
+            setIntersecting(1);
+          }
+        }),
+      [ref],
+    );
+  }
+
+  useEffect(() => {
+    if (ref.current !== null) {
+      observer.observe(ref.current);
+      return () => observer.disconnect();
+    }
+  }, []);
+
+  return isIntersecting;
 }
