@@ -1,5 +1,5 @@
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
-// import {switchSliderPanelVisibility} from '../../sliderPanel';
+import {switchSliderPanelVisibility} from '../../sliderPanel';
 import {useStore} from '~/hooks/useStore';
 import classnames from 'classnames';
 
@@ -12,7 +12,7 @@ export const links = () => {
 const PDPAddToCartForm = ({
   classes,
   forceSoldOut,
-  // renderingShadeFinder,
+  renderingShadeFinder,
   exclusiveProductAtcColor,
   exclusiveProductTextColor,
   isGated,
@@ -74,10 +74,8 @@ const PDPAddToCartForm = ({
             +
           </button>
         </div>
-
         <div className={'ctaContainer'}>
-          {/* DO NOT REMOVE - POST LAUNCH FEATURE */}
-          {/* {renderingShadeFinder &&
+          {renderingShadeFinder &&
             store?.productPage?.selectedVariant === undefined && (
               <div
                 className={'openSFButtonForm'}
@@ -95,6 +93,7 @@ const PDPAddToCartForm = ({
                 Find my shade
               </div>
             )}
+          {/* DO NOT REMOVE - POST LAUNCH FEATURE
 
           {renderingConcealer &&
             store?.productPage?.selectedVariant === undefined && (

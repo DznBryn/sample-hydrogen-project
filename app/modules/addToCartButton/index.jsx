@@ -67,11 +67,11 @@ export default function PDPAddToCart({
   ];
 
   useEffect(() => {
-    if (addItem?.quantity === 0 || !availableForSale || forceSoldOut) {
+    if (addItem?.quantity === 0 || availableForSale === false || forceSoldOut) {
       setButtonState(SOLD_OUT);
     } else if (isGated && !isLoggedIn) {
       setButtonState(LOCKED);
-    } else if (addItem?.variantId === 0) {
+    } else if (!addItem?.variantId || addItem?.variantId === 0) {
       setButtonState(SELECT_SHADE);
     } else if (addToCart?.state === FETCHER.STATE.SUBMIT) {
       setButtonState(LOADING);
