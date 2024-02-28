@@ -614,7 +614,13 @@ const MainContent = () => {
           >
             shop now
           </Link>
-          <Link className={'viewMyAccountLink'} to={'/account?c=rewards'}>
+          <Link
+            className={'viewMyAccountLink'}
+            to={'/account?c=rewards'}
+            onClick={() =>
+              document.querySelector('body').classList.remove('bodyWrap')
+            }
+          >
             view my account
           </Link>
 
