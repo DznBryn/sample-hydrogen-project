@@ -19,7 +19,7 @@ export default function ForgotPasswordForm() {
   return (
     <div className={'templateCustomersLogin'}>
       <div className={'formBox'}>
-        {!fetcher?.data?.data?.status === 500 ? (
+        {fetcher?.data?.data?.status !== 500 ? (
           <>
             <h1>Check your inbox!</h1>
             <p>
