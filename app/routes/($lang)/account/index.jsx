@@ -1,3 +1,4 @@
+import {useLoaderData} from '@remix-run/react';
 import {
   CacheShort,
   flattenConnection,
@@ -36,6 +37,7 @@ import {
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
 import logout from './__private/logout';
+import {useEffect} from 'react';
 import {useStore} from '~/hooks/useStore';
 
 export function links() {
@@ -437,7 +439,17 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {data: customerData} = useStore((store) => store?.account ?? {});
+  const {customer} = useLoaderData();
+  const {data: customerData, setCustomerData} = useStore(
+    (store) => store?.account ?? {},
+  );
+
+  useEffect(() => {
+    if (customerData && customer?.id !== customerData.id) {
+      setCustomerData(customer);
+    }
+  }, [customerData.id]);
+
   return (
     <Layouts.MainNavFooter>
       <Account data={customerData} />
