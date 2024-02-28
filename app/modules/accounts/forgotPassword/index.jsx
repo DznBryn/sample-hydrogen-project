@@ -15,11 +15,11 @@ export default function ForgotPasswordForm() {
     email === '' ||
     fetcher?.state === FETCHER.STATE.LOADING ||
     fetcher?.state === FETCHER.STATE.SUBMIT;
-
+  console.log('fetcher', fetcher);
   return (
     <div className={'templateCustomersLogin'}>
       <div className={'formBox'}>
-        {fetcher?.data?.data?.status !== 500 ? (
+        {fetcher?.data?.data?.status === 200 ? (
           <>
             <h1>Check your inbox!</h1>
             <p>
