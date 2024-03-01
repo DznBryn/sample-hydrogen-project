@@ -37,12 +37,12 @@ const PDPVariants = ({classes, details = {}}) => {
       if (isVariantsOnUrl) {
         const variantIdOnUrl = searchParams.get('variant');
         const variant = details?.variants.find((variant) =>
-          variant.id.includes(variantIdOnUrl),
+          variant?.id.includes(variantIdOnUrl),
         );
         const defaultVariantId =
-          details?.variants.length <= 2 ? details.variants[0].id : 0;
+          details?.variants.length <= 2 ? details.variants?.[0]?.id : 0;
 
-        return variant.id || defaultVariantId;
+        return variant?.id || defaultVariantId;
       } else {
         return details.variants.length <= 3 ||
           (details.variants.length > 3 && isGiftCard.current)
