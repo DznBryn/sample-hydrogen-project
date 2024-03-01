@@ -22,7 +22,7 @@ const SliderCartProductBox = ({
   const inputQtyRef = useRef();
   const {updateItems} = useCartActions();
   const [forceChange, setForceChange] = useState(false);
-
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   let sellingPlanName = '';
   let isSellingPlan = false;
   let isLoyaltyRedeem = false;
@@ -107,9 +107,12 @@ const SliderCartProductBox = ({
     <div className={'sliderCartProduct'}>
       <div className={'productImage'}>
         <Link
-          to={`products/${item?.merchandise?.product?.handle}?variant=${
-            parseGid(item?.merchandise?.id)?.id
-          }`}
+          to={{
+            pathname: `/products/${item?.merchandise?.product?.handle}`,
+            search: `?variant=${parseGid(item?.merchandise?.id)?.id}`,
+          }}
+          onClick={toggleCart}
+          prefetch={true}
         >
           <Image
             className="productImage"
@@ -182,6 +185,7 @@ const RegularProduct = ({
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
   );
@@ -190,9 +194,12 @@ const RegularProduct = ({
     <div className={'sliderCartProduct'}>
       <div className={'productImage'}>
         <Link
-          to={`products/${item?.merchandise?.product?.handle}?variant=${
-            parseGid(item?.merchandise?.id)?.id
-          }`}
+          to={{
+            pathname: `/products/${item?.merchandise?.product?.handle}`,
+            search: `?variant=${parseGid(item?.merchandise?.id)?.id}`,
+          }}
+          onClick={toggleCart}
+          prefetch={true}
         >
           <Image
             className="productImage"
