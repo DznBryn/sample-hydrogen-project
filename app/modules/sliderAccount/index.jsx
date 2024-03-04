@@ -359,11 +359,12 @@ const MainContent = () => {
       <div className={'rewardsBannerContainer'} ref={container}>
         <Link
           to={'/rewards'}
-          onClick={() =>
+          onClick={() => {
             triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
               source: 'accountSlider',
-            })
-          }
+            });
+            switchSliderPanelVisibility('SliderAccount');
+          }}
         >
           <span>{icons['round_star']} introducing</span>
           <div>TULA 24-7 Rewards</div>
@@ -626,14 +627,26 @@ const MainContent = () => {
 
           <div id={'createAccountBannersContainer'}>
             {getApiKeys().FEATURE_FLAGS.LOYALTY && (
-              <Link className={'rewardsBanner'} to={'/rewards'}>
+              <Link
+                className={'rewardsBanner'}
+                to={'/rewards'}
+                onClick={() => {
+                  switchSliderPanelVisibility('SliderAccount');
+                }}
+              >
                 <span>new</span>
                 <div>TULA 24-7 Rewards</div>
                 <div>Earn points, rewards and exclusive access.</div>
                 {icons['round_arrow']}
               </Link>
             )}
-            <Link className={'skinquizBanner'} to={'/pages/skincare-finder'}>
+            <Link
+              className={'skinquizBanner'}
+              to={'/pages/skincare-finder'}
+              onClick={() => {
+                switchSliderPanelVisibility('SliderAccount');
+              }}
+            >
               <span>skin quiz</span>
               <div>
                 Get your personal <br />
