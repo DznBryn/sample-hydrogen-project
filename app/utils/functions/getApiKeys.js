@@ -318,12 +318,14 @@ export function getEnv() {
   if (typeof window === 'object') {
     const {host} = window.location;
 
-    if (host.includes('tula.com')) {
-      return 'US_PROD';
+    if (host.includes('staging-hydroxy.tula.com')) {
+      return 'US_STG';
     } else if (host.includes('tulaskincare.ca')) {
       return 'CA_PROD';
     } else if (host.includes('tulaskincare.co.uk')) {
       return 'UK_PROD';
+    } else if (host.includes('tula.com')) {
+      return 'US_PROD';
     } else {
       return 'US_STG';
     }
