@@ -245,18 +245,26 @@ const MainContent = () => {
         to: '/pages/upload-receipt',
         new: true,
         showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
-        onClick: () =>
+        onClick: () => {
           triggerAnalyticsLoyaltyEvents('SubmitReceiptBtnClick', {
             source: 'accountSlider',
-          }),
+          });
+          switchSliderPanelVisibility('SliderAccount');
+        },
       },
       {
         label: 'redeem rewards',
         to: customerId !== '' ? '/account?c=rewards' : '/rewards',
         new: true,
         showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
+        onClick: () => switchSliderPanelVisibility('SliderAccount'),
       },
-      {label: 'contact us', to: '/pages/contact-us', showIt: true},
+      {
+        label: 'contact us',
+        to: '/pages/contact-us',
+        showIt: true,
+        onClick: () => switchSliderPanelVisibility('SliderAccount'),
+      },
     ];
 
     return (
