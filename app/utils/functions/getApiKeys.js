@@ -300,7 +300,7 @@ function getApiKeys() {
   }
 }
 
-function getEnv() {
+export function getEnv() {
   /**
    * I made this function to keep the apiGetEnv as a function.
    * Here, we are checking the domain to define the enviroment
