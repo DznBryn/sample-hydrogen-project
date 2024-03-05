@@ -710,7 +710,7 @@ const ItemsList = ({
 
             if (
               item.id !== props?.carbonOffsetVariant &&
-              item.id !== props?.GWP_PRODUCT_VARIANT_ID
+              !item?.merchandise?.id?.includes(props?.GWP_PRODUCT_VARIANT_ID)
             ) {
               return (
                 <SliderCartProductBox
