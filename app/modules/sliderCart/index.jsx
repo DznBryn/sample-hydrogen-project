@@ -383,7 +383,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
 
   useEffect(() => {
     setupListrakCart();
-  }, [cart.lines]);
+  }, [cart?.lines]);
 
   function setupListrakCart() {
     const {lines, id, checkoutUrl} = cart;
