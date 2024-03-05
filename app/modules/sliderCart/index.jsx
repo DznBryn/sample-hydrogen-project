@@ -47,8 +47,8 @@ let prevState = null;
 
 const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const productRecList = recommendations;
+  const cart = useStore((store) => store?.cart?.data ?? {});
   const {
-    data: cart,
     updateCart: removeItemData = () => {},
     setData: setCartData = () => {},
   } = useStore((store) => store?.cart ?? {});
@@ -386,7 +386,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   }, [cart?.lines]);
 
   function setupListrakCart() {
-    const {lines, id, checkoutUrl} = cart;
+    const {lines = [], id, checkoutUrl} = cart;
 
     const cartProducts = flattenConnection(lines);
     const isCartEmpty = cartProducts?.length === 0;
