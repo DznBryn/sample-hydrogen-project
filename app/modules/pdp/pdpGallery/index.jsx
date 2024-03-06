@@ -188,7 +188,7 @@ const PDPGallery = ({
       <img
         className={'product__image'}
         loading={'lazy'}
-        src={imgObj?.url + '&width=414'}
+        src={imgObj?.url + '&width=600'}
         alt={imgObj?.altText ?? 'Tula Product'}
         width={imgObj.width ?? '500'}
         height={imgObj?.height ?? '500'}
