@@ -123,6 +123,28 @@ const PDPConcealerVariants = ({
 
   const haveShadeRecommendation = !!store?.selectedShade;
 
+  //
+
+  useEffect(() => {
+    resetSelectedVariant();
+  }, []);
+
+  //
+
+  function resetSelectedVariant() {
+    setStore({
+      ...store,
+      productPage: {
+        ...store.productPage,
+        selectedVariant: undefined,
+        addToCart: {
+          ...store?.productPage?.addToCart,
+          quantity: undefined,
+        },
+      },
+    });
+  }
+
   const HalfCircle = () => (
     <div className={'sf_halfCircle'}>
       <svg
