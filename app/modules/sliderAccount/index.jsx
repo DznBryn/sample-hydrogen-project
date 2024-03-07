@@ -524,11 +524,7 @@ const MainContent = () => {
 
         <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
           <input type="hidden" name="formAction" value={'LOGOUT'} />
-          <button
-            type="submit"
-            className={'welcomeBottomButton'}
-            onClick={() => changeMainContent('signIn')}
-          >
+          <button type="submit" className={'welcomeBottomButton'}>
             sign out
           </button>
         </signoutFetcher.Form>
