@@ -229,7 +229,7 @@
   text-align: center;
 }
 
-.selected {
+.selectedSf {
   z-index: 10;
   border: 1px solid #48c6d9;
   height: 36px;
@@ -564,7 +564,7 @@
   text-align: center;
 }
 
-.selected {
+.selectedSf {
   z-index: 10;
   border: 1px solid #48c6d9;
   height: 36px;
