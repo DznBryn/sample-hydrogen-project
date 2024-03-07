@@ -523,10 +523,12 @@ const MainContent = () => {
         <Links />
 
         <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
-          <input type="hidden" name="formAction" value={'LOGOUT'} />
-          <button type="submit" className={'welcomeBottomButton'}>
-            sign out
-          </button>
+          <div onClick={() => switchSliderPanelVisibility('SliderAccount')}>
+            <input type="hidden" name="formAction" value={'LOGOUT'} />
+            <button type="submit" className={'welcomeBottomButton'}>
+              sign out
+            </button>
+          </div>
         </signoutFetcher.Form>
       </>
     ),
