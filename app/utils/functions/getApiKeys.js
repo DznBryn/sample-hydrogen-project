@@ -300,7 +300,7 @@ function getApiKeys() {
   }
 }
 
-function getEnv() {
+export function getEnv() {
   /**
    * I made this function to keep the apiGetEnv as a function.
    * Here, we are checking the domain to define the enviroment
@@ -318,12 +318,14 @@ function getEnv() {
   if (typeof window === 'object') {
     const {host} = window.location;
 
-    if (host.includes('tula.com')) {
-      return 'US_PROD';
+    if (host.includes('staging-hydroxy.tula.com')) {
+      return 'US_STG';
     } else if (host.includes('tulaskincare.ca')) {
       return 'CA_PROD';
     } else if (host.includes('tulaskincare.co.uk')) {
       return 'UK_PROD';
+    } else if (host.includes('tula.com')) {
+      return 'US_PROD';
     } else {
       return 'US_STG';
     }
