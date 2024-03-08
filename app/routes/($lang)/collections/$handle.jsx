@@ -22,9 +22,14 @@ export const links = () => {
 };
 
 export const meta = ({data}) => {
+  const collection = data?.collection;
+
   return [
-    {title: data?.collection?.seo?.title},
-    {description: data?.collection?.seo?.description},
+    {title: collection?.seo?.title || collection?.title},
+    {
+      description:
+        collection?.seo?.description || `Collection ${collection.title}`,
+    },
   ];
 };
 
