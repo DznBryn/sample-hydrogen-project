@@ -414,13 +414,13 @@ const Price = ({item, promo, product, cartPageConfig}) => {
     );
   } else if (item.sellingPlanAllocation !== null) {
     const ADdiscount = Number(cartPageConfig?.autoDeliveryDiscount ?? 0) / 100;
-    const line_price =
-      Number(item?.cost?.totalAmount?.amount) -
-      Number(item?.cost?.totalAmount?.amount) * ADdiscount;
+    const pricePerUnit =
+      Number(item?.cost?.amountPerQuantity?.amount) * item?.quantity;
+    const line_price = Number(pricePerUnit) - Number(pricePerUnit) * ADdiscount;
     return (
       <div>
         <h6 className={'strikeThrough'}>
-          {getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}
+          {getCurrency() + Number(pricePerUnit).toFixed(2)}
         </h6>
         <h6
           className={

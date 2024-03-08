@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   convertStorefrontIdToExternalId,
+  getCartQuantity,
   getLoyaltyCustomerData,
   isAutoDeliveryInCart,
   updateListrakCart,
@@ -468,6 +469,30 @@ const CartContent = ({
   const totalCart = Number(cart?.cost?.subtotalAmount?.amount ?? 0);
   const productRecList = productRecs;
 
+  const quantity = getTotalItemsOnCart();
+
+  function getTotalItemsOnCart() {
+    const items = cart?.lines ? flattenConnection(cart.lines) : [];
+    const GWP_PRODUCT_EXTERNAL_ID = parseInt(
+      cartConfig?.freeGiftPromoProductExternalID,
+    );
+
+    const IS_GWP_PRODUCT_ON_CART = items.some(
+      (product) =>
+        product?.merchandise?.id !== undefined &&
+        product?.merchandise?.product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID),
+    );
+
+    const EXCEPTIONS = [IS_GWP_PRODUCT_ON_CART];
+
+    let total = getCartQuantity(items);
+
+    EXCEPTIONS.forEach((exception) => {
+      if (exception) total -= 1;
+    });
+
+    return total;
+  }
   function toggleModal() {
     setShowModal(!showModal);
   }
@@ -493,7 +518,7 @@ const CartContent = ({
   ) : (
     <>
       <div className={'cartHeader'}>
-        <h3>{'My Cart (' + cart?.totalQuantity + ')'}</h3>
+        <h3>{'My Cart (' + quantity + ')'}</h3>
         <div className={'cartClose'} onClick={handleClick}>
           CLOSE
         </div>

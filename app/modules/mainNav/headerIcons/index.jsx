@@ -104,7 +104,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
             </li>
           ) : null}
           <li className={classes.iconContainer}>
-            <IconCart cartConfig={cartConfig} />
+            <IconCart cartConfig={cartPageConfig} />
           </li>
         </ul>
       ) : (
@@ -118,7 +118,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
             </li>
           ) : null}
           <li className={classes.iconContainer}>
-            <IconCart cartConfig={cartConfig} />
+            <IconCart cartConfig={cartPageConfig} />
           </li>
         </ul>
       )}
