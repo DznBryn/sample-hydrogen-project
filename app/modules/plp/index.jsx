@@ -154,8 +154,15 @@ const PLP = ({
   }, []);
 
   useLayoutEffect(() => {
-    setFilteredProducts(products);
+    resetPLPState();
   }, [collection.title]);
+
+  function resetPLPState() {
+    currentFiltersConfig.current = {};
+    setSortedBy('featured');
+    dispatch({type: 'clear'});
+    setFilteredProducts(products);
+  }
 
   // effect to update collection after sorted
   useLayoutEffect(() => {
