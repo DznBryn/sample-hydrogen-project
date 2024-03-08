@@ -161,21 +161,6 @@ const PageMeta = () => {
           <link rel="canonical" href={url} key="canonicalURL" />
       */}
 
-      {getApiKeys().ONE_TRUST ? (
-        <>
-          <script
-            defer
-            type="text/javascript"
-            src={getApiKeys().ONE_TRUST.OtAutoBlock}
-          ></script>
-          <script
-            defer
-            src={getApiKeys().ONE_TRUST.OtSDKStub}
-            type="text/javascript"
-          ></script>
-        </>
-      ) : null}
-
       {getApiKeys().DYNATRACE ? (
         <>
           <script

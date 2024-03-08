@@ -63,9 +63,9 @@ function getApiKeys() {
         SHOW_FIREWORK: true,
         ONE_TRUST: {
           OtAutoBlock:
-            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
+            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd/OtAutoBlock.js',
           OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-          // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
+          domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd',
           otButtonMessage: 'Your Privacy Choices',
         },
         POSTSCRIPT: {
@@ -122,9 +122,9 @@ function getApiKeys() {
         SHOW_FIREWORK: true,
         ONE_TRUST: {
           OtAutoBlock:
-            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
+            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd/OtAutoBlock.js',
           OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-          // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
+          domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd',
           otButtonMessage: 'Your Privacy Choices',
         },
         POSTSCRIPT: {
