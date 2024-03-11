@@ -1,7 +1,7 @@
 import logout from '~/routes/($lang)/account/__private/logout';
 import {MONEY_FRAGMENT} from '../fragments';
 
-export async function getCustomer(context, customerAccessToken) {
+export async function getCustomer(context, customerAccessToken, request) {
   const {storefront} = context;
   const data = await storefront.query(CUSTOMER_QUERY, {
     variables: {
@@ -13,13 +13,18 @@ export async function getCustomer(context, customerAccessToken) {
   });
 
   if (!data || !data?.customer) {
-    throw await logout(context);
+    throw await logout({request, context});
   }
 
   return data.customer;
 }
 
-export async function getAddresses(context, customerAccessToken, type) {
+export async function getAddresses(
+  context,
+  customerAccessToken,
+  type,
+  request,
+) {
   const {storefront} = context;
   const QUERY = type === 'addresses' ? CUSTOMER_ADDRESSES_QUERY : null;
 
@@ -36,7 +41,7 @@ export async function getAddresses(context, customerAccessToken, type) {
   });
 
   if (!data || !data?.customer) {
-    throw await logout(context);
+    throw await logout(context, request);
   }
 
   return data.customer;
