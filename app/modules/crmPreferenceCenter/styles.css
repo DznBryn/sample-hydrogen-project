@@ -7,7 +7,17 @@
 #ltkPrefCenter {
   width: 100%;
   margin: 0 auto;
-  min-height: 700px;
+  min-height: 1900px;
+}
+@media all and (max-width: 880px) {
+  #ltkPrefCenter {
+    min-height: 2100px;
+  }
+}
+@media all and (max-width: 390px) {
+  #ltkPrefCenter {
+    min-height: 2520px;
+  }
 }
 
 .skeletonWrapper {
@@ -44,9 +54,6 @@
   }
   .skeletonWrapper > div > div:nth-child(2) {
     display: none;
-  }
-  .mainContainer {
-    margin-top: 90px;
   }
 }
 

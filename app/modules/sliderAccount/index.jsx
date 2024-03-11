@@ -245,18 +245,26 @@ const MainContent = () => {
         to: '/pages/upload-receipt',
         new: true,
         showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
-        onClick: () =>
+        onClick: () => {
           triggerAnalyticsLoyaltyEvents('SubmitReceiptBtnClick', {
             source: 'accountSlider',
-          }),
+          });
+          switchSliderPanelVisibility('SliderAccount');
+        },
       },
       {
         label: 'redeem rewards',
         to: customerId !== '' ? '/account?c=rewards' : '/rewards',
         new: true,
         showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
+        onClick: () => switchSliderPanelVisibility('SliderAccount'),
       },
-      {label: 'contact us', to: '/pages/contact-us', showIt: true},
+      {
+        label: 'contact us',
+        to: '/pages/contact-us',
+        showIt: true,
+        onClick: () => switchSliderPanelVisibility('SliderAccount'),
+      },
     ];
 
     return (
@@ -359,11 +367,12 @@ const MainContent = () => {
       <div className={'rewardsBannerContainer'} ref={container}>
         <Link
           to={'/rewards'}
-          onClick={() =>
+          onClick={() => {
             triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
               source: 'accountSlider',
-            })
-          }
+            });
+            switchSliderPanelVisibility('SliderAccount');
+          }}
         >
           <span>{icons['round_star']} introducing</span>
           <div>TULA 24-7 Rewards</div>
@@ -514,10 +523,12 @@ const MainContent = () => {
         <Links />
 
         <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
-          <input type="hidden" name="formAction" value={'LOGOUT'} />
-          <button type="submit" className={'welcomeBottomButton'}>
-            sign out
-          </button>
+          <div onClick={() => switchSliderPanelVisibility('SliderAccount')}>
+            <input type="hidden" name="formAction" value={'LOGOUT'} />
+            <button type="submit" className={'welcomeBottomButton'}>
+              sign out
+            </button>
+          </div>
         </signoutFetcher.Form>
       </>
     ),
@@ -626,14 +637,26 @@ const MainContent = () => {
 
           <div id={'createAccountBannersContainer'}>
             {getApiKeys().FEATURE_FLAGS.LOYALTY && (
-              <Link className={'rewardsBanner'} to={'/rewards'}>
+              <Link
+                className={'rewardsBanner'}
+                to={'/rewards'}
+                onClick={() => {
+                  switchSliderPanelVisibility('SliderAccount');
+                }}
+              >
                 <span>new</span>
                 <div>TULA 24-7 Rewards</div>
                 <div>Earn points, rewards and exclusive access.</div>
                 {icons['round_arrow']}
               </Link>
             )}
-            <Link className={'skinquizBanner'} to={'/pages/skincare-finder'}>
+            <Link
+              className={'skinquizBanner'}
+              to={'/pages/skincare-finder'}
+              onClick={() => {
+                switchSliderPanelVisibility('SliderAccount');
+              }}
+            >
               <span>skin quiz</span>
               <div>
                 Get your personal <br />

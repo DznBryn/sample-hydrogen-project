@@ -1,7 +1,7 @@
 // import { useCartActions } from 'frontend-checkout';
 import {useEffect, useState} from 'react';
 import {useCollection} from '~/hooks/useCollection';
-import {prepProduct} from '~/utils/functions/eventFunctions';
+import {getIdFromGid, prepProduct} from '~/utils/functions/eventFunctions';
 import ProductBoxLoading, {
   links as productBoxLoadingStyles,
 } from '../productBoxLoading';
@@ -128,6 +128,22 @@ const ListrakRec = ({listrak}) => {
               recProducts.map((product) => {
                 return (
                   <PLPProductBox
+                    analytics={{
+                      click: {
+                        actionField: {list: 'PDP Recommendation'},
+                        products: [
+                          {
+                            name: product?.title,
+                            id: getIdFromGid(product?.id),
+                            price: parseFloat(
+                              product?.priceRange?.minVariantPrice?.amount,
+                            )?.toFixed(2),
+                            category: product?.productType,
+                            variant: '',
+                          },
+                        ],
+                      },
+                    }}
                     product={prepProduct(product)}
                     key={product.handle}
                     fromLt

@@ -14,17 +14,19 @@ const FreeGiftPromoProduct = ({
     : [];
   const Img =
     isMystery && anonymousImageSrc?.asset ? (
-      <img
-        src={anonymousImageSrc?.asset?.url}
-        alt={anonymousImageSrc?.asset?.altText ?? 'Mystery gift'}
-        sizes="(min-width: 45em) 50vw, 100vw"
-      />
+      <>
+        <img
+          src={anonymousImageSrc?.asset?.url}
+          alt={anonymousImageSrc?.asset?.altText ?? 'Mystery gift'}
+          sizes="(min-width: 45em) 50vw, 100vw"
+        />
+      </>
     ) : (
       <Image
         className="productImage"
         data={shopifyProductImages?.[0]}
         sizes="(min-width: 45em) 50vw, 100vw"
-        aspectRatio="1/1"
+        aspectRatio="4:5"
       />
     );
 
@@ -47,7 +49,7 @@ const FreeGiftPromoProduct = ({
 
           {`(${getCurrency() + productPrice} value)`}
         </div>
-        <p>{isMystery ? 'Mystery gift' : product?.name}</p>
+        <p>{isMystery ? 'Mystery gift' : product?.title}</p>
       </div>
     </div>
   );

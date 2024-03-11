@@ -20,6 +20,7 @@ const PDPAddToCartForm = ({
 }) => {
   const showOOSForm = false;
   const {store, setStore} = useStore();
+  const atcQuantity = store?.productPage?.addToCart?.quantity;
 
   function setQuantity(quantity) {
     setStore({
@@ -35,45 +36,47 @@ const PDPAddToCartForm = ({
   }
 
   const increaseItemQty = () => {
-    setQuantity(store?.productPage?.addToCart?.quantity + 1);
+    setQuantity(atcQuantity + 1);
   };
 
   const decreaseItemQty = () => {
-    setQuantity(store?.productPage?.addToCart?.quantity - 1);
+    setQuantity(atcQuantity - 1);
   };
 
   return (
     <div className={classnames('atc__container', classes)}>
-      <div className={classnames('container', 'add_to_cart_form')}>
-        <div className={'quantity_container'}>
-          <button
-            className={'control_button'}
-            onClick={() =>
-              store?.productPage?.addToCart?.quantity > 1 && decreaseItemQty()
-            }
-          >
-            -
-          </button>
-          {store?.productPage?.addToCart?.quantity && (
+      <div
+        className={classnames('container', 'add_to_cart_form', {
+          pdpNoQuantity: !atcQuantity,
+        })}
+      >
+        {atcQuantity && (
+          <div className={'quantity_container'}>
+            <button
+              className={'control_button'}
+              onClick={() => atcQuantity > 1 && decreaseItemQty()}
+            >
+              -
+            </button>
+
             <input
               className={'quantity'}
               type="number"
               name="quantity"
-              value={forceSoldOut ? 0 : store?.productPage?.addToCart?.quantity}
+              value={forceSoldOut ? 0 : atcQuantity}
               pattern="/[^1-5]/gi"
               disabled
               required
             />
-          )}
-          <button
-            className={'control_button'}
-            onClick={() =>
-              store?.productPage?.addToCart?.quantity < 5 && increaseItemQty()
-            }
-          >
-            +
-          </button>
-        </div>
+
+            <button
+              className={'control_button'}
+              onClick={() => atcQuantity < 5 && increaseItemQty()}
+            >
+              +
+            </button>
+          </div>
+        )}
         <div className={'ctaContainer'}>
           {renderingShadeFinder &&
             store?.productPage?.selectedVariant === undefined && (
@@ -109,7 +112,7 @@ const PDPAddToCartForm = ({
             addItem={{
               product: store?.product ?? {},
               variantId: store?.productPage?.selectedVariant,
-              quantity: store?.productPage?.addToCart?.quantity,
+              quantity: atcQuantity,
               ['selling_plan_id']:
                 store?.productPage?.addToCart?.selling_plan_id &&
                 store?.productPage?.addToCart?.selling_plan_id !== 0

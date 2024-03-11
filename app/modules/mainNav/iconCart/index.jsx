@@ -33,8 +33,7 @@ const IconCart = ({cartConfig}) => {
     const IS_GWP_PRODUCT_ON_CART = items.some(
       (product) =>
         product?.merchandise?.id !== undefined &&
-        parseGid(product?.merchandise?.product?.id)?.id ===
-          GWP_PRODUCT_EXTERNAL_ID,
+        product?.merchandise?.product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID),
     );
 
     const EXCEPTIONS = [carbonOffsetIsOnCart, IS_GWP_PRODUCT_ON_CART];

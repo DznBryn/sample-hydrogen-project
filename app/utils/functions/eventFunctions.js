@@ -732,7 +732,7 @@ export async function getMainNavFooterCMSData(context) {
  * Shopify data functions
  */
 
-export async function getCustomerData(context, customerAccessToken) {
+export async function getCustomerData(context, customerAccessToken, request) {
   let customer = {
     id: '',
     firstName: '',
@@ -741,7 +741,7 @@ export async function getCustomerData(context, customerAccessToken) {
   };
 
   if (typeof customerAccessToken === 'string') {
-    customer = await getCustomer(context, customerAccessToken);
+    customer = await getCustomer(context, customerAccessToken, request);
 
     customer.addresses = flattenConnection(customer.addresses);
     customer.orders = flattenConnection(customer.orders);

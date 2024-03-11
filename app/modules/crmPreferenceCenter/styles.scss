@@ -7,7 +7,14 @@
 #ltkPrefCenter {
   width: 100%;
   margin: 0 auto;
-  min-height: 700px;
+  min-height: 1900px;
+
+  @media all and (max-width: 880px) {
+    min-height: 2100px;
+  }
+  @media all and (max-width: 390px) {
+    min-height: 2520px;
+  }
 }
 
 .skeletonWrapper {
@@ -22,38 +29,29 @@
   z-index: -1;
 }
 
-.skeletonWrapper>div {
-
+.skeletonWrapper > div {
   display: flex;
   width: 100%;
-  justify-content: space-between
+  justify-content: space-between;
 }
 
-.skeletonWrapper>div>div:nth-child(1) {
-
+.skeletonWrapper > div > div:nth-child(1) {
   display: flex;
   flex-direction: column;
   gap: 5px;
-
 }
 
 @media all and (max-width: 660px) {
-
   .skeletonWrapper {
     padding: 0 20px;
   }
 
-  .skeletonWrapper>div>div:nth-child(1) {
+  .skeletonWrapper > div > div:nth-child(1) {
     width: 100%;
     overflow: hidden;
   }
 
-  .skeletonWrapper>div>div:nth-child(2) {
+  .skeletonWrapper > div > div:nth-child(2) {
     display: none;
   }
-
-  .mainContainer {
-    margin-top: 90px;
-  }
-
 }

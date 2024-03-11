@@ -255,6 +255,7 @@ export async function action({request, context}) {
         context,
         customerAccessToken,
         'addresses',
+        request,
       );
       customer.addresses = flattenConnection(customer.addresses);
 
@@ -306,6 +307,7 @@ export async function action({request, context}) {
         context,
         customerAccessToken,
         'addresses',
+        request,
       );
       customer.addresses = flattenConnection(customer.addresses);
 
@@ -349,6 +351,7 @@ export async function action({request, context}) {
         context,
         customerAccessToken,
         'addresses',
+        request,
       );
       customer.addresses = flattenConnection(customer.addresses);
 
@@ -377,7 +380,7 @@ export async function loader({request, context, params}) {
     });
   }
 
-  const customer = await getCustomer(context, customerAccessToken);
+  const customer = await getCustomer(context, customerAccessToken, request);
   customer.addresses = flattenConnection(customer.addresses);
   customer.orders = flattenConnection(customer.orders);
 
