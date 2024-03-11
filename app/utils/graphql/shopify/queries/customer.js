@@ -41,7 +41,7 @@ export async function getAddresses(
   });
 
   if (!data || !data?.customer) {
-    throw await logout(context, request);
+    throw await logout({context, request});
   }
 
   return data.customer;
