@@ -68,7 +68,7 @@ const SliderCartProductBox = ({
     }
   }
 
-  if (item?.sellingPlanAllocation !== undefined) {
+  if (item?.sellingPlanAllocation) {
     isSellingPlan = true;
     for (let it = 0; it < cartPageConfig.sellingPlans.length; it++) {
       if (
@@ -82,12 +82,12 @@ const SliderCartProductBox = ({
   }
 
   function getSellingPlan() {
-    const itemCurrentSellingPlan = parseGid(
-      item?.sellingPlanAllocation?.sellingPlan?.id,
-    )?.id;
+    const itemCurrentSellingPlan =
+      parseGid(item?.sellingPlanAllocation?.sellingPlan?.id)?.id ?? null;
 
     const dropdownValue = parseInt(sellingPlansDropdown?.current?.value);
-    const defaultSellingPlan = cartPageConfig.sellingPlans[0]?.sellingPlanID;
+
+    const defaultSellingPlan = cartPageConfig.sellingPlans.at(2)?.sellingPlanID;
 
     return itemCurrentSellingPlan
       ? itemCurrentSellingPlan
