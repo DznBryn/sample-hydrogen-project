@@ -513,7 +513,10 @@ const CartContent = ({
     productRecList,
   };
 
-  return items?.length === 0 || !items || cart?.totalQuantity === 0 ? (
+  const shouldRenderEmptyCartUI =
+    items?.length === 0 || !items || cart?.totalQuantity === 0;
+
+  return shouldRenderEmptyCartUI ? (
     <EmptyCart {...emptyCartProps} />
   ) : (
     <>
@@ -600,7 +603,7 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => (
       gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
     />
 
-    <Checkout message="Start Shopping" url="/collections/all" />
+    <Checkout message="Start Shopping" url="/collections/all" isEmpty />
   </>
 );
 
