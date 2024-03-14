@@ -654,7 +654,15 @@ const ItemsList = ({
     products.products.find((product) =>
       product.id.includes(cartConfig.freeGiftPromoProductExternalID),
     );
-
+  console.log('Debug', {
+    filteredItems,
+    cartConfig,
+    items,
+    products,
+    loyaltyProduct,
+    shouldRenderGiftProduct,
+    productRecList,
+  });
   return (
     <div className={'innerContent'}>
       <div className={'itemsList'}>
