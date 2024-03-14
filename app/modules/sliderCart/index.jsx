@@ -736,9 +736,14 @@ const ItemsList = ({
                 ? product.productPromos
                 : false;
 
+            const GWP_PRODUCT_VARIANT_ID =
+              props?.GWP_PRODUCT_VARIANT_ID !== ''
+                ? props?.GWP_PRODUCT_VARIANT_ID
+                : -1;
+
             if (
               item.id !== props?.carbonOffsetVariant &&
-              !item?.merchandise?.id?.includes(props?.GWP_PRODUCT_VARIANT_ID)
+              !item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)
             ) {
               return (
                 <SliderCartProductBox
