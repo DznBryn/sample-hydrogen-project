@@ -654,15 +654,7 @@ const ItemsList = ({
     products.products.find((product) =>
       product.id.includes(cartConfig.freeGiftPromoProductExternalID),
     );
-  console.log('Debug', {
-    filteredItems,
-    cartConfig,
-    items,
-    products,
-    loyaltyProduct,
-    shouldRenderGiftProduct,
-    productRecList,
-  });
+
   return (
     <div className={'innerContent'}>
       <div className={'itemsList'}>
@@ -741,9 +733,14 @@ const ItemsList = ({
                 ? product.productPromos
                 : false;
 
+            const GWP_PRODUCT_VARIANT_ID =
+              props?.GWP_PRODUCT_VARIANT_ID !== ''
+                ? props?.GWP_PRODUCT_VARIANT_ID
+                : -1;
+
             if (
               item.id !== props?.carbonOffsetVariant &&
-              !item?.merchandise?.id?.includes(props?.GWP_PRODUCT_VARIANT_ID)
+              !item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)
             ) {
               return (
                 <SliderCartProductBox
