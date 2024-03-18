@@ -70,7 +70,7 @@ export default function LoginForm() {
             <div
                 className={
                   fetcher.data?.[0]?.code 
-                    ? 'login_password_input inputTextError'
+                    ? 'login_password_input invalid'
                     : 'login_password_input'
                 }
               >
