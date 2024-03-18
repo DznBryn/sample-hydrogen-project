@@ -30,6 +30,7 @@
 .templateCustomersLogin form input {
   width: 100%;
   margin-bottom: 10px;
+  border-radius: 3px;
 }
 
 .templateCustomersLogin form div,
@@ -85,6 +86,32 @@
 
 .inputText:disabled {
   border: 1px solid rgba(76, 78, 86, 0.4);
+}
+
+.login_password_input {
+  @extend .inputText;
+
+  border-radius: 3px;
+  padding: 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #4c4e56;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px
+}
+
+.login_password_input input {
+  font: 400 16px avenir;
+  margin-bottom: 0 !important;
+  border: none;
+}
+
+.login_password_input:focus-within {
+  border: 1px solid #48c6d9;
 }
 
 .some-page-wrapper {
