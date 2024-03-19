@@ -23,14 +23,6 @@
   border: none;
 }
 
-.out-stock {
-  font-size: 9px;
-}
-
-.starter_kit {
-  font-size: 9px;
-}
-
 .kit {
   border-radius: 2px;
   width: auto;
@@ -48,7 +40,6 @@
 }
 
 .limited-edition {
-  font-size: 9px;
   /* background-color: var(--color-light-purple); */
   background-color: var(--color-primary);
 }
@@ -60,11 +51,6 @@
 .best-seller {
   /* background-color: background-color: var(--color-error); */
   background-color: var(--color-primary);
-  font-size: 9px;
-}
-
-.award-winner {
-  font-size: 9px;
 }
 
 @media (max-width: 550px) {
