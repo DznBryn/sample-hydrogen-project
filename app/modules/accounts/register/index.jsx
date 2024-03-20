@@ -306,7 +306,6 @@ export function RegisterForm({fetcher = useFetcher()}) {
         autoComplete="lastName"
         placeholder="Last Name*"
         aria-label="Last Name"
-        autoFocus
       />
       <div>
         <input
@@ -317,7 +316,6 @@ export function RegisterForm({fetcher = useFetcher()}) {
           autoComplete="email"
           placeholder="Email*"
           aria-label="Email address"
-          autoFocus
           value={registerForm.email}
           onChange={(e) =>
             setRegisterForm({
@@ -350,7 +348,6 @@ export function RegisterForm({fetcher = useFetcher()}) {
           aria-label="Password"
           minLength={5}
           required
-          autoFocus
           value={registerForm.password}
           onChange={(e) =>
             setRegisterForm({
