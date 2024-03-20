@@ -79,11 +79,6 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    setMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
-    getCustomerData();
-  }, [customerId]);
-
-  useEffect(() => {
     if (loginButtonRef.current) {
       if (login.state === 'submitting') {
         loginButtonRef.current.disabled = true;
@@ -145,6 +140,7 @@ const MainContent = () => {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', {
         userAcceptsMarketing: true,
       });
+      setCustomerData(login.data?.customer);
       changeMainContent('createAccountSuccess');
     }
   }, [registerFetcher.state]);
@@ -153,6 +149,7 @@ const MainContent = () => {
     if (signoutFetcher.state === FETCHER.STATE.LOADING) {
       setCustomerData();
     }
+    setMainContent('signIn');
   }, [signoutFetcher.state]);
 
   function init() {
