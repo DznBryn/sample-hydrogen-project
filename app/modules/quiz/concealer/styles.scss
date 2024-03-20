@@ -1,0 +1,777 @@
+.concealer_wrapper {
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  width: 400px;
+  background-color: #fff;
+}
+
+.concealer_mainHeader {
+  background-color: #f8f8f8;
+  padding: 50px 33px 23px 24px;
+  position: relative;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.concealer_sfQuestion {
+  font-size: 15px;
+  font-family: 'Avenir';
+  font-weight: bold;
+  color: #4c4e56;
+}
+
+.concealer_neutralAnswerContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+.concealer_neutralAnswerContainer p {
+  color: rgba(76, 78, 86, 1);
+  font-size: 14px;
+}
+
+.concealer_neutralAnswerContainer span {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.concealer_closeBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: 'Avenir';
+  font-weight: 900;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  right: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.concealer_startOverBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: 'Avenir';
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-decoration: underline;
+  left: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.concealer_quizContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 0 18px 0 20px;
+}
+
+.concealer_resultWrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.concealer_quizItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 78px;
+  margin-bottom: 11px;
+  background-color: #e1f0f5;
+  cursor: pointer;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.concealer_quizItemFinal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 100px;
+  margin-bottom: 11px;
+  background-color: #fdfdfe;
+  cursor: pointer;
+}
+
+.concealer_sfItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px 0px 0px 3px;
+  font-size: 14px;
+  font-family: 'Avenir';
+  font-weight: 800;
+  line-height: 19.12px;
+  min-width: 72px;
+  height: 92px;
+  margin-right: 16px;
+}
+
+.concealer_item {
+  width: 130px;
+  color: #4c4e56;
+  font-weight: 800;
+  font-size: 14px;
+  margin-left: 41px;
+}
+
+.concealer_quizContent {
+  text-align: center;
+}
+
+.concealer_itemBorder {
+  height: 100%;
+  width: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.concealer_img {
+  height: 100%;
+  min-width: 167px;
+  object-fit: contain;
+}
+
+.concealer_goBackButton {
+  text-align: center;
+  background-color: #c1c1c1;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Avenir';
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.concealer_selectShadeButtonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 30px;
+  gap: 14px;
+}
+
+.concealer_selectShadeButtonContainer div {
+  text-align: center;
+  background-color: #48c6d9;
+  color: #fff;
+  font-size: 16px;
+  border-radius: 3px;
+  line-height: 22px;
+  font-weight: 800;
+  padding: 0;
+  cursor: pointer;
+  width: 257px;
+}
+
+.concealer_selectShadeButtonContainer p {
+  color: #4c4e56;
+  text-align: center;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.1px;
+  width: 153px;
+}
+
+.concealer_arrow {
+  margin-right: 6px;
+}
+
+.concealer_infoText {
+  color: #4c4e56;
+  font-family: 'Avenir';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 14px 0 13px;
+}
+
+.concealer_additionalShadeContainer {
+  padding-left: 29px;
+}
+
+.concealer_additionalShade {
+  margin: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.concealer_recommendedBadge {
+  background-color: #48c6d9;
+  font-size: 10px;
+  height: 17px;
+  color: #fff;
+  font-family: 'Avenir';
+  font-weight: 900;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.concealer_recommendedShadeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.concealer_recommendedShade {
+  font-family: 'Avenir';
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.concealer_shadeIcon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+  background-size: contain;
+}
+
+.concealer_shadeFounded {
+  color: #4c4e56;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: 'Avenir';
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.concealer_selected {
+  z-index: 10;
+  border: 1px solid #48c6d9;
+  height: 36px;
+  width: 36px;
+  background: transparent;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.concealer_shadeIconContainer {
+  position: relative;
+  padding-left: 5px;
+}
+
+.concealer_startOverArrow {
+  margin-right: 4px;
+}
+
+.concealer_otherShades {
+  font-size: 15px;
+  font-family: 'Avenir';
+  background-color: #4c4e56;
+  font-weight: 800;
+}
+
+.concealer_resultContainer {
+  position: relative;
+  background: #f8f8f8;
+  margin-bottom: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.concealer_helpingText {
+  font-weight: 800;
+  font-size: 15px;
+  color: #4c4e56;
+  font-family: 'Avenir';
+  margin-bottom: 9px;
+}
+
+.concealer_undertoneInfo {
+  font-family: 'Avenir';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-left: 18px;
+  color: rgba(76, 78, 86, 0.8);
+}
+
+.concealer_undertoneContainer {
+  display: flex;
+  align-items: center;
+}
+
+.concealer_shadeImage {
+  width: 293px;
+  height: 283px;
+  margin-bottom: 18px;
+}
+
+.concealer_dotsContainer {
+  display: flex;
+  margin-bottom: 18px;
+}
+
+.concealer_dots {
+  width: 7.14px;
+  height: 7.19px;
+  margin-right: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .concealer_wrapper {
+    width: 100%;
+  }
+
+  .concealer_closeBtn {
+    right: 34px;
+  }
+
+  .concealer_startOverBtn {
+    left: 34px;
+  }
+}
+
+.concealer_rightArrow {
+  position: absolute;
+  top: 30%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.concealer_leftArrow {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  cursor: pointer;
+}
+
+.concealer_wrapper {
+  position: fixed;
+  right: 0;
+  height: 100vh;
+  width: 400px;
+  background-color: #fff;
+}
+
+.concealer_mainHeader {
+  background-color: #f8f8f8;
+  padding: 50px 33px 23px 24px;
+  position: relative;
+  display: block;
+}
+
+.concealer_sfQuestion {
+  font-size: 15px;
+  font-family: 'Avenir';
+  font-weight: bold;
+  color: #4c4e56;
+}
+
+.concealer_closeBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: 'Avenir';
+  font-weight: 900;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  right: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.concealer_startOverBtn {
+  position: absolute;
+  font-size: 12px;
+  font-family: 'Avenir';
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  text-decoration: underline;
+  left: 25px;
+  top: 20px;
+  cursor: pointer;
+}
+
+.concealer_quizContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 0 18px 0 20px;
+}
+
+.concealer_resultWrapper {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.concealer_quizItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 78px;
+  margin-bottom: 11px;
+  background-color: #e1f0f5;
+  cursor: pointer;
+}
+
+.concealer_quizItemFinal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  height: 100px;
+  margin-bottom: 11px;
+  background-color: #fdfdfe;
+  cursor: pointer;
+}
+
+.concealer_sfItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 3px 0px 0px 3px;
+  font-size: 14px;
+  font-family: 'Avenir';
+  font-weight: 800;
+  line-height: 19.12px;
+  min-width: 72px;
+  height: 92px;
+  margin-right: 16px;
+}
+
+.concealer_item {
+  width: 130px;
+  color: #4c4e56;
+  font-weight: 800;
+  font-size: 14px;
+  margin-left: 41px;
+}
+
+.concealer_helpTextUndertoneContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3px;
+  margin-left: 41px;
+}
+
+.concealer_helpTextUndertone {
+  font-size: 12px;
+  color: rgba(76, 78, 86, 1);
+}
+
+.concealer_quizContent {
+  text-align: center;
+}
+
+.concealer_itemBorder {
+  height: 100%;
+  width: 10px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
+.concealer_img {
+  height: 100%;
+  min-width: 167px;
+  object-fit: cover;
+}
+
+.concealer_goBackButton {
+  text-align: center;
+  background-color: #c1c1c1;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Avenir';
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.concealer_selectShadeButton {
+  text-align: center;
+  background-color: #48c6d9;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'Avenir';
+  line-height: 22px;
+  font-weight: 800;
+  padding: 16px 0;
+  cursor: pointer;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.concealer_arrow {
+  margin-right: 6px;
+}
+
+.concealer_infoText {
+  color: #4c4e56;
+  font-family: 'Avenir';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin: 14px 0 13px;
+}
+
+.concealer_additionalShadeContainer {
+  padding-left: 29px;
+}
+
+.concealer_additionalShade {
+  margin: 8px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.concealer_recommendedBadge {
+  background-color: #48c6d9;
+  font-size: 10px;
+  height: 17px;
+  color: #fff;
+  font-family: 'Avenir';
+  font-weight: 900;
+  padding: 2px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.concealer_recommendedShadeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.concealer_recommendedShade {
+  font-family: 'Avenir';
+  font-weight: 900;
+  font-size: 13px;
+  line-height: 17px;
+}
+
+.concealer_shadeIcon {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.concealer_shadeFounded {
+  color: #4c4e56;
+  font-size: 15px;
+  font-weight: 800;
+  font-family: 'Avenir';
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.concealer_selected {
+  z-index: 10;
+  border: 1px solid #48c6d9;
+  height: 36px;
+  width: 36px;
+  background: transparent;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.concealer_shadeIconContainer {
+  position: relative;
+  padding-left: 5px;
+}
+
+.concealer_startOverArrow {
+  margin-right: 4px;
+}
+
+.concealer_otherShades {
+  font-size: 15px;
+  font-family: 'Avenir';
+  background-color: #4c4e56;
+  font-weight: 800;
+}
+
+.concealer_resultContainer {
+  position: relative;
+  background: #f8f8f8;
+  margin-bottom: 19px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.concealer_helpingText {
+  font-weight: 800;
+  font-size: 15px;
+  color: #4c4e56;
+  font-family: 'Avenir';
+  margin-bottom: 9px;
+}
+
+.concealer_undertoneInfo {
+  font-family: 'Avenir';
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-left: 18px;
+  color: rgba(76, 78, 86, 0.8);
+}
+
+.concealer_undertoneContainer {
+  display: flex;
+  align-items: center;
+}
+
+.concealer_shadeImage {
+  width: 293px;
+  height: 283px;
+  margin-bottom: 18px;
+}
+
+.concealer_dotsContainer {
+  display: flex;
+  margin-bottom: 18px;
+}
+
+.concealer_dots {
+  width: 7.14px;
+  height: 7.19px;
+  margin-right: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .concealer_wrapper {
+    width: 100%;
+  }
+
+  .concealer_closeBtn {
+    right: 34px;
+  }
+
+  .concealer_startOverBtn {
+    left: 34px;
+  }
+}
+
+.concealer_rightArrow {
+  position: absolute;
+  top: 30%;
+  right: 5%;
+  cursor: pointer;
+}
+
+.concealer_leftArrow {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  cursor: pointer;
+}
+
+@media (max-width: 376px) {
+  .concealer_selectShadeButtonContainer {
+    margin-top: 10px;
+  }
+}
+
+.concealer_radiantContainer {
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+
+.concealer_radiantTextContainer {
+  font-size: 13px;
+  color: rgba(76, 78, 86, 1);
+}
+
+.concealer_radiantImage {
+  background-size: contain;
+  width: 51px;
+  height: 59px;
+}
+
+.concealer_radiantSelection {
+  color: rgba(72, 198, 217, 1);
+  text-decoration: underline;
+  margin-top: 2px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.concealer_addedToCart {
+  background-color: #48c6d9;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 22px;
+  padding: 0;
+  text-align: center;
+  width: 257px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

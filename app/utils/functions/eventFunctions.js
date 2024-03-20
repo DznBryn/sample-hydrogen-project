@@ -12,7 +12,9 @@ import {
   GET_SITE_WIDE_SETTINGS,
   PRODUCT_RECOMMENDATIONS,
   GET_SHADE_FINDER_CONTENT,
+  GET_CONCEALER_CONTENT,
   ALL_GLOBAL_PROMO_BAR,
+  GET_CONCEALER_SHADE_IMAGES,
 } from '~/utils/graphql/sanity/queries';
 
 export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US')
@@ -689,6 +691,8 @@ export async function getMainNavFooterCMSData(context) {
     GlobalPromoBar,
     ProductRecommendation,
     ShadeFinder,
+    Concealer,
+    ConcealerImages,
   ] = await Promise.all([
     getCMSContent(context, GET_ANNOUNCEMENT_HEADER),
     getCMSContent(context, GET_MOBILE_NAV_BAR),
@@ -701,7 +705,12 @@ export async function getMainNavFooterCMSData(context) {
     getCMSContent(context, GET_SHADE_FINDER_CONTENT, {
       id: 'b8a6cf0d-b106-49bb-926d-a2b3d6473694',
     }),
+    getCMSContent(context, GET_CONCEALER_CONTENT, {
+      id: 'c7d0ed65-5df9-4cc3-a99e-fdc942dade87',
+    }),
+    getCMSContent(context, GET_CONCEALER_SHADE_IMAGES),
   ]);
+
   const recommendations = {
     productList: [],
     name: ProductRecommendation?.name ?? '',
@@ -725,6 +734,8 @@ export async function getMainNavFooterCMSData(context) {
     GlobalPromoBar,
     ProductRecommendation: recommendations,
     ShadeFinder,
+    Concealer,
+    ConcealerImages,
   };
 }
 

@@ -409,6 +409,24 @@ const PDPConcealerVariants = ({
     if (window?.innerWidth && window?.innerWidth < 600) {
       setIsMobile(true);
     }
+
+    const product = details.product;
+
+    if (!store.product) {
+      setStore({
+        ...store,
+        product,
+        productPage: {
+          ...store.productPage,
+          newRecommendedShade: false,
+          addToCart: {
+            ...store?.productPage?.addToCart,
+            quantity: 1,
+            discount: 0,
+          },
+        },
+      });
+    }
   }, []);
 
   const shadeVariantsOOOS = shadeVariantsOos[0]?.storefrontId ?? [];
@@ -441,6 +459,7 @@ const PDPConcealerVariants = ({
   };
 
   useEffect(() => {
+    console.log('Chamei', store?.selectedShade);
     async function getOOS() {
       await checkOOS();
     }
@@ -453,10 +472,14 @@ const PDPConcealerVariants = ({
       !!store?.selectedShade
     ) {
       const shadeNumber = store?.selectedShade?.split(' ')[0];
+      console.log({shadeNumber, details});
       const product = details?.variants?.find(
-        (variant) => variant.name.split(' ')[1] === shadeNumber,
+        (variant) => variant?.title?.split(' ')[1] === shadeNumber,
       );
-      const externalId = product.externalId;
+
+      console.log('produ', product);
+
+      const externalId = product.id;
       setIsSelected(store.selectedShade);
       setShade(store.selectedShade);
       setStore({
