@@ -1,11 +1,14 @@
-import {redirect} from '@shopify/remix-oxygen';
+import {redirect, json} from '@shopify/remix-oxygen';
 
-export default async function logout({request, context}) {
+export default async function logout({request, context}, noRedirect = false) {
   const {session, storefront} = context;
   session.unset('customerAccessToken');
   console.log('logout', {storefront, request: request.url});
   // Redirect to the current page
-  return redirect(request.url.includes('/account') ? '/' : request.url, {
+
+  if (noRedirect) return json({message: 'Success', status: 200});
+
+  return redirect('/', {
     headers: {
       'Set-Cookie': await session.commit(),
     },

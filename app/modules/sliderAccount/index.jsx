@@ -104,7 +104,6 @@ const MainContent = () => {
         errorElement.current.innerHTML = login.data?.message;
         return signInPassword.current.parentElement.after(errorElement.current);
       }
-
       changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
     }
   }, [login.state]);
@@ -149,7 +148,7 @@ const MainContent = () => {
     if (signoutFetcher.state === FETCHER.STATE.LOADING) {
       setCustomerData();
     }
-    setMainContent('signIn');
+    changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
   }, [signoutFetcher.state]);
 
   function init() {
@@ -521,7 +520,11 @@ const MainContent = () => {
 
         <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
           <div onClick={() => switchSliderPanelVisibility('SliderAccount')}>
-            <input type="hidden" name="formAction" value={'LOGOUT'} />
+            <input
+              type="hidden"
+              name="formAction"
+              value={'LOGOUT_NO_REDIRECT'}
+            />
             <button type="submit" className={'welcomeBottomButton'}>
               sign out
             </button>
