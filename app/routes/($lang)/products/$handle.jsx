@@ -26,7 +26,10 @@ export const links = () => {
 export const meta = ({data}) => {
   return [
     {title: data?.product?.seo?.title || data?.product?.handle},
-    {description: data?.product?.seo?.description},
+    {
+      name: 'description',
+      content: data?.product?.seo?.description,
+    },
   ];
 };
 

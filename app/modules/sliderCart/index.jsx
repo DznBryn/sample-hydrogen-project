@@ -433,7 +433,6 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     GWP_PRODUCT_VARIANT_ID,
     ...props,
   };
-
   return (
     <div
       className={`sliderCartWrap ${

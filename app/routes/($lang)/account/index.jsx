@@ -47,7 +47,8 @@ export function links() {
 export const meta = () => [
   {title: 'My Account - TULA Skincare'},
   {
-    description: 'Log in and access your TULA account here',
+    name: 'description',
+    content: 'Log in and access your TULA account here',
   },
 ];
 
