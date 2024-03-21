@@ -60,6 +60,12 @@
   justify-content: space-between;
 }
 
+.register_password_input span {
+  color: #4c4e56;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .register_password_input input {
   font: 400 16px avenir;
   margin-bottom: 0 !important;
