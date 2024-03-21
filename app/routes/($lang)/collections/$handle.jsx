@@ -27,8 +27,8 @@ export const meta = ({data}) => {
   return [
     {title: collection?.seo?.title || collection?.title},
     {
-      description:
-        collection?.seo?.description || `Collection ${collection.title}`,
+      name: 'description',
+      content: collection?.seo?.description || `Collection ${collection.title}`,
     },
   ];
 };

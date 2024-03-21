@@ -73,6 +73,9 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
     }
   }
 
+  console.log(cart);
+  console.log(cart?.checkoutUrl);
+
   return (
     <>
       <div

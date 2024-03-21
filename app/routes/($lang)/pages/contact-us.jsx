@@ -11,7 +11,9 @@ export const links = () => contactUsStyles();
 export const meta = () => [
   {title: 'Contact Us | TULA Skincare'},
   {
-    description: 'Tula Probiotics Skincare - We\'d love to hear from you - Contact Us - Tula Skincare Products',
+    name: 'description',
+    // prettier-ignore
+    content: 'Tula Probiotics Skincare - We\'d love to hear from you - Contact Us - Tula Skincare Products',
   },
 ];
 

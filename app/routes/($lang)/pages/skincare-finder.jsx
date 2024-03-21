@@ -11,7 +11,9 @@ export const links = () => quizStyles();
 export const meta = () => [
   {title: 'Skincare Finder | TULA Skincare'},
   {
-    description: 'View the best TULA skincare products recommended for you based on your needs.',
+    name: 'description',
+    content:
+      'View the best TULA skincare products recommended for you based on your needs.',
   },
 ];
 
