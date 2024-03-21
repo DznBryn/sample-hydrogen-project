@@ -139,7 +139,7 @@ const MainContent = () => {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', {
         userAcceptsMarketing: true,
       });
-      setCustomerData(login.data?.customer);
+      setCustomerData(registerFetcher.data?.customer);
       changeMainContent('createAccountSuccess');
     }
   }, [registerFetcher.state]);
