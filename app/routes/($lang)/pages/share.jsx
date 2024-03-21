@@ -7,7 +7,9 @@ export const links = () => referralsStyles();
 export const meta = () => [
   {title: 'Share | TULA Skincare'},
   {
-    description: 'Beauty and Style Experts share their opinions about Tula Priobiotic Skincare Products.',
+    name: 'description',
+    content:
+      'Beauty and Style Experts share their opinions about Tula Priobiotic Skincare Products.',
   },
 ];
 

@@ -12,7 +12,9 @@ export const links = () => tulaScholarshipPageStyles();
 export const meta = () => [
   {title: 'TULA Medical School Scholarship Program'},
   {
-    description: 'As a brand that’s based on science, skin health & wellness from the inside out, plus that is founded by a practicing internal medicine doctor who is also a woman of color, we’re committed to furthering advances in medical research, health care & health care & health equality',
+    name: 'description',
+    content:
+      'As a brand that’s based on science, skin health & wellness from the inside out, plus that is founded by a practicing internal medicine doctor who is also a woman of color, we’re committed to furthering advances in medical research, health care & health care & health equality',
   },
 ];
 

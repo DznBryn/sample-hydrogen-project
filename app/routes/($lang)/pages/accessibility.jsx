@@ -9,7 +9,8 @@ export const links = () => accessibilityPageStyles();
 export const meta = () => [
   {title: 'Accessibility'},
   {
-    description: 'This page contains accessibility information for tula.com',
+    name: 'description',
+    content: 'This page contains accessibility information for tula.com',
   },
 ];
 
