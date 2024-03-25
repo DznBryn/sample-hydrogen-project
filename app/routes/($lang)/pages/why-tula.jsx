@@ -10,7 +10,9 @@ export const links = () => whyTulaStyles();
 export const meta = () => [
   {title: 'Probiotic Skincare – TULA Skincare'},
   {
-    description: 'Rethink healthy skin From the inside out with probiotic skincare. Probiotic extracts are natural, good-for-you bacteria that work to improve your health, inside and out.',
+    name: 'description',
+    content:
+      'Rethink healthy skin From the inside out with probiotic skincare. Probiotic extracts are natural, good-for-you bacteria that work to improve your health, inside and out.',
   },
 ];
 

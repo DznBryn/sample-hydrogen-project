@@ -62,6 +62,7 @@ export const PRODUCTS_QUERY = `#graphql
         handle
         tags
         productType
+        createdAt
         images(first: 2) {
           nodes {
             url

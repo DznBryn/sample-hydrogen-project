@@ -11,7 +11,8 @@ export const links = () => pressPageStyles();
 export const meta = () => [
   {title: 'Tula Probiotics Skincare in the Press - TULA Skincare'},
   {
-    description: 'Tula Probiotics Skincare in the Press - TULA Skincare',
+    name: 'description',
+    content: 'Tula Probiotics Skincare in the Press - TULA Skincare',
   },
 ];
 

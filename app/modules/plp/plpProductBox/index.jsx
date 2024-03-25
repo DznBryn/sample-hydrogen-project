@@ -88,8 +88,8 @@ const PLPProductBox2 = ({
 
   const noPromo = product?.tags.find((tag) => tag.toLowerCase() === 'no-promo');
 
-  const mainImg = media[0]?.url + '&height=328';
-  const secImg = media[1]?.url && media[1]?.url + '&height=328';
+  const mainImg = media[0]?.url + '&height=528';
+  const secImg = media[1]?.url && media[1]?.url + '&height=528';
 
   useEffect(() => {
     if (window.localStorage.getItem('tulaSitewide') !== null) {

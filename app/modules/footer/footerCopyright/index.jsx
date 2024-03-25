@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
 import getApiKeys from '~/utils/functions/getApiKeys';
-
+import {Helmet} from 'react-helmet';
 import styles from './styles.css';
 
 export const links = () => {
@@ -8,24 +7,53 @@ export const links = () => {
 };
 
 const FooterCopyright = () => {
-  useEffect(() => {
-    const otButtonMessage = getApiKeys()?.ONE_TRUST
-      ? '| <div id="tula-ot-button-container"><button id="ot-sdk-btn" class="ot-sdk-show-settings">Your Privacy Choices</button></div>'
-      : null;
+  return (
+    <>
+      {getApiKeys().ONE_TRUST && (
+        <Helmet>
+          <script
+            type="text/javascript"
+            src={getApiKeys().ONE_TRUST.OtAutoBlock}
+          />
+          <script
+            src={getApiKeys().ONE_TRUST.OtSDKStub}
+            type="text/javascript"
+            data-domain-script={getApiKeys().ONE_TRUST.domain_script}
+          />
+        </Helmet>
+      )}
 
-    let footerCopyrightOT = `© TULA Life, Inc. | All Rights Reserved | Made in NYC | <a href="/pages/terms-conditions" target="_self">Terms &amp; Conditions</a> | <a href="/pages/privacy-policy" target="_self">Privacy Policy</a> | <a href="/pages/cookie-policy" target="_self">Cookie Policy</a> ${otButtonMessage} <img id="privacy-options" alt="California Consumer Privacy Act (CCPA) Opt-Out Icon" src="https://cdn.shopify.com/s/files/1/1736/9637/files/privacyoptions.svg?v=1701808999"  />`;
-
-    let footerCopyright =
-      '© TULA Life, Inc. | All Rights Reserved | Made in NYC | <a href="/pages/terms-conditions" target="_self">Terms &amp; Conditions</a> | <a href="/pages/privacy-policy" target="_self">Privacy Policy</a> | <a href="/pages/cookie-policy" target="_self">Cookie Policy</a>';
-
-    getApiKeys().ONE_TRUST
-      ? (document.getElementById('footerCopyright').innerHTML =
-          footerCopyrightOT)
-      : (document.getElementById('footerCopyright').innerHTML =
-          footerCopyright);
-  }, []);
-
-  return <div id="footerCopyright" className={'footerCopyright'}></div>;
+      <div id="footerCopyright" className={'footerCopyright'}>
+        © TULA Life, Inc. | All Rights Reserved | Made in NYC |{' '}
+        <a href="/pages/terms-conditions" target="_self">
+          Terms &amp; Conditions
+        </a>
+        &nbsp;|&nbsp;
+        <a href="/pages/privacy-policy" target="_self">
+          Privacy Policy
+        </a>
+        &nbsp;|&nbsp;
+        <a href="/pages/cookie-policy" target="_self">
+          Cookie Policy
+        </a>
+        {getApiKeys().ONE_TRUST && (
+          <>
+            &nbsp;|&nbsp;
+            <div id="tula-ot-button-container">
+              <button id="ot-sdk-btn" className="ot-sdk-show-settings">
+                Your Privacy Choices
+              </button>
+            </div>
+            <img
+              id="privacy-options"
+              alt="California Consumer Privacy Act (CCPA) Opt-Out Icon"
+              src="https://cdn.shopify.com/s/files/1/1736/9637/files/privacyoptions.svg?v=1701808999"
+            />
+          </>
+        )}
+      </div>
+    </>
+  );
 };
 
 export default FooterCopyright;

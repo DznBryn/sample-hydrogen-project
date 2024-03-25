@@ -22,7 +22,7 @@ const SliderCartProductBox = ({
   const inputQtyRef = useRef();
   const {updateItems} = useCartActions();
   const [forceChange, setForceChange] = useState(false);
-
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   let sellingPlanName = '';
   let isSellingPlan = false;
   let isLoyaltyRedeem = false;
@@ -68,7 +68,7 @@ const SliderCartProductBox = ({
     }
   }
 
-  if (item?.sellingPlanAllocation !== undefined) {
+  if (item?.sellingPlanAllocation) {
     isSellingPlan = true;
     for (let it = 0; it < cartPageConfig.sellingPlans.length; it++) {
       if (
@@ -82,12 +82,12 @@ const SliderCartProductBox = ({
   }
 
   function getSellingPlan() {
-    const itemCurrentSellingPlan = parseGid(
-      item?.sellingPlanAllocation?.sellingPlan?.id,
-    )?.id;
+    const itemCurrentSellingPlan =
+      parseGid(item?.sellingPlanAllocation?.sellingPlan?.id)?.id ?? null;
 
     const dropdownValue = parseInt(sellingPlansDropdown?.current?.value);
-    const defaultSellingPlan = cartPageConfig.sellingPlans[0]?.sellingPlanID;
+
+    const defaultSellingPlan = cartPageConfig.sellingPlans.at(2)?.sellingPlanID;
 
     return itemCurrentSellingPlan
       ? itemCurrentSellingPlan
@@ -105,16 +105,19 @@ const SliderCartProductBox = ({
 
   const LoyaltyProduct = () => (
     <div className={'sliderCartProduct'}>
-      <div className={'productImage'}>
+      <div className={'PB-productImage'}>
         <Link
-          to={`products/${item?.merchandise?.product?.handle}?variant=${
-            parseGid(item?.merchandise?.id)?.id
-          }`}
+          to={{
+            pathname: `/products/${item?.merchandise?.product?.handle}`,
+            search: `?variant=${parseGid(item?.merchandise?.id)?.id}`,
+          }}
+          onClick={toggleCart}
+          prefetch={true}
         >
           <Image
-            className="productImage"
+            className="PB-productImage"
             data={item?.merchandise?.image}
-            sizes="(min-width: 45em) 50vw, 100vw"
+            // sizes="(min-width: 45em) 50vw, 100vw"
           />
         </Link>
       </div>
@@ -182,22 +185,26 @@ const RegularProduct = ({
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
   );
 
   return (
     <div className={'sliderCartProduct'}>
-      <div className={'productImage'}>
+      <div className={'PB-productImage'}>
         <Link
-          to={`products/${item?.merchandise?.product?.handle}?variant=${
-            parseGid(item?.merchandise?.id)?.id
-          }`}
+          to={{
+            pathname: `/products/${item?.merchandise?.product?.handle}`,
+            search: `?variant=${parseGid(item?.merchandise?.id)?.id}`,
+          }}
+          onClick={toggleCart}
+          prefetch={true}
         >
           <Image
-            className="productImage"
+            className="PB-productImage"
             data={item?.merchandise?.image}
-            sizes="(min-width: 45em) 50vw, 100vw"
+            // sizes="(min-width: 45em) 50vw, 100vw"
           />
         </Link>
       </div>
@@ -407,13 +414,13 @@ const Price = ({item, promo, product, cartPageConfig}) => {
     );
   } else if (item.sellingPlanAllocation !== null) {
     const ADdiscount = Number(cartPageConfig?.autoDeliveryDiscount ?? 0) / 100;
-    const line_price =
-      Number(item?.cost?.totalAmount?.amount) -
-      Number(item?.cost?.totalAmount?.amount) * ADdiscount;
+    const pricePerUnit =
+      Number(item?.cost?.amountPerQuantity?.amount) * item?.quantity;
+    const line_price = Number(pricePerUnit) - Number(pricePerUnit) * ADdiscount;
     return (
       <div>
         <h6 className={'strikeThrough'}>
-          {getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}
+          {getCurrency() + Number(pricePerUnit).toFixed(2)}
         </h6>
         <h6
           className={

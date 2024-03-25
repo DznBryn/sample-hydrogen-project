@@ -32,7 +32,8 @@ export const links = () => homePageStyles();
 export const meta = () => [
   {title: 'TULA Skincare: Probiotic Skin Care Products'},
   {
-    description:
+    name: 'description',
+    content:
       'Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup.',
   },
 ];

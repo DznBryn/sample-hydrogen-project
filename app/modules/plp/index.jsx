@@ -35,6 +35,8 @@ import styles from './styles.css';
 import {Link} from '@remix-run/react';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
+//
+
 export const links = () => {
   return [
     {rel: 'stylesheet', href: styles},
@@ -47,6 +49,8 @@ export const links = () => {
     ...titleStyles(),
   ];
 };
+
+//
 
 const PLP = ({
   collection,
@@ -150,8 +154,15 @@ const PLP = ({
   }, []);
 
   useLayoutEffect(() => {
+    resetPLPState();
+  }, [collection.title]);
+
+  function resetPLPState() {
+    currentFiltersConfig.current = {};
+    setSortedBy('featured');
+    dispatch({type: 'clear'});
     setFilteredProducts(products);
-  }, [collection]);
+  }
 
   // effect to update collection after sorted
   useLayoutEffect(() => {
@@ -291,6 +302,8 @@ const PLP = ({
       </p>
     </div>
   );
+
+  //
 
   return filteredProducts.length > 0 ? (
     <div className={'plpWrapper minHeight'}>

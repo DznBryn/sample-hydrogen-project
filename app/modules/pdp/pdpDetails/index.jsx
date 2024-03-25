@@ -444,7 +444,7 @@ const PDPDetails = ({
           Component={
             <div className={'ctaContainer'}>
               {shouldRenderSkinFinder &&
-                store?.productPage?.selectedVariantId === undefined && (
+                store?.productPage?.selectedVariant === undefined && (
                   <div
                     className={'openSFButtonSticky'}
                     onClick={() => {

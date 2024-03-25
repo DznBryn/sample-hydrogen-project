@@ -47,6 +47,37 @@
   text-align: center;
 }
 
+.register_password_input {
+  @extend .inputText;
+
+  border-radius: 3px;
+  padding: 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  color: #4c4e56;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.register_password_input span {
+  color: #4c4e56;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.register_password_input input {
+  font: 400 16px avenir;
+  margin-bottom: 0 !important;
+  border: none;
+}
+
+.register_password_input:focus-within {
+  border: 1px solid #48c6d9;
+}
+
 .templateCustomersLogin p.errorText {
   margin: 0;
 }
@@ -95,6 +126,7 @@
 .templateCustomersLogin form input {
   width: 100%;
   margin-bottom: 10px;
+  border-radius: 3px;
 }
 
 .templateCustomersLogin form div,

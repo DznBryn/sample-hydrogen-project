@@ -47,7 +47,8 @@ export function links() {
 export const meta = () => [
   {title: 'My Account - TULA Skincare'},
   {
-    description: 'Log in and access your TULA account here',
+    name: 'description',
+    content: 'Log in and access your TULA account here',
   },
 ];
 
@@ -68,6 +69,10 @@ export async function action({request, context}) {
 
   if (formAction === 'LOGOUT') {
     return await logout({request, context});
+  }
+
+  if (formAction === 'LOGOUT_NO_REDIRECT') {
+    return await logout({request, context}, true);
   }
   // SUBSCRIPTION
   if (formAction.includes('SUBSCRIPTION')) {
@@ -255,6 +260,7 @@ export async function action({request, context}) {
         context,
         customerAccessToken,
         'addresses',
+        request,
       );
       customer.addresses = flattenConnection(customer.addresses);
 
@@ -306,6 +312,7 @@ export async function action({request, context}) {
         context,
         customerAccessToken,
         'addresses',
+        request,
       );
       customer.addresses = flattenConnection(customer.addresses);
 
@@ -349,6 +356,7 @@ export async function action({request, context}) {
         context,
         customerAccessToken,
         'addresses',
+        request,
       );
       customer.addresses = flattenConnection(customer.addresses);
 
@@ -377,7 +385,7 @@ export async function loader({request, context, params}) {
     });
   }
 
-  const customer = await getCustomer(context, customerAccessToken);
+  const customer = await getCustomer(context, customerAccessToken, request);
   customer.addresses = flattenConnection(customer.addresses);
   customer.orders = flattenConnection(customer.orders);
 

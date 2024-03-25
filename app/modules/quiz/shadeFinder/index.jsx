@@ -473,7 +473,7 @@ const StartOverArrow = () => (
 );
 
 const Selected = () => (
-  <div className="selected">
+  <div className="selectedSf">
     <svg
       width="11"
       height="9"

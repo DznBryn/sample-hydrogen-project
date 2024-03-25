@@ -111,7 +111,11 @@ export async function loader({context, request}) {
     customerCache.accessToken !== curCustomerAccessToken ||
     customerCache.data === undefined
   ) {
-    customerCache.data = await getCustomerData(context, curCustomerAccessToken);
+    customerCache.data = await getCustomerData(
+      context,
+      curCustomerAccessToken,
+      request,
+    );
     customerCache.accessToken = curCustomerAccessToken;
   }
 

@@ -117,6 +117,28 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
 
   const haveShadeRecommendation = !!store?.selectedShade;
 
+  //
+
+  useEffect(() => {
+    resetSelectedVariant();
+  }, []);
+
+  //
+
+  function resetSelectedVariant() {
+    setStore({
+      ...store,
+      productPage: {
+        ...store.productPage,
+        selectedVariant: undefined,
+        addToCart: {
+          ...store?.productPage?.addToCart,
+          quantity: undefined,
+        },
+      },
+    });
+  }
+
   const types = useRef(getVariantTypes(details.variants));
 
   const handleRecommendation = (shadeRecommended) => {

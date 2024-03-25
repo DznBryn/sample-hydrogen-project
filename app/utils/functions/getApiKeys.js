@@ -63,9 +63,9 @@ function getApiKeys() {
         SHOW_FIREWORK: true,
         ONE_TRUST: {
           OtAutoBlock:
-            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
+            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd/OtAutoBlock.js',
           OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-          // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
+          domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd',
           otButtonMessage: 'Your Privacy Choices',
         },
         POSTSCRIPT: {
@@ -122,9 +122,9 @@ function getApiKeys() {
         SHOW_FIREWORK: true,
         ONE_TRUST: {
           OtAutoBlock:
-            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
+            'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd/OtAutoBlock.js',
           OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-          // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
+          domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd',
           otButtonMessage: 'Your Privacy Choices',
         },
         POSTSCRIPT: {
@@ -300,7 +300,7 @@ function getApiKeys() {
   }
 }
 
-function getEnv() {
+export function getEnv() {
   /**
    * I made this function to keep the apiGetEnv as a function.
    * Here, we are checking the domain to define the enviroment
@@ -318,12 +318,14 @@ function getEnv() {
   if (typeof window === 'object') {
     const {host} = window.location;
 
-    if (host.includes('tula.com')) {
-      return 'US_PROD';
+    if (host.includes('staging-hydroxy.tula.com')) {
+      return 'US_STG';
     } else if (host.includes('tulaskincare.ca')) {
       return 'CA_PROD';
     } else if (host.includes('tulaskincare.co.uk')) {
       return 'UK_PROD';
+    } else if (host.includes('tula.com')) {
+      return 'US_PROD';
     } else {
       return 'US_STG';
     }

@@ -1,4 +1,4 @@
-import getApiKeys from '~/utils/functions/getApiKeys';
+import getApiKeys, {getEnv} from '~/utils/functions/getApiKeys';
 import {showPaymentPlanVendor} from '~/utils/functions/eventFunctions';
 import logo from '../../../public/logo.png';
 import {useEffect} from 'react';
@@ -17,6 +17,7 @@ const PageMeta = () => {
   return (
     <>
       <meta charSet="utf-8" />
+      {getEnv() === 'US_STG' && <meta name="robots" content="noindex" />}
       <meta name="viewport" content="width=device-width,initial-scale=1" />
 
       {/* <!-- Twitter Card data --> */}
@@ -159,21 +160,6 @@ const PageMeta = () => {
           :
           <link rel="canonical" href={url} key="canonicalURL" />
       */}
-
-      {getApiKeys().ONE_TRUST ? (
-        <>
-          <script
-            defer
-            type="text/javascript"
-            src={getApiKeys().ONE_TRUST.OtAutoBlock}
-          ></script>
-          <script
-            defer
-            src={getApiKeys().ONE_TRUST.OtSDKStub}
-            type="text/javascript"
-          ></script>
-        </>
-      ) : null}
 
       {getApiKeys().DYNATRACE ? (
         <>

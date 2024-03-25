@@ -1,28 +1,14 @@
 import {useStore} from '~/hooks/useStore';
 import {getCurrency} from '../../../utils/functions/eventFunctions';
 import getApiKeys from '../../../utils/functions/getApiKeys';
-import {flattenConnection} from '@shopify/hydrogen';
 
-const Checkout = ({cartConfig, message, url, valueToSubtract = null}) => {
+const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
   const cart = useStore((store) => store?.cart?.data ?? null);
   const subtotalPrice = Number(cart?.cost?.subtotalAmount?.amount ?? 0).toFixed(
     2,
   );
 
-  const handleCartSubTotal = ({cart, subtotalPrice}) => {
-    const lines = cart?.lines ? flattenConnection(cart.lines) : null;
-    let valueToSubtract = 0;
-    const ADdiscount = cartConfig?.autoDeliveryDiscount ?? 0;
-
-    if (lines) {
-      lines.forEach((line) => {
-        if (line?.sellingPlanAllocation?.sellingPlan?.id) {
-          valueToSubtract +=
-            Number(line.cost.totalAmount.amount) * (ADdiscount / 100);
-        }
-      });
-    }
-
+  const handleCartSubTotal = ({subtotalPrice}) => {
     return Number(subtotalPrice - valueToSubtract).toFixed(2);
   };
 
@@ -31,9 +17,11 @@ const Checkout = ({cartConfig, message, url, valueToSubtract = null}) => {
       (handleCartSubTotal({cart, subtotalPrice}) - valueToSubtract)
     : getCurrency() + handleCartSubTotal({cart, subtotalPrice});
 
+  const isNotEmptyCart = cart !== null && !isEmpty;
+
   return (
-    <div className={cart !== null ? 'checkout' : 'emptyCheckout'}>
-      {cart !== null && (
+    <div className={isNotEmptyCart ? 'checkout' : 'emptyCheckout'}>
+      {isNotEmptyCart && (
         <div className={'subtotal'}>
           <h2>Subtotal</h2>
           <h2>{modifiedSubtotalPrice}</h2>
@@ -42,7 +30,7 @@ const Checkout = ({cartConfig, message, url, valueToSubtract = null}) => {
       <a href={url} className={'checkoutCta'}>
         {message}
       </a>
-      {cart !== null && (
+      {isNotEmptyCart && (
         <div className={'discount'}>
           {getApiKeys().CURRENT_ENV.includes('US')
             ? 'Got a discount code or rewards points? Add them at checkout.'

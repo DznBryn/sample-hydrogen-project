@@ -12,7 +12,9 @@ export const links = () => ourStoryAndFounderStyles();
 export const meta = () => [
   {title: 'TULA Skincare Story & Founder'},
   {
-    description: 'Founded by Dr. Roshini Raj, TULA is built on the power of probiotics & superfoods. We believe that ingredients which are good for your body are also great for your skin.',
+    name: 'description',
+    content:
+      'Founded by Dr. Roshini Raj, TULA is built on the power of probiotics & superfoods. We believe that ingredients which are good for your body are also great for your skin.',
   },
 ];
 

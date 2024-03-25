@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {
   convertStorefrontIdToExternalId,
+  getCartQuantity,
   getLoyaltyCustomerData,
   isAutoDeliveryInCart,
   updateListrakCart,
 } from '../../utils/functions/eventFunctions';
 import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
-import {useCartActions} from '../../hooks/useCart';
+
 import {useCustomerState} from '../../hooks/useCostumer';
 import {PortableText} from '@portabletext/react';
 import getApiKeys from '../../utils/functions/getApiKeys';
@@ -29,6 +30,8 @@ import Banner, {
   links as loyaltyBannerStyles,
 } from '../loyalty/banner';
 import {flattenConnection, parseGid} from '@shopify/hydrogen';
+import {useFetcher} from '@remix-run/react';
+import {API_METHODS, FETCHER} from '~/utils/constants';
 
 export const links = () => {
   return [
@@ -46,12 +49,18 @@ let prevState = null;
 const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const productRecList = recommendations;
   const cart = useStore((store) => store?.cart?.data ?? {});
+  const {
+    updateCart: removeItemData = () => {},
+    setData: setCartData = () => {},
+  } = useStore((store) => store?.cart ?? {});
+
   const [items, setItems] = useState(null);
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const isSliderCartOpen = useStore(
     (store) => store?.cart?.isSliderCartOpen ?? false,
   );
-  const {addItems, removeItems} = useCartActions();
+
+  const fetcher = useFetcher();
   const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
   const carbonOffsetItem = items?.filter(
     (item) =>
@@ -65,20 +74,17 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const GWP_PRODUCT_EXTERNAL_ID = cartConfig.freeGiftPromoProductExternalID;
   const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
 
-  const GWP_PRODUCT = products?.products?.filter(
-    (product) => +parseGid(product?.id).id === GWP_PRODUCT_EXTERNAL_ID,
-  )[0];
-
-  const GWP_PRODUCT_VARIANT_ID = +parseGid(GWP_PRODUCT?.variants.nodes[0].id)
-    .id;
+  const GWP_PRODUCT = products?.products?.find((product) => {
+    return product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID);
+  });
+  const GWP_PRODUCT_VARIANT_ID = parseGid(GWP_PRODUCT?.variants.nodes[0].id).id;
 
   function checkIfIsGWPProductOnCart() {
-    return (
-      items?.some(
-        (product) =>
-          +parseGid(product?.merchandise.id).id === GWP_PRODUCT_VARIANT_ID,
-      ) || false
+    const items = cart?.lines ? flattenConnection(cart.lines) : [];
+    const variant = items?.find((product) =>
+      product?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID),
     );
+    return variant ? true : false;
   }
 
   const IS_GWP_PRODUCT_ON_CART = checkIfIsGWPProductOnCart();
@@ -147,19 +153,116 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     }
   }, [cart?.totalQuantity]);
 
-  function checkGWPThreshold() {
+  useEffect(() => {
+    if (
+      fetcher.type === FETCHER.TYPE.ACTION_RELOAD &&
+      fetcher?.data?.cart?.totalQuantity >= 0
+    ) {
+      if (fetcher?.data?.cart?.buyerIdentity) {
+        setCartData(fetcher.data.cart);
+      } else {
+        removeItemData(fetcher.data.cart);
+      }
+    }
+  }, [fetcher.type]);
+
+  async function checkGWPThreshold() {
     const items = cart?.lines ? flattenConnection(cart.lines) : [];
     const GWP_THRESHOLD = cartConfig.freeGiftPromoThreshold;
 
     if (getTotalValueOnCart() >= GWP_THRESHOLD) {
+      if (items.length === 1 && IS_GWP_PRODUCT_ON_CART) {
+        // @TODO: TECH DEBT - Convert duplicated logic into a function
+        const cartLineItem = items.find(
+          (item) =>
+            item.merchandise.id ===
+            `gid://shopify/ProductVariant/${GWP_PRODUCT_VARIANT_ID}`,
+        );
+        const linesIds = [cartLineItem.id];
+        const formData = new FormData();
+        formData.append('cartAction', 'REMOVE_FROM_CART');
+        formData.append('linesIds', JSON.stringify(linesIds));
+        try {
+          // Using fetcher.submit() for form submission
+          await fetcher.submit(formData, {
+            method: API_METHODS.POST,
+            action: '/cart',
+          });
+        } catch (error) {
+          // Handle errors
+          return console.error('GWP fail to add to cart', error);
+        }
+      }
       if (!hasOnlyGiftCards()) {
-        if (!IS_GWP_PRODUCT_ON_CART)
-          addItems([{id: GWP_PRODUCT_VARIANT_ID, quantity: 1}]);
+        if (!IS_GWP_PRODUCT_ON_CART) {
+          const lineItem = {
+            merchandiseId: `gid://shopify/ProductVariant/${GWP_PRODUCT_VARIANT_ID}`,
+            quantity: 1,
+          };
+
+          const formData = new FormData();
+          formData.append('cartAction', 'ADD_TO_CART');
+          formData.append('lines', JSON.stringify([lineItem]));
+
+          try {
+            // Using fetcher.submit() for form submission
+            await fetcher.submit(formData, {
+              method: API_METHODS.POST,
+              action: '/cart',
+            });
+          } catch (error) {
+            // Handle errors
+            return console.error('GWP fail to add to cart', error);
+          }
+        }
       } else {
-        if (IS_GWP_PRODUCT_ON_CART) removeItems([GWP_PRODUCT_VARIANT_ID]);
+        if (IS_GWP_PRODUCT_ON_CART) {
+          // @TODO: ADD error handling here if cartLineItem is undefined
+          // @TODO: TECH DEBT - Convert duplicated logic into a function
+          const cartLineItem = items.find(
+            (item) =>
+              item.merchandise.id ===
+              `gid://shopify/ProductVariant/${GWP_PRODUCT_VARIANT_ID}`,
+          );
+          const linesIds = [cartLineItem.id];
+          const formData = new FormData();
+          formData.append('cartAction', 'REMOVE_FROM_CART');
+          formData.append('linesIds', JSON.stringify(linesIds));
+          try {
+            // Using fetcher.submit() for form submission
+            await fetcher.submit(formData, {
+              method: API_METHODS.POST,
+              action: '/cart',
+            });
+          } catch (error) {
+            // Handle errors
+            return console.error('GWP fail to remove from cart', error);
+          }
+        }
       }
     } else {
-      if (IS_GWP_PRODUCT_ON_CART) removeItems([GWP_PRODUCT_VARIANT_ID]);
+      if (IS_GWP_PRODUCT_ON_CART) {
+        // @TODO: TECH DEBT - Convert duplicated logic into a function
+        const cartLineItem = items.find(
+          (item) =>
+            item.merchandise.id ===
+            `gid://shopify/ProductVariant/${GWP_PRODUCT_VARIANT_ID}`,
+        );
+        const linesIds = [cartLineItem.id];
+        const formData = new FormData();
+        formData.append('cartAction', 'REMOVE_FROM_CART');
+        formData.append('linesIds', JSON.stringify(linesIds));
+        try {
+          // Using fetcher.submit() for form submission
+          await fetcher.submit(formData, {
+            method: API_METHODS.POST,
+            action: '/cart',
+          });
+        } catch (error) {
+          // Handle errors
+          return console.error('GWP fail to remove from cart', error);
+        }
+      }
     }
 
     function getTotalValueOnCart() {
@@ -281,10 +384,10 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
 
   useEffect(() => {
     setupListrakCart();
-  }, [cart.lines]);
+  }, [cart?.lines]);
 
   function setupListrakCart() {
-    const {lines, id, checkoutUrl} = cart;
+    const {lines = [], id, checkoutUrl} = cart;
 
     const cartProducts = flattenConnection(lines);
     const isCartEmpty = cartProducts?.length === 0;
@@ -330,7 +433,6 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     GWP_PRODUCT_VARIANT_ID,
     ...props,
   };
-
   return (
     <div
       className={`sliderCartWrap ${
@@ -366,6 +468,30 @@ const CartContent = ({
   const totalCart = Number(cart?.cost?.subtotalAmount?.amount ?? 0);
   const productRecList = productRecs;
 
+  const quantity = getTotalItemsOnCart();
+
+  function getTotalItemsOnCart() {
+    const items = cart?.lines ? flattenConnection(cart.lines) : [];
+    const GWP_PRODUCT_EXTERNAL_ID = parseInt(
+      cartConfig?.freeGiftPromoProductExternalID,
+    );
+
+    const IS_GWP_PRODUCT_ON_CART = items.some(
+      (product) =>
+        product?.merchandise?.id !== undefined &&
+        product?.merchandise?.product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID),
+    );
+
+    const EXCEPTIONS = [IS_GWP_PRODUCT_ON_CART];
+
+    let total = getCartQuantity(items);
+
+    EXCEPTIONS.forEach((exception) => {
+      if (exception) total -= 1;
+    });
+
+    return total;
+  }
   function toggleModal() {
     setShowModal(!showModal);
   }
@@ -386,12 +512,15 @@ const CartContent = ({
     productRecList,
   };
 
-  return items?.length === 0 || !items || cart?.totalQuantity === 0 ? (
+  const shouldRenderEmptyCartUI =
+    items?.length === 0 || !items || cart?.totalQuantity === 0;
+
+  return shouldRenderEmptyCartUI ? (
     <EmptyCart {...emptyCartProps} />
   ) : (
     <>
       <div className={'cartHeader'}>
-        <h3>{'My Cart (' + cart?.totalQuantity + ')'}</h3>
+        <h3>{'My Cart (' + quantity + ')'}</h3>
         <div className={'cartClose'} onClick={handleClick}>
           CLOSE
         </div>
@@ -473,7 +602,7 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => (
       gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
     />
 
-    <Checkout message="Start Shopping" url="/collections/all" />
+    <Checkout message="Start Shopping" url="/collections/all" isEmpty />
   </>
 );
 
@@ -606,9 +735,14 @@ const ItemsList = ({
                 ? product.productPromos
                 : false;
 
+            const GWP_PRODUCT_VARIANT_ID =
+              props?.GWP_PRODUCT_VARIANT_ID !== ''
+                ? props?.GWP_PRODUCT_VARIANT_ID
+                : -1;
+
             if (
               item.id !== props?.carbonOffsetVariant &&
-              item.id !== props?.GWP_PRODUCT_VARIANT_ID
+              !item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)
             ) {
               return (
                 <SliderCartProductBox
