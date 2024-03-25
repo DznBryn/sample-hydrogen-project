@@ -133,7 +133,6 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
       variantsWraperScrollTop.current = variantsWraper.current.scrollTop;
     }
 
-    // setShade(shadeRecommended);
     setIsSelected(shadeRecommended);
     setStore({
       ...store,
@@ -279,11 +278,23 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     }
   };
 
-  const renderVariants = (shadeRecommended, shadeBackground, selectedShade) => {
+  const RenderVariants = ({
+    shadeRecommended,
+    shadeBackground,
+    selectedShade,
+  }) => {
     if (viewType === 'LIST') {
-      return ListViewVariants(shadeRecommended, shadeBackground, selectedShade);
+      return ListViewVariants(
+        shadeRecommended?.toLowerCase(),
+        shadeBackground,
+        selectedShade,
+      );
     } else {
-      return GridViewVariants(shadeRecommended, shadeBackground, selectedShade);
+      return GridViewVariants(
+        shadeRecommended?.toLowerCase(),
+        shadeBackground,
+        selectedShade,
+      );
     }
   };
 
@@ -293,10 +304,13 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     useLayoutEffect(() => {
       if (variantsWraper.current)
         variantsWraper.current.scrollTop = variantsWraperScrollTop.current;
-    });
+    }, [store?.productPage?.recommendedShade]);
 
     useEffect(() => {
-      const recommended = store?.productPage?.recommendedShade;
+      const recommended =
+        localStorage?.getItem('recommendation') ||
+        store?.productPage?.recommendedShade;
+
       if (viewType === 'LIST' && !!recommended) {
         document.getElementById(recommended).scrollIntoView({
           behavior: 'smooth',
@@ -321,11 +335,11 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
             {shadeVariantsSorted.map(({shadeRecommended, shadeBackground}) => {
               return (
                 <Fragment key={shadeRecommended}>
-                  {renderVariants(
-                    shadeRecommended,
-                    shadeBackground,
-                    selectedShade,
-                  )}
+                  <RenderVariants
+                    shadeRecommended={shadeRecommended}
+                    shadeBackground={shadeBackground}
+                    selectedShade={selectedShade}
+                  />
                 </Fragment>
               );
             })}
@@ -337,11 +351,11 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
                 ({shadeRecommended, shadeBackground}) => {
                   return (
                     <Fragment key={shadeRecommended}>
-                      {renderVariants(
-                        shadeRecommended,
-                        shadeBackground,
-                        selectedShade,
-                      )}
+                      <RenderVariants
+                        shadeRecommended={shadeRecommended}
+                        shadeBackground={shadeBackground}
+                        selectedShade={selectedShade}
+                      />
                     </Fragment>
                   );
                 },
@@ -422,18 +436,25 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
     }
 
     getOOS();
+
+    const hasRecommendation = !!localStorage?.getItem('recommendation');
+
     if (
       details?.variants &&
       isArrayEmpty(details?.variants, 0) &&
-      !!store?.selectedShade
+      (!!store?.selectedShade || hasRecommendation)
     ) {
-      const shadeNumber = getShadeNumberByName(store?.selectedShade);
+      const finalShade =
+        localStorage?.getItem('recommendation') || store?.selectedShade;
+
+      const shadeNumber = getShadeNumberByName(finalShade);
       const variant = details?.variants?.find(
-        (variant) => variant.name.split(' ')[1] === shadeNumber,
+        (variant) => variant?.title?.split(' ')[1] === shadeNumber,
       );
+
       const {externalId} = variant;
-      setIsSelected(store.selectedShade);
-      setShade(store.selectedShade);
+      setIsSelected(finalShade);
+      setShade(finalShade);
       setStore({
         ...store,
         productPage: {
@@ -442,10 +463,13 @@ const PDPVariants = ({details = {}, viewType, shadeVariantsOos = []}) => {
           selectedVariant: externalId,
           selectedVariantId: externalId,
           selectedTypeSize: null,
+          recommendedShade: finalShade,
         },
       });
+
+      localStorage?.removeItem('recommendation');
     }
-  }, [store?.selectedShade]);
+  }, [store?.selectedShade, store?.productPage?.recommendedShade]);
 
   return <ShadeFinderVariants />;
 };

@@ -3,7 +3,6 @@ import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
 
 import {useMatches} from '@remix-run/react';
 import {useStore} from '~/hooks/useStore';
-import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 import quizService from '~/utils/services/quiz';
 import styles from './styles.css';
@@ -34,9 +33,10 @@ const Component = () => {
   const [answerState, setAnswerState] = useState([]);
   const [resultState, setResultState] = useState({});
   const [step, setStep] = useState(0);
-  const [added, setAdded] = useState(false);
 
   const {store, setStore} = useStore();
+
+  const variants = store?.product?.variants || [];
 
   const quiz = quizService(CONCEALER_QUIZ_MODEL);
 
@@ -133,7 +133,7 @@ const Component = () => {
 
   function stepBack() {
     if (step === 0) {
-      switchSliderPanelVisibility('ShadeFinderSlider');
+      switchSliderPanelVisibility('ConcealerSlider');
       setTimeout(() => {
         handleRestart();
       }, 600);
@@ -191,6 +191,15 @@ const Component = () => {
     }
   }
 
+  function arraysHaveSameElements(arr1, arr2) {
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+    const sortedArr1 = arr1.slice().sort();
+    const sortedArr2 = arr2.slice().sort();
+    return sortedArr1.every((element, index) => element === sortedArr2[index]);
+  }
+
   function getResult() {
     let answersArr = quiz.handleGetUserAnswers(
       answerState,
@@ -204,7 +213,21 @@ const Component = () => {
       productQualifierKey,
     );
 
-    return {result, answersArr};
+    const qualifiers = result.only
+      .map((e, i) => {
+        const names = e.quizAttributes.qualifiers.map(
+          (qualifier) => qualifier.name,
+        );
+
+        if (arraysHaveSameElements(names, answersArr)) {
+          return result.only[i];
+        }
+
+        return null;
+      })
+      .filter((e) => e !== undefined && e !== null);
+
+    return {result: qualifiers[0], answersArr};
   }
 
   const getBackgroundColorByShade = (shade) => {
@@ -230,55 +253,49 @@ const Component = () => {
     return shade.split(' ')[0];
   };
 
-  const sendSelectedShadeToStore = () => {
-    const shadeNumber = getNumberByShade(selectedShade);
-    // Change atc copy
-    setAdded(true);
-    const product = store?.product?.variants?.find(
+  function sendSelectedShadeToStore(shade) {
+    const shadeNumber = getNumberByShade(shade);
+    const product = variants?.find(
       (variant) => variant?.title.split(' ')[1] === shadeNumber,
     );
 
+    const selected = shadeNumber;
     const selectedVariant = product?.id;
 
     setStore({
       ...store,
-      selectedShade,
       productPage: {
         ...store.productPage,
+        recommendedShade: shade,
+        selectedShade: selected,
+        newRecommendedShade: true,
         selectedVariant,
-        selectedVariantId: selectedVariant,
-        variantId: getIdFromGid(selectedVariant),
-        concealerShade: selectedShade,
+        seletedVariantId: selectedVariant,
         addToCart: {
           ...store?.productPage?.addToCart,
           quantity: 1,
           discount: 0,
+          variantId: selectedVariant,
         },
       },
+      selectedShade: shade,
     });
-
-    setTimeout(() => {
-      setAdded(false);
-    }, 300);
-
-    switchSliderPanelVisibility('ConcealerSlider');
-
-    !hasRadiantRecommendation
-      ? switchSliderPanelVisibility('ConcealerSlider')
-      : null;
 
     if (window?.dataLayer) {
       window.dataLayer.push({
         event: 'concealerSelectShade',
       });
     }
-  };
+  }
 
   const sendUserToShadeFinderWithRecommendation = () => {
     const shadeFinderUrl =
       '/products/radiant-skin-brightening-serum-skin-tint-spf-30';
 
-    localStorage.setItem('recommendation', resultState?.radiantRecommendation);
+    localStorage.setItem(
+      'recommendation',
+      resultState?.radiantRecommendation?.toLowerCase(),
+    );
     switchSliderPanelVisibility('ConcealerSlider');
 
     window.location.replace(shadeFinderUrl);
@@ -303,37 +320,6 @@ const Component = () => {
             complete my routine
           </p>
         </div>
-      </div>
-    );
-  };
-
-  const SelectShadeButton = () => {
-    const shadeNumber = getNumberByShade(selectedShade);
-    const product = store?.product?.variants?.find(
-      (variant) => variant?.title.split(' ')[1] === shadeNumber,
-    );
-
-    return (
-      <div className={'concealer_selectShadeButtonContainer'}>
-        <div onClick={sendSelectedShadeToStore}>
-          {added ? (
-            <div className={'concealer_addedToCart'}>Added to Cart!</div>
-          ) : (
-            <PDPAddToCart
-              addItem={{
-                product,
-                variantId: product?.id,
-
-                quantity: 1,
-              }}
-            />
-          )}
-        </div>
-        {!hasRadiantRecommendation && (
-          <p>
-            free 60 day returns on all orders. auto-delivery options in cart.
-          </p>
-        )}
       </div>
     );
   };
@@ -400,25 +386,26 @@ const Component = () => {
   );
 
   const setNeutralAsAnswer = (answers) => {
-    console.log(answers);
-    // const neutralAnswer = answers.find(
-    //   (answer) => answer.answerQualifiers[0]?.name.toLowerCase() === 'neutral',
-    // );
-    // // deleting subquestions to avoid new steps
-    // delete neutralAnswer.subQuestions;
-    // if (neutralAnswer) {
-    //   handleAnswersSubmit(neutralAnswer);
-    // }
+    const neutralAnswer = answers.find(
+      (answer) => answer.qualifiers[0]?.name.toLowerCase() === 'neutral',
+    );
 
-    // return;
+    const neutralAnswerClone = structuredClone(neutralAnswer);
+    // deleting subquestions to avoid new steps
+    delete neutralAnswerClone.subQuestions;
+
+    handleAnswersSubmit(neutralAnswerClone);
+
+    return;
   };
 
-  const renderResult = () => {
+  const RenderResult = () => {
     const {additionalRecommendation, shadeRecommended} = resultState;
 
     const resultHaveOtherShades = additionalRecommendation?.find(
       (recommendation) => recommendation !== '',
     );
+
     const {backgroundImage, length} = getBackgroundImageByShade(selectedShade);
 
     return (
@@ -504,22 +491,11 @@ const Component = () => {
     if (questionsState.length === step) {
       const {result} = getResult();
 
-      const sortedResult = result.only.sort(
-        (a, b) =>
-          b.quizAttributes.qualifiers.length -
-          a.quizAttributes.qualifiers.length,
-      )[0];
-
-      const {shadeRecommended} = sortedResult;
+      const {shadeRecommended} = result;
 
       setSelectedShade(shadeRecommended);
-
-      setStore((currStore) => ({
-        ...currStore,
-        selectedShade,
-      }));
-
-      setResultState(sortedResult);
+      setResultState(result);
+      sendSelectedShadeToStore(shadeRecommended);
     }
   }, [step]);
 
@@ -538,7 +514,7 @@ const Component = () => {
             </p>
           ) : null}
           {hasResult ? (
-            renderResult()
+            <RenderResult />
           ) : (
             <>
               {answers.map(
@@ -611,9 +587,7 @@ const Component = () => {
                           </div>
                           <img
                             className={'concealer_img'}
-                            src={
-                              answer?.image?.image?.asset?.url + '?auto=format'
-                            }
+                            src={answer?.image?.image?.asset?.url}
                             alt={answer?.image?.alt}
                           />
                         </>
@@ -639,8 +613,31 @@ const Component = () => {
         </div>
         {hasResult ? (
           <>
-            <SelectShadeButton />
-            {hasRadiantRecommendation && <RadiantRecommendation />}
+            <div className={'concealer_selectShadeButtonContainer'}>
+              <PDPAddToCart
+                addItem={{
+                  product: store?.product ?? {},
+                  variantId: store?.productPage?.selectedVariant,
+                  quantity: store?.productPage?.addToCart?.quantity,
+                  ['selling_plan_id']:
+                    store?.productPage?.addToCart?.selling_plan_id &&
+                    store?.productPage?.addToCart?.selling_plan_id !== 0
+                      ? store.productPage.addToCart.selling_plan_id
+                      : null,
+                  discount: store?.productPage?.addToCart?.discount ?? 0,
+                }}
+                availableForSale={store?.product?.availableForSale}
+              />
+            </div>
+
+            {hasRadiantRecommendation ? (
+              <RadiantRecommendation />
+            ) : (
+              <p>
+                free 60 day returns on all orders. auto-delivery options in
+                cart.
+              </p>
+            )}
           </>
         ) : (
           <GoBackButton />

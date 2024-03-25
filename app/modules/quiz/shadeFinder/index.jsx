@@ -171,7 +171,7 @@ const ShadeFinder = () => {
       ...store,
       productPage: {
         ...store.productPage,
-        recommendedShade: selectedShade,
+        recommendedShade: selectedShade.toLocaleLowerCase(),
         selectedShade: selected,
         newRecommendedShade: true,
         selectedVariant,
@@ -197,7 +197,10 @@ const ShadeFinder = () => {
 
   const SelectShadeButton = () => {
     return (
-      <div className="selectShadeButton" onClick={sendSelectedShadeToStore}>
+      <div
+        className="selectShadeButton"
+        onClick={() => sendSelectedShadeToStore()}
+      >
         Select Shade
       </div>
     );
