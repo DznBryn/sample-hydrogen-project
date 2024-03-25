@@ -163,8 +163,6 @@ const PDPConcealerVariants = ({
     </div>
   );
 
-  const types = useRef(getVariantTypes(details?.variants));
-
   const handleRecommendation = (shadeRecommended) => {
     const shadeNumber = getShadeNumberByName(shadeRecommended);
 
@@ -194,6 +192,7 @@ const PDPConcealerVariants = ({
           discount: 0,
         },
       },
+      concealerShade: shade,
     });
   };
 
@@ -238,6 +237,8 @@ const PDPConcealerVariants = ({
       );
     const shadeId = shadeRecommended;
 
+    const treatedSelectedShade = isSelected?.toLowerCase();
+
     if (isOOSVariant) {
       return (
         <div
@@ -250,7 +251,7 @@ const PDPConcealerVariants = ({
         >
           <OOSItem />
           {shadeName}
-          {isSelected === shadeRecommended && <Selected oos />}
+          {treatedSelectedShade === shadeRecommended && <Selected oos />}
           {selectedShade === shadeRecommended && (
             <div className={'shadeRecommendedContainer'}>
               <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
@@ -279,7 +280,7 @@ const PDPConcealerVariants = ({
             }}
           ></div>
           {shadeRecommended}
-          {isSelected === shadeRecommended && <Selected />}
+          {treatedSelectedShade === shadeRecommended && <Selected />}
           {selectedShade === shadeRecommended && (
             <div className={'shadeRecommendedContainer'}>
               <div className={'sf_recommendedBadge'}>RECOMMENDED</div>
@@ -378,7 +379,8 @@ const PDPConcealerVariants = ({
   };
 
   const ConcealerVariants = () => {
-    const selectedShade = store?.selectedShade?.toLowerCase();
+    const shade = store?.selectedShade?.toLowerCase();
+
     useLayoutEffect(() => {
       if (variantsWraper.current)
         variantsWraper.current.scrollTop = variantsWraperScrollTop.current;
@@ -386,7 +388,7 @@ const PDPConcealerVariants = ({
 
     useEffect(() => {
       if (viewType === 'LIST' && !!store?.selectedShade) {
-        document?.getElementById(selectedShade)?.scrollIntoView({
+        document?.getElementById(shade)?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
         });
@@ -404,7 +406,7 @@ const PDPConcealerVariants = ({
             {details?.variants.map(({title: shadeRecommended}) => {
               return (
                 <Fragment key={shadeRecommended}>
-                  {renderVariants(shadeRecommended, selectedShade)}
+                  {renderVariants(shadeRecommended, shade)}
                 </Fragment>
               );
             })}
@@ -415,7 +417,7 @@ const PDPConcealerVariants = ({
               {details?.variants.map(({title: shadeRecommended}) => {
                 return (
                   <Fragment key={shadeRecommended}>
-                    {renderVariants(shadeRecommended, selectedShade)}
+                    {renderVariants(shadeRecommended, shade)}
                   </Fragment>
                 );
               })}
@@ -430,6 +432,24 @@ const PDPConcealerVariants = ({
   useEffect(() => {
     if (window?.innerWidth && window?.innerWidth < 600) {
       setIsMobile(true);
+    }
+
+    const product = details.product;
+
+    if (!store.product) {
+      setStore({
+        ...store,
+        product,
+        productPage: {
+          ...store.productPage,
+          newRecommendedShade: false,
+          addToCart: {
+            ...store?.productPage?.addToCart,
+            quantity: 1,
+            discount: 0,
+          },
+        },
+      });
     }
   }, []);
 
@@ -474,24 +494,8 @@ const PDPConcealerVariants = ({
       isArrayEmpty(details?.variants, 0) &&
       !!store?.selectedShade
     ) {
-      const shadeNumber = store?.selectedShade?.split(' ')[0];
-      const product = details?.variants?.find(
-        (variant) => variant.name.split(' ')[1] === shadeNumber,
-      );
-      const externalId = product.externalId;
       setIsSelected(store.selectedShade);
       setShade(store.selectedShade);
-      setStore({
-        ...store,
-        product: details.product,
-        productPage: {
-          ...store?.productPage,
-          types: types.current,
-          selectedVariant: externalId,
-          selectedVariantId: externalId,
-          selectedTypeSize: null,
-        },
-      });
     }
   }, [store?.selectedShade]);
 

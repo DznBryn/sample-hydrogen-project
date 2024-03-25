@@ -114,12 +114,12 @@ const PDPDetails = ({
                 shadeVariantsOos={shadeVariantsOos}
                 concealerImages={concealerImages}
               />
-              {/* <div
+              <div
                 className={'openSFButton'}
                 onClick={() => switchSliderPanelVisibility('ConcealerSlider')}
               >
                 find my shade <OpenSFButtonIcon />
-              </div> */}
+              </div>
             </>
           ) : (
             <>
@@ -461,7 +461,7 @@ const PDPDetails = ({
                     Find my shade
                   </div>
                 )}
-              {/* {shouldRenderConcealer &&
+              {shouldRenderConcealer &&
                 store?.productPage?.selectedVariantId === undefined && (
                   <div
                     className={'openSFButtonSticky'}
@@ -471,7 +471,7 @@ const PDPDetails = ({
                   >
                     Find my shade
                   </div>
-                )} */}
+                )}
 
               <PDPAddToCart
                 classes={['stickyAtc']}
