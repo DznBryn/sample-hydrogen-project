@@ -31,61 +31,6 @@
   margin-right: 35px;
 }
 
-// .swiper {
-//   height: 100%;
-//   max-height: 591px;
-//   width: 521px;
-//   overflow: hidden;
-//   position: relative;
-// }
-
-// .swiper :global(.swiper-wrapper .swiper-slide) img {
-//   height: 100%;
-//   width: 100%;
-//   max-height: 591px;
-//   max-width: 521px;
-// }
-
-// .swiper :global(.swiper-pagination),
-// .swiper :global(.swiper-pagination) {
-//   bottom: 0 !important;
-//   left: 50% !important;
-//   transform: translateX(-50%) !important;
-// }
-
-// .swiper :global(.swiper-pagination) {
-//   background-color: rgba(76, 78, 86, 0.4) !important;
-//   border-radius: 27px !important;
-//   width: fit-content !important;
-//   padding: 0 10px !important;
-//   left: 50% !important;
-//   transform: translateX(-50%) !important;
-//   margin-bottom: 11px !important;
-// }
-
-// .swiper :global(.swiper-pagination-bullet-active) {
-//   background: #fff !important;
-// }
-
-// .swiper :global(.swiper-pagination-bullet) {
-//   color: rgba(255, 255, 255, 0.3) !important;
-// }
-
-// .swiper :global(.swiper-button-prev),
-// .swiper :global(.swiper-button-next) {
-//   color: rgba(76, 78, 86, 1) !important;
-//   height: 23.5px;
-//   width: 11.75px;
-// }
-
-// .swiper :global(.swiper-button-prev) {
-//   margin-left: 17.62px;
-// }
-
-// .swiper :global(.swiper-button-next) {
-//   margin-right: 17.62px;
-// }
-
 .badges {
   display: flex;
   flex-direction: row;
@@ -246,41 +191,6 @@
   .productImageCarousel {
     margin: 28px 20px 24px;
   }
-
-  // .swiper,
-  // .swiper :global(.swiper-wrapper),
-  // .swiper :global(.swiper-wrapper .swiper-slide) img {
-  //   height: 100vw;
-  //   max-width: calc(100vw - 40px);
-  //   width: 100%;
-  // }
-
-  // .productSectionLeft,
-  // .productSectionRight {
-  //   display: flex;
-  //   justify-content: center;
-  // }
-
-  // .swiper :global(.swiper-button-prev),
-  // .swiper :global(.swiper-button-next) {
-  //   display: none !important;
-  // }
-
-  // .swiper :global(.swiper-pagination-bullet) {
-  //   width: 5px;
-  //   height: 5px;
-  // }
-
-  // .swiper :global(.swiper-pagination) {
-  //   display: flex;
-  //   flex-direction: row;
-  //   padding: 0 3px !important;
-  //   margin-bottom: 9px;
-  // }
-
-  // .swiper :global(.swiper-pagination-bullets .swiper-pagination-bullet) {
-  //   margin: 3px;
-  // }
 
   .productSectionRight {
     flex-direction: column;
