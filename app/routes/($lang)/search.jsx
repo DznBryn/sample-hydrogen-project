@@ -5,13 +5,13 @@ import SearchPage, {links as searchPageStyles} from '~/modules/searchPage';
 export const links = () => searchPageStyles();
 
 export async function loader({context, request}) {
-  const {ALGOLIA_WRITE_API_KEY} = context.env;
+  const {ALGOLIA_WRITE_API_KEY, ALGOLIA_APP_ID} = context.env;
 
   const url = new URL(request.url);
   const query = url.searchParams.get('query');
 
   const algoliaKeys = {
-    appID: 'YQP7IIXNMT',
+    appID: ALGOLIA_APP_ID,
     writeAPIKey: ALGOLIA_WRITE_API_KEY,
   };
 
