@@ -246,57 +246,6 @@ function getApiKeys() {
         },
         // API_TYPE: storePlatformApiType
       };
-
-    // case ('US_DEV'):
-    //   return {
-
-    //     CURRENT_ENV: 'US_DEV',
-    //     CURRENCY_SYMBOL: '$',
-    //     CLOVERLY_ID: 40953533268141,
-    //     AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
-    //     AUDIOEYE_URL: 'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
-    //     OG_KEY: ogKeys.US.AD20,
-    //     YOTPO_KEY: 'C0xryJ2odYUmfvBx6EmyD1JP9cAQPAjNA1KBWKwd',
-    //     LISTRAK_SCRIPT: 'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
-    //     GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    //                   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    //                   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    //                   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    //                   })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
-    //     GLADLY_CONFIG: {
-    //       api: 'https://us-1.gladly.com',
-    //       orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
-    //       brandId: 'tula.com-en-us',
-    //       cdn: 'https://cdn.gladly.com',
-    //       selector: '#gladly-help-center'
-    //     },
-    //     GLADLY_EMBED_CONFIG: { appId: 'tula.com' },
-    //     GOOGLE_SITE_VERIFICATION_ID: 'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
-    //     RETURNS_HREF: 'https://returns.tula.com/',
-    //     LISTRAK_IDS: {
-    //       // list_id: 345013,
-    //       // birthday_segment_id: 431,
-    //       externalEventName: 11771,
-    //       fieldGroupName: 51,
-    //       fieldName: 7810
-    //     },
-    //     YOTTA_KEY: 'zZisVju12QIJQg',
-    //     YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
-    //     YOTPO_LOYALTY_GUID: '2WRlHAg5CQBSYTHLyTML2A',
-    //     GIFT_CARD_ID: 33630516353,
-    //     GIFT_CARDS_VARIANTS_IDS: [33630516353, 33630516417, 34008161345, 34008182785, 30290305187886],
-    //     SHOW_FIREWORK: true,
-    //     ONE_TRUST: {
-    //       OtAutoBlock: 'https://cdn.cookielaw.org/consent/7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test/OtAutoBlock.js',
-    //       OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
-    //       // domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd-test',
-    //       otButtonMessage: 'Do Not Sell My Information'
-    //     },
-    //     FEATURE_FLAGS: {
-    //       LOYALTY: false,
-    //     },
-    //     // API_TYPE: storePlatformApiType
-    //   };
   }
 }
 
@@ -320,7 +269,10 @@ export function getEnv() {
 
     if (host.includes('staging-hydroxy.tula.com')) {
       return 'US_STG';
-    } else if (host.includes('tulaskincare.ca')) {
+    } else if (
+      host.includes('tulaskincare.ca') ||
+      host.includes('tula-hydroxy-ca')
+    ) {
       return 'CA_PROD';
     } else if (host.includes('tulaskincare.co.uk')) {
       return 'UK_PROD';
