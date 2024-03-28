@@ -70,6 +70,10 @@ export async function action({request, context}) {
   if (formAction === 'LOGOUT') {
     return await logout({request, context});
   }
+
+  if (formAction === 'LOGOUT_NO_REDIRECT') {
+    return await logout({request, context}, true);
+  }
   // SUBSCRIPTION
   if (formAction.includes('SUBSCRIPTION')) {
     if (formAction === 'SUBSCRIPTION_REACTIVATE') {

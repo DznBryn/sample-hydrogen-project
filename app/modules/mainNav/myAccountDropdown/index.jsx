@@ -9,11 +9,10 @@ import {
   getLoyaltyCustomerData,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
-
-import styles from './styles.css';
-import logout from '~/routes/($lang)/account/__private/logout';
 import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
+
+import styles from './styles.css';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...loadingSkeletonStyles()];
@@ -33,72 +32,6 @@ const CommomVersion = () => {
     (store) => store?.account?.data ?? null,
   );
 
-  const Modal = () => {
-    function openSliderAccount() {
-      setIsModalOpen(false);
-      switchSliderPanelVisibility('SliderAccount');
-    }
-
-    const Content = {
-      LoggedIn: () => (
-        <>
-          <div
-            className={
-              'accDropdown_content accDropdownloggedIn navAccountMenuOld'
-            }
-          >
-            <a href="/account">My Account</a>
-            <a href="https://returns.tula.com/">Returns & Exchanges</a>
-            <a href="/pages/contact-us">Contact Us</a>
-            <a href="/pages/faq">FAQs</a>
-            <span
-              className={'signOut'}
-              onClick={async () => {
-                await logout();
-                window.location.reload();
-              }}
-            >
-              sign out
-            </span>
-          </div>
-        </>
-      ),
-
-      LoggedOut: () => (
-        <>
-          <div className={'accDropdown_content'}>
-            <p>Hey, glowgetter!</p>
-            login or create an account to easily manage orders & auto-deliveries
-          </div>
-
-          <div
-            className={'accDropdown_cta'}
-            onClick={openSliderAccount.bind(this)}
-          >
-            <div>Join now</div>
-            <div>Sign in</div>
-          </div>
-        </>
-      ),
-    };
-
-    return (
-      <div className={'myAccountDropDown_modalContainer noLoyalty'}>
-        <div className={'accDropdownCloseButton'}>
-          {customerId !== '' && (
-            <div onClick={() => setIsModalOpen(!isModalOpen)}>
-              <Icons.X />
-            </div>
-          )}
-        </div>
-
-        <div className={'accDropDowncontainer'}>
-          {customerId !== '' ? <Content.LoggedIn /> : <Content.LoggedOut />}
-        </div>
-      </div>
-    );
-  };
-
   return (
     <>
       <div
@@ -113,8 +46,93 @@ const CommomVersion = () => {
         </div>
       </div>
 
-      {isModalOpen && <Modal />}
+      {isModalOpen && <Modal setIsModalOpen={setIsModalOpen} />}
     </>
+  );
+};
+
+const Modal = ({setIsModalOpen}) => {
+  const {id: customerId = ''} = useStore(
+    (store) => store?.account?.data ?? null,
+  );
+  const {setCustomerData} = useStore((store) => store?.account ?? null);
+  const signoutFetcher = useFetcher();
+
+  //
+
+  useEffect(() => {
+    if (signoutFetcher.state === FETCHER.STATE.LOADING) {
+      setCustomerData();
+    }
+  }, [signoutFetcher.state]);
+
+  //
+
+  function openSliderAccount() {
+    setIsModalOpen(false);
+    switchSliderPanelVisibility('SliderAccount');
+  }
+
+  //
+
+  const Content = {
+    LoggedIn: () => (
+      <>
+        <div
+          className={
+            'accDropdown_content accDropdownloggedIn navAccountMenuOld'
+          }
+        >
+          <a href="/account">My Account</a>
+          <a href="https://returns.tula.com/">Returns & Exchanges</a>
+          <a href="/pages/contact-us">Contact Us</a>
+          <a href="/pages/faq">FAQs</a>
+          <signoutFetcher.Form
+            action="/account"
+            method={API_METHODS.POST}
+            className={'signOut'}
+          >
+            <input type="hidden" name="formAction" value={'LOGOUT'} />
+            <button type="submit" className={'signOut'}>
+              sign out
+            </button>
+          </signoutFetcher.Form>
+        </div>
+      </>
+    ),
+
+    LoggedOut: () => (
+      <>
+        <div className={'accDropdown_content'}>
+          <p>Hey, glowgetter!</p>
+          login or create an account to easily manage orders & auto-deliveries
+        </div>
+
+        <div
+          className={'accDropdown_cta'}
+          onClick={openSliderAccount.bind(this)}
+        >
+          <div>Join now</div>
+          <div>Sign in</div>
+        </div>
+      </>
+    ),
+  };
+
+  return (
+    <div className={'myAccountDropDown_modalContainer noLoyalty'}>
+      <div className={'accDropdownCloseButton'}>
+        {customerId !== '' && (
+          <div onClick={() => setIsModalOpen(false)}>
+            <Icons.X />
+          </div>
+        )}
+      </div>
+
+      <div className={'accDropDowncontainer'}>
+        {customerId !== '' ? <Content.LoggedIn /> : <Content.LoggedOut />}
+      </div>
+    </div>
   );
 };
 

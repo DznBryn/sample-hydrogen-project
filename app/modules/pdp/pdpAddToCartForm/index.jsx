@@ -16,7 +16,7 @@ const PDPAddToCartForm = ({
   exclusiveProductAtcColor,
   exclusiveProductTextColor,
   isGated,
-  // renderingConcealer,
+  renderingConcealer,
 }) => {
   const showOOSForm = false;
   const {store, setStore} = useStore();
@@ -96,7 +96,6 @@ const PDPAddToCartForm = ({
                 Find my shade
               </div>
             )}
-          {/* DO NOT REMOVE - POST LAUNCH FEATURE
 
           {renderingConcealer &&
             store?.productPage?.selectedVariant === undefined && (
@@ -106,7 +105,7 @@ const PDPAddToCartForm = ({
               >
                 Find my shade
               </div>
-            )} */}
+            )}
 
           <PDPAddToCart
             addItem={{

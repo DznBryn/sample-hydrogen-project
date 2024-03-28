@@ -20,6 +20,19 @@ export default function Register() {
     fetcher?.state === FETCHER.STATE.SUBMIT ||
     fetcher?.state === FETCHER.STATE.LOADING;
 
+  const passwordRef = useRef(null);
+
+  function togglePassword() {
+    const curValue = passwordRef.current.getAttribute('type');
+    const label = passwordRef.current.parentElement.querySelector('span');
+
+    passwordRef.current.setAttribute(
+      'type',
+      curValue === 'text' ? 'password' : 'text',
+    );
+    label.innerHTML = label.innerHTML === 'hide' ? 'show' : 'hide';
+  }
+
   return (
     <div>
       <div className="templateCustomersLogin">
@@ -87,31 +100,37 @@ export default function Register() {
             </div>
 
             <div>
-              <input
+              <div
                 className={
                   fetcher.data &&
                   fetcher.data?.length > 0 &&
                   fetcher.data?.[0]?.field?.includes('password')
-                    ? 'inputText inputTextError'
-                    : 'inputText'
+                    ? 'register_password_input inputTextError'
+                    : 'register_password_input'
                 }
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                placeholder="Password"
-                aria-label="Password"
-                minLength={8}
-                required
-                autoFocus
-                value={registerForm.password}
-                onChange={(e) =>
-                  setRegisterForm({
-                    ...registerForm,
-                    [e.target.name]: e.target.value,
-                  })
-                }
-              />
+              >
+                <input
+                  ref={passwordRef}
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  placeholder="Password"
+                  aria-label="Password"
+                  minLength={5}
+                  required
+                  value={registerForm.password}
+                  onChange={(e) =>
+                    setRegisterForm({
+                      ...registerForm,
+                      [e.target.name]: e.target.value,
+                    })
+                  }
+                  autoFocus
+                />
+
+                <span onClick={togglePassword}>show</span>
+              </div>
               {fetcher.data &&
                 fetcher.data?.length > 0 &&
                 fetcher.data.map(
@@ -122,6 +141,9 @@ export default function Register() {
                       </p>
                     ),
                 )}
+              <span className="smallText">
+                Password must be at least 5 characters
+              </span>
             </div>
             {getApiKeys().CURRENT_ENV.includes('UK') ? (
               <p className={'infoText'}>
@@ -284,7 +306,6 @@ export function RegisterForm({fetcher = useFetcher()}) {
         autoComplete="lastName"
         placeholder="Last Name*"
         aria-label="Last Name"
-        autoFocus
       />
       <div>
         <input
@@ -295,7 +316,6 @@ export function RegisterForm({fetcher = useFetcher()}) {
           autoComplete="email"
           placeholder="Email*"
           aria-label="Email address"
-          autoFocus
           value={registerForm.email}
           onChange={(e) =>
             setRegisterForm({
@@ -328,7 +348,6 @@ export function RegisterForm({fetcher = useFetcher()}) {
           aria-label="Password"
           minLength={5}
           required
-          autoFocus
           value={registerForm.password}
           onChange={(e) =>
             setRegisterForm({

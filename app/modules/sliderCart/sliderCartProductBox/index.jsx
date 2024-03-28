@@ -105,7 +105,7 @@ const SliderCartProductBox = ({
 
   const LoyaltyProduct = () => (
     <div className={'sliderCartProduct'}>
-      <div className={'productImage'}>
+      <div className={'PB-productImage'}>
         <Link
           to={{
             pathname: `/products/${item?.merchandise?.product?.handle}`,
@@ -115,9 +115,9 @@ const SliderCartProductBox = ({
           prefetch={true}
         >
           <Image
-            className="productImage"
+            className="PB-productImage"
             data={item?.merchandise?.image}
-            sizes="(min-width: 45em) 50vw, 100vw"
+            // sizes="(min-width: 45em) 50vw, 100vw"
           />
         </Link>
       </div>
@@ -192,7 +192,7 @@ const RegularProduct = ({
 
   return (
     <div className={'sliderCartProduct'}>
-      <div className={'productImage'}>
+      <div className={'PB-productImage'}>
         <Link
           to={{
             pathname: `/products/${item?.merchandise?.product?.handle}`,
@@ -202,9 +202,9 @@ const RegularProduct = ({
           prefetch={true}
         >
           <Image
-            className="productImage"
+            className="PB-productImage"
             data={item?.merchandise?.image}
-            sizes="(min-width: 45em) 50vw, 100vw"
+            // sizes="(min-width: 45em) 50vw, 100vw"
           />
         </Link>
       </div>
