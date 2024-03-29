@@ -111,7 +111,7 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
     <div className={'navPlaceholder minHeight'} id="navPlaceholder">
       <noscript>
         <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-5ZXFRC"
+          src={getApiKeys().GA_URL}
           height="0"
           width="0"
           style={iframeStyle}
