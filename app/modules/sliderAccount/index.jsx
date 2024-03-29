@@ -630,7 +630,7 @@ const MainContent = () => {
             to={
               getApiKeys().CURRENT_ENV.includes('US')
                 ? '/account?c=rewards'
-                : '/accounts'
+                : '/account'
             }
             onClick={() =>
               document.querySelector('body').classList.remove('bodyWrap')
