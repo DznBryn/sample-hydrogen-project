@@ -45,9 +45,11 @@ function Header({data}) {
 }
 
 function Tabs({data}) {
-  const showRewardsTab = getApiKeys().FEATURE_FLAGS.LOYALTY;
+  const showRewardsTab =
+    getApiKeys().FEATURE_FLAGS.LOYALTY &&
+    getApiKeys().CURRENT_ENV.includes('US');
   const showAddressTab = true;
-  const showReferralTab = true;
+  const showReferralTab = getApiKeys().CURRENT_ENV.includes('US');
   const [active, setActive] = useState(1);
   const {refreshWidgets} = useYotpo();
 
