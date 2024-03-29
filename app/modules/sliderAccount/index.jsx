@@ -627,7 +627,11 @@ const MainContent = () => {
           </Link>
           <Link
             className={'viewMyAccountLink'}
-            to={'/account?c=rewards'}
+            to={
+              getApiKeys().CURRENT_ENV.includes('US')
+                ? '/account?c=rewards'
+                : '/accounts'
+            }
             onClick={() =>
               document.querySelector('body').classList.remove('bodyWrap')
             }
