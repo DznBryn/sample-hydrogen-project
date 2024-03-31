@@ -89,9 +89,7 @@ export async function loader({context, request}) {
   /**
    * CMS DATA
    */
-  if (shouldRequestCMSData(CMSDataCache)) {
-    await requestCMSData(context, CMSDataCache);
-  }
+  await requestCMSData(context, CMSDataCache);
 
   /**
    * SHOPIFY DATA
@@ -303,11 +301,6 @@ function togglePreviewMode(context, url, referer) {
 
 function updatePreviewModeURL() {
   pushQueryParam('previewMode', 'true');
-}
-
-function shouldRequestCMSData(cacheObj) {
-  const props = Object.values(cacheObj);
-  return props.some((data) => data === undefined) || props.length === 0;
 }
 
 async function requestCMSData(context, cacheObj) {
