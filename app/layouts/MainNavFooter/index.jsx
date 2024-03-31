@@ -41,15 +41,6 @@ const MainNavFooter = ({children}) => {
     searchConfig,
   } = root.data;
 
-  const {
-    AnnouncementHeaders = [],
-    MobileNavbar = [],
-    HeaderConfig = [],
-    SiteWideSettings = [],
-    GlobalPromoBar = [],
-    ProductRecommendation = [],
-  } = mainNavFooterCMSData;
-
   /* TODO: Remove products property from sliderCart and remove this custom hook */
   const {products: allCollection, state} = useCollection('all');
 
@@ -57,7 +48,7 @@ const MainNavFooter = ({children}) => {
     <>
       <NavPlaceholder
         siteWideSettings={
-          getCMSDoc(SiteWideSettings, 'SiteWideSettings')
+          getCMSDoc(mainNavFooterCMSData?.SiteWideSettings, 'SiteWideSettings')
             ?.activeSitewideSettings
         }
         searchConfig={searchConfig}
@@ -65,13 +56,22 @@ const MainNavFooter = ({children}) => {
 
       <MainNav
         cartConfig={cartPageConfig}
-        announcementHeader={getCMSDoc(AnnouncementHeaders, 'Main Announcement')}
-        mobileNavbar={getCMSDoc(MobileNavbar, 'Mobile')}
-        mobileOverlayNav={getCMSDoc(HeaderConfig, 'Mobile Overlay Nav')}
+        announcementHeader={getCMSDoc(
+          mainNavFooterCMSData?.AnnouncementHeaders,
+          'Main Announcement',
+        )}
+        mobileNavbar={getCMSDoc(mainNavFooterCMSData?.MobileNavbar, 'Mobile')}
+        mobileOverlayNav={getCMSDoc(
+          mainNavFooterCMSData?.HeaderConfig,
+          'Mobile Overlay Nav',
+        )}
         mobileNavMainButton={mobileNavFooterMainButton}
         annoucementTopBannerContent={announcementTopBanner}
-        desktopHeaderNav={getCMSDoc(HeaderConfig, 'Desktop Header Nav')}
-        promoContent={GlobalPromoBar}
+        desktopHeaderNav={getCMSDoc(
+          mainNavFooterCMSData?.HeaderConfig,
+          'Desktop Header Nav',
+        )}
+        promoContent={mainNavFooterCMSData?.GlobalPromoBar}
       />
 
       {/* TODO: Remove products property from sliderCart */}
@@ -81,7 +81,7 @@ const MainNavFooter = ({children}) => {
             {(CartPageConfigSolved) => (
               <SliderCart
                 cartConfig={getCMSDoc(CartPageConfigSolved, 'DefaultCart')}
-                recommendations={ProductRecommendation}
+                recommendations={mainNavFooterCMSData?.ProductRecommendation}
                 products={{products: allCollection}}
               />
             )}
