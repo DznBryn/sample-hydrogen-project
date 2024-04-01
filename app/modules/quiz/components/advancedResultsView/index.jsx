@@ -69,7 +69,7 @@ const AdvancedResultsView = ({content}) => {
                   )}
                   ctaOpensBlank={
                     handleGetProductByID(advancedResultsState[item].productId)
-                      .variants.length > 1
+                      ?.variants?.length > 1
                   }
                   is2Columns={true}
                   key={advancedResultsState[item].productId}
