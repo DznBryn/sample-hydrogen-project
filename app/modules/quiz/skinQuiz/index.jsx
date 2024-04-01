@@ -26,17 +26,9 @@ export const links = () => {
   ];
 };
 
-const SKIN_QUIZ_MODEL = {
-  quizID: 'US-skin-quiz',
-  marketAvailability: ['US'],
-  categories: ['cleanser', 'treat&prep', 'moisturizer', 'eye-balm', 'spf'],
-  resultTypes: ['regular', 'advanced'],
-  quizType: 'skin-quiz',
-};
-
 const productQualifierKey = 'qualifier';
 
-const SkinQuiz = ({content}) => {
+const SkinQuiz = ({content, quizModel}) => {
   const {quizBannerContent, quizQuestions, quizResults, quizAdvancedResults} =
     content;
 
@@ -49,7 +41,7 @@ const SkinQuiz = ({content}) => {
 
   const {products} = useCollection('all');
 
-  const quizz = quizzService(SKIN_QUIZ_MODEL);
+  const quizz = quizzService(quizModel);
 
   const questionStep =
     questionsState.length > step ? step : questionsState.length - 1;
@@ -300,7 +292,7 @@ const SkinQuiz = ({content}) => {
       window.dataLayer.push({
         event: 'skinQuizStart',
         quiz_type: 'skin',
-        quiz_id: SKIN_QUIZ_MODEL.quizID,
+        quiz_id: quizModel.quizID,
       });
     }
   }, []);
@@ -316,7 +308,7 @@ const SkinQuiz = ({content}) => {
         window.dataLayer.push({
           event: 'skin_quiz_complete',
           quiz_type: 'skin',
-          quiz_id: SKIN_QUIZ_MODEL.quizID,
+          quiz_id: quizModel.quizID,
         });
       }
     }
@@ -339,7 +331,8 @@ const SkinQuiz = ({content}) => {
           </button>
         )}
 
-        {questionsState.length - 1 < step ? (
+        {questionsState.length - 1 < step &&
+        !!Object.keys(resultState).length ? (
           <ResultView content={resultContent} />
         ) : (
           <MainContentQuizView content={mainQuizContent} />
