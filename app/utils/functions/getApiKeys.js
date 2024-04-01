@@ -32,6 +32,7 @@ function getApiKeys() {
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
+        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-5ZXFRC',
         GLADLY_CONFIG: {
           api: 'https://us-1.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -94,6 +95,7 @@ function getApiKeys() {
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
+        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-5ZXFRC',
         GLADLY_CONFIG: {
           api: 'https://us-1.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -153,6 +155,7 @@ function getApiKeys() {
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-MPMHT3S');`,
+        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-MPMHT3S',
         GLADLY_CONFIG: {
           api: 'https://tula.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -206,6 +209,7 @@ function getApiKeys() {
                             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                             })(window,document,'script','dataLayer','GTM-N4P454X');`,
+        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-N4P454X',
         GLADLY_CONFIG: {
           api: 'https://tula.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
