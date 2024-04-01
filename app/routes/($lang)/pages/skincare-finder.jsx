@@ -17,22 +17,45 @@ export const meta = () => [
   },
 ];
 
+const US_SKIN_QUIZ_MODEL = {
+  quizID: 'US-skin-quiz',
+  marketAvailability: ['US'],
+  categories: ['cleanser', 'treat&prep', 'moisturizer', 'eye-balm', 'spf'],
+  resultTypes: ['regular', 'advanced'],
+  quizType: 'skin-quiz',
+};
+
+const CAN_SKIN_QUIZ_MODEL = {
+  quizID: 'US-skin-quiz',
+  marketAvailability: ['CAN'],
+  categories: ['cleanser', 'treat&prep', 'moisturizer', 'eye-care', 'lip-care'],
+  resultTypes: ['regular', 'advanced'],
+  quizType: 'skin-quiz',
+};
+
 export async function loader({context}) {
+  const IsCAN = context.env.SITE_NAME === 'CA_PROD';
+  const id = IsCAN
+    ? 'c7e1edfe-5c6e-4464-b52d-2cd41613ff44'
+    : 'b10ae91d-1c63-4d29-bf68-5f14b9ecec7f';
+
   const quizContent = await getCMSContent(context, QUIZ_CONTENT, {
-    id: 'b10ae91d-1c63-4d29-bf68-5f14b9ecec7f',
+    id,
   });
 
   return {
+    IsCAN,
     quizContent,
   };
 }
 
 export default function QuizContent() {
-  const {quizContent} = useLoaderData();
+  const {IsCAN, quizContent} = useLoaderData();
+  const SKIN_QUIZ_MODEL = IsCAN ? CAN_SKIN_QUIZ_MODEL : US_SKIN_QUIZ_MODEL;
 
   return (
     <Layouts.MainNavFooter>
-      <Quiz content={quizContent} />
+      <Quiz content={quizContent} quizModel={SKIN_QUIZ_MODEL} />
     </Layouts.MainNavFooter>
   );
 }

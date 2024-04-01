@@ -115,7 +115,7 @@ const ResultView = ({content}) => {
                   product={handleGetProductByID(resultState[item][0].productId)}
                   ctaOpensBlank={
                     handleGetProductByID(resultState[item][0].productId)
-                      .variants.length > 1
+                      ?.variants.length > 1
                   }
                   is2Columns={true}
                   key={resultState[item][0].productId}
