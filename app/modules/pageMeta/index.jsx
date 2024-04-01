@@ -17,7 +17,9 @@ const PageMeta = () => {
   return (
     <>
       <meta charSet="utf-8" />
-      {getEnv() === 'US_STG' && <meta name="robots" content="noindex" />}
+      {(getEnv() === 'US_STG' || getEnv() === 'CA_PROD') && (
+        <meta name="robots" content="noindex" />
+      )}
       <meta name="viewport" content="width=device-width,initial-scale=1" />
 
       {/* <!-- Twitter Card data --> */}

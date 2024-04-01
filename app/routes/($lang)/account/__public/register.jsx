@@ -2,6 +2,7 @@ import {json, redirect} from '@shopify/remix-oxygen';
 import Layouts from '~/layouts';
 import {login, register} from '~/utils/graphql/shopify/mutations/customer';
 import Register, {links as registerStyles} from '~/modules/accounts/register';
+import {getCustomerData} from '~/utils/functions/eventFunctions';
 
 export function links() {
   return [...registerStyles()];
@@ -33,6 +34,10 @@ export async function action({request, context, params}) {
     const data = await login(context, {email, password});
     if (data?.accessToken) {
       session.set('customerAccessToken', data.accessToken);
+      const customer = await getCustomerData(context, data.accessToken);
+
+      data.customer = customer;
+
       if (
         formData?.get('form_location') &&
         formData.get('form_location') !== ''

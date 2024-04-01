@@ -79,11 +79,6 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    setMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
-    getCustomerData();
-  }, [customerId]);
-
-  useEffect(() => {
     if (loginButtonRef.current) {
       if (login.state === 'submitting') {
         loginButtonRef.current.disabled = true;
@@ -109,7 +104,6 @@ const MainContent = () => {
         errorElement.current.innerHTML = login.data?.message;
         return signInPassword.current.parentElement.after(errorElement.current);
       }
-
       changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
     }
   }, [login.state]);
@@ -145,6 +139,7 @@ const MainContent = () => {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', {
         userAcceptsMarketing: true,
       });
+      setCustomerData(registerFetcher.data?.customer);
       changeMainContent('createAccountSuccess');
     }
   }, [registerFetcher.state]);
@@ -153,6 +148,7 @@ const MainContent = () => {
     if (signoutFetcher.state === FETCHER.STATE.LOADING) {
       setCustomerData();
     }
+    changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
   }, [signoutFetcher.state]);
 
   function init() {
@@ -524,7 +520,11 @@ const MainContent = () => {
 
         <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
           <div onClick={() => switchSliderPanelVisibility('SliderAccount')}>
-            <input type="hidden" name="formAction" value={'LOGOUT'} />
+            <input
+              type="hidden"
+              name="formAction"
+              value={'LOGOUT_NO_REDIRECT'}
+            />
             <button type="submit" className={'welcomeBottomButton'}>
               sign out
             </button>
@@ -627,7 +627,11 @@ const MainContent = () => {
           </Link>
           <Link
             className={'viewMyAccountLink'}
-            to={'/account?c=rewards'}
+            to={
+              getApiKeys().CURRENT_ENV.includes('US')
+                ? '/account?c=rewards'
+                : '/account'
+            }
             onClick={() =>
               document.querySelector('body').classList.remove('bodyWrap')
             }

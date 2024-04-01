@@ -2060,6 +2060,178 @@ export const GET_SHADE_FINDER_CONTENT = gql`
   }
 `;
 
+export const GET_CONCEALER_CONTENT = gql`
+  query GetConcealerContent($id: ID!) {
+    ConcealerQuizContent(id: $id) {
+      name
+      concealerQuizQuestions {
+        name
+        questionText
+        multipleChoice
+        answers {
+          name
+          answerText
+          helpingText
+          image {
+            name
+            labelColor
+            skinTone
+            alt
+            helpingText
+            image {
+              asset {
+                _id
+                url
+              }
+            }
+          }
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+          subQuestion {
+            name
+            questionText
+            multipleChoice
+            answers {
+              name
+              answerText
+              helpingText
+              image {
+                name
+                labelColor
+                skinTone
+                alt
+                helpingText
+                image {
+                  asset {
+                    _id
+                    url
+                  }
+                }
+              }
+              qualifiers {
+                name
+                qualifier
+                type
+              }
+              subQuestion {
+                name
+                questionText
+                multipleChoice
+                answers {
+                  name
+                  answerText
+                  helpingText
+                  image {
+                    name
+                    labelColor
+                    skinTone
+                    alt
+                    helpingText
+                    image {
+                      asset {
+                        _id
+                        url
+                      }
+                    }
+                  }
+                  qualifiers {
+                    name
+                    qualifier
+                    type
+                  }
+                  subQuestion {
+                    name
+                    questionText
+                    multipleChoice
+                    answers {
+                      name
+                      answerText
+                      helpingText
+                      image {
+                        name
+                        labelColor
+                        skinTone
+                        alt
+                        helpingText
+                        image {
+                          asset {
+                            _id
+                            url
+                          }
+                        }
+                      }
+                      qualifiers {
+                        name
+                        qualifier
+                        type
+                      }
+                    }
+                  }
+                  subQuestion {
+                    name
+                    questionText
+                    multipleChoice
+                    answers {
+                      name
+                      answerText
+                      helpingText
+                      image {
+                        name
+                        labelColor
+                        skinTone
+                        alt
+                        helpingText
+                        image {
+                          asset {
+                            _id
+                            url
+                          }
+                        }
+                      }
+                      qualifiers {
+                        name
+                        qualifier
+                        type
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      concealerQuizResults {
+        name
+        shadeRecommended
+        additionalRecommendation
+        backgroundColor
+        resultImage {
+          asset {
+            _id
+            url
+          }
+        }
+        radiantRecommendation
+        quizAttributes {
+          name
+          category
+          default
+          priorityOrder
+          qualifiers {
+            name
+            qualifier
+            type
+          }
+        }
+      }
+    }
+  }
+`;
+
 export const ALL_GLOBAL_PROMO_BAR = gql`
   query AllGlobalPromoBar {
     allGlobalPromoBar {

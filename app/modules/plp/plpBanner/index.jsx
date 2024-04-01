@@ -18,7 +18,7 @@ const BannerDesktop = ({banner = {}, ...rest}) => {
             height="503px"
             style={{borderRadius: '10px', position: 'absolute', top: '0'}}
           />
-          <FireWorkStory id={banner.id} />
+          <FireWorkStory id={banner.id} autoplay={true} />
         </div>
       ) : (
         <a href={banner.url}>
@@ -39,7 +39,7 @@ const BannerMobile = ({banner = {}, ...rest}) => {
             height="393px"
             style={{borderRadius: '10px', position: 'absolute', top: '0'}}
           />
-          <FireWorkStory id={banner.id} />
+          <FireWorkStory id={banner.id} autoplay={true} />
         </div>
       ) : (
         <a href={banner.url}>

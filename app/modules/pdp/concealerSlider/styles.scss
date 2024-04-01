@@ -1,0 +1,210 @@
+.productsWrapper,
+.productsWrapperReversed {
+  margin: 0 auto 77px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.productsWrapper {
+  flex-direction: row;
+}
+
+.productsWrapperReversed {
+  flex-direction: row-reverse;
+}
+
+.productSectionLeft,
+.productSectionRight {
+  max-width: 521px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.spacer {
+  width: 51px;
+}
+
+.productSectionRight {
+  margin-left: 0;
+  padding-left: 51px;
+  margin-right: 35px;
+}
+
+.badges {
+  display: flex;
+  flex-direction: row;
+}
+
+.savingsBadge {
+  background-color: #ff5483;
+  color: #fff;
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  padding: 4px 9.3px;
+  border-radius: 3px;
+  margin-right: 7.6px;
+}
+
+.secondBadge {
+  background-color: #47c6d9;
+  color: #fff;
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+  padding: 4px 9.3px;
+  border-radius: 3px;
+}
+
+.productName .cutesyName {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 21px;
+  line-height: 21px;
+  color: #4c4e56;
+  margin-top: 19px;
+}
+
+.productName .productTitle {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 23px;
+  color: #4c4e56;
+}
+
+.originalPrice {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 22px;
+  color: #bebebe;
+  letter-spacing: 0.01em;
+  text-decoration-line: line-through;
+  margin-right: 8px;
+}
+
+.salePrice {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 22px;
+  letter-spacing: 0.01em;
+  color: #ec6184;
+}
+
+.productDescription {
+  margin-bottom: 18px;
+}
+
+.productOne,
+.productTwo {
+  display: flex;
+  flex-direction: row;
+  padding: 15px 0;
+}
+
+.productOne {
+  border-bottom: 1px solid rgba(76, 78, 86, 0.2);
+}
+
+.productOneDetails,
+.productTwoDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 22px;
+}
+
+.productOneDetails .productOneCutesyName,
+.productTwoDetails .productTwoCutesyName {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 15px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #48c6d9;
+}
+
+.productOneDetails .productOneTitle,
+.productTwoDetails .productTwoTitle {
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: #4c4e56;
+  margin: 7px 0 21px;
+}
+
+.productImgSmall img {
+  height: 118px;
+  width: 98px;
+  object-fit: contain;
+  object-position: center;
+}
+
+.productOne button,
+.productTwo button {
+  background: #47c6d9;
+  border-radius: 3px;
+  border: none;
+  font-family: 'Avenir';
+  font-style: normal;
+  font-weight: 900;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #ffffff;
+  padding: 10px 0;
+  width: 208px !important;
+  height: 38px !important;
+}
+
+@media all and (max-width: 500px) {
+  .productsWrapper,
+  .productsWrapperReversed {
+    flex-direction: column;
+    width: 100vw;
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+  .productImageCarousel {
+    margin: 28px 20px 24px;
+  }
+
+  .productSectionRight {
+    flex-direction: column;
+  }
+
+  .productSectionRight {
+    margin: 0;
+    padding: 0;
+    max-width: calc(100vw - 40px);
+  }
+
+  .productTwo {
+    display: flex;
+    flex-direction: row;
+    padding: 15px 0 0;
+  }
+}
