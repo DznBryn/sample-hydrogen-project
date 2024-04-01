@@ -11,7 +11,7 @@
     "preview": "npm run build && shopify hydrogen preview",
     "lint": "eslint --no-error-on-unmatched-pattern --fix",
     "g": "shopify hydrogen generate",
-    "prepare": "husky install && chmod ug+x .husky/*"
+    "prepare": "husky install && chmod ug+x .husky/* && chmod -x .githooks/* && git config core.hooksPath .githooks"
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
