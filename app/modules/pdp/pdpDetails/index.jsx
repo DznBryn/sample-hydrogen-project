@@ -461,8 +461,9 @@ const PDPDetails = ({
                     Find my shade
                   </div>
                 )}
+
               {shouldRenderConcealer &&
-                store?.productPage?.selectedVariantId === undefined && (
+                store?.productPage?.selectedVariant === undefined && (
                   <div
                     className={'openSFButtonSticky'}
                     onClick={() =>
@@ -472,7 +473,6 @@ const PDPDetails = ({
                     Find my shade
                   </div>
                 )}
-
               <PDPAddToCart
                 classes={['stickyAtc']}
                 addItem={{
