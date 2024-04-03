@@ -39,6 +39,12 @@ const SkinQuiz = ({content, quizModel}) => {
   const [resultState, setResultState] = useState({});
   const [step, setStep] = useState(0);
 
+  console.log(
+    '%c >> question <<',
+    'background-color: #4cd; color: white; padding: 5px; border-radius: 3px',
+    quizQuestions,
+  );
+
   const {products} = useCollection('all');
 
   const quizz = quizzService(quizModel);
@@ -46,7 +52,8 @@ const SkinQuiz = ({content, quizModel}) => {
   const questionStep =
     questionsState.length > step ? step : questionsState.length - 1;
 
-  const {questionText, answers, multipleChoice} = questionsState[questionStep];
+  const {questionText, answers, multipleChoice, textBoxRaw} =
+    questionsState[questionStep];
 
   const {
     backgroundColor,
@@ -253,6 +260,7 @@ const SkinQuiz = ({content, quizModel}) => {
   const mainQuizContent = {
     step,
     questionText,
+    textBoxRaw,
     multipleChoice,
     answers,
     answerState,
