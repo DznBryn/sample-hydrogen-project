@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 
 import styles from './styles.css';
+import PortableTextCustom from '~/modules/portableTextCustom';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -10,6 +11,7 @@ const MainContentQuiz = ({content}) => {
   const {
     step,
     questionText,
+    textBoxRaw,
     multipleChoice,
     answers,
     answerState,
@@ -76,22 +78,24 @@ const MainContentQuiz = ({content}) => {
   return (
     <section className="mainContentContainer">
       <p className="step">Step {step + 1}</p>
-
       <p className="question">{questionText}</p>
-
       {multipleChoice ? (
         <p className="multipleChoiceDek">
           Select up to {multipleChoice} in order of priority.
         </p>
       ) : null}
-
       <br />
-
       <div className="buttons_grid">
         {answers.map((el) => (
           <AnswerBtn element={el} key={el?.qualifiers[0]?.name} />
         ))}
       </div>
+
+      {textBoxRaw && (
+        <div className="textBoxRaw">
+          <PortableTextCustom value={textBoxRaw} />
+        </div>
+      )}
 
       {shouldShowSubmitButton ? (
         <button

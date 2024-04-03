@@ -372,4 +372,8 @@
   .resultsProductGrid .infoContainer a {
     font-size: 14px !important;
   }
+
+  .advancedRoutineRecommendations .productWrapper:nth-child(even) {
+    background-color: #f1f1f2;
+  }
 }
