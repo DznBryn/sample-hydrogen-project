@@ -40,7 +40,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Data Protection Rights</h3>
+        <h3 className="health_title">1. Definitions</h3>
         <p>
           The term “Consumer Health Data” is broadly defined to mean personal
           information that is linked or can be reasonably linked to a consumer
@@ -57,7 +57,7 @@ const ConsumerHealth = () => {
 
       <div className="health-box">
         <h3 className="health_title">
-          Categories of Consumer Health Data that We Collect
+          2. Categories of Consumer Health Data that We Collect
         </h3>
         <p>
           Tula only collects, uses and discloses Consumer Health Data as needed
@@ -93,7 +93,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Prohibited Data</h3>
+        <h3 className="health_title">3. Prohibited Data</h3>
         <p>
           You are hereby prohibited from providing us with the following data:
         </p>
@@ -113,7 +113,7 @@ const ConsumerHealth = () => {
 
       <div className="health-box">
         <h3 className="health_title">
-          Purposes for Collecting Consumer Health Data and How We Use It
+          4. Purposes for Collecting Consumer Health Data and How We Use It
         </h3>
 
         <p>
@@ -178,7 +178,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Sources of Consumer Health Data</h3>
+        <h3 className="health_title">5. Sources of Consumer Health Data</h3>
 
         <p>We collect Consumer Health Data from the following sources:</p>
         <ul>
@@ -203,7 +203,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Disclosures of Consumer Health Data</h3>
+        <h3 className="health_title">6. Disclosures of Consumer Health Data</h3>
         <p>
           We do not, to the best of our knowledge “sell” or “share” your
           Consumer Health Data, as such terms are defined pursuant to law.
@@ -226,7 +226,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Your Privacy Rights</h3>
+        <h3 className="health_title">7. Your Privacy Rights</h3>
         <p>
           You have specific rights with respect to your Consumer Health Data:
         </p>
@@ -262,7 +262,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Appeals and Complaints</h3>
+        <h3 className="health_title">8. Appeals and Complaints</h3>
 
         <p>
           If we deny your privacy rights request, you may appeal that denial by
@@ -285,7 +285,7 @@ const ConsumerHealth = () => {
       </div>
 
       <div className="health-box">
-        <h3 className="health_title">Contact Us</h3>
+        <h3 className="health_title">9. Contact Us</h3>
         <p>
           For the avoidance of you doubt, you may not, under any condition,
           upload or otherwise input into our website (whether via a chat-box,
