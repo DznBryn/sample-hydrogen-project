@@ -23,6 +23,7 @@ const SkinQuizAgeEmailOptIn = ({
 }) => {
   const [dateInputted, setDateInputted] = useState(false);
   const [activeTab, setActiveTab] = useState(currentTab);
+  const [hideText, setHideText] = useState(false);
 
   const userEmailRef = useRef(null);
 
@@ -38,7 +39,6 @@ const SkinQuizAgeEmailOptIn = ({
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth();
-
   const years = [];
   const months = [
     '01',
@@ -89,6 +89,74 @@ const SkinQuizAgeEmailOptIn = ({
 
   async function sendAnswersToLT(userEmail) {
     return await submitSkinQuizForm(userEmail, getLTPostObject());
+  }
+
+  function Text() {
+    return (
+      <>
+        {hideText ? (
+          <div className="infoText">
+            Some of the information you will be providing us may indicate or
+            imply information about your past, present, or future health
+            conditions, including your product interests, individual health
+            conditions, treatments, diseases, bodily function, and vital signs
+            and measurements (“Consumer Health Data”). Please note that Tula
+            will collect, retain, and process your personally identifiable
+            information (“Personal Information”), including Consumer Health
+            Data, in accordance with our website{' '}
+            <a href="/pages/privacy-policy" target="_blank">
+              Privacy Policy
+            </a>{' '}
+            and our Consumer Health Data Privacy Policy (collectively, the
+            “Privacy Statements”). For example, we will use your Personal
+            Information, including your Consumer Health Data, to provide you
+            products and services, create and deliver relevant advertising, and
+            manage your accounts. Your Personal Information, including your{' '}
+            <a
+              href="/pages/consumer-health-data-privacy-policy"
+              target="_blank"
+            >
+              Consumer Health Data
+            </a>{' '}
+            , will be shared with our service providers and data processors who
+            assist Tula in providing goods and services to you and for other
+            legal and business operational purposes, as outlined in our Privacy
+            Statements. You have read and you agree to our Privacy Statements
+            and{' '}
+            <a href="/pages/terms-conditions" target="_blank">
+              Terms & Condition
+            </a>
+            {'.'}{' '}
+            <spam
+              style={{
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                textDecoration: 'underline',
+              }}
+              onClick={() => setHideText(false)}
+            >
+              Show less
+            </spam>
+          </div>
+        ) : (
+          <div className="infoText">
+            Some of the information you will be providing us may indicate or
+            imply information about your past, present, or future health
+            conditions, including your product interests...{' '}
+            <spam
+              style={{
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                textDecoration: 'underline',
+              }}
+              onClick={() => setHideText(true)}
+            >
+              Show more
+            </spam>
+          </div>
+        )}
+      </>
+    );
   }
 
   async function subscribeEmailOnLT(userEmail) {
@@ -144,7 +212,7 @@ const SkinQuizAgeEmailOptIn = ({
       age =
         rangeAge < 20
           ? 'teens'
-          : `${rangeAge > 40 ? '50\'s+' : rangeAge + '\'s'}`;
+          : `${rangeAge > 40 ? "50's+" : rangeAge + "'s"}`;
     }
     return age;
   }
@@ -556,25 +624,11 @@ const SkinQuizAgeEmailOptIn = ({
           </p>
           <div className="form">
             <input type="email" placeholder="Email" ref={userEmailRef} />
-
-            <div className="infoText">
-              By registering, I agree to receive emails from TULA Skincare. I
-              have read and agree to the TULA Skincare{' '}
-              <a href="/pages/terms-conditions" target="_blank">
-                Terms & Conditions
-              </a>{' '}
-              and TULA Skincare{' '}
-              <a href="/pages/privacy-policy" target="_blank">
-                Privacy Policy
-              </a>
-              .
-            </div>
-
+            <Text />
             <p
               id="emailErrorMessage"
               style={{display: 'hidden', textAlign: 'left', color: 'red'}}
             ></p>
-
             <button
               id="submitEmail"
               // className={classNames(false && styles.inactiveBtn)}
