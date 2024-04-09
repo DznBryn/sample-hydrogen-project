@@ -104,18 +104,19 @@ const SkinQuizAgeEmailOptIn = ({
         <a href="/pages/privacy-policy" target="_blank">
           Privacy Policy
         </a>{' '}
-        and our Consumer Health Data Privacy Policy (collectively, the “Privacy
-        Statements”). For example, we will use your Personal Information,
-        including your Consumer Health Data, to provide you products and
-        services, create and deliver relevant advertising, and manage your
-        accounts. Your Personal Information, including your{' '}
+        and our{' '}
         <a href="/pages/consumer-health-data-privacy-policy" target="_blank">
-          Consumer Health Data
+          Consumer Health Data Privacy Policy
         </a>{' '}
-        , will be shared with our service providers and data processors who
-        assist Tula in providing goods and services to you and for other legal
-        and business operational purposes, as outlined in our Privacy
-        Statements. You have read and you agree to our Privacy Statements and{' '}
+        (collectively, the “Privacy Statements”). For example, we will use your
+        Personal Information, including your Consumer Health Data, to provide
+        you products and services, create and deliver relevant advertising, and
+        manage your accounts. Your Personal Information, including your Consumer
+        Health Data, will be shared with our service providers and data
+        processors who assist Tula in providing goods and services to you and
+        for other legal and business operational purposes, as outlined in our
+        Privacy Statements. You have read and you agree to our Privacy
+        Statements and{' '}
         <a href="/pages/terms-conditions" target="_blank">
           Terms & Condition
         </a>
@@ -589,7 +590,6 @@ const SkinQuizAgeEmailOptIn = ({
           </p>
           <div className="form">
             <input type="email" placeholder="Email" ref={userEmailRef} />
-            <Text />
             <p
               id="emailErrorMessage"
               style={{display: 'hidden', textAlign: 'left', color: 'red'}}
@@ -610,6 +610,8 @@ const SkinQuizAgeEmailOptIn = ({
           >
             No thanks! Just show me my results now
           </p>
+
+          <Text />
         </div>
       )}
     </div>
