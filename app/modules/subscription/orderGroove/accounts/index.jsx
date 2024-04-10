@@ -9,6 +9,7 @@ import {
   changeProduct,
   getCustomerOrders,
   getCustomerSubscription,
+  getItems,
 } from '~/utils/services/subscription';
 import ModalGeneric from '~/modules/modalGeneric';
 import DatePicker from 'react-date-picker';
@@ -53,23 +54,48 @@ const handleDateFormatter = (date) => {
 };
 
 export const handleUpdateCustomerSubcription = async (
-  subscription,
+  order,
   {customer, updateCustomerSubscription},
   callback,
 ) => {
-  const activeSubscription = await getCustomerSubscription(
-    subscription.customer,
-    true,
-  );
-  const inactiveSubscription = await getCustomerSubscription(
-    subscription.customer,
-  );
+  const [activeSubscription, inactiveSubscription, subscriptionOrders, items] =
+    await Promise.all([
+      getCustomerSubscription(order.customer, true),
+      getCustomerSubscription(order.customer),
+      getCustomerOrders(order.customer),
+      getItems(order.customer),
+    ]);
 
-  const subscriptionOrders = await getCustomerOrders(subscription.customer);
-
-  activeSubscription && (customer.subscription.active = activeSubscription);
   inactiveSubscription &&
     (customer.subscription.inactive = inactiveSubscription);
+
+  const activeItems = {
+    ...items,
+    results: items?.results?.map((item) => {
+      if (activeSubscription?.results) {
+        const subscription = activeSubscription.results.find(
+          (sub) => sub.public_id === item.subscription,
+        );
+        item.subscription = subscription;
+      }
+
+      return item;
+    }),
+  };
+
+  subscriptionOrders?.results &&
+    (subscriptionOrders.results = subscriptionOrders.results.map((order) => {
+      const items = [];
+
+      activeItems.results.forEach((item) => {
+        if (order.public_id === item.order) {
+          items.push(item);
+        }
+      });
+      order.items = items;
+      return order;
+    }));
+
   subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
 
   updateCustomerSubscription(customer.subscription);
@@ -89,7 +115,7 @@ const AccountSubscription = ({active}) => {
               our customer service a call (844-545-1236).
             </p>
 
-            {((data?.subscription?.active?.results.length === 0 &&
+            {((data.subscription?.orders?.results?.length === 0 &&
               data.subscription?.inactive?.results.length === 0) ||
               !data.subscription) && (
               <div className="noSubscription">
@@ -106,14 +132,14 @@ const AccountSubscription = ({active}) => {
                 </div>
               </div>
             )}
-            {data?.subscription?.active?.results.length > 0 && (
+            {data.subscription?.orders?.results?.length > 0 && (
               <div className={'activeProducts'}>
                 <h3>
                   <b>Upcoming Shipments</b>
                 </h3>
                 <ul>
-                  {data.subscription.orders.results
-                    .map((order, index) => (
+                  {data.subscription?.orders?.results?.map((order, index) =>
+                    order?.items?.length > 0 ? (
                       <ActiveProductItem
                         key={`active-${order.public_id}-${index}`}
                         {...{
@@ -122,16 +148,17 @@ const AccountSubscription = ({active}) => {
                               address.public_id === order?.shipping_address,
                           ),
                           order,
-                          subscription:
-                            data?.subscription?.active?.results[index],
+                          items: order?.items ?? [],
                         }}
                       />
-                    ))
-                    .reverse()}
+                    ) : (
+                      <></>
+                    ),
+                  )}
                 </ul>
               </div>
             )}
-            {data.subscription?.inactive?.results.length > 0 && (
+            {data.subscription?.inactive?.results?.length > 0 && (
               <div className={'inactiveProducts'}>
                 <h3>
                   <b>Inactive Auto-delivery</b>
@@ -155,110 +182,12 @@ const AccountSubscription = ({active}) => {
   );
 };
 
-function ActiveProductItem({address, order, subscription}) {
-  const {data, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
-  const {products: all} = useLoaderData();
-  const [product, setProduct] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(
-    subscription?.every ?? 1,
-  );
-  const [selectedProductId, setSelectedProductId] = useState(
-    subscription?.product ?? null,
-  );
+function ActiveProductItem({address, order, items}) {
   const [showModal, setShowModal] = useState(null);
-  const options = [1, 2, 3, 4, 5];
-  const fullPrice = Number(order?.sub_total) + Number(order?.discount_total);
-
-  useEffect(() => {
-    if (subscription?.product) {
-      const existingProduct = all.products.find((product) => {
-        const variants = flattenConnection(product.variants);
-        return variants.find(
-          (variant) => parseGid(variant.id).id === subscription.product,
-        );
-      });
-      setProduct(existingProduct);
-    }
-  }, [subscription.product]);
-
-  const handleSelectChange = async (event) => {
-    if (subscription?.every === Number(event.target.value)) {
-      return;
-    }
-
-    try {
-      const res = await changeFrequency({
-        ...subscription,
-        every: Number(event.target.value),
-      });
-
-      if (!res?.every || res?.every === event.target.value) {
-        return;
-      }
-
-      return setSelectedOption(res.every);
-    } catch (error) {
-      return console.log({
-        message: error.message,
-      });
-    }
-  };
-
-  const handleSwapProduct = async (event) => {
-    if (subscription?.product === event.target.value) {
-      return;
-    }
-    try {
-      const res = await changeProduct(subscription, event.target.value);
-
-      if (res?.product) {
-        setSelectedProductId(res.product);
-      }
-
-      if (res.customer) {
-        return handleUpdateCustomerSubcription(res, {
-          customer: data,
-          updateCustomerSubscription,
-        });
-      }
-    } catch (error) {
-      return console.log({
-        message: error.message,
-      });
-    }
-  };
+  const subscription = null;
 
   const handleModalClose = useCallback(() => setShowModal(null), []);
   const mapActionToComponent = {
-    changeDate: (
-      <ChangeSubscriptionDate
-        handleModalClose={handleModalClose}
-        subscription={subscription}
-        order={order}
-      />
-    ),
-    pause: (
-      <PauseSubscription
-        handleModalClose={handleModalClose}
-        subscription={subscription}
-        order={order}
-      />
-    ),
-    skip: (
-      <SkipOrderSubscription
-        handleModalClose={handleModalClose}
-        subscription={subscription}
-        order={order}
-      />
-    ),
-    cancel: (
-      <CancelSubscription
-        handleModalClose={handleModalClose}
-        {...subscription}
-      />
-    ),
     changeShipping: (
       <EditShippingAddress
         handleModalClose={handleModalClose}
@@ -271,144 +200,15 @@ function ActiveProductItem({address, order, subscription}) {
   return (
     <>
       <li>
-        <div className="subcriptionDelivery">
-          <p className="deliveryDate col-span-2">
-            Shipment On: {handleDateFormatter(order?.place)}
-          </p>
-          <div className="deliveryActions">
-            <button
-              className="outline-btn"
-              type="submit"
-              onClick={() => setShowModal('changeDate')}
-              disabled={showModal !== null}
-            >
-              Change Date
-            </button>
-            <button
-              className="outline-btn"
-              type="button"
-              onClick={() => setShowModal('skip')}
-              disabled={showModal !== null}
-            >
-              Skip Order
-            </button>
-          </div>
-        </div>
-        <div className="subcriptionItem">
-          <div className="productDetail col-span-2">
-            <div className="itemImageContainer">
-              {product && (
-                <Link
-                  to={`/products/${product?.handle}`}
-                  target="_blank"
-                  role="link"
-                >
-                  <Image
-                    data={
-                      flattenConnection(product?.variants).find(
-                        (variant) =>
-                          parseGid(variant.id).id === subscription.product,
-                      )?.image
-                    }
-                    sizes="(min-width: 45em) 50vw, 100vw"
-                    aspectRatio="4/5"
-                  />
-                </Link>
-              )}
-            </div>
-            <div className="productDescription">
-              {product?.title ? (
-                <Link
-                  to={`/products/${product?.handle}`}
-                  target="_blank"
-                  className="itemTitle"
-                  role="link"
-                >
-                  <ProductTitle product={product} subscription={subscription} />
-                </Link>
-              ) : (
-                <p className="itemTitle">
-                  {'Product not found. Please contact us.'}
-                </p>
-              )}
-              {fullPrice && (
-                <p className="itemQuantity">
-                  <span style={{textDecoration: 'line-through'}}>
-                    ${fullPrice.toFixed(2)}
-                  </span>{' '}
-                  ${order?.sub_total} each
-                </p>
-              )}
-              {data?.subscription?.inactive?.results.length > 0 && (
-                <select value={selectedProductId} onChange={handleSwapProduct}>
-                  <option value={selectedProductId}>
-                    (swap all upcoming deliveries){' '}
-                    <ProductTitle
-                      product={product}
-                      subscription={subscription}
-                    />
-                  </option>
-                  {data.subscription.inactive.results.map(
-                    (subscription, index) => {
-                      const product = all.products.find((product) => {
-                        const variants = flattenConnection(product.variants);
-                        return variants.find(
-                          (variant) =>
-                            parseGid(variant.id).id === subscription.product,
-                        );
-                      });
-                      const variant = product?.variants
-                        ? flattenConnection(product.variants).find(
-                            (variant) =>
-                              parseGid(variant.id).id === subscription.product,
-                          )
-                        : null;
-
-                      return (
-                        <option key={index} value={subscription.product}>
-                          {variant &&
-                            `${product?.title} - $${Number(
-                              variant?.price?.amount ?? '0',
-                            ).toFixed(2)}`}
-                        </option>
-                      );
-                    },
-                  )}
-                </select>
-              )}
-            </div>
-          </div>
-          <div className="subscriptionActionContainer">
-            <div>
-              <div className="frequency">
-                <label>Sending 1 every</label>
-                <select value={selectedOption} onChange={handleSelectChange}>
-                  {options.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option === 1 ? `${option} months` : `${option} months`}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="actionButtons">
-                <button
-                  className="underline-btn"
-                  type="button"
-                  onClick={() => setShowModal('cancel')}
-                >
-                  Cancel Auto-delivery
-                </button>
-                <button
-                  className="underline-btn"
-                  type="submit"
-                  onClick={() => setShowModal('pause')}
-                >
-                  Pause Auto-delivery
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+        {items.length > 0 &&
+          items.map((item, index) => (
+            <SubscriptionItem
+              key={`item-${item.public_id}`}
+              index={index}
+              order={order}
+              item={item}
+            />
+          ))}
         <div className="subscriptionDetails">
           <div className="shippingDetails col-span-2">
             <div className="shipping">
@@ -495,6 +295,265 @@ function ActiveProductItem({address, order, subscription}) {
           </div>
         </div>
       </li>
+      <ModalGeneric isOpen={showModal !== null} handleClose={handleModalClose}>
+        {mapActionToComponent[showModal]}
+      </ModalGeneric>
+    </>
+  );
+}
+
+function SubscriptionItem({index, order, item}) {
+  const [showModal, setShowModal] = useState(null);
+  const handleModalClose = useCallback(() => setShowModal(null), []);
+  const {data, updateCustomerSubscription} = useStore(
+    (store) => store?.account ?? null,
+  );
+  const {subscription} = item;
+  const {products: all} = useLoaderData();
+  const [product, setProduct] = useState(null);
+  const [selectedOption, setSelectedOption] = useState(
+    subscription?.every ?? 1,
+  );
+  const [selectedProductId, setSelectedProductId] = useState(
+    item?.product ?? null,
+  );
+  const options = [1, 2, 3, 4, 5];
+
+  useEffect(() => {
+    if (item?.product) {
+      const existingProduct = all.products.find((product) => {
+        const variants = flattenConnection(product.variants);
+        return variants.find(
+          (variant) => parseGid(variant.id).id === item.product,
+        );
+      });
+      setProduct(existingProduct);
+    }
+  }, [item?.product]);
+
+  const handleSelectChange = async (event) => {
+    if (subscription?.every === Number(event.target.value)) {
+      return;
+    }
+
+    try {
+      const res = await changeFrequency({
+        ...subscription,
+        every: Number(event.target.value),
+      });
+
+      if (!res?.every || res?.every === event.target.value) {
+        return;
+      }
+
+      return setSelectedOption(res.every);
+    } catch (error) {
+      return console.log({
+        message: error.message,
+      });
+    }
+  };
+
+  const handleSwapProduct = async (event) => {
+    if (item?.product === event.target.value) {
+      return;
+    }
+    try {
+      const res = await changeProduct(item, event.target.value);
+
+      if (res?.product) {
+        setSelectedProductId(res.product);
+      }
+
+      if (res.subscription) {
+        return handleUpdateCustomerSubcription(order, {
+          customer: data,
+          updateCustomerSubscription,
+        });
+      }
+    } catch (error) {
+      return console.log({
+        message: error.message,
+      });
+    }
+  };
+
+  const mapActionToComponent = {
+    changeDate: (
+      <ChangeSubscriptionDate
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
+      />
+    ),
+    skip: (
+      <SkipOrderSubscription
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
+      />
+    ),
+    pause: (
+      <PauseSubscription
+        handleModalClose={handleModalClose}
+        subscription={subscription}
+        order={order}
+      />
+    ),
+    cancel: (
+      <CancelSubscription
+        handleModalClose={handleModalClose}
+        {...subscription}
+      />
+    ),
+  };
+
+  return (
+    <>
+      <div className="subcriptionDelivery">
+        <p className="deliveryDate col-span-2">
+          {index === 0 && `Shipment On: ${handleDateFormatter(order?.place)}`}
+        </p>
+        <div className="deliveryActions">
+          <button
+            className="outline-btn"
+            type="submit"
+            onClick={() => setShowModal('changeDate')}
+            disabled={showModal !== null}
+          >
+            Change Date
+          </button>
+          <button
+            className="outline-btn"
+            type="button"
+            onClick={() => setShowModal('skip')}
+            disabled={showModal !== null}
+          >
+            Skip Order
+          </button>
+        </div>
+      </div>
+      <div className="subcriptionItem" key={`item-${item?.public_id}`}>
+        <div className="productDetail col-span-2">
+          <div className="itemImageContainer">
+            {product && (
+              <Link
+                to={`/products/${product?.handle}`}
+                target="_blank"
+                role="link"
+              >
+                <Image
+                  data={
+                    flattenConnection(product?.variants).find(
+                      (variant) =>
+                        parseGid(variant.id).id === item?.subscription?.product,
+                    )?.image ?? product?.images?.nodes?.[0]
+                  }
+                  sizes="(min-width: 45em) 50vw, 100vw"
+                  aspectRatio="4/5"
+                />
+              </Link>
+            )}
+          </div>
+          <div className="productDescription">
+            {product?.title ? (
+              <Link
+                to={`/products/${product?.handle}`}
+                target="_blank"
+                className="itemTitle"
+                role="link"
+              >
+                <ProductTitle
+                  product={product}
+                  subscription={item?.subscription}
+                />
+              </Link>
+            ) : (
+              <p className="itemTitle">
+                {'Product not found. Please contact us.'}
+              </p>
+            )}
+
+            <p className="itemQuantity">
+              <span style={{textDecoration: 'line-through'}}>
+                ${Number(item?.price).toFixed(2)}
+              </span>{' '}
+              $
+              {(
+                Number(item?.total_price) / Number(item?.quantity ?? 1)
+              ).toFixed(2)}{' '}
+              each
+            </p>
+
+            {data?.subscription?.inactive?.results?.length > 0 && (
+              <select value={selectedProductId} onChange={handleSwapProduct}>
+                <option value={selectedProductId}>
+                  (swap all upcoming deliveries){' '}
+                  <ProductTitle product={product} subscription={subscription} />
+                </option>
+                {data.subscription.inactive.results.map(
+                  (subscription, index) => {
+                    const product = all.products.find((product) => {
+                      const variants = flattenConnection(product.variants);
+                      return variants.find(
+                        (variant) =>
+                          parseGid(variant.id).id === subscription.product,
+                      );
+                    });
+                    const variant = product?.variants
+                      ? flattenConnection(product.variants).find(
+                          (variant) =>
+                            parseGid(variant.id).id === subscription.product,
+                        )
+                      : null;
+
+                    return (
+                      subscription.product !== selectedProductId && (
+                        <option key={index} value={subscription.product}>
+                          {variant &&
+                            `${product?.title} - $${Number(
+                              variant?.price?.amount ?? '0',
+                            ).toFixed(2)}`}
+                        </option>
+                      )
+                    );
+                  },
+                )}
+              </select>
+            )}
+          </div>
+        </div>
+        <div className="subscriptionActionContainer">
+          <div>
+            <div className="frequency">
+              <label>Sending {item?.quantity ?? 1} every</label>
+              <select value={selectedOption} onChange={handleSelectChange}>
+                {options.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option === 1 ? `${option} months` : `${option} months`}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="actionButtons">
+              <button
+                className="underline-btn"
+                type="button"
+                onClick={() => setShowModal('cancel')}
+              >
+                Cancel Auto-delivery
+              </button>
+              <button
+                className="underline-btn"
+                type="submit"
+                onClick={() => setShowModal('pause')}
+              >
+                Pause Auto-delivery
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <ModalGeneric isOpen={showModal !== null} handleClose={handleModalClose}>
         {mapActionToComponent[showModal]}
       </ModalGeneric>
@@ -599,7 +658,7 @@ function ProductTitle({product, subscription}) {
   return title;
 }
 
-function EditShippingAddress({handleModalClose, subscription, order}) {
+function EditShippingAddress({handleModalClose, order}) {
   const fetcher = useFetcher();
   const {data: customer, updateCustomerSubscription} = useStore(
     (store) => store?.account ?? null,
@@ -612,9 +671,9 @@ function EditShippingAddress({handleModalClose, subscription, order}) {
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       //@TODO: BUG - Response reutrns data but message is "Body is unusable" from fetcher
-      if (fetcher.data && subscription?.customer) {
+      if (fetcher.data && order?.customer) {
         handleUpdateCustomerSubcription(
-          {customer: subscription?.customer},
+          {customer: order?.customer},
           {
             customer,
             updateCustomerSubscription,
@@ -642,7 +701,7 @@ function EditShippingAddress({handleModalClose, subscription, order}) {
             <p>Stored Address(es)</p>
           </div>
           <div className="addressList__container">
-            {addresses.length > 0 && (
+            {addresses?.length > 0 && (
               <select
                 value={selectedShippingAddress}
                 onChange={handleShippingChange}
@@ -713,7 +772,7 @@ function EditShippingAddress({handleModalClose, subscription, order}) {
             <input
               type="hidden"
               name="customerId"
-              value={subscription?.customer ?? ''}
+              value={order?.customer ?? ''}
             />
             <button
               className="outline-btn"

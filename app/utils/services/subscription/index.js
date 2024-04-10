@@ -55,6 +55,7 @@ export async function getCustomerSubscription(customerId, live = false) {
     return error.message;
   }
 }
+
 export async function getSubscriptionPayment(customerId, payment_id) {
   const url = `https://restapi.ordergroove.com/payments/${payment_id}/`;
   const headers = {
@@ -74,6 +75,27 @@ export async function getSubscriptionPayment(customerId, payment_id) {
     return error.message;
   }
 }
+
+export async function getSubscription(customerId, subscriptionId) {
+  const url = `https://restapi.ordergroove.com/subscriptions/${subscriptionId}/`;
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(customerId),
+  };
+  try {
+    const response = await fetch(url, {headers});
+
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 export async function getOrderItem(customerId, orderId) {
   const url = `https://restapi.ordergroove.com/orders/${orderId}/`;
   const headers = {
@@ -96,8 +118,8 @@ export async function getOrderItem(customerId, orderId) {
 }
 
 export async function getCustomerOrders(customerId, pageSize = null) {
-  const url = `https://restapi.ordergroove.com/orders/?customer=${customerId}&status=1&page_size=${
-    pageSize ?? 50
+  const url = `https://restapi.ordergroove.com/orders/?status=1&customer=${customerId}&page_size=${
+    pageSize ?? 100
   }`;
   const headers = {
     'Content-Type': 'application/json',
@@ -111,8 +133,28 @@ export async function getCustomerOrders(customerId, pageSize = null) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const orders = await response.json();
+    // console.log('orders', orders);
 
     return orders;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function getItems(customerId) {
+  const url = 'https://restapi.ordergroove.com/items/?status=1';
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(customerId),
+  };
+  try {
+    const response = await fetch(url, {headers});
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const items = await response.json();
+    return items;
   } catch (error) {
     return error.message;
   }
@@ -302,11 +344,13 @@ export async function skipSubscriptionOrder(subscriptionItem) {
 }
 
 export async function changeProduct(subscriptionItem, newProduct) {
-  const url = `https://restapi.ordergroove.com/subscriptions/${subscriptionItem.public_id}/change_product/`;
+  const url = `https://restapi.ordergroove.com/items/${subscriptionItem.public_id}/change_product/`;
   const headers = {
     accept: 'application/json',
     'Content-Type': 'application/json',
-    Authorization: generateOGAuthorization(subscriptionItem.customer),
+    Authorization: generateOGAuthorization(
+      subscriptionItem.subscription.customer,
+    ),
   };
 
   try {
@@ -339,6 +383,30 @@ export async function cancelSubscription(subscriptionItem) {
       method: API_METHODS.PATCH,
       headers,
       body: JSON.stringify({cancel_reason: subscriptionItem.cancelReason}),
+    });
+
+    if (!response.ok) {
+      // Handle non-successful responses (e.g., 4xx or 5xx status codes)
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const subscription = await response.json();
+    return subscription;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+export async function cancelOrder(order) {
+  const url = `https://restapi.ordergroove.com/orders/${order.public_id}/cancel`;
+  const headers = {
+    accept: 'application/json',
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(order.customer),
+  };
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.PATCH,
+      headers,
     });
 
     if (!response.ok) {

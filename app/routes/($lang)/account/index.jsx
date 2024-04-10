@@ -1,9 +1,7 @@
-import {useLoaderData} from '@remix-run/react';
 import {
-  CacheShort,
+  CacheLong,
   flattenConnection,
   generateCacheControlHeader,
-  parseGid,
 } from '@shopify/hydrogen';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {
@@ -29,15 +27,11 @@ import {
   changeShippingAddress,
   changeSubscriptionDate,
   getCollectionProducts,
-  getCustomerAddresses,
-  getCustomerOrders,
-  getCustomerSubscription,
   reactivateSubscription,
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
 import logout from './__private/logout';
-import {useEffect} from 'react';
 import {useStore} from '~/hooks/useStore';
 
 export function links() {
@@ -396,34 +390,7 @@ export async function loader({request, context, params}) {
     : 'Account Page';
 
   const products = await getCollectionProducts(context, 'all');
-  let activeSubscription = {};
-  let inactiveSubscription = {};
-  let subscriptionOrders = {};
-  let subscriptionAddresses = {};
-
-  if (customer?.id) {
-    customer.subscription = {};
-    const customerId = parseGid(customer.id).id;
-
-    [
-      activeSubscription,
-      inactiveSubscription,
-      subscriptionOrders,
-      subscriptionAddresses,
-    ] = await Promise.all([
-      getCustomerSubscription(customerId, true),
-      getCustomerSubscription(customerId),
-      getCustomerOrders(customerId),
-      getCustomerAddresses(customerId),
-    ]);
-
-    subscriptionAddresses &&
-      (customer.subscription.addresses = subscriptionAddresses);
-    activeSubscription && (customer.subscription.active = activeSubscription);
-    inactiveSubscription &&
-      (customer.subscription.inactive = inactiveSubscription);
-    subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-  }
+  customer.subscription = {};
 
   const [yotpoRedeemProducts, faqContent] = await Promise.all([
     getCMSContent(context, GET_YOTPO_REDEEM_PRODUCTS),
@@ -440,24 +407,14 @@ export async function loader({request, context, params}) {
     },
     {
       headers: {
-        'Cache-Control': generateCacheControlHeader(CacheShort()),
+        'Cache-Control': generateCacheControlHeader(CacheLong()),
       },
     },
   );
 }
 
 export default function AccountPage() {
-  const {customer} = useLoaderData();
-  const {data: customerData, setCustomerData} = useStore(
-    (store) => store?.account ?? {},
-  );
-
-  useEffect(() => {
-    if (customerData && customer?.id !== customerData.id) {
-      setCustomerData(customer);
-    }
-  }, [customerData.id]);
-
+  const {data: customerData} = useStore((store) => store?.account ?? {});
   return (
     <Layouts.MainNavFooter>
       <Account data={customerData} />
