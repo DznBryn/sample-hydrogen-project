@@ -151,23 +151,29 @@ const AccountSubscription = ({active}) => {
                   <b>Upcoming Shipments</b>
                 </h3>
                 <ul>
-                  {data.subscription?.orders?.results?.map((order, index) =>
-                    order?.items?.length > 0 ? (
-                      <ActiveProductItem
-                        key={`active-${order.public_id}-${index}`}
-                        {...{
-                          address: data.subscription.addresses.results.find(
-                            (address) =>
-                              address.public_id === order?.shipping_address,
-                          ),
-                          order,
-                          items: order?.items ?? [],
-                        }}
-                      />
-                    ) : (
-                      <></>
-                    ),
-                  )}
+                  {data.subscription?.orders?.results
+                    ?.sort((a, b) => {
+                      const dateA = new Date(a.place);
+                      const dateB = new Date(b.place);
+                      return dateA - dateB;
+                    })
+                    .map((order, index) =>
+                      order?.items?.length > 0 ? (
+                        <ActiveProductItem
+                          key={`active-${order.public_id}-${index}`}
+                          {...{
+                            address: data.subscription.addresses.results.find(
+                              (address) =>
+                                address.public_id === order?.shipping_address,
+                            ),
+                            order,
+                            items: order?.items ?? [],
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      ),
+                    )}
                 </ul>
               </div>
             )}
