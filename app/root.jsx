@@ -46,6 +46,8 @@ import {
   getCustomerAddresses,
   getCustomerOrders,
   getCustomerSubscription,
+  getItems,
+  getSubscriptionPayments,
 } from './utils/services/subscription';
 
 export const links = () => {
@@ -101,10 +103,7 @@ export async function loader({context, request}) {
   ]);
 
   const cart = cartId ? await getCart(context, cartId) : {};
-  let activeSubscription = {};
-  let inactiveSubscription = {};
-  let subscriptionOrders = {};
-  let subscriptionAddresses = {};
+
   if (
     customerCache.accessToken !== curCustomerAccessToken ||
     customerCache.data === undefined
@@ -115,32 +114,6 @@ export async function loader({context, request}) {
       request,
     );
     customerCache.accessToken = curCustomerAccessToken;
-  }
-
-  if (customerCache.data?.id) {
-    customerCache.data.subscription = {};
-    const customerId = parseGid(customerCache.data.id).id;
-
-    [
-      activeSubscription,
-      inactiveSubscription,
-      subscriptionOrders,
-      subscriptionAddresses,
-    ] = await Promise.all([
-      getCustomerSubscription(customerId, true),
-      getCustomerSubscription(customerId),
-      getCustomerOrders(customerId),
-      getCustomerAddresses(customerId),
-    ]);
-
-    subscriptionAddresses &&
-      (customerCache.data.subscription.addresses = subscriptionAddresses);
-    activeSubscription &&
-      (customerCache.data.subscription.active = activeSubscription);
-    inactiveSubscription &&
-      (customerCache.data.subscription.inactive = inactiveSubscription);
-    subscriptionOrders &&
-      (customerCache.data.subscription.orders = subscriptionOrders);
   }
 
   headers.set('Set-Cookie', await context.session.commit());
@@ -188,7 +161,7 @@ export default function App() {
     }
 
     if (customerData && customer?.id !== customerData.id) {
-      setCustomerData(customer);
+      getCustomerSubscriptionData(customer);
     }
 
     if (showSliderCart) toggleCart(true);
@@ -197,6 +170,73 @@ export default function App() {
   useEffect(() => {
     if (previewMode) updatePreviewModeURL();
   }, [location]);
+
+  async function getCustomerSubscriptionData(customer) {
+    if (customer?.id) {
+      customer.subscription = {};
+      const customerId = parseGid(customer.id).id;
+
+      const [
+        activeSubscription,
+        inactiveSubscription,
+        subscriptionOrders,
+        items,
+        payments,
+        subscriptionAddresses,
+      ] = await Promise.all([
+        getCustomerSubscription(customerId, true),
+        getCustomerSubscription(customerId),
+        getCustomerOrders(customerId),
+        getItems(customerId),
+        getSubscriptionPayments(customerId),
+        getCustomerAddresses(customerId),
+      ]);
+
+      subscriptionAddresses &&
+        (customer.subscription.addresses = subscriptionAddresses);
+
+      inactiveSubscription &&
+        (customer.subscription.inactive = inactiveSubscription);
+
+      const activeItems = {
+        ...items,
+        results: items?.results?.map((item) => {
+          if (activeSubscription?.results) {
+            const subscription = activeSubscription.results.find(
+              (sub) => sub.public_id === item.subscription,
+            );
+            const payment = payments?.results?.find(
+              (pay) => pay.public_id === subscription.payment,
+            );
+
+            subscription.payment = payment;
+            item.subscription = subscription;
+          }
+
+          return item;
+        }),
+      };
+
+      subscriptionOrders?.results &&
+        (subscriptionOrders.results = subscriptionOrders.results.map(
+          (order) => {
+            const items = [];
+
+            activeItems.results.forEach((item) => {
+              if (order.public_id === item.order) {
+                items.push(item);
+              }
+            });
+            order.items = items;
+            return order;
+          },
+        ));
+
+      subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
+
+      setCustomerData(customer);
+    }
+  }
 
   return (
     <RootStructure>
