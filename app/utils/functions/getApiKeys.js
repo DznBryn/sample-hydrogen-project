@@ -275,12 +275,14 @@ export function getEnv() {
       return 'US_STG';
     } else if (
       host.includes('tulaskincare.ca') ||
-      host.includes('tula-hydroxy-ca')
+      host.includes('tula-hydroxy-ca') ||
+      host.includes('ca-preview')
     ) {
       return 'CA_PROD';
     } else if (
       host.includes('tulaskincare.co.uk') ||
-      host.includes('tula-hydroxy-uk')
+      host.includes('tula-hydroxy-uk') ||
+      host.includes('uk-preview')
     ) {
       return 'UK_PROD';
     } else if (host.includes('tula.com')) {
