@@ -227,6 +227,12 @@ export default function App() {
                 items.push(item);
               }
             });
+
+            const payment = payments?.results?.find(
+              (pay) => pay.public_id === order.payment,
+            );
+
+            order.payment = payment;
             order.items = items;
             return order;
           },

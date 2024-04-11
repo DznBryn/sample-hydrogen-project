@@ -235,12 +235,10 @@ function ActiveProductItem({address, order, items}) {
                 <b>Billing</b>
               </p>
               <div>
-                {subscription?.payment?.cc_number_ending ? (
+                {order?.payment?.cc_number_ending ? (
                   <>
-                    <p>
-                      ending in {subscription?.payment?.cc_number_ending ?? '-'}
-                    </p>
-                    <p>Expires {subscription?.payment?.cc_exp_date}</p>
+                    <p>ending in {order?.payment?.cc_number_ending ?? '-'}</p>
+                    <p>Expires {order?.payment?.cc_exp_date}</p>
                     <button
                       className="underline-btn"
                       type="button"
