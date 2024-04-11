@@ -178,7 +178,7 @@ const SkinQuizAgeEmailOptIn = ({
       age =
         rangeAge < 20
           ? 'teens'
-          : `${rangeAge > 40 ? "50's+" : rangeAge + "'s"}`;
+          : `${rangeAge > 40 ? '50\'s+' : rangeAge + '\'s'}`;
     }
     return age;
   }
@@ -206,227 +206,243 @@ const SkinQuizAgeEmailOptIn = ({
       },
       {
         segmentationFieldId: 6492,
-        value: concatResults[0]?.name,
+        value: concatResults[0]?.name || 'name',
       },
       {
         segmentationFieldId: 6493,
-        value: concatResults[0]?.whatItDoes,
+        value: concatResults[0]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 6494,
-        value: concatResults[0]?.images.nodes[0]?.url,
+        value: concatResults[0]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 6495,
-        value: getLinkURL(concatResults[0]?.productId),
+        value: getLinkURL(concatResults[0]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 6500,
-        value: getPrice(concatResults[0]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[0]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 6501,
-        value: concatResults[1]?.name,
+        value: concatResults[1]?.name || 'name',
       },
       {
         segmentationFieldId: 6502,
-        value: concatResults[1]?.whatItDoes,
+        value: concatResults[1]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 6503,
-        value: concatResults[1]?.images.nodes[0]?.url,
+        value: concatResults[1]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 6504,
-        value: getLinkURL(concatResults[1]?.productId),
+        value: getLinkURL(concatResults[1]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 6505,
-        value: getPrice(concatResults[1]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[1]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 6506,
-        value: concatResults[2]?.name,
+        value: concatResults[2]?.name || 'name' || 'name',
       },
       {
         segmentationFieldId: 6507,
-        value: concatResults[2]?.whatItDoes,
+        value: concatResults[2]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 6508,
-        value: concatResults[2]?.images.nodes[0]?.url,
+        value: concatResults[2]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 6509,
-        value: getLinkURL(concatResults[2]?.productId),
+        value: getLinkURL(concatResults[2]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 6510,
-        value: getPrice(concatResults[2]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[2]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 18275,
-        value: concatResults[3]?.name,
+        value: concatResults[3]?.name || 'name',
       },
       {
         segmentationFieldId: 18277,
-        value: concatResults[3]?.whatItDoes,
+        value: concatResults[3]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 18278,
-        value: concatResults[3]?.images.nodes[0]?.url,
+        value: concatResults[3]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 18279,
-        value: getLinkURL(concatResults[3]?.productId),
+        value: getLinkURL(concatResults[3]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 18280,
-        value: getPrice(concatResults[3]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[3]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 18281,
-        value: concatResults[4]?.name,
+        value: concatResults[4]?.name || 'name',
       },
       {
         segmentationFieldId: 18282,
-        value: concatResults[4]?.whatItDoes,
+        value: concatResults[4]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 18283,
-        value: concatResults[4]?.images.nodes[0]?.url,
+        value: concatResults[4]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 18284,
-        value: getLinkURL(concatResults[4]?.productId),
+        value: getLinkURL(concatResults[4]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 18285,
-        value: getPrice(concatResults[4]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[4]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 18286,
-        value: concatResults[5]?.name,
+        value: concatResults[5]?.name || 'name',
       },
       {
         segmentationFieldId: 18287,
-        value: concatResults[5]?.whatItDoes,
+        value: concatResults[5]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 18288,
-        value: concatResults[5]?.images.nodes[0]?.url,
+        value: concatResults[5]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 18289,
-        value: getLinkURL(concatResults[5]?.productId),
+        value: getLinkURL(concatResults[5]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 18290,
-        value: getPrice(concatResults[5]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[5]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 18291,
-        value: concatResults[6]?.name,
+        value: concatResults[6]?.name || 'name',
       },
       {
         segmentationFieldId: 18292,
-        value: concatResults[6]?.whatItDoes,
+        value: concatResults[6]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 18293,
-        value: concatResults[6]?.images.nodes[0]?.url,
+        value: concatResults[6]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 18294,
-        value: getLinkURL(concatResults[6]?.productId),
+        value: getLinkURL(concatResults[6]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 18295,
-        value: getPrice(concatResults[6]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[6]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 18296,
-        value: concatResults[7]?.name,
+        value: concatResults[7]?.name || 'name',
       },
       {
         segmentationFieldId: 18297,
-        value: concatResults[7]?.whatItDoes,
+        value: concatResults[7]?.whatItDoes || 'whatItDoes',
       },
       {
         segmentationFieldId: 18298,
-        value: concatResults[7]?.images.nodes[0]?.url,
+        value: concatResults[7]?.images.nodes[0]?.url || '',
       },
       {
         segmentationFieldId: 18299,
-        value: getLinkURL(concatResults[7]?.productId),
+        value: getLinkURL(concatResults[7]?.productId || 'productId'),
       },
       {
         segmentationFieldId: 18300,
-        value: getPrice(concatResults[7]?.priceRange.maxVariantPrice.amount),
+        value: getPrice(
+          concatResults[7]?.priceRange.maxVariantPrice.amount || 'price',
+        ),
       },
       {
         segmentationFieldId: 18336,
-        value: concatResults[0]?.reviews_average,
+        value: concatResults[0]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18337,
-        value: concatResults[1]?.reviews_average,
+        value: concatResults[1]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18338,
-        value: concatResults[2]?.reviews_average,
+        value: concatResults[2]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18339,
-        value: concatResults[3]?.reviews_average,
+        value: concatResults[3]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18340,
-        value: concatResults[4]?.reviews_average,
+        value: concatResults[4]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18341,
-        value: concatResults[5]?.reviews_average,
+        value: concatResults[5]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18342,
-        value: concatResults[6]?.reviews_average,
+        value: concatResults[6]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18343,
-        value: concatResults[7]?.reviews_average,
+        value: concatResults[7]?.reviews_average || 'reviews_average',
       },
       {
         segmentationFieldId: 18344,
-        value: concatResults[0]?.reviews_count,
+        value: concatResults[0]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18345,
-        value: concatResults[1]?.reviews_count,
+        value: concatResults[1]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18346,
-        value: concatResults[2]?.reviews_count,
+        value: concatResults[2]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18347,
-        value: concatResults[3]?.reviews_count,
+        value: concatResults[3]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18348,
-        value: concatResults[4]?.reviews_count,
+        value: concatResults[4]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18349,
-        value: concatResults[5]?.reviews_count,
+        value: concatResults[5]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18350,
-        value: concatResults[6]?.reviews_count,
+        value: concatResults[6]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18351,
-        value: concatResults[7]?.reviews_count,
+        value: concatResults[7]?.reviews_count || 'reviews_count',
       },
       {
         segmentationFieldId: 18352,
