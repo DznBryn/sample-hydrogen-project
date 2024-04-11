@@ -130,7 +130,7 @@ export function appendScript(src, id = '', isDefer = true, callback) {
 
   if (callback) po.onload = callback;
 
-  document.getElementsByTagName('body')[0].appendChild(po);
+  document.getElementsByTagName('body')?.[0]?.appendChild(po);
 }
 
 export function getMetafields(metafields) {
@@ -683,6 +683,14 @@ export function getPageOnCMSBySlug(pagesOnCMS, slug) {
 }
 
 export async function getMainNavFooterCMSData(context) {
+  const concealerContentIds = {
+    US_PROD: 'b24e3674-d807-4979-9977-4d85380bc913',
+    US_STG: 'c7d0ed65-5df9-4cc3-a99e-fdc942dade87',
+  };
+
+  const concealerContenId =
+    concealerContentIds[context.env.SITE_NAME] ?? concealerContentIds.US_STG;
+
   const [
     AnnouncementHeaders,
     MobileNavbar,
@@ -706,7 +714,7 @@ export async function getMainNavFooterCMSData(context) {
       id: 'b8a6cf0d-b106-49bb-926d-a2b3d6473694',
     }),
     getCMSContent(context, GET_CONCEALER_CONTENT, {
-      id: 'c7d0ed65-5df9-4cc3-a99e-fdc942dade87',
+      id: concealerContenId,
     }),
     getCMSContent(context, GET_CONCEALER_SHADE_IMAGES),
   ]);
