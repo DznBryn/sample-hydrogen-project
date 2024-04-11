@@ -5,7 +5,7 @@ name: Storefront 1000016926
 on:
   push:
     branches:
-      - uk-main
+      - uk-preview
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy to Oxygen UK
+    name: Deploy to Oxygen UK Preview
     timeout-minutes: 30
     if: ${{ contains(github.event.head_commit.message, 'Merge pull request') }}
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Build and Publish to Oxygen UK
+      - name: Build and Publish to Oxygen UK Preview
         id: deploy
         uses: shopify/oxygenctl-action@v4
         with:
