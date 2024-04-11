@@ -1,11 +1,11 @@
 # Don't change the line below!
-#! oxygen_storefront_id: 1000016085
+#! oxygen_storefront_id: 1000016926
 
-name: Storefront 1000016085
+name: Storefront 1000016926
 on:
   push:
     branches:
-      - ca-main
+      - uk-preview
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy to Oxygen CA
+    name: Deploy to Oxygen UK Preview
     timeout-minutes: 30
     if: ${{ contains(github.event.head_commit.message, 'Merge pull request') }}
     runs-on: ubuntu-latest
@@ -42,11 +42,11 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Build and Publish to Oxygen CA
+      - name: Build and Publish to Oxygen UK Preview
         id: deploy
         uses: shopify/oxygenctl-action@v4
         with:
-          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000016085 }}
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000016926 }}
           build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL npm run build"
 
       # Create GitHub Deployment

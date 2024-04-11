@@ -109,7 +109,7 @@ const PDP = ({
 
   function setUpPostscript() {
     window.postscript.event('page_view', {
-      shop_id: getApiKeys().POSTSCRIPT.shopId, // your Postscript Shop ID
+      shop_id: getApiKeys().POSTSCRIPT?.shopId, // your Postscript Shop ID
       url: window.location.href, // the current page
       search_params: {variant: `${details.variants[0].id}`},
       page_type: 'product',

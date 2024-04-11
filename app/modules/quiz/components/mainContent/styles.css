@@ -220,7 +220,7 @@
 }
 
 .buttons_grid button .answerText {
-  font-weight: 700;
+  font-weight: 500;
   color: inherit;
 }
 
@@ -543,6 +543,19 @@
   color: #48c6d9 !important;
 }
 
+.mainContentContainer .textBoxRaw {
+  background-color: #e9f8fa;
+  margin: 50px 16px 20px;
+  max-width: 816px;
+  padding: 30px 16px 26px 26px;
+}
+
+.mainContentContainer .textBoxRaw p {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 20px;
+}
+
 /**
  MEDIA TO ENABLE HOVER STYLES AT BIGGER SCREEN
 */
@@ -609,7 +622,7 @@
     margin-bottom: 34px;
   }
   .buttons_grid {
-    padding: 0 15px;
+    padding: 0 12px;
     justify-content: center;
   }
   .buttons_grid button {

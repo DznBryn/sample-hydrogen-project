@@ -1,0 +1,34 @@
+#!/bin/sh
+
+new_branch=$(git branch --show-current)
+
+# These branches already exist and should always be checked out (and especially not be deleted)
+if [[ $new_branch =~ ^main|ca-main|uk-main|staging$ ]]
+then
+    exit 0
+fi
+
+base_branch=$(git rev-parse --abbrev-ref @{-1})
+base_head=$(git rev-parse @{-1})
+new_head=$(git rev-parse HEAD)
+
+# First check the name of the base branch
+# Then compare the hashes of the last commits
+if [ $base_branch = "staging" ] && [ $base_head = $new_head ]
+then
+    echo ""
+    echo ""
+    echo ""
+    echo "HEY, WAIT!!!!"       
+    echo "-----------------"       
+    echo ""
+    echo "You can not create branches from the staging branch!"
+    echo "SWITCHING BACK to staging and DELETING the new branch..."
+    echo ""
+    echo "-----------------"
+    echo ""
+    echo ""
+    echo ""
+    git checkout staging && git branch -D $new_branch
+    exit 1
+fi

@@ -46,7 +46,8 @@ const SkinQuiz = ({content, quizModel}) => {
   const questionStep =
     questionsState.length > step ? step : questionsState.length - 1;
 
-  const {questionText, answers, multipleChoice} = questionsState[questionStep];
+  const {questionText, answers, multipleChoice, textBoxRaw} =
+    questionsState[questionStep];
 
   const {
     backgroundColor,
@@ -157,6 +158,13 @@ const SkinQuiz = ({content, quizModel}) => {
 
   function handleGetProductByID(_productId) {
     const product = products.find((prod) => prod.handle === _productId);
+    if (!product) {
+      console.log(
+        '%c >> BROKEN PRODUCT << ',
+        'background-color: red; color: white; padding: 5px; border-radius: 3px',
+        _productId,
+      );
+    }
     return product;
   }
 
@@ -253,6 +261,7 @@ const SkinQuiz = ({content, quizModel}) => {
   const mainQuizContent = {
     step,
     questionText,
+    textBoxRaw,
     multipleChoice,
     answers,
     answerState,
