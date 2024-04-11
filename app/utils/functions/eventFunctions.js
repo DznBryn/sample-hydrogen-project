@@ -130,7 +130,7 @@ export function appendScript(src, id = '', isDefer = true, callback) {
 
   if (callback) po.onload = callback;
 
-  document.getElementsByTagName('body')[0].appendChild(po);
+  document.getElementsByTagName('body')?.[0]?.appendChild(po);
 }
 
 export function getMetafields(metafields) {
