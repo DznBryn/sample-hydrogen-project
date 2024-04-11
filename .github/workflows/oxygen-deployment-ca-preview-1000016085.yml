@@ -5,7 +5,7 @@ name: Storefront 1000016085
 on:
   push:
     branches:
-      - ca-main
+      - ca-preview
 
 permissions:
   contents: read
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy to Oxygen CA
+    name: Deploy to Oxygen CA Preview
     timeout-minutes: 30
     if: ${{ contains(github.event.head_commit.message, 'Merge pull request') }}
     runs-on: ubuntu-latest
@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Build and Publish to Oxygen CA
+      - name: Build and Publish to Oxygen CA Preview
         id: deploy
         uses: shopify/oxygenctl-action@v4
         with:
