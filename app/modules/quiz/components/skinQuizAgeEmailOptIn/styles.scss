@@ -26,7 +26,7 @@
 }
 
 .SkinQuizEmailOptIn .footnote {
-  color: #9F9F9F;
+  color: #9f9f9f;
   font-size: 12px;
   font-weight: 300;
 }
@@ -49,7 +49,7 @@
 }
 
 .SkinQuizEmailOptIn .selectWrapper div {
-  margin-right: .5em;
+  margin-right: 0.5em;
 }
 
 .SkinQuizEmailOptIn .selectWrapper div:last-child {
@@ -60,8 +60,8 @@
   position: relative;
 }
 
-.selectWrapper>div::after {
-  content: "▼";
+.selectWrapper > div::after {
+  content: '▼';
   font-size: 10px;
   top: 0px;
   right: 30px;
@@ -88,7 +88,7 @@
 }
 
 .inactiveBtn {
-  color: #4C4E56 !important;
+  color: #4c4e56 !important;
   pointer-events: none !important;
   background-color: #aaa !important;
 }
@@ -99,9 +99,9 @@
 }
 
 .SkinQuizEmailOptIn .skipQuestion {
-  margin: 1em auto;
+  margin: 1em auto 30px;
   text-decoration: underline;
-  color: #aaa;
+  color: #4c4e56;
   font-weight: 700;
   cursor: pointer;
 }
@@ -111,7 +111,7 @@
   max-width: 1040px;
 }
 
-.emailOptIn .form input[type="email"] {
+.emailOptIn .form input[type='email'] {
   height: 57px;
   width: 100%;
   padding: 1em;
@@ -129,8 +129,8 @@
   color: inherit;
 }
 
-.emailOptinCheckbox input:checked~.checkmark {
-  background-color: #47C6D9;
+.emailOptinCheckbox input:checked ~ .checkmark {
+  background-color: #47c6d9;
 }
 
 .infoText {
@@ -138,7 +138,7 @@
   font-size: 12px;
   line-height: 16px;
   color: rgba(76, 78, 86, 0.8);
-  margin-top: 8px;
+  margin: 0 0 27px;
   text-align: left !important;
 }
 
@@ -173,21 +173,21 @@
   border: 1px solid #6fd2e0;
 }
 
-.emailOptinCheckbox .container:hover input~.checkmark {
+.emailOptinCheckbox .container:hover input ~ .checkmark {
   background-color: #fff;
 }
 
-.emailOptinCheckbox .container input:checked~.checkmark {
-  background-color: #47C6D9;
+.emailOptinCheckbox .container input:checked ~ .checkmark {
+  background-color: #47c6d9;
 }
 
 .emailOptinCheckbox .checkmark:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
 
-.emailOptinCheckbox .container input:checked~.checkmark:after {
+.emailOptinCheckbox .container input:checked ~ .checkmark:after {
   display: block;
 }
 
@@ -210,6 +210,10 @@
 @media all and (max-width: 768px) {
   .SkinQuizEmailOptIn .dek {
     width: calc(100% - 30px);
+  }
+
+  .SkinQuizEmailOptIn .skipQuestion {
+    margin-top: 0;
   }
 
   .SkinQuizEmailOptIn .emailOptIn {

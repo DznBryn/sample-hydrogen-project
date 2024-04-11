@@ -387,4 +387,12 @@
   .resultsProductGrid .infoContainer a {
     font-size: 14px !important;
   }
+
+  .resultsProductGrid .productWrapper:nth-child(even) {
+    background-color: #f1f1f2;
+  }
+
+  .resultsProductGrid .productWrapper:last-child() {
+    background-color: #ecf9fb;
+  }
 }

@@ -120,6 +120,7 @@
 .subcriptionDelivery {
   width: 100%;
   height: auto;
+  margin-top: 1rem;
   margin-bottom: 1rem;
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));

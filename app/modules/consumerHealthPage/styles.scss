@@ -1,0 +1,52 @@
+.consumer-health_container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 130px 10%;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+
+.health_main_title {
+  font-weight: 800;
+  font-size: 24px;
+  color: #4c4e56;
+  margin-bottom: 51px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.health-date {
+  margin-bottom: 12px;
+}
+
+.health_title {
+  color: #48c6d9;
+  font-weight: 800;
+  font-size: 16px;
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+
+.consumer-health_containe > div {
+  text-align: center;
+}
+
+.health-box p {
+  margin-bottom: 12px;
+}
+
+.health-box ul > li {
+  margin-left: 16px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+  .health_main_title {
+    font-size: 30px;
+  }
+
+  .consumer-health_container {
+    padding: 100px 16px 60px;
+  }
+}

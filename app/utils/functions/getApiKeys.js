@@ -278,7 +278,10 @@ export function getEnv() {
       host.includes('tula-hydroxy-ca')
     ) {
       return 'CA_PROD';
-    } else if (host.includes('tulaskincare.co.uk')) {
+    } else if (
+      host.includes('tulaskincare.co.uk') ||
+      host.includes('tula-hydroxy-uk')
+    ) {
       return 'UK_PROD';
     } else if (host.includes('tula.com')) {
       return 'US_PROD';
