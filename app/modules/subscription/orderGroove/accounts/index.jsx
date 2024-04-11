@@ -10,6 +10,7 @@ import {
   getCustomerOrders,
   getCustomerSubscription,
   getItems,
+  getSubscriptionPayments,
 } from '~/utils/services/subscription';
 import ModalGeneric from '~/modules/modalGeneric';
 import DatePicker from 'react-date-picker';
@@ -58,13 +59,19 @@ export const handleUpdateCustomerSubcription = async (
   {customer, updateCustomerSubscription},
   callback,
 ) => {
-  const [activeSubscription, inactiveSubscription, subscriptionOrders, items] =
-    await Promise.all([
-      getCustomerSubscription(order.customer, true),
-      getCustomerSubscription(order.customer),
-      getCustomerOrders(order.customer),
-      getItems(order.customer),
-    ]);
+  const [
+    activeSubscription,
+    inactiveSubscription,
+    subscriptionOrders,
+    items,
+    payments,
+  ] = await Promise.all([
+    getCustomerSubscription(order.customer, true),
+    getCustomerSubscription(order.customer),
+    getCustomerOrders(order.customer),
+    getItems(order.customer),
+    getSubscriptionPayments(order.customer),
+  ]);
 
   inactiveSubscription &&
     (customer.subscription.inactive = inactiveSubscription);
@@ -76,6 +83,11 @@ export const handleUpdateCustomerSubcription = async (
         const subscription = activeSubscription.results.find(
           (sub) => sub.public_id === item.subscription,
         );
+        const payment = payments?.results?.find(
+          (pay) => pay.public_id === subscription.payment,
+        );
+
+        subscription.payment = payment;
         item.subscription = subscription;
       }
 
@@ -104,6 +116,7 @@ export const handleUpdateCustomerSubcription = async (
 
 const AccountSubscription = ({active}) => {
   const {data} = useStore((store) => store?.account ?? null);
+
   return (
     <div className={active === 1 ? 'menuWrapper' : 'menuWrapper hidden'}>
       <div id="autoTab">
@@ -138,23 +151,29 @@ const AccountSubscription = ({active}) => {
                   <b>Upcoming Shipments</b>
                 </h3>
                 <ul>
-                  {data.subscription?.orders?.results?.map((order, index) =>
-                    order?.items?.length > 0 ? (
-                      <ActiveProductItem
-                        key={`active-${order.public_id}-${index}`}
-                        {...{
-                          address: data.subscription.addresses.results.find(
-                            (address) =>
-                              address.public_id === order?.shipping_address,
-                          ),
-                          order,
-                          items: order?.items ?? [],
-                        }}
-                      />
-                    ) : (
-                      <></>
-                    ),
-                  )}
+                  {data.subscription?.orders?.results
+                    ?.sort((a, b) => {
+                      const dateA = new Date(a.place);
+                      const dateB = new Date(b.place);
+                      return dateA - dateB;
+                    })
+                    .map((order, index) =>
+                      order?.items?.length > 0 ? (
+                        <ActiveProductItem
+                          key={`active-${order.public_id}-${index}`}
+                          {...{
+                            address: data.subscription.addresses.results.find(
+                              (address) =>
+                                address.public_id === order?.shipping_address,
+                            ),
+                            order,
+                            items: order?.items ?? [],
+                          }}
+                        />
+                      ) : (
+                        <></>
+                      ),
+                    )}
                 </ul>
               </div>
             )}
