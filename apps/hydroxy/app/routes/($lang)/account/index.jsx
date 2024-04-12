@@ -74,7 +74,7 @@ export async function action({request, context}) {
     return await logout({request, context}, true);
   }
   // SUBSCRIPTION
-  if (formAction.includes('SUBSCRIPTION')) {
+  if (formAction?.includes('SUBSCRIPTION')) {
     if (formAction === 'SUBSCRIPTION_REACTIVATE') {
       const resubscribe = {
         public_id: formData.get('publicId'),
