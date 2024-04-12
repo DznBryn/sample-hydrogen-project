@@ -42,7 +42,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install dependencies
-        run: npm install ci
+        run: npm ci
 
       - name: Build and Publish to Oxygen Staging
         id: deploy
