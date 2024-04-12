@@ -15,10 +15,12 @@ jobs:
   deploy-hydrogen:
     name: Deploy to Oxygen Staging
     timeout-minutes: 30
-
     if: ${{ contains(github.event.head_commit.message, 'Merge pull request') }}
-
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./apps/hydroxy
+
     steps:
       - uses: actions/checkout@v3
 
@@ -49,7 +51,7 @@ jobs:
         uses: shopify/oxygenctl-action@v4
         with:
           oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000005119 }}
-          build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL npm run build:hydroxy"
+          build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL npm run build"
           # build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL npm run build:hydroxy"
   
   deploy-sanity:
