@@ -1,0 +1,73 @@
+export default {
+  name: 'OurStoryAndFounder',
+  description: '',
+  type: 'document',
+  title: 'OurStoryAndFounder',
+  fields: [
+    {
+      title: 'Name',
+      name: 'name',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SectionOneImageLeft',
+      name: 'sectionOneImageLeft',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'SectionOneImageRight',
+      name: 'sectionOneImageRight',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'SectionThreeImage',
+      name: 'sectionThreeImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'SectionFourImage',
+      name: 'sectionFourImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'ContentSectionOne',
+      name: 'contentSectionOne',
+      description: '',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+    {
+      title: 'ContentSectionTwo',
+      name: 'contentSectionTwo',
+      description: '',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+    {
+      title: 'ContentSectionThree',
+      name: 'contentSectionThree',
+      description: '',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+    {
+      title: 'ContentSectionFour',
+      name: 'contentSectionFour',
+      description: '',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+    {
+      title: 'ContentSectionFive',
+      name: 'contentSectionFive',
+      description: '',
+      type: 'array',
+      of: [{type: 'block'}],
+    },
+  ],
+}

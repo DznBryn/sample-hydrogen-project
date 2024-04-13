@@ -111,3 +111,5 @@ yarn.lock
 /app/.DS_Store
 /app/routes/.DS_Store
 /app/routes/($lang)/.DS_Store
+
+.sanity/
