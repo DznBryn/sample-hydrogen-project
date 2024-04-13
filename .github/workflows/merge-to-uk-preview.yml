@@ -1,0 +1,36 @@
+# Don't change the line below!
+#! oxygen_storefront_id: 1000016926
+
+name: Storefront 1000016926
+on:
+  pull_request:
+    branches:
+      - uk-main
+
+jobs:
+  deploy-preview:
+    name: Merge to UK preview
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    env:
+      TARGET: uk-preview
+      BRANCH_NAME: ${{ github.head_ref }} 
+
+    steps:
+    - run: echo $TARGET 
+    - run: echo $BRANCH_NAME 
+
+    - uses: actions/checkout@v3
+
+    - name: Set Git config
+      run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+          
+    - name: Merge master back to dev
+      run: |
+          git fetch --unshallow
+          git checkout uk-preview
+          git pull
+          git merge --no-ff $BRANCH_NAME -m "Auto-merge $BRANCH_NAME to uk-preview"
+          git push
