@@ -3,9 +3,11 @@
 
 name: Storefront 1000016926
 on:
-  push:
+  pull_request:
+    types:
+      - opened
     branches:
-      - uk-preview
+      - uk-main
 
 permissions:
   contents: read
