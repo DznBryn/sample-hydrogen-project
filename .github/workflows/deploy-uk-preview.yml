@@ -4,9 +4,6 @@
 name: Storefront 1000016926
 on:
   pull_request:
-    types:
-      - opened
-      - edited
     branches:
       - uk-main
 
