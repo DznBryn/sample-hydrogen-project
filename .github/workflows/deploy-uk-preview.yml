@@ -7,8 +7,46 @@ on:
     branches:
       - uk-main
 
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
-  test:
+  deploy-hydrogen:
+    name: Deploy to Oxygen UK Preview
+    timeout-minutes: 30
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo yo
+      - uses: actions/checkout@v3
+
+      - name: Setup node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          check-latest: true
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish to Oxygen UK Preview
+        id: deploy
+        uses: shopify/oxygenctl-action@v4
+        with:
+          oxygen_worker_dir: "./apps/hydroxy/dist/worker"
+          oxygen_client_dir: "./apps/hydroxy/dist/client"
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000016926 }}
+          build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL npm run build:hydroxy"
