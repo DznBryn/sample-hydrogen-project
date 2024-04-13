@@ -9,7 +9,7 @@ on:
 
 jobs:
   deploy-preview:
-    name: Merge to UK preview
+    name: Merge into UK preview
     timeout-minutes: 30
     runs-on: ubuntu-latest
     env:
@@ -17,9 +17,6 @@ jobs:
       BRANCH_NAME: ${{ github.head_ref }} 
 
     steps:
-    - run: echo $TARGET 
-    - run: echo $BRANCH_NAME 
-
     - uses: actions/checkout@v3
 
     - name: Set Git config
@@ -30,7 +27,7 @@ jobs:
     - name: Merge master back to dev
       run: |
           git fetch --unshallow
-          git checkout uk-preview
+          git checkout $TARGET
           git pull
-          git merge --no-ff $BRANCH_NAME -m "Auto-merge $BRANCH_NAME to uk-preview"
+          git merge --no-ff origin/$BRANCH_NAME -m "Auto-merge $BRANCH_NAME to uk-preview"
           git push
