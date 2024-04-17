@@ -177,7 +177,12 @@ const EyeQuiz = ({content}) => {
     handleAnswersSubmit,
   };
 
-  let resultContent = {setRangeAge, resultState, handleGetProductByID};
+  let resultContent = {
+    setRangeAge,
+    resultState,
+    handleGetProductByID,
+    submitType: 'onlySubscribe',
+  };
 
   if (Object.keys(resultState).length) {
     const {answersArr} = getResult();

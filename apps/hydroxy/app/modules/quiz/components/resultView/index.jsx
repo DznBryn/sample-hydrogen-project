@@ -31,6 +31,7 @@ const ResultView = ({content}) => {
     multipleChoiceState,
     advancedResultsState,
     advancedQuizContent,
+    submitType,
   } = content;
 
   const provisionalH2 = advancedQuizContent
@@ -86,6 +87,7 @@ const ResultView = ({content}) => {
         setRangeAge={setRangeAge}
         quizAnswers={answers}
         concatResults={getLTPostResult()}
+        submitType={submitType}
       />
 
       <section className="quizResults">
