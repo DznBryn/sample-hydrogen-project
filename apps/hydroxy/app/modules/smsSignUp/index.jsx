@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import PortableTextCustom from '../portableTextCustom';
 import {appendScript} from '~/utils/functions/eventFunctions';
+import {postScriptSmsAdd} from '~/utils/services/postscript';
 import styles from './styles.css';
 
 export const links = () => {
@@ -15,37 +16,11 @@ const SMSSignUp = ({content}) => {
     setIsModalOpen(true);
 
     const phoneNumber = document.getElementById('phonenumberfield').value;
-
-    if (typeof window === 'object') {
-      window
-        .createPostscriptSubscriber(phoneNumber)
-        .catch((error) =>
-          console.log(
-            'Not able to create postscript customer with the phone',
-            phoneNumber,
-            'Error',
-            error,
-          ),
-        );
-    }
+    postScriptSmsAdd(phoneNumber);
   };
 
   useEffect(() => {
     if (window.document) {
-      if (
-        document.querySelector(
-          'script[src=\'https://sdk.postscript.io/sdk.bundle.js?shopId=273330\']',
-        )
-      ) {
-        let addPSScript = setInterval(() => {
-          document
-            .querySelector(
-              'script[src=\'https://sdk.postscript.io/sdk.bundle.js?shopId=273330\']',
-            )
-            .remove();
-          clearInterval(addPSScript);
-        }, 200);
-      }
       appendScript(
         'https://sdk.postscript.io/sdk.bundle.js?shopId=272499',
       )?.then(() => {});
