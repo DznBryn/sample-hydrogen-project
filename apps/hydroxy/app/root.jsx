@@ -146,8 +146,9 @@ export async function loader({context, request}) {
       showSliderCart: checkShowSliderCart(request),
       previewMode: context.session.get('previewMode') === 'true',
       ...CMSData,
-      PUBLIC_ENVS: {
+      ENVS: {
         SITE_NAME: context.env.SITE_NAME,
+        PAYMENT_PLAN_VENDOR: context.env.PAYMENT_PLAN_VENDOR,
       },
     },
     {
@@ -298,8 +299,6 @@ export function ErrorBoundary() {
  */
 
 function RootStructure({children}) {
-  const data = useLoaderData();
-
   //
 
   return (
@@ -313,11 +312,6 @@ function RootStructure({children}) {
         {children}
         <ScrollRestoration />
         <Scripts />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.ENV)}`,
-          }}
-        />
       </body>
     </html>
   );

@@ -1,10 +1,10 @@
 import React from 'react';
 import {submitFooterContact} from '~/utils/functions/listrakFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {PortableText} from '@portabletext/react';
+import {handleSignUpTracking} from '~/utils/functions/eventFunctions';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
-import {handleSignUpTracking} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -34,6 +34,7 @@ const SuccessIcon = () => (
 );
 
 const EmailSmsSignup = ({emailSmsSignupContent}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const communication = emailSmsSignupContent;
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   // const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -86,7 +87,7 @@ const EmailSmsSignup = ({emailSmsSignupContent}) => {
     handleSignUpTracking('footer', emailRef?.current?.value);
     if (!emailRef.current.classList.contains('hide')) {
       if (emailRef.current.value.match(emailRegex)) {
-        const isUK = getApiKeys().CURRENT_ENV.includes('UK');
+        const isUK = ENVS?.SITE_NAME.includes('UK');
 
         if (!isUK) {
           headerBeforeEmailSubmit.current.style.display = 'none';

@@ -1,19 +1,24 @@
 import React, {useState, useRef, useEffect} from 'react';
-import GetApiKeys from '~/utils/functions/getApiKeys';
 import classNames from 'classnames/bind';
 import {
   getCookie,
   isInfluencerLink,
   createCookie,
 } from '~/utils/functions/eventFunctions';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
+//
+
 const SiteSwitcher = ({isMobile}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const currentSite = useRef(getCurrentSite());
   const [isOptionsOpened, setIsOptionsOpened] = useState(false);
 
@@ -51,7 +56,7 @@ const SiteSwitcher = ({isMobile}) => {
   };
 
   function getCurrentSite() {
-    const curEnv = GetApiKeys().CURRENT_ENV;
+    const curEnv = ENVS?.SITE_NAME;
 
     if (curEnv.includes('CA')) return 'canada';
     if (curEnv.includes('US')) return 'unitedStates';
@@ -118,10 +123,13 @@ const SiteSwitcher = ({isMobile}) => {
   );
 };
 
+//
+
 export const SiteSwitcherPopUp = () => {
+  const {ENVS} = useRouteLoaderData('root');
   const [isOpen, setIsOpen] = useState(false);
   const [environment, setEnvironment] = useState(null);
-  const currentEnv = GetApiKeys().CURRENT_ENV;
+  const currentEnv = ENVS?.SITE_NAME;
 
   useEffect(() => {
     checkLocateAndEnv();
