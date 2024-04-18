@@ -22,7 +22,6 @@ function getApiKeys() {
         AUDIOEYE_URL:
           'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
         OG_KEY: ogKeys.US.AD20,
-        YOTPO_KEY: 'C0xryJ2odYUmfvBx6EmyD1JP9cAQPAjNA1KBWKwd',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
         GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -83,7 +82,6 @@ function getApiKeys() {
         AUDIOEYE_URL:
           'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
         OG_KEY: ogKeys.US.AD20,
-        YOTPO_KEY: 'C0xryJ2odYUmfvBx6EmyD1JP9cAQPAjNA1KBWKwd',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
         GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -141,7 +139,6 @@ function getApiKeys() {
         AUDIOEYE_URL:
           'https://customer-portal.audioeye.com/accessibility-statement.html?domain=tulaskincare.ca',
         OG_KEY: ogKeys.CA.AD20,
-        YOTPO_KEY: 'oyOGMszxVLKBCAkDrwDJVKw2huWE5begXY836FaN',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=XFjQ0i6x3CEB&v=1',
         GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -193,7 +190,6 @@ function getApiKeys() {
         AUDIOEYE_URL:
           'https://customer-portal.audioeye.com/accessibility-statement.html?domain=tulaskincare.co.uk',
         OG_KEY: ogKeys.UK.AD20,
-        YOTPO_KEY: 'hMVU5uRCT6zhUr2SOSA7rflNcZmjs5ZlTaSOzjWx',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=WXn2lO0vrk3n&v=1',
         GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

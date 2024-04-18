@@ -63,8 +63,14 @@ const PageMeta = () => {
 
       <script
         defer
-        src={`https://staticw2.yotpo.com/${getApiKeys().YOTPO_KEY}/widget.js`}
+        src={`https://staticw2.yotpo.com/${ENVS?.YOTPO_KEY}/widget.js`}
       ></script>
+
+      <link
+        rel="stylesheet"
+        href={`https://staticw2.yotpo.com/${ENVS?.YOTPO_KEY}/widget.css?widget_version=2022-10-06_07-58-33`}
+        media="screen"
+      />
 
       <meta
         name="google-site-verification"
