@@ -145,6 +145,7 @@ export async function loader({context, request}) {
         YOTPO_KEY: context.env.YOTPO_KEY,
         GOOGLE_SITE_VERIFICATION_ID: context.env.GOOGLE_SITE_VERIFICATION_ID,
         YOTTA_KEY: context.env.YOTTA_KEY,
+        YOTPO_LOYALTY_GUID: context.env.YOTPO_LOYALTY_GUID,
       },
     },
     {

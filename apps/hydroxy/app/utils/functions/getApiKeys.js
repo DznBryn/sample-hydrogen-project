@@ -46,7 +46,6 @@ function getApiKeys() {
           fieldName: 7810,
         },
         YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
-        YOTPO_LOYALTY_GUID: 'qfEoWaPmtkBoUMwPAGu1ow',
         YOTPO_LOYALTY_WIDGETS: {
           // receipt_uploader: '264193',
         },
@@ -102,7 +101,6 @@ function getApiKeys() {
           fieldName: 7810,
         },
         YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
-        YOTPO_LOYALTY_GUID: 'qfEoWaPmtkBoUMwPAGu1ow',
         GIFT_CARD_ID: 33630516353,
         GIFT_CARDS_VARIANTS_IDS: [
           33630516353, 33630516417, 34008161345, 34008182785, 30290305187886,
@@ -155,7 +153,6 @@ function getApiKeys() {
           fieldName: 26307,
         },
         YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
-        YOTPO_LOYALTY_GUID: 'BQyPisPfp0K9qSSRoSTM9Q',
         GIFT_CARD_ID: 42936398807263,
         GIFT_CARDS_VARIANTS_IDS: [
           42936398807263, 42936398840031, 42936398872799, 42936398905567,
@@ -203,7 +200,6 @@ function getApiKeys() {
           fieldName: 26886,
         },
         YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
-        YOTPO_LOYALTY_GUID: 'xpVaGpCDsSJoAZoBLKuxig',
         GIFT_CARD_ID: 7781918540017,
         GIFT_CARDS_VARIANTS_IDS: [
           43180565561585, 43180565627121, 43180565659889, 43180565692657,
