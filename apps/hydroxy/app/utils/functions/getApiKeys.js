@@ -37,7 +37,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GLADLY_EMBED_CONFIG: {appId: 'tula.com'},
         GOOGLE_SITE_VERIFICATION_ID:
           'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
         RETURNS_HREF: 'https://returns.tula.com/',
@@ -97,7 +96,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GLADLY_EMBED_CONFIG: {appId: 'tula.com'},
         GOOGLE_SITE_VERIFICATION_ID:
           'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
         RETURNS_HREF: 'https://returns.tula.com/',
@@ -154,7 +152,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GLADLY_EMBED_CONFIG: {appId: 'tula.com-canada'},
         GOOGLE_SITE_VERIFICATION_ID:
           'CXLFa98xjLun0wo4c4Fm9Nk21ZwpFiM5sRLIHL-Bzvc',
         RETURNS_HREF: 'https://returns.tulaskincare.ca/',
@@ -205,7 +202,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GLADLY_EMBED_CONFIG: {appId: 'tula.com-canada'},
         GOOGLE_SITE_VERIFICATION_ID:
           '3fu79kDaiqWI3f6z55q1ZqEe3ENsbGWLDOoKR7PJmuI',
         RETURNS_HREF:
