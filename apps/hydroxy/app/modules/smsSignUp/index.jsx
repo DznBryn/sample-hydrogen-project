@@ -16,7 +16,7 @@ const SMSSignUp = ({content}) => {
     setIsModalOpen(true);
 
     const phoneNumber = document.getElementById('phonenumberfield').value;
-    postScriptSmsAdd(phoneNumber);
+    postScriptSmsAdd(phoneNumber, 'TULASMSPAGE');
   };
 
   useEffect(() => {

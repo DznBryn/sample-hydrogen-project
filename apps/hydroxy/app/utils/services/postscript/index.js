@@ -1,7 +1,7 @@
-export async function postScriptSmsAdd(phoneNumber) {
+export async function postScriptSmsAdd(phoneNumber, keyword) {
     const url = 'https://api.postscript.io/api/v2/subscribers';
     const data = {
-      keyword: 'TULASMS',
+      keyword: `${keyword}`,
       phone_number: `${phoneNumber.toString()}`,
     };
   
