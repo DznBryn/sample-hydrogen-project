@@ -17,7 +17,6 @@ function getApiKeys() {
   switch (getEnv()) {
     case 'US_STG':
       return {
-        CURRENT_ENV: 'US_STG',
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 39694764015662,
         AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
@@ -80,7 +79,6 @@ function getApiKeys() {
 
     case 'US_PROD':
       return {
-        CURRENT_ENV: 'US_PROD',
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 39694764015662,
         AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
@@ -140,7 +138,6 @@ function getApiKeys() {
 
     case 'CA_PROD':
       return {
-        CURRENT_ENV: 'CA_PROD',
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 40953533268141,
         AUDIOEYE_HASH: 'd5f4121320cf7d960ef0d5088649aff4',
@@ -194,7 +191,6 @@ function getApiKeys() {
 
     case 'UK_PROD':
       return {
-        CURRENT_ENV: 'UK_PROD',
         CURRENCY_SYMBOL: '£',
         CLOVERLY_ID: 40953533268141,
         AUDIOEYE_HASH: 'b2ff5a33ddb224387e0a0961f30fe6a0',
@@ -253,7 +249,7 @@ function getApiKeys() {
   }
 }
 
-export function getEnv() {
+function getEnv() {
   /**
    * I made this function to keep the apiGetEnv as a function.
    * Here, we are checking the domain to define the enviroment

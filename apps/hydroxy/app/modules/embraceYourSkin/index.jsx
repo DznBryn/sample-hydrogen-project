@@ -1,12 +1,19 @@
 import {useEffect} from 'react';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
+
 import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
+//
+
 const EmbraceYourSkin = ({content}) => {
+  const {ENVS} = useRouteLoaderData('root');
+
   useEffect(() => {
     if (window.yotpo) {
       window.yotpo.refreshWidgets();
@@ -15,7 +22,7 @@ const EmbraceYourSkin = ({content}) => {
 
   return (
     <div className={'eysPage minHeight'}>
-      {getApiKeys().CURRENT_ENV.includes('US') ? (
+      {ENVS?.SITE_NAME.includes('US') ? (
         <div className={'hero'}>
           <video autoPlay loop muted playsInline controls="controls">
             <source
@@ -287,7 +294,7 @@ const EmbraceYourSkin = ({content}) => {
           </strong>
           <sup>6</sup>
         </p>
-        {getApiKeys().CURRENT_ENV.includes('US') && (
+        {ENVS?.SITE_NAME.includes('US') && (
           <p>
             This year, we&apos;re continuing to lead the conversation within the
             industry &amp; our
@@ -399,9 +406,8 @@ const EmbraceYourSkin = ({content}) => {
         </ol>
         <p>
           <em>
-            *brand survey of 3,800{' '}
-            {!getApiKeys().CURRENT_ENV.includes('US') && 'U.S '}customers
-            conducted in August, 2021
+            *brand survey of 3,800 {!ENVS?.SITE_NAME.includes('US') && 'U.S '}
+            customers conducted in August, 2021
           </em>
         </p>
       </div>

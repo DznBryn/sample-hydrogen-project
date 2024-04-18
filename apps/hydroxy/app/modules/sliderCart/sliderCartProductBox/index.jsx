@@ -1,11 +1,11 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
-import {Link, useFetcher} from '@remix-run/react';
+import {Link, useFetcher, useRouteLoaderData} from '@remix-run/react';
 import {useCartActions} from '../../../hooks/useCart';
 import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {Image, flattenConnection, parseGid} from '@shopify/hydrogen';
 import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
-import getApiKeys, {getEnv} from '~/utils/functions/getApiKeys';
+import getApiKeys from '~/utils/functions/getApiKeys';
 import styles from './styles.css';
 import {PortableText} from '@portabletext/react';
 
@@ -182,6 +182,7 @@ const RegularProduct = ({
   product,
   cartPageConfig,
 }) => {
+  const {ENVS} = useRouteLoaderData('root');
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
@@ -189,6 +190,8 @@ const RegularProduct = ({
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
   );
+
+  //
 
   return (
     <div className={'sliderCartProduct'}>
@@ -226,7 +229,7 @@ const RegularProduct = ({
 
           {!isNaN(Number(item?.cost?.totalAmount?.amount)) &&
           customerId !== '' &&
-          getEnv() !== 'CA_PROD' ? (
+          ENVS?.SITE_NAME !== 'CA_PROD' ? (
             <YotpoProductPrice
               price={
                 (item.sellingPlanAllocation

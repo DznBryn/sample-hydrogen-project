@@ -9,6 +9,7 @@ import AccountSubscription, {
   links as subscriptionStyles,
 } from '~/modules/subscription/orderGroove/accounts';
 import {useYotpo} from '~/hooks/useYotpo';
+import {useRouteLoaderData} from '@remix-run/react';
 
 export function links() {
   return [
@@ -45,11 +46,11 @@ function Header({data}) {
 }
 
 function Tabs({data}) {
+  const {ENVS} = useRouteLoaderData('root');
   const showRewardsTab =
-    getApiKeys().FEATURE_FLAGS.LOYALTY &&
-    getApiKeys().CURRENT_ENV.includes('US');
+    getApiKeys().FEATURE_FLAGS.LOYALTY && ENVS?.SITE_NAME.includes('US');
   const showAddressTab = true;
-  const showReferralTab = getApiKeys().CURRENT_ENV.includes('US');
+  const showReferralTab = ENVS?.SITE_NAME.includes('US');
   const [active, setActive] = useState(1);
   const {refreshWidgets} = useYotpo();
 

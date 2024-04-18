@@ -178,7 +178,8 @@ const SkinQuizAgeEmailOptIn = ({
       age =
         rangeAge < 20
           ? 'teens'
-          : `${rangeAge > 40 ? '50\'s+' : rangeAge + '\'s'}`;
+          : // eslint-disable-next-line quotes
+            `${rangeAge > 40 ? "50's+" : rangeAge + "'s"}`;
     }
     return age;
   }

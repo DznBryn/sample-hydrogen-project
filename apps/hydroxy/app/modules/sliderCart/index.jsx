@@ -7,14 +7,10 @@ import {
   updateListrakCart,
 } from '../../utils/functions/eventFunctions';
 import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
-
 import {useCustomerState} from '../../hooks/useCostumer';
 import {PortableText} from '@portabletext/react';
 import getApiKeys from '../../utils/functions/getApiKeys';
 import LoadingSkeleton from '../loadingSkeleton';
-
-import styles from './styles.css';
-
 import ProgressBar from './modules/ProgressBar';
 import Checkout from './modules/Checkout';
 import LoyaltyTooltipModal from './modules/LoyaltyTooltipModal';
@@ -32,6 +28,11 @@ import Banner, {
 import {flattenConnection, parseGid} from '@shopify/hydrogen';
 import {useFetcher} from '@remix-run/react';
 import {API_METHODS, FETCHER} from '~/utils/constants';
+import {useRouteLoaderData} from '@remix-run/react';
+
+import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [
@@ -42,11 +43,14 @@ export const links = () => {
   ];
 };
 
+//
+
 const apiType = getApiKeys().API_TYPE;
 
 let prevState = null;
 
 const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const productRecList = recommendations;
   const cart = useStore((store) => store?.cart?.data ?? {});
   const {
@@ -363,7 +367,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   });
 
   async function getCustomerData() {
-    const env = getApiKeys().CURRENT_ENV;
+    const env = ENVS?.SITE_NAME;
     const data = {email, customerId: id, env, useCache: false};
 
     if (email || id) {
@@ -462,6 +466,7 @@ const CartContent = ({
   isAbleToRedeem,
   ...props
 }) => {
+  const {ENVS} = useRouteLoaderData('root');
   const [showModal, setShowModal] = useState(false);
   const account = useStore((store) => store?.account?.data ?? {});
   const cart = useStore((store) => store?.cart?.data ?? {});
@@ -541,7 +546,7 @@ const CartContent = ({
           </span>
         </div>
       )}
-      {getApiKeys().CURRENT_ENV.includes('US') && (
+      {ENVS?.SITE_NAME.includes('US') && (
         <Banner
           loggedIn={account?.id !== ''}
           points={Math.floor(totalCart) * 10}
@@ -574,37 +579,43 @@ const CartContent = ({
   );
 };
 
-const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => (
-  <>
-    <div className={'cartHeader'}>
-      <div className={'cartHeader_title'}>
-        {cartConfig?.emptyCartMessageRaw?.[0] ? (
-          <PortableText value={[cartConfig?.emptyCartMessageRaw?.[0]]} />
-        ) : (
-          <p>Your Cart Is Currently Empty</p>
+const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => {
+  const {ENVS} = useRouteLoaderData('root');
+
+  //
+
+  return (
+    <>
+      <div className={'cartHeader'}>
+        <div className={'cartHeader_title'}>
+          {cartConfig?.emptyCartMessageRaw?.[0] ? (
+            <PortableText value={[cartConfig?.emptyCartMessageRaw?.[0]]} />
+          ) : (
+            <p>Your Cart Is Currently Empty</p>
+          )}
+        </div>
+        <div className={'cartClose'} onClick={handleClick}>
+          CLOSE
+        </div>
+      </div>
+
+      <div className={'emptyCart'}>
+        {ENVS?.SITE_NAME.includes('US') && (
+          <Banner loggedIn={isLoggedIn} isEmpty />
         )}
+        <SkinQuizCartBanner />
       </div>
-      <div className={'cartClose'} onClick={handleClick}>
-        CLOSE
-      </div>
-    </div>
 
-    <div className={'emptyCart'}>
-      {getApiKeys().CURRENT_ENV.includes('US') && (
-        <Banner loggedIn={isLoggedIn} isEmpty />
-      )}
-      <SkinQuizCartBanner />
-    </div>
+      <SliderCartRec
+        productRecs={productRecList}
+        limit={1}
+        gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
+      />
 
-    <SliderCartRec
-      productRecs={productRecList}
-      limit={1}
-      gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
-    />
-
-    <Checkout message="Start Shopping" url="/collections/all" isEmpty />
-  </>
-);
+      <Checkout message="Start Shopping" url="/collections/all" isEmpty />
+    </>
+  );
+};
 
 const ItemsList = ({
   cartConfig,
@@ -613,6 +624,7 @@ const ItemsList = ({
   productRecList,
   ...props
 }) => {
+  const {ENVS} = useRouteLoaderData('root');
   const cart = useStore((store) => store?.cart?.data ?? {});
   const items = cart?.lines ? flattenConnection(cart?.lines) : [];
   const getRecItemsLimit = () => {
@@ -784,7 +796,7 @@ const ItemsList = ({
         items={items}
         gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
       />
-      {getApiKeys().CURRENT_ENV.includes('US') && (
+      {ENVS?.SITE_NAME.includes('US') && (
         <div className={'discount'}>
           *300 rewards points applicable for every new Auto Delivery
           subscription
