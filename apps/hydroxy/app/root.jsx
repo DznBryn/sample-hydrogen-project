@@ -147,6 +147,7 @@ export async function loader({context, request}) {
         YOTTA_KEY: context.env.YOTTA_KEY,
         YOTPO_LOYALTY_GUID: context.env.YOTPO_LOYALTY_GUID,
         GTM_ID: context.env.GTM_ID,
+        POSTSCRIPT_ID: context.env.POSTSCRIPT_ID,
       },
     },
     {

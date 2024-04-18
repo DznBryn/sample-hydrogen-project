@@ -22,11 +22,6 @@ function getApiKeys() {
         OG_KEY: ogKeys.US.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
-        GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
         GLADLY_CONFIG: {
           api: 'https://us-1.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -53,9 +48,6 @@ function getApiKeys() {
           OtSDKStub: 'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js',
           domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd',
           otButtonMessage: 'Your Privacy Choices',
-        },
-        POSTSCRIPT: {
-          shopId: 272499,
         },
         FEATURE_FLAGS: {
           LOYALTY: true,
@@ -70,11 +62,6 @@ function getApiKeys() {
         OG_KEY: ogKeys.US.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
-        GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
         GLADLY_CONFIG: {
           api: 'https://us-1.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -102,9 +89,6 @@ function getApiKeys() {
           domain_script: '7df3cc93-89e6-4e2d-b2d6-bbb988cb41dd',
           otButtonMessage: 'Your Privacy Choices',
         },
-        POSTSCRIPT: {
-          shopId: 272499,
-        },
         FEATURE_FLAGS: {
           LOYALTY: true,
         },
@@ -118,11 +102,6 @@ function getApiKeys() {
         OG_KEY: ogKeys.CA.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=XFjQ0i6x3CEB&v=1',
-        GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                    })(window,document,'script','dataLayer','GTM-MPMHT3S');`,
         GLADLY_CONFIG: {
           api: 'https://tula.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -144,9 +123,6 @@ function getApiKeys() {
           42936398938335,
         ],
         SHOW_FIREWORK: false,
-        POSTSCRIPT: {
-          shopId: 272832,
-        },
         FEATURE_FLAGS: {
           LOYALTY: false,
         },
@@ -160,11 +136,6 @@ function getApiKeys() {
         OG_KEY: ogKeys.UK.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=WXn2lO0vrk3n&v=1',
-        GA_SCRIPT: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                            })(window,document,'script','dataLayer','GTM-N4P454X');`,
         GLADLY_CONFIG: {
           api: 'https://tula.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
