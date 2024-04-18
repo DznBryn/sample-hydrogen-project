@@ -149,6 +149,7 @@ export async function loader({context, request}) {
       ENVS: {
         SITE_NAME: context.env.SITE_NAME,
         PAYMENT_PLAN_VENDOR: context.env.PAYMENT_PLAN_VENDOR,
+        AUDIOEYE_HASH: context.env.AUDIOEYE_HASH,
       },
     },
     {

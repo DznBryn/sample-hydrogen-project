@@ -19,7 +19,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 39694764015662,
-        AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
         AUDIOEYE_URL:
           'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
         OG_KEY: ogKeys.US.AD20,
@@ -81,7 +80,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 39694764015662,
-        AUDIOEYE_HASH: '686e7679eb385409922a704c9434649d',
         AUDIOEYE_URL:
           'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
         OG_KEY: ogKeys.US.AD20,
@@ -140,7 +138,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 40953533268141,
-        AUDIOEYE_HASH: 'd5f4121320cf7d960ef0d5088649aff4',
         AUDIOEYE_URL:
           'https://customer-portal.audioeye.com/accessibility-statement.html?domain=tulaskincare.ca',
         OG_KEY: ogKeys.CA.AD20,
@@ -193,7 +190,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '£',
         CLOVERLY_ID: 40953533268141,
-        AUDIOEYE_HASH: 'b2ff5a33ddb224387e0a0961f30fe6a0',
         AUDIOEYE_URL:
           'https://customer-portal.audioeye.com/accessibility-statement.html?domain=tulaskincare.co.uk',
         OG_KEY: ogKeys.UK.AD20,
