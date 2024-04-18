@@ -37,8 +37,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GOOGLE_SITE_VERIFICATION_ID:
-          'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
@@ -47,7 +45,6 @@ function getApiKeys() {
           fieldGroupName: 51,
           fieldName: 7810,
         },
-        YOTTA_KEY: 'NhJw4378TzDpkA',
         YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
         YOTPO_LOYALTY_GUID: 'qfEoWaPmtkBoUMwPAGu1ow',
         YOTPO_LOYALTY_WIDGETS: {
@@ -96,8 +93,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GOOGLE_SITE_VERIFICATION_ID:
-          'O3zBsezZx0F3tdxnuN6KZOowjnNL9uEG30WLTNSmz4E',
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
@@ -106,7 +101,6 @@ function getApiKeys() {
           fieldGroupName: 51,
           fieldName: 7810,
         },
-        YOTTA_KEY: 'zZisVju12QIJQg',
         YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
         YOTPO_LOYALTY_GUID: 'qfEoWaPmtkBoUMwPAGu1ow',
         GIFT_CARD_ID: 33630516353,
@@ -152,8 +146,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GOOGLE_SITE_VERIFICATION_ID:
-          'CXLFa98xjLun0wo4c4Fm9Nk21ZwpFiM5sRLIHL-Bzvc',
         RETURNS_HREF: 'https://returns.tulaskincare.ca/',
         LISTRAK_IDS: {
           list_id: 346002,
@@ -162,7 +154,6 @@ function getApiKeys() {
           fieldGroupName: 2873,
           fieldName: 26307,
         },
-        YOTTA_KEY: 'P6Qr6e8GbjsV4g',
         YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
         YOTPO_LOYALTY_GUID: 'BQyPisPfp0K9qSSRoSTM9Q',
         GIFT_CARD_ID: 42936398807263,
@@ -202,8 +193,6 @@ function getApiKeys() {
           cdn: 'https://cdn.gladly.com',
           selector: '#gladly-help-center',
         },
-        GOOGLE_SITE_VERIFICATION_ID:
-          '3fu79kDaiqWI3f6z55q1ZqEe3ENsbGWLDOoKR7PJmuI',
         RETURNS_HREF:
           '/pages/faq?a=What-is-your-return-policy---id--8SHAtr2IT0GpnbwAdBP50Q',
         LISTRAK_IDS: {
@@ -213,7 +202,6 @@ function getApiKeys() {
           fieldGroupName: 2948,
           fieldName: 26886,
         },
-        YOTTA_KEY: 'FV0jkBbqZ1-VkQ',
         YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
         YOTPO_LOYALTY_GUID: 'xpVaGpCDsSJoAZoBLKuxig',
         GIFT_CARD_ID: 7781918540017,

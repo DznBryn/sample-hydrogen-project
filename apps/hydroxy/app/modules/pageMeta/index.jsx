@@ -12,9 +12,7 @@ const PageMeta = () => {
   useEffect(() => {
     if (typeof window === 'object' && window?.Yo) {
       window?.Yo.configure(
-        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${
-          getApiKeys().YOTTA_KEY
-        }`,
+        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${ENVS?.YOTTA_KEY}`,
       );
     }
   }, []);
@@ -111,9 +109,7 @@ const PageMeta = () => {
 
       <script
         defer
-        src={`https://rapid-cdn.yottaa.com/rapid/lib/${
-          getApiKeys().YOTTA_KEY
-        }.js`}
+        src={`https://rapid-cdn.yottaa.com/rapid/lib/${ENVS?.YOTTA_KEY}.js`}
       ></script>
 
       <script
