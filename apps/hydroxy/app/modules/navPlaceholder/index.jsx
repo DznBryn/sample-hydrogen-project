@@ -10,7 +10,7 @@ import getApiKeys from '~/utils/functions/getApiKeys';
 import {useCustomerState} from '~/hooks/useCostumer';
 const Search = lazy(() => import('~/modules/search'));
 import {links as searchStyles} from '~/modules/search';
-import {Await} from '@remix-run/react';
+import {Await, useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
 
@@ -19,6 +19,7 @@ export const links = () => {
 };
 
 const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const {id, email, isLoggedIn} = useCustomerState();
 
   const [{confirmationText}, setDiscountObj] = useState({
@@ -111,7 +112,7 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
     <div className={'navPlaceholder minHeight'} id="navPlaceholder">
       <noscript>
         <iframe
-          src={getApiKeys().GA_URL}
+          src={`https://www.googletagmanager.com/ns.html?id=${ENVS?.GTM_ID}`}
           height="0"
           width="0"
           style={iframeStyle}

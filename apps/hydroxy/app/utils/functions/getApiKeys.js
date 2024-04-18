@@ -19,8 +19,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 39694764015662,
-        AUDIOEYE_URL:
-          'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
         OG_KEY: ogKeys.US.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
@@ -29,7 +27,6 @@ function getApiKeys() {
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
-        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-5ZXFRC',
         GLADLY_CONFIG: {
           api: 'https://us-1.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -44,10 +41,6 @@ function getApiKeys() {
           externalEventName: 11771,
           fieldGroupName: 51,
           fieldName: 7810,
-        },
-        YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
-        YOTPO_LOYALTY_WIDGETS: {
-          // receipt_uploader: '264193',
         },
         GIFT_CARD_ID: 33630516353,
         GIFT_CARDS_VARIANTS_IDS: [
@@ -74,8 +67,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 39694764015662,
-        AUDIOEYE_URL:
-          'https://portal.audioeye.com/marketplace/accessibilitystatement/format/ajax/site/26580',
         OG_KEY: ogKeys.US.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
@@ -84,7 +75,6 @@ function getApiKeys() {
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-5ZXFRC');`,
-        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-5ZXFRC',
         GLADLY_CONFIG: {
           api: 'https://us-1.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -100,7 +90,6 @@ function getApiKeys() {
           fieldGroupName: 51,
           fieldName: 7810,
         },
-        YOTPO_PROD_GALLERY_ID: '5d3f111dd060a417368c1683',
         GIFT_CARD_ID: 33630516353,
         GIFT_CARDS_VARIANTS_IDS: [
           33630516353, 33630516417, 34008161345, 34008182785, 30290305187886,
@@ -126,8 +115,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '$',
         CLOVERLY_ID: 40953533268141,
-        AUDIOEYE_URL:
-          'https://customer-portal.audioeye.com/accessibility-statement.html?domain=tulaskincare.ca',
         OG_KEY: ogKeys.CA.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=XFjQ0i6x3CEB&v=1',
@@ -136,7 +123,6 @@ function getApiKeys() {
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-MPMHT3S');`,
-        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-MPMHT3S',
         GLADLY_CONFIG: {
           api: 'https://tula.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -152,7 +138,6 @@ function getApiKeys() {
           fieldGroupName: 2873,
           fieldName: 26307,
         },
-        YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
         GIFT_CARD_ID: 42936398807263,
         GIFT_CARDS_VARIANTS_IDS: [
           42936398807263, 42936398840031, 42936398872799, 42936398905567,
@@ -172,8 +157,6 @@ function getApiKeys() {
       return {
         CURRENCY_SYMBOL: '£',
         CLOVERLY_ID: 40953533268141,
-        AUDIOEYE_URL:
-          'https://customer-portal.audioeye.com/accessibility-statement.html?domain=tulaskincare.co.uk',
         OG_KEY: ogKeys.UK.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=WXn2lO0vrk3n&v=1',
@@ -182,7 +165,6 @@ function getApiKeys() {
                             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                             })(window,document,'script','dataLayer','GTM-N4P454X');`,
-        GA_URL: 'https://www.googletagmanager.com/ns.html?id=GTM-N4P454X',
         GLADLY_CONFIG: {
           api: 'https://tula.gladly.com',
           orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
@@ -199,7 +181,6 @@ function getApiKeys() {
           fieldGroupName: 2948,
           fieldName: 26886,
         },
-        YOTPO_PROD_GALLERY_ID: '625d7884cece0506720d4d38',
         GIFT_CARD_ID: 7781918540017,
         GIFT_CARDS_VARIANTS_IDS: [
           43180565561585, 43180565627121, 43180565659889, 43180565692657,
