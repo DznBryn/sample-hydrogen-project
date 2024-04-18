@@ -502,3 +502,26 @@ export async function changeAllShippingAddress(subscriptionItem) {
     return error.message;
   }
 }
+
+export async function getProucts(customerId) {
+  const url =
+    'https://restapi.ordergroove.com/products/?group_type=sku_swap&page_size=100';
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: generateOGAuthorization(customerId),
+  };
+  try {
+    const response = await fetch(url, {
+      method: API_METHODS.GET,
+      headers,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const products = await response.json();
+    return products;
+  } catch (error) {
+    return error.message;
+  }
+}

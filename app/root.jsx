@@ -47,6 +47,7 @@ import {
   getCustomerOrders,
   getCustomerSubscription,
   getItems,
+  getProucts,
   getSubscriptionPayments,
 } from './utils/services/subscription';
 
@@ -183,6 +184,7 @@ export default function App() {
         items,
         payments,
         subscriptionAddresses,
+        ogProducts,
       ] = await Promise.all([
         getCustomerSubscription(customerId, true),
         getCustomerSubscription(customerId),
@@ -190,6 +192,7 @@ export default function App() {
         getItems(customerId),
         getSubscriptionPayments(customerId),
         getCustomerAddresses(customerId),
+        getProucts(customerId),
       ]);
 
       subscriptionAddresses &&
@@ -239,7 +242,7 @@ export default function App() {
         ));
 
       subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-
+      ogProducts && (customer.subscription.products = ogProducts);
       setCustomerData(customer);
     }
   }

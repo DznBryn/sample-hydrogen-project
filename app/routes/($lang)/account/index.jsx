@@ -2,7 +2,6 @@ import {
   CacheLong,
   flattenConnection,
   generateCacheControlHeader,
-  parseGid,
 } from '@shopify/hydrogen';
 import {defer, redirect} from '@shopify/remix-oxygen';
 import {
@@ -28,10 +27,6 @@ import {
   changeShippingAddress,
   changeSubscriptionDate,
   getCollectionProducts,
-  getCustomerAddresses,
-  getCustomerOrders,
-  getCustomerSubscription,
-  getItems,
   reactivateSubscription,
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
@@ -396,59 +391,6 @@ export async function loader({request, context, params}) {
 
   const products = await getCollectionProducts(context, 'all');
   customer.subscription = {};
-
-  if (customer?.id) {
-    const customerId = parseGid(customer.id).id;
-
-    const [
-      activeSubscription,
-      inactiveSubscription,
-      subscriptionOrders,
-      items,
-      subscriptionAddresses,
-    ] = await Promise.all([
-      getCustomerSubscription(customerId, true),
-      getCustomerSubscription(customerId),
-      getCustomerOrders(customerId),
-      getItems(customerId),
-      getCustomerAddresses(customerId),
-    ]);
-
-    subscriptionAddresses &&
-      (customer.subscription.addresses = subscriptionAddresses);
-
-    inactiveSubscription &&
-      (customer.subscription.inactive = inactiveSubscription);
-
-    const activeItems = {
-      ...items,
-      results: items?.results?.map((item) => {
-        if (activeSubscription?.results) {
-          const subscription = activeSubscription.results.find(
-            (sub) => sub.public_id === item.subscription,
-          );
-          item.subscription = subscription;
-        }
-
-        return item;
-      }),
-    };
-
-    subscriptionOrders?.results &&
-      (subscriptionOrders.results = subscriptionOrders.results.map((order) => {
-        const items = [];
-
-        activeItems.results.forEach((item) => {
-          if (order.public_id === item.order) {
-            items.push(item);
-          }
-        });
-        order.items = items;
-        return order;
-      }));
-
-    subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-  }
 
   const [yotpoRedeemProducts, faqContent] = await Promise.all([
     getCMSContent(context, GET_YOTPO_REDEEM_PRODUCTS),

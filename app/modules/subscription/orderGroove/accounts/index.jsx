@@ -502,40 +502,39 @@ function SubscriptionItem({index, order, item}) {
               each
             </p>
 
-            {data?.subscription?.inactive?.results?.length > 0 && (
+            {data?.subscription?.products?.results?.length > 0 && (
               <select value={selectedProductId} onChange={handleSwapProduct}>
                 <option value={selectedProductId}>
                   (swap all upcoming deliveries){' '}
                   <ProductTitle product={product} subscription={subscription} />
                 </option>
-                {data.subscription.inactive.results.map(
-                  (subscription, index) => {
-                    const product = all.products.find((product) => {
+                {data.subscription.products.results
+                  .filter((ogProduct) =>
+                    all.products.find((product) => {
                       const variants = flattenConnection(product.variants);
                       return variants.find(
                         (variant) =>
-                          parseGid(variant.id).id === subscription.product,
+                          String(parseGid(variant.id).id) ===
+                          ogProduct.external_product_id,
                       );
-                    });
-                    const variant = product?.variants
-                      ? flattenConnection(product.variants).find(
-                          (variant) =>
-                            parseGid(variant.id).id === subscription.product,
-                        )
-                      : null;
-
+                    }),
+                  )
+                  .map((subscription, index) => {
                     return (
-                      subscription.product !== selectedProductId && (
-                        <option key={index} value={subscription.product}>
-                          {variant &&
-                            `${product?.title} - $${Number(
-                              variant?.price?.amount ?? '0',
+                      subscription.external_product_id !==
+                        selectedProductId && (
+                        <option
+                          key={index}
+                          value={subscription.external_product_id}
+                        >
+                          {subscription?.name &&
+                            `${subscription.name} - $${Number(
+                              subscription.price ?? '0',
                             ).toFixed(2)}`}
                         </option>
                       )
                     );
-                  },
-                )}
+                  })}
               </select>
             )}
           </div>
