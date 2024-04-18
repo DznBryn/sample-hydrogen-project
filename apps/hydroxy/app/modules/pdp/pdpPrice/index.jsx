@@ -1,22 +1,22 @@
 import {useState, useEffect, useRef} from 'react';
-
 import {parseGid} from '@shopify/hydrogen';
 import classnames from 'classnames';
-
-import {
-  getCurrency,
-  showPaymentPlanVendor,
-} from '~/utils/functions/eventFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {getCurrency} from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
+//
+
 const PDPPrice = ({pricing}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const {
     originalPrice,
     price,
@@ -42,8 +42,7 @@ const PDPPrice = ({pricing}) => {
 
   const sellingPlanID = store?.productPage?.addToCart?.selling_plan_id;
   const showAfterpay =
-    !sellingPlanID ||
-    (sellingPlanID === 0 && !getApiKeys().CURRENT_ENV.includes('UK'));
+    !sellingPlanID || (sellingPlanID === 0 && !ENVS?.SITE_NAME.includes('UK'));
 
   const selectedVariantID = parseGid(selectedVariant).id;
   const isSelectedVariantIncludedAtPromo =
@@ -220,7 +219,7 @@ const PDPPrice = ({pricing}) => {
       {!isStickyCta && (
         <>
           <PromoText />
-          {showPaymentPlanVendor === 'afterpay' ? (
+          {ENVS?.PAYMENT_PLAN_VENDOR === 'afterpay' ? (
             <div
               className={classnames(
                 'pdp_afterpay',

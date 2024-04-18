@@ -17,10 +17,6 @@ import {
   GET_CONCEALER_SHADE_IMAGES,
 } from '~/utils/graphql/sanity/queries';
 
-export const showPaymentPlanVendor = getApiKeys().CURRENT_ENV.includes('US')
-  ? 'afterpay'
-  : 'klarna';
-
 const canUseDOM = !!(
   typeof window !== 'undefined' &&
   window.document &&

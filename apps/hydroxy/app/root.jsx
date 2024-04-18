@@ -50,6 +50,8 @@ import {
   getSubscriptionPayments,
 } from './utils/services/subscription';
 
+//
+
 export const links = () => {
   return [
     {
@@ -69,8 +71,12 @@ export const links = () => {
   ];
 };
 
+//
+
 const CMSDataCache = {};
 const customerCache = {accessToken: undefined, data: undefined};
+
+//
 
 export async function loader({context, request}) {
   const referer = request.headers.get('referer');
@@ -92,6 +98,18 @@ export async function loader({context, request}) {
    * CMS DATA
    */
   await requestCMSData(context, CMSDataCache);
+
+  const CMSData = {
+    footers: CMSDataCache.footers,
+    listrakRec: CMSDataCache.listrakRec,
+    searchConfig: CMSDataCache.searchConfig,
+    productsCMSData: CMSDataCache.productsCMS,
+    cartPageConfig: CMSDataCache.cartPageConfig,
+    mainNavFooterCMSData: CMSDataCache.mainNavFooterCMSData,
+    announcementTopBanner: CMSDataCache.announcementTopBanner,
+    emailSmsSignupContent: CMSDataCache.emailSmsSignupContent,
+    mobileNavFooterMainButton: CMSDataCache.mobileNavFooterMainButton,
+  };
 
   /**
    * SHOPIFY DATA
@@ -118,6 +136,8 @@ export async function loader({context, request}) {
 
   headers.set('Set-Cookie', await context.session.commit());
 
+  //
+
   return defer(
     {
       request,
@@ -125,15 +145,11 @@ export async function loader({context, request}) {
       customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
       previewMode: context.session.get('previewMode') === 'true',
-      footers: CMSDataCache.footers,
-      listrakRec: CMSDataCache.listrakRec,
-      searchConfig: CMSDataCache.searchConfig,
-      productsCMSData: CMSDataCache.productsCMS,
-      cartPageConfig: CMSDataCache.cartPageConfig,
-      mainNavFooterCMSData: CMSDataCache.mainNavFooterCMSData,
-      announcementTopBanner: CMSDataCache.announcementTopBanner,
-      emailSmsSignupContent: CMSDataCache.emailSmsSignupContent,
-      mobileNavFooterMainButton: CMSDataCache.mobileNavFooterMainButton,
+      ...CMSData,
+      ENVS: {
+        SITE_NAME: context.env.SITE_NAME,
+        PAYMENT_PLAN_VENDOR: context.env.PAYMENT_PLAN_VENDOR,
+      },
     },
     {
       status: 200,
@@ -283,6 +299,8 @@ export function ErrorBoundary() {
  */
 
 function RootStructure({children}) {
+  //
+
   return (
     <html lang="en">
       <head>

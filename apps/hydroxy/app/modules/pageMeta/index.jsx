@@ -1,9 +1,14 @@
-import getApiKeys, {getEnv} from '~/utils/functions/getApiKeys';
-import {showPaymentPlanVendor} from '~/utils/functions/eventFunctions';
+import getApiKeys from '~/utils/functions/getApiKeys';
 import logo from '../../../public/logo.png';
 import {useEffect} from 'react';
+import {useRouteLoaderData} from '@remix-run/react';
+
+//
 
 const PageMeta = () => {
+  const {ENVS} = useRouteLoaderData('root');
+  //
+
   useEffect(() => {
     if (typeof window === 'object' && window?.Yo) {
       window?.Yo.configure(
@@ -14,18 +19,16 @@ const PageMeta = () => {
     }
   }, []);
 
+  //
+
   return (
     <>
       <meta charSet="utf-8" />
-      {(getEnv() === 'US_STG' || getEnv() === 'CA_PROD') && (
-        <meta name="robots" content="noindex" />
-      )}
+      {ENVS?.SITE_NAME === 'US_STG' && <meta name="robots" content="noindex" />}
       <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-      {/* <!-- Twitter Card data --> */}
       <meta name="twitter:card" value="summary" />
 
-      {/* <!-- Open Graph data --> */}
       <meta
         property="og:title"
         content="TULA Skincare: Probiotic Skin Care Products"
@@ -68,7 +71,7 @@ const PageMeta = () => {
         content={getApiKeys().GOOGLE_SITE_VERIFICATION_ID}
       />
 
-      {getApiKeys().CURRENT_ENV.includes('UK') && (
+      {ENVS?.SITE_NAME.includes('UK') && (
         <meta
           name="facebook-domain-verification"
           content="fw3gr1515pe7790vj7heo8w1jnz400"
@@ -148,7 +151,7 @@ const PageMeta = () => {
         }}
       ></script>
 
-      {showPaymentPlanVendor === 'afterpay' ? (
+      {ENVS?.PAYMENT_PLAN_VENDOR === 'afterpay' ? (
         <script
           src="https://js.afterpay.com/afterpay-1.x.js"
           data-analytics-enabled

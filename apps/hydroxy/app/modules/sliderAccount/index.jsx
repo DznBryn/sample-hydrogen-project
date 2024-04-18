@@ -13,11 +13,14 @@ import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '../loadingSkeleton';
 import {Link, useFetcher} from '@remix-run/react';
-
-import styles from './styles.css';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import {RegisterForm, links as registerFormStyles} from '../accounts/register';
 import {useStore} from '~/hooks/useStore';
+import {useRouteLoaderData} from '@remix-run/react';
+
+import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [
@@ -27,6 +30,8 @@ export const links = () => {
     ...registerFormStyles(),
   ];
 };
+
+//
 
 const curSliderPanelID = 'SliderAccount';
 
@@ -51,6 +56,7 @@ const SliderAccount = () => {
 };
 
 const MainContent = () => {
+  const {ENVS} = useRouteLoaderData('root');
   const login = useFetcher();
   const loginButtonRef = useRef(null);
   const recoverPassword = useFetcher();
@@ -628,9 +634,7 @@ const MainContent = () => {
           <Link
             className={'viewMyAccountLink'}
             to={
-              getApiKeys().CURRENT_ENV.includes('US')
-                ? '/account?c=rewards'
-                : '/account'
+              ENVS?.SITE_NAME.includes('US') ? '/account?c=rewards' : '/account'
             }
             onClick={() =>
               document.querySelector('body').classList.remove('bodyWrap')
