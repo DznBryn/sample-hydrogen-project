@@ -1,0 +1,62 @@
+export default {
+  name: 'homepageCollectionCallout',
+  description: '',
+  type: 'document',
+  title: 'HomepageCollectionCallout',
+  fields: [
+    {
+      title: 'Name',
+      name: 'name',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'GrayText',
+      name: 'grayText',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'BoldHeader',
+      name: 'boldHeader',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SectionCopy',
+      name: 'sectionCopy',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'ButtonText',
+      name: 'buttonText',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'ButtonUrl',
+      name: 'buttonUrl',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'BigImage',
+      name: 'bigImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'SmallImage',
+      name: 'smallImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'MobileImage',
+      name: 'mobileImage',
+      description: '',
+      type: 'image',
+    },
+  ],
+}
