@@ -1,0 +1,141 @@
+import richBlockType from '../../customFields/richBlockType'
+
+export default {
+  name: 'homepageCarouselv2',
+  description: '',
+  type: 'document',
+  title: 'HomepageCarouselv2',
+  fields: [
+    {
+      title: 'Name',
+      name: 'name',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'FullWidth',
+      name: 'fullWidth',
+      description: '',
+      type: 'boolean',
+    },
+    {
+      title: 'FullWidthImage',
+      name: 'fullWidthImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'FullWidthMobileImage',
+      name: 'fullWidthMobileImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'SlideBGColorHex',
+      name: 'slideBGColorHex',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideEyebrowFontColorHex',
+      name: 'slideEyebrowFontColorHex',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideEyebrowText',
+      name: 'slideEyebrowText',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideHeaderFontColorHex',
+      name: 'slideHeaderFontColorHex',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideHeader',
+      name: 'slideHeader',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideCopyFontColorHex',
+      name: 'slideCopyFontColorHex',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideCopy',
+      name: 'slideCopy',
+      ...richBlockType,
+    },
+    {
+      title: 'SlideCtaFontColorHex',
+      name: 'slideCtaFontColorHex',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideCta',
+      name: 'slideCta',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideCtaBGColorHex',
+      name: 'slideCtaBGColorHex',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideCtaLink',
+      name: 'slideCtaLink',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'SlideImage',
+      name: 'slideImage',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'SlideImageMobile',
+      name: 'slideImageMobile',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'VideoSlideHeader',
+      name: 'videoSlideHeader',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'VideoSlideCopy',
+      name: 'videoSlideCopy',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'VideoSlideCta',
+      name: 'videoSlideCta',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'VideoSlideCtaLink',
+      name: 'videoSlideCtaLink',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'Video',
+      name: 'video',
+      description: '',
+      type: 'image',
+    },
+  ],
+}

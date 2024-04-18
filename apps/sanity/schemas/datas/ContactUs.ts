@@ -1,0 +1,98 @@
+export default {
+  name: 'contactUs',
+  description: '',
+  type: 'document',
+  title: 'ContactUs',
+  fields: [
+    {
+      title: 'Name',
+      name: 'name',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'ContactMessage',
+      name: 'contactMessage',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'ContactEmailIcon',
+      name: 'contactEmailIcon',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'ContactEmailHeader',
+      name: 'contactEmailHeader',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'EmailAddress',
+      name: 'emailAddress',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'ContactPhoneIcon',
+      name: 'contactPhoneIcon',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'ContactPhoneHeader',
+      name: 'contactPhoneHeader',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'PhoneNumber',
+      name: 'phoneNumber',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'OfficeHours',
+      name: 'officeHours',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'ContactSocialIcon',
+      name: 'contactSocialIcon',
+      description: '',
+      type: 'image',
+    },
+    {
+      title: 'ContactSocialHeader',
+      name: 'ContactSocialHeader',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'Facebook',
+      name: 'facebook',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'Twitter',
+      name: 'twitter',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'Pinterest',
+      name: 'pinterest',
+      description: '',
+      type: 'string',
+    },
+    {
+      title: 'Instagram',
+      name: 'instagram',
+      description: '',
+      type: 'string',
+    },
+  ],
+}
