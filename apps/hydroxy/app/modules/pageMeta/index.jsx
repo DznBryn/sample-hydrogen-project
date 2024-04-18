@@ -74,7 +74,7 @@ const PageMeta = () => {
 
       <meta
         name="google-site-verification"
-        content={getApiKeys().GOOGLE_SITE_VERIFICATION_ID}
+        content={ENVS?.GOOGLE_SITE_VERIFICATION_ID}
       />
 
       {ENVS?.SITE_NAME.includes('UK') && (

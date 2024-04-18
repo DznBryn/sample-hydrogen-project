@@ -143,6 +143,7 @@ export async function loader({context, request}) {
         PAYMENT_PLAN_VENDOR: context.env.PAYMENT_PLAN_VENDOR,
         AUDIOEYE_HASH: context.env.AUDIOEYE_HASH,
         YOTPO_KEY: context.env.YOTPO_KEY,
+        GOOGLE_SITE_VERIFICATION_ID: context.env.GOOGLE_SITE_VERIFICATION_ID,
       },
     },
     {
