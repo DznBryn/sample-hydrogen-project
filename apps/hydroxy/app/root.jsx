@@ -145,12 +145,9 @@ export async function loader({context, request}) {
 export default function App() {
   const location = useLocation();
   const {cart, showSliderCart, previewMode, customer} = useLoaderData();
-  const {
-    setData: setCartData = () => {},
-    data = null,
-
-    toggleCart,
-  } = useStore((store) => store?.cart ?? null);
+  const {setData: setCartData = () => {}, toggleCart} = useStore(
+    (store) => store?.cart ?? null,
+  );
 
   const {data: customerData, setCustomerData} = useStore(
     (store) => store?.account ?? {},
@@ -158,11 +155,6 @@ export default function App() {
 
   useEffect(() => {
     setCartData(cart);
-    console.log('devdrew did cart update? Line 160', cart);
-
-    // if (cart?.id && JSON.stringify(cart) !== JSON.stringify(data)) {
-    //   setCartData(cart);
-    // }
 
     if (customerData && customer?.id !== customerData.id) {
       getCustomerSubscriptionData(customer);
