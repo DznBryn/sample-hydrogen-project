@@ -1,24 +1,8 @@
-const ogKeys = {
-  US: {
-    AD15: 'ddeeb16695fd11ea80bdbc764e10b970',
-    AD20: 'fb58fa587a4411edbad7ce8f0c4adeb8',
-  },
-  CA: {
-    AD15: 'c1ff625674af11ecbde3f2737e309b5b',
-    AD20: 'dc673fbe7a4511ed8191ea4fad94f603',
-  },
-  UK: {
-    AD15: 'ed2450c806a811edb66cda989c1a3bbf',
-    AD20: 'f2f7719a7a4511ed9f3ece8f0c4adeb8',
-  },
-};
-
 function getApiKeys() {
   switch (getEnv()) {
     case 'US_STG':
       return {
         CURRENCY_SYMBOL: '$',
-        OG_KEY: ogKeys.US.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
         GLADLY_CONFIG: {
@@ -50,7 +34,6 @@ function getApiKeys() {
     case 'US_PROD':
       return {
         CURRENCY_SYMBOL: '$',
-        OG_KEY: ogKeys.US.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
         GLADLY_CONFIG: {
@@ -82,7 +65,6 @@ function getApiKeys() {
     case 'CA_PROD':
       return {
         CURRENCY_SYMBOL: '$',
-        OG_KEY: ogKeys.CA.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=XFjQ0i6x3CEB&v=1',
         GLADLY_CONFIG: {
@@ -115,7 +97,6 @@ function getApiKeys() {
     case 'UK_PROD':
       return {
         CURRENCY_SYMBOL: '£',
-        OG_KEY: ogKeys.UK.AD20,
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=WXn2lO0vrk3n&v=1',
         GLADLY_CONFIG: {
