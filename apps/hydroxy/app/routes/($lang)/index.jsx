@@ -25,6 +25,9 @@ import {
   getCustomerAddresses,
   getCustomerOrders,
   getCustomerSubscription,
+  getItems,
+  getProucts,
+  getSubscriptionPayments,
 } from '~/utils/services/subscription';
 
 export const links = () => homePageStyles();
@@ -57,35 +60,79 @@ export const action = async ({request, context}) => {
     if (data?.accessToken) {
       context.session.set('customerAccessToken', data.accessToken);
       const customer = await getCustomerData(context, data.accessToken);
-      let activeSubscription = {};
-      let inactiveSubscription = {};
-      let subscriptionOrders = {};
-      let subscriptionAddresses = {};
 
       if (customer?.id) {
         customer.subscription = {};
         const customerId = parseGid(customer.id).id;
 
-        [
+        const [
           activeSubscription,
           inactiveSubscription,
           subscriptionOrders,
+          items,
+          payments,
           subscriptionAddresses,
+          ogProducts,
         ] = await Promise.all([
           getCustomerSubscription(customerId, true),
           getCustomerSubscription(customerId),
           getCustomerOrders(customerId),
+          getItems(customerId),
+          getSubscriptionPayments(customerId),
           getCustomerAddresses(customerId),
+          getProucts(customerId),
         ]);
 
         subscriptionAddresses &&
           (customer.subscription.addresses = subscriptionAddresses);
-        activeSubscription &&
-          (customer.subscription.active = activeSubscription);
+
         inactiveSubscription &&
           (customer.subscription.inactive = inactiveSubscription);
+
+        const activeItems = {
+          ...items,
+          results: items?.results?.map((item) => {
+            if (activeSubscription?.results) {
+              const subscription = activeSubscription.results.find(
+                (sub) => sub.public_id === item.subscription,
+              );
+              const payment = payments?.results?.find(
+                (pay) => pay.public_id === subscription.payment,
+              );
+
+              subscription.payment = payment;
+              item.subscription = subscription;
+            }
+
+            return item;
+          }),
+        };
+
+        subscriptionOrders?.results &&
+          (subscriptionOrders.results = subscriptionOrders.results.map(
+            (order) => {
+              const items = [];
+
+              activeItems.results.forEach((item) => {
+                if (order.public_id === item.order) {
+                  items.push(item);
+                }
+              });
+
+              const payment = payments?.results?.find(
+                (pay) => pay.public_id === order.payment,
+              );
+
+              order.payment = payment;
+              order.items = items;
+              return order;
+            },
+          ));
+
         subscriptionOrders &&
           (customer.subscription.orders = subscriptionOrders);
+
+        ogProducts && (customer.subscription.products = ogProducts);
       }
       console.log('customer.accessToken', customer);
       return json(
