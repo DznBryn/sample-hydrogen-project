@@ -1,9 +1,9 @@
 import React from 'react';
 import classnames from 'classnames';
-import {getCurrency} from '~/utils/functions/eventFunctions';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import useCurrency from '~/hooks/useCurrency';
 
 //
 
@@ -13,14 +13,20 @@ export const links = () => {
 
 //
 
-const PLPAfterpay = ({classes}) => (
-  <div className={classnames('plpTitle_afterpay_container', classes)}>
-    <IconAfterpay />
-    <p className={'afterpay_text'}>
-      Available for orders over {getCurrency()}35
-    </p>
-  </div>
-);
+const PLPAfterpay = ({classes}) => {
+  const {getCurrency} = useCurrency();
+
+  //
+
+  return (
+    <div className={classnames('plpTitle_afterpay_container', classes)}>
+      <IconAfterpay />
+      <p className={'afterpay_text'}>
+        Available for orders over {getCurrency()}35
+      </p>
+    </div>
+  );
+};
 
 //
 

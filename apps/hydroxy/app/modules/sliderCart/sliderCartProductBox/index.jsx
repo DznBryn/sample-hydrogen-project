@@ -1,23 +1,31 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Link, useFetcher, useRouteLoaderData} from '@remix-run/react';
 import {useCartActions} from '../../../hooks/useCart';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {Image, parseGid} from '@shopify/hydrogen';
 import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import styles from './styles.css';
 import {PortableText} from '@portabletext/react';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 let sitewide = false;
+
+//
+
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+//
 const SliderCartProductBox = ({
   item = {},
   promo,
   cartPageConfig = {},
   product,
 }) => {
+  const {getCurrency} = useCurrency();
   const inputQtyRef = useRef();
   const {updateItems} = useCartActions();
   const [forceChange, setForceChange] = useState(false);
@@ -164,12 +172,16 @@ const SliderCartProductBox = ({
   );
 };
 
+//
+
 const YotpoProductPrice = ({price, isSellingPlan = false}) => (
   <div className={'yotpoProductPriceContainer'}>
     <LoyaltyBadgeIcon />
     <span>{isSellingPlan ? price + 300 : price}</span>
   </div>
 );
+
+//
 
 const RegularProduct = ({
   item,
@@ -181,7 +193,8 @@ const RegularProduct = ({
   product,
   cartPageConfig,
 }) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
+  const rootData = useRouteLoaderData('root');
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
@@ -228,7 +241,7 @@ const RegularProduct = ({
 
           {!isNaN(Number(item?.cost?.totalAmount?.amount)) &&
           customerId !== '' &&
-          ENVS?.SITE_NAME !== 'CA_PROD' ? (
+          rootData?.ENVS?.SITE_NAME !== 'CA_PROD' ? (
             <YotpoProductPrice
               price={
                 (item.sellingPlanAllocation
@@ -336,7 +349,10 @@ const RegularProduct = ({
   );
 };
 
+//
+
 const Price = ({item, promo, product, cartPageConfig}) => {
+  const {getCurrency} = useCurrency();
   const hasSitewidePromo =
     sitewide &&
     !sitewide?.excludeList?.includes(item.merchandise.product.handle);
@@ -448,6 +464,8 @@ const Price = ({item, promo, product, cartPageConfig}) => {
   }
 };
 
+//
+
 const ADSwitcherContent = ({
   item,
   switcherInput,
@@ -544,6 +562,9 @@ const ADSwitcherContent = ({
     </div>
   );
 };
+
+//
+
 const LoyaltyBadgeIcon = () => (
   <svg
     width={12}
@@ -568,6 +589,8 @@ const LoyaltyBadgeIcon = () => (
     />
   </svg>
 );
+
+//
 
 function RemoveItemButton({lineId}) {
   const fetcher = useFetcher();
@@ -619,6 +642,8 @@ function RemoveItemButton({lineId}) {
   );
 }
 
+//
+
 function UpdateItemButton({lineIds, children}) {
   const fetcher = useFetcher();
   const {updateCart: updateItemData = () => {}, data = null} = useStore(
@@ -643,5 +668,7 @@ function UpdateItemButton({lineIds, children}) {
     </fetcher.Form>
   );
 }
+
+//
 
 export default SliderCartProductBox;

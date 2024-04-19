@@ -2,7 +2,6 @@ import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {getCustomer} from '~/utils/graphql/shopify/queries/customer';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection, parseGid} from '@shopify/hydrogen';
-import getApiKeys from './getApiKeys';
 import {getProductByHandle} from '../graphql/shopify/queries/collections';
 import {
   GET_ANNOUNCEMENT_HEADER,
@@ -483,10 +482,6 @@ export function getCartTotalForFreeShipping(cart, siteName) {
   });
 
   return totalPrice;
-}
-
-export function getCurrency() {
-  return getApiKeys().CURRENCY_SYMBOL;
 }
 
 export function triggerAnalyticsLoyaltyEvents(

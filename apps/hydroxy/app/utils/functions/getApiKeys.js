@@ -2,7 +2,6 @@ function getApiKeys() {
   switch (getEnv()) {
     case 'US_STG':
       return {
-        CURRENCY_SYMBOL: '$',
         SHOW_FIREWORK: true,
         FEATURE_FLAGS: {
           LOYALTY: true,
@@ -12,7 +11,6 @@ function getApiKeys() {
 
     case 'US_PROD':
       return {
-        CURRENCY_SYMBOL: '$',
         SHOW_FIREWORK: true,
         FEATURE_FLAGS: {
           LOYALTY: true,
@@ -22,7 +20,6 @@ function getApiKeys() {
 
     case 'CA_PROD':
       return {
-        CURRENCY_SYMBOL: '$',
         SHOW_FIREWORK: false,
         FEATURE_FLAGS: {
           LOYALTY: false,
@@ -32,7 +29,6 @@ function getApiKeys() {
 
     case 'UK_PROD':
       return {
-        CURRENCY_SYMBOL: '£',
         SHOW_FIREWORK: false,
         FEATURE_FLAGS: {
           LOYALTY: false,

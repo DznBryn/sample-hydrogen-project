@@ -2,7 +2,6 @@ import {useRef, useEffect} from 'react';
 import classname from 'classnames';
 import {
   bindCustomEvent,
-  getCurrency,
   getCartTotalForFreeShipping,
   getCMSDoc,
 } from '~/utils/functions/eventFunctions';
@@ -16,6 +15,7 @@ import {useStore} from '~/hooks/useStore';
 import {flattenConnection} from '@shopify/hydrogen';
 
 import styles from './styles.css';
+import useCurrency from '~/hooks/useCurrency';
 
 //
 
@@ -40,6 +40,7 @@ let cartPageConfig;
 
 const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
   const rootData = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
   const alertRef = useRef();
   const cart = useStore((store) => store?.cart?.data ?? (() => {}));
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
