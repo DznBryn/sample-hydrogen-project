@@ -5,14 +5,20 @@ import {
   bindCustomEvent,
   createCustomEvent,
   getCMSDoc,
+  getReturnsURL,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+//
 
 const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
   const overlayRef = useRef(null);
@@ -95,6 +101,8 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
     </div>
   );
 };
+
+//
 
 const Navigation = ({overlayItems}) => {
   let optionOffsetHeight;
@@ -208,7 +216,10 @@ const Navigation = ({overlayItems}) => {
   );
 };
 
+//
+
 const FooterButtons = () => {
+  const rootData = useRouteLoaderData('root');
   const links = [
     {
       label: 'my account',
@@ -229,7 +240,7 @@ const FooterButtons = () => {
     {
       label: 'returns & exchanges',
       icon: icons['flux'],
-      link: getApiKeys().RETURNS_HREF,
+      link: getReturnsURL(rootData?.ENVS?.SITE_NAME),
       showIt: true,
     },
     {
@@ -251,6 +262,8 @@ const FooterButtons = () => {
       showIt: true,
     },
   ];
+
+  //
 
   return (
     <div id={'extraLinkContainer'}>
@@ -280,6 +293,8 @@ const FooterButtons = () => {
   );
 };
 
+//
+
 const handleClickOnLink = () => {
   const dataEvent = createCustomEvent();
   const activeOverlayClassName = 'styles_overlayActive__2BCiY';
@@ -294,6 +309,8 @@ const handleClickOnLink = () => {
   menuWraper?.setAttribute('data-visible-state', 'hide');
   menuWraper?.dispatchEvent(dataEvent);
 };
+
+//
 
 const icons = {
   arrow: (

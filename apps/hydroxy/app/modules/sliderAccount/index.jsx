@@ -1,9 +1,9 @@
 import {useEffect, useState, useRef} from 'react';
 import {
   getLoyaltyCustomerData,
+  getReturnsURL,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import SliderPanel, {
   switchSliderPanelVisibility,
   openedStateID,
@@ -19,6 +19,7 @@ import {useStore} from '~/hooks/useStore';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import getApiKeys from '~/utils/functions/getApiKeys';
 
 //
 
@@ -55,8 +56,10 @@ const SliderAccount = () => {
   );
 };
 
+//
+
 const MainContent = () => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const login = useFetcher();
   const loginButtonRef = useRef(null);
   const recoverPassword = useFetcher();
@@ -238,7 +241,7 @@ const MainContent = () => {
     const links = [
       {
         label: 'return & exchanges',
-        to: getApiKeys().RETURNS_HREF,
+        to: getReturnsURL(rootData?.ENVS?.SITE_NAME),
         showIt: true,
       },
       {label: 'faqs & help', to: 'https://help.tula.com/', showIt: true},
@@ -634,7 +637,9 @@ const MainContent = () => {
           <Link
             className={'viewMyAccountLink'}
             to={
-              ENVS?.SITE_NAME.includes('US') ? '/account?c=rewards' : '/account'
+              rootData?.ENVS?.SITE_NAME.includes('US')
+                ? '/account?c=rewards'
+                : '/account'
             }
             onClick={() =>
               document.querySelector('body').classList.remove('bodyWrap')
@@ -702,6 +707,8 @@ const MainContent = () => {
     </>
   );
 };
+
+//
 
 const icons = {
   arrow: (

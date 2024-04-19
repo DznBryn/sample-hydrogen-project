@@ -534,6 +534,18 @@ export function getFormData(object) {
   return formData;
 }
 
+export function getReturnsURL(siteName = 'US_STG') {
+  const returnsURLs = {
+    US_STG: 'https://returns.tula.com/',
+    US_PROD: 'https://returns.tula.com/',
+    CA_PROD: 'https://returns.tulaskincare.ca/',
+    UK_PROD:
+      '/pages/faq?a=What-is-your-return-policy---id--8SHAtr2IT0GpnbwAdBP50Q',
+  };
+
+  return returnsURLs[siteName];
+}
+
 /**
  *   GraphQL functions
  */
