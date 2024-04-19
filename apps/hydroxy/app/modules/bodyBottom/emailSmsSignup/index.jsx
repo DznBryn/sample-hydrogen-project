@@ -6,9 +6,13 @@ import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
 
+//
+
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+//
 
 const SuccessIcon = () => (
   <svg
@@ -33,8 +37,10 @@ const SuccessIcon = () => (
   </svg>
 );
 
+//
+
 const EmailSmsSignup = ({emailSmsSignupContent}) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const communication = emailSmsSignupContent;
   const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   // const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -87,7 +93,7 @@ const EmailSmsSignup = ({emailSmsSignupContent}) => {
     handleSignUpTracking('footer', emailRef?.current?.value);
     if (!emailRef.current.classList.contains('hide')) {
       if (emailRef.current.value.match(emailRegex)) {
-        const isUK = ENVS?.SITE_NAME.includes('UK');
+        const isUK = rootData?.ENVS?.SITE_NAME.includes('UK');
 
         if (!isUK) {
           headerBeforeEmailSubmit.current.style.display = 'none';
@@ -100,7 +106,11 @@ const EmailSmsSignup = ({emailSmsSignupContent}) => {
             dateRef.current.focus();
           }, 100);
         } else {
-          const response = await submitFooterContact(emailRef.current.value);
+          const response = await submitFooterContact(
+            emailRef.current.value,
+            '',
+            rootData?.ENVS?.SITE_NAME,
+          );
           const isValidStatusCode = () =>
             [200, 201].some((validStatus) => validStatus === response.status);
 
@@ -136,6 +146,7 @@ const EmailSmsSignup = ({emailSmsSignupContent}) => {
         const response = await submitFooterContact(
           emailRef.current.value,
           birthDate,
+          rootData?.ENVS?.SITE_NAME,
         );
         const isValidStatusCode = () =>
           [200, 201].some((validStatus) => validStatus === response.status);
@@ -249,4 +260,5 @@ const EmailSmsSignup = ({emailSmsSignupContent}) => {
     </div>
   );
 };
+
 export default EmailSmsSignup;
