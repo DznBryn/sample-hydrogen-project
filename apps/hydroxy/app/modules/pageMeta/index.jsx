@@ -80,7 +80,9 @@ const PageMeta = () => {
         />
       )}
 
-      <script src={getApiKeys().LISTRAK_SCRIPT}></script>
+      <script
+        src={`https://cdn.listrakbi.com/scripts/script.js?m=${rootData?.ENVS?.LISTRAK_ID}&v=1`}
+      ></script>
 
       <script
         defer

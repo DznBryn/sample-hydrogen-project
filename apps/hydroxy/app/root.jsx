@@ -149,6 +149,7 @@ export async function loader({context, request}) {
         GTM_ID: context?.env?.GTM_ID,
         POSTSCRIPT_ID: context?.env?.POSTSCRIPT_ID,
         ONETRUST_ID: context?.env?.ONETRUST_ID,
+        LISTRAK_ID: context?.env?.LISTRAK_ID,
       },
     },
     {

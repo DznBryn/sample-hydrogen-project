@@ -3,8 +3,6 @@ function getApiKeys() {
     case 'US_STG':
       return {
         CURRENCY_SYMBOL: '$',
-        LISTRAK_SCRIPT:
-          'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
@@ -27,8 +25,6 @@ function getApiKeys() {
     case 'US_PROD':
       return {
         CURRENCY_SYMBOL: '$',
-        LISTRAK_SCRIPT:
-          'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
@@ -51,8 +47,6 @@ function getApiKeys() {
     case 'CA_PROD':
       return {
         CURRENCY_SYMBOL: '$',
-        LISTRAK_SCRIPT:
-          'https://cdn.listrakbi.com/scripts/script.js?m=XFjQ0i6x3CEB&v=1',
         RETURNS_HREF: 'https://returns.tulaskincare.ca/',
         LISTRAK_IDS: {
           list_id: 346002,
@@ -76,8 +70,6 @@ function getApiKeys() {
     case 'UK_PROD':
       return {
         CURRENCY_SYMBOL: '£',
-        LISTRAK_SCRIPT:
-          'https://cdn.listrakbi.com/scripts/script.js?m=WXn2lO0vrk3n&v=1',
         RETURNS_HREF:
           '/pages/faq?a=What-is-your-return-policy---id--8SHAtr2IT0GpnbwAdBP50Q',
         LISTRAK_IDS: {
