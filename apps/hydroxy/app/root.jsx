@@ -174,9 +174,12 @@ export default function App() {
   );
 
   useEffect(() => {
-    if (cart?.id && JSON.stringify(cart) !== JSON.stringify(data)) {
       setCartData(cart);
-    }
+      console.log("devdrew did cart update? Line 160", cart);
+
+    // if (cart?.id && JSON.stringify(cart) !== JSON.stringify(data)) {
+    //   setCartData(cart);
+    // }
 
     if (customerData && customer?.id !== customerData.id) {
       getCustomerSubscriptionData(customer);
