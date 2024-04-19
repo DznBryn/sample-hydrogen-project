@@ -191,7 +191,6 @@ const RegularProduct = ({
     tag.includes('subscriptionEligible'),
   );
 
-  const shouldShowYotpoPoints = ENVS?.SITE_NAME.includes('US');
   //
 
   return (
@@ -230,7 +229,7 @@ const RegularProduct = ({
 
           {!isNaN(Number(item?.cost?.totalAmount?.amount)) &&
           customerId !== '' &&
-          shouldShowYotpoPoints ? (
+          ENVS?.SITE_NAME !== 'CA_PROD' ? (
             <YotpoProductPrice
               price={
                 (item.sellingPlanAllocation
