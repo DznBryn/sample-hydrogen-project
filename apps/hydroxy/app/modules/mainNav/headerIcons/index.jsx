@@ -7,15 +7,17 @@ import {
   getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
-
 import IconSearch, {
   links as iconSearchStyles,
 } from '~/modules/mainNav/iconSearch';
 import IconCart, {links as iconCartStyles} from '~/modules/mainNav/iconCart';
-
-import styles from './styles.css';
+import {useRouteLoaderData} from '@remix-run/react';
 import {useStore} from '~/hooks/useStore';
 import {flattenConnection} from '@shopify/hydrogen';
+
+import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [
@@ -25,6 +27,8 @@ export const links = () => {
   ];
 };
 
+//
+
 const classes = {
   headerIcons: classname('header_icons'),
   iconContainer: classname('icon__container'),
@@ -32,11 +36,16 @@ const classes = {
 
 let cartPageConfig;
 
+//
+
 const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
+  const rootData = useRouteLoaderData('root');
   const alertRef = useRef();
   const cart = useStore((store) => store?.cart?.data ?? (() => {}));
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
-  const cartTotal = parseFloat(getCartTotalForFreeShipping(cart));
+  const cartTotal = parseFloat(
+    getCartTotalForFreeShipping(cart, rootData?.ENVS?.SITE_NAME),
+  );
   let progressMsg = null;
 
   useEffect(

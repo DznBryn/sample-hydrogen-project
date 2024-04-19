@@ -10,10 +10,6 @@ function getApiKeys() {
           fieldGroupName: 51,
           fieldName: 7810,
         },
-        GIFT_CARD_ID: 33630516353,
-        GIFT_CARDS_VARIANTS_IDS: [
-          33630516353, 33630516417, 34008161345, 34008182785, 30290305187886,
-        ],
         SHOW_FIREWORK: true,
         FEATURE_FLAGS: {
           LOYALTY: true,
@@ -31,10 +27,6 @@ function getApiKeys() {
           fieldGroupName: 51,
           fieldName: 7810,
         },
-        GIFT_CARD_ID: 33630516353,
-        GIFT_CARDS_VARIANTS_IDS: [
-          33630516353, 33630516417, 34008161345, 34008182785, 30290305187886,
-        ],
         SHOW_FIREWORK: true,
         FEATURE_FLAGS: {
           LOYALTY: true,
@@ -52,11 +44,6 @@ function getApiKeys() {
           fieldGroupName: 2873,
           fieldName: 26307,
         },
-        GIFT_CARD_ID: 42936398807263,
-        GIFT_CARDS_VARIANTS_IDS: [
-          42936398807263, 42936398840031, 42936398872799, 42936398905567,
-          42936398938335,
-        ],
         SHOW_FIREWORK: false,
         FEATURE_FLAGS: {
           LOYALTY: false,
@@ -74,11 +61,6 @@ function getApiKeys() {
           fieldGroupName: 2948,
           fieldName: 26886,
         },
-        GIFT_CARD_ID: 7781918540017,
-        GIFT_CARDS_VARIANTS_IDS: [
-          43180565561585, 43180565627121, 43180565659889, 43180565692657,
-          43180565725425,
-        ],
         SHOW_FIREWORK: false,
         FEATURE_FLAGS: {
           LOYALTY: false,

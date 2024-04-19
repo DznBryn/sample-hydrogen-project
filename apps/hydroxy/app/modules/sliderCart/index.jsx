@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   getCartQuantity,
+  getGiftCardIDs,
   getLoyaltyCustomerData,
   isAutoDeliveryInCart,
   updateListrakCart,
@@ -8,7 +9,6 @@ import {
 import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
 import {useCustomerState} from '../../hooks/useCostumer';
 import {PortableText} from '@portabletext/react';
-import getApiKeys from '../../utils/functions/getApiKeys';
 import LoadingSkeleton from '../loadingSkeleton';
 import ProgressBar from './modules/ProgressBar';
 import Checkout from './modules/Checkout';
@@ -47,7 +47,7 @@ export const links = () => {
 let prevState = null;
 
 const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const productRecList = recommendations;
   const cart = useStore((store) => store?.cart?.data ?? {});
   const {
@@ -66,7 +66,9 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const [isAbleToRedeem, setIsAbleToRedeem] = React.useState(false);
 
   const GWP_PRODUCT_EXTERNAL_ID = cartConfig.freeGiftPromoProductExternalID;
-  const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
+  const GIFT_CARDS_VARIANTS_IDS = getGiftCardIDs(
+    rootData?.ENVS?.SITE_NAME,
+  )?.variantsIds;
 
   const GWP_PRODUCT = products?.products?.find((product) => {
     return product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID);
@@ -357,7 +359,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   });
 
   async function getCustomerData() {
-    const env = ENVS?.SITE_NAME;
+    const env = rootData?.ENVS?.SITE_NAME;
     const data = {email, customerId: id, env, useCache: false};
 
     if (email || id) {
@@ -454,7 +456,7 @@ const CartContent = ({
   isAbleToRedeem,
   ...props
 }) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const [showModal, setShowModal] = useState(false);
   const account = useStore((store) => store?.account?.data ?? {});
   const cart = useStore((store) => store?.cart?.data ?? {});
@@ -533,7 +535,7 @@ const CartContent = ({
           </span>
         </div>
       )}
-      {ENVS?.SITE_NAME.includes('US') && (
+      {rootData?.ENVS?.SITE_NAME.includes('US') && (
         <Banner
           loggedIn={account?.id !== ''}
           points={Math.floor(totalCart) * 10}
@@ -561,7 +563,7 @@ const CartContent = ({
 };
 
 const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
 
   //
 
@@ -581,7 +583,7 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => {
       </div>
 
       <div className={'emptyCart'}>
-        {ENVS?.SITE_NAME.includes('US') && (
+        {rootData?.ENVS?.SITE_NAME.includes('US') && (
           <Banner loggedIn={isLoggedIn} isEmpty />
         )}
         <SkinQuizCartBanner />
@@ -605,7 +607,7 @@ const ItemsList = ({
   productRecList,
   ...props
 }) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const cart = useStore((store) => store?.cart?.data ?? {});
   const items = cart?.lines ? flattenConnection(cart?.lines) : [];
   const getRecItemsLimit = () => {
@@ -771,7 +773,7 @@ const ItemsList = ({
         items={items}
         gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
       />
-      {ENVS?.SITE_NAME.includes('US') && (
+      {rootData?.ENVS?.SITE_NAME.includes('US') && (
         <div className={'discount'}>
           *300 rewards points applicable for every new Auto Delivery
           subscription
