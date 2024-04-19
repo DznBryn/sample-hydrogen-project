@@ -148,6 +148,7 @@ export default function App() {
   const {
     setData: setCartData = () => {},
     data = null,
+
     toggleCart,
   } = useStore((store) => store?.cart ?? null);
 
@@ -156,8 +157,8 @@ export default function App() {
   );
 
   useEffect(() => {
-      setCartData(cart);
-      console.log("devdrew did cart update? Line 160", cart);
+    setCartData(cart);
+    console.log('devdrew did cart update? Line 160', cart);
 
     // if (cart?.id && JSON.stringify(cart) !== JSON.stringify(data)) {
     //   setCartData(cart);
