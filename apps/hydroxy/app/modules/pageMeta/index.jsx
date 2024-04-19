@@ -1,4 +1,3 @@
-import getApiKeys from '~/utils/functions/getApiKeys';
 import logo from '../../../public/logo.png';
 import {useEffect} from 'react';
 import {useRouteLoaderData} from '@remix-run/react';
@@ -165,24 +164,6 @@ const PageMeta = () => {
           data-analytics-enabled
           defer
         ></script>
-      ) : null}
-
-      {/* 
-        url.includes('/pages/why-tula') ?
-          <link rel="canonical" href="https://www.tula.com/pages/why-tula" key="canonicalURL" />
-          :
-          <link rel="canonical" href={url} key="canonicalURL" />
-      */}
-
-      {getApiKeys().DYNATRACE ? (
-        <>
-          <script
-            defer
-            type="text/javascript"
-            src={getApiKeys().DYNATRACE.src}
-            crossOrigin="anonymous"
-          ></script>
-        </>
       ) : null}
 
       {rootData?.ENVS?.POSTSCRIPT_ID ? (

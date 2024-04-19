@@ -1,6 +1,5 @@
 import {Suspense, useEffect, useRef} from 'react';
 import {Await, Link} from '@remix-run/react';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {
   bindCustomEvent,
   createCustomEvent,
@@ -11,6 +10,7 @@ import {
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 //
 
@@ -21,6 +21,7 @@ export const links = () => {
 //
 
 const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const overlayRef = useRef(null);
   const overlayItems = mobileOverlayItems;
 
@@ -56,13 +57,13 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
                 to={linkURL}
                 id={'footer'}
                 onClick={() => {
-                  getApiKeys().FEATURE_FLAGS.LOYALTY &&
+                  SHOW_LOYALTY &&
                     triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
                       source: 'mobileBanner',
                     });
                 }}
                 style={
-                  getApiKeys().FEATURE_FLAGS.LOYALTY
+                  SHOW_LOYALTY
                     ? {
                         backgroundImage:
                           'url(' +
@@ -74,25 +75,16 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
                 }
               >
                 <div
-                  className={[
-                    'content',
-                    getApiKeys().FEATURE_FLAGS.LOYALTY ? 'whiteColor' : '',
-                  ].join(' ')}
+                  className={['content', SHOW_LOYALTY ? 'whiteColor' : ''].join(
+                    ' ',
+                  )}
                   onClick={handleClickOnLink}
                 >
-                  <p
-                    className={
-                      getApiKeys().FEATURE_FLAGS.LOYALTY && 'whiteColor'
-                    }
-                  >
-                    {header}
-                  </p>
+                  <p className={SHOW_LOYALTY && 'whiteColor'}>{header}</p>
                   {contentText}
                 </div>
 
-                {getApiKeys().FEATURE_FLAGS.LOYALTY
-                  ? icons['round_arrow']
-                  : icons['arrow']}
+                {SHOW_LOYALTY ? icons['round_arrow'] : icons['arrow']}
               </Link>
             );
           }}
@@ -220,6 +212,7 @@ const Navigation = ({overlayItems}) => {
 
 const FooterButtons = () => {
   const rootData = useRouteLoaderData('root');
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const links = [
     {
       label: 'my account',
@@ -231,7 +224,7 @@ const FooterButtons = () => {
       label: 'upload receipt to earn points',
       icon: icons['upload'],
       link: '/pages/upload-receipt',
-      showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
+      showIt: SHOW_LOYALTY,
       onClick: () =>
         triggerAnalyticsLoyaltyEvents('SubmitReceiptBtnClick', {
           source: 'hamburgerNav',

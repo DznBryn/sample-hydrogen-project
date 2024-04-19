@@ -6,19 +6,20 @@ import {
   appendScript,
   getCMSDoc,
 } from '~/utils/functions/eventFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {useCustomerState} from '~/hooks/useCostumer';
 const Search = lazy(() => import('~/modules/search'));
 import {links as searchStyles} from '~/modules/search';
 import {Await, useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...searchStyles()];
 };
 
 const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const {ENVS} = useRouteLoaderData('root');
   const {id, email, isLoggedIn} = useCustomerState();
 
@@ -56,12 +57,6 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       let customerId = id;
-
-      if (getApiKeys().API_TYPE === 'rest') {
-        const parsedCustomerId = window?.atob(id);
-        customerId = parsedCustomerId?.split('/Customer/')[1] || '';
-      }
-
       setYotpoId(customerId);
     }
   }, [id]);
@@ -81,7 +76,7 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
   useEffect(() => {
     appendGorgiasChat();
 
-    if (typeof window === 'object' && getApiKeys().FEATURE_FLAGS.LOYALTY)
+    if (typeof window === 'object' && SHOW_LOYALTY)
       window.addClickEventOnWidgetElement = addClickEventOnWidgetElement;
   }, []);
 

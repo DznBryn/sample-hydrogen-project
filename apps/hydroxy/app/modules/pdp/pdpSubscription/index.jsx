@@ -2,11 +2,11 @@ import {useRef, useState} from 'react';
 import Badges, {links as badgesStyles} from '../../badges';
 import ModalGeneric, {links as modalGenericStyles} from '../../modalGeneric';
 import PortableTextCustom from '../../portableTextCustom';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {useStore} from '~/hooks/useStore';
 import classnames from 'classnames';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export const links = () => {
   return [
@@ -20,7 +20,7 @@ const DEFAULT_SELLING_PLAN_NAME = '3 months';
 
 const PDPSubscription = ({classes, sellingPlans, autoDeliveryInfo}) => {
   const {store, setStore} = useStore();
-
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const defaultSellingPlanId = getDefaultSellingPlan();
   const recommendedSellingPlanId =
     sellingPlans.RecommendedSellingPlan || defaultSellingPlanId;
@@ -198,7 +198,7 @@ const PDPSubscription = ({classes, sellingPlans, autoDeliveryInfo}) => {
                 </ModalGeneric>
               </>
             )}
-            {getApiKeys().FEATURE_FLAGS.LOYALTY && (
+            {SHOW_LOYALTY && (
               <div className={'loyaltyCopy'}>
                 <span>+ 300 bonus points!</span> <RoundStarIcon />
               </div>

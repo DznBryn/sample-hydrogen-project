@@ -19,7 +19,7 @@ import {useStore} from '~/hooks/useStore';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 //
 
@@ -70,6 +70,7 @@ const MainContent = () => {
   const {setCustomerData} = useStore((store) => store?.account ?? null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
+  const {SHOW_LOYALTY} = useFeatureFlags();
 
   const {id: customerId = '', firstName, email} = customerData;
 
@@ -249,7 +250,7 @@ const MainContent = () => {
         label: 'submit a receipt',
         to: '/pages/upload-receipt',
         new: true,
-        showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
+        showIt: SHOW_LOYALTY,
         onClick: () => {
           triggerAnalyticsLoyaltyEvents('SubmitReceiptBtnClick', {
             source: 'accountSlider',
@@ -261,7 +262,7 @@ const MainContent = () => {
         label: 'redeem rewards',
         to: customerId !== '' ? '/account?c=rewards' : '/rewards',
         new: true,
-        showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
+        showIt: SHOW_LOYALTY,
         onClick: () => switchSliderPanelVisibility('SliderAccount'),
       },
       {
@@ -320,7 +321,7 @@ const MainContent = () => {
         icon: icons['arrow'],
         to: '/collections/all',
         content: 'Healthy, balanced skin begins with TULA',
-        showIt: !getApiKeys().FEATURE_FLAGS.LOYALTY,
+        showIt: !SHOW_LOYALTY,
       },
     ];
 
@@ -345,7 +346,7 @@ const MainContent = () => {
             ),
         )}
 
-        {getApiKeys().FEATURE_FLAGS.LOYALTY && (
+        {SHOW_LOYALTY && (
           <Link
             to={'/account?c=rewards'}
             className={'welcomeButton rewards'}
@@ -477,7 +478,7 @@ const MainContent = () => {
           </div>
         </login.Form>
 
-        {getApiKeys().FEATURE_FLAGS.LOYALTY ? (
+        {SHOW_LOYALTY ? (
           <div id={'createNewAccRewards'}>
             <p>
               <span
@@ -649,7 +650,7 @@ const MainContent = () => {
           </Link>
 
           <div id={'createAccountBannersContainer'}>
-            {getApiKeys().FEATURE_FLAGS.LOYALTY && (
+            {SHOW_LOYALTY && (
               <Link
                 className={'rewardsBanner'}
                 to={'/rewards'}
