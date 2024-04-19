@@ -5,13 +5,6 @@ function getApiKeys() {
         CURRENCY_SYMBOL: '$',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
-        GLADLY_CONFIG: {
-          api: 'https://us-1.gladly.com',
-          orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
-          brandId: 'tula.com-en-us',
-          cdn: 'https://cdn.gladly.com',
-          selector: '#gladly-help-center',
-        },
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
@@ -36,13 +29,6 @@ function getApiKeys() {
         CURRENCY_SYMBOL: '$',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=4aBATcUCndfp&v=1',
-        GLADLY_CONFIG: {
-          api: 'https://us-1.gladly.com',
-          orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
-          brandId: 'tula.com-en-us',
-          cdn: 'https://cdn.gladly.com',
-          selector: '#gladly-help-center',
-        },
         RETURNS_HREF: 'https://returns.tula.com/',
         LISTRAK_IDS: {
           list_id: 345013,
@@ -67,13 +53,6 @@ function getApiKeys() {
         CURRENCY_SYMBOL: '$',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=XFjQ0i6x3CEB&v=1',
-        GLADLY_CONFIG: {
-          api: 'https://tula.gladly.com',
-          orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
-          brandId: 'Cwlh9rPdSRKp6wkbJbmlxg',
-          cdn: 'https://cdn.gladly.com',
-          selector: '#gladly-help-center',
-        },
         RETURNS_HREF: 'https://returns.tulaskincare.ca/',
         LISTRAK_IDS: {
           list_id: 346002,
@@ -99,13 +78,6 @@ function getApiKeys() {
         CURRENCY_SYMBOL: '£',
         LISTRAK_SCRIPT:
           'https://cdn.listrakbi.com/scripts/script.js?m=WXn2lO0vrk3n&v=1',
-        GLADLY_CONFIG: {
-          api: 'https://tula.gladly.com',
-          orgId: 'QW4MLmtCTR2XgALQ0o8IeA',
-          brandId: 'RFyIyiaISn2Uh6tM5J_ggA',
-          cdn: 'https://cdn.gladly.com',
-          selector: '#gladly-help-center',
-        },
         RETURNS_HREF:
           '/pages/faq?a=What-is-your-return-policy---id--8SHAtr2IT0GpnbwAdBP50Q',
         LISTRAK_IDS: {
