@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {
-  convertStorefrontIdToExternalId,
   getCartQuantity,
   getLoyaltyCustomerData,
   isAutoDeliveryInCart,
@@ -45,8 +44,6 @@ export const links = () => {
 
 //
 
-const apiType = getApiKeys().API_TYPE;
-
 let prevState = null;
 
 const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
@@ -65,13 +62,6 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   );
 
   const fetcher = useFetcher();
-  const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
-  const carbonOffsetItem = items?.filter(
-    (item) =>
-      (apiType === 'graphql'
-        ? convertStorefrontIdToExternalId(item.variant.product.id)
-        : item.id) === carbonOffsetVariant,
-  )[0];
   const [loading, setLoading] = React.useState(false);
   const [isAbleToRedeem, setIsAbleToRedeem] = React.useState(false);
 
@@ -329,7 +319,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   }
 
   function getTotalItemsOnCart() {
-    const EXCEPTIONS = [carbonOffsetItem, IS_GWP_PRODUCT_ON_CART];
+    const EXCEPTIONS = [IS_GWP_PRODUCT_ON_CART];
     let total = cart?.totalQuantity ?? 0;
 
     EXCEPTIONS.forEach((exception) => {
@@ -427,7 +417,6 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     items,
     cartConfig,
     productRecs: recommendations,
-    carbonOffsetItem,
     quantity: getTotalItemsOnCart(),
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
     handleClick: toggleCart,
@@ -462,7 +451,6 @@ const CartContent = ({
   productRecs,
   hasOnlyGiftCards,
   handleClick,
-  carbonOffsetItem,
   isAbleToRedeem,
   ...props
 }) => {
@@ -504,7 +492,6 @@ const CartContent = ({
   const itemsListProps = {
     items,
     cartConfig,
-    carbonOffsetItem,
     productRecList,
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
     ...props,
@@ -560,12 +547,6 @@ const CartContent = ({
 
       <Checkout
         cartConfig={cartConfig}
-        valueToSubtract={
-          carbonOffsetItem &&
-          (apiType === 'graphql'
-            ? Number(carbonOffsetItem.variant.price)
-            : carbonOffsetItem.line_price / 100)
-        }
         message="Checkout"
         url={cart?.checkoutUrl}
       />
@@ -703,10 +684,7 @@ const ItemsList = ({
                 ? product.productPromos
                 : false;
 
-            if (
-              item.id !== props?.carbonOffsetVariant &&
-              item.id !== props?.GWP_PRODUCT_VARIANT_ID
-            ) {
+            if (item.id !== props?.GWP_PRODUCT_VARIANT_ID) {
               return (
                 <SliderCartProductBox
                   item={{
@@ -752,10 +730,7 @@ const ItemsList = ({
                 ? props?.GWP_PRODUCT_VARIANT_ID
                 : -1;
 
-            if (
-              item.id !== props?.carbonOffsetVariant &&
-              !item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)
-            ) {
+            if (!item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)) {
               return (
                 <SliderCartProductBox
                   item={{
