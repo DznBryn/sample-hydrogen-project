@@ -587,7 +587,7 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => {
           <Banner loggedIn={isLoggedIn} isEmpty />
         )}
         {/* Provisional way to hide Skin Quiz on UK */}
-        {!ENVS?.SITE_NAME.includes('UK') && <SkinQuizCartBanner />}
+        {rootData?.ENVS?.SITE_NAME.includes('UK') && <SkinQuizCartBanner />}
       </div>
 
       <SliderCartRec
