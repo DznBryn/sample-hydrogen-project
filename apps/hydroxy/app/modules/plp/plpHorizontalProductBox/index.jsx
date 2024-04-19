@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {getCurrency, useLayoutEffect} from '~/utils/functions/eventFunctions';
+import {useLayoutEffect} from '~/utils/functions/eventFunctions';
 import {Link} from '@remix-run/react';
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
 import PLPBadges, {links as plpBadgesStyles} from '../plpBadges';
@@ -7,6 +7,9 @@ import Badges, {links as badgesStyles} from '../../badges';
 import Product, {links as plpProductBoxStyles} from '../plpProductBox';
 
 import styles from './styles.css';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 export const links = () => {
   return [
@@ -17,6 +20,8 @@ export const links = () => {
     ...plpProductBoxStyles(),
   ];
 };
+
+//
 
 const Button = ({product, ...rest}) => {
   const [forceSoldOut, setForceSoldOut] = useState(false);
@@ -93,6 +98,8 @@ const Button = ({product, ...rest}) => {
     : button['add'];
 };
 
+//
+
 let sitewide = false;
 
 const PLPHorizontalProductBox = ({
@@ -102,6 +109,7 @@ const PLPHorizontalProductBox = ({
   compareButtonConfig,
   ...rest
 }) => {
+  const {getCurrency} = useCurrency();
   const [forceChange, setForceChange] = useState(false);
   const {media = [], name} = product;
   const variants = product.variants.nodes;

@@ -1,10 +1,13 @@
 import {flattenConnection} from '@shopify/hydrogen';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {isFreeGitPromoActivate} from '../utils';
+import useCurrency from '~/hooks/useCurrency';
 
 let initState = 0;
 
+//
+
 const ProgressBar = ({cart, cartConfig}) => {
+  const {getCurrency} = useCurrency();
   let cartTotal = cart?.cost?.subtotalAmount?.amount ?? 0;
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
   let progressMsg = null;
@@ -37,10 +40,13 @@ const ProgressBar = ({cart, cartConfig}) => {
       percentage = (cartTotal / cartConfig.freeShippingThreshold) * 100;
       progressMsg = (
         <p>
-          {'You\'re ' +
-            getCurrency() +
-            leftTillFree +
-            ' away from free shipping'}
+          {
+            // eslint-disable-next-line
+            "You're " +
+              getCurrency() +
+              leftTillFree +
+              ' away from free shipping'
+          }
         </p>
       );
     }
@@ -51,7 +57,9 @@ const ProgressBar = ({cart, cartConfig}) => {
       cartTotal = items
         .filter((item) => !item?.sellingPlanAllocation?.sellingPlan)
         .reduce((total, value) => {
-          return (total += Number(value?.cost?.amountPerQuantity?.amount * value.quantity ?? 0));
+          return (total += Number(
+            value?.cost?.amountPerQuantity?.amount * value.quantity ?? 0,
+          ));
         }, 0);
     }
     if (cartTotal >= cartConfig.freeGiftPromoThreshold) {
@@ -70,7 +78,8 @@ const ProgressBar = ({cart, cartConfig}) => {
       percentageFreeGift =
         (cartTotal / cartConfig.freeGiftPromoThreshold) * 100;
       progressMsgFreeGift = (
-        <p>{'You\'re $' + leftTillFreeGift + ' away from a Free Gift'}</p>
+        // eslint-disable-next-line
+        <p>{"You're $" + leftTillFreeGift + ' away from a Free Gift'}</p>
       );
     }
   }

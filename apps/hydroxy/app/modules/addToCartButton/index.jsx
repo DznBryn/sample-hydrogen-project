@@ -7,12 +7,12 @@ import {
   createCustomEvent,
   getIdFromGid,
 } from '~/utils/functions/eventFunctions';
-
-import styles from './styles.css';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import {useStore} from '~/hooks/useStore';
 import {useCartState} from '~/hooks/useCart';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
+
+import styles from './styles.css';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -37,6 +37,7 @@ export default function PDPAddToCart({
   availableForSale,
   content,
 }) {
+  const rootData = useRouteLoaderData('root');
   const [root] = useMatches();
   const {setData: setCartData = () => {}, data = null} = useStore(
     (store) => store?.cart ?? null,
@@ -173,13 +174,34 @@ export default function PDPAddToCart({
         productToSubscribe: {},
       };
 
+      const OG_KEY = {
+        US_STG: {
+          AD15: 'ddeeb16695fd11ea80bdbc764e10b970',
+          AD20: 'fb58fa587a4411edbad7ce8f0c4adeb8',
+        },
+        US_PROD: {
+          AD15: 'ddeeb16695fd11ea80bdbc764e10b970',
+          AD20: 'fb58fa587a4411edbad7ce8f0c4adeb8',
+        },
+        CA_PROD: {
+          AD15: 'c1ff625674af11ecbde3f2737e309b5b',
+          AD20: 'dc673fbe7a4511ed8191ea4fad94f603',
+        },
+        UK_PROD: {
+          AD15: 'ed2450c806a811edb66cda989c1a3bbf',
+          AD20: 'f2f7719a7a4511ed9f3ece8f0c4adeb8',
+        },
+      };
+
       OG_STATE.productOffer[addItem.variantId.toString()] = [
-        getApiKeys().OG_KEY,
+        OG_KEY[rootData?.ENVS?.SITE_NAME]?.AD20,
       ];
 
       items.forEach((item) => {
         if (item.selling_plan_allocation) {
-          OG_STATE.productOffer[item.variant_id] = [getApiKeys().OG_KEY];
+          OG_STATE.productOffer[item.variant_id] = [
+            OG_KEY[rootData?.ENVS?.SITE_NAME]?.AD20,
+          ];
         }
       });
 
