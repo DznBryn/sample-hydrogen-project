@@ -80,7 +80,7 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
                   )}
                   onClick={handleClickOnLink}
                 >
-                  <p className={SHOW_LOYALTY && 'whiteColor'}>{header}</p>
+                  <p className={SHOW_LOYALTY ? 'whiteColor' : ''}>{header}</p>
                   {contentText}
                 </div>
 
