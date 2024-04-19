@@ -53,7 +53,7 @@ const PageMeta = () => {
 
       <script
         defer
-        src={`https://cdn-widgetsrepository.yotpo.com/v1/loader/${rootData?.ENVS?.YOTPO_LOYALTY_GUID}`}
+        src={`https://cdn-widgetsrepository.yotpo.com/v1/loader/${rootData?.ENVS?.YOTPO_KEY}`}
       ></script>
 
       <script

@@ -3,13 +3,15 @@ const PDPYotPoReviews = (product) => {
   return (
     <section className="YotpoProductReviews">
       <div
-        className="yotpo yotpo-main-widget"
-        data-product-id={productID}
-        data-currency="USD"
-        data-image-url={product?.images?.[0]?.url}
-        data-name={product?.title}
-        data-price={product?.priceRange?.maxVariantPrice?.amount}
-        data-url={`/products/${product?.handle}`}
+        className="yotpo-widget-instance"
+        data-yotpo-instance-id="637693"
+        data-yotpo-product-id={productID}
+        data-yotpo-name={product?.title}
+        data-yotpo-url={`/products/${product?.handle}`}
+        data-yotpo-image-url={product?.images?.[0]?.url}
+        data-yotpo-price={product?.priceRange?.maxVariantPrice?.amount}
+        data-yotpo-currency="USD"
+        data-yotpo-description={product?.description || ''}
       ></div>
     </section>
   );
