@@ -31,7 +31,6 @@ import CatchContent, {
   links as catchBoundaryStyles,
 } from './boundaries/catchContent';
 import {useRouteError, isRouteErrorResponse} from '@remix-run/react';
-import getApiKeys from './utils/functions/getApiKeys';
 import {defer, redirect} from '@remix-run/server-runtime';
 import {links as layoutsStyles} from '~/layouts';
 import favicon from '../public/favicon.ico';
@@ -55,13 +54,6 @@ import {
 
 export const links = () => {
   return [
-    {
-      rel: 'stylesheet',
-      href: `https://staticw2.yotpo.com/${
-        getApiKeys().YOTPO_KEY
-      }/widget.css?widget_version=2022-10-06_07-58-33`,
-      media: 'screen',
-    },
     {rel: 'stylesheet', href: styles},
     {rel: 'preconnect', href: 'https://shop.app'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
@@ -148,8 +140,17 @@ export async function loader({context, request}) {
       previewMode: context.session.get('previewMode') === 'true',
       ...CMSData,
       ENVS: {
-        SITE_NAME: context.env.SITE_NAME,
-        PAYMENT_PLAN_VENDOR: context.env.PAYMENT_PLAN_VENDOR,
+        SITE_NAME: context?.env?.SITE_NAME,
+        PAYMENT_PLAN_VENDOR: context?.env?.PAYMENT_PLAN_VENDOR,
+        AUDIOEYE_HASH: context?.env?.AUDIOEYE_HASH,
+        YOTPO_KEY: context?.env?.YOTPO_KEY,
+        GOOGLE_SITE_VERIFICATION_ID: context?.env?.GOOGLE_SITE_VERIFICATION_ID,
+        YOTTA_KEY: context?.env?.YOTTA_KEY,
+        YOTPO_LOYALTY_GUID: context?.env?.YOTPO_LOYALTY_GUID,
+        GTM_ID: context?.env?.GTM_ID,
+        POSTSCRIPT_ID: context?.env?.POSTSCRIPT_ID,
+        ONETRUST_ID: context?.env?.ONETRUST_ID,
+        LISTRAK_ID: context?.env?.LISTRAK_ID,
       },
     },
     {

@@ -1,20 +1,27 @@
 import {Suspense, useEffect, useRef} from 'react';
 import {Await, Link} from '@remix-run/react';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {
   bindCustomEvent,
   createCustomEvent,
   getCMSDoc,
+  getReturnsURL,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
+//
+
 const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const overlayRef = useRef(null);
   const overlayItems = mobileOverlayItems;
 
@@ -50,13 +57,13 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
                 to={linkURL}
                 id={'footer'}
                 onClick={() => {
-                  getApiKeys().FEATURE_FLAGS.LOYALTY &&
+                  SHOW_LOYALTY &&
                     triggerAnalyticsLoyaltyEvents('LearnMoreBtnClick', {
                       source: 'mobileBanner',
                     });
                 }}
                 style={
-                  getApiKeys().FEATURE_FLAGS.LOYALTY
+                  SHOW_LOYALTY
                     ? {
                         backgroundImage:
                           'url(' +
@@ -68,25 +75,16 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
                 }
               >
                 <div
-                  className={[
-                    'content',
-                    getApiKeys().FEATURE_FLAGS.LOYALTY ? 'whiteColor' : '',
-                  ].join(' ')}
+                  className={['content', SHOW_LOYALTY ? 'whiteColor' : ''].join(
+                    ' ',
+                  )}
                   onClick={handleClickOnLink}
                 >
-                  <p
-                    className={
-                      getApiKeys().FEATURE_FLAGS.LOYALTY && 'whiteColor'
-                    }
-                  >
-                    {header}
-                  </p>
+                  <p className={SHOW_LOYALTY ? 'whiteColor' : ''}>{header}</p>
                   {contentText}
                 </div>
 
-                {getApiKeys().FEATURE_FLAGS.LOYALTY
-                  ? icons['round_arrow']
-                  : icons['arrow']}
+                {SHOW_LOYALTY ? icons['round_arrow'] : icons['arrow']}
               </Link>
             );
           }}
@@ -95,6 +93,8 @@ const MainNavMobileOverlay = ({mobileOverlayItems, mobileNavMainButton}) => {
     </div>
   );
 };
+
+//
 
 const Navigation = ({overlayItems}) => {
   let optionOffsetHeight;
@@ -208,7 +208,11 @@ const Navigation = ({overlayItems}) => {
   );
 };
 
+//
+
 const FooterButtons = () => {
+  const rootData = useRouteLoaderData('root');
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const links = [
     {
       label: 'my account',
@@ -220,7 +224,7 @@ const FooterButtons = () => {
       label: 'upload receipt to earn points',
       icon: icons['upload'],
       link: '/pages/upload-receipt',
-      showIt: getApiKeys().FEATURE_FLAGS.LOYALTY,
+      showIt: SHOW_LOYALTY,
       onClick: () =>
         triggerAnalyticsLoyaltyEvents('SubmitReceiptBtnClick', {
           source: 'hamburgerNav',
@@ -229,7 +233,7 @@ const FooterButtons = () => {
     {
       label: 'returns & exchanges',
       icon: icons['flux'],
-      link: getApiKeys().RETURNS_HREF,
+      link: getReturnsURL(rootData?.ENVS?.SITE_NAME),
       showIt: true,
     },
     {
@@ -251,6 +255,8 @@ const FooterButtons = () => {
       showIt: true,
     },
   ];
+
+  //
 
   return (
     <div id={'extraLinkContainer'}>
@@ -280,6 +286,8 @@ const FooterButtons = () => {
   );
 };
 
+//
+
 const handleClickOnLink = () => {
   const dataEvent = createCustomEvent();
   const activeOverlayClassName = 'styles_overlayActive__2BCiY';
@@ -294,6 +302,8 @@ const handleClickOnLink = () => {
   menuWraper?.setAttribute('data-visible-state', 'hide');
   menuWraper?.dispatchEvent(dataEvent);
 };
+
+//
 
 const icons = {
   arrow: (

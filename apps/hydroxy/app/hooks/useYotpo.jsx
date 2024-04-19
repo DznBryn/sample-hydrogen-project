@@ -1,7 +1,12 @@
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
+
+//
 
 export function useYotpo() {
+  const {ENVS} = useRouteLoaderData('root');
+
   //
+
   async function getProductReviewsData(productExternalID) {
     return await getFetchedData(productExternalID);
   }
@@ -17,9 +22,7 @@ export function useYotpo() {
     }
 
     function getURL() {
-      return `https://api.yotpo.com/products/${
-        getApiKeys().YOTPO_KEY
-      }/${productExternalID}/bottomline`;
+      return `https://api.yotpo.com/products/${ENVS?.YOTPO_KEY}/${productExternalID}/bottomline`;
     }
 
     function getHeader() {
@@ -50,6 +53,8 @@ export function useYotpo() {
       }
     }
   }
+
+  //
 
   return {
     refreshWidgets,
