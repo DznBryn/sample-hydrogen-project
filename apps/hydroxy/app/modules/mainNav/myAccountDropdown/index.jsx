@@ -3,7 +3,6 @@ import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '../../loadingSkeleton';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {Link, useFetcher} from '@remix-run/react';
 import {
   getLoyaltyCustomerData,
@@ -13,17 +12,18 @@ import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...loadingSkeletonStyles()];
 };
 
 const MyAccountDropdown = () => {
-  return getApiKeys().FEATURE_FLAGS.LOYALTY ? (
-    <LoyaltyVersion />
-  ) : (
-    <CommomVersion />
-  );
+  const {SHOW_LOYALTY} = useFeatureFlags();
+
+  //
+
+  return SHOW_LOYALTY ? <LoyaltyVersion /> : <CommomVersion />;
 };
 
 const CommomVersion = () => {

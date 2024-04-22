@@ -1,24 +1,31 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Link, useFetcher, useRouteLoaderData} from '@remix-run/react';
 import {useCartActions} from '../../../hooks/useCart';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
-import {Image, flattenConnection, parseGid} from '@shopify/hydrogen';
+import {Image, parseGid} from '@shopify/hydrogen';
 import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import styles from './styles.css';
 import {PortableText} from '@portabletext/react';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 let sitewide = false;
+
+//
+
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+//
 const SliderCartProductBox = ({
   item = {},
   promo,
   cartPageConfig = {},
   product,
 }) => {
+  const {getCurrency} = useCurrency();
   const inputQtyRef = useRef();
   const {updateItems} = useCartActions();
   const [forceChange, setForceChange] = useState(false);
@@ -165,12 +172,16 @@ const SliderCartProductBox = ({
   );
 };
 
+//
+
 const YotpoProductPrice = ({price, isSellingPlan = false}) => (
   <div className={'yotpoProductPriceContainer'}>
     <LoyaltyBadgeIcon />
     <span>{isSellingPlan ? price + 300 : price}</span>
   </div>
 );
+
+//
 
 const RegularProduct = ({
   item,
@@ -182,7 +193,8 @@ const RegularProduct = ({
   product,
   cartPageConfig,
 }) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
+  const rootData = useRouteLoaderData('root');
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
@@ -190,7 +202,7 @@ const RegularProduct = ({
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
   );
-  const shouldShowYotpoPoints = ENVS?.SITE_NAME.includes('US');
+  const shouldShowYotpoPoints = rootData.ENVS?.SITE_NAME.includes('US');
 
   //
 
@@ -338,7 +350,10 @@ const RegularProduct = ({
   );
 };
 
+//
+
 const Price = ({item, promo, product, cartPageConfig}) => {
+  const {getCurrency} = useCurrency();
   const hasSitewidePromo =
     sitewide &&
     !sitewide?.excludeList?.includes(item.merchandise.product.handle);
@@ -450,6 +465,8 @@ const Price = ({item, promo, product, cartPageConfig}) => {
   }
 };
 
+//
+
 const ADSwitcherContent = ({
   item,
   switcherInput,
@@ -546,6 +563,9 @@ const ADSwitcherContent = ({
     </div>
   );
 };
+
+//
+
 const LoyaltyBadgeIcon = () => (
   <svg
     width={12}
@@ -571,22 +591,15 @@ const LoyaltyBadgeIcon = () => (
   </svg>
 );
 
+//
+
 function RemoveItemButton({lineId}) {
   const fetcher = useFetcher();
-  const {updateCart: removeItemData = () => {}, data = null} = useStore(
+  const {updateCart: removeItemData = () => {}} = useStore(
     (store) => store?.cart ?? {},
   );
-  const items = data?.lines ? flattenConnection(data.lines) : [];
-  const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
-  // @TODO: convert storefront id to external id
-  const carbonOffsetIsOnCart = items?.find(
-    (item) => item && item?.merchandise?.product?.id === carbonOffsetVariant,
-  )?.id;
 
-  const linesIds =
-    carbonOffsetIsOnCart && items.length <= 2
-      ? JSON.stringify([lineId, carbonOffsetIsOnCart])
-      : JSON.stringify([lineId]);
+  const linesIds = JSON.stringify([lineId]);
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
@@ -630,6 +643,8 @@ function RemoveItemButton({lineId}) {
   );
 }
 
+//
+
 function UpdateItemButton({lineIds, children}) {
   const fetcher = useFetcher();
   const {updateCart: updateItemData = () => {}, data = null} = useStore(
@@ -654,5 +669,7 @@ function UpdateItemButton({lineIds, children}) {
     </fetcher.Form>
   );
 }
+
+//
 
 export default SliderCartProductBox;

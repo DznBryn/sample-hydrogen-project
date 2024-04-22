@@ -2,8 +2,7 @@ import classname from 'classnames';
 
 import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
-import getApiKeys from '~/utils/functions/getApiKeys';
-import {flattenConnection, parseGid} from '@shopify/hydrogen';
+import {flattenConnection} from '@shopify/hydrogen';
 import {getCartQuantity} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
@@ -19,10 +18,6 @@ const IconCart = ({cartConfig}) => {
   const cart = useStore((store) => store?.cart?.data ?? (() => {}));
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
-  const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
-  const carbonOffsetIsOnCart = items.filter(
-    (item) => parseGid(item?.merchandise?.id)?.id === carbonOffsetVariant,
-  )[0];
   const quantity = getTotalItemsOnCart();
 
   function getTotalItemsOnCart() {
@@ -36,7 +31,7 @@ const IconCart = ({cartConfig}) => {
         product?.merchandise?.product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID),
     );
 
-    const EXCEPTIONS = [carbonOffsetIsOnCart, IS_GWP_PRODUCT_ON_CART];
+    const EXCEPTIONS = [IS_GWP_PRODUCT_ON_CART];
 
     let total = getCartQuantity(items);
 
