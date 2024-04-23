@@ -37,11 +37,18 @@ import {links as layoutsStyles} from '~/layouts';
 import favicon from '../public/favicon.ico';
 import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
+import {usePageAnalytics} from './hooks/usePageAnalytics';
 import {getCart} from './utils/graphql/shopify/queries/cart';
 
 import styles from './styles/app.css';
-import {parseGid} from '@shopify/hydrogen';
+import {
+  parseGid,
+  AnalyticsEventName,
+  getClientBrowserParameters,
+  sendShopifyAnalytics,
+  useShopifyCookies,
+} from '@shopify/hydrogen';
 import {
   getCustomerAddresses,
   getCustomerOrders,
@@ -118,6 +125,8 @@ export async function loader({context, request}) {
 
   headers.set('Set-Cookie', await context.session.commit());
 
+  const storeAnalytics = {shopId: 'gid://shopify/Shop/000000000'};
+
   return defer(
     {
       request,
@@ -139,26 +148,53 @@ export async function loader({context, request}) {
       status: 200,
       headers,
     },
+    {
+      analytics: {storeAnalytics},
+    },
   );
 }
 
 export default function App() {
+  // IMPORTANT: It’s up to you to ensure you have tracking consent
+  // before updating this value to true.
+  const hasUserConsent = true;
+  useShopifyCookies({hasUserConsent});
+  // The user's current location
   const location = useLocation();
+  // The user's last location. Blank to start.
+  const lastLocationKey = useRef('');
+  // Analytics data returned by the custom hook
+  const pageAnalytics = usePageAnalytics({hasUserConsent});
+
+  useEffect(() => {
+    // Only continue if the user's location changed.
+    if (lastLocationKey.current === location.key) return;
+    lastLocationKey.current = location.key;
+
+    // Analytics data, including browser information
+    const payload = {
+      ...getClientBrowserParameters(),
+      ...pageAnalytics,
+    };
+
+    // Send analytics payload to Shopify
+    sendShopifyAnalytics({
+      eventName: AnalyticsEventName.PAGE_VIEW,
+      payload,
+    });
+  }, [location]);
+
   const {cart, showSliderCart, previewMode, customer} = useLoaderData();
-  const {
-    setData: setCartData = () => {},
-    data = null,
-    toggleCart,
-  } = useStore((store) => store?.cart ?? null);
+  const {setData: setCartData = () => {}, toggleCart} = useStore(
+    (store) => store?.cart ?? null,
+  );
 
   const {data: customerData, setCustomerData} = useStore(
     (store) => store?.account ?? {},
   );
 
   useEffect(() => {
-    if (cart?.id && JSON.stringify(cart) !== JSON.stringify(data)) {
-      setCartData(cart);
-    }
+    setCartData(cart);
 
     if (customerData && customer?.id !== customerData.id) {
       getCustomerSubscriptionData(customer);
