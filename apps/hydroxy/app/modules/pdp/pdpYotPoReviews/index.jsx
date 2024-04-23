@@ -7,6 +7,8 @@ const PDPYotPoReviews = ({product, env}) => {
     UK_PROD: 706468,
   };
 
+  console.log('Env', env);
+
   return (
     <section className="YotpoProductReviews">
       <div
