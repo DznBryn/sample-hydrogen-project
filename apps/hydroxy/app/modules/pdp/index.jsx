@@ -382,7 +382,7 @@ const PDP = ({
 
         <ContentSection>
           {!isGiftCard ? (
-            <PDPYotPo product={product} />
+            <PDPYotPo product={product} env={rootData?.ENVS?.SITE_NAME} />
           ) : (
             <div className={'giftcard_description__container'}>
               <div className={'giftcard_description'}>
