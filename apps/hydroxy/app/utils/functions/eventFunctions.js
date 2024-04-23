@@ -2,8 +2,6 @@ import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {getCustomer} from '~/utils/graphql/shopify/queries/customer';
 import apolloClient from '~/utils/graphql/sanity/apolloClient';
 import {flattenConnection, parseGid} from '@shopify/hydrogen';
-import {useCartState} from '~/hooks/useCart';
-import getApiKeys from './getApiKeys';
 import {getProductByHandle} from '../graphql/shopify/queries/collections';
 import {
   GET_ANNOUNCEMENT_HEADER,
@@ -473,9 +471,9 @@ export function generateUUID() {
   return uuid;
 }
 
-export function getCartTotalForFreeShipping(cart) {
+export function getCartTotalForFreeShipping(cart, siteName) {
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
-  const giftCardID = getApiKeys().GIFT_CARD_ID;
+  const giftCardID = getGiftCardIDs(siteName)?.id;
   let totalPrice = Number(cart?.cost?.totalAmount?.amount);
 
   items.forEach((item) => {
@@ -484,10 +482,6 @@ export function getCartTotalForFreeShipping(cart) {
   });
 
   return totalPrice;
-}
-
-export function getCurrency() {
-  return getApiKeys().CURRENCY_SYMBOL;
 }
 
 export function triggerAnalyticsLoyaltyEvents(
@@ -534,6 +528,51 @@ export function getFormData(object) {
   return formData;
 }
 
+export function getReturnsURL(siteName = 'US_STG') {
+  const returnsURLs = {
+    US_STG: 'https://returns.tula.com/',
+    US_PROD: 'https://returns.tula.com/',
+    CA_PROD: 'https://returns.tulaskincare.ca/',
+    UK_PROD:
+      '/pages/faq?a=What-is-your-return-policy---id--8SHAtr2IT0GpnbwAdBP50Q',
+  };
+
+  return returnsURLs[siteName];
+}
+
+export function getGiftCardIDs(siteName = 'US_STG') {
+  const giftCard = {
+    US_STG: {
+      id: 33630516353,
+      variantsIds: [
+        33630516353, 33630516417, 34008161345, 34008182785, 30290305187886,
+      ],
+    },
+    US_PROD: {
+      id: 33630516353,
+      variantsIds: [
+        33630516353, 33630516417, 34008161345, 34008182785, 30290305187886,
+      ],
+    },
+    CA_PROD: {
+      id: 42936398807263,
+      variantsIds: [
+        42936398807263, 42936398840031, 42936398872799, 42936398905567,
+        42936398938335,
+      ],
+    },
+    UK_PROD: {
+      id: 7781918540017,
+      variantsIds: [
+        43180565561585, 43180565627121, 43180565659889, 43180565692657,
+        43180565725425,
+      ],
+    },
+  };
+
+  return giftCard[siteName];
+}
+
 /**
  *   GraphQL functions
  */
@@ -576,20 +615,6 @@ export function isAutoDeliveryInCart(items) {
   return (
     items?.find((item) => item?.sellingPlanAllocation?.sellingPlan?.id) ?? false
   );
-}
-
-export function getCartTotalForFreeShippingGraphQL() {
-  const {items, subtotalPrice} = useCartState();
-  const giftCardID = getApiKeys().GIFT_CARD_ID;
-  let totalPrice = Number(subtotalPrice);
-  items.forEach((item) => {
-    if (
-      convertStorefrontIdToExternalId(item.variant.product.id) === giftCardID
-    ) {
-      totalPrice -= Number(item.variant.price);
-    }
-  });
-  return totalPrice;
 }
 
 /**

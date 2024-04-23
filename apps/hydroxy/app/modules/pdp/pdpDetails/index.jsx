@@ -1,14 +1,10 @@
 import {useState, useRef} from 'react';
-
 import classnames from 'classnames';
 import {Link} from '@remix-run/react';
-
 import {useStore} from '~/hooks/useStore';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {useCustomerState} from '~/hooks/useCostumer';
 import {switchSliderPanelVisibility} from '../../sliderPanel';
 import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
-
 import {IconClose} from '../../plp/plpFilterModal';
 import PDPTitle, {links as pdpTitleStyles} from '../pdpTitle';
 import PDPPrice, {links as pdpPriceStyles} from '../pdpPrice';
@@ -37,6 +33,7 @@ import YotpoStarReviews, {
 } from '~/modules/YotpoStarReviews';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export const links = () => {
   return [
@@ -64,6 +61,7 @@ const PDPDetails = ({
   shadeVariantsOos,
   concealerImages = null,
 }) => {
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const subscriptionEligibleTag = useRef(
     Boolean(details.tags.includes('subscriptionEligibleTag')),
   );
@@ -374,9 +372,7 @@ const PDPDetails = ({
         <PDPPrice
           pricing={getPrice(store?.productPage?.selectedVariant ?? 0)}
         />
-        {getApiKeys().FEATURE_FLAGS.LOYALTY && (
-          <LoyaltyMessage className={'show_mobile'} />
-        )}
+        {SHOW_LOYALTY && <LoyaltyMessage className={'show_mobile'} />}
         <PDPDescription
           classes={'order_7'}
           description={getDescription(
@@ -409,9 +405,7 @@ const PDPDetails = ({
             </div>
           )}
         {details.variants !== null && getVariantsSelector()}
-        {getApiKeys().FEATURE_FLAGS.LOYALTY && (
-          <LoyaltyMessage className={'show_desktop'} />
-        )}
+        {SHOW_LOYALTY && <LoyaltyMessage className={'show_desktop'} />}
         {subscriptionEligibleTag.current ? (
           <PDPSubscription
             classes={'order_0'}

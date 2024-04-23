@@ -1,9 +1,9 @@
 import {useState, useEffect, useRef} from 'react';
 import {parseGid} from '@shopify/hydrogen';
 import classnames from 'classnames';
-import {getCurrency} from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
 import {useRouteLoaderData} from '@remix-run/react';
+import useCurrency from '~/hooks/useCurrency';
 
 import styles from './styles.css';
 
@@ -17,6 +17,7 @@ export const links = () => {
 
 const PDPPrice = ({pricing}) => {
   const {ENVS} = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
   const {
     originalPrice,
     price,
