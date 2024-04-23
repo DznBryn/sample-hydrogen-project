@@ -1,6 +1,8 @@
 import {UnlockedIcon, LockedIcon} from '../../icons';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {Image, flattenConnection} from '@shopify/hydrogen';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 const FreeGiftPromoProduct = ({
   product,
@@ -9,6 +11,7 @@ const FreeGiftPromoProduct = ({
   active,
   productPrice,
 }) => {
+  const {getCurrency} = useCurrency();
   const shopifyProductImages = product?.images
     ? flattenConnection(product.images)
     : [];
@@ -29,6 +32,8 @@ const FreeGiftPromoProduct = ({
         aspectRatio="4:5"
       />
     );
+
+  //
 
   return (
     <div className={['freeGiftPromo', active ? '' : 'disabled'].join(' ')}>

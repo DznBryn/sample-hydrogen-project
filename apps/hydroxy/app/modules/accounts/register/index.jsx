@@ -1,14 +1,20 @@
-import {Link, useFetcher} from '@remix-run/react';
+import {Link, useFetcher, useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import Button, {links as buttonStyles} from '~/modules/global/button';
 import {useRef, useState} from 'react';
 import {API_METHODS, FETCHER, MESSAGE_ERROR} from '~/utils/constants';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
+
+//
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}, ...buttonStyles()];
 }
+
+//
+
 export default function Register() {
+  const {ENVS} = useRouteLoaderData('root');
   const fetcher = useFetcher();
   const [registerForm, setRegisterForm] = useState({
     email: '',
@@ -145,7 +151,7 @@ export default function Register() {
                 Password must be at least 5 characters
               </span>
             </div>
-            {getApiKeys().CURRENT_ENV.includes('UK') ? (
+            {ENVS?.SITE_NAME.includes('UK') ? (
               <p className={'infoText'}>
                 You are registering as a user of Tula UK for which{' '}
                 <a href="/pages/privacy-policy">Tula Life, Inc.</a> is the data
@@ -200,7 +206,11 @@ export default function Register() {
 }
 
 const Header = () => {
-  if (getApiKeys().FEATURE_FLAGS.LOYALTY) {
+  const {SHOW_LOYALTY} = useFeatureFlags();
+
+  //
+
+  if (SHOW_LOYALTY) {
     return (
       <>
         <div className={'header__banner'}>
@@ -252,6 +262,7 @@ const Icons = {
 };
 
 export function RegisterForm({fetcher = useFetcher()}) {
+  const {ENVS} = useRouteLoaderData('root');
   const [registerForm, setRegisterForm] = useState({
     email: '',
     password: '',
@@ -381,7 +392,7 @@ export function RegisterForm({fetcher = useFetcher()}) {
           ? 'Loading'
           : 'REGISTER'}
       </Button>
-      {getApiKeys().CURRENT_ENV.includes('UK') ? (
+      {ENVS?.SITE_NAME.includes('UK') ? (
         <p className={'infoText'}>
           You are registering as a user of Tula UK for which{' '}
           <a href="/pages/privacy-policy">Tula Life, Inc.</a> is the data

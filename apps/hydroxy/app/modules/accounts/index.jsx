@@ -1,6 +1,5 @@
 import styles from './styles.css';
 import {useEffect, useState} from 'react';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import Addresses, {links as addressesStyles} from './addresses';
 import OrderHistory, {links as ordersStyles} from './orders';
 import ReferralWidget, {links as referralStyles} from './referral';
@@ -9,6 +8,8 @@ import AccountSubscription, {
   links as subscriptionStyles,
 } from '~/modules/subscription/orderGroove/accounts';
 import {useYotpo} from '~/hooks/useYotpo';
+import {useRouteLoaderData} from '@remix-run/react';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export function links() {
   return [
@@ -45,11 +46,12 @@ function Header({data}) {
 }
 
 function Tabs({data}) {
+  const rootData = useRouteLoaderData('root');
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const showRewardsTab =
-    getApiKeys().FEATURE_FLAGS.LOYALTY &&
-    getApiKeys().CURRENT_ENV.includes('US');
+    SHOW_LOYALTY && rootData?.ENVS?.SITE_NAME.includes('US');
   const showAddressTab = true;
-  const showReferralTab = getApiKeys().CURRENT_ENV.includes('US');
+  const showReferralTab = rootData?.ENVS?.SITE_NAME.includes('US');
   const [active, setActive] = useState(1);
   const {refreshWidgets} = useYotpo();
 

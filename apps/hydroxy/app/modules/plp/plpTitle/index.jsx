@@ -1,25 +1,34 @@
 import React from 'react';
 import classnames from 'classnames';
-import {
-  getCurrency,
-  showPaymentPlanVendor,
-} from '~/utils/functions/eventFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
-const PLPAfterpay = ({classes}) => (
-  <div className={classnames('plpTitle_afterpay_container', classes)}>
-    <IconAfterpay />
-    <p className={'afterpay_text'}>
-      Available for orders over {getCurrency()}35
-    </p>
-  </div>
-);
+//
+
+const PLPAfterpay = ({classes}) => {
+  const {getCurrency} = useCurrency();
+
+  //
+
+  return (
+    <div className={classnames('plpTitle_afterpay_container', classes)}>
+      <IconAfterpay />
+      <p className={'afterpay_text'}>
+        Available for orders over {getCurrency()}35
+      </p>
+    </div>
+  );
+};
+
+//
 
 const RightArrow = () => (
   <svg
@@ -39,6 +48,8 @@ const RightArrow = () => (
   </svg>
 );
 
+//
+
 const EyeQuizLinkBanner = () => (
   <div className={'linkBannerContainer'}>
     <a
@@ -51,20 +62,28 @@ const EyeQuizLinkBanner = () => (
   </div>
 );
 
+//
+
 const PLPTitle = ({title, showAfterpay}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const showEyeQuizLinkBanner =
     title.title.toLowerCase().includes('eye care') &&
-    getApiKeys().CURRENT_ENV.includes('US');
+    ENVS?.SITE_NAME.includes('US');
   return (
     <div className={'plpTitleContainer'}>
       <h1 className={'title'}>{title.title}</h1>
       <p className={'subTitle'}>{title.subTitle}</p>
-      {showAfterpay && showPaymentPlanVendor === 'afterpay' && <PLPAfterpay />}
+      {showAfterpay && ENVS?.PAYMENT_PLAN_VENDOR === 'afterpay' && (
+        <PLPAfterpay />
+      )}
       {showEyeQuizLinkBanner && <EyeQuizLinkBanner />}
     </div>
   );
 };
+
 export default PLPTitle;
+
+//
 
 const IconAfterpay = () => (
   <svg

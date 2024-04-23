@@ -1,8 +1,12 @@
 import {useStore} from '~/hooks/useStore';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
-import getApiKeys from '../../../utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
+  const {ENVS} = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
   const cart = useStore((store) => store?.cart?.data ?? null);
   const subtotalPrice = Number(cart?.cost?.subtotalAmount?.amount ?? 0).toFixed(
     2,
@@ -32,7 +36,7 @@ const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
       </a>
       {isNotEmptyCart && (
         <div className={'discount'}>
-          {getApiKeys().CURRENT_ENV.includes('US')
+          {ENVS?.SITE_NAME.includes('US')
             ? 'Got a discount code or rewards points? Add them at checkout.'
             : 'Got a discount code? Add it on the next page'}
         </div>

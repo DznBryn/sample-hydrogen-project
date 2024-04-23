@@ -1,18 +1,21 @@
 /* eslint-disable react/no-unescaped-entities */
 import {useRef, useState} from 'react';
 import classNames from 'classnames';
-
 import {
   submitFooterContact,
   submitSkinQuizForm,
 } from '~/utils/functions/listrakFunctions';
-
 import styles from './styles.css';
 import {handleSignUpTracking} from '~/utils/functions/eventFunctions';
+import {useRouteLoaderData} from '@remix-run/react';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+//
 
 const SkinQuizAgeEmailOptIn = ({
   setRangeAge,
@@ -21,6 +24,7 @@ const SkinQuizAgeEmailOptIn = ({
   quizAnswers,
   submitType = 'sendAnswers',
 }) => {
+  const rootData = useRouteLoaderData('root');
   const [dateInputted, setDateInputted] = useState(false);
   const [activeTab, setActiveTab] = useState(currentTab);
 
@@ -87,7 +91,11 @@ const SkinQuizAgeEmailOptIn = ({
   }
 
   async function sendAnswersToLT(userEmail) {
-    return await submitSkinQuizForm(userEmail, getLTPostObject());
+    return await submitSkinQuizForm(
+      userEmail,
+      getLTPostObject(),
+      rootData?.ENVS?.SITE_NAME,
+    );
   }
 
   function Text() {
@@ -131,7 +139,11 @@ const SkinQuizAgeEmailOptIn = ({
       ? `${userBirthday.current.month}/${userBirthday.current.year}`
       : '';
 
-    return await submitFooterContact(userEmail, birthdayFormatted);
+    return await submitFooterContact(
+      userEmail,
+      birthdayFormatted,
+      rootData?.ENVS?.SITE_NAME,
+    );
   }
 
   function handleDateSubmit() {
@@ -178,7 +190,7 @@ const SkinQuizAgeEmailOptIn = ({
       age =
         rangeAge < 20
           ? 'teens'
-          : `${rangeAge > 40 ? '50\'s+' : rangeAge + '\'s'}`;
+          : `${rangeAge > 40 ? '50´s+' : rangeAge + '´s'}`;
     }
     return age;
   }

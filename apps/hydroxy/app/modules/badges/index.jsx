@@ -1,11 +1,15 @@
 import classnames from 'classnames';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+
+//
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
+
+//
 
 export const CertifiedBadge = ({image, title, ...rest}) => {
   return (
@@ -20,13 +24,18 @@ export const CertifiedBadge = ({image, title, ...rest}) => {
   );
 };
 
+//
+
 export const ExclusiveMemberBadge = ({...rest}) => (
   <div className={'exclusiveMemberBadgeContainer'} {...rest}>
     <p>MEMBER EXCLUSIVE</p>
   </div>
 );
 
+//
+
 export const PDPBadges = ({productDetails = [], selectedVariant}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const firstVariantObj = productDetails.variants[0];
   const selectedVariantObj =
     selectedVariant > 0
@@ -108,7 +117,7 @@ export const PDPBadges = ({productDetails = [], selectedVariant}) => {
             return null;
           })}
 
-        {getApiKeys().CURRENT_ENV.includes('US') &&
+        {ENVS?.SITE_NAME.includes('US') &&
           roseGlowTagsFromShopify.map((tag) => (
             <div
               key={tag.replace(' ', '-')}
@@ -126,6 +135,8 @@ export const PDPBadges = ({productDetails = [], selectedVariant}) => {
     )
   );
 };
+
+//
 
 const HolidayBadge = () => {
   const HolidayIcon = () => (
@@ -150,6 +161,8 @@ const HolidayBadge = () => {
     </div>
   );
 };
+
+//
 
 const SavingsBadges = ({
   message = 'Save 40%',

@@ -1,10 +1,6 @@
 import {useEffect, useRef} from 'react';
-import {
-  triggerAnalyticsProductClick,
-  getCurrency,
-} from '~/utils/functions/eventFunctions';
+import {triggerAnalyticsProductClick} from '~/utils/functions/eventFunctions';
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {comparisonUtils} from '../comparisonModal';
 import {Link} from '@remix-run/react';
 import classNames from 'classnames';
@@ -12,11 +8,14 @@ import {useComparisonModalStore} from '~/hooks/useStore';
 import YotpoStarReviews, {
   links as YotpoStarReviewsStyles,
 } from '~/modules/YotpoStarReviews';
-
+import {useRouteLoaderData} from '@remix-run/react';
 import {useOnScreen} from '~/utils/functions/eventFunctions';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
+import useCurrency from '~/hooks/useCurrency';
+
+//
 
 export const links = () => {
   return [
@@ -26,11 +25,15 @@ export const links = () => {
   ];
 };
 
+//
+
 let sitewide = false;
 
 const getLinkToObj = (slug, product) => {
   return {pathname: `/products/${slug}`, state: {product: product}};
 };
+
+//
 
 const Button = ({product, opensBlank = false, ...rest}) => {
   const {variants, tags, handle: slug} = product;
@@ -67,6 +70,8 @@ const Button = ({product, opensBlank = false, ...rest}) => {
   );
 };
 
+//
+
 const PLPProductBox2 = ({
   product,
   analytics,
@@ -81,6 +86,7 @@ const PLPProductBox2 = ({
     handle: slug,
     title,
   } = product;
+  const {getCurrency} = useCurrency();
   const media = images.nodes;
   const altTitle = product?.alt_title || '';
   const ref = useRef(null);
@@ -366,8 +372,8 @@ export default PLPProductBox2;
  */
 
 const PLPBadges = ({product}) => {
+  const {ENVS} = useRouteLoaderData('root');
   const {variants, tags} = product;
-
   const price = parseFloat(variants.nodes[0]?.price?.amount);
   const originalPrice = parseFloat(variants.nodes[0]?.compareAtPrice?.amount);
 
@@ -393,7 +399,7 @@ const PLPBadges = ({product}) => {
 
     if (
       roseGlowTags.find((tag) => tag === sanitizedTag.trim()) &&
-      getApiKeys().CURRENT_ENV.includes('US')
+      ENVS?.SITE_NAME.includes('US')
     ) {
       return classNames.bind(styles)('roseGlowBadgeContainer', customClass);
     }
@@ -500,6 +506,8 @@ const PLPBadges = ({product}) => {
     </div>
   );
 };
+
+//
 
 const ComparisonCheckbox = ({slug}) => {
   const {store} = useComparisonModalStore();
