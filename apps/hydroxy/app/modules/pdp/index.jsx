@@ -57,6 +57,8 @@ const PDP = ({
   const rootData = useRouteLoaderData('root');
   const {refreshWidgets} = useYotpo();
 
+  console.log('root data', rootData.ENVS);
+
   const details = useMemo(() => getDetailsObj(product), [product]);
 
   const isGiftCard = useMemo(
