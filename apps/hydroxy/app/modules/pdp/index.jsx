@@ -383,7 +383,8 @@ const PDP = ({
 
         <ContentSection>
           {!isGiftCard ? (
-            <PDPYotPo product={product} />
+            // should be rootData.ENVS.SITE_NAME
+            <PDPYotPo product={product} env={null} />
           ) : (
             <div className={'giftcard_description__container'}>
               <div className={'giftcard_description'}>
