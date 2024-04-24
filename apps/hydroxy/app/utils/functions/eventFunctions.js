@@ -549,7 +549,7 @@ export function updateListrakCart(items, token, cartLink, isAutoDelivery) {
       items.forEach((item) => {
         const curTotal = item.cost.totalAmount.amount;
         window._ltk.SCA.AddItemWithLinks(
-          parseGid(item.merchandise.product.id).id,
+          parseGid(item.merchandise.id).id,
           item.quantity,
           curTotal,
           item.merchandise.product.title,
