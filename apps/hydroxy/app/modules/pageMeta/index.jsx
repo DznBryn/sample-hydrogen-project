@@ -46,6 +46,13 @@ const PageMeta = () => {
         id="storelocatorescript"
       ></script>
 
+      {rootData?.ENVS?.SITE_NAME.includes('US') && (
+        <script
+          async
+          src="https://d1fjjtymoe0goc.cloudfront.net/3e0547f6.js"
+        ></script>
+      )}
+
       <script
         defer
         src={`https://cdn-loyalty.yotpo.com/loader/${rootData?.ENVS?.YOTPO_LOYALTY_GUID}.js`}
