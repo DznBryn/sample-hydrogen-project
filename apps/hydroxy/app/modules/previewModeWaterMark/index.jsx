@@ -12,6 +12,7 @@ const PreviewModeWaterMark = () => {
   return (
     <div className="previewModeWaterMark">
       <EyeIcon />
+
       <span>
         Viewing in <b>preview mode</b>
       </span>
