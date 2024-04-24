@@ -136,8 +136,6 @@ export async function loader({context, request}) {
 
   headers.set('Set-Cookie', await context.session.commit());
 
-  const storeAnalytics = {shopId: 'gid://shopify/Shop/000000000'};
-
   return defer(
     {
       request,
@@ -163,9 +161,6 @@ export async function loader({context, request}) {
     {
       status: 200,
       headers,
-    },
-    {
-      analytics: {storeAnalytics},
     },
   );
 }
