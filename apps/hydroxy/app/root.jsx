@@ -31,7 +31,6 @@ import CatchContent, {
   links as catchBoundaryStyles,
 } from './boundaries/catchContent';
 import {useRouteError, isRouteErrorResponse} from '@remix-run/react';
-import getApiKeys from './utils/functions/getApiKeys';
 import {defer, redirect} from '@remix-run/server-runtime';
 import {links as layoutsStyles} from '~/layouts';
 import favicon from '../public/favicon.ico';
@@ -54,18 +53,14 @@ import {
   getCustomerOrders,
   getCustomerSubscription,
   getItems,
+  getProucts,
   getSubscriptionPayments,
 } from './utils/services/subscription';
 
+//
+
 export const links = () => {
   return [
-    {
-      rel: 'stylesheet',
-      href: `https://staticw2.yotpo.com/${
-        getApiKeys().YOTPO_KEY
-      }/widget.css?widget_version=2022-10-06_07-58-33`,
-      media: 'screen',
-    },
     {rel: 'stylesheet', href: styles},
     {rel: 'preconnect', href: 'https://shop.app'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
@@ -76,8 +71,12 @@ export const links = () => {
   ];
 };
 
+//
+
 const CMSDataCache = {};
 const customerCache = {accessToken: undefined, data: undefined};
+
+//
 
 export async function loader({context, request}) {
   const referer = request.headers.get('referer');
@@ -99,6 +98,18 @@ export async function loader({context, request}) {
    * CMS DATA
    */
   await requestCMSData(context, CMSDataCache);
+
+  const CMSData = {
+    footers: CMSDataCache.footers,
+    listrakRec: CMSDataCache.listrakRec,
+    searchConfig: CMSDataCache.searchConfig,
+    productsCMSData: CMSDataCache.productsCMS,
+    cartPageConfig: CMSDataCache.cartPageConfig,
+    mainNavFooterCMSData: CMSDataCache.mainNavFooterCMSData,
+    announcementTopBanner: CMSDataCache.announcementTopBanner,
+    emailSmsSignupContent: CMSDataCache.emailSmsSignupContent,
+    mobileNavFooterMainButton: CMSDataCache.mobileNavFooterMainButton,
+  };
 
   /**
    * SHOPIFY DATA
@@ -125,6 +136,8 @@ export async function loader({context, request}) {
 
   headers.set('Set-Cookie', await context.session.commit());
 
+  const storeAnalytics = {shopId: 'gid://shopify/Shop/000000000'};
+
   return defer(
     {
       request,
@@ -132,20 +145,27 @@ export async function loader({context, request}) {
       customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
       previewMode: context.session.get('previewMode') === 'true',
-      footers: CMSDataCache.footers,
-      listrakRec: CMSDataCache.listrakRec,
-      searchConfig: CMSDataCache.searchConfig,
-      productsCMSData: CMSDataCache.productsCMS,
-      cartPageConfig: CMSDataCache.cartPageConfig,
-      mainNavFooterCMSData: CMSDataCache.mainNavFooterCMSData,
-      announcementTopBanner: CMSDataCache.announcementTopBanner,
-      emailSmsSignupContent: CMSDataCache.emailSmsSignupContent,
-      mobileNavFooterMainButton: CMSDataCache.mobileNavFooterMainButton,
-      analytics: {shopId: 'gid://shopify/Shop/17369637'},
+      ...CMSData,
+      ENVS: {
+        SITE_NAME: context?.env?.SITE_NAME,
+        PAYMENT_PLAN_VENDOR: context?.env?.PAYMENT_PLAN_VENDOR,
+        AUDIOEYE_HASH: context?.env?.AUDIOEYE_HASH,
+        YOTPO_KEY: context?.env?.YOTPO_KEY,
+        GOOGLE_SITE_VERIFICATION_ID: context?.env?.GOOGLE_SITE_VERIFICATION_ID,
+        YOTTA_KEY: context?.env?.YOTTA_KEY,
+        YOTPO_LOYALTY_GUID: context?.env?.YOTPO_LOYALTY_GUID,
+        GTM_ID: context?.env?.GTM_ID,
+        POSTSCRIPT_ID: context?.env?.POSTSCRIPT_ID,
+        ONETRUST_ID: context?.env?.ONETRUST_ID,
+        LISTRAK_ID: context?.env?.LISTRAK_ID,
+      },
     },
     {
       status: 200,
       headers,
+    },
+    {
+      analytics: {storeAnalytics},
     },
   );
 }
@@ -153,7 +173,7 @@ export async function loader({context, request}) {
 export default function App() {
   // IMPORTANT: It’s up to you to ensure you have tracking consent
   // before updating this value to true.
-  const hasUserConsent = false;
+  const hasUserConsent = true;
   useShopifyCookies({hasUserConsent});
   // The user's current location
   const location = useLocation();
@@ -161,11 +181,6 @@ export default function App() {
   const lastLocationKey = useRef('');
   // Analytics data returned by the custom hook
   const pageAnalytics = usePageAnalytics({hasUserConsent});
-
-  // console.log('devdrew hasUserConsent:', hasUserConsent);
-  // console.log('devdrew location:', location);
-  // console.log('devdrew lastLocationKey:', lastLocationKey);
-  // console.log('devdrew pageAnalytics:', pageAnalytics);
 
   useEffect(() => {
     // Only continue if the user's location changed.
@@ -220,6 +235,7 @@ export default function App() {
         items,
         payments,
         subscriptionAddresses,
+        ogProducts,
       ] = await Promise.all([
         getCustomerSubscription(customerId, true),
         getCustomerSubscription(customerId),
@@ -227,6 +243,7 @@ export default function App() {
         getItems(customerId),
         getSubscriptionPayments(customerId),
         getCustomerAddresses(customerId),
+        getProucts(customerId),
       ]);
 
       subscriptionAddresses &&
@@ -276,7 +293,7 @@ export default function App() {
         ));
 
       subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-
+      ogProducts && (customer.subscription.products = ogProducts);
       setCustomerData(customer);
     }
   }
@@ -320,6 +337,8 @@ export function ErrorBoundary() {
  */
 
 function RootStructure({children}) {
+  //
+
   return (
     <html lang="en">
       <head>
