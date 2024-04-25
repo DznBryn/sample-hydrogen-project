@@ -82,6 +82,18 @@ const PDPDetails = ({
     certifiedBadges.length = 4;
   }
 
+  const tulaSiteWide = useRef(null);
+
+  if (
+    typeof window === 'object' &&
+    tulaSiteWide.current === null &&
+    window?.localStorage?.getItem('tulaSitewide') !== null
+  ) {
+    tulaSiteWide.current = JSON.parse(
+      window.localStorage.getItem('tulaSitewide'),
+    );
+  }
+
   const {store} = useStore();
 
   const getVariantsSelector = () => {
@@ -254,17 +266,24 @@ const PDPDetails = ({
 
         const MULTIPLIER = 10;
         const ADD_WHEN_AD = 300;
+        const SHOW_SITE_WIDE_PROMO =
+          tulaSiteWide.current?.promoDiscount &&
+          !tulaSiteWide.current?.excludeList?.includes(product.handle);
         const SHOWING_PROMO =
           promos?.showPromo &&
           promos?.variantIds.includes(
             store?.productPage?.selectedVariant.toString(),
           );
+
+        const PROMO_PRICE =
+          tulaSiteWide.current?.promoDiscount || promos?.discount;
+
         const ROUNDED_PRICE = Math.floor(price);
 
         let curPrice;
 
-        if (SHOWING_PROMO && !IS_AD) {
-          const PROMO_DISCOUNT = ROUNDED_PRICE * (promos?.discount / 100);
+        if ((SHOWING_PROMO || SHOW_SITE_WIDE_PROMO) && !IS_AD) {
+          const PROMO_DISCOUNT = ROUNDED_PRICE * (PROMO_PRICE / 100);
           curPrice = ROUNDED_PRICE - PROMO_DISCOUNT;
         } else {
           const DISCOUNT = ROUNDED_PRICE * (DISCOUNT_PERCENT / 100);
