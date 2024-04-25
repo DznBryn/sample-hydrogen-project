@@ -64,7 +64,6 @@ const PDPDetails = ({
   shadeVariantsOos,
   concealerImages = null,
 }) => {
-  const tulaSiteWide = useRef(null);
   const subscriptionEligibleTag = useRef(
     Boolean(details.tags.includes('subscriptionEligibleTag')),
   );
@@ -84,6 +83,8 @@ const PDPDetails = ({
   if (certifiedBadges?.length > 4) {
     certifiedBadges.length = 4;
   }
+
+  const tulaSiteWide = useRef(null);
 
   if (
     typeof window === 'object' &&
