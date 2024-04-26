@@ -68,8 +68,10 @@
   display: flex;
   align-items: center;
   gap: 54px;
-  width: fit-content;
+  width: 100%;
   padding: 0 27px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .uploadReceipt_uploader {
@@ -158,10 +160,6 @@
   }
 }
 @media (max-width: 1223px) {
-  .uploadReceipt_slider {
-    align-items: flex-start;
-    justify-content: normal;
-  }
   .uploadReceipt_mainContainer :global(.flexified-child.yotpo-outer-tile) {
     width: 100% !important;
   }

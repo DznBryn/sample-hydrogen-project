@@ -17,19 +17,12 @@ export function links() {
 }
 
 const Slider = () => (
-  <div className="carousel-container">
-    <div className="carousel-track">
-      {Object.values(brandLogos).map((svg, index) => (
-        <div key={index} className={'earn_points_svg'}>
-          {svg}
-        </div>
-      ))}
-      {Object.values(brandLogos).map((svg, index) => (
-        <div key={index} className={'earn_points_svg'}>
-          {svg}
-        </div>
-      ))}
-    </div>
+  <div className="carousel-track">
+    {Object.values(brandLogos).map((svg, index) => (
+      <div key={index} className={'earn_points_svg'}>
+        {svg}
+      </div>
+    ))}
   </div>
 );
 

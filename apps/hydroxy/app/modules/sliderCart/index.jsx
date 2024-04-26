@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
-  convertStorefrontIdToExternalId,
   getCartQuantity,
+  getGiftCardIDs,
   getLoyaltyCustomerData,
   isAutoDeliveryInCart,
   updateListrakCart,
@@ -9,7 +9,6 @@ import {
 import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
 import {useCustomerState} from '../../hooks/useCostumer';
 import {PortableText} from '@portabletext/react';
-import getApiKeys from '../../utils/functions/getApiKeys';
 import LoadingSkeleton from '../loadingSkeleton';
 import ProgressBar from './modules/ProgressBar';
 import Checkout from './modules/Checkout';
@@ -45,12 +44,10 @@ export const links = () => {
 
 //
 
-const apiType = getApiKeys().API_TYPE;
-
 let prevState = null;
 
 const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const productRecList = recommendations;
   const cart = useStore((store) => store?.cart?.data ?? {});
   const {
@@ -65,18 +62,13 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   );
 
   const fetcher = useFetcher();
-  const carbonOffsetVariant = getApiKeys().CLOVERLY_ID;
-  const carbonOffsetItem = items?.filter(
-    (item) =>
-      (apiType === 'graphql'
-        ? convertStorefrontIdToExternalId(item.variant.product.id)
-        : item.id) === carbonOffsetVariant,
-  )[0];
   const [loading, setLoading] = React.useState(false);
   const [isAbleToRedeem, setIsAbleToRedeem] = React.useState(false);
 
   const GWP_PRODUCT_EXTERNAL_ID = cartConfig.freeGiftPromoProductExternalID;
-  const GIFT_CARDS_VARIANTS_IDS = getApiKeys().GIFT_CARDS_VARIANTS_IDS;
+  const GIFT_CARDS_VARIANTS_IDS = getGiftCardIDs(
+    rootData?.ENVS?.SITE_NAME,
+  )?.variantsIds;
 
   const GWP_PRODUCT = products?.products?.find((product) => {
     return product?.id?.includes(GWP_PRODUCT_EXTERNAL_ID);
@@ -329,7 +321,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   }
 
   function getTotalItemsOnCart() {
-    const EXCEPTIONS = [carbonOffsetItem, IS_GWP_PRODUCT_ON_CART];
+    const EXCEPTIONS = [IS_GWP_PRODUCT_ON_CART];
     let total = cart?.totalQuantity ?? 0;
 
     EXCEPTIONS.forEach((exception) => {
@@ -367,7 +359,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   });
 
   async function getCustomerData() {
-    const env = ENVS?.SITE_NAME;
+    const env = rootData?.ENVS?.SITE_NAME;
     const data = {email, customerId: id, env, useCache: false};
 
     if (email || id) {
@@ -427,7 +419,6 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     items,
     cartConfig,
     productRecs: recommendations,
-    carbonOffsetItem,
     quantity: getTotalItemsOnCart(),
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
     handleClick: toggleCart,
@@ -462,11 +453,10 @@ const CartContent = ({
   productRecs,
   hasOnlyGiftCards,
   handleClick,
-  carbonOffsetItem,
   isAbleToRedeem,
   ...props
 }) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const [showModal, setShowModal] = useState(false);
   const account = useStore((store) => store?.account?.data ?? {});
   const cart = useStore((store) => store?.cart?.data ?? {});
@@ -504,7 +494,6 @@ const CartContent = ({
   const itemsListProps = {
     items,
     cartConfig,
-    carbonOffsetItem,
     productRecList,
     hasOnlyGiftCards: () => hasOnlyGiftCards(),
     ...props,
@@ -546,7 +535,7 @@ const CartContent = ({
           </span>
         </div>
       )}
-      {ENVS?.SITE_NAME.includes('US') && (
+      {rootData?.ENVS?.SITE_NAME.includes('US') && (
         <Banner
           loggedIn={account?.id !== ''}
           points={Math.floor(totalCart) * 10}
@@ -560,12 +549,6 @@ const CartContent = ({
 
       <Checkout
         cartConfig={cartConfig}
-        valueToSubtract={
-          carbonOffsetItem &&
-          (apiType === 'graphql'
-            ? Number(carbonOffsetItem.variant.price)
-            : carbonOffsetItem.line_price / 100)
-        }
         message="Checkout"
         url={cart?.checkoutUrl}
       />
@@ -580,7 +563,7 @@ const CartContent = ({
 };
 
 const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
 
   //
 
@@ -600,10 +583,11 @@ const EmptyCart = ({cartConfig, handleClick, isLoggedIn, productRecList}) => {
       </div>
 
       <div className={'emptyCart'}>
-        {ENVS?.SITE_NAME.includes('US') && (
+        {rootData?.ENVS?.SITE_NAME.includes('US') && (
           <Banner loggedIn={isLoggedIn} isEmpty />
         )}
-        <SkinQuizCartBanner />
+        {/* Provisional way to hide Skin Quiz on UK */}
+        {!rootData?.ENVS?.SITE_NAME.includes('UK') && <SkinQuizCartBanner />}
       </div>
 
       <SliderCartRec
@@ -624,7 +608,7 @@ const ItemsList = ({
   productRecList,
   ...props
 }) => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   const cart = useStore((store) => store?.cart?.data ?? {});
   const items = cart?.lines ? flattenConnection(cart?.lines) : [];
   const getRecItemsLimit = () => {
@@ -703,10 +687,7 @@ const ItemsList = ({
                 ? product.productPromos
                 : false;
 
-            if (
-              item.id !== props?.carbonOffsetVariant &&
-              item.id !== props?.GWP_PRODUCT_VARIANT_ID
-            ) {
+            if (item.id !== props?.GWP_PRODUCT_VARIANT_ID) {
               return (
                 <SliderCartProductBox
                   item={{
@@ -752,10 +733,7 @@ const ItemsList = ({
                 ? props?.GWP_PRODUCT_VARIANT_ID
                 : -1;
 
-            if (
-              item.id !== props?.carbonOffsetVariant &&
-              !item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)
-            ) {
+            if (!item?.merchandise?.id?.includes(GWP_PRODUCT_VARIANT_ID)) {
               return (
                 <SliderCartProductBox
                   item={{
@@ -796,7 +774,7 @@ const ItemsList = ({
         items={items}
         gwpProductId={cartConfig?.freeGiftPromoProductExternalID}
       />
-      {ENVS?.SITE_NAME.includes('US') && (
+      {rootData?.ENVS?.SITE_NAME.includes('US') && (
         <div className={'discount'}>
           *300 rewards points applicable for every new Auto Delivery
           subscription
