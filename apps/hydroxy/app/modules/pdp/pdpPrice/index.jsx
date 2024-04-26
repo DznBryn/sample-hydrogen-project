@@ -91,7 +91,8 @@ const PDPPrice = ({pricing}) => {
             <>
               <span className={'compared_price'}>
                 {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-              </span>{' '}
+              </span>
+              &nbsp;
               <span className={'secondary'}>
                 {getCurrency() +
                   isRemainder(
@@ -101,13 +102,14 @@ const PDPPrice = ({pricing}) => {
                         parseFloat(price).toFixed(2)
                     ).toFixed(2),
                   )}
-              </span>{' '}
+              </span>
+              &nbsp;
               {originalPrice > price && (
                 <span className={'value_price'}>
                   (
                   {getCurrency() +
-                    isRemainder(parseFloat(originalPrice).toFixed(2))}{' '}
-                  value)
+                    isRemainder(parseFloat(originalPrice).toFixed(2))}
+                  &nbsp;value)
                 </span>
               )}
             </>
@@ -119,7 +121,8 @@ const PDPPrice = ({pricing}) => {
                 <span className={'compared_price'}>
                   {getCurrency() +
                     isRemainder(parseFloat(originalPrice).toFixed(2))}
-                </span>{' '}
+                </span>
+                &nbsp;
                 <span className={'secondary'}>
                   {getCurrency() +
                     isRemainder(
@@ -135,7 +138,8 @@ const PDPPrice = ({pricing}) => {
               <>
                 <span className={'compared_price'}>
                   {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-                </span>{' '}
+                </span>
+                &nbsp;
                 <span className={'secondary'}>
                   {getCurrency() +
                     isRemainder(
@@ -152,12 +156,13 @@ const PDPPrice = ({pricing}) => {
             <>
               <span className={'retail_price'}>
                 {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-              </span>{' '}
+              </span>
+              &nbsp;
               <span className={'value_price'}>
                 (
                 {getCurrency() +
-                  isRemainder(parseFloat(originalPrice).toFixed(2))}{' '}
-                value)
+                  isRemainder(parseFloat(originalPrice).toFixed(2))}
+                &nbsp;value)
               </span>
             </>
           ) : (
@@ -169,16 +174,18 @@ const PDPPrice = ({pricing}) => {
           <>
             <span className={'compared_price'}>
               {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-            </span>{' '}
+            </span>
+            &nbsp;
             <span className={'secondary'}>
               {getCurrency() + isRemainder(discountedPrice.toFixed(2))}
-            </span>{' '}
+            </span>
+            &nbsp;
             {originalPrice > price ? (
               <span className={'value_price'}>
                 (
                 {getCurrency() +
-                  isRemainder(parseFloat(originalPrice).toFixed(2))}{' '}
-                value)
+                  isRemainder(parseFloat(originalPrice).toFixed(2))}
+                &nbsp;value)
               </span>
             ) : null}
           </>
