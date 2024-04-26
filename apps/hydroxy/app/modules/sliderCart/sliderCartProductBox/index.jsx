@@ -226,9 +226,8 @@ const RegularProduct = ({
     if (item.sellingPlanAllocation) {
       return Math.floor(PRICE) * 10 + 300;
     } else if (SHOW_SITE_WIDE_PROMO) {
-      const discount =
-        Math.floor(PRICE) * (tulaSiteWide.current?.promoDiscount / 100);
-      return (PRICE - discount) * 10;
+      const discount = PRICE * (tulaSiteWide.current?.promoDiscount / 100);
+      return Math.floor(PRICE - discount) * 10;
     } else {
       return Math.floor(PRICE) * 10;
     }
