@@ -165,8 +165,6 @@ const SliderCartProductBox = ({
   );
 };
 
-//
-
 const YotpoProductPrice = ({points}) => (
   <div className={'yotpoProductPriceContainer'}>
     <LoyaltyBadgeIcon />
@@ -185,6 +183,7 @@ const RegularProduct = ({
   cartPageConfig,
 }) => {
   const {ENVS} = useRouteLoaderData('root');
+  const tulaSiteWide = useRef(null);
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
@@ -192,7 +191,6 @@ const RegularProduct = ({
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
   );
-  const tulaSiteWide = useRef(null);
 
   if (
     typeof window === 'object' &&
