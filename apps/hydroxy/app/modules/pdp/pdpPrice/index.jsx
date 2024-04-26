@@ -3,6 +3,7 @@ import {parseGid} from '@shopify/hydrogen';
 import classnames from 'classnames';
 import {getCurrency} from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
+import {appendScript} from '~/utils/functions/eventFunctions';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
@@ -213,9 +214,32 @@ const PDPPrice = ({pricing}) => {
     ) : null;
   };
 
+  useEffect(() => {
+    if (window.document) {
+      appendScript('https://js-sandbox.getcatch.com/catchjs/v1/catch.js')?.then(
+        () => {},
+      );
+    }
+
+    let checkCatchJs = setInterval(() => {
+      if (window.catchjs) {
+        window.catchjs
+          .init('6j5rYjXphCMrz1Hk98285nEK', {
+            // Optional configuration settings
+          })
+          .catch(function (error) {
+            console.log('devdrew error???', error);
+          });
+        clearInterval(checkCatchJs);
+        console.log('devdrew catchJs found, initialized');
+      }
+    }, 200);
+  });
+
   return (
     <div className={isStickyCta ? 'price_container m0' : 'price_container'}>
       <Price />
+      <catch-callout price={Number(price)} />
       {!isStickyCta && (
         <>
           <PromoText />
