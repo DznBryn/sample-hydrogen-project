@@ -76,11 +76,18 @@ const PDPPrice = ({pricing}) => {
       );
     }
 
+    const showSiteWidePromo =
+      tulaSiteWide.current?.promoDiscount &&
+      !tulaSiteWide.current?.excludeList?.includes(product.handle);
+    const showProductPromo =
+      promos?.showPromo &&
+      !tags.find((tag) => tag.toLowerCase() === 'no-promo');
+    const showPromoPink = tags.find(
+      (tag) => tag.toLowerCase() === 'promo:pink',
+    );
+
     const shouldShowPromoPrice =
-      (tulaSiteWide.current?.promoDiscount &&
-        !tulaSiteWide.current?.excludeList?.includes(product.handle)) ||
-      (promos?.showPromo &&
-        !tags.find((tag) => tag.toLowerCase() === 'no-promo'));
+      showSiteWidePromo || showProductPromo || showPromoPink;
 
     const promoPrice = tulaSiteWide.current?.promoDiscount || promos?.discount;
 
