@@ -292,7 +292,7 @@ const PDPDetails = ({
 
         const POINTS = IS_AD
           ? Math.round(curPrice) * MULTIPLIER + ADD_WHEN_AD
-          : curPrice * MULTIPLIER;
+          : Math.round(curPrice) * MULTIPLIER;
 
         return Math.floor(POINTS);
       }
