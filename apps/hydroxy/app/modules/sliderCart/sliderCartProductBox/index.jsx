@@ -226,10 +226,11 @@ const RegularProduct = ({
     if (item.sellingPlanAllocation) {
       return Math.floor(PRICE) * 10 + 300;
     } else if (SHOW_SITE_WIDE_PROMO) {
-      const discount = PRICE * (tulaSiteWide.current?.promoDiscount / 100);
+      const discount =
+        Math.floor(PRICE) * (tulaSiteWide.current?.promoDiscount / 100);
       return (PRICE - discount) * 10;
     } else {
-      return PRICE * 10;
+      return Math.floor(PRICE) * 10;
     }
   }
   //
