@@ -165,10 +165,10 @@ const SliderCartProductBox = ({
   );
 };
 
-const YotpoProductPrice = ({price, isSellingPlan = false}) => (
+const YotpoProductPrice = ({points}) => (
   <div className={'yotpoProductPriceContainer'}>
     <LoyaltyBadgeIcon />
-    <span>{isSellingPlan ? price + 300 : price}</span>
+    <span>{points}</span>
   </div>
 );
 
@@ -183,6 +183,7 @@ const RegularProduct = ({
   cartPageConfig,
 }) => {
   const {ENVS} = useRouteLoaderData('root');
+  const tulaSiteWide = useRef(null);
   const {id: customerId = ''} = useStore(
     (store) => store?.account?.data ?? null,
   );
@@ -190,6 +191,34 @@ const RegularProduct = ({
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
   );
+
+  if (
+    typeof window === 'object' &&
+    tulaSiteWide.current === null &&
+    window?.localStorage?.getItem('tulaSitewide') !== null
+  ) {
+    tulaSiteWide.current = JSON.parse(
+      window.localStorage.getItem('tulaSitewide'),
+    );
+  }
+
+  function getPoints() {
+    const PRICE = Number(item?.cost?.totalAmount?.amount);
+    const SHOW_SITE_WIDE_PROMO =
+      tulaSiteWide.current?.promoDiscount &&
+      !tulaSiteWide.current?.excludeList?.includes(
+        item?.merchandise?.product?.handle,
+      );
+
+    if (item.sellingPlanAllocation) {
+      return Math.floor(PRICE) * 10 + 300;
+    } else if (SHOW_SITE_WIDE_PROMO) {
+      const discount = PRICE * (tulaSiteWide.current?.promoDiscount / 100);
+      return (PRICE - discount) * 10;
+    } else {
+      return PRICE * 10;
+    }
+  }
 
   //
 
@@ -228,21 +257,10 @@ const RegularProduct = ({
           )}
 
           {!isNaN(Number(item?.cost?.totalAmount?.amount)) &&
-          customerId !== '' &&
-          ENVS?.SITE_NAME !== 'CA_PROD' ? (
-            <YotpoProductPrice
-              price={
-                (item.sellingPlanAllocation
-                  ? parseInt(
-                      Number(item?.cost?.totalAmount?.amount) *
-                        ((100 - cartPageConfig?.autoDeliveryDiscount ?? 0) /
-                          100),
-                    )
-                  : Number(item?.cost?.totalAmount?.amount)) * 10
-              }
-              isSellingPlan={item.sellingPlanAllocation}
-            />
-          ) : null}
+            customerId !== '' &&
+            ENVS?.SITE_NAME !== 'CA_PROD' && (
+              <YotpoProductPrice points={getPoints()} />
+            )}
         </div>
         <div className={'productQty'}>
           <div className={'product_input'}>
