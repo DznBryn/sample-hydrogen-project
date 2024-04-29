@@ -226,12 +226,16 @@ const PDPPrice = ({pricing}) => {
         window.catchjs
           .init('6j5rYjXphCMrz1Hk98285nEK', {
             // Optional configuration settings
+            theme: 'light-mono',
           })
           .catch(function (error) {
-            console.log('devdrew error???', error);
+            console.log(error);
           });
         clearInterval(checkCatchJs);
-        console.log('devdrew catchJs found, initialized');
+
+        document
+          .querySelector('button.callout-container')
+          .prepend('<p>or: </p>');
       }
     }, 200);
   });
@@ -239,7 +243,6 @@ const PDPPrice = ({pricing}) => {
   return (
     <div className={isStickyCta ? 'price_container m0' : 'price_container'}>
       <Price />
-      <catch-callout price={Number(price)} />
       {!isStickyCta && (
         <>
           <PromoText />
@@ -271,6 +274,9 @@ const PDPPrice = ({pricing}) => {
           ) : null}
         </>
       )}
+      <div className="catchWrapper">
+        <p>or</p> <catch-callout price={Number(price)} border-style="none" />
+      </div>
     </div>
   );
 };

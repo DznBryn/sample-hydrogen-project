@@ -97,6 +97,27 @@
   display: none;
 }
 
+.catchWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.catchWrapper > p {
+  font-size: 14px;
+  padding-top: 4.2px;
+  padding-right: 3px;
+}
+catch-callout:defined {
+  margin: 0 -6px;
+  border: 0px solid #fff;
+  width: 309px !important;
+  --text-color: #4d4e56;
+  --benefit-text-earn-color: #4d4e56;
+  --benefit-text-redeem-color: #4d4e56;
+  --text-transform: lowercase;
+}
+
 @media (min-width: 768px) {
   .pdpPriceBadge {
     justify-content: flex-start;
