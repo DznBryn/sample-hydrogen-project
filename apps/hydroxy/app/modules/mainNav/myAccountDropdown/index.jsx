@@ -300,9 +300,10 @@ const SwellPointBalance = () => {
   useEffect(() => {
     if (id !== '') {
       getCustomerData();
-    } else {
-      setPoints(0);
     }
+    // else {
+    //   setPoints(0);
+    // }
   }, [id]);
 
   async function getCustomerData() {
