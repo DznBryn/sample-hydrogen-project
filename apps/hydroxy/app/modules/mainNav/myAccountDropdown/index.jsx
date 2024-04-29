@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, memo} from 'react';
 import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '../../loadingSkeleton';
@@ -136,9 +136,51 @@ const Modal = ({setIsModalOpen}) => {
   );
 };
 
+// eslint-disable-next-line react/display-name
+const SwellPointBalance = memo(({points}) => {
+  return (
+    <div className={'pointsDisplay'}>
+      {points !== null && points !== undefined ? (
+        points.toLocaleString()
+      ) : (
+        <LoadingSkeleton
+          width="13px"
+          height="10px"
+          style={{borderRadius: '6px', marginTop: '2px'}}
+        />
+      )}
+    </div>
+  );
+});
+
 const LoyaltyVersion = () => {
+  const [points, setPoints] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const customerData = useStore((store) => store?.account?.data ?? null);
+
+  const {id, email} = customerData;
+
+  useEffect(() => {
+    if (id !== '') {
+      getCustomerData();
+    } else {
+      setPoints(0);
+    }
+  }, [id]);
+
+  function getCustomerData() {
+    const env = 'US_PROD';
+    const data = {email, customerId: id, env, useCache: false};
+
+    if (email || id) {
+      getLoyaltyCustomerData(data)
+        .then((res) => {
+          setPoints(res.pointsBalance);
+        })
+        .catch((err) => err);
+    }
+  }
+
   const MyAccountButton = {
     MyRewards: () => (
       <>
@@ -155,7 +197,7 @@ const LoyaltyVersion = () => {
         Hi, {customerData?.firstName || '{USER_NAME}'}!
         <div className={'pill'}>
           <Icons.RoundedStar />
-          <SwellPointBalance /> pts
+          <SwellPointBalance points={points} /> pts
         </div>
         <div className={isModalOpen ? 'flipIt' : undefined}>
           <Icons.ArrowDown />
@@ -168,6 +210,7 @@ const LoyaltyVersion = () => {
     customerData,
     setIsModalOpen,
     isModalOpen,
+    points,
   };
   return (
     <>
@@ -187,7 +230,7 @@ const LoyaltyVersion = () => {
   );
 };
 
-const LoyaltyModal = ({customerData, setIsModalOpen, isModalOpen}) => {
+const LoyaltyModal = ({customerData, setIsModalOpen, isModalOpen, points}) => {
   const {firstName = ''} = customerData;
   const {setCustomerData} = useStore((store) => store?.account ?? null);
   function openSliderAccount() {
@@ -209,7 +252,7 @@ const LoyaltyModal = ({customerData, setIsModalOpen, isModalOpen}) => {
           <p>Hi, {firstName}!</p>
           you have{' '}
           <b>
-            <SwellPointBalance />
+            <SwellPointBalance points={points} />
           </b>{' '}
           points
         </div>
@@ -289,46 +332,6 @@ const LoyaltyModal = ({customerData, setIsModalOpen, isModalOpen}) => {
       <div className={'accDropDowncontainer'}>
         {firstName !== '' ? <Content.LoggedIn /> : <Content.LoggedOut />}
       </div>
-    </div>
-  );
-};
-
-const SwellPointBalance = () => {
-  const [points, setPoints] = useState(0);
-  const customerData = useStore((store) => store?.account?.data ?? null);
-  const {id, email} = customerData;
-  useEffect(() => {
-    if (id !== '') {
-      getCustomerData();
-    }
-    // else {
-    //   setPoints(0);
-    // }
-  }, [id]);
-
-  async function getCustomerData() {
-    const env = 'US_PROD';
-    const data = {email, customerId: id, env, useCache: false};
-
-    if (email || id) {
-      getLoyaltyCustomerData(data)
-        .then((res) => {
-          setPoints(res.pointsBalance);
-        })
-        .catch((err) => err);
-    }
-  }
-  return (
-    <div className={'pointsDisplay'}>
-      {points !== null && points !== undefined ? (
-        points.toLocaleString()
-      ) : (
-        <LoadingSkeleton
-          width="13px"
-          height="10px"
-          style={{borderRadius: '6px', marginTop: '2px'}}
-        />
-      )}
     </div>
   );
 };
