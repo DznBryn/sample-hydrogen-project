@@ -2,6 +2,7 @@ import {useState, useEffect, useRef} from 'react';
 import {parseGid} from '@shopify/hydrogen';
 import classnames from 'classnames';
 import {useStore} from '~/hooks/useStore';
+import {appendScript} from '~/utils/functions/eventFunctions';
 import {useRouteLoaderData} from '@remix-run/react';
 import useCurrency from '~/hooks/useCurrency';
 
@@ -221,6 +222,32 @@ const PDPPrice = ({pricing}) => {
     ) : null;
   };
 
+  useEffect(() => {
+    if (window.document) {
+      appendScript('https://js-sandbox.getcatch.com/catchjs/v1/catch.js')?.then(
+        () => {},
+      );
+    }
+
+    let checkCatchJs = setInterval(() => {
+      if (window.catchjs) {
+        window.catchjs
+          .init('6j5rYjXphCMrz1Hk98285nEK', {
+            // Optional configuration settings
+            theme: 'light-mono',
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        clearInterval(checkCatchJs);
+
+        document
+          .querySelector('button.callout-container')
+          .prepend('<p>or: </p>');
+      }
+    }, 200);
+  });
+
   return (
     <div className={isStickyCta ? 'price_container m0' : 'price_container'}>
       <Price />
@@ -255,6 +282,9 @@ const PDPPrice = ({pricing}) => {
           ) : null}
         </>
       )}
+      <div className="catchWrapper">
+        <p>or</p> <catch-callout price={Number(price)} border-style="none" />
+      </div>
     </div>
   );
 };
