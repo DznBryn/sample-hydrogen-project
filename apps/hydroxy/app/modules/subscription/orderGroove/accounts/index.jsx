@@ -502,41 +502,73 @@ function SubscriptionItem({index, order, item}) {
               each
             </p>
 
-            {data?.subscription?.products?.results?.length > 0 && (
-              <select value={selectedProductId} onChange={handleSwapProduct}>
-                <option value={selectedProductId}>
-                  (swap all upcoming deliveries){' '}
-                  <ProductTitle product={product} subscription={subscription} />
-                </option>
-                {data.subscription.products.results
-                  .filter((ogProduct) =>
-                    all.products.find((product) => {
-                      const variants = flattenConnection(product.variants);
-                      return variants.find(
-                        (variant) =>
-                          String(parseGid(variant.id).id) ===
-                          ogProduct.external_product_id,
+            {data?.subscription?.products?.results?.length > 0 &&
+              data.subscription.products.results
+                .find(
+                  (product) =>
+                    product.external_product_id === selectedProductId,
+                )
+                ?.groups?.find((group) => group.group_type === 'sku_swap') && (
+                <select value={selectedProductId} onChange={handleSwapProduct}>
+                  <option value={selectedProductId}>
+                    (swap all upcoming deliveries){' '}
+                    <ProductTitle
+                      product={product}
+                      subscription={subscription}
+                    />
+                  </option>
+                  {data.subscription.products.results
+                    .filter((ogProduct) =>
+                      all.products.find((product) => {
+                        const variants = flattenConnection(product.variants);
+                        return variants.find(
+                          (variant) =>
+                            String(parseGid(variant.id).id) ===
+                            ogProduct.external_product_id,
+                        );
+                      }),
+                    )
+                    .map((subscription, index) => {
+                      const currentSubscription =
+                        data.subscription.products.results.find(
+                          (product) =>
+                            product.external_product_id === selectedProductId,
+                        );
+
+                      const currentSubscriptionGroup =
+                        currentSubscription?.groups?.find(
+                          (group) => group.group_type === 'sku_swap',
+                        );
+
+                      const subscriptionGroup = subscription?.groups?.find(
+                        (group) => group.group_type === 'sku_swap',
+                      ) ?? {
+                        name: '',
+                      };
+
+                      const isSameCategory =
+                        currentSubscriptionGroup?.name &&
+                        currentSubscriptionGroup?.name ===
+                          subscriptionGroup.name;
+
+                      return (
+                        subscription.external_product_id !==
+                          selectedProductId &&
+                        isSameCategory && (
+                          <option
+                            key={index}
+                            value={subscription.external_product_id}
+                          >
+                            {subscription?.name &&
+                              `${subscription.name} - $${Number(
+                                subscription.price ?? '0',
+                              ).toFixed(2)}`}
+                          </option>
+                        )
                       );
-                    }),
-                  )
-                  .map((subscription, index) => {
-                    return (
-                      subscription.external_product_id !==
-                        selectedProductId && (
-                        <option
-                          key={index}
-                          value={subscription.external_product_id}
-                        >
-                          {subscription?.name &&
-                            `${subscription.name} - $${Number(
-                              subscription.price ?? '0',
-                            ).toFixed(2)}`}
-                        </option>
-                      )
-                    );
-                  })}
-              </select>
-            )}
+                    })}
+                </select>
+              )}
           </div>
         </div>
         <div className="subscriptionActionContainer">
