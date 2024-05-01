@@ -1,11 +1,12 @@
 import {useStore} from '~/hooks/useStore';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
 import {useRouteLoaderData} from '@remix-run/react';
+import useCurrency from '~/hooks/useCurrency';
 
 //
 
 const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
   const {ENVS} = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
   const cart = useStore((store) => store?.cart?.data ?? null);
   const subtotalPrice = Number(cart?.cost?.subtotalAmount?.amount ?? 0).toFixed(
     2,

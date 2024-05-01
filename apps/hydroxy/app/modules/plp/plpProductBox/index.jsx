@@ -1,8 +1,5 @@
 import {useEffect, useRef} from 'react';
-import {
-  triggerAnalyticsProductClick,
-  getCurrency,
-} from '~/utils/functions/eventFunctions';
+import {triggerAnalyticsProductClick} from '~/utils/functions/eventFunctions';
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
 import {comparisonUtils} from '../comparisonModal';
 import {Link} from '@remix-run/react';
@@ -16,6 +13,7 @@ import {useOnScreen} from '~/utils/functions/eventFunctions';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 import styles from './styles.css';
+import useCurrency from '~/hooks/useCurrency';
 
 //
 
@@ -34,6 +32,8 @@ let sitewide = false;
 const getLinkToObj = (slug, product) => {
   return {pathname: `/products/${slug}`, state: {product: product}};
 };
+
+//
 
 const Button = ({product, opensBlank = false, ...rest}) => {
   const {variants, tags, handle: slug} = product;
@@ -70,6 +70,8 @@ const Button = ({product, opensBlank = false, ...rest}) => {
   );
 };
 
+//
+
 const PLPProductBox2 = ({
   product,
   analytics,
@@ -84,6 +86,7 @@ const PLPProductBox2 = ({
     handle: slug,
     title,
   } = product;
+  const {getCurrency} = useCurrency();
   const media = images.nodes;
   const altTitle = product?.alt_title || '';
   const ref = useRef(null);
@@ -503,6 +506,8 @@ const PLPBadges = ({product}) => {
     </div>
   );
 };
+
+//
 
 const ComparisonCheckbox = ({slug}) => {
   const {store} = useComparisonModalStore();
