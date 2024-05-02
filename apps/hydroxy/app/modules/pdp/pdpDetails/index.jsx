@@ -1,14 +1,10 @@
 import {useState, useRef} from 'react';
-
 import classnames from 'classnames';
 import {Link} from '@remix-run/react';
-
 import {useStore} from '~/hooks/useStore';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {useCustomerState} from '~/hooks/useCostumer';
 import {switchSliderPanelVisibility} from '../../sliderPanel';
 import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
-
 import {IconClose} from '../../plp/plpFilterModal';
 import PDPTitle, {links as pdpTitleStyles} from '../pdpTitle';
 import PDPPrice, {links as pdpPriceStyles} from '../pdpPrice';
@@ -37,6 +33,7 @@ import YotpoStarReviews, {
 } from '~/modules/YotpoStarReviews';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export const links = () => {
   return [
@@ -64,6 +61,7 @@ const PDPDetails = ({
   shadeVariantsOos,
   concealerImages = null,
 }) => {
+  const {SHOW_LOYALTY} = useFeatureFlags();
   const subscriptionEligibleTag = useRef(
     Boolean(details.tags.includes('subscriptionEligibleTag')),
   );
@@ -82,6 +80,18 @@ const PDPDetails = ({
 
   if (certifiedBadges?.length > 4) {
     certifiedBadges.length = 4;
+  }
+
+  const tulaSiteWide = useRef(null);
+
+  if (
+    typeof window === 'object' &&
+    tulaSiteWide.current === null &&
+    window?.localStorage?.getItem('tulaSitewide') !== null
+  ) {
+    tulaSiteWide.current = JSON.parse(
+      window.localStorage.getItem('tulaSitewide'),
+    );
   }
 
   const {store} = useStore();
@@ -256,17 +266,24 @@ const PDPDetails = ({
 
         const MULTIPLIER = 10;
         const ADD_WHEN_AD = 300;
+        const SHOW_SITE_WIDE_PROMO =
+          tulaSiteWide.current?.promoDiscount &&
+          !tulaSiteWide.current?.excludeList?.includes(product.handle);
         const SHOWING_PROMO =
           promos?.showPromo &&
           promos?.variantIds.includes(
             store?.productPage?.selectedVariant.toString(),
           );
+
+        const PROMO_PRICE =
+          tulaSiteWide.current?.promoDiscount || promos?.discount;
+
         const ROUNDED_PRICE = Math.floor(price);
 
         let curPrice;
 
-        if (SHOWING_PROMO && !IS_AD) {
-          const PROMO_DISCOUNT = ROUNDED_PRICE * (promos?.discount / 100);
+        if ((SHOWING_PROMO || SHOW_SITE_WIDE_PROMO) && !IS_AD) {
+          const PROMO_DISCOUNT = ROUNDED_PRICE * (PROMO_PRICE / 100);
           curPrice = ROUNDED_PRICE - PROMO_DISCOUNT;
         } else {
           const DISCOUNT = ROUNDED_PRICE * (DISCOUNT_PERCENT / 100);
@@ -275,7 +292,7 @@ const PDPDetails = ({
 
         const POINTS = IS_AD
           ? Math.round(curPrice) * MULTIPLIER + ADD_WHEN_AD
-          : curPrice * MULTIPLIER;
+          : Math.round(curPrice) * MULTIPLIER;
 
         return Math.floor(POINTS);
       }
@@ -374,9 +391,7 @@ const PDPDetails = ({
         <PDPPrice
           pricing={getPrice(store?.productPage?.selectedVariant ?? 0)}
         />
-        {getApiKeys().FEATURE_FLAGS.LOYALTY && (
-          <LoyaltyMessage className={'show_mobile'} />
-        )}
+        {SHOW_LOYALTY && <LoyaltyMessage className={'show_mobile'} />}
         <PDPDescription
           classes={'order_7'}
           description={getDescription(
@@ -409,9 +424,7 @@ const PDPDetails = ({
             </div>
           )}
         {details.variants !== null && getVariantsSelector()}
-        {getApiKeys().FEATURE_FLAGS.LOYALTY && (
-          <LoyaltyMessage className={'show_desktop'} />
-        )}
+        {SHOW_LOYALTY && <LoyaltyMessage className={'show_desktop'} />}
         {subscriptionEligibleTag.current ? (
           <PDPSubscription
             classes={'order_0'}

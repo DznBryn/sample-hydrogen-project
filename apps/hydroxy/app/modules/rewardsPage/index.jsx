@@ -67,6 +67,17 @@ const RewardsPage = ({yotpoFaq, yotpoRedeemProducts}) => {
     }
   }, [state]);
 
+  useEffect(() => {
+    if (document) {
+      const elements = document.getElementsByClassName(
+        'yotpo-redemption-option-cost',
+      );
+      for (const element of elements) {
+        element.style.display = 'none';
+      }
+    }
+  });
+
   return (
     <section
       id={'rewards'}

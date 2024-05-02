@@ -58,6 +58,17 @@ const RedeemProductsSection = (props) => {
     }
   });
 
+  useEffect(() => {
+    if (document) {
+      const elements = document.getElementsByClassName(
+        'yotpo-redemption-option-cost',
+      );
+      for (const element of elements) {
+        element.style.display = 'none';
+      }
+    }
+  });
+
   const [buttonDisabled, setButtonDisabled] = useState('prev');
   const navigationNextRef = useRef(null);
   const navigationPrevRef = useRef(null);

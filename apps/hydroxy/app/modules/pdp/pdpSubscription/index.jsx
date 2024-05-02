@@ -1,12 +1,14 @@
 import {useRef, useState} from 'react';
+import {useRouteLoaderData} from '@remix-run/react';
+
 import Badges, {links as badgesStyles} from '../../badges';
 import ModalGeneric, {links as modalGenericStyles} from '../../modalGeneric';
 import PortableTextCustom from '../../portableTextCustom';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {useStore} from '~/hooks/useStore';
 import classnames from 'classnames';
 
 import styles from './styles.css';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 export const links = () => {
   return [
@@ -18,8 +20,19 @@ export const links = () => {
 
 const DEFAULT_SELLING_PLAN_NAME = '3 months';
 
+const DEFAULT_SELLING_PLAN_ID = {
+  US_PROD: 10092590,
+  US_STG: 10092590,
+  CA_PROD: 2961015007,
+  UK_PROD: 3029631217,
+};
+
 const PDPSubscription = ({classes, sellingPlans, autoDeliveryInfo}) => {
   const {store, setStore} = useStore();
+
+  const {SHOW_LOYALTY} = useFeatureFlags();
+
+  const {ENVS} = useRouteLoaderData('root');
 
   const defaultSellingPlanId = getDefaultSellingPlan();
   const recommendedSellingPlanId =
@@ -52,7 +65,7 @@ const PDPSubscription = ({classes, sellingPlans, autoDeliveryInfo}) => {
     return (
       sellingPlans.SellingPlans.find(
         (data) => data.name.toLowerCase() === DEFAULT_SELLING_PLAN_NAME,
-      )?.sellingPlanID || 10092590 // 3 Month ID
+      )?.sellingPlanID || DEFAULT_SELLING_PLAN_ID[ENVS?.SITE_NAME] // 3 Month ID
     );
   }
 
@@ -198,7 +211,7 @@ const PDPSubscription = ({classes, sellingPlans, autoDeliveryInfo}) => {
                 </ModalGeneric>
               </>
             )}
-            {getApiKeys().FEATURE_FLAGS.LOYALTY && (
+            {SHOW_LOYALTY && (
               <div className={'loyaltyCopy'}>
                 <span>+ 300 bonus points!</span> <RoundStarIcon />
               </div>

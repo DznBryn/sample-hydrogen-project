@@ -5,13 +5,13 @@ export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
-const PDPYotPo = ({product, YotpoRef}) => {
+const PDPYotPo = ({product, YotpoRef, env}) => {
   let curProduct;
   curProduct = product;
 
   return (
     <div ref={YotpoRef} id={'yotpoWrapper'} className={'yotpoWrapper'}>
-      <PDPYotPoReviews {...curProduct} />
+      <PDPYotPoReviews product={curProduct} env={env} />
     </div>
   );
 };

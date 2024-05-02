@@ -1,4 +1,3 @@
-import getApiKeys from '~/utils/functions/getApiKeys';
 import logo from '../../../public/logo.png';
 import {useEffect} from 'react';
 import {useRouteLoaderData} from '@remix-run/react';
@@ -6,25 +5,23 @@ import {useRouteLoaderData} from '@remix-run/react';
 //
 
 const PageMeta = () => {
-  const {ENVS} = useRouteLoaderData('root');
+  const rootData = useRouteLoaderData('root');
   //
 
   useEffect(() => {
     if (typeof window === 'object' && window?.Yo) {
       window?.Yo.configure(
-        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${
-          getApiKeys().YOTTA_KEY
-        }`,
+        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${rootData?.ENVS?.YOTTA_KEY}`,
       );
     }
   }, []);
 
-  //
-
   return (
     <>
       <meta charSet="utf-8" />
-      {ENVS?.SITE_NAME === 'US_STG' && <meta name="robots" content="noindex" />}
+      {rootData?.ENVS?.SITE_NAME === 'US_STG' && (
+        <meta name="robots" content="noindex" />
+      )}
       <meta name="viewport" content="width=device-width,initial-scale=1" />
 
       <meta name="twitter:card" value="summary" />
@@ -40,45 +37,56 @@ const PageMeta = () => {
         property="og:description"
         content="Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup."
       />
-
       <script
         defer
         src="//cdn.storerocket.io/widget.js"
         id="storelocatorescript"
       ></script>
 
+      {rootData?.ENVS?.SITE_NAME.includes('US') && (
+        <script
+          async
+          src="https://d1fjjtymoe0goc.cloudfront.net/3e0547f6.js"
+        ></script>
+      )}
+
       <script
         defer
-        src={`https://cdn-loyalty.yotpo.com/loader/${
-          getApiKeys().YOTPO_LOYALTY_GUID
-        }.js`}
+        src={`https://cdn-loyalty.yotpo.com/loader/${rootData?.ENVS?.YOTPO_LOYALTY_GUID}.js`}
       ></script>
 
       <script
         defer
-        src={`https://cdn-widgetsrepository.yotpo.com/v1/loader/${
-          getApiKeys().YOTPO_LOYALTY_GUID
-        }`}
+        src={`https://cdn-widgetsrepository.yotpo.com/v1/loader/${rootData?.ENVS?.YOTPO_KEY}`}
       ></script>
 
       <script
         defer
-        src={`https://staticw2.yotpo.com/${getApiKeys().YOTPO_KEY}/widget.js`}
+        src={`https://staticw2.yotpo.com/${rootData?.ENVS?.YOTPO_KEY}/widget.js`}
       ></script>
+
+      <link
+        rel="stylesheet"
+        href={`https://staticw2.yotpo.com/${rootData?.ENVS?.YOTPO_KEY}/widget.css?widget_version=2022-10-06_07-58-33`}
+        media="screen"
+      />
 
       <meta
         name="google-site-verification"
-        content={getApiKeys().GOOGLE_SITE_VERIFICATION_ID}
+        content={rootData?.ENVS?.GOOGLE_SITE_VERIFICATION_ID}
       />
 
-      {ENVS?.SITE_NAME.includes('UK') && (
+      {rootData?.ENVS?.SITE_NAME.includes('UK') && (
         <meta
           name="facebook-domain-verification"
           content="fw3gr1515pe7790vj7heo8w1jnz400"
         />
       )}
-
-      <script src={getApiKeys().LISTRAK_SCRIPT}></script>
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          src={`https://cdn.listrakbi.com/scripts/script.js?m=${rootData?.ENVS?.LISTRAK_ID}&v=1`}
+        ></script>
+      )}
 
       <script
         defer
@@ -89,39 +97,50 @@ const PageMeta = () => {
         defer
         dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-        originalLocation: document.location.protocol + '//' +
-                          document.location.hostname +
-                          document.location.pathname +
-                          document.location.search
-        });`,
+                    window.dataLayer.push({
+                    originalLocation: document.location.protocol + '//' +
+                    document.location.hostname +
+                    document.location.pathname +
+                    document.location.search });`,
         }}
       ></script>
 
-      <script
-        defer
-        dangerouslySetInnerHTML={{__html: getApiKeys().GA_SCRIPT}}
-      ></script>
+      {/* GA Cookies */}
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                            })(window,document,'script','dataLayer','${rootData?.ENVS?.GTM_ID}');`,
+          }}
+        ></script>
+      )}
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
+        ></script>
+      )}
 
-      <script
-        defer
-        src={`https://rapid-cdn.yottaa.com/rapid/lib/${
-          getApiKeys().YOTTA_KEY
-        }.js`}
-      ></script>
+      {/* ABtasty  cookies  */}
 
-      <script
-        defer
-        type="text/javascript"
-        src="https://try.abtasty.com/02cdae70c1d789160f8b7d2e1d22ccf3.js"
-      ></script>
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          type="text/javascript"
+          src="https://try.abtasty.com/02cdae70c1d789160f8b7d2e1d22ccf3.js"
+        ></script>
+      )}
 
       <script
         defer
         dangerouslySetInnerHTML={{
           __html:
             '! function() {var b = function() {window.__AudioEyeSiteHash = "' +
-            getApiKeys().AUDIOEYE_HASH +
+            rootData?.ENVS?.AUDIOEYE_HASH +
             '";var a = document.createElement("script");a.src = "https://wsmcdn.audioeye.com/aem.js";a.type = "text/javascript";a.setAttribute("defer", "");document.getElementsByTagName("body")?.[0]?.appendChild(a)};"complete" !== document.readyState ? window.addEventListener ? window.addEventListener("load", b) : window.attachEvent && window.attachEvent("onload", b) : b()}();',
         }}
       ></script>
@@ -151,7 +170,7 @@ const PageMeta = () => {
         }}
       ></script>
 
-      {ENVS?.PAYMENT_PLAN_VENDOR === 'afterpay' ? (
+      {rootData?.ENVS?.PAYMENT_PLAN_VENDOR === 'afterpay' ? (
         <script
           src="https://js.afterpay.com/afterpay-1.x.js"
           data-analytics-enabled
@@ -159,31 +178,11 @@ const PageMeta = () => {
         ></script>
       ) : null}
 
-      {/* 
-        url.includes('/pages/why-tula') ?
-          <link rel="canonical" href="https://www.tula.com/pages/why-tula" key="canonicalURL" />
-          :
-          <link rel="canonical" href={url} key="canonicalURL" />
-      */}
-
-      {getApiKeys().DYNATRACE ? (
+      {rootData?.ENVS?.POSTSCRIPT_ID ? (
         <>
           <script
             defer
-            type="text/javascript"
-            src={getApiKeys().DYNATRACE.src}
-            crossOrigin="anonymous"
-          ></script>
-        </>
-      ) : null}
-
-      {getApiKeys().POSTSCRIPT ? (
-        <>
-          <script
-            defer
-            src={`https://sdk.postscript.io/sdk.bundle.js?shopId=${
-              getApiKeys().POSTSCRIPT.shopId
-            }`}
+            src={`https://sdk.postscript.io/sdk.bundle.js?shopId=${rootData?.ENVS?.POSTSCRIPT_ID}`}
           ></script>
         </>
       ) : null}

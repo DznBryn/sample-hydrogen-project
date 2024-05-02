@@ -19,6 +19,10 @@ import {links as footerStyles} from '~/modules/footer';
 import {Await, useMatches} from '@remix-run/react';
 import {useCollection} from '~/hooks/useCollection';
 import {Suspense, lazy} from 'react';
+import PreviewModeWaterMark, {
+  links as PreviewModeWaterMarkStyles,
+} from '~/modules/previewModeWaterMark';
+// import OneTrustScripts, {CookieScripts} from '~/utils/services/customerPrivacy';
 
 export const links = () => {
   return [
@@ -30,6 +34,7 @@ export const links = () => {
     ...footerStyles(),
     ...mainNavStyles(),
     ...NavPlaceholderStyles(),
+    ...PreviewModeWaterMarkStyles(),
   ];
 };
 
@@ -43,6 +48,7 @@ const MainNavFooter = ({children}) => {
     mobileNavFooterMainButton,
     announcementTopBanner,
     searchConfig,
+    previewMode,
   } = root.data;
 
   /* TODO: Remove products property from sliderCart and remove this custom hook */
@@ -50,6 +56,8 @@ const MainNavFooter = ({children}) => {
 
   return (
     <>
+      {previewMode && <PreviewModeWaterMark />}
+
       <NavPlaceholder
         siteWideSettings={
           getCMSDoc(mainNavFooterCMSData?.SiteWideSettings, 'SiteWideSettings')

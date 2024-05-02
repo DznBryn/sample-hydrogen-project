@@ -6,7 +6,6 @@ import {
   handleProductMetafieldData,
   getCMSDoc,
 } from '~/utils/functions/eventFunctions';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import {useYotpo} from '~/hooks/useYotpo';
 import PDPGallery, {links as pdpGalleryStyles} from './pdpGallery';
 import PDPDetails, {links as pdpDetailsStyles} from './pdpDetails';
@@ -25,9 +24,8 @@ import PDPYotPo, {links as pdpYotPoStyles} from './pdpYotPo';
 import FireWorkPDPCarousel, {
   links as fireWorkPDPCarouselStyles,
 } from './fireWorkPDPCarousel';
-
 import styles from './styles.css';
-import {Await, useMatches} from '@remix-run/react';
+import {Await, useMatches, useRouteLoaderData} from '@remix-run/react';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
@@ -56,6 +54,7 @@ const PDP = ({
   concealerImages,
 }) => {
   const [root] = useMatches();
+  const rootData = useRouteLoaderData('root');
   const {refreshWidgets} = useYotpo();
 
   const details = useMemo(() => getDetailsObj(product), [product]);
@@ -109,7 +108,7 @@ const PDP = ({
 
   function setUpPostscript() {
     window.postscript.event('page_view', {
-      shop_id: getApiKeys().POSTSCRIPT?.shopId, // your Postscript Shop ID
+      shop_id: rootData?.ENVS?.POSTSCRIPT_ID, // your Postscript Shop ID
       url: window.location.href, // the current page
       search_params: {variant: `${details.variants[0].id}`},
       page_type: 'product',
@@ -383,7 +382,7 @@ const PDP = ({
 
         <ContentSection>
           {!isGiftCard ? (
-            <PDPYotPo product={product} />
+            <PDPYotPo product={product} env={rootData?.ENVS?.SITE_NAME} />
           ) : (
             <div className={'giftcard_description__container'}>
               <div className={'giftcard_description'}>

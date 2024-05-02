@@ -1,26 +1,24 @@
-import getApiKeys from '~/utils/functions/getApiKeys';
-import {Helmet} from 'react-helmet';
+import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
+import OneTrustScripts, {CookieScripts} from '~/utils/services/customerPrivacy';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
 };
 
 const FooterCopyright = () => {
+  const rootData = useRouteLoaderData('root');
+  const oneTrustID = rootData?.ENVS?.ONETRUST_ID;
+
+  //
+
   return (
     <>
-      {getApiKeys().ONE_TRUST && (
-        <Helmet>
-          <script
-            type="text/javascript"
-            src={getApiKeys().ONE_TRUST.OtAutoBlock}
-          />
-          <script
-            src={getApiKeys().ONE_TRUST.OtSDKStub}
-            type="text/javascript"
-            data-domain-script={getApiKeys().ONE_TRUST.domain_script}
-          />
-        </Helmet>
+      {oneTrustID && (
+        <>
+          <OneTrustScripts oneTrustID={oneTrustID} />
+          <CookieScripts />
+        </>
       )}
 
       <div id="footerCopyright" className={'footerCopyright'}>
@@ -36,7 +34,7 @@ const FooterCopyright = () => {
         <a href="/pages/cookie-policy" target="_self">
           Cookie Policy
         </a>
-        {getApiKeys().ONE_TRUST && (
+        {oneTrustID && (
           <>
             &nbsp;|&nbsp;
             <div id="tula-ot-button-container">
