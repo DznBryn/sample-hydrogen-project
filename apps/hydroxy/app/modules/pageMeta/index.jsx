@@ -16,8 +16,6 @@ const PageMeta = () => {
     }
   }, []);
 
-  //
-
   return (
     <>
       <meta charSet="utf-8" />
@@ -39,7 +37,6 @@ const PageMeta = () => {
         property="og:description"
         content="Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup."
       />
-
       <script
         defer
         src="//cdn.storerocket.io/widget.js"
@@ -85,10 +82,11 @@ const PageMeta = () => {
           content="fw3gr1515pe7790vj7heo8w1jnz400"
         />
       )}
-
-      <script
-        src={`https://cdn.listrakbi.com/scripts/script.js?m=${rootData?.ENVS?.LISTRAK_ID}&v=1`}
-      ></script>
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          src={`https://cdn.listrakbi.com/scripts/script.js?m=${rootData?.ENVS?.LISTRAK_ID}&v=1`}
+        ></script>
+      )}
 
       <script
         defer
@@ -99,36 +97,43 @@ const PageMeta = () => {
         defer
         dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-        originalLocation: document.location.protocol + '//' +
-                          document.location.hostname +
-                          document.location.pathname +
-                          document.location.search
-        });`,
+                    window.dataLayer.push({
+                    originalLocation: document.location.protocol + '//' +
+                    document.location.hostname +
+                    document.location.pathname +
+                    document.location.search });`,
         }}
       ></script>
 
-      <script
-        defer
-        dangerouslySetInnerHTML={{
-          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      {/* GA Cookies */}
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                             })(window,document,'script','dataLayer','${rootData?.ENVS?.GTM_ID}');`,
-        }}
-      ></script>
+          }}
+        ></script>
+      )}
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
+        ></script>
+      )}
 
-      <script
-        defer
-        src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
-      ></script>
+      {/* ABtasty  cookies  */}
 
-      <script
-        defer
-        type="text/javascript"
-        src="https://try.abtasty.com/02cdae70c1d789160f8b7d2e1d22ccf3.js"
-      ></script>
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          type="text/javascript"
+          src="https://try.abtasty.com/02cdae70c1d789160f8b7d2e1d22ccf3.js"
+        ></script>
+      )}
 
       <script
         defer

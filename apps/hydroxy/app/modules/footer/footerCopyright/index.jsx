@@ -1,6 +1,6 @@
 import {useRouteLoaderData} from '@remix-run/react';
-import {Helmet} from 'react-helmet';
 import styles from './styles.css';
+import OneTrustScripts, {CookieScripts} from '~/utils/services/customerPrivacy';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -15,17 +15,10 @@ const FooterCopyright = () => {
   return (
     <>
       {oneTrustID && (
-        <Helmet>
-          <script
-            type="text/javascript"
-            src={`https://cdn.cookielaw.org/consent/${oneTrustID}/OtAutoBlock.js`}
-          />
-          <script
-            src={'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js'}
-            type="text/javascript"
-            data-domain-script={oneTrustID}
-          />
-        </Helmet>
+        <>
+          <OneTrustScripts oneTrustID={oneTrustID} />
+          <CookieScripts />
+        </>
       )}
 
       <div id="footerCopyright" className={'footerCopyright'}>

@@ -36,7 +36,7 @@ import {links as layoutsStyles} from '~/layouts';
 import favicon from '../public/favicon.ico';
 import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef} from 'react';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
 import {getCart} from './utils/graphql/shopify/queries/cart';
 
@@ -169,9 +169,8 @@ export default function App() {
   // IMPORTANT: It’s up to you to ensure you have tracking consent
   // before updating this value to true.
   const loaderData = useLoaderData();
-  const [hasUserConsent] = useState(
-    loaderData?.ENVS?.SITE_NAME === 'UK_PROD' ? false : true,
-  );
+  const hasUserConsent =
+    loaderData?.ENVS?.SITE_NAME === 'UK_PROD' ? false : true;
 
   useShopifyCookies({hasUserConsent});
   // The user's current location
@@ -344,8 +343,6 @@ export function ErrorBoundary() {
  */
 
 function RootStructure({children}) {
-  //
-
   return (
     <html lang="en">
       <head>
