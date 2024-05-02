@@ -5,7 +5,7 @@ import {
 } from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
 import SavingsBadges, {links as badgesStyles} from '../../badges';
-import {useSearchParams} from '@remix-run/react';
+import {useLocation, useSearchParams} from '@remix-run/react';
 import classnames from 'classnames';
 
 import styles from './styles.css';
@@ -21,13 +21,15 @@ const PDPVariants = ({classes, details = {}}) => {
     ),
   );
   const types = useRef(getVariantTypes(details.variants));
-
   const [searchParams] = useSearchParams();
   const {store, setStore} = useStore();
+  const location = useLocation();
+
+  //
 
   useEffect(() => {
     setStoreInitialValue();
-  }, []);
+  }, [location?.pathname]);
 
   function setStoreInitialValue() {
     function getSelectedVariant() {
