@@ -85,6 +85,38 @@ const PDPPrice = ({pricing}) => {
 
     const promoPrice = tulaSiteWide.current?.promoDiscount || promos?.discount;
 
+    const OriginalPriceHigherThanPrice = () => {
+      const promoTag = tags.find((tag) => tag.includes('promo:'));
+      const promoColor = promoTag?.split(':')[1];
+
+      if (promoTag && promoColor) {
+        return (
+          <>
+            <span className={'compared_price'}>
+              {getCurrency() +
+                isRemainder(parseFloat(originalPrice).toFixed(2))}
+            </span>
+            <span className={'secondary'}>
+              {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
+            </span>
+          </>
+        );
+      }
+
+      return (
+        <>
+          <span className={'retail_price'}>
+            {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
+          </span>
+          &nbsp;
+          <span className={'value_price'}>
+            ({getCurrency() + isRemainder(parseFloat(originalPrice).toFixed(2))}
+            &nbsp;value)
+          </span>
+        </>
+      );
+    };
+
     return (
       <h2 className={'price retail_price'}>
         {discount === 0 ? (
@@ -154,18 +186,7 @@ const PDPPrice = ({pricing}) => {
               </>
             )
           ) : originalPrice > price ? (
-            <>
-              <span className={'retail_price'}>
-                {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-              </span>
-              &nbsp;
-              <span className={'value_price'}>
-                (
-                {getCurrency() +
-                  isRemainder(parseFloat(originalPrice).toFixed(2))}
-                &nbsp;value)
-              </span>
-            </>
+            <OriginalPriceHigherThanPrice />
           ) : (
             <span className={'original_price'}>
               {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
