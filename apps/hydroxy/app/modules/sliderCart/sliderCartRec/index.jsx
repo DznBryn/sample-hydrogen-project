@@ -1,16 +1,16 @@
 import React from 'react';
 import PDPAddToCart, {links as pdpAddToCartStyles} from '../../addToCartButton';
-// import ResponsiveImage from 'frontend-ui/ResponsiveImage';
-import {getCurrency} from '../../../utils/functions/eventFunctions';
 import styles from './styles.css';
 import {Image, flattenConnection} from '@shopify/hydrogen';
 import {useStore} from '~/hooks/useStore';
+import useCurrency from '~/hooks/useCurrency';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...pdpAddToCartStyles()];
 };
 
 const SliderCartRec = ({productRecs, limit, gwpProductId}) => {
+  const {getCurrency} = useCurrency();
   const cart = useStore((state) => state.cart.data);
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
 
