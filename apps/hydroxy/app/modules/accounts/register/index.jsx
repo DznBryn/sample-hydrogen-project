@@ -1,9 +1,9 @@
 import {Link, useFetcher, useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
-import getApiKeys from '~/utils/functions/getApiKeys';
 import Button, {links as buttonStyles} from '~/modules/global/button';
 import {useRef, useState} from 'react';
 import {API_METHODS, FETCHER, MESSAGE_ERROR} from '~/utils/constants';
+import useFeatureFlags from '~/hooks/useFeatureFlags';
 
 //
 
@@ -206,7 +206,11 @@ export default function Register() {
 }
 
 const Header = () => {
-  if (getApiKeys().FEATURE_FLAGS.LOYALTY) {
+  const {SHOW_LOYALTY} = useFeatureFlags();
+
+  //
+
+  if (SHOW_LOYALTY) {
     return (
       <>
         <div className={'header__banner'}>

@@ -18,6 +18,7 @@ import {useLoaderData} from 'react-router';
 import {json} from '@shopify/remix-oxygen';
 import Layouts from '~/layouts';
 import {useMemo} from 'react';
+import {AnalyticsPageType} from '@shopify/hydrogen';
 
 export const links = () => {
   return [...pdpStyles()];
@@ -84,6 +85,10 @@ export const loader = async ({params, context}) => {
     ExclusiveProductBannerReleaseContent,
     ConcealerShadeImages,
     CartPageConfig,
+    analytics: {
+      pageType: AnalyticsPageType.product,
+      products: [product],
+    },
   });
 };
 

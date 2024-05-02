@@ -4,13 +4,22 @@ import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
 import {Link} from '@remix-run/react';
 import {Image, flattenConnection} from '@shopify/hydrogen';
-import getApiKeys from '~/utils/functions/getApiKeys';
+import {useRouteLoaderData} from '@remix-run/react';
+import {getReturnsURL} from '~/utils/functions/eventFunctions';
+
+//
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}];
 }
+
+//
+
 export default function OrderHistory() {
   const orders = useStore((store) => store?.account?.data?.orders ?? []);
+
+  //
+
   return (
     <div id={'ordersTab'}>
       {orders.length > 0 ? (
@@ -27,7 +36,10 @@ export default function OrderHistory() {
   );
 }
 
+//
+
 function OrderItem({data}) {
+  const rootData = useRouteLoaderData('root');
   const formattedDate = data?.processedAt
     ? new Date(data.processedAt).toLocaleDateString()
     : null;
@@ -35,6 +47,8 @@ function OrderItem({data}) {
   const showReturn =
     data?.fulfillmentStatus !== 'UNFULFILLED' ||
     new Date().getTime() > data?.processedAt;
+
+  //
 
   return (
     <div className="order">
@@ -93,7 +107,9 @@ function OrderItem({data}) {
         </div>
         {showReturn && (
           <div className={styles.orderOptions}>
-            <Link to={getApiKeys().RETURNS_HREF}>Start a Return</Link>
+            <Link to={getReturnsURL(rootData?.ENVS?.SITE_NAME)}>
+              Start a Return
+            </Link>
           </div>
         )}
       </div>

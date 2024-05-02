@@ -5,7 +5,7 @@ import {
 } from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
 import SavingsBadges, {links as badgesStyles} from '../../badges';
-import {useSearchParams} from '@remix-run/react';
+import {useLocation, useSearchParams} from '@remix-run/react';
 import classnames from 'classnames';
 
 import styles from './styles.css';
@@ -21,13 +21,15 @@ const PDPVariants = ({classes, details = {}}) => {
     ),
   );
   const types = useRef(getVariantTypes(details.variants));
-
   const [searchParams] = useSearchParams();
   const {store, setStore} = useStore();
+  const location = useLocation();
+
+  //
 
   useEffect(() => {
     setStoreInitialValue();
-  }, [details]);
+  }, [location?.pathname]);
 
   function setStoreInitialValue() {
     function getSelectedVariant() {
@@ -594,7 +596,7 @@ const ShadeVariant = ({
     (isTypeShadeMatch && (
       <div className={'variant_details__container'}>
         <div className={'variant_text__container'}>
-          {shade[0] ? (
+          {shade?.[0] ? (
             <p
               className={
                 variant.title.includes('So ')
@@ -602,13 +604,13 @@ const ShadeVariant = ({
                   : 'variant_text'
               }
             >
-              {shade[0]}
+              {shade?.[0]}
             </p>
           ) : (
             ''
           )}
-          {shade[1] && !variant.title.includes('So ') ? (
-            <p className={'variant_text text_bold'}>{shade[1]}</p>
+          {shade?.[1] && !variant.title.includes('So ') ? (
+            <p className={'variant_text text_bold'}>{shade?.[1]}</p>
           ) : (
             ''
           )}

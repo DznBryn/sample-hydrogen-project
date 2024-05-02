@@ -1,9 +1,10 @@
 import {useState, useEffect, useRef} from 'react';
 import {parseGid} from '@shopify/hydrogen';
 import classnames from 'classnames';
-import {getCurrency} from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
+import {appendScript} from '~/utils/functions/eventFunctions';
 import {useRouteLoaderData} from '@remix-run/react';
+import useCurrency from '~/hooks/useCurrency';
 
 import styles from './styles.css';
 
@@ -17,6 +18,7 @@ export const links = () => {
 
 const PDPPrice = ({pricing}) => {
   const {ENVS} = useRouteLoaderData('root');
+  const {getCurrency} = useCurrency();
   const {
     originalPrice,
     price,
@@ -90,7 +92,8 @@ const PDPPrice = ({pricing}) => {
             <>
               <span className={'compared_price'}>
                 {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-              </span>{' '}
+              </span>
+              &nbsp;
               <span className={'secondary'}>
                 {getCurrency() +
                   isRemainder(
@@ -100,13 +103,14 @@ const PDPPrice = ({pricing}) => {
                         parseFloat(price).toFixed(2)
                     ).toFixed(2),
                   )}
-              </span>{' '}
+              </span>
+              &nbsp;
               {originalPrice > price && (
                 <span className={'value_price'}>
                   (
                   {getCurrency() +
-                    isRemainder(parseFloat(originalPrice).toFixed(2))}{' '}
-                  value)
+                    isRemainder(parseFloat(originalPrice).toFixed(2))}
+                  &nbsp;value)
                 </span>
               )}
             </>
@@ -118,7 +122,8 @@ const PDPPrice = ({pricing}) => {
                 <span className={'compared_price'}>
                   {getCurrency() +
                     isRemainder(parseFloat(originalPrice).toFixed(2))}
-                </span>{' '}
+                </span>
+                &nbsp;
                 <span className={'secondary'}>
                   {getCurrency() +
                     isRemainder(
@@ -134,7 +139,8 @@ const PDPPrice = ({pricing}) => {
               <>
                 <span className={'compared_price'}>
                   {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-                </span>{' '}
+                </span>
+                &nbsp;
                 <span className={'secondary'}>
                   {getCurrency() +
                     isRemainder(
@@ -151,12 +157,13 @@ const PDPPrice = ({pricing}) => {
             <>
               <span className={'retail_price'}>
                 {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-              </span>{' '}
+              </span>
+              &nbsp;
               <span className={'value_price'}>
                 (
                 {getCurrency() +
-                  isRemainder(parseFloat(originalPrice).toFixed(2))}{' '}
-                value)
+                  isRemainder(parseFloat(originalPrice).toFixed(2))}
+                &nbsp;value)
               </span>
             </>
           ) : (
@@ -168,16 +175,18 @@ const PDPPrice = ({pricing}) => {
           <>
             <span className={'compared_price'}>
               {getCurrency() + isRemainder(parseFloat(price).toFixed(2))}
-            </span>{' '}
+            </span>
+            &nbsp;
             <span className={'secondary'}>
               {getCurrency() + isRemainder(discountedPrice.toFixed(2))}
-            </span>{' '}
+            </span>
+            &nbsp;
             {originalPrice > price ? (
               <span className={'value_price'}>
                 (
                 {getCurrency() +
-                  isRemainder(parseFloat(originalPrice).toFixed(2))}{' '}
-                value)
+                  isRemainder(parseFloat(originalPrice).toFixed(2))}
+                &nbsp;value)
               </span>
             ) : null}
           </>
@@ -213,6 +222,32 @@ const PDPPrice = ({pricing}) => {
     ) : null;
   };
 
+  useEffect(() => {
+    if (window.document) {
+      appendScript('https://js-sandbox.getcatch.com/catchjs/v1/catch.js')?.then(
+        () => {},
+      );
+    }
+
+    let checkCatchJs = setInterval(() => {
+      if (window.catchjs) {
+        window.catchjs
+          .init('6j5rYjXphCMrz1Hk98285nEK', {
+            // Optional configuration settings
+            theme: 'light-mono',
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        clearInterval(checkCatchJs);
+
+        document
+          .querySelector('button.callout-container')
+          .prepend('<p>or: </p>');
+      }
+    }, 200);
+  });
+
   return (
     <div className={isStickyCta ? 'price_container m0' : 'price_container'}>
       <Price />
@@ -247,6 +282,9 @@ const PDPPrice = ({pricing}) => {
           ) : null}
         </>
       )}
+      <div className="catchWrapper">
+        <p>or</p> <catch-callout price={Number(price)} border-style="none" />
+      </div>
     </div>
   );
 };

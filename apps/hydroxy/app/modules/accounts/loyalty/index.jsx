@@ -17,19 +17,12 @@ export function links() {
 }
 
 const Slider = () => (
-  <div className="carousel-container">
-    <div className="carousel-track">
-      {Object.values(brandLogos).map((svg, index) => (
-        <div key={index} className={'earn_points_svg'}>
-          {svg}
-        </div>
-      ))}
-      {Object.values(brandLogos).map((svg, index) => (
-        <div key={index} className={'earn_points_svg'}>
-          {svg}
-        </div>
-      ))}
-    </div>
+  <div className="carousel-track">
+    {Object.values(brandLogos).map((svg, index) => (
+      <div key={index} className={'earn_points_svg'}>
+        {svg}
+      </div>
+    ))}
   </div>
 );
 
@@ -108,22 +101,35 @@ const LoyaltyRewardsTab = () => {
   );
 };
 
-export const RedeemProductList = (props) => (
-  <div className={'redeemSectionContainer'}>
-    <h1>your available rewards</h1>
-    <div className={'faq__divider'} />
-    <h3>redeem for full-size products</h3>
-    <p>
-      Add your product to cart then click “redeem” to receive your code to use
-      at checkout.
-      <br />
-      <span>Must be redeemed with purchase.</span>
-    </p>
-    <div className="container__redeem-products-tab">
-      <RedeemProductsSection products={props?.products} />
+export const RedeemProductList = (props) => {
+  useEffect(() => {
+    if (document) {
+      const elements = document.getElementsByClassName(
+        'yotpo-redemption-option-cost',
+      );
+      for (const element of elements) {
+        element.style.display = 'none';
+      }
+    }
+  });
+
+  return (
+    <div className={'redeemSectionContainer'}>
+      <h1>your available rewards</h1>
+      <div className={'faq__divider'} />
+      <h3>redeem for full-size products</h3>
+      <p>
+        Add your product to cart then click “redeem” to receive your code to use
+        at checkout.
+        <br />
+        <span>Must be redeemed with purchase.</span>
+      </p>
+      <div className="container__redeem-products-tab">
+        <RedeemProductsSection products={props?.products} />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 const AccordionItem = ({showDescription, ariaExpanded, item, onClick}) => {
   const cx = classNames.bind(styles);
