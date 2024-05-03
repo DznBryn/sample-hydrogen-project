@@ -223,29 +223,31 @@ const PDPPrice = ({pricing}) => {
   };
 
   useEffect(() => {
-    if (window.document) {
-      appendScript('https://js-sandbox.getcatch.com/catchjs/v1/catch.js')?.then(
+    if (window.document && ENVS?.SITE_NAME.includes('US')) {
+      appendScript('https://js.getcatch.com/catchjs/v1/catch.js')?.then(
         () => {},
       );
     }
 
-    let checkCatchJs = setInterval(() => {
-      if (window.catchjs) {
-        window.catchjs
-          .init('6j5rYjXphCMrz1Hk98285nEK', {
-            // Optional configuration settings
-            theme: 'light-mono',
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        clearInterval(checkCatchJs);
+    if (ENVS?.SITE_NAME.includes('US')) {
+      let checkCatchJs = setInterval(() => {
+        if (window.catchjs) {
+          window.catchjs
+            .init('TP9O1yaF9NCNSHBXoqwS1ZXR', {
+              // Optional configuration settings
+              theme: 'light-mono',
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          clearInterval(checkCatchJs);
 
-        document
-          .querySelector('button.callout-container')
-          .prepend('<p>or: </p>');
-      }
-    }, 200);
+          document
+            .querySelector('button.callout-container')
+            .prepend('<p>or: </p>');
+        }
+      }, 200);
+    }
   });
 
   return (
@@ -282,9 +284,12 @@ const PDPPrice = ({pricing}) => {
           ) : null}
         </>
       )}
-      <div className="catchWrapper">
-        <p>or</p> <catch-callout price={Number(price)} border-style="none" />
-      </div>
+      {ENVS?.SITE_NAME.includes('US') ? (
+        <div className="catchWrapper">
+          <p>or</p>{' '}
+          <catch-callout price={parseInt(price + '00')} border-style="none" />
+        </div>
+      ) : null}
     </div>
   );
 };
