@@ -229,23 +229,25 @@ const PDPPrice = ({pricing}) => {
       );
     }
 
-    let checkCatchJs = setInterval(() => {
-      if (window.catchjs && ENVS?.SITE_NAME.includes('US')) {
-        window.catchjs
-          .init('TP9O1yaF9NCNSHBXoqwS1ZXR', {
-            // Optional configuration settings
-            theme: 'light-mono',
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-        clearInterval(checkCatchJs);
+    if (ENVS?.SITE_NAME.includes('US')) {
+      let checkCatchJs = setInterval(() => {
+        if (window.catchjs) {
+          window.catchjs
+            .init('TP9O1yaF9NCNSHBXoqwS1ZXR', {
+              // Optional configuration settings
+              theme: 'light-mono',
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          clearInterval(checkCatchJs);
 
-        document
-          .querySelector('button.callout-container')
-          .prepend('<p>or: </p>');
-      }
-    }, 200);
+          document
+            .querySelector('button.callout-container')
+            .prepend('<p>or: </p>');
+        }
+      }, 200);
+    }
   });
 
   return (
