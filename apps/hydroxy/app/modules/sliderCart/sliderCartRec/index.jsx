@@ -29,9 +29,9 @@ const SliderCartRec = ({productRecs, limit, gwpProductId}) => {
 
     return (
       <div className={'sliderCartRec'}>
-        {productRecomendations.length ? (
+        {productRecomendations > 0 && (
           <h2>{productRecs?.title ?? 'Boost your TULA routine with'}</h2>
-        ) : null}
+        )}
         {productRecomendations.map((product, index) => {
           const variants = product?.variants
             ? flattenConnection(product.variants)

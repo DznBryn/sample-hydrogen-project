@@ -224,7 +224,7 @@ const PDPPrice = ({pricing}) => {
 
   useEffect(() => {
     if (window.document) {
-      appendScript('https://js-sandbox.getcatch.com/catchjs/v1/catch.js')?.then(
+      appendScript('https://js.getcatch.com/catchjs/v1/catch.js')?.then(
         () => {},
       );
     }
@@ -232,7 +232,7 @@ const PDPPrice = ({pricing}) => {
     let checkCatchJs = setInterval(() => {
       if (window.catchjs) {
         window.catchjs
-          .init('6j5rYjXphCMrz1Hk98285nEK', {
+          .init('TP9O1yaF9NCNSHBXoqwS1ZXR', {
             // Optional configuration settings
             theme: 'light-mono',
           })
@@ -283,7 +283,8 @@ const PDPPrice = ({pricing}) => {
         </>
       )}
       <div className="catchWrapper">
-        <p>or</p> <catch-callout price={Number(price)} border-style="none" />
+        <p>or</p>{' '}
+        <catch-callout price={parseInt(price + '00')} border-style="none" />
       </div>
     </div>
   );
