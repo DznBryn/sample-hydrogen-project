@@ -65,6 +65,11 @@ const PageMeta = () => {
         src={`https://staticw2.yotpo.com/${rootData?.ENVS?.YOTPO_KEY}/widget.js`}
       ></script>
 
+      <script
+        defer
+        src={`https://cdn-widgetsrepository.yotpo.com/v1/loader/${rootData?.ENVS?.YOTPO_LOYALTY_GUID}`}
+      ></script>
+
       <link
         rel="stylesheet"
         href={`https://staticw2.yotpo.com/${rootData?.ENVS?.YOTPO_KEY}/widget.css?widget_version=2022-10-06_07-58-33`}
