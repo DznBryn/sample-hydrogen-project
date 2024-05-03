@@ -223,14 +223,14 @@ const PDPPrice = ({pricing}) => {
   };
 
   useEffect(() => {
-    if (window.document) {
+    if (window.document && ENVS?.SITE_NAME.includes('US')) {
       appendScript('https://js.getcatch.com/catchjs/v1/catch.js')?.then(
         () => {},
       );
     }
 
     let checkCatchJs = setInterval(() => {
-      if (window.catchjs) {
+      if (window.catchjs && ENVS?.SITE_NAME.includes('US')) {
         window.catchjs
           .init('TP9O1yaF9NCNSHBXoqwS1ZXR', {
             // Optional configuration settings
@@ -282,10 +282,12 @@ const PDPPrice = ({pricing}) => {
           ) : null}
         </>
       )}
-      <div className="catchWrapper">
-        <p>or</p>{' '}
-        <catch-callout price={parseInt(price + '00')} border-style="none" />
-      </div>
+      {ENVS?.SITE_NAME.includes('US') ? (
+        <div className="catchWrapper">
+          <p>or</p>{' '}
+          <catch-callout price={parseInt(price + '00')} border-style="none" />
+        </div>
+      ) : null}
     </div>
   );
 };
