@@ -264,7 +264,7 @@ export default function PDPAddToCart({
     ),
     [SOLD_OUT]: (
       <div className="addToCart__container">
-        <button className={'add_to_cart disabled'} disabled>
+        <button className={'add_to_cart disabled_atc'} disabled>
           <span>{buttonState === SOLD_OUT ? 'Sold out' : 'Select Shade'}</span>
         </button>
       </div>
