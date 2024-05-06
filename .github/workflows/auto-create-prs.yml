@@ -4,6 +4,10 @@ on:
       branches:
         - main
 
+permissions:
+    contents: read
+    deployments: write
+
 jobs:
   auto-create-prs:
     name: Auto Create PRs
@@ -11,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+          
         - name: Create PR to UK-MAIN
           uses: devops-infra/action-pull-request@v0.5.5
           with:
