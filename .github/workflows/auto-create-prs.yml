@@ -12,11 +12,16 @@ jobs:
 
     steps:
         - name: Create PR to UK-MAIN
-          run: gh pr create -B uk-main -H ${GITHUB_HEAD_REF} --title 'Merge ${GITHUB_HEAD_REF} into uk-main' --body 'Created by Github action'
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-        - name: Create PR to CA-MAIN
-          run: gh pr create -B ca-main -H ${GITHUB_HEAD_REF} --title 'Merge ${GITHUB_HEAD_REF} into ca-main' --body 'Created by Github action'
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          uses: devops-infra/action-pull-request@v0.5.5
+          with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            source_branch: ${{ github.head_ref }}
+            target_branch: uk-main
+            title: Automatic pull request from ${{ github.head_ref }}
+            body: "**Automated pull request**"
+            assignee: octocat
+            # old_string: "<!-- Add your description here -->"
+            # new_string: "** Automatic pull request**"
+            get_diff: true
+            ignore_users: "dependabot"
+            allow_no_diff: false
