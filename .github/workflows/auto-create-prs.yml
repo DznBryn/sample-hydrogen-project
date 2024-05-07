@@ -15,6 +15,11 @@ jobs:
           uses: actions/checkout@v2
 
         - name: Create PR to UK-MAIN
-          run: gh pr create -B uk-main -H ${{ github.head_ref }} --title 'Merge ${{ github.head_ref }} into uk-main' --body 'Created by Github action'
+          run: gh pr create -B uk-main -H ${{ github.head_ref }} --title 'RELEASE / Merge ${{ github.head_ref }} into uk-main' --body 'Created by Github action'
+          env:
+              GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS_TOKEN }}
+        
+        - name: Create PR to CA-MAIN
+          run: gh pr create -B ca-main -H ${{ github.head_ref }} --title 'RELEASE / Merge ${{ github.head_ref }} into ca-main' --body 'Created by Github action'
           env:
               GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS_TOKEN }}
