@@ -23,8 +23,7 @@ const HomepageCarouselStaticSlide = (slideContent) => {
       : '#FFF',
   };
 
-  const desktopImage =
-    slideContent.slideContent.fullWidthImage.asset.url + '?auto=format';
+  const desktopImage = slideContent.slideContent.fullWidthImage.asset.url;
   const mobileImage =
     slideContent.slideContent.fullWidthMobileImage.asset.url + '?auto=format';
 

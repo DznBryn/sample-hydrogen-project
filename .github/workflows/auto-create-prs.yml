@@ -1,0 +1,25 @@
+name: Auto Create PRs
+on:
+    pull_request:
+      branches:
+        - main
+
+jobs:
+  auto-create-prs:
+    name: Auto Create PRs
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout repository
+          uses: actions/checkout@v2
+
+        - name: Create PR to UK-MAIN
+          run: gh pr create -B uk-main -H ${{ github.head_ref }} --title 'UK-RELEASE / Merge ${{ github.head_ref }} into uk-main' --body 'Created by Github action'
+          env:
+              GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS_TOKEN }}
+        
+        - name: Create PR to CA-MAIN
+          run: gh pr create -B ca-main -H ${{ github.head_ref }} --title 'CA-RELEASE / Merge ${{ github.head_ref }} into ca-main' --body 'Created by Github action'
+          env:
+              GITHUB_TOKEN: ${{ secrets.GIT_ACTIONS_TOKEN }}
