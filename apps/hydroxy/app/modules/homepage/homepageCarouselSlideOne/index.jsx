@@ -43,9 +43,7 @@ const HomepageCarouselSlideOne = ({slideContent}) => {
             </div>
             <div
               style={{
-                backgroundImage: `url(${
-                  slideContent.slideImage.asset.url + '?auto=format'
-                })`,
+                backgroundImage: `url(${slideContent.slideImage.asset.url})`,
               }}
               className={'right desktop'}
             />
