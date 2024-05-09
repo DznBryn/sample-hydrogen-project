@@ -1,5 +1,4 @@
 import logo from '../../../public/logo.png';
-import {useEffect} from 'react';
 import {useRouteLoaderData} from '@remix-run/react';
 
 //
@@ -7,14 +6,6 @@ import {useRouteLoaderData} from '@remix-run/react';
 const PageMeta = () => {
   const rootData = useRouteLoaderData('root');
   //
-
-  useEffect(() => {
-    if (typeof window === 'object' && window?.Yo) {
-      window?.Yo.configure(
-        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${rootData?.ENVS?.YOTTA_KEY}`,
-      );
-    }
-  }, []);
 
   return (
     <>
@@ -37,6 +28,12 @@ const PageMeta = () => {
         property="og:description"
         content="Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup."
       />
+
+      <script
+        defer
+        src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
+      ></script>
+
       <script
         defer
         src="//cdn.storerocket.io/widget.js"
@@ -121,12 +118,6 @@ const PageMeta = () => {
                             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                             })(window,document,'script','dataLayer','${rootData?.ENVS?.GTM_ID}');`,
           }}
-        ></script>
-      )}
-      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
-        <script
-          defer
-          src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
         ></script>
       )}
 
