@@ -42,21 +42,11 @@ import {getCart} from './utils/graphql/shopify/queries/cart';
 
 import styles from './styles/app.css';
 import {
-  parseGid,
   AnalyticsEventName,
   getClientBrowserParameters,
   sendShopifyAnalytics,
   useShopifyCookies,
 } from '@shopify/hydrogen';
-import {
-  getCustomerAddresses,
-  getCustomerOrders,
-  getCustomerSubscription,
-  getItems,
-  getProucts,
-  getSubscriptionPayments,
-} from './utils/services/subscription';
-import {useCustomer} from './hooks/useCustomer';
 
 //
 
@@ -199,9 +189,7 @@ export default function App() {
     });
   }, [location]);
 
-  const {cart, showSliderCart, previewMode, customer} = useLoaderData();
-  const customerData = useCustomer();
-  //---------------------------//--------------------------- customer and customerData is the same here!
+  const {cart, showSliderCart, previewMode} = useLoaderData();
 
   const {setData: setCartData = () => {}, toggleCart} = useStore(
     (store) => store?.cart ?? null,
@@ -218,90 +206,12 @@ export default function App() {
   useEffect(() => {
     setCartData(cart);
 
-    if (customerData && customer?.id !== customerData.id) {
-      getCustomerSubscriptionData(customer);
-    }
-
     if (showSliderCart) toggleCart(true);
   }, []);
 
   useEffect(() => {
     if (previewMode) updatePreviewModeURL();
   }, [location]);
-
-  async function getCustomerSubscriptionData(customer) {
-    if (customer?.id) {
-      customer.subscription = {};
-      const customerId = parseGid(customer.id).id;
-
-      const [
-        activeSubscription,
-        inactiveSubscription,
-        subscriptionOrders,
-        items,
-        payments,
-        subscriptionAddresses,
-        ogProducts,
-      ] = await Promise.all([
-        getCustomerSubscription(customerId, true),
-        getCustomerSubscription(customerId),
-        getCustomerOrders(customerId),
-        getItems(customerId),
-        getSubscriptionPayments(customerId),
-        getCustomerAddresses(customerId),
-        getProucts(customerId),
-      ]);
-
-      subscriptionAddresses &&
-        (customer.subscription.addresses = subscriptionAddresses);
-
-      inactiveSubscription &&
-        (customer.subscription.inactive = inactiveSubscription);
-
-      const activeItems = {
-        ...items,
-        results: items?.results?.map((item) => {
-          if (activeSubscription?.results) {
-            const subscription = activeSubscription.results.find(
-              (sub) => sub.public_id === item.subscription,
-            );
-            const payment = payments?.results?.find(
-              (pay) => pay.public_id === subscription.payment,
-            );
-
-            subscription.payment = payment;
-            item.subscription = subscription;
-          }
-
-          return item;
-        }),
-      };
-
-      subscriptionOrders?.results &&
-        (subscriptionOrders.results = subscriptionOrders.results.map(
-          (order) => {
-            const items = [];
-
-            activeItems.results.forEach((item) => {
-              if (order.public_id === item.order) {
-                items.push(item);
-              }
-            });
-
-            const payment = payments?.results?.find(
-              (pay) => pay.public_id === order.payment,
-            );
-
-            order.payment = payment;
-            order.items = items;
-            return order;
-          },
-        ));
-
-      subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-      ogProducts && (customer.subscription.products = ogProducts);
-    }
-  }
 
   return (
     <RootStructure>
