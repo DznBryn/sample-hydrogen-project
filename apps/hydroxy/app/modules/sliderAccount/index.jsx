@@ -16,7 +16,6 @@ import LoadingSkeleton, {
 import {Link, useFetcher, useLocation} from '@remix-run/react';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import {RegisterForm, links as registerFormStyles} from '../accounts/register';
-import {useStore} from '~/hooks/useStore';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
@@ -69,7 +68,6 @@ const MainContent = () => {
   const registerFetcher = useFetcher();
   const signoutFetcher = useFetcher();
   const customerData = useCustomer();
-  const {setCustomerData} = useStore((store) => store?.account ?? null);
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
   const {SHOW_LOYALTY} = useFeatureFlags();
@@ -92,7 +90,6 @@ const MainContent = () => {
   }, []);
 
   useEffect(() => {
-    console.log(login.state);
     if (loginButtonRef.current) {
       if (login.state === 'submitting') {
         loginButtonRef.current.disabled = true;
@@ -100,9 +97,6 @@ const MainContent = () => {
       } else {
         loginButtonRef.current.disabled = false;
         loginButtonRef.current.classList.remove('disabledButton');
-      }
-      if (login.state === FETCHER.STATE.LOADING) {
-        setCustomerData(login.data?.customer);
       }
       if (login.data?.status === 401) {
         removeErrorMessage();
@@ -152,7 +146,6 @@ const MainContent = () => {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', {
         userAcceptsMarketing: true,
       });
-      setCustomerData(registerFetcher.data?.customer);
       changeMainContent('createAccountSuccess');
     }
   }, [registerFetcher.state]);
