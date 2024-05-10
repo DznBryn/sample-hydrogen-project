@@ -1,5 +1,4 @@
 import {useEffect, useRef, useState} from 'react';
-import {useStore} from '~/hooks/useStore';
 import styles from './styles.css';
 import {useFetcher} from '@remix-run/react';
 import {API_METHODS, FETCHER, FORM_ACTIONS, US_STATES} from '~/utils/constants';
@@ -15,6 +14,7 @@ export default function Addresses() {
     submitBtnMessage: 'Add address',
     formAction: FORM_ACTIONS.CREATE,
   });
+
   return showAddAddressForm.id ? (
     <div id="addressTab" className={'mainContainer'}>
       <Form
@@ -168,12 +168,7 @@ const AddressBox = ({data = null}) => {
 
 function RemoveAddress({addressId}) {
   const fetcher = useFetcher();
-  const {removeAddress} = useStore((store) => store?.account ?? null);
-  useEffect(() => {
-    if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
-      removeAddress(addressId);
-    }
-  }, [fetcher.type]);
+
   return (
     <fetcher.Form action="/account" method={API_METHODS.DELETE}>
       <input type="hidden" name="addressId" value={addressId} required />
@@ -189,7 +184,6 @@ function RemoveAddress({addressId}) {
 
 function Form({data}) {
   const fetcher = useFetcher();
-  const {updateAddresses} = useStore((store) => store?.account ?? null);
   const [form, setForm] = useState({
     firstName: data?.firstName ?? '',
     lastName: data?.lastName ?? '',
@@ -212,10 +206,6 @@ function Form({data}) {
   useEffect(() => {
     if (fetcher.data?.errors) {
       setErrors(fetcher.data.errors);
-    }
-    if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
-      updateAddresses(fetcher.data);
-      data.closeForm();
     }
   }, [fetcher.type]);
 
