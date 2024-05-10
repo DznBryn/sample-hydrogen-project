@@ -7,6 +7,7 @@ import {API_METHODS, FETCHER} from '~/utils/constants';
 import styles from './styles.css';
 import {PortableText} from '@portabletext/react';
 import useCurrency from '~/hooks/useCurrency';
+import {useCustomer} from '~/hooks/useCustomer';
 
 //
 
@@ -196,9 +197,7 @@ const RegularProduct = ({
   const {getCurrency} = useCurrency();
   const rootData = useRouteLoaderData('root');
   const tulaSiteWide = useRef(null);
-  const {id: customerId = ''} = useStore(
-    (store) => store?.account?.data ?? null,
-  );
+  const {id: customerId = ''} = useCustomer();
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),

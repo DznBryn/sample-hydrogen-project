@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import styles from './styles.css';
-import {useStore} from '~/hooks/useStore';
 import {Link} from '@remix-run/react';
 import {Image, flattenConnection} from '@shopify/hydrogen';
 import {useRouteLoaderData} from '@remix-run/react';
 import {getReturnsURL} from '~/utils/functions/eventFunctions';
+import {useCustomer} from '~/hooks/useCustomer';
 
 //
 
@@ -16,7 +16,7 @@ export function links() {
 //
 
 export default function OrderHistory() {
-  const orders = useStore((store) => store?.account?.data?.orders ?? []);
+  const {orders} = useCustomer();
 
   //
 

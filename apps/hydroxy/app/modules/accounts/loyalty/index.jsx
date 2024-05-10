@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {useYotpo} from '~/hooks/useYotpo';
 import classNames from 'classnames/bind';
 import styles from './styles.css';
-import {useStore} from '~/hooks/useStore';
 import RedeemProductsSection, {
   links as redeemProductsSectionStyles,
 } from '~/modules/redeemProductsSection';
@@ -11,6 +10,7 @@ import {brandLogos} from '~/modules/rewardsEarnPoints';
 import {useCollection} from '~/hooks/useCollection';
 import {handleGetProductByID} from '~/utils/functions/eventFunctions';
 import {useLoaderData} from '@remix-run/react';
+import {useCustomer} from '~/hooks/useCustomer';
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}, ...redeemProductsSectionStyles()];
@@ -30,7 +30,7 @@ const LoyaltyRewardsTab = () => {
   const {faqContent, yotpoRedeemProducts} = useLoaderData();
   const yotpoFAQ = faqContent?.[0]?.yotpoQuestions || null;
   const yotpoProducts = yotpoRedeemProducts?.[0]?.products || null;
-  const data = useStore((store) => store?.account?.data ?? null);
+  const data = useCustomer();
   const {refreshWidgets} = useYotpo();
   const isLoggedIn =
     data?.id !== '' || data?.id !== null || data?.id !== undefined;

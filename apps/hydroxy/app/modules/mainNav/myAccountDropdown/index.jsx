@@ -3,16 +3,16 @@ import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '../../loadingSkeleton';
 import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
-import {Link, useFetcher} from '@remix-run/react';
+import {Link, useFetcher, useLocation} from '@remix-run/react';
 import {
   getLoyaltyCustomerData,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
-import {useStore} from '~/hooks/useStore';
-import {API_METHODS, FETCHER} from '~/utils/constants';
+import {API_METHODS} from '~/utils/constants';
 
 import styles from './styles.css';
 import useFeatureFlags from '~/hooks/useFeatureFlags';
+import {useCustomer} from '~/hooks/useCustomer';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...loadingSkeletonStyles()];
@@ -28,9 +28,7 @@ const MyAccountDropdown = () => {
 
 const CommomVersion = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {firstName, id: customerId = ''} = useStore(
-    (store) => store?.account?.data ?? null,
-  );
+  const {firstName, id: customerId = ''} = useCustomer();
 
   return (
     <>
@@ -52,19 +50,9 @@ const CommomVersion = () => {
 };
 
 const Modal = ({setIsModalOpen}) => {
-  const {id: customerId = ''} = useStore(
-    (store) => store?.account?.data ?? null,
-  );
-  const {setCustomerData} = useStore((store) => store?.account ?? null);
+  const {id: customerId = ''} = useCustomer();
   const signoutFetcher = useFetcher();
-
-  //
-
-  useEffect(() => {
-    if (signoutFetcher.state === FETCHER.STATE.LOADING) {
-      setCustomerData();
-    }
-  }, [signoutFetcher.state]);
+  const location = useLocation();
 
   //
 
@@ -83,7 +71,7 @@ const Modal = ({setIsModalOpen}) => {
             'accDropdown_content accDropdownloggedIn navAccountMenuOld'
           }
         >
-          <a href="/account">My Account</a>
+          <a href="/account/logout">My Account</a>
           <a href="https://returns.tula.com/">Returns & Exchanges</a>
           <a href="/pages/contact-us">Contact Us</a>
           <a href="/pages/faq">FAQs</a>
@@ -92,7 +80,7 @@ const Modal = ({setIsModalOpen}) => {
             method={API_METHODS.POST}
             className={'signOut'}
           >
-            <input type="hidden" name="formAction" value={'LOGOUT'} />
+            <input type="hidden" name="source" value={location?.pathname} />
             <button type="submit" className={'signOut'}>
               sign out
             </button>
@@ -156,7 +144,7 @@ const SwellPointBalance = memo(({points}) => {
 const LoyaltyVersion = () => {
   const [points, setPoints] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const customerData = useStore((store) => store?.account?.data ?? null);
+  const customerData = useCustomer();
 
   const {id, email} = customerData;
 
@@ -232,18 +220,13 @@ const LoyaltyVersion = () => {
 
 const LoyaltyModal = ({customerData, setIsModalOpen, isModalOpen, points}) => {
   const {firstName = ''} = customerData;
-  const {setCustomerData} = useStore((store) => store?.account ?? null);
+  const signoutFetcher = useFetcher();
+  const location = useLocation();
+
   function openSliderAccount() {
     setIsModalOpen(false);
     switchSliderPanelVisibility('SliderAccount');
   }
-  const signoutFetcher = useFetcher();
-
-  useEffect(() => {
-    if (signoutFetcher.state === FETCHER.STATE.LOADING) {
-      setCustomerData();
-    }
-  }, [signoutFetcher.state]);
 
   const Content = {
     LoggedIn: () => (
@@ -264,8 +247,11 @@ const LoyaltyModal = ({customerData, setIsModalOpen, isModalOpen, points}) => {
           <Link reloadDocument to={'/pages/upload-receipt'}>
             Upload a Receipt & Earn
           </Link>
-          <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
-            <input type="hidden" name="formAction" value={'LOGOUT'} />
+          <signoutFetcher.Form
+            action="/account/logout"
+            method={API_METHODS.POST}
+          >
+            <input type="hidden" name="source" value={location?.pathname} />
             <button type="submit" className={'signOut'}>
               sign out
             </button>

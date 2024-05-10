@@ -6,7 +6,7 @@ import {
   appendScript,
   getCMSDoc,
 } from '~/utils/functions/eventFunctions';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 const Search = lazy(() => import('~/modules/search'));
 import {links as searchStyles} from '~/modules/search';
 import {Await, useRouteLoaderData} from '@remix-run/react';
@@ -21,7 +21,7 @@ export const links = () => {
 const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
   const {SHOW_LOYALTY} = useFeatureFlags();
   const {ENVS} = useRouteLoaderData('root');
-  const {id, email, isLoggedIn} = useCustomerState();
+  const {id, email, isLoggedIn} = useCustomer();
 
   const [{confirmationText}, setDiscountObj] = useState({
     code: '',

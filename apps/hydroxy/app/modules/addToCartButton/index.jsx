@@ -2,7 +2,7 @@ import {useFetcher, useMatches} from '@remix-run/react';
 import {useEffect, useState} from 'react';
 import {switchSliderPanelVisibility} from '../sliderPanel';
 import {Padlock} from '../icons';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 import {
   createCustomEvent,
   getIdFromGid,
@@ -47,7 +47,7 @@ export default function PDPAddToCart({
   const addToCart = useFetcher();
 
   const {id, items} = useCartState();
-  const {isLoggedIn} = useCustomerState();
+  const {isLoggedIn} = useCustomer();
   const [buttonState, setButtonState] = useState(IDLE);
   const loadingBtnStylesForExclusiveProducts = {
     color: exclusiveProductTextColor,

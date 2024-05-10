@@ -56,6 +56,7 @@ import {
   getProucts,
   getSubscriptionPayments,
 } from './utils/services/subscription';
+import {useCustomer} from './hooks/useCustomer';
 
 //
 
@@ -199,12 +200,11 @@ export default function App() {
   }, [location]);
 
   const {cart, showSliderCart, previewMode, customer} = useLoaderData();
+  const customerData = useCustomer();
+  //---------------------------//--------------------------- customer and customerData is the same here!
+
   const {setData: setCartData = () => {}, toggleCart} = useStore(
     (store) => store?.cart ?? null,
-  );
-
-  const {data: customerData, setCustomerData} = useStore(
-    (store) => store?.account ?? {},
   );
 
   // @TODO: Uncomment when OneTrust is ready
@@ -300,7 +300,6 @@ export default function App() {
 
       subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
       ogProducts && (customer.subscription.products = ogProducts);
-      setCustomerData(customer);
     }
   }
 

@@ -7,7 +7,7 @@ import {
   updateListrakCart,
 } from '../../utils/functions/eventFunctions';
 import {compareItemsState, isFreeGitPromoActivate} from './utils/index';
-import {useCustomerState} from '../../hooks/useCostumer';
+import {useCustomer} from '../../hooks/useCustomer';
 import {PortableText} from '@portabletext/react';
 import LoadingSkeleton from '../loadingSkeleton';
 import ProgressBar from './modules/ProgressBar';
@@ -91,7 +91,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
 
   const setRewardsPoints = () => {}; //mock
 
-  const {id, email, status} = useCustomerState();
+  const {id, email, status} = useCustomer();
 
   useEffect(() => {
     if (cart?.totalQuantity) {
@@ -458,7 +458,7 @@ const CartContent = ({
 }) => {
   const rootData = useRouteLoaderData('root');
   const [showModal, setShowModal] = useState(false);
-  const account = useStore((store) => store?.account?.data ?? {});
+  const account = useCustomer();
   const cart = useStore((store) => store?.cart?.data ?? {});
   const totalCart = Number(cart?.cost?.subtotalAmount?.amount ?? 0);
   const productRecList = productRecs;

@@ -16,6 +16,7 @@ import {flattenConnection} from '@shopify/hydrogen';
 
 import styles from './styles.css';
 import useCurrency from '~/hooks/useCurrency';
+import {useCustomer} from '~/hooks/useCustomer';
 
 //
 
@@ -138,7 +139,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
 export default HeaderIcons;
 
 const AccIcon = () => {
-  const {id: customerId} = useStore((store) => store?.account?.data ?? {});
+  const customerData = useCustomer();
 
   return (
     <div
@@ -146,7 +147,7 @@ const AccIcon = () => {
       onClick={() => switchSliderPanelVisibility('SliderAccount')}
       style={{cursor: 'pointer', height: '0'}}
     >
-      {customerId !== '' ? (
+      {customerData?.id !== '' ? (
         <svg
           className={'loggedIn'}
           width={21}

@@ -3,6 +3,7 @@ import {switchSliderPanelVisibility} from '~/modules/sliderPanel';
 import styles from './styles.css';
 import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
 import {useStore} from '~/hooks/useStore';
+import {useCustomer} from '~/hooks/useCustomer';
 
 export function links() {
   return [{rel: 'stylesheet', href: styles}];
@@ -15,9 +16,7 @@ export default function Banner({
   userName = 'Jane',
   onClick = () => {},
 }) {
-  const {id: customerId = ''} = useStore(
-    (store) => store?.account?.data ?? null,
-  );
+  const {id: customerId = ''} = useCustomer();
   return isEmpty
     ? EmptyCart()
     : isAbleToRedeem

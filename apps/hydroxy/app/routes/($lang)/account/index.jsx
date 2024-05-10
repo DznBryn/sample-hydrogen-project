@@ -31,8 +31,7 @@ import {
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
 import {format} from 'date-fns';
-import logout from './__private/logout';
-import {useStore} from '~/hooks/useStore';
+import {useCustomer} from '~/hooks/useCustomer';
 
 export function links() {
   return [...accountStyles()];
@@ -61,13 +60,6 @@ export async function action({request, context}) {
   const addressId = formData.get('addressId');
   const formAction = formData.get('formAction');
 
-  if (formAction === 'LOGOUT') {
-    return await logout({request, context});
-  }
-
-  if (formAction === 'LOGOUT_NO_REDIRECT') {
-    return await logout({request, context}, true);
-  }
   // SUBSCRIPTION
   if (formAction?.includes('SUBSCRIPTION')) {
     if (formAction === 'SUBSCRIPTION_REACTIVATE') {
@@ -414,7 +406,7 @@ export async function loader({request, context, params}) {
 }
 
 export default function AccountPage() {
-  const {data: customerData} = useStore((store) => store?.account ?? {});
+  const customerData = useCustomer();
   return (
     <Layouts.MainNavFooter>
       <Account data={customerData} />
