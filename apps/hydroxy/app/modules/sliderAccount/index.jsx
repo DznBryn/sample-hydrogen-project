@@ -553,7 +553,7 @@ const MainContent = () => {
         </div>
 
         <recoverPassword.Form
-          action="/"
+          action="/account/recover"
           method={API_METHODS.POST}
           className={'form'}
         >

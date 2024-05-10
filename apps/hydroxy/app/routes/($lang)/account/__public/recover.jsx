@@ -1,4 +1,4 @@
-import {redirect} from '@shopify/remix-oxygen';
+import {json, redirect} from '@shopify/remix-oxygen';
 import Layouts from '~/layouts';
 import ForgotPasswordForm, {
   links as forgotPasswordStyles,
@@ -10,11 +10,12 @@ export function links() {
 }
 export async function action({request, context}) {
   const formData = await request.formData();
-  const email = formData.get('email');
+  const email = formData.get('email') || formData.get('forgotEmail');
   const data = await recoverPassword(email, context);
-  return {
-    data,
-  };
+
+  if (data?.status === 500) return data;
+
+  return json({message: 'Success', status: 200});
 }
 
 export async function loader({context, params}) {

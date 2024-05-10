@@ -15,11 +15,11 @@ export default function ForgotPasswordForm() {
     email === '' ||
     fetcher?.state === FETCHER.STATE.LOADING ||
     fetcher?.state === FETCHER.STATE.SUBMIT;
-  console.log('fetcher', fetcher);
+
   return (
     <div className={'templateCustomersLogin'}>
       <div className={'formBox'}>
-        {fetcher?.data?.data?.status === 200 ? (
+        {fetcher?.data?.status === 200 ? (
           <>
             <h1>Check your inbox!</h1>
             <p>
@@ -34,7 +34,11 @@ export default function ForgotPasswordForm() {
               Enter your email and we will send you a password reset link to
               your inbox.
             </p>
-            <fetcher.Form method={API_METHODS.POST} noValidate className="">
+            <fetcher.Form
+              action="/account/recover"
+              method={API_METHODS.POST}
+              className=""
+            >
               <input
                 className="inputText"
                 id="email"
@@ -48,9 +52,8 @@ export default function ForgotPasswordForm() {
                 onChange={(e) => setEmail(e.target.value)}
                 autoFocus
               />
-              {fetcher.data?.data &&
-                fetcher.data?.data?.length > 0 &&
-                fetcher.data.data.map(
+              {fetcher.data?.length > 0 &&
+                fetcher.data.map(
                   (error, index) =>
                     error?.field?.includes('email') && (
                       <p className={'errorText'} key={index}>
@@ -67,9 +70,9 @@ export default function ForgotPasswordForm() {
               </Button>
               <br />
               <Link to="/account/login">Go back to login</Link>
-              {fetcher?.data?.data?.status === 500 && (
+              {fetcher?.data?.status === 500 && (
                 <p className={'errorText'}>
-                  <strong>{fetcher?.data?.data?.message}</strong>
+                  <strong>{fetcher?.data?.message}</strong>
                 </p>
               )}
             </fetcher.Form>

@@ -1,9 +1,6 @@
 import Layouts from '~/layouts';
 import {json, redirect} from '@shopify/remix-oxygen';
-import {
-  login,
-  recoverPassword,
-} from '~/utils/graphql/shopify/mutations/customer';
+import {login} from '~/utils/graphql/shopify/mutations/customer';
 import LoginForm, {
   links as loginFormStyles,
 } from '../../../../modules/accounts/login';
@@ -17,7 +14,7 @@ import {
 } from '~/utils/services/subscription';
 import {parseGid} from '@shopify/hydrogen';
 import {getCustomerData} from '~/utils/functions/eventFunctions';
-import {FORGOT_EMAIL, SIGN_IN_EMAIL, SIGN_IN_PASSWORD} from '~/utils/constants';
+import {SIGN_IN_EMAIL, SIGN_IN_PASSWORD} from '~/utils/constants';
 
 export const links = () => {
   return [...loginFormStyles()];
@@ -29,7 +26,6 @@ export const action = async ({request, context}) => {
 
   const email = formData.get(SIGN_IN_EMAIL) || formData.get('email');
   const password = formData.get(SIGN_IN_PASSWORD) || formData.get('password');
-  const forgotEmail = formData.get(FORGOT_EMAIL);
 
   if (
     email &&
@@ -116,7 +112,9 @@ export const action = async ({request, context}) => {
 
         ogProducts && (customer.subscription.products = ogProducts);
       }
+
       console.log('customer.accessToken', customer);
+
       return json(
         {
           customer,
@@ -138,18 +136,6 @@ export const action = async ({request, context}) => {
     errorMessage = 'Please enter a password.';
   } else {
     errorMessage = 'Email and password are required.';
-  }
-
-  if (forgotEmail && (forgotEmail !== '' || typeof forgotEmail !== 'string')) {
-    const result = await recoverPassword(forgotEmail, context);
-
-    if (result?.customerRecover?.customerUserErrors?.length) {
-      return json({
-        message: result?.customerRecover?.customerUserErrors[0]?.message,
-        status: 400,
-      });
-    }
-    return json({message: 'Success', status: 200});
   }
 
   return json({message: errorMessage, status: 400});
