@@ -6,7 +6,6 @@ import {Image, flattenConnection} from '@shopify/hydrogen';
 import {useRouteLoaderData} from '@remix-run/react';
 import {getReturnsURL} from '~/utils/functions/eventFunctions';
 import {useCustomer} from '~/hooks/useCustomer';
-import {useMultipass} from '~/hooks/useMultipass';
 
 //
 
@@ -41,7 +40,7 @@ export default function OrderHistory() {
 
 function OrderItem({data}) {
   const rootData = useRouteLoaderData('root');
-  const {navigateToShopify} = useMultipass();
+  const userData = useCustomer();
   const formattedDate = data?.processedAt
     ? new Date(data.processedAt).toLocaleDateString()
     : null;
@@ -53,7 +52,16 @@ function OrderItem({data}) {
   //
 
   function handleTrackOrderOnClick(url) {
-    navigateToShopify(url);
+    const urlPrefix = url?.split('/authenticate')[0];
+
+    if (!urlPrefix || !userData?.email || !data?.orderNumber) {
+      window.location.href = url;
+    }
+
+    const orderAndEmail = `${data?.orderNumber}/${userData?.email}`;
+    const encoded = btoa(orderAndEmail).replaceAll('=', '');
+
+    window.location.href = `${urlPrefix}?o=${encoded}`;
   }
 
   //
