@@ -1,5 +1,6 @@
 import {useCollection} from '~/hooks/useCollection';
 import Product, {links as productStyles} from '../plp/plpProductBox';
+import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 
 export const links = () => {
@@ -10,6 +11,17 @@ const AutoDelivery = ({content}) => {
   const {state, products} = useCollection(
     content?.[0]?.featuredCollection.collectionId,
   );
+
+  const {ENVS} = useRouteLoaderData('root');
+
+  function faqLink() {
+    const curEnv = ENVS?.SITE_NAME;
+
+    if (curEnv.includes('CA')) return 'https://help.tulaskincare.ca/en-US';
+    if (curEnv.includes('US')) return 'https://help.tula.com/en-US';
+    if (curEnv.includes('UK'))
+      return 'unitedKinhttps://help.tulaskincare.co.uk/en-USgdom';
+  }
 
   return (
     <div id="ad-page">
@@ -360,7 +372,7 @@ const AutoDelivery = ({content}) => {
         <p className={'bottomText'}>
           Still have questions? <br />
           Visit{' '}
-          <a href="/pages/faq" target="_blank">
+          <a href={faqLink()} target="_blank" rel="noreferrer">
             FAQ
           </a>{' '}
           or{' '}
