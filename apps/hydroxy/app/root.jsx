@@ -147,6 +147,8 @@ export async function loader({context, request}) {
         POSTSCRIPT_ID: context?.env?.POSTSCRIPT_ID,
         ONETRUST_ID: context?.env?.ONETRUST_ID,
         LISTRAK_ID: context?.env?.LISTRAK_ID,
+        MULTIPASS_SECRET: context?.env?.MULTIPASS_SECRET,
+        PUBLIC_STORE_DOMAIN: context?.env?.PUBLIC_STORE_DOMAIN,
       },
     },
     {

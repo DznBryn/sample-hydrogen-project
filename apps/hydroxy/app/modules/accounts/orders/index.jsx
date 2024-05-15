@@ -6,6 +6,7 @@ import {Image, flattenConnection} from '@shopify/hydrogen';
 import {useRouteLoaderData} from '@remix-run/react';
 import {getReturnsURL} from '~/utils/functions/eventFunctions';
 import {useCustomer} from '~/hooks/useCustomer';
+import {useMultipass} from '~/hooks/useMultipass';
 
 //
 
@@ -40,6 +41,7 @@ export default function OrderHistory() {
 
 function OrderItem({data}) {
   const rootData = useRouteLoaderData('root');
+  const {navigateToShopify} = useMultipass();
   const formattedDate = data?.processedAt
     ? new Date(data.processedAt).toLocaleDateString()
     : null;
@@ -47,6 +49,12 @@ function OrderItem({data}) {
   const showReturn =
     data?.fulfillmentStatus !== 'UNFULFILLED' ||
     new Date().getTime() > data?.processedAt;
+
+  //
+
+  function handleTrackOrderOnClick(url) {
+    navigateToShopify(url);
+  }
 
   //
 
@@ -103,7 +111,9 @@ function OrderItem({data}) {
           </span>
         </div>
         <div className={'orderOptions'}>
-          <Link to={`${data?.statusUrl}`}>Track Order</Link>
+          <div onClick={() => handleTrackOrderOnClick(data?.statusUrl)}>
+            Track Order
+          </div>
         </div>
         {showReturn && (
           <div className={styles.orderOptions}>

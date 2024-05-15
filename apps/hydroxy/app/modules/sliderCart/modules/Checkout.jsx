@@ -1,16 +1,20 @@
 import {useStore} from '~/hooks/useStore';
 import {useRouteLoaderData} from '@remix-run/react';
 import useCurrency from '~/hooks/useCurrency';
+import {useMultipass} from '~/hooks/useMultipass';
 
 //
 
 const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
   const {ENVS} = useRouteLoaderData('root');
+  const {navigateToShopify} = useMultipass();
   const {getCurrency} = useCurrency();
   const cart = useStore((store) => store?.cart?.data ?? null);
   const subtotalPrice = Number(cart?.cost?.subtotalAmount?.amount ?? 0).toFixed(
     2,
   );
+
+  //
 
   const handleCartSubTotal = ({subtotalPrice}) => {
     return Number(subtotalPrice - valueToSubtract).toFixed(2);
@@ -20,6 +24,12 @@ const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
     ? getCurrency() +
       (handleCartSubTotal({cart, subtotalPrice}) - valueToSubtract)
     : getCurrency() + handleCartSubTotal({cart, subtotalPrice});
+
+  function handleCheckoutOnClick() {
+    navigateToShopify(url);
+  }
+
+  //
 
   const isNotEmptyCart = cart !== null && !isEmpty;
 
@@ -31,9 +41,10 @@ const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
           <h2>{modifiedSubtotalPrice}</h2>
         </div>
       )}
-      <a href={url} className={'checkoutCta'}>
+      <div onClick={handleCheckoutOnClick} className={'checkoutCta'}>
         {message}
-      </a>
+      </div>
+
       {isNotEmptyCart && (
         <div className={'discount'}>
           {ENVS?.SITE_NAME.includes('US')
