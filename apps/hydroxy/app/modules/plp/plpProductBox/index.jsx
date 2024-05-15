@@ -85,6 +85,7 @@ const PLPProductBox2 = ({
     productPromos = null,
     handle: slug,
     title,
+    tags,
   } = product;
   const {getCurrency} = useCurrency();
   const media = images.nodes;
@@ -236,15 +237,38 @@ const PLPProductBox2 = ({
       (sitewide === false && !product?.productPromos?.showPromo) ||
       noPromo ||
       sitewide?.excludeList?.includes(product.handle);
+
+    const CommonPrice = () => {
+      const promoTag = tags.find((tag) => tag.includes('promo:'));
+      const promoColor = promoTag?.split(':')[1];
+
+      if (promoTag && promoColor) {
+        return (
+          <div className={'plpBox_compared_price'}>
+            <div>
+              <strong className="value strikethrough">
+                {getCurrency() + originalPrice}
+              </strong>
+              <strong className="value promo">{getPrice()}</strong>
+            </div>
+          </div>
+        );
+      }
+
+      if (originalPriceHigher) {
+        return (
+          <p className={'plpBox_compared_price'}>
+            <strong className="value">{getPrice()}</strong>
+            <span>{` (${getCurrency() + originalPrice} value)`}</span>
+          </p>
+        );
+      }
+
+      return <strong className="value">{getPrice()}</strong>;
+    };
+
     if (noPromoPrice) {
-      return originalPriceHigher ? (
-        <p className={'plpBox_compared_price'}>
-          <strong className="value">{getPrice()}</strong>
-          <span>{` (${getCurrency() + originalPrice} value)`}</span>
-        </p>
-      ) : (
-        <strong className="value">{getPrice()}</strong>
-      );
+      return <CommonPrice />;
     } else {
       return (
         <div className={'plpBox_compared_price'}>

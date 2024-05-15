@@ -468,11 +468,11 @@ const Price = ({item, promo, product, cartPageConfig}) => {
       </div>
     );
   } else {
-    const promoColorText = product?.tags?.find((tag) => tag.includes('promo:'))
-      ? product.tags.find((tag) => tag.includes('promo:')).split(':')[1]
-      : null;
+    const promoTag = product?.tags.find((tag) => tag.includes('promo:'));
+    const promoColor = promoTag?.split(':')[1];
+
     return (
-      <h6 className={`${promoColorText ? `promo_${promoColorText}` : ''}`}>
+      <h6 className={`${promoTag && promoColor ? 'promo' : ''}`}>
         {getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}
       </h6>
     );
