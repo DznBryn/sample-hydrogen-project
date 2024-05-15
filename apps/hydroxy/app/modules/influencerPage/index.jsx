@@ -4,6 +4,7 @@ import ProductBox from '~/modules/plp/plpHorizontalProductBox';
 import FireWorkCarousel from '~/modules/fireWorkCarousel';
 
 import styles from './styles.css';
+import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...plpStyles()];
@@ -64,8 +65,29 @@ const InfluencerPage = ({influencer, cartConfig}) => {
       </div>
 
       <div className={collectionContainerStyle}>
-        {influencer.influencerProducts?.slice(0, 4).map((product) => (
-          <ProductBox key={product.id} is2Columns={true} product={product} />
+        {influencer.influencerProducts?.slice(0, 4).map((product, index) => (
+          <ProductBox
+            key={product.id}
+            is2Columns={true}
+            product={product}
+            analytics={{
+              click: {
+                actionField: {list: `${collection.name}`},
+                products: [
+                  {
+                    name: product?.title,
+                    id: getIdFromGid(product?.id),
+                    price: parseFloat(
+                      product?.priceRange?.minVariantPrice?.amount,
+                    )?.toFixed(2),
+                    category: product?.productType,
+                    variant: '',
+                    position: index,
+                  },
+                ],
+              },
+            }}
+          />
         ))}
       </div>
 
@@ -74,8 +96,29 @@ const InfluencerPage = ({influencer, cartConfig}) => {
       </div>
 
       <div className={collectionContainerStyle}>
-        {influencer.influencerProducts?.slice(4, 8).map((product) => (
-          <ProductBox key={product.id} is2Columns={true} product={product} />
+        {influencer.influencerProducts?.slice(4, 8).map((product, index) => (
+          <ProductBox
+            key={product.id}
+            is2Columns={true}
+            product={product}
+            analytics={{
+              click: {
+                actionField: {list: `${collection.name}`},
+                products: [
+                  {
+                    name: product?.title,
+                    id: getIdFromGid(product?.id),
+                    price: parseFloat(
+                      product?.priceRange?.minVariantPrice?.amount,
+                    )?.toFixed(2),
+                    category: product?.productType,
+                    variant: '',
+                    position: index,
+                  },
+                ],
+              },
+            }}
+          />
         ))}
       </div>
 

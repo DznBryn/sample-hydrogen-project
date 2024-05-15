@@ -5,6 +5,7 @@ import ProductBox, {
 } from '~/modules/plp/plpHorizontalProductBox';
 
 import styles from './styles.css';
+import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}, ...productBoxStyles()];
@@ -58,7 +59,7 @@ const AdvancedResultsView = ({content}) => {
       >
         {Object.keys(advancedResultsState)
           .slice(0, 3)
-          .map((item) => (
+          .map((item, index) => (
             <div key={item} className="productWrapper">
               <h4>BOOST</h4>
 
@@ -67,6 +68,33 @@ const AdvancedResultsView = ({content}) => {
                   product={handleGetProductByID(
                     advancedResultsState[item].productId,
                   )}
+                  analytics={{
+                    click: {
+                      actionField: {list: 'advance search results'},
+                      products: [
+                        {
+                          name: handleGetProductByID(
+                            advancedResultsState[item].productId,
+                          ).title,
+                          id: getIdFromGid(
+                            handleGetProductByID(
+                              advancedResultsState[item].productId,
+                            ).id,
+                          ),
+                          price: parseFloat(
+                            handleGetProductByID(
+                              advancedResultsState[item].productId,
+                            ).priceRange?.minVariantPrice?.amount,
+                          )?.toFixed(2),
+                          category: handleGetProductByID(
+                            advancedResultsState[item].productId,
+                          ).productType,
+                          variant: '',
+                          position: index,
+                        },
+                      ],
+                    },
+                  }}
                   ctaOpensBlank={
                     handleGetProductByID(advancedResultsState[item].productId)
                       ?.variants?.length > 1
