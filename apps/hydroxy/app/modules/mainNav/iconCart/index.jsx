@@ -4,6 +4,7 @@ import styles from './styles.css';
 import {useStore} from '~/hooks/useStore';
 import {flattenConnection} from '@shopify/hydrogen';
 import {getCartQuantity} from '~/utils/functions/eventFunctions';
+import LoadingSkeleton from '~/modules/global/loadingSkeleton';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -15,7 +16,7 @@ const classes = {
 };
 
 const IconCart = ({cartConfig}) => {
-  const cart = useStore((store) => store?.cart?.data ?? (() => {}));
+  const cart = useStore((store) => store?.cart?.data ?? null);
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const quantity = getTotalItemsOnCart();
@@ -41,6 +42,7 @@ const IconCart = ({cartConfig}) => {
 
     return total;
   }
+
   return (
     <div className={classes.cartIconContainer} onClick={toggleCart}>
       <svg
@@ -65,9 +67,24 @@ const IconCart = ({cartConfig}) => {
           fill="#4C4E56"
         />
       </svg>
-      <div className={classes.cartListNumber}>
-        {quantity > 9 ? <span>9+</span> : quantity}
-      </div>
+      {cart ? (
+        <div className={classes.cartListNumber}>
+          {quantity > 9 ? <span>9+</span> : quantity}
+        </div>
+      ) : (
+        <LoadingSkeleton
+          width="19px"
+          height="19px"
+          style={{
+            borderRadius: '19px',
+            marginTop: '-5px',
+            marginLeft: '-8px',
+            background:
+              'linear-gradient(-90deg, #47c6d9 0%, rgb(127 238 255) 50%, #47c6d9 100%)',
+            backgroundSize: '400% 400%',
+          }}
+        />
+      )}
     </div>
   );
 };

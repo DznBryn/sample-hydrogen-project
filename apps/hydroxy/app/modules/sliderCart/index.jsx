@@ -50,10 +50,9 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const rootData = useRouteLoaderData('root');
   const productRecList = recommendations;
   const cart = useStore((store) => store?.cart?.data ?? {});
-  const {
-    updateCart: removeItemData = () => {},
-    setData: setCartData = () => {},
-  } = useStore((store) => store?.cart ?? {});
+  const {setData: setCartData = () => {}} = useStore(
+    (store) => store?.cart ?? {},
+  );
 
   const [items, setItems] = useState(null);
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
@@ -92,6 +91,17 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
   const setRewardsPoints = () => {}; //mock
 
   const {id, email, status} = useCustomer();
+
+  useEffect(() => {
+    fetcher.load('/api/cart?fetcherLoad=true');
+  }, []);
+
+  useEffect(() => {
+    //only on first load
+    if (fetcher.type === FETCHER.TYPE.DONE && Object.keys(cart).length === 0) {
+      setCartData(fetcher?.data?.cart);
+    }
+  }, [fetcher.type]);
 
   useEffect(() => {
     if (cart?.totalQuantity) {
@@ -149,19 +159,6 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
     }
   }, [cart?.totalQuantity]);
 
-  useEffect(() => {
-    if (
-      fetcher.type === FETCHER.TYPE.ACTION_RELOAD &&
-      fetcher?.data?.cart?.totalQuantity >= 0
-    ) {
-      if (fetcher?.data?.cart?.buyerIdentity) {
-        setCartData(fetcher.data.cart);
-      } else {
-        removeItemData(fetcher.data.cart);
-      }
-    }
-  }, [fetcher.type]);
-
   async function checkGWPThreshold() {
     const items = cart?.lines ? flattenConnection(cart.lines) : [];
     const GWP_THRESHOLD = cartConfig.freeGiftPromoThreshold;
@@ -182,7 +179,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
           // Using fetcher.submit() for form submission
           await fetcher.submit(formData, {
             method: API_METHODS.POST,
-            action: '/cart',
+            action: '/api/cart',
           });
         } catch (error) {
           // Handle errors
@@ -204,7 +201,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
             // Using fetcher.submit() for form submission
             await fetcher.submit(formData, {
               method: API_METHODS.POST,
-              action: '/cart',
+              action: '/api/cart',
             });
           } catch (error) {
             // Handle errors
@@ -228,7 +225,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
             // Using fetcher.submit() for form submission
             await fetcher.submit(formData, {
               method: API_METHODS.POST,
-              action: '/cart',
+              action: '/api/cart',
             });
           } catch (error) {
             // Handle errors
@@ -252,7 +249,7 @@ const SliderCart = ({cartConfig, recommendations, products, ...props}) => {
           // Using fetcher.submit() for form submission
           await fetcher.submit(formData, {
             method: API_METHODS.POST,
-            action: '/cart',
+            action: '/api/cart',
           });
         } catch (error) {
           // Handle errors

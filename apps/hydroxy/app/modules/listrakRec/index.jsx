@@ -1,4 +1,3 @@
-// import { useCartActions } from 'frontend-checkout';
 import {useEffect, useState} from 'react';
 import {useCollection} from '~/hooks/useCollection';
 import {getIdFromGid, prepProduct} from '~/utils/functions/eventFunctions';

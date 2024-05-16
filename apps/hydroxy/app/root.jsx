@@ -38,8 +38,6 @@ import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
 import {useEffect, useRef} from 'react';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
-import {getCart} from './utils/graphql/shopify/queries/cart';
-
 import styles from './styles/app.css';
 import {
   AnalyticsEventName,
@@ -106,12 +104,9 @@ export async function loader({context, request}) {
    * SHOPIFY DATA
    */
 
-  const [cartId, curCustomerAccessToken] = await Promise.all([
-    context.session.get('cartId'),
+  const [curCustomerAccessToken] = await Promise.all([
     context.session.get('customerAccessToken'),
   ]);
-
-  const cart = cartId ? await getCart(context, cartId) : {};
 
   if (
     customerCache.accessToken !== curCustomerAccessToken ||
@@ -130,7 +125,6 @@ export async function loader({context, request}) {
   return defer(
     {
       request,
-      cart,
       customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
       previewMode: context.session.get('previewMode') === 'true',
@@ -191,11 +185,9 @@ export default function App() {
     });
   }, [location]);
 
-  const {cart, showSliderCart, previewMode} = useLoaderData();
+  const {showSliderCart, previewMode} = useLoaderData();
 
-  const {setData: setCartData = () => {}, toggleCart} = useStore(
-    (store) => store?.cart ?? null,
-  );
+  const {toggleCart} = useStore((store) => store?.cart ?? null);
 
   // @TODO: Uncomment when OneTrust is ready
   // useEffect(() => {
@@ -206,8 +198,6 @@ export default function App() {
   // });
 
   useEffect(() => {
-    setCartData(cart);
-
     if (showSliderCart) toggleCart(true);
   }, []);
 
