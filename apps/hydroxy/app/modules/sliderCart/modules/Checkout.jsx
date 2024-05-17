@@ -1,5 +1,5 @@
 import {useStore} from '~/hooks/useStore';
-import {useRouteLoaderData} from '@remix-run/react';
+import {useNavigate, useRouteLoaderData} from '@remix-run/react';
 import useCurrency from '~/hooks/useCurrency';
 import {useMultipass} from '~/hooks/useMultipass';
 
@@ -8,6 +8,8 @@ import {useMultipass} from '~/hooks/useMultipass';
 const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
   const {ENVS} = useRouteLoaderData('root');
   const {navigateToShopify} = useMultipass();
+  const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
+  const navigate = useNavigate();
   const {getCurrency} = useCurrency();
   const cart = useStore((store) => store?.cart?.data ?? null);
   const subtotalPrice = Number(cart?.cost?.subtotalAmount?.amount ?? 0).toFixed(
@@ -26,7 +28,12 @@ const Checkout = ({message, url, valueToSubtract = null, isEmpty = false}) => {
     : getCurrency() + handleCartSubTotal({cart, subtotalPrice});
 
   function handleCheckoutOnClick() {
-    navigateToShopify(url);
+    if (url.includes('https')) {
+      navigateToShopify(url);
+    } else {
+      navigate(url);
+      toggleCart();
+    }
   }
 
   //
