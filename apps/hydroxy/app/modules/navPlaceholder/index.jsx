@@ -90,7 +90,7 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
 
   function appendGorgiasChat() {
     appendScript(
-      'https://config.gorgias.chat/bundle-loader/01H7G04F846WG95Q6E2FBRW47X',
+      `https://config.gorgias.chat/bundle-loader/${ENVS?.GORGIAS_ID}`,
     );
   }
 

@@ -143,6 +143,7 @@ export async function loader({context, request}) {
         LISTRAK_ID: context?.env?.LISTRAK_ID,
         MULTIPASS_SECRET: context?.env?.MULTIPASS_SECRET,
         PUBLIC_STORE_DOMAIN: context?.env?.PUBLIC_STORE_DOMAIN,
+        GORGIAS_ID: context?.env?.GORGIAS_ID,
       },
     },
     {
