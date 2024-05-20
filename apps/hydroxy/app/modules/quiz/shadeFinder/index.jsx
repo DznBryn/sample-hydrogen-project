@@ -52,7 +52,7 @@ const ShadeFinder = () => {
     let questions = structuredClone(questionsState);
 
     answersArray[step] = answer.qualifiers;
-    console.log(answersArray);
+
     if (answer.subQuestion) {
       const returnQuestions = quiz.handleAddSubQuestionIntoQuestionsQueue(
         questions,
