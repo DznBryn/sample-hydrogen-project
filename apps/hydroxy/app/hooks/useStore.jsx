@@ -130,3 +130,14 @@ export const useComparisonModalStore = create((set) => ({
     set({store: obj});
   },
 }));
+
+export const useSuccessBanner = create((set) => ({
+  isVisible: false,
+  message: 'Default message.',
+  showBanner: ({_message}) => {
+    set(() => ({isVisible: true, message: _message}));
+  },
+  closeBanner: () => {
+    set(() => ({isVisible: false, message: ''}));
+  },
+}));

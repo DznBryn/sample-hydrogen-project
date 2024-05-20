@@ -1,0 +1,41 @@
+.successBannerContainer {
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  width: 100%;
+  background-color: #edfbf8;
+}
+
+.successBannerContentWrapper {
+  display: flex;
+  flex: 1;
+  max-width: 1123px;
+  align-items: center;
+  padding-inline: 16px 40px;
+}
+
+.successBannerMessage {
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  margin-left: 15px;
+}
+
+.successBannerclose {
+  rotate: 45deg;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px;
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .successBannerContentWrapper {
+    padding-left: 0;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */
