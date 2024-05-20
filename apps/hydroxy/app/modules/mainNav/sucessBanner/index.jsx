@@ -1,3 +1,4 @@
+import {useEffect} from 'react';
 import {useSuccessBanner} from '~/hooks/useStore';
 
 import styles from './styles.css';
@@ -8,6 +9,12 @@ export const links = () => {
 
 const SucessBanner = () => {
   const {isVisible, message, closeBanner} = useSuccessBanner();
+
+  useEffect(() => {
+    if (!window.location.href.includes('/account')) {
+      closeBanner();
+    }
+  }, []);
 
   return isVisible ? (
     <section className="successBannerContainer">
