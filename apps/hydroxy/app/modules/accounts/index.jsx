@@ -158,7 +158,7 @@ function Tabs({data}) {
         <ReferralWidget />
       </div>
       <div style={{display: showAddressTab && active === 4 ? 'flex' : 'none'}}>
-        <Addresses />
+        <Addresses data={data} />
       </div>
       <div style={{display: active === 5 ? 'block' : 'none'}}>
         <LoyaltyRewardsTab />

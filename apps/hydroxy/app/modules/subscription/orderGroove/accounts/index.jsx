@@ -17,6 +17,8 @@ import datePickerStyles from 'react-date-picker/dist/DatePicker.css';
 import calendarStyles from 'react-calendar/dist/Calendar.css';
 import {useSubscriptions} from '~/hooks/useSubscriptions';
 
+import {useSuccessBanner} from '~/hooks/useStore';
+
 export function links() {
   return [
     {rel: 'stylesheet', href: styles},
@@ -361,7 +363,7 @@ function SubscriptionItem({
   );
   const options = [1, 2, 3, 4, 5];
 
-  //
+  const {closeBanner, showBanner} = useSuccessBanner();
 
   useEffect(() => {
     if (item?.product) {
@@ -378,6 +380,8 @@ function SubscriptionItem({
   //
 
   const handleSelectChange = async (event) => {
+    const changeFrequencyMessage = `Your auto-delivery will now ship every ${event.target.value} months. Your next shipment date has not changed.`;
+
     if (subscription?.every === Number(event.target.value)) {
       return;
     }
@@ -392,15 +396,20 @@ function SubscriptionItem({
         return;
       }
 
-      return setSelectedOption(res.every);
+      setSelectedOption(res.every);
+      closeBanner();
+      return showBanner({_message: changeFrequencyMessage});
     } catch (error) {
-      return console.log({
+      return console.error({
         message: error.message,
       });
     }
   };
 
   const handleSwapProduct = async (event) => {
+    const changeADProductMessage =
+      'Your auto-delivery item has been changed successfully.';
+
     if (item?.product === event.target.value) {
       return;
     }
@@ -412,13 +421,16 @@ function SubscriptionItem({
       }
 
       if (res.subscription) {
-        return handleUpdateCustomerSubcription(order, {
+        handleUpdateCustomerSubcription(order, {
           customer,
           updateCustomerSubscription,
         });
+
+        closeBanner();
+        return showBanner({_message: changeADProductMessage});
       }
     } catch (error) {
-      return console.log({
+      return console.error({
         message: error.message,
       });
     }
@@ -907,6 +919,11 @@ function CancelSubscription({
   const [customReason, setCustomReason] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const cancelSubscriptionMessage =
+    'Your auto-delivery has been cancelled successfully.';
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.message) {
@@ -921,6 +938,11 @@ function CancelSubscription({
           updateCustomerSubscription,
         });
         handleModalClose();
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: cancelSubscriptionMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -1030,6 +1052,11 @@ function SkipOrderSubscription({
 }) {
   const fetcher = useFetcher();
 
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const skipSubscriptionMessage =
+    'This shipment has been skipped successfully. Your next shipment will be scheduled according to your subscription preferences.';
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.customer) {
@@ -1038,6 +1065,11 @@ function SkipOrderSubscription({
           updateCustomerSubscription,
         });
         handleModalClose();
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: skipSubscriptionMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -1100,6 +1132,19 @@ function ChangeSubscriptionDate({
   const fetcher = useFetcher();
   const [dateChange, setDateChange] = useState(order?.place ?? new Date());
 
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const formattedDateMessage = new Date(dateChange).toLocaleDateString(
+    'en-US',
+    {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    },
+  );
+
+  const changeDateMessage = `Your shipment date has been changed successfully to ${formattedDateMessage}`;
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.customer) {
@@ -1108,6 +1153,10 @@ function ChangeSubscriptionDate({
           updateCustomerSubscription,
         });
         handleModalClose();
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: changeDateMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -1174,7 +1223,21 @@ function PauseSubscription({
   updateCustomerSubscription,
 }) {
   const fetcher = useFetcher();
+
   const [dateChange, setDateChange] = useState(order?.place ?? new Date());
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const formattedDateMessage = new Date(dateChange).toLocaleDateString(
+    'en-US',
+    {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    },
+  );
+
+  const pauseDateMessage = `Your auto-delivery has been successfully paused until ${formattedDateMessage}`;
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
@@ -1184,6 +1247,11 @@ function PauseSubscription({
           updateCustomerSubscription,
         });
         handleModalClose();
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: pauseDateMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -1245,6 +1313,12 @@ function ReactivateButton({
   updateCustomerSubscription,
 }) {
   const fetcher = useFetcher();
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const reactivateSubscriptionMessage =
+    'Your auto-delivery has been reactivated successfully.';
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.customer) {
@@ -1252,6 +1326,11 @@ function ReactivateButton({
           customer,
           updateCustomerSubscription,
         });
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: reactivateSubscriptionMessage});
+        }
       }
     }
   }, [fetcher.type]);

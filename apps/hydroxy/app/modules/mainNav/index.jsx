@@ -1,5 +1,8 @@
 import {useRef, useEffect, Suspense, lazy} from 'react';
+import {Await} from '@remix-run/react';
+
 import {createCustomEvent, getCMSDoc} from '~/utils/functions/eventFunctions';
+
 import DesktopNavItem, {
   links as desktopNavItemStyles,
 } from '~/modules/mainNav/desktopNavItem';
@@ -31,7 +34,7 @@ import CountdownTimerBar, {
 import AnnouncementTopBanner, {
   links as announcementTopBannerStyles,
 } from '~/modules/mainNav/announcementTopBanner';
-import {Await} from '@remix-run/react';
+import SucessBanner, {links as sucessBannerStyles} from './sucessBanner';
 
 import styles from './styles.css';
 
@@ -48,6 +51,7 @@ export const links = () => {
     ...iconSearchStyles(),
     ...countdownTimerBarStyles(),
     ...announcementTopBannerStyles(),
+    ...sucessBannerStyles(),
   ];
 };
 
@@ -172,6 +176,7 @@ const MainNav = ({
             <HeaderIcons cartConfig={cartConfig} searchConfig={searchConfig} />
           </div>
         </div>
+        <SucessBanner />
       </div>
 
       <MobileNavbar content={mobileNavbar} />

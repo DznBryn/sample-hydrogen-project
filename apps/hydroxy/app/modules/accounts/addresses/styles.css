@@ -1,6 +1,7 @@
 .mainContainer {
   display: flex;
   flex-direction: column;
+  margin: auto;
   margin-bottom: 50px;
 }
 
@@ -141,6 +142,7 @@
 .addressBtnContainer {
   display: flex;
   position: absolute;
+  align-items: flex-end;
   bottom: 12px;
   left: 21px;
   right: auto;
@@ -157,9 +159,7 @@
 }
 
 .verticalSeparator {
-  height: auto;
-  margin: 0 7px;
-  border-right: 1px solid #47c6d9;
+  color: #47c6d9;
 }
 
 /*
