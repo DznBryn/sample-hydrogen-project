@@ -73,6 +73,7 @@ export async function loader({context, request}) {
   const url = new URL(request.url);
 
   togglePreviewMode(context, url, referer);
+  const {SHOPIFY_ANALYTICS} = context.env;
 
   /**
    * REDIRECT
@@ -125,6 +126,7 @@ export async function loader({context, request}) {
   return defer(
     {
       request,
+      analytics: {shopId: `gid://shopify/Shop/${SHOPIFY_ANALYTICS}`},
       customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
       previewMode: context.session.get('previewMode') === 'true',
