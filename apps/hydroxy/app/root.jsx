@@ -345,11 +345,6 @@ export function ErrorBoundary() {
 function RootStructure({children}) {
   return (
     <html lang="en">
-      <head>
-        <PageMeta />
-        <Meta />
-        <Links />
-      </head>
       <body>
         <button id="ot-sdk-btn" className="ot-sdk-show-settings">
           Your Privacy Choices
@@ -358,6 +353,11 @@ function RootStructure({children}) {
         <ScrollRestoration />
         <Scripts />
       </body>
+      <head>
+        <PageMeta />
+        <Meta />
+        <Links />
+      </head>
     </html>
   );
 }
