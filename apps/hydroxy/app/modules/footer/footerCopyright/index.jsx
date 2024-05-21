@@ -47,11 +47,11 @@ const FooterCopyright = () => {
         {oneTrustID && (
           <>
             &nbsp;|&nbsp;
-            <div id="tula-ot-button-container">
-              <button id="ot-sdk-btn" className="ot-sdk-show-settings">
-                Your Privacy Choices
-              </button>
-            </div>
+            {/* <div id="tula-ot-button-container"> */}
+            <button id="ot-sdk-btn" className="ot-sdk-show-settings">
+              Your Privacy Choices
+            </button>
+            {/* </div> */}
             <img
               id="privacy-options"
               alt="California Consumer Privacy Act (CCPA) Opt-Out Icon"
