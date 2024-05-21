@@ -1,6 +1,7 @@
 import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 import {CookieScripts} from '~/utils/services/customerPrivacy';
+import {useEffect} from 'react';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -12,11 +13,20 @@ const FooterCopyright = () => {
 
   //
 
+  useEffect(() => {
+    if (typeof window === 'object') {
+      if (window?.OneTrust && window?.OneTrust?.Init) {
+        window?.OneTrust.Init();
+      }
+    }
+  }, []);
+
+  //
+
   return (
     <>
       {oneTrustID && (
         <>
-          {/* <OneTrustScripts oneTrustID={oneTrustID} /> */}
           <CookieScripts />
         </>
       )}
