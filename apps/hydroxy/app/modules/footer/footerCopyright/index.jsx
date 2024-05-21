@@ -2,6 +2,7 @@ import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 import {CookieScripts} from '~/utils/services/customerPrivacy';
 import {useEffect} from 'react';
+// import {useEffect} from 'react';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -17,9 +18,21 @@ const FooterCopyright = () => {
     if (typeof window === 'object') {
       if (window?.OneTrust && window?.OneTrust?.Init) {
         window?.OneTrust.Init();
+        window?.OneTrust.InitializeBanner();
+        window?.OneTrust.LoadBanner();
       }
     }
   }, []);
+
+  //
+
+  function handleOpenOTModal() {
+    if (typeof window === 'object') {
+      if (window?.OneTrust && window?.OneTrust?.ToggleInfoDisplay) {
+        window?.OneTrust.ToggleInfoDisplay();
+      }
+    }
+  }
 
   //
 
@@ -47,11 +60,15 @@ const FooterCopyright = () => {
         {oneTrustID && (
           <>
             &nbsp;|&nbsp;
-            {/* <div id="tula-ot-button-container"> */}
-            <button id="ot-sdk-btn" className="ot-sdk-show-settings">
-              Your Privacy Choices
-            </button>
-            {/* </div> */}
+            <div id="tula-ot-button-container">
+              <button
+                id="ot-sdk-btn"
+                className="ot-sdk-show-settings"
+                onClick={handleOpenOTModal}
+              >
+                Your Privacy Choices
+              </button>
+            </div>
             <img
               id="privacy-options"
               alt="California Consumer Privacy Act (CCPA) Opt-Out Icon"
