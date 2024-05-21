@@ -133,10 +133,10 @@ export function initOneTrust() {
   return waitForOneTrust();
 }
 
-const OneTrustScripts = ({oneTrustID}) => {
+const OneTrustScripts = () => {
   return (
     <Helmet>
-      <script
+      {/* <script
         type="text/javascript"
         src={`https://cdn.cookielaw.org/consent/${oneTrustID}/OtAutoBlock.js`}
       />
@@ -144,7 +144,7 @@ const OneTrustScripts = ({oneTrustID}) => {
         src={'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js'}
         type="text/javascript"
         data-domain-script={oneTrustID}
-      />
+      /> */}
     </Helmet>
   );
 };

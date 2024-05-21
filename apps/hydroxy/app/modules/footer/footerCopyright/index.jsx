@@ -1,6 +1,6 @@
 import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
-import OneTrustScripts, {CookieScripts} from '~/utils/services/customerPrivacy';
+import {CookieScripts} from '~/utils/services/customerPrivacy';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -16,7 +16,7 @@ const FooterCopyright = () => {
     <>
       {oneTrustID && (
         <>
-          <OneTrustScripts oneTrustID={oneTrustID} />
+          {/* <OneTrustScripts oneTrustID={oneTrustID} /> */}
           <CookieScripts />
         </>
       )}
