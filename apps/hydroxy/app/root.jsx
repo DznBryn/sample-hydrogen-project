@@ -351,6 +351,9 @@ function RootStructure({children}) {
         <Links />
       </head>
       <body>
+        <button id="ot-sdk-btn" className="ot-sdk-show-settings">
+          Your Privacy Choices
+        </button>
         {children}
         <ScrollRestoration />
         <Scripts />
