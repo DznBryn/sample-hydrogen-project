@@ -37,6 +37,17 @@ const PageMeta = () => {
         property="og:description"
         content="Clean + Effective Skincare Made With Probiotic Extracts and Superfoods. Get Your Healthiest, Brightest Skin Ever With 15% Off Your First Order & Email Signup."
       />
+
+      <script
+        type="text/javascript"
+        src={`https://cdn.cookielaw.org/consent/${rootData?.ENVS?.ONETRUST_ID}/OtAutoBlock.js`}
+      />
+      <script
+        src={'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js'}
+        type="text/javascript"
+        data-domain-script={rootData?.ENVS?.ONETRUST_ID}
+      />
+
       <script
         defer
         src="//cdn.storerocket.io/widget.js"
