@@ -47,10 +47,6 @@ const PageMeta = () => {
         type="text/javascript"
         data-domain-script={rootData?.ENVS?.ONETRUST_ID}
       />
-      <script
-        type="text/javascript"
-        dangerouslySetInnerHTML={{__html: 'function OptanonWrapper() {}'}}
-      />
 
       <script
         defer

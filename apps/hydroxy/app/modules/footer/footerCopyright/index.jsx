@@ -1,8 +1,7 @@
 import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 import {CookieScripts} from '~/utils/services/customerPrivacy';
-import {useEffect} from 'react';
-// import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -11,6 +10,7 @@ export const links = () => {
 const FooterCopyright = () => {
   const rootData = useRouteLoaderData('root');
   const oneTrustID = rootData?.ENVS?.ONETRUST_ID;
+  const groups = useRef(null);
 
   //
 
@@ -21,6 +21,14 @@ const FooterCopyright = () => {
         window?.OneTrust.InitializeBanner();
         window?.OneTrust.LoadBanner();
       }
+
+      groups.current = window.OnetrustActiveGroups;
+      window.OptanonWrapper = () => {
+        if (window.OnetrustActiveGroups !== groups.current) {
+          groups.current = window.OnetrustActiveGroups;
+          setTimeout(() => window.location.reload(), 2000);
+        }
+      };
     }
   }, []);
 
