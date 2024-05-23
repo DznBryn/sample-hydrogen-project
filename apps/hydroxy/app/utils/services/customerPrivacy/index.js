@@ -1,20 +1,21 @@
 // import {useRouteLoaderData} from '@remix-run/react';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+// import React, {useEffect, useState} from 'react';
 import {Helmet} from 'react-helmet';
-const performanceCookieCategory = 'C0002';
+// const performanceCookieCategory = 'C0002';
 // const functionalCookieCategory = 'C0003';
 // const crossContextBehaviorCookieCategory = 'C0004';
 // const socialMediaCookieCategory = 'C0005';
 
-function sendConsent() {
-  // if (window.OnetrustActiveGroups.includes(performanceCookieCategory)) {}
-  // if (window.OnetrustActiveGroups.includes(functionalCookieCategory)) {}
-  // if (
-  //   window.OnetrustActiveGroups.includes(crossContextBehaviorCookieCategory)
-  // ) {}
-  // if (window.OnetrustActiveGroups.includes(socialMediaCookieCategory)) {}
-  // window.dataLayer.push({consent_status: trackingConsent});
-}
+// function sendConsent() {
+// if (window.OnetrustActiveGroups.includes(performanceCookieCategory)) {}
+// if (window.OnetrustActiveGroups.includes(functionalCookieCategory)) {}
+// if (
+//   window.OnetrustActiveGroups.includes(crossContextBehaviorCookieCategory)
+// ) {}
+// if (window.OnetrustActiveGroups.includes(socialMediaCookieCategory)) {}
+// window.dataLayer.push({consent_status: trackingConsent});
+// }
 
 function waitForOneTrust() {
   hasOneTrustLoaded();
@@ -36,7 +37,7 @@ function waitForOneTrust() {
 function hasOneTrustLoaded() {
   if (typeof window.OnetrustActiveGroups === 'string') {
     //check now
-    optanonWrapper();
+    // optanonWrapper();
 
     // provide consent check
     // checkOnConsent(window.OnetrustActiveGroups);
@@ -45,16 +46,16 @@ function hasOneTrustLoaded() {
   return false;
 }
 
-function optanonWrapper() {
-  const trackingConsent = window.OnetrustActiveGroups.includes(
-    performanceCookieCategory,
-  );
-  console.log('trackingConsent: ', trackingConsent);
-  sendConsent(trackingConsent);
-}
+// function optanonWrapper() {
+//   const trackingConsent = window.OnetrustActiveGroups.includes(
+//     performanceCookieCategory,
+//   );
+//   console.log('trackingConsent: ', trackingConsent);
+//   sendConsent(trackingConsent);
+// }
 
 function checkOnConsent(status) {
-  console.log('Consent status: ', status);
+  // console.log('Consent status: ', status);
   if (status.includes('BG37,C0004')) {
     if (window.fbq) fbqPixelConsentManage('grant');
     if (window.dtrum) dynatraceConsentManage(true);
@@ -80,7 +81,7 @@ function checkOnConsent(status) {
 const fbqPixelConsentManage = (status) => {
   if (!window.fbq || status !== 'revoke' || status !== 'grant') return;
   window.fbq('consent', status);
-  console.log('=> Facebook consent status: ', status.toUpperCase());
+  // console.log('=> Facebook consent status: ', status.toUpperCase());
 };
 
 const dynatraceConsentManage = (status) => {
@@ -88,10 +89,10 @@ const dynatraceConsentManage = (status) => {
   if (status) {
     window.dtrum.enableSessionReplay(true);
     window.dtrum.enable();
-    console.log('=> Dynatrace consent status: ENABLED');
+    // console.log('=> Dynatrace consent status: ENABLED');
   } else {
     window.dtrum.disableSessionReplay();
-    console.log('=> Dynatrace consent status: DISABLED');
+    // console.log('=> Dynatrace consent status: DISABLED');
   }
 };
 
@@ -133,10 +134,10 @@ export function initOneTrust() {
   return waitForOneTrust();
 }
 
-const OneTrustScripts = ({oneTrustID}) => {
+const OneTrustScripts = () => {
   return (
     <Helmet>
-      <script
+      {/* <script
         type="text/javascript"
         src={`https://cdn.cookielaw.org/consent/${oneTrustID}/OtAutoBlock.js`}
       />
@@ -144,13 +145,13 @@ const OneTrustScripts = ({oneTrustID}) => {
         src={'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js'}
         type="text/javascript"
         data-domain-script={oneTrustID}
-      />
+      /> */}
     </Helmet>
   );
 };
 
 export const CookieScripts = () => {
-  const [activeGroup, setactiveGroup] = useState('');
+  // const [activeGroup, setactiveGroup] = useState('');
   // const rootData = useRouteLoaderData('root');
   useEffect(() => {
     if (window) {
@@ -169,7 +170,7 @@ export const CookieScripts = () => {
   function hasOneTrustLoaded(window) {
     if (typeof window?.OnetrustActiveGroups === 'string') {
       //check now
-      optanonWrapper(window);
+      // optanonWrapper(window);
 
       // provide consent check
       // checkOnConsent(window.OnetrustActiveGroups);
@@ -178,12 +179,12 @@ export const CookieScripts = () => {
     return false;
   }
 
-  function optanonWrapper(window) {
-    console.log('trackingConsent: ', window?.OnetrustActiveGroups);
+  // function optanonWrapper(window) {
+  // console.log('trackingConsent: ', window?.OnetrustActiveGroups);
 
-    setactiveGroup(window?.OnetrustActiveGroups);
-  }
-  console.log('activeGroup', activeGroup);
+  // setactiveGroup(window?.OnetrustActiveGroups);
+  // }
+  // console.log('activeGroup', activeGroup);
   return (
     <Helmet>
       {/* <script

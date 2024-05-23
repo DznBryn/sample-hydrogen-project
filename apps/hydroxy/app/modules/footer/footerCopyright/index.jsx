@@ -1,6 +1,7 @@
 import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
-import OneTrustScripts, {CookieScripts} from '~/utils/services/customerPrivacy';
+import {CookieScripts} from '~/utils/services/customerPrivacy';
+import {useEffect, useRef} from 'react';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -9,6 +10,37 @@ export const links = () => {
 const FooterCopyright = () => {
   const rootData = useRouteLoaderData('root');
   const oneTrustID = rootData?.ENVS?.ONETRUST_ID;
+  const groups = useRef(null);
+
+  //
+
+  useEffect(() => {
+    if (typeof window === 'object') {
+      if (window?.OneTrust && window?.OneTrust?.Init) {
+        window?.OneTrust.Init();
+        window?.OneTrust.InitializeBanner();
+        window?.OneTrust.LoadBanner();
+      }
+
+      groups.current = window.OnetrustActiveGroups;
+      window.OptanonWrapper = () => {
+        if (window.OnetrustActiveGroups !== groups.current) {
+          groups.current = window.OnetrustActiveGroups;
+          setTimeout(() => window.location.reload(), 2000);
+        }
+      };
+    }
+  }, []);
+
+  //
+
+  function handleOpenOTModal() {
+    if (typeof window === 'object') {
+      if (window?.OneTrust && window?.OneTrust?.ToggleInfoDisplay) {
+        window?.OneTrust.ToggleInfoDisplay();
+      }
+    }
+  }
 
   //
 
@@ -16,7 +48,6 @@ const FooterCopyright = () => {
     <>
       {oneTrustID && (
         <>
-          <OneTrustScripts oneTrustID={oneTrustID} />
           <CookieScripts />
         </>
       )}
@@ -38,7 +69,11 @@ const FooterCopyright = () => {
           <>
             &nbsp;|&nbsp;
             <div id="tula-ot-button-container">
-              <button id="ot-sdk-btn" className="ot-sdk-show-settings">
+              <button
+                id="ot-sdk-btn"
+                className="ot-sdk-show-settings"
+                onClick={handleOpenOTModal}
+              >
                 Your Privacy Choices
               </button>
             </div>
