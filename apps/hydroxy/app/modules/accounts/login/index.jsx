@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useFetcher} from 'react-router-dom';
 import styles from './styles.css';
 import Button, {links as buttonStyles} from '~/modules/global/button';
@@ -26,6 +26,17 @@ export default function LoginForm() {
     fetcher.state === 'submitting';
 
   const passwordRef = useRef(null);
+
+  useEffect(() => {
+    if (window?.datalayer && fetcher.data?.customer) {
+      window?.datalayer.push({
+        event: 'loyaltySignin',
+        details: {
+          source: 'loginPage', // source representing where user signed in
+        },
+      });
+    }
+  }, [fetcher.data]);
 
   function togglePassword() {
     const curValue = passwordRef.current.getAttribute('type');

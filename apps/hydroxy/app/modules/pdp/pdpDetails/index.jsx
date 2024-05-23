@@ -126,7 +126,15 @@ const PDPDetails = ({
               />
               <div
                 className={'openSFButton'}
-                onClick={() => switchSliderPanelVisibility('ConcealerSlider')}
+                onClick={() => {
+                  window?.dataLayer?.push({
+                    event: 'shadeFinderFindMyShade',
+                    details: {
+                      source: 'inlineCta',
+                    },
+                  });
+                  switchSliderPanelVisibility('ConcealerSlider');
+                }}
               >
                 find my shade <OpenSFButtonIcon />
               </div>

@@ -362,18 +362,20 @@ const Price = ({item, promo, product, cartPageConfig}) => {
   ) {
     const line_price =
       promo && promo.showPromo
-        ? Number(item?.cost?.totalAmount?.amount).toFixed(2) -
-          Number(item?.cost?.totalAmount?.amount).toFixed(2) *
-            (parseInt(promo.discount) / 100)
-        : Number(item?.cost?.totalAmount?.amount).toFixed(2);
+        ? Number(item?.cost?.amountPerQuantity?.amount) *
+          Number(item?.quantity) *
+          (parseInt(promo.discount) / 100)
+        : (
+            Number(item?.cost?.amountPerQuantity?.amount) *
+            Number(item?.quantity)
+          ).toFixed(2);
     const sitewideDiscount = Number(sitewide?.promoDiscount ?? 0) / 100;
     const sitewideLinePrice = line_price - line_price * sitewideDiscount;
 
     const origPrice =
-      Number(item?.cost?.compareAtAmountPerQuantity?.amount ?? 0) *
-      item?.quantity;
+      Number(item?.cost?.amountPerQuantity?.amount ?? 0) * item?.quantity;
 
-    return origPrice >= item?.cost?.totalAmount?.amount ? (
+    return origPrice >= item?.cost?.amountPerQuantity?.amount ? (
       <div>
         <h6 className={'strikeThrough'}>
           {getCurrency() + origPrice?.toFixed(2)}

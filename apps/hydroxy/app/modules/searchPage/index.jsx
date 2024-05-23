@@ -11,7 +11,7 @@ import {useSearch} from '~/hooks/useSearch';
 
 import styles from './styles.css';
 import {Await, useMatches} from '@remix-run/react';
-import {getCMSDoc} from '~/utils/functions/eventFunctions';
+import {getCMSDoc, getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [
@@ -86,7 +86,29 @@ const SearchPage = ({searchQuery, algoliaKeys}) => {
           </div>
           <div className={'searchPageProducts'}>
             {results.map((product, index) => {
-              return <PLPProductBox product={product} key={index} />;
+              return (
+                <PLPProductBox
+                  product={product}
+                  key={index}
+                  analytics={{
+                    click: {
+                      actionField: {list: 'Homepage'},
+                      products: [
+                        {
+                          name: product?.title,
+                          id: getIdFromGid(product?.id),
+                          price: parseInt(
+                            product?.priceRange?.minVariantPrice?.amount,
+                          )?.toFixed(2),
+                          category: product?.productType,
+                          variant: '',
+                          position: index,
+                        },
+                      ],
+                    },
+                  }}
+                />
+              );
             })}
           </div>
         </>
