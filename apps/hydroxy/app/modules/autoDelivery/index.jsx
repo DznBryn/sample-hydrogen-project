@@ -1,17 +1,14 @@
-import {useCollection} from '~/hooks/useCollection';
-import Product, {links as productStyles} from '../plp/plpProductBox';
+import RebuyRecommendation, {
+  links as rebuyRecommendationStyles,
+} from '../rebuyRecommendation';
 import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 
 export const links = () => {
-  return [{rel: 'stylesheet', href: styles}, ...productStyles()];
+  return [{rel: 'stylesheet', href: styles}, ...rebuyRecommendationStyles()];
 };
 
 const AutoDelivery = ({content}) => {
-  const {state, products} = useCollection(
-    content?.[0]?.featuredCollection.collectionId,
-  );
-
   const {ENVS} = useRouteLoaderData('root');
 
   function faqLink() {
@@ -291,43 +288,11 @@ const AutoDelivery = ({content}) => {
 
       <div className={'autoDeliverySectionFive'}>
         <div className="fixedWidthPage">
-          <h2>Subscribe to our glow getter favorites</h2>
-
           <div className={'recommendationWrapper'}>
-            {/*
-                    
-                    {content?.[0]?.featuredCollection.products.slice(0,4).map((product) => {
-                        return <Product product={product} key={product._id} className={styles.product}/>
-                    })}
-                    
-                    */}
-            {state === 'loaded' &&
-              products.slice(0, 4).map((product, index) => {
-                return (
-                  <Product
-                    product={product}
-                    key={product?.id}
-                    className={'product'}
-                    analytics={{
-                      click: {
-                        actionField: {list: 'Auto Delivery'},
-                        products: [
-                          {
-                            name: product?.title,
-                            id: window.btoa(product?.id),
-                            price: parseInt(
-                              product?.priceRange?.minVariantPrice?.amount,
-                            )?.toFixed(2),
-                            category: product?.productType,
-                            variant: '',
-                            position: index,
-                          },
-                        ],
-                      },
-                    }}
-                  />
-                );
-              })}
+            <RebuyRecommendation
+              widgetId="113756"
+              header="Subscribe to our glow getter favorites"
+            />
           </div>
         </div>
       </div>
