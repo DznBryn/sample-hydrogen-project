@@ -1,10 +1,9 @@
-import {Suspense, useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import classnames from 'classnames';
 import {
   isProductMetafield,
   getProductMetafield,
   handleProductMetafieldData,
-  getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import {useYotpo} from '~/hooks/useYotpo';
 import PDPGallery, {links as pdpGalleryStyles} from './pdpGallery';
@@ -19,13 +18,15 @@ import PDPExclusiveProductBannerRelease, {
 import PDPBenefits, {links as pdpBenefitsStyles} from './pdpBenefits';
 import PDPFormulate, {links as pdpFormulateStyles} from './pdpFormulate';
 import PDPHowToUse, {links as pdpHowToUseStyles} from './pdpHowToUse';
-import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
 import PDPYotPo, {links as pdpYotPoStyles} from './pdpYotPo';
+import RebuyRecommendation, {
+  links as rebuyRecommendationStyles,
+} from '../rebuyRecommendation';
 import FireWorkPDPCarousel, {
   links as fireWorkPDPCarouselStyles,
 } from './fireWorkPDPCarousel';
 import styles from './styles.css';
-import {Await, useMatches, useRouteLoaderData} from '@remix-run/react';
+import {useRouteLoaderData} from '@remix-run/react';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
@@ -39,7 +40,7 @@ export const links = () => {
     ...pdpBenefitsStyles(),
     ...pdpFormulateStyles(),
     ...pdpHowToUseStyles(),
-    ...listrakRecStyles(),
+    ...rebuyRecommendationStyles(),
     ...pdpYotPoStyles(),
     ...fireWorkPDPCarouselStyles(),
   ];
@@ -53,7 +54,6 @@ const PDP = ({
   exclusiveProductBannerContent,
   concealerImages,
 }) => {
-  const [root] = useMatches();
   const rootData = useRouteLoaderData('root');
   const {refreshWidgets} = useYotpo();
 
@@ -367,18 +367,16 @@ const PDP = ({
         )}
 
         <ContentSection>
-          <FireWorkPDPCarousel playlist="g4P8eg" />
+          <RebuyRecommendation
+            widgetId="104534"
+            product={product}
+            header="you may also like"
+          />
         </ContentSection>
 
-        <Suspense>
-          <Await resolve={root.data.listrakRec}>
-            {(listrakRec) => (
-              <ContentSection>
-                <ListrakRec listrak={getCMSDoc(listrakRec, 'PDP')} />
-              </ContentSection>
-            )}
-          </Await>
-        </Suspense>
+        <ContentSection>
+          <FireWorkPDPCarousel playlist="g4P8eg" />
+        </ContentSection>
 
         <ContentSection>
           {!isGiftCard ? (

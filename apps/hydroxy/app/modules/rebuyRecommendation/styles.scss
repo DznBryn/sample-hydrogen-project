@@ -1,0 +1,43 @@
+#rebuy-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 2em auto;
+  width: 100vw;
+}
+
+#rebuy-wrapper .section-title {
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: lowercase;
+  line-height: 0.55em;
+  border-bottom: 5px solid rgba(71, 198, 217, 0.5);
+  text-align: center;
+  margin: 1em auto;
+}
+
+#rebuy-wrapper .product-box-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: scroll;
+  width: calc(100vw - 50px);
+  margin: 0 auto;
+}
+
+@media only screen and (min-width: 550px) {
+  #rebuy-wrapper {
+    width: 100%;
+  }
+  #rebuy-wrapper .product-box-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: initial;
+    width: 100%;
+    margin-left: 0;
+  }
+}

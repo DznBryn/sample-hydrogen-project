@@ -1,6 +1,8 @@
-import {Suspense, useEffect, useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useCollection} from '~/hooks/useCollection';
-import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
+import RebuyRecommendation, {
+  links as rebuyRecommendationStyles,
+} from '../rebuyRecommendation';
 import ProductBoxLoading, {
   links as productBoxLoadingStyles,
 } from '../productBoxLoading';
@@ -10,21 +12,17 @@ import PLPProductBox, {
 import {useSearch} from '~/hooks/useSearch';
 
 import styles from './styles.css';
-import {Await, useMatches} from '@remix-run/react';
-import {getCMSDoc} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [
     {rel: 'stylesheet', href: styles},
-    ...listrakRecStyles(),
+    ...rebuyRecommendationStyles(),
     ...productBoxLoadingStyles(),
     ...plpProductBoxStyles(),
   ];
 };
 
 const SearchPage = ({searchQuery, algoliaKeys}) => {
-  const [root] = useMatches();
-
   const {state, products: allProducts} = useCollection('all');
   const {search, status, hits} = useSearch(algoliaKeys);
 
@@ -64,13 +62,10 @@ const SearchPage = ({searchQuery, algoliaKeys}) => {
             Your search for <strong>&quot;{searchQuery}&quot;</strong> did not
             yield any results.
           </h1>
-          <Suspense>
-            <Await resolve={root.data.listrakRec}>
-              {(listrakRec) => (
-                <ListrakRec listrak={getCMSDoc(listrakRec, 'Search')} />
-              )}
-            </Await>
-          </Suspense>
+          <RebuyRecommendation
+            widgetId="113756"
+            header="check out these best sellers"
+          />
         </div>
       )}
 
