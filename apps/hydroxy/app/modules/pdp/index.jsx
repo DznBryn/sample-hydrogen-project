@@ -367,11 +367,15 @@ const PDP = ({
         )}
 
         <ContentSection>
-          <FireWorkPDPCarousel playlist="g4P8eg" />
+          <RebuyRecommendation
+            widgetId="104534"
+            product={product}
+            header="you may also like"
+          />
         </ContentSection>
 
         <ContentSection>
-          <RebuyRecommendation widgetId="104534" product={product} />
+          <FireWorkPDPCarousel playlist="g4P8eg" />
         </ContentSection>
 
         <ContentSection>
