@@ -16,8 +16,7 @@ const AutoDelivery = ({content}) => {
 
     if (curEnv.includes('CA')) return 'https://help.tulaskincare.ca/en-US';
     if (curEnv.includes('US')) return 'https://help.tula.com/en-US';
-    if (curEnv.includes('UK'))
-      return 'unitedKinhttps://help.tulaskincare.co.uk/en-USgdom';
+    if (curEnv.includes('UK')) return 'https://help.tulaskincare.co.uk/en-US';
   }
 
   return (
