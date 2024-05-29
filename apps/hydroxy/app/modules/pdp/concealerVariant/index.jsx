@@ -1,6 +1,6 @@
 /* eslint-disable quotes */
 import {useState, useEffect, useRef, Fragment} from 'react';
-import {useCartActions} from '~/hooks/useCart';
+// import {useCartActions} from '~/hooks/useCart';
 import {useStore} from '~/hooks/useStore';
 import {useLayoutEffect} from '~/utils/functions/eventFunctions';
 
@@ -112,7 +112,7 @@ const PDPConcealerVariants = ({
   shadeVariantsOos = [],
   concealerImages = mockConcealerImages,
 }) => {
-  const {getProductQuantity} = useCartActions();
+  // const {getProductQuantity} = useCartActions();
   const {store, setStore} = useStore();
   const [shade, setShade] = useState('');
   const [isSelected, setIsSelected] = useState('');
@@ -470,12 +470,12 @@ const PDPConcealerVariants = ({
       });
 
       if (variantIdsToBeSearched.length > 0) {
-        for (const variant of variantIdsToBeSearched) {
-          const quantity = await getProductQuantity({id: variant.storefrontId});
-          if (quantity === 0) {
-            oosItems.push(variant);
-          }
-        }
+        // for (const variant of variantIdsToBeSearched) {
+        // const quantity = await getProductQuantity({id: variant.storefrontId});
+        // if (quantity === 0) {
+        // oosItems.push(variant);
+        // }
+        // }
 
         setOosVariants((prevStore) => [...prevStore, ...oosItems]);
       }

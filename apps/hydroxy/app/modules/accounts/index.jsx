@@ -10,6 +10,7 @@ import AccountSubscription, {
 import {useYotpo} from '~/hooks/useYotpo';
 import {useRouteLoaderData} from '@remix-run/react';
 import useFeatureFlags from '~/hooks/useFeatureFlags';
+import {useSuccessBanner} from '~/hooks/useStore';
 
 export function links() {
   return [
@@ -54,6 +55,7 @@ function Tabs({data}) {
   const showReferralTab = rootData?.ENVS?.SITE_NAME.includes('US');
   const [active, setActive] = useState(1);
   const {refreshWidgets} = useYotpo();
+  const {closeBanner} = useSuccessBanner();
 
   const tabsID = {
     ad: 1,
@@ -90,6 +92,7 @@ function Tabs({data}) {
   function handleActiveTab(tab) {
     setActive(tab);
     setURLQuery(tab);
+    closeBanner();
   }
 
   return (
@@ -158,7 +161,7 @@ function Tabs({data}) {
         <ReferralWidget />
       </div>
       <div style={{display: showAddressTab && active === 4 ? 'flex' : 'none'}}>
-        <Addresses />
+        <Addresses data={data} />
       </div>
       <div style={{display: active === 5 ? 'block' : 'none'}}>
         <LoyaltyRewardsTab />

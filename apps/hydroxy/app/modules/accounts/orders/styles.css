@@ -13,7 +13,7 @@
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  border: #DDDDDD solid 1px;
+  border: #dddddd solid 1px;
   padding-bottom: 34px;
   margin-bottom: 15px;
   flex-direction: column;
@@ -29,7 +29,7 @@
 
 .orderHeader {
   align-items: center;
-  background-color: #E9F8FB;
+  background-color: #e9f8fb;
   display: flex;
   justify-content: space-between;
   padding: 10px 15px;
@@ -106,9 +106,12 @@
   object-fit: contain;
 }
 
-.status a {
-  color: #47C6D9;
+.status a,
+.orderOptions div {
+  color: #47c6d9;
   font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .prodName,
@@ -139,16 +142,16 @@
   padding: 10px 20px;
   border-radius: 0;
   background-color: white;
-  color: #47C6D9;
-  border-color: #47C6D9;
+  color: #47c6d9;
+  border-color: #47c6d9;
   border-style: solid;
 }
 
 .btnacct:hover {
   padding: 10px 20px;
   border-radius: 0;
-  background-color: #47C6D9;
-  color: #FFFFFF;
+  background-color: #47c6d9;
+  color: #ffffff;
 }
 
 @media all and (min-width: 768px) {

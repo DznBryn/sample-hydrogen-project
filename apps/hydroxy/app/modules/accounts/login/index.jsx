@@ -1,12 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { useFetcher } from 'react-router-dom';
+import React, {useEffect, useRef, useState} from 'react';
+import {useFetcher} from 'react-router-dom';
 import styles from './styles.css';
-import Button, { links as buttonStyles } from '~/modules/global/button';
-import { Link } from '@remix-run/react';
-import { API_METHODS} from '~/utils/constants';
+import Button, {links as buttonStyles} from '~/modules/global/button';
+import {Link} from '@remix-run/react';
+import {API_METHODS} from '~/utils/constants';
 
 export const links = () => {
-  return [{ rel: 'stylesheet', href: styles }, ...buttonStyles()];
+  return [{rel: 'stylesheet', href: styles}, ...buttonStyles()];
 };
 
 export default function LoginForm() {
@@ -17,7 +17,7 @@ export default function LoginForm() {
 
   const [loginForm, setLoginForm] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const disableLoginButton =
@@ -25,29 +25,36 @@ export default function LoginForm() {
     loginForm.password === '' ||
     fetcher.state === 'submitting';
 
-    const passwordRef = useRef(null);
+  const passwordRef = useRef(null);
 
-    function togglePassword() {
-      const curValue = passwordRef.current.getAttribute('type');
-      const label = passwordRef.current.parentElement.querySelector('span');
-  
-      passwordRef.current.setAttribute(
-        'type',
-        curValue === 'text' ? 'password' : 'text',
-      );
-      label.innerHTML = label.innerHTML === 'hide' ? 'show' : 'hide';
+  useEffect(() => {
+    if (window?.datalayer && fetcher.data?.customer) {
+      window?.datalayer.push({
+        event: 'loyaltySignin',
+        details: {
+          source: 'loginPage', // source representing where user signed in
+        },
+      });
     }
+  }, [fetcher.data]);
+
+  function togglePassword() {
+    const curValue = passwordRef.current.getAttribute('type');
+    const label = passwordRef.current.parentElement.querySelector('span');
+
+    passwordRef.current.setAttribute(
+      'type',
+      curValue === 'text' ? 'password' : 'text',
+    );
+    label.innerHTML = label.innerHTML === 'hide' ? 'show' : 'hide';
+  }
 
   return (
     <div className="alllogin">
       <div className="templateCustomersLogin">
         <div className="formBox">
           <h1>WELCOME TO TULA</h1>
-          <fetcher.Form
-            method={API_METHODS.POST}
-            noValidate
-            action='/account/login'
-          >
+          <fetcher.Form method={API_METHODS.POST} action="/account/login">
             <input
               id="email"
               className={
@@ -68,35 +75,35 @@ export default function LoginForm() {
               autoFocus
             />
             <div
-                className={
-                  fetcher.data?.[0]?.code 
-                    ? 'login_password_input invalid'
-                    : 'login_password_input'
-                }
-              >
-            <input
-              ref={passwordRef}
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              placeholder="Password"
-              aria-label="Password"
-              minLength={8}
-              value={loginForm.password}
-              onChange={(e) =>
-                setLoginForm({
-                  ...loginForm,
-                  [e.target.name]: e.target.value,
-                })
+              className={
+                fetcher.data?.[0]?.code
+                  ? 'login_password_input invalid'
+                  : 'login_password_input'
               }
-              required={fetcher.data?.[0]?.code}
-              autoFocus
-            />
-            <span onClick={togglePassword}>show</span>
+            >
+              <input
+                ref={passwordRef}
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                placeholder="Password"
+                aria-label="Password"
+                minLength={8}
+                value={loginForm.password}
+                onChange={(e) =>
+                  setLoginForm({
+                    ...loginForm,
+                    [e.target.name]: e.target.value,
+                  })
+                }
+                required={fetcher.data?.[0]?.code}
+                autoFocus
+              />
+              <span onClick={togglePassword}>show</span>
             </div>
-            <div className='flexWrapper'>
-              <div className='row'>
+            <div className="flexWrapper">
+              <div className="row">
                 <Link to={'/account/recover'}>{FORGOT_PASSWORD}</Link>
                 <Link to={'/account/register'}>{REGISTER_LINK_TEXT}</Link>
               </div>

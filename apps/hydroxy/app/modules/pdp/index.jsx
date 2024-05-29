@@ -1,10 +1,9 @@
-import {Suspense, useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo} from 'react';
 import classnames from 'classnames';
 import {
   isProductMetafield,
   getProductMetafield,
   handleProductMetafieldData,
-  getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import {useYotpo} from '~/hooks/useYotpo';
 import PDPGallery, {links as pdpGalleryStyles} from './pdpGallery';
@@ -28,7 +27,7 @@ import FireWorkPDPCarousel, {
 } from './fireWorkPDPCarousel';
 import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
 import styles from './styles.css';
-import {Await, useMatches, useRouteLoaderData} from '@remix-run/react';
+import {useRouteLoaderData} from '@remix-run/react';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
@@ -57,7 +56,6 @@ const PDP = ({
   exclusiveProductBannerContent,
   concealerImages,
 }) => {
-  const [root] = useMatches();
   const rootData = useRouteLoaderData('root');
   const {refreshWidgets} = useYotpo();
 

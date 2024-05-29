@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react';
 import styles from './styles.css';
-import {useStore} from '~/hooks/useStore';
 import {Link} from '@remix-run/react';
 import {Image, flattenConnection} from '@shopify/hydrogen';
 import {useRouteLoaderData} from '@remix-run/react';
 import {getReturnsURL} from '~/utils/functions/eventFunctions';
+import {useCustomer} from '~/hooks/useCustomer';
 
 //
 
@@ -16,7 +16,7 @@ export function links() {
 //
 
 export default function OrderHistory() {
-  const orders = useStore((store) => store?.account?.data?.orders ?? []);
+  const {orders} = useCustomer();
 
   //
 
@@ -40,6 +40,7 @@ export default function OrderHistory() {
 
 function OrderItem({data}) {
   const rootData = useRouteLoaderData('root');
+  const userData = useCustomer();
   const formattedDate = data?.processedAt
     ? new Date(data.processedAt).toLocaleDateString()
     : null;
@@ -47,6 +48,21 @@ function OrderItem({data}) {
   const showReturn =
     data?.fulfillmentStatus !== 'UNFULFILLED' ||
     new Date().getTime() > data?.processedAt;
+
+  //
+
+  function handleTrackOrderOnClick(url) {
+    const urlPrefix = url?.split('/authenticate')[0];
+
+    if (!urlPrefix || !userData?.email || !data?.orderNumber) {
+      window.location.href = url;
+    }
+
+    const orderAndEmail = `${data?.orderNumber}/${userData?.email}`;
+    const encoded = btoa(orderAndEmail).replaceAll('=', '');
+
+    window.location.href = `${urlPrefix}?o=${encoded}`;
+  }
 
   //
 
@@ -103,7 +119,9 @@ function OrderItem({data}) {
           </span>
         </div>
         <div className={'orderOptions'}>
-          <Link to={`${data?.statusUrl}`}>Track Order</Link>
+          <div onClick={() => handleTrackOrderOnClick(data?.statusUrl)}>
+            Track Order
+          </div>
         </div>
         {showReturn && (
           <div className={styles.orderOptions}>

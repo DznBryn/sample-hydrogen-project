@@ -2,7 +2,7 @@ import {useState, useRef} from 'react';
 import classnames from 'classnames';
 import {Link} from '@remix-run/react';
 import {useStore} from '~/hooks/useStore';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 import {switchSliderPanelVisibility} from '../../sliderPanel';
 import {triggerAnalyticsLoyaltyEvents} from '~/utils/functions/eventFunctions';
 import {IconClose} from '../../plp/plpFilterModal';
@@ -126,7 +126,15 @@ const PDPDetails = ({
               />
               <div
                 className={'openSFButton'}
-                onClick={() => switchSliderPanelVisibility('ConcealerSlider')}
+                onClick={() => {
+                  window?.dataLayer?.push({
+                    event: 'shadeFinderFindMyShade',
+                    details: {
+                      source: 'inlineCta',
+                    },
+                  });
+                  switchSliderPanelVisibility('ConcealerSlider');
+                }}
               >
                 find my shade <OpenSFButtonIcon />
               </div>
@@ -245,7 +253,7 @@ const PDPDetails = ({
       : defaultDescription;
 
   const LoyaltyMessage = ({className}) => {
-    const {isLoggedIn} = useCustomerState();
+    const {isLoggedIn} = useCustomer();
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     function handleModalDisplay() {

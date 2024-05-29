@@ -1,5 +1,5 @@
 #frontend-root {
-  --primary-color: #48C6D9;
+  --primary-color: #48c6d9;
   --white-color: #fff;
 }
 
@@ -62,17 +62,16 @@
   .search {
     display: none;
   }
-
 }
 
 .cartAlert {
-  background-color: #48C6A7;
+  background-color: #48c6a7;
   padding: 9px 8px 8px 8px;
   position: absolute;
   width: 100%;
   z-index: 100;
   top: 91px;
-  transition: z-index .6s, visibility .6s, opacity .6s linear;
+  transition: z-index 0.6s, visibility 0.6s, opacity 0.6s linear;
   display: flex;
   justify-content: center;
 }
@@ -93,7 +92,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #FFFFFF;
+  color: #ffffff;
   gap: 5px;
 }
 
@@ -103,7 +102,7 @@
   font-style: normal;
   font-weight: 900;
   font-size: 15px;
-  color: #FFFFFF;
+  color: #ffffff;
   line-height: 25px;
 }
 
@@ -115,9 +114,9 @@
   line-height: 25px;
 }
 
-.cartAlert a {
-  color: #FFFFFF;
-  border: 1px solid #FFFFFF;
+.cartAlert .checkoutButton {
+  color: #ffffff;
+  border: 1px solid #ffffff;
   border-radius: 2px;
   padding: 0 15px;
   text-decoration: none;
@@ -127,6 +126,7 @@
   text-transform: capitalize;
   line-height: 25px;
   margin-left: auto;
+  cursor: pointer;
 }
 
 #cartAlertMinimalHeader {
@@ -135,7 +135,6 @@
 }
 
 @media only screen and (max-width: 768px) {
-
   .cartAlert {
     padding: 11px;
     top: 56px;
@@ -171,7 +170,7 @@
     font-size: 12px;
   }
 
-  .cartAlert a {
+  .cartAlert .checkoutButton {
     padding: 4px 15px 0 15px;
     font-weight: 500;
     font-size: 12px;
@@ -181,7 +180,6 @@
   .cartAlert.forceLift {
     top: 55px;
   }
-
 }
 
 .hidden {

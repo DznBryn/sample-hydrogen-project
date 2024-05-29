@@ -16,6 +16,8 @@ import {flattenConnection} from '@shopify/hydrogen';
 
 import styles from './styles.css';
 import useCurrency from '~/hooks/useCurrency';
+import {useCustomer} from '~/hooks/useCustomer';
+import {useMultipass} from '~/hooks/useMultipass';
 
 //
 
@@ -41,6 +43,7 @@ let cartPageConfig;
 const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
   const rootData = useRouteLoaderData('root');
   const {getCurrency} = useCurrency();
+  const {navigateToShopify} = useMultipass();
   const alertRef = useRef();
   const cart = useStore((store) => store?.cart?.data ?? (() => {}));
   const items = cart?.lines ? flattenConnection(cart.lines) : [];
@@ -48,6 +51,8 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
     getCartTotalForFreeShipping(cart, rootData?.ENVS?.SITE_NAME),
   );
   let progressMsg = null;
+
+  //
 
   useEffect(
     () =>
@@ -63,6 +68,8 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
       cartPageConfig = getCMSDoc(data, 'DefaultCart');
     });
   }, []);
+
+  //
 
   if (items.find((item) => item?.sellingPlanAllocation?.sellingPlan?.id)) {
     progressMsg = <p> Enjoy FREE SHIPPING with auto-delivery</p>;
@@ -83,6 +90,12 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
     }
   }
 
+  function handleCheckoutOnClick() {
+    navigateToShopify(cart?.checkoutUrl);
+  }
+
+  //
+
   return (
     <>
       <div
@@ -98,9 +111,9 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
           {progressMsg}
         </div>
 
-        <a className={'checkoutButton'} href={cart?.checkoutUrl}>
+        <div className={'checkoutButton'} onClick={handleCheckoutOnClick}>
           Checkout
-        </a>
+        </div>
       </div>
 
       {fixedRight === true ? (
@@ -138,7 +151,7 @@ const HeaderIcons = ({cartConfig, hideSearch, fixedRight, lpMinimalHeader}) => {
 export default HeaderIcons;
 
 const AccIcon = () => {
-  const {id: customerId} = useStore((store) => store?.account?.data ?? {});
+  const customerData = useCustomer();
 
   return (
     <div
@@ -146,7 +159,7 @@ const AccIcon = () => {
       onClick={() => switchSliderPanelVisibility('SliderAccount')}
       style={{cursor: 'pointer', height: '0'}}
     >
-      {customerId !== '' ? (
+      {customerData?.id !== '' ? (
         <svg
           className={'loggedIn'}
           width={21}

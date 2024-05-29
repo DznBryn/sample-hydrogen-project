@@ -6,7 +6,7 @@ import {
   appendScript,
   getCMSDoc,
 } from '~/utils/functions/eventFunctions';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 const Search = lazy(() => import('~/modules/search'));
 import {links as searchStyles} from '~/modules/search';
 import {Await, useRouteLoaderData} from '@remix-run/react';
@@ -21,7 +21,7 @@ export const links = () => {
 const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
   const {SHOW_LOYALTY} = useFeatureFlags();
   const {ENVS} = useRouteLoaderData('root');
-  const {id, email, isLoggedIn} = useCustomerState();
+  const {id, email, isLoggedIn} = useCustomer();
 
   const [{confirmationText}, setDiscountObj] = useState({
     code: '',
@@ -90,7 +90,7 @@ const NavPlaceholder = ({searchConfig, siteWideSettings}) => {
 
   function appendGorgiasChat() {
     appendScript(
-      'https://config.gorgias.chat/bundle-loader/01H7G04F846WG95Q6E2FBRW47X',
+      `https://config.gorgias.chat/bundle-loader/${ENVS?.GORGIAS_ID}`,
     );
   }
 

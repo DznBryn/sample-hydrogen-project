@@ -1,18 +1,21 @@
-import {
-  CacheLong,
-  flattenConnection,
-  generateCacheControlHeader,
-} from '@shopify/hydrogen';
-import {defer, redirect} from '@shopify/remix-oxygen';
+import {flattenConnection} from '@shopify/hydrogen';
+
+import {useLoaderData} from '@remix-run/react';
+
+import {redirect} from '@shopify/remix-oxygen';
+
 import {
   getAddresses,
   getCustomer,
 } from '~/utils/graphql/shopify/queries/customer';
+
 import {getCMSContent} from '~/utils/functions/eventFunctions';
+
 import {
   GET_REWARDS_FAQ_CONTENT,
   GET_YOTPO_REDEEM_PRODUCTS,
 } from '~/utils/graphql/sanity/queries';
+
 import Layouts from '~/layouts';
 import Account, {links as accountStyles} from '~/modules/accounts';
 import {CANCEL_REASONS, FORM_ACTIONS} from '~/utils/constants';
@@ -22,6 +25,7 @@ import {
   UPDATE_ADDRESS_MUTATION,
   UPDATE_DEFAULT_ADDRESS_MUTATION,
 } from '~/utils/graphql/shopify/mutations/customer';
+
 import {
   cancelSubscription,
   changeShippingAddress,
@@ -30,9 +34,8 @@ import {
   reactivateSubscription,
   skipSubscriptionOrder,
 } from '~/utils/services/subscription';
+
 import {format} from 'date-fns';
-import logout from './__private/logout';
-import {useStore} from '~/hooks/useStore';
 
 export function links() {
   return [...accountStyles()];
@@ -61,13 +64,6 @@ export async function action({request, context}) {
   const addressId = formData.get('addressId');
   const formAction = formData.get('formAction');
 
-  if (formAction === 'LOGOUT') {
-    return await logout({request, context});
-  }
-
-  if (formAction === 'LOGOUT_NO_REDIRECT') {
-    return await logout({request, context}, true);
-  }
   // SUBSCRIPTION
   if (formAction?.includes('SUBSCRIPTION')) {
     if (formAction === 'SUBSCRIPTION_REACTIVATE') {
@@ -194,26 +190,28 @@ export async function action({request, context}) {
   const formErrors = [];
   const requiredFields = ['firstName', 'lastName', 'city', 'province'];
 
-  Object.keys(normalizeAddress).forEach((key) => {
-    if (key === 'zip') {
-      if (normalizeAddress[key] === '' && !formErrors.includes('zip')) {
-        formErrors.push('zip');
+  if (request.method !== FORM_ACTIONS.DELETE) {
+    Object.keys(normalizeAddress).forEach((key) => {
+      if (key === 'zip') {
+        if (normalizeAddress[key] === '' && !formErrors.includes('zip')) {
+          formErrors.push('zip');
+        }
       }
-    }
-    if (key === 'address1') {
-      if (
-        normalizeAddress[key] === '' &&
-        !formErrors.includes('streetAddress')
-      ) {
-        formErrors.push('streetAddress');
+      if (key === 'address1') {
+        if (
+          normalizeAddress[key] === '' &&
+          !formErrors.includes('streetAddress')
+        ) {
+          formErrors.push('streetAddress');
+        }
       }
-    }
-    if (requiredFields.includes(key)) {
-      if (normalizeAddress[key] === '' && !formErrors.includes(key)) {
-        formErrors.push(key);
+      if (requiredFields.includes(key)) {
+        if (normalizeAddress[key] === '' && !formErrors.includes(key)) {
+          formErrors.push(key);
+        }
       }
-    }
-  });
+    });
+  }
 
   if (formErrors.length > 0) {
     return {
@@ -225,13 +223,6 @@ export async function action({request, context}) {
 
   if (request.method === FORM_ACTIONS.DELETE) {
     // refactor into function deleteAddress()
-
-    if (typeof addressId !== 'string') {
-      return {
-        message: 'You must provide an address id.',
-        status: 400,
-      };
-    }
 
     if (typeof addressId !== 'string') {
       return {
@@ -380,7 +371,16 @@ export async function loader({request, context, params}) {
   }
 
   const customer = await getCustomer(context, customerAccessToken, request);
-  customer.addresses = flattenConnection(customer.addresses);
+
+  const address = await getAddresses(
+    context,
+    customerAccessToken,
+    'addresses',
+    request,
+  );
+
+  customer.addresses = flattenConnection(address.addresses);
+  customer.defaultAddress = address.defaultAddress;
   customer.orders = flattenConnection(customer.orders);
 
   const header = customer
@@ -397,27 +397,21 @@ export async function loader({request, context, params}) {
     getCMSContent(context, GET_REWARDS_FAQ_CONTENT),
   ]);
 
-  return defer(
-    {
-      header,
-      customer,
-      products,
-      faqContent,
-      yotpoRedeemProducts,
-    },
-    {
-      headers: {
-        'Cache-Control': generateCacheControlHeader(CacheLong()),
-      },
-    },
-  );
+  return {
+    header,
+    customer,
+    products,
+    faqContent,
+    yotpoRedeemProducts,
+  };
 }
 
 export default function AccountPage() {
-  const {data: customerData} = useStore((store) => store?.account ?? {});
+  const {customer} = useLoaderData();
+
   return (
     <Layouts.MainNavFooter>
-      <Account data={customerData} />
+      <Account data={customer} />
     </Layouts.MainNavFooter>
   );
 }

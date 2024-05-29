@@ -7,7 +7,7 @@ import YotpoProductBox, {
 import {Swiper, SwiperSlide} from 'swiper/react';
 import styles from './styles.css';
 import {Navigation, Pagination} from 'swiper/modules';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 
 import swiperStyles from 'swiper/css';
 import swiperNavigationStyles from 'swiper/css/navigation';
@@ -74,7 +74,7 @@ const RedeemProductsSection = (props) => {
   const navigationPrevRef = useRef(null);
   const swiperRef = useRef(null);
 
-  const {isLoggedIn} = useCustomerState();
+  const {isLoggedIn} = useCustomer();
   function handleMovePrevSlide() {
     swiperRef.current?.swiper?.slidePrev();
     if (swiperRef.current?.isBeginning) {
