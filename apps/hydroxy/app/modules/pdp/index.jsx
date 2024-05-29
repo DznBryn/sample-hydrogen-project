@@ -27,7 +27,7 @@ import FireWorkPDPCarousel, {
 } from './fireWorkPDPCarousel';
 import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
 import styles from './styles.css';
-import {useRouteLoaderData} from '@remix-run/react';
+import {Await, useMatches, useRouteLoaderData} from '@remix-run/react';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
