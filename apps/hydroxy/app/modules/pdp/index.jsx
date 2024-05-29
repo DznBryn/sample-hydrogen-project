@@ -1,9 +1,10 @@
-import {useCallback, useEffect, useMemo, Suspense} from 'react';
+import {Suspense, useCallback, useEffect, useMemo} from 'react';
 import classnames from 'classnames';
 import {
   isProductMetafield,
   getProductMetafield,
   handleProductMetafieldData,
+  getCMSDoc,
 } from '~/utils/functions/eventFunctions';
 import {useYotpo} from '~/hooks/useYotpo';
 import PDPGallery, {links as pdpGalleryStyles} from './pdpGallery';
@@ -56,6 +57,7 @@ const PDP = ({
   exclusiveProductBannerContent,
   concealerImages,
 }) => {
+  const [root] = useMatches();
   const rootData = useRouteLoaderData('root');
   const {refreshWidgets} = useYotpo();
 
