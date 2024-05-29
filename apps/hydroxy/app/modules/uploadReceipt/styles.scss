@@ -96,8 +96,10 @@
   }
 
   .flexified-child.yotpo-outer-tile {
-    width: 356px !important;
-    height: 168.66px !important;
+    max-width: 356px !important;
+    width: 100%;
+    max-height: 168.66px !important;
+    height: 100%;
     margin: 0 auto !important;
   }
 }
