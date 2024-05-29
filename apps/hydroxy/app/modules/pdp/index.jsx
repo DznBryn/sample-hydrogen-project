@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useMemo} from 'react';
+import {useCallback, useEffect, useMemo, Suspense} from 'react';
 import classnames from 'classnames';
 import {
   isProductMetafield,
