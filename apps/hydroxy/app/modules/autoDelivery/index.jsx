@@ -1,23 +1,25 @@
+import {useCollection} from '~/hooks/useCollection';
 import RebuyRecommendation, {
   links as rebuyRecommendationStyles,
 } from '../rebuyRecommendation';
+import Product, {links as productStyles} from '../plp/plpProductBox';
 import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 
 export const links = () => {
-  return [{rel: 'stylesheet', href: styles}, ...rebuyRecommendationStyles()];
+  return [
+    {rel: 'stylesheet', href: styles},
+    ...rebuyRecommendationStyles(),
+    ...productStyles(),
+  ];
 };
 
 const AutoDelivery = ({content}) => {
+  const {state, products} = useCollection(
+    content?.[0]?.featuredCollection.collectionId,
+  );
+
   const {ENVS} = useRouteLoaderData('root');
-
-  function faqLink() {
-    const curEnv = ENVS?.SITE_NAME;
-
-    if (curEnv.includes('CA')) return 'https://help.tulaskincare.ca/en-US';
-    if (curEnv.includes('US')) return 'https://help.tula.com/en-US';
-    if (curEnv.includes('UK')) return 'https://help.tulaskincare.co.uk/en-US';
-  }
 
   return (
     <div id="ad-page">
@@ -287,11 +289,44 @@ const AutoDelivery = ({content}) => {
 
       <div className={'autoDeliverySectionFive'}>
         <div className="fixedWidthPage">
+          {!ENVS?.SITE_NAME.includes('US') ? (
+            <h2>Subscribe to our glow getter favorites</h2>
+          ) : null}
           <div className={'recommendationWrapper'}>
-            <RebuyRecommendation
-              widgetId="113756"
-              header="Subscribe to our glow getter favorites"
-            />
+            {ENVS?.SITE_NAME.includes('US') ? (
+              <RebuyRecommendation
+                widgetId="113756"
+                header="Subscribe to our glow getter favorites"
+              />
+            ) : (
+              state === 'loaded' &&
+              products.slice(0, 4).map((product, index) => {
+                return (
+                  <Product
+                    product={product}
+                    key={product?.id}
+                    className={'product'}
+                    analytics={{
+                      click: {
+                        actionField: {list: 'Auto Delivery'},
+                        products: [
+                          {
+                            name: product?.title,
+                            id: window.btoa(product?.id),
+                            price: parseInt(
+                              product?.priceRange?.minVariantPrice?.amount,
+                            )?.toFixed(2),
+                            category: product?.productType,
+                            variant: '',
+                            position: index,
+                          },
+                        ],
+                      },
+                    }}
+                  />
+                );
+              })
+            )}
           </div>
         </div>
       </div>
@@ -336,7 +371,7 @@ const AutoDelivery = ({content}) => {
         <p className={'bottomText'}>
           Still have questions? <br />
           Visit{' '}
-          <a href={faqLink()} target="_blank" rel="noreferrer">
+          <a href="/pages/faq" target="_blank">
             FAQ
           </a>{' '}
           or{' '}

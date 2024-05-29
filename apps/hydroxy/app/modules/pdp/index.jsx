@@ -18,13 +18,14 @@ import PDPExclusiveProductBannerRelease, {
 import PDPBenefits, {links as pdpBenefitsStyles} from './pdpBenefits';
 import PDPFormulate, {links as pdpFormulateStyles} from './pdpFormulate';
 import PDPHowToUse, {links as pdpHowToUseStyles} from './pdpHowToUse';
+import PDPYotPo, {links as pdpYotPoStyles} from './pdpYotPo';
 import RebuyRecommendation, {
   links as rebuyRecommendationStyles,
 } from '../rebuyRecommendation';
-import PDPYotPo, {links as pdpYotPoStyles} from './pdpYotPo';
 import FireWorkPDPCarousel, {
   links as fireWorkPDPCarouselStyles,
 } from './fireWorkPDPCarousel';
+import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
 import styles from './styles.css';
 import {useRouteLoaderData} from '@remix-run/react';
 import {getIdFromGid} from '~/utils/functions/eventFunctions';
@@ -41,6 +42,7 @@ export const links = () => {
     ...pdpFormulateStyles(),
     ...pdpHowToUseStyles(),
     ...rebuyRecommendationStyles(),
+    ...listrakRecStyles(),
     ...pdpYotPoStyles(),
     ...fireWorkPDPCarouselStyles(),
   ];
@@ -365,14 +367,25 @@ const PDP = ({
             <PDPHowToUse data={details.tabSections['howToUse']} />
           </ContentSection>
         )}
-
-        <ContentSection>
-          <RebuyRecommendation
-            widgetId="104534"
-            product={product}
-            header="you may also like"
-          />
-        </ContentSection>
+        {rootData?.ENVS?.SITE_NAME.includes('US') ? (
+          <ContentSection>
+            <RebuyRecommendation
+              widgetId="104534"
+              product={product}
+              header="you may also like"
+            />
+          </ContentSection>
+        ) : (
+          <Suspense>
+            <Await resolve={root.data.listrakRec}>
+              {(listrakRec) => (
+                <ContentSection>
+                  <ListrakRec listrak={getCMSDoc(listrakRec, 'PDP')} />
+                </ContentSection>
+              )}
+            </Await>
+          </Suspense>
+        )}
 
         <ContentSection>
           <FireWorkPDPCarousel playlist="g4P8eg" />
