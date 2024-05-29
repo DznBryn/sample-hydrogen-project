@@ -1,4 +1,4 @@
-import {useEffect, useMemo} from 'react';
+import {Suspense, useEffect, useMemo} from 'react';
 import {useCollection} from '~/hooks/useCollection';
 import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
 import RebuyRecommendation, {
