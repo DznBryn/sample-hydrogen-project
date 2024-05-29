@@ -1,6 +1,7 @@
 import RebuyRecommendation, {
   links as rebuyRecommendationStyles,
 } from '~/modules/rebuyRecommendation';
+import {useRouteLoaderData} from '@remix-run/react';
 import styles from './styles.css';
 
 export const links = () => {
@@ -8,6 +9,7 @@ export const links = () => {
 };
 
 const PageNotFound = () => {
+  const rootData = useRouteLoaderData('root');
   return (
     <div className={'pageNotFound'}>
       <h2>oops 404 again! that page can&apos;t be found</h2>
@@ -36,10 +38,12 @@ const PageNotFound = () => {
           <span>Search</span>
         </button>
       </form>
-      <RebuyRecommendation
-        widgetId="113756"
-        header="check out these best sellers"
-      />
+      {rootData?.ENVS?.SITE_NAME.includes('US') ? (
+        <RebuyRecommendation
+          widgetId="113756"
+          header="check out these best sellers"
+        />
+      ) : null}
     </div>
   );
 };
