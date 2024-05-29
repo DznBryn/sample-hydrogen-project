@@ -30,9 +30,14 @@ const PageMeta = () => {
       />
 
       <script
-        defer
-        src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
-      ></script>
+        type="text/javascript"
+        src={`https://cdn.cookielaw.org/consent/${rootData?.ENVS?.ONETRUST_ID}/OtAutoBlock.js`}
+      />
+      <script
+        src={'https://cdn.cookielaw.org/scripttemplates/otSDKStub.js'}
+        type="text/javascript"
+        data-domain-script={rootData?.ENVS?.ONETRUST_ID}
+      />
 
       <script
         defer
@@ -118,6 +123,13 @@ const PageMeta = () => {
                             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                             })(window,document,'script','dataLayer','${rootData?.ENVS?.GTM_ID}');`,
           }}
+        ></script>
+      )}
+      
+      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
+        <script
+          defer
+          src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
         ></script>
       )}
 
