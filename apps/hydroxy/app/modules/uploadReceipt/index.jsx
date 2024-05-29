@@ -1,8 +1,10 @@
 /* eslint-disable quotes */
 /* eslint-disable react/no-unknown-property */
-import {Await, Link, useMatches} from '@remix-run/react';
-
+import {Await, Link, useMatches, useRouteLoaderData} from '@remix-run/react';
 import ListrakRec, {links as listrakRecStyles} from '~/modules/listrakRec';
+import RebuyRecommendation, {
+  links as rebuyRecommendationStyles,
+} from '../rebuyRecommendation';
 import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '~/modules/loadingSkeleton';
@@ -11,6 +13,7 @@ import {
   getCMSDoc,
   triggerAnalyticsLoyaltyEvents,
 } from '~/utils/functions/eventFunctions';
+
 import {Suspense} from 'react';
 
 import styles from './styles.css';
@@ -22,6 +25,7 @@ export const links = () => {
       href: styles,
     },
     ...listrakRecStyles(),
+    ...rebuyRecommendationStyles(),
     ...loadingSkeletonStyles(),
   ];
 };
@@ -48,6 +52,7 @@ export const Slider = () => {
 
 const UploadReceipt = () => {
   const [root] = useMatches();
+  const rootData = useRouteLoaderData('root');
   return (
     <div className={'uploadReceipt_mainContainer'}>
       <section className={'uploadReceipt_header'}>
@@ -100,15 +105,22 @@ const UploadReceipt = () => {
       </section>
 
       <section className={'uploadReceipt_recommendations'}>
-        <Suspense>
-          <Await resolve={root.data.listrakRec}>
-            {(listrakRec) => (
-              <ListrakRec
-                listrak={getCMSDoc(listrakRec, 'LoyaltyUploadReceipt')}
-              />
-            )}
-          </Await>
-        </Suspense>
+        {rootData?.ENVS?.SITE_NAME.includes('US') ? (
+          <RebuyRecommendation
+            widgetId="113756"
+            header="ready to earn more points?"
+          />
+        ) : (
+          <Suspense>
+            <Await resolve={root.data.listrakRec}>
+              {(listrakRec) => (
+                <ListrakRec
+                  listrak={getCMSDoc(listrakRec, 'LoyaltyUploadReceipt')}
+                />
+              )}
+            </Await>
+          </Suspense>
+        )}
       </section>
     </div>
   );

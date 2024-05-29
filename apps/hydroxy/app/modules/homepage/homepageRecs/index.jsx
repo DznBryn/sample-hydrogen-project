@@ -29,6 +29,7 @@ const HomepageRecs = ({active, collection}) => {
   return (
     <div
       className={active ? 'homepageRecProducts' : 'homepageRecProducts hidden'}
+      ref={homeRecContainer}
     >
       {state === 'loaded' ? (
         products.slice(0, 4).map((product, index) => {

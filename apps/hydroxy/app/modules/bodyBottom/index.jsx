@@ -10,7 +10,7 @@ import EmailSmsSignup, {
 } from '~/modules/bodyBottom/emailSmsSignup';
 
 import styles from './styles.css';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 
 export const links = () => {
   return [
@@ -21,7 +21,7 @@ export const links = () => {
 };
 
 const BodyBottom = ({emailSmsSignupContent}) => {
-  const {id, email, phone} = useCustomerState;
+  const {id, email, phone} = useCustomer;
 
   useEffect(() => {
     /* Push Customer ID, Email, Phone */

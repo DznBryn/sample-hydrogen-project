@@ -1,5 +1,4 @@
 import logo from '../../../public/logo.png';
-import {useEffect} from 'react';
 import {useRouteLoaderData} from '@remix-run/react';
 
 //
@@ -7,14 +6,6 @@ import {useRouteLoaderData} from '@remix-run/react';
 const PageMeta = () => {
   const rootData = useRouteLoaderData('root');
   //
-
-  useEffect(() => {
-    if (typeof window === 'object' && window?.Yo) {
-      window?.Yo.configure(
-        `https://qoe-1.yottaa.net/api/v1/configure.rapid.js?key=${rootData?.ENVS?.YOTTA_KEY}`,
-      );
-    }
-  }, []);
 
   return (
     <>
@@ -134,6 +125,7 @@ const PageMeta = () => {
           }}
         ></script>
       )}
+      
       {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
         <script
           defer

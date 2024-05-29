@@ -7,7 +7,7 @@ import AddToCartButton, {
   links as addToCartButtonStyles,
 } from '../addToCartButton';
 import styles from './styles.css';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 import {useEffect, useState} from 'react';
 
 const getLinkToObj = (slug, product) => {
@@ -27,7 +27,7 @@ export const links = () => {
 };
 
 const YotpoRedeemProductBox = ({yotpoProduct = {}}) => {
-  const {isLoggedIn} = useCustomerState();
+  const {isLoggedIn} = useCustomer();
   const [urlSource, setUrlSource] = useState('');
 
   const {product, yotpo_points_value, variant_id, variant_name, widget_id} =

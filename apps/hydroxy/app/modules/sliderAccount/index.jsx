@@ -3,6 +3,7 @@ import {
   getLoyaltyCustomerData,
   getReturnsURL,
   triggerAnalyticsLoyaltyEvents,
+  useLayoutEffect,
 } from '~/utils/functions/eventFunctions';
 import SliderPanel, {
   switchSliderPanelVisibility,
@@ -12,14 +13,14 @@ import SliderPanel, {
 import LoadingSkeleton, {
   links as loadingSkeletonStyles,
 } from '../loadingSkeleton';
-import {Link, useFetcher} from '@remix-run/react';
+import {Link, useFetcher, useLocation} from '@remix-run/react';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import {RegisterForm, links as registerFormStyles} from '../accounts/register';
-import {useStore} from '~/hooks/useStore';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
 import useFeatureFlags from '~/hooks/useFeatureFlags';
+import {useCustomer} from '~/hooks/useCustomer';
 
 //
 
@@ -66,11 +67,11 @@ const MainContent = () => {
   const recoverPasswordButtonRef = useRef(null);
   const registerFetcher = useFetcher();
   const signoutFetcher = useFetcher();
-  const customerData = useStore((store) => store?.account?.data ?? null);
-  const {setCustomerData} = useStore((store) => store?.account ?? null);
+  const customerData = useCustomer();
   const [mainContent, setMainContent] = useState('loading');
   const [points, setPoints] = useState(null);
   const {SHOW_LOYALTY} = useFeatureFlags();
+  const location = useLocation();
 
   const {id: customerId = '', firstName, email} = customerData;
 
@@ -97,9 +98,6 @@ const MainContent = () => {
         loginButtonRef.current.disabled = false;
         loginButtonRef.current.classList.remove('disabledButton');
       }
-      if (login.state === FETCHER.STATE.LOADING) {
-        setCustomerData(login.data?.customer);
-      }
       if (login.data?.status === 401) {
         removeErrorMessage();
         errorElement.current = document.createElement('span');
@@ -114,7 +112,6 @@ const MainContent = () => {
         errorElement.current.innerHTML = login.data?.message;
         return signInPassword.current.parentElement.after(errorElement.current);
       }
-      changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
     }
   }, [login.state]);
 
@@ -149,17 +146,13 @@ const MainContent = () => {
       triggerAnalyticsLoyaltyEvents('RegisterAccount', {
         userAcceptsMarketing: true,
       });
-      setCustomerData(registerFetcher.data?.customer);
       changeMainContent('createAccountSuccess');
     }
   }, [registerFetcher.state]);
 
-  useEffect(() => {
-    if (signoutFetcher.state === FETCHER.STATE.LOADING) {
-      setCustomerData();
-    }
+  useLayoutEffect(() => {
     changeMainContent(customerId !== '' ? 'welcomeBack' : 'signIn');
-  }, [signoutFetcher.state]);
+  }, [customerId]);
 
   function init() {
     initialized.current = true;
@@ -430,7 +423,11 @@ const MainContent = () => {
       <>
         <div className={'sliderAccount_header'}>welcome!</div>
 
-        <login.Form action="/" method={API_METHODS.POST} className={'form'}>
+        <login.Form
+          action="/account/login"
+          method={API_METHODS.POST}
+          className={'form'}
+        >
           <input
             className={'input'}
             key={'siginEmail'}
@@ -456,8 +453,7 @@ const MainContent = () => {
               show
             </span>
           </div>
-          {login.data?.data &&
-            login.data?.data?.length > 0 &&
+          {login.data?.data?.length > 0 &&
             login.data?.data?.map(
               (error, index) =>
                 !error.field && (
@@ -528,13 +524,9 @@ const MainContent = () => {
 
         <Links />
 
-        <signoutFetcher.Form action="/account" method={API_METHODS.POST}>
+        <signoutFetcher.Form action="/account/logout" method={API_METHODS.POST}>
           <div onClick={() => switchSliderPanelVisibility('SliderAccount')}>
-            <input
-              type="hidden"
-              name="formAction"
-              value={'LOGOUT_NO_REDIRECT'}
-            />
+            <input type="hidden" name="source" value={location?.pathname} />
             <button type="submit" className={'welcomeBottomButton'}>
               sign out
             </button>
@@ -554,7 +546,7 @@ const MainContent = () => {
         </div>
 
         <recoverPassword.Form
-          action="/"
+          action="/account/recover"
           method={API_METHODS.POST}
           className={'form'}
         >

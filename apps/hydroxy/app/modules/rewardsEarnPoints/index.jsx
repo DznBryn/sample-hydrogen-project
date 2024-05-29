@@ -3,7 +3,7 @@ import IconComputer from '../iconComputer';
 import IconStore from '../iconStore';
 import Button, {links as buttonStyles} from '../button/index';
 import styles from './styles.css';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 import {switchSliderPanelVisibility} from '../sliderPanel';
 
 export const links = () => {
@@ -17,7 +17,7 @@ export const links = () => {
 };
 
 const RewardEarnPoints = () => {
-  const {isLoggedIn} = useCustomerState();
+  const {isLoggedIn} = useCustomer();
 
   return (
     <div className={'earn_points_section'}>
@@ -72,9 +72,17 @@ const RewardEarnPoints = () => {
                     </a>
                   ) : (
                     <Button
-                      onClick={() =>
-                        switchSliderPanelVisibility('SliderAccount')
-                      }
+                      onClick={() => {
+                        if (window?.datalayer) {
+                          window?.datalayer.push({
+                            event: 'loyaltySignupBtnClick',
+                            details: {
+                              source: 'loyaltyPage', // source representing specific button clicked
+                            },
+                          });
+                        }
+                        switchSliderPanelVisibility('SliderAccount');
+                      }}
                       className={'btn'}
                     >
                       sign up

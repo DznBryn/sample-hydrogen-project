@@ -1,12 +1,12 @@
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {Link, useFetcher, useRouteLoaderData} from '@remix-run/react';
-import {useCartActions} from '../../../hooks/useCart';
 import {Image, parseGid} from '@shopify/hydrogen';
 import {useStore} from '~/hooks/useStore';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import styles from './styles.css';
 import {PortableText} from '@portabletext/react';
 import useCurrency from '~/hooks/useCurrency';
+import {useCustomer} from '~/hooks/useCustomer';
 
 //
 
@@ -27,7 +27,6 @@ const SliderCartProductBox = ({
 }) => {
   const {getCurrency} = useCurrency();
   const inputQtyRef = useRef();
-  const {updateItems} = useCartActions();
   const [forceChange, setForceChange] = useState(false);
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   let sellingPlanName = '';
@@ -35,28 +34,6 @@ const SliderCartProductBox = ({
   let isLoyaltyRedeem = false;
   const sellingPlansDropdown = useRef(null);
   const switcherInput = useRef(null);
-
-  const changeCartQty = async (qty) => {
-    try {
-      await updateItems({id: item?.id, quantity: qty});
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const handleAdd = () => {
-    const curQty = parseInt(inputQtyRef.current.value);
-    if (curQty < 5) {
-      inputQtyRef.current.value = curQty + 1;
-      return changeCartQty(curQty + 1);
-    }
-  };
-  const handleSub = () => {
-    const curQty = parseInt(inputQtyRef.current.value);
-    if (curQty !== 1) {
-      inputQtyRef.current.value = curQty - 1;
-      return changeCartQty(curQty - 1);
-    }
-  };
 
   if (item?.attributes?.some((atribute) => atribute.key === 'loyalty_redeem')) {
     isLoyaltyRedeem = true;
@@ -150,9 +127,7 @@ const SliderCartProductBox = ({
     item,
     isSellingPlan,
     sellingPlanName,
-    handleSub,
     inputQtyRef,
-    handleAdd,
     forceChange,
     promo,
     product,
@@ -196,9 +171,7 @@ const RegularProduct = ({
   const {getCurrency} = useCurrency();
   const rootData = useRouteLoaderData('root');
   const tulaSiteWide = useRef(null);
-  const {id: customerId = ''} = useStore(
-    (store) => store?.account?.data ?? null,
-  );
+  const {id: customerId = ''} = useCustomer();
   const toggleCart = useStore((store) => store?.cart?.toggleCart ?? (() => {}));
   const hasSellingPlans = item?.merchandise?.product?.tags?.find((tag) =>
     tag.includes('subscriptionEligible'),
@@ -471,11 +444,11 @@ const Price = ({item, promo, product, cartPageConfig}) => {
       </div>
     );
   } else {
-    const promoColorText = product?.tags?.find((tag) => tag.includes('promo:'))
-      ? product.tags.find((tag) => tag.includes('promo:')).split(':')[1]
-      : null;
+    const promoTag = product?.tags.find((tag) => tag.includes('promo:'));
+    const promoColor = promoTag?.split(':')[1];
+
     return (
-      <h6 className={`${promoColorText ? `promo_${promoColorText}` : ''}`}>
+      <h6 className={`${promoTag && promoColor ? 'promo' : ''}`}>
         {getCurrency() + Number(item?.cost?.totalAmount?.amount).toFixed(2)}
       </h6>
     );
@@ -526,7 +499,7 @@ const ADSwitcherContent = ({
       // Using fetcher.submit() for form submission
       return await fetcher.submit(formData, {
         method: API_METHODS.POST,
-        action: '/cart',
+        action: '/api/cart',
       });
     } catch (error) {
       // Handle errors
@@ -628,7 +601,7 @@ function RemoveItemButton({lineId}) {
 
   return (
     <fetcher.Form
-      action="/cart"
+      action="/api/cart"
       className={'removeButton'}
       method={API_METHODS.POST}
     >
@@ -679,7 +652,7 @@ function UpdateItemButton({lineIds, children}) {
     }
   }, [fetcher.type]);
   return (
-    <fetcher.Form action="/cart" method={API_METHODS.POST}>
+    <fetcher.Form action="/api/cart" method={API_METHODS.POST}>
       <input type="hidden" name="cartAction" value={'UPDATE_CART'} />
       <input type="hidden" name="lines" value={lines} />
       {children}

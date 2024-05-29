@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import styles from './styles.css';
 import {Link, useFetcher, useLoaderData} from '@remix-run/react';
-import {useStore} from '~/hooks/useStore';
 import {Image, flattenConnection, parseGid} from '@shopify/hydrogen';
 import {API_METHODS, CANCEL_REASONS, FETCHER} from '~/utils/constants';
 import {
@@ -16,6 +15,9 @@ import ModalGeneric from '~/modules/modalGeneric';
 import DatePicker from 'react-date-picker';
 import datePickerStyles from 'react-date-picker/dist/DatePicker.css';
 import calendarStyles from 'react-calendar/dist/Calendar.css';
+import {useSubscriptions} from '~/hooks/useSubscriptions';
+
+import {useSuccessBanner} from '~/hooks/useStore';
 
 export function links() {
   return [
@@ -115,7 +117,11 @@ export const handleUpdateCustomerSubcription = async (
 };
 
 const AccountSubscription = ({active}) => {
-  const {data} = useStore((store) => store?.account ?? null);
+  const {data, updateCustomerSubscription} = useSubscriptions();
+
+  if (data?.state === 'loading') {
+    return <h2 style={{textAlign: 'center', margin: '20px'}}>Loading...</h2>;
+  }
 
   return (
     <div className={active === 1 ? 'menuWrapper' : 'menuWrapper hidden'}>
@@ -145,6 +151,7 @@ const AccountSubscription = ({active}) => {
                 </div>
               </div>
             )}
+
             {data.subscription?.orders?.results?.length > 0 && (
               <div className={'activeProducts'}>
                 <h3>
@@ -160,6 +167,10 @@ const AccountSubscription = ({active}) => {
                     .map((order, index) =>
                       order?.items?.length > 0 ? (
                         <ActiveProductItem
+                          customer={data}
+                          updateCustomerSubscription={
+                            updateCustomerSubscription
+                          }
                           key={`active-${order.public_id}-${index}`}
                           {...{
                             address: data.subscription.addresses.results.find(
@@ -177,6 +188,7 @@ const AccountSubscription = ({active}) => {
                 </ul>
               </div>
             )}
+
             {data.subscription?.inactive?.results?.length > 0 && (
               <div className={'inactiveProducts'}>
                 <h3>
@@ -187,6 +199,8 @@ const AccountSubscription = ({active}) => {
                     (subscription, index) => (
                       <InactiveProductItem
                         key={`inactive-${subscription.product}-${index}`}
+                        customer={data}
+                        updateCustomerSubscription={updateCustomerSubscription}
                         {...{products: data.subscription, subscription}}
                       />
                     ),
@@ -201,7 +215,13 @@ const AccountSubscription = ({active}) => {
   );
 };
 
-function ActiveProductItem({address, order, items}) {
+function ActiveProductItem({
+  address,
+  order,
+  items,
+  customer,
+  updateCustomerSubscription,
+}) {
   const [showModal, setShowModal] = useState(null);
   const subscription = null;
 
@@ -209,6 +229,8 @@ function ActiveProductItem({address, order, items}) {
   const mapActionToComponent = {
     changeShipping: (
       <EditShippingAddress
+        customer={customer}
+        updateCustomerSubscription={updateCustomerSubscription}
         handleModalClose={handleModalClose}
         subscription={subscription}
         order={order}
@@ -223,6 +245,8 @@ function ActiveProductItem({address, order, items}) {
           items.map((item, index) => (
             <SubscriptionItem
               key={`item-${item.public_id}`}
+              customer={customer}
+              updateCustomerSubscription={updateCustomerSubscription}
               index={index}
               order={order}
               item={item}
@@ -319,12 +343,15 @@ function ActiveProductItem({address, order, items}) {
   );
 }
 
-function SubscriptionItem({index, order, item}) {
+function SubscriptionItem({
+  index,
+  order,
+  item,
+  customer,
+  updateCustomerSubscription,
+}) {
   const [showModal, setShowModal] = useState(null);
   const handleModalClose = useCallback(() => setShowModal(null), []);
-  const {data, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
   const {subscription} = item;
   const {products: all} = useLoaderData();
   const [product, setProduct] = useState(null);
@@ -335,6 +362,8 @@ function SubscriptionItem({index, order, item}) {
     item?.product ?? null,
   );
   const options = [1, 2, 3, 4, 5];
+
+  const {closeBanner, showBanner} = useSuccessBanner();
 
   useEffect(() => {
     if (item?.product) {
@@ -348,7 +377,11 @@ function SubscriptionItem({index, order, item}) {
     }
   }, [item?.product]);
 
+  //
+
   const handleSelectChange = async (event) => {
+    const changeFrequencyMessage = `Your auto-delivery will now ship every ${event.target.value} months. Your next shipment date has not changed.`;
+
     if (subscription?.every === Number(event.target.value)) {
       return;
     }
@@ -363,15 +396,20 @@ function SubscriptionItem({index, order, item}) {
         return;
       }
 
-      return setSelectedOption(res.every);
+      setSelectedOption(res.every);
+      closeBanner();
+      return showBanner({_message: changeFrequencyMessage});
     } catch (error) {
-      return console.log({
+      return console.error({
         message: error.message,
       });
     }
   };
 
   const handleSwapProduct = async (event) => {
+    const changeADProductMessage =
+      'Your auto-delivery item has been changed successfully.';
+
     if (item?.product === event.target.value) {
       return;
     }
@@ -383,13 +421,16 @@ function SubscriptionItem({index, order, item}) {
       }
 
       if (res.subscription) {
-        return handleUpdateCustomerSubcription(order, {
-          customer: data,
+        handleUpdateCustomerSubcription(order, {
+          customer,
           updateCustomerSubscription,
         });
+
+        closeBanner();
+        return showBanner({_message: changeADProductMessage});
       }
     } catch (error) {
-      return console.log({
+      return console.error({
         message: error.message,
       });
     }
@@ -398,6 +439,8 @@ function SubscriptionItem({index, order, item}) {
   const mapActionToComponent = {
     changeDate: (
       <ChangeSubscriptionDate
+        customer={customer}
+        updateCustomerSubscription={updateCustomerSubscription}
         handleModalClose={handleModalClose}
         subscription={subscription}
         order={order}
@@ -405,6 +448,8 @@ function SubscriptionItem({index, order, item}) {
     ),
     skip: (
       <SkipOrderSubscription
+        customer={customer}
+        updateCustomerSubscription={updateCustomerSubscription}
         handleModalClose={handleModalClose}
         subscription={subscription}
         order={order}
@@ -412,6 +457,8 @@ function SubscriptionItem({index, order, item}) {
     ),
     pause: (
       <PauseSubscription
+        customer={customer}
+        updateCustomerSubscription={updateCustomerSubscription}
         handleModalClose={handleModalClose}
         subscription={subscription}
         order={order}
@@ -419,11 +466,15 @@ function SubscriptionItem({index, order, item}) {
     ),
     cancel: (
       <CancelSubscription
-        handleModalClose={handleModalClose}
         {...subscription}
+        customer={customer}
+        updateCustomerSubscription={updateCustomerSubscription}
+        handleModalClose={handleModalClose}
       />
     ),
   };
+
+  //
 
   return (
     <>
@@ -431,6 +482,7 @@ function SubscriptionItem({index, order, item}) {
         <p className="deliveryDate col-span-2">
           {index === 0 && `Shipment On: ${handleDateFormatter(order?.place)}`}
         </p>
+
         <div className="deliveryActions">
           <button
             className="outline-btn"
@@ -450,6 +502,7 @@ function SubscriptionItem({index, order, item}) {
           </button>
         </div>
       </div>
+
       <div className="subcriptionItem" key={`item-${item?.public_id}`}>
         <div className="productDetail col-span-2">
           <div className="itemImageContainer">
@@ -472,6 +525,7 @@ function SubscriptionItem({index, order, item}) {
               </Link>
             )}
           </div>
+
           <div className="productDescription">
             {product?.title ? (
               <Link
@@ -502,8 +556,8 @@ function SubscriptionItem({index, order, item}) {
               each
             </p>
 
-            {data?.subscription?.products?.results?.length > 0 &&
-              data.subscription.products.results
+            {customer?.subscription?.products?.results?.length > 0 &&
+              customer.subscription.products.results
                 .find(
                   (product) =>
                     product.external_product_id === selectedProductId,
@@ -517,7 +571,8 @@ function SubscriptionItem({index, order, item}) {
                       subscription={subscription}
                     />
                   </option>
-                  {data.subscription.products.results
+
+                  {customer.subscription.products.results
                     .filter((ogProduct) =>
                       all.products.find((product) => {
                         const variants = flattenConnection(product.variants);
@@ -530,7 +585,7 @@ function SubscriptionItem({index, order, item}) {
                     )
                     .map((subscription, index) => {
                       const currentSubscription =
-                        data.subscription.products.results.find(
+                        customer.subscription.products.results.find(
                           (product) =>
                             product.external_product_id === selectedProductId,
                         );
@@ -571,6 +626,7 @@ function SubscriptionItem({index, order, item}) {
               )}
           </div>
         </div>
+
         <div className="subscriptionActionContainer">
           <div>
             <div className="frequency">
@@ -602,6 +658,7 @@ function SubscriptionItem({index, order, item}) {
           </div>
         </div>
       </div>
+
       <ModalGeneric isOpen={showModal !== null} handleClose={handleModalClose}>
         {mapActionToComponent[showModal]}
       </ModalGeneric>
@@ -609,7 +666,12 @@ function SubscriptionItem({index, order, item}) {
   );
 }
 
-function InactiveProductItem({products, subscription}) {
+function InactiveProductItem({
+  products,
+  subscription,
+  customer,
+  updateCustomerSubscription,
+}) {
   const {products: all} = useLoaderData();
   const [product, setProduct] = useState(
     products && products?.results
@@ -674,7 +736,11 @@ function InactiveProductItem({products, subscription}) {
           </div>
         </div>
         <div className="subscriptionActionContainer">
-          <ReactivateButton {...{product, subscription}} />
+          <ReactivateButton
+            {...{product, subscription}}
+            customer={customer}
+            updateCustomerSubscription={updateCustomerSubscription}
+          />
           <p>
             Cancelled on {handleDateFormatter(subscription?.cancelled ?? null)}
           </p>
@@ -706,11 +772,13 @@ function ProductTitle({product, subscription}) {
   return title;
 }
 
-function EditShippingAddress({handleModalClose, order}) {
+function EditShippingAddress({
+  handleModalClose,
+  order,
+  customer,
+  updateCustomerSubscription,
+}) {
   const fetcher = useFetcher();
-  const {data: customer, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
   const addresses = customer?.subscription?.addresses?.results ?? [];
   const [selectedShippingAddress, setSelectedShippingAddress] = useState(
     order?.shipping_address ?? null,
@@ -840,14 +908,21 @@ function EditShippingAddress({handleModalClose, order}) {
   );
 }
 
-function CancelSubscription({handleModalClose, ...subscription}) {
+function CancelSubscription({
+  handleModalClose,
+  customer,
+  updateCustomerSubscription,
+  ...subscription
+}) {
   const fetcher = useFetcher();
-  const {data: customer, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
   const [selectedReason, setSelectedReason] = useState(null);
   const [customReason, setCustomReason] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const cancelSubscriptionMessage =
+    'Your auto-delivery has been cancelled successfully.';
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
@@ -863,6 +938,11 @@ function CancelSubscription({handleModalClose, ...subscription}) {
           updateCustomerSubscription,
         });
         handleModalClose();
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: cancelSubscriptionMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -963,11 +1043,19 @@ function CancelSubscription({handleModalClose, ...subscription}) {
   );
 }
 
-function SkipOrderSubscription({handleModalClose, subscription, order}) {
+function SkipOrderSubscription({
+  handleModalClose,
+  subscription,
+  order,
+  customer,
+  updateCustomerSubscription,
+}) {
   const fetcher = useFetcher();
-  const {data: customer, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const skipSubscriptionMessage =
+    'This shipment has been skipped successfully. Your next shipment will be scheduled according to your subscription preferences.';
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
@@ -977,6 +1065,11 @@ function SkipOrderSubscription({handleModalClose, subscription, order}) {
           updateCustomerSubscription,
         });
         handleModalClose();
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: skipSubscriptionMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -1029,12 +1122,28 @@ function SkipOrderSubscription({handleModalClose, subscription, order}) {
   );
 }
 
-function ChangeSubscriptionDate({handleModalClose, subscription, order}) {
+function ChangeSubscriptionDate({
+  handleModalClose,
+  subscription,
+  order,
+  customer,
+  updateCustomerSubscription,
+}) {
   const fetcher = useFetcher();
-  const {data: customer, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
   const [dateChange, setDateChange] = useState(order?.place ?? new Date());
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const formattedDateMessage = new Date(dateChange).toLocaleDateString(
+    'en-US',
+    {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    },
+  );
+
+  const changeDateMessage = `Your shipment date has been changed successfully to ${formattedDateMessage}`;
 
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
@@ -1044,6 +1153,10 @@ function ChangeSubscriptionDate({handleModalClose, subscription, order}) {
           updateCustomerSubscription,
         });
         handleModalClose();
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: changeDateMessage});
+        }
       }
     }
   }, [fetcher.type]);
@@ -1102,12 +1215,30 @@ function ChangeSubscriptionDate({handleModalClose, subscription, order}) {
   );
 }
 
-function PauseSubscription({handleModalClose, subscription, order}) {
+function PauseSubscription({
+  handleModalClose,
+  subscription,
+  order,
+  customer,
+  updateCustomerSubscription,
+}) {
   const fetcher = useFetcher();
-  const {data: customer, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
+
   const [dateChange, setDateChange] = useState(order?.place ?? new Date());
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const formattedDateMessage = new Date(dateChange).toLocaleDateString(
+    'en-US',
+    {
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    },
+  );
+
+  const pauseDateMessage = `Your auto-delivery has been successfully paused until ${formattedDateMessage}`;
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.customer) {
@@ -1116,9 +1247,15 @@ function PauseSubscription({handleModalClose, subscription, order}) {
           updateCustomerSubscription,
         });
         handleModalClose();
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: pauseDateMessage});
+        }
       }
     }
   }, [fetcher.type]);
+
   return (
     <div className="modal__container">
       <div className="modal__header">
@@ -1169,11 +1306,19 @@ function PauseSubscription({handleModalClose, subscription, order}) {
   );
 }
 
-function ReactivateButton({product, subscription}) {
+function ReactivateButton({
+  product,
+  subscription,
+  customer,
+  updateCustomerSubscription,
+}) {
   const fetcher = useFetcher();
-  const {data: customer, updateCustomerSubscription} = useStore(
-    (store) => store?.account ?? null,
-  );
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const reactivateSubscriptionMessage =
+    'Your auto-delivery has been reactivated successfully.';
+
   useEffect(() => {
     if (fetcher.type === FETCHER.TYPE.ACTION_RELOAD) {
       if (fetcher.data?.customer) {
@@ -1181,6 +1326,11 @@ function ReactivateButton({product, subscription}) {
           customer,
           updateCustomerSubscription,
         });
+
+        if (!fetcher.data?.errors) {
+          closeBanner();
+          showBanner({_message: reactivateSubscriptionMessage});
+        }
       }
     }
   }, [fetcher.type]);

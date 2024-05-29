@@ -12,6 +12,11 @@ import AdvancedResultsView, {
 } from '~/modules/quiz/components/advancedResultsView';
 
 import styles from './styles.css';
+import {useEffect, useRef} from 'react';
+import {
+  getIdFromGid,
+  triggerAnalyticsOnScroll,
+} from '~/utils/functions/eventFunctions';
 
 export const links = () => {
   return [
@@ -33,6 +38,8 @@ const ResultView = ({content}) => {
     advancedQuizContent,
     submitType,
   } = content;
+
+  const skinQuizContainer = useRef(null);
 
   const provisionalH2 = advancedQuizContent
     ? "We've found your perfect skincare routine to:"
@@ -81,6 +88,19 @@ const ResultView = ({content}) => {
     return [...aResults, ...aAdvResults];
   }
 
+  useEffect(() => {
+    if (resultState) {
+      const products = Object.keys(resultState).map((item) => {
+        return handleGetProductByID(resultState[item][0].productId);
+      });
+      triggerAnalyticsOnScroll(
+        skinQuizContainer.current,
+        products,
+        'Skin Quiz Results',
+      );
+    }
+  }, [resultState]);
+
   return (
     <main className="finalWrapper">
       <SkinQuizAgeEmailOptIn
@@ -98,9 +118,17 @@ const ResultView = ({content}) => {
 
         <br />
 
-        <div className="resultsProductGrid">
+        <div className="resultsProductGrid" ref={skinQuizContainer}>
           {Object.keys(resultState).map((item, idx) => (
-            <div key={item} className="productWrapper">
+            <div
+              key={item}
+              className="productWrapper"
+              id={`product-${
+                handleGetProductByID(resultState[item][0].productId)?.handle
+                  ? handleGetProductByID(resultState[item][0].productId).handle
+                  : handleGetProductByID(resultState[item][0].productId).slug
+              }`}
+            >
               <h4>
                 <span>
                   {(idx + 1).toLocaleString('en-US', {
@@ -115,6 +143,31 @@ const ResultView = ({content}) => {
               {resultState[item][0] && (
                 <ProductBox
                   product={handleGetProductByID(resultState[item][0].productId)}
+                  analytics={{
+                    click: {
+                      actionField: {list: 'Skin Quiz Results'},
+                      products: [
+                        {
+                          name: handleGetProductByID(
+                            resultState[item][0].productId,
+                          ).title,
+                          id: getIdFromGid(
+                            handleGetProductByID(resultState[item][0].productId)
+                              .id,
+                          ),
+                          price: parseFloat(
+                            handleGetProductByID(resultState[item][0].productId)
+                              .priceRange?.minVariantPrice?.amount,
+                          )?.toFixed(2),
+                          category: handleGetProductByID(
+                            resultState[item][0].productId,
+                          ).productType,
+                          variant: '',
+                          position: 0,
+                        },
+                      ],
+                    },
+                  }}
                   ctaOpensBlank={
                     handleGetProductByID(resultState[item][0].productId)
                       ?.variants.length > 1

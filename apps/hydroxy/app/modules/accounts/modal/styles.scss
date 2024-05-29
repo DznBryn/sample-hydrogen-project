@@ -1,0 +1,97 @@
+.modalBackdrop {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+}
+
+.modalBackground {
+  position: fixed;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  width: 284px;
+  height: 258px;
+  padding: 48px 19px 19px;
+  z-index: 10001;
+  border-radius: 7px;
+}
+
+.modalCloseButton {
+  color: #4c4e56;
+  transform: rotate(45deg);
+  font-size: 2em;
+  line-height: 0.7;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}
+
+.modalContent {
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  line-height: 23px;
+  color: #4c4e56;
+  text-align: center;
+  margin: 0 30px;
+}
+
+.modalBtnContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 6px;
+}
+.defaultButton {
+  height: 43px;
+  border: 1px solid #47c6d9;
+  border-radius: 2px;
+  color: #47c6d9;
+  background: none;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 19px;
+  min-width: 180px;
+}
+
+.defaultButton[disabled] {
+  border-radius: 2px;
+  color: #fff;
+  background: rgba(76, 78, 86, 0.4);
+  border-color: rgba(76, 78, 86, 0.4);
+}
+
+.solid {
+  color: #fff;
+  background: #47c6d9;
+}
+
+@media all and (min-width: 768px) {
+  .modalBackground {
+    height: 230px;
+    width: 632px;
+    padding: 45px;
+  }
+
+  .modalContent {
+    line-height: 30px;
+  }
+
+  .modalBtnContainer {
+    flex-direction: row;
+    column-gap: 6px;
+  }
+}

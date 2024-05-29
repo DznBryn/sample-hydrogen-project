@@ -2,17 +2,17 @@ import {useFetcher, useMatches} from '@remix-run/react';
 import {useEffect, useState} from 'react';
 import {switchSliderPanelVisibility} from '../sliderPanel';
 import {Padlock} from '../icons';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 import {
   createCustomEvent,
   getIdFromGid,
 } from '~/utils/functions/eventFunctions';
 import {API_METHODS, FETCHER} from '~/utils/constants';
 import {useStore} from '~/hooks/useStore';
-import {useCartState} from '~/hooks/useCart';
 import {useRouteLoaderData} from '@remix-run/react';
 
 import styles from './styles.css';
+import {flattenConnection} from '@shopify/hydrogen';
 
 export const links = () => {
   return [{rel: 'stylesheet', href: styles}];
@@ -45,9 +45,7 @@ export default function PDPAddToCart({
 
   const selectedLocale = root.data.selectedLocale;
   const addToCart = useFetcher();
-
-  const {id, items} = useCartState();
-  const {isLoggedIn} = useCustomerState();
+  const {isLoggedIn} = useCustomer();
   const [buttonState, setButtonState] = useState(IDLE);
   const loadingBtnStylesForExclusiveProducts = {
     color: exclusiveProductTextColor,
@@ -82,11 +80,7 @@ export default function PDPAddToCart({
       addToCart?.data?.errors?.length > 0
     ) {
       setButtonState(ERROR);
-    } else if (
-      addItem?.quantity > 0 &&
-      availableForSale &&
-      buttonState !== IDLE
-    ) {
+    } else if (addItem?.quantity > 0 && buttonState !== IDLE) {
       if (
         addToCart.data?.cart &&
         addToCart.data?.cart?.totalQuantity !== data?.totalQuantity &&
@@ -161,7 +155,7 @@ export default function PDPAddToCart({
   function updateOGState() {
     if (addItem.selling_plan_id !== 0) {
       const OG_STATE = {
-        sessionId: id,
+        sessionId: data?.id,
         optedin: [
           {id: '8419474538542', frequency: '2_3'},
           {id: '35292334273', frequency: '2_3'},
@@ -197,7 +191,7 @@ export default function PDPAddToCart({
         OG_KEY[rootData?.ENVS?.SITE_NAME]?.AD20,
       ];
 
-      items.forEach((item) => {
+      flattenConnection(data?.lines).forEach((item) => {
         if (item.selling_plan_allocation) {
           OG_STATE.productOffer[item.variant_id] = [
             OG_KEY[rootData?.ENVS?.SITE_NAME]?.AD20,
@@ -215,7 +209,7 @@ export default function PDPAddToCart({
 
   const mapStateToButton = {
     [IDLE]: (
-      <addToCart.Form action="/cart" method={API_METHODS.POST}>
+      <addToCart.Form action="/api/cart" method={API_METHODS.POST}>
         <input
           type="hidden"
           name="cartAction"

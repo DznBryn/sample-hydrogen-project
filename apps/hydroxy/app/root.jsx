@@ -38,24 +38,13 @@ import {useStore} from './hooks/useStore';
 import PageMeta from './modules/pageMeta';
 import {useEffect, useRef} from 'react';
 import {usePageAnalytics} from './hooks/usePageAnalytics';
-import {getCart} from './utils/graphql/shopify/queries/cart';
-
 import styles from './styles/app.css';
 import {
-  parseGid,
   AnalyticsEventName,
   getClientBrowserParameters,
   sendShopifyAnalytics,
   useShopifyCookies,
 } from '@shopify/hydrogen';
-import {
-  getCustomerAddresses,
-  getCustomerOrders,
-  getCustomerSubscription,
-  getItems,
-  getProucts,
-  getSubscriptionPayments,
-} from './utils/services/subscription';
 
 //
 
@@ -84,6 +73,7 @@ export async function loader({context, request}) {
   const url = new URL(request.url);
 
   togglePreviewMode(context, url, referer);
+  const {SHOPIFY_ANALYTICS} = context.env;
 
   /**
    * REDIRECT
@@ -115,12 +105,9 @@ export async function loader({context, request}) {
    * SHOPIFY DATA
    */
 
-  const [cartId, curCustomerAccessToken] = await Promise.all([
-    context.session.get('cartId'),
+  const [curCustomerAccessToken] = await Promise.all([
     context.session.get('customerAccessToken'),
   ]);
-
-  const cart = cartId ? await getCart(context, cartId) : {};
 
   if (
     customerCache.accessToken !== curCustomerAccessToken ||
@@ -139,7 +126,7 @@ export async function loader({context, request}) {
   return defer(
     {
       request,
-      cart,
+      analytics: {shopId: `gid://shopify/Shop/${SHOPIFY_ANALYTICS}`},
       customer: customerCache.data,
       showSliderCart: checkShowSliderCart(request),
       previewMode: context.session.get('previewMode') === 'true',
@@ -156,6 +143,9 @@ export async function loader({context, request}) {
         POSTSCRIPT_ID: context?.env?.POSTSCRIPT_ID,
         ONETRUST_ID: context?.env?.ONETRUST_ID,
         LISTRAK_ID: context?.env?.LISTRAK_ID,
+        MULTIPASS_SECRET: context?.env?.MULTIPASS_SECRET,
+        PUBLIC_STORE_DOMAIN: context?.env?.PUBLIC_STORE_DOMAIN,
+        GORGIAS_ID: context?.env?.GORGIAS_ID,
       },
     },
     {
@@ -198,14 +188,9 @@ export default function App() {
     });
   }, [location]);
 
-  const {cart, showSliderCart, previewMode, customer} = useLoaderData();
-  const {setData: setCartData = () => {}, toggleCart} = useStore(
-    (store) => store?.cart ?? null,
-  );
+  const {showSliderCart, previewMode} = useLoaderData();
 
-  const {data: customerData, setCustomerData} = useStore(
-    (store) => store?.account ?? {},
-  );
+  const {toggleCart} = useStore((store) => store?.cart ?? null);
 
   // @TODO: Uncomment when OneTrust is ready
   // useEffect(() => {
@@ -216,93 +201,12 @@ export default function App() {
   // });
 
   useEffect(() => {
-    setCartData(cart);
-
-    if (customerData && customer?.id !== customerData.id) {
-      getCustomerSubscriptionData(customer);
-    }
-
     if (showSliderCart) toggleCart(true);
   }, []);
 
   useEffect(() => {
     if (previewMode) updatePreviewModeURL();
   }, [location]);
-
-  async function getCustomerSubscriptionData(customer) {
-    if (customer?.id) {
-      customer.subscription = {};
-      const customerId = parseGid(customer.id).id;
-
-      const [
-        activeSubscription,
-        inactiveSubscription,
-        subscriptionOrders,
-        items,
-        payments,
-        subscriptionAddresses,
-        ogProducts,
-      ] = await Promise.all([
-        getCustomerSubscription(customerId, true),
-        getCustomerSubscription(customerId),
-        getCustomerOrders(customerId),
-        getItems(customerId),
-        getSubscriptionPayments(customerId),
-        getCustomerAddresses(customerId),
-        getProucts(customerId),
-      ]);
-
-      subscriptionAddresses &&
-        (customer.subscription.addresses = subscriptionAddresses);
-
-      inactiveSubscription &&
-        (customer.subscription.inactive = inactiveSubscription);
-
-      const activeItems = {
-        ...items,
-        results: items?.results?.map((item) => {
-          if (activeSubscription?.results) {
-            const subscription = activeSubscription.results.find(
-              (sub) => sub.public_id === item.subscription,
-            );
-            const payment = payments?.results?.find(
-              (pay) => pay.public_id === subscription.payment,
-            );
-
-            subscription.payment = payment;
-            item.subscription = subscription;
-          }
-
-          return item;
-        }),
-      };
-
-      subscriptionOrders?.results &&
-        (subscriptionOrders.results = subscriptionOrders.results.map(
-          (order) => {
-            const items = [];
-
-            activeItems.results.forEach((item) => {
-              if (order.public_id === item.order) {
-                items.push(item);
-              }
-            });
-
-            const payment = payments?.results?.find(
-              (pay) => pay.public_id === order.payment,
-            );
-
-            order.payment = payment;
-            order.items = items;
-            return order;
-          },
-        ));
-
-      subscriptionOrders && (customer.subscription.orders = subscriptionOrders);
-      ogProducts && (customer.subscription.products = ogProducts);
-      setCustomerData(customer);
-    }
-  }
 
   return (
     <RootStructure>

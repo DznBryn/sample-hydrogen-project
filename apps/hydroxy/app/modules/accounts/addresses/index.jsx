@@ -1,184 +1,299 @@
-import { useEffect, useRef, useState } from 'react';
-import { useStore } from '~/hooks/useStore';
+import {useEffect, useRef, useState} from 'react';
+import {useFetcher, useRevalidator} from '@remix-run/react';
+
+import {useSuccessBanner} from '~/hooks/useStore';
+
+import Modal, {links as modalStyles} from '~/modules/accounts/modal';
+
+import {API_METHODS, FETCHER, FORM_ACTIONS, US_STATES} from '~/utils/constants';
+
 import styles from './styles.css';
-import { useFetcher } from '@remix-run/react';
-import { API_METHODS, FETCHER, FORM_ACTIONS, US_STATES } from '~/utils/constants';
 
 export function links() {
-  return [
-    { rel: 'stylesheet', href: styles }
-  ];
+  return [{rel: 'stylesheet', href: styles}, ...modalStyles()];
 }
-export default function Addresses() {
-  const data = useStore(store => store?.account?.data ?? null);
+export default function Addresses({data}) {
+  const {addresses, defaultAddress} = data;
+
+  const removeAddressFetcher = useFetcher({key: 'remove-address'});
+  const addAddressFetcher = useFetcher({key: 'add-address'});
+
   const [showAddAddressForm, setShowAddAddressForm] = useState({
     headerMessage: 'Add New Address',
     submitBtnMessage: 'Add address',
     formAction: FORM_ACTIONS.CREATE,
   });
-  return showAddAddressForm.id ? (
-    <div id="addressTab" className={'mainContainer'}>
-      <Form data={{
-        headerMessage: showAddAddressForm?.headerMessage,
-        submitBtnMessage: showAddAddressForm?.submitBtnMessage,
-        closeForm: () => setShowAddAddressForm({ id: null }),
-        ...showAddAddressForm
-      }} />
-    </div>
-  ) : (
-    <div id="addressTab" className={'mainContainer'}>
-      <div className="dataContainer">
-        <div className="accountDetailsContainer">
-          <div className={'headerContainer'}>
-            <h3 className={'headerTitle'}>Account Details</h3>
-          </div>
-          <h3 className={'accountName'}>{
-            (data?.defaultAddress !== null &&
-              data?.defaultAddress?.firstName !== ''
-              ? data.defaultAddress.firstName : data?.firstName)
-            + ' ' +
-            (data?.defaultAddress !== null &&
-              data?.defaultAddress?.lastName !== ''
-              ? data.defaultAddress.lastName : data?.lastName)
-          }</h3>
-          <span className={'accountDetails'}>{data?.phone}</span>
-          <span className={'accountDetails'}>{data?.email}</span>
-          <span className={'accountDetails'}>
-            {new Date(data?.createdAt).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </span>
-        </div>
-        <div className={'addressContainer'}>
 
-          <div className={'headerContainer'}>
-            <h3 className={'headerTitle'}>Shipping Addresses</h3>
-            <button
-              className={'editButton'}
-              onClick={() => setShowAddAddressForm({
-                id: ' ',
-                headerMessage: 'Add New Address',
-                submitBtnMessage: 'Add address',
-                formAction: FORM_ACTIONS.CREATE
-              })}
-            >
-              + Add New Address
-            </button>
-          </div>
-          {
-            data?.addresses && data.addresses?.length > 0 ? (
-              <div className={'addressListContainer'}>
-                {
-                  data.addresses.sort((a, b) => {
-                    a.isDefault = data?.defaultAddress?.id === a.id;
-                    b.isDefault = data?.defaultAddress?.id === b.id;
-                    return b.isDefault - a.isDefault;
-                  }).map(address => <div key={`address-${address.id}`}>
-                    <AddressBox data={{
-                      editAddress: () => setShowAddAddressForm({
-                        headerMessage: 'Edit Address',
-                        submitBtnMessage: 'Update address',
-                        formAction: FORM_ACTIONS.UPDATE,
-                        ...address
-                      }),
-                      ...address
-                    }} />
-                  </div>)
-                }
-              </div>
-            ) : (<p className={'noAddressesMessage'}>
-              <strong>No addesses saved yet</strong>
-              <br />
-              <span>
-                Shipping addresses used at checkout will be saved here or you
-                can &nbsp;
-              </span>
-              <span
-                className={'editButton'}
-                onClick={() => setShowAddAddressForm({
-                  id: ' ',
-                  headerMessage: 'Add New Address',
-                  submitBtnMessage: 'Add address',
-                  formAction: FORM_ACTIONS.CREATE,
-                })}
-              >
-                add a new address now.
-              </span>
-            </p>)
-          }
+  const [modalData, setModalData] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    submitBtnMessage: 'Submit',
+    cancelBtnMessage: 'Cancel',
+    submitAction: () => {},
+  });
+
+  function parseAddressId(addressId) {
+    return addressId?.split('?')[0];
+  }
+
+  const sortedAddress = [
+    {...defaultAddress, isDefault: true},
+    ...addresses.filter(
+      (add) => parseAddressId(add?.id) !== parseAddressId(defaultAddress?.id),
+    ),
+  ];
+
+  return (
+    <>
+      <AddressModal modalData={modalData} setModalData={setModalData} />
+      {showAddAddressForm.id ? (
+        <div id="addressTab" className={'mainContainer'}>
+          <Form
+            data={{
+              headerMessage: showAddAddressForm?.headerMessage,
+              submitBtnMessage: showAddAddressForm?.submitBtnMessage,
+              closeForm: () => setShowAddAddressForm({id: null}),
+              setModalData,
+              addAddressFetcher,
+              ...showAddAddressForm,
+            }}
+          />
         </div>
-      </div>
-    </div>
+      ) : (
+        <div id="addressTab" className={'mainContainer'}>
+          <div className="dataContainer">
+            <div className="accountDetailsContainer">
+              <div className={'headerContainer'}>
+                <h3 className={'headerTitle'}>Account Details</h3>
+              </div>
+              <h3 className={'accountName'}>
+                {(defaultAddress !== null && defaultAddress?.firstName !== ''
+                  ? defaultAddress.firstName
+                  : data?.firstName) +
+                  ' ' +
+                  (defaultAddress !== null && defaultAddress?.lastName !== ''
+                    ? defaultAddress.lastName
+                    : data?.lastName)}
+              </h3>
+              <span className={'accountDetails'}>{data?.phone}</span>
+              <span className={'accountDetails'}>{data?.email}</span>
+              <span className={'accountDetails'}>
+                {new Date(data?.createdAt).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </span>
+            </div>
+            <div className={'addressContainer'}>
+              <div className={'headerContainer'}>
+                <h3 className={'headerTitle'}>Shipping Addresses</h3>
+                <button
+                  className={'editButton'}
+                  onClick={() =>
+                    setShowAddAddressForm({
+                      id: ' ',
+                      headerMessage: 'Add New Address',
+                      submitBtnMessage: 'Add address',
+                      formAction: FORM_ACTIONS.CREATE,
+                    })
+                  }
+                >
+                  + Add New Address
+                </button>
+              </div>
+              {addresses.length ? (
+                <div className={'addressListContainer'}>
+                  {sortedAddress.map((address) => (
+                    <div key={`address-${address.id}`}>
+                      <AddressBox
+                        data={{
+                          removeAddressFetcher,
+                          setModalData,
+                          editAddress: () =>
+                            setShowAddAddressForm({
+                              headerMessage: 'Edit Address',
+                              submitBtnMessage: 'Update address',
+                              formAction: FORM_ACTIONS.UPDATE,
+                              ...address,
+                            }),
+                          ...address,
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className={'noAddressesMessage'}>
+                  <strong>No addesses saved yet</strong>
+                  <br />
+                  <span>
+                    Shipping addresses used at checkout will be saved here or
+                    you can &nbsp;
+                  </span>
+                  <span
+                    className={'editButton'}
+                    onClick={() =>
+                      setShowAddAddressForm({
+                        id: ' ',
+                        headerMessage: 'Add New Address',
+                        submitBtnMessage: 'Add address',
+                        formAction: FORM_ACTIONS.CREATE,
+                      })
+                    }
+                  >
+                    add a new address now.
+                  </span>
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
-const AddressBox = ({ data = null }) => {
+const AddressBox = ({data = null}) => {
   return (
-    <div
-      className={'addressBoxContainer'}
-      style={{
-        background: data?.isDefault && '#47c6d90d',
-        paddingTop: !data?.isDefault && 33,
-      }}
-    >
-      {data?.isDefault && (
-        <div className={'defaultAddressBadge'}>default address</div>
-      )}
+    <>
+      <div
+        className={'addressBoxContainer'}
+        style={{
+          background: data?.isDefault && '#47c6d90d',
+          paddingTop: !data?.isDefault && 33,
+        }}
+      >
+        {data?.isDefault && (
+          <div className={'defaultAddressBadge'}>default address</div>
+        )}
 
-      <div className={'addressDetails'}>
-        <p
-          className={'addressDetailName'}
-        >{`${data?.firstName} ${data?.lastName}`}</p>
-        <p className={'addressDetailAddress'}>
-          {data?.address1}.&nbsp;
-          {data?.city},&nbsp;
-          {data?.zip},&nbsp;
-          <br className={'countryBreakRow'} />
-          {data?.country}
-        </p>
-      </div>
+        <div className={'addressDetails'}>
+          <p
+            className={'addressDetailName'}
+          >{`${data?.firstName} ${data?.lastName}`}</p>
+          <p className={'addressDetailAddress'}>
+            {data?.address1}.&nbsp;
+            {data?.city},&nbsp;
+            {data?.zip},&nbsp;
+            <br className={'countryBreakRow'} />
+            {data?.country}
+          </p>
+        </div>
 
-      <div className={'addressBtnContainer'}>
-        <button
-          className={'addressBtn'}
-          type="button"
-          onClick={data?.editAddress}
-        >
-          Edit Address
-        </button>
-        <div className={'verticalSeparator'} />
-        <RemoveAddress addressId={data.id} />
+        <div className={'addressBtnContainer'}>
+          <button
+            className={'addressBtn'}
+            type="button"
+            onClick={data?.editAddress}
+          >
+            Edit Address
+          </button>
+          <p className="verticalSeparator">{'\u2502'}</p>
+          <RemoveAddress
+            addressId={data.id}
+            setModalData={data.setModalData}
+            fetcher={data.removeAddressFetcher}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
-function RemoveAddress({ addressId }) {
-  const fetcher = useFetcher();
-  const { removeAddress } = useStore(store => store?.account ?? null);
+function RemoveAddress({addressId, setModalData, fetcher}) {
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const revalidator = useRevalidator();
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const addressSuccefullyRemovedMessage = 'Address successfully removed.';
+
+  const buttonMessage =
+    (fetcher.state === FETCHER.STATE.SUBMIT ||
+      fetcher.state === FETCHER.STATE.LOADING) &&
+    isDeleting
+      ? '...Removing Address'
+      : 'Remove Address';
+
+  function scrollToTop() {
+    window?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  function onSubmit() {
+    fetcher.submit(
+      {addressId},
+      {
+        method: API_METHODS.DELETE,
+        action: '/account',
+      },
+    );
+    setIsDeleting(true);
+  }
+
+  function openModal() {
+    const removeTitle = 'Remove address';
+    const removeMessage = 'Are you sure want to remove this shipping address?';
+    const submitBtnMessage = 'Yes, remove';
+    const cancelBtnMessage = 'Cancel';
+
+    function handleSubmit() {
+      setModalData((prevState) => ({
+        ...prevState,
+        isOpen: false,
+      }));
+      onSubmit();
+    }
+
+    setModalData((prevState) => ({
+      ...prevState,
+      title: removeTitle,
+      message: removeMessage,
+      submitBtnMessage,
+      submitAction: handleSubmit,
+      cancelBtnMessage,
+      isOpen: true,
+    }));
+
+    scrollToTop();
+  }
+
   useEffect(() => {
-    if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
-      removeAddress(addressId);
+    if (fetcher.type === FETCHER.TYPE.DONE && revalidator.state === 'idle') {
+      revalidator.revalidate();
+      closeBanner();
+      scrollToTop();
+      fetcher.type = 'init';
+      showBanner({_message: addressSuccefullyRemovedMessage});
+      setIsDeleting(false);
     }
   }, [fetcher.type]);
-  return <fetcher.Form action='/account' method={API_METHODS.DELETE} >
-    <input type="hidden" name="addressId" value={addressId} required />
-    <button
-      className={'addressBtn'}
-      type="submit"
-    >
-      {
-        fetcher.state === FETCHER.STATE.SUBMIT || fetcher.state === FETCHER.STATE.LOADING ? '...Removing Address' : 'Remove Address'
-      }
-    </button>
-  </fetcher.Form>;
+
+  return (
+    <fetcher.Form>
+      <input type="hidden" name="addressId" value={addressId} required />
+      <button
+        className={'addressBtn'}
+        type="button"
+        onClick={(e) => {
+          e.preventDefault(), openModal();
+        }}
+      >
+        {buttonMessage}
+      </button>
+    </fetcher.Form>
+  );
 }
 
-function Form({ data }) {
-  const fetcher = useFetcher();
-  const { updateAddresses } = useStore(store => store?.account ?? null);
+function Form({data}) {
+  const fetcher = data.addAddressFetcher;
+  const revalidator = useRevalidator();
+
   const [form, setForm] = useState({
     firstName: data?.firstName ?? '',
     lastName: data?.lastName ?? '',
@@ -195,17 +310,56 @@ function Form({ data }) {
     province: data?.province ?? '',
     zip: data?.zip ? String(data.zip.slice(0, 5)) : '',
   });
+
   const [formErrors, setErrors] = useState([]);
   const phoneRef = useRef(null);
+
+  const {closeBanner, showBanner} = useSuccessBanner();
+
+  const addressSuccefullyAddedMessage = 'Address successfully added.';
+  const addressSuccefullyUpdatedMessage = 'Address successfully updated.';
+
+  function scrollToTop() {
+    window?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+  }
+
+  function showNewBanner(message) {
+    closeBanner();
+    showBanner({_message: message});
+  }
 
   useEffect(() => {
     if (fetcher.data?.errors) {
       setErrors(fetcher.data.errors);
     }
-    if (fetcher.type === FETCHER.TYPE.DONE && fetcher.data?.addresses) {
-      updateAddresses(fetcher.data);
+    if (
+      fetcher.type === FETCHER.TYPE.DONE &&
+      fetcher.data?.addresses &&
+      revalidator.state === 'idle'
+    ) {
       data.closeForm();
+      scrollToTop();
+      revalidator.revalidate();
     }
+  }, [fetcher]);
+
+  useEffect(() => {
+    if (fetcher?.data?.errors) {
+      return;
+    }
+    if (fetcher.type === FETCHER.TYPE.DONE) {
+      if (data?.formAction === FORM_ACTIONS.UPDATE) {
+        showNewBanner(addressSuccefullyUpdatedMessage);
+      } else {
+        showNewBanner(addressSuccefullyAddedMessage);
+      }
+      fetcher.type = 'init';
+    }
+    scrollToTop();
   }, [fetcher.type]);
 
   function format(ref) {
@@ -231,12 +385,12 @@ function Form({ data }) {
     }
     const val = doFormat(
       ref.current.value,
-      ref.current.getAttribute('data-format')
+      ref.current.getAttribute('data-format'),
     );
     ref.current.value = doFormat(
       ref.current.value,
       ref.current.getAttribute('data-format'),
-      ref.current.getAttribute('data-mask')
+      ref.current.getAttribute('data-mask'),
     );
     if (ref.current.createTextRange) {
       var range = ref.current.createTextRange();
@@ -251,7 +405,7 @@ function Form({ data }) {
   const handleOnChange = (e) => {
     e?.preventDefault();
     var regex = /[^0-9]/gi;
-    const { name, value } = e.target || e.current;
+    const {name, value} = e.target || e.current;
     if (name === 'zip') {
       if (value === '' && !formErrors.includes(name)) {
         setErrors([...formErrors, name]);
@@ -260,7 +414,10 @@ function Form({ data }) {
         const errors = formErrors.filter((error) => error !== name);
         setErrors(errors);
       }
-      return setForm((prevFormData) => ({ ...prevFormData, [name]: value.replace(regex, '') }));
+      return setForm((prevFormData) => ({
+        ...prevFormData,
+        [name]: value.replace(regex, ''),
+      }));
     } else {
       if (value === '' && !formErrors.includes(name)) {
         setErrors([...formErrors, name]);
@@ -269,229 +426,287 @@ function Form({ data }) {
         const errors = formErrors.filter((error) => error !== name);
         setErrors(errors);
       }
-      return setForm((prevFormData) => ({ ...prevFormData, [name]: value }));
+      return setForm((prevFormData) => ({...prevFormData, [name]: value}));
     }
   };
 
+  function onSubmit(event) {
+    fetcher.submit(event.currentTarget.form, {
+      method: API_METHODS.POST,
+      action: '/account',
+      encType: 'application/x-www-form-urlencoded',
+    });
+  }
 
-  return <fetcher.Form className={'formContainer'} action='/account' method={API_METHODS.POST}>
-    {data?.headerMessage && <h2 className={'formTitle'}>{data.headerMessage}</h2>}
-    <input type="hidden" name="formAction" value={data?.formAction} />
-    {
-      data?.formAction === FORM_ACTIONS.UPDATE &&
-      <input type="hidden" name="addressId" value={data?.id} />
+  function openModal() {
+    const {setModalData} = data;
+
+    const updateTitle = 'Are you sure?';
+    const updateMessage = 'If you cancel, the edits you have made will be lost';
+    const submitBtnMessage = 'Yes, I want to cancel';
+    // eslint-disable-next-line quotes
+    const cancelBtnMessage = "No, I don't want to cancel";
+
+    function handleCancel() {
+      data?.closeForm();
+      setModalData((prevState) => ({
+        ...prevState,
+        isOpen: false,
+      }));
     }
-    <p className={'formInfoText'}>* indicates a required field</p>
-    <div className={'formGroup'}>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>First Name*</label>
-        <input
-          name="firstName"
-          className={`formInput ${formErrors.includes('firstName') && 'formInputError'}`}
-          placeholder="First Name"
-          value={form?.firstName ?? data?.firstName}
-          onChange={handleOnChange}
-        />
-        {formErrors.includes('firstName') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>Last Name*</label>
-        <input
-          name="lastName"
-          className={`formInput ${formErrors.includes('lastName') && 'formInputError'}`}
-          placeholder="Last Name"
-          value={form?.lastName ?? data?.lastName}
-          onChange={handleOnChange}
-        />
-        {formErrors.includes('lastName') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
-    </div>
-    <div className={'formGroup'}>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>Company</label>
-        <input
-          name="company"
-          placeholder="Company name (optional)"
-          className={'formInput'}
-          value={form?.company}
-          onChange={handleOnChange}
-        />
-      </span>
-    </div>
-    <div className={'formGroup'}>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>Street Address*</label>
-        <input
-          name="streetAddress"
-          placeholder="Street Address"
-          className={`formInput ${formErrors.includes('streetAddress') && 'formInputError'}`}
-          value={form?.streetAddress}
-          onChange={handleOnChange}
-        />
-        {formErrors.includes('streetAddress') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
-    </div>
-    <div className={'aptCityGroup'}>
-      <span className={'inputCell aptCell'}>
-        <label className={'inputLabel'}>Apt, Suite</label>
-        <input
-          type="tel"
-          name="number"
-          className={'formInput'}
-          placeholder="No."
-          value={form?.number}
-          onChange={handleOnChange}
-        />
-      </span>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>City*</label>
-        <input
-          name="city"
-          className={`formInput ${formErrors.includes('city') && 'formInputError'}`}
-          placeholder="City"
-          value={form?.city}
-          onChange={handleOnChange}
-        />
-        {formErrors.includes('city') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
-    </div>
-    <div className={'formGroup'}>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>State*</label>
-        <div
-          className={`formInput ${formErrors.includes('province') && 'formInputError'}`}
-          name="countryContainer"
-        >
-          <AddressIcon
-            style={{ position: 'absolute', top: '25%', left: 16 }}
-            formErrors={formErrors}
-          />
-          <select
-            name="province"
-            value={form?.province}
-            className={'countrySelect'}
+
+    setModalData((prevState) => ({
+      ...prevState,
+      title: updateTitle,
+      message: updateMessage,
+      submitBtnMessage,
+      submitAction: handleCancel,
+      cancelBtnMessage,
+      isOpen: true,
+    }));
+
+    scrollToTop();
+  }
+
+  return (
+    <fetcher.Form className={'formContainer'}>
+      {data?.headerMessage && (
+        <h2 className={'formTitle'}>{data.headerMessage}</h2>
+      )}
+      <input type="hidden" name="formAction" value={data?.formAction} />
+      {data?.formAction === FORM_ACTIONS.UPDATE && (
+        <input type="hidden" name="addressId" value={data?.id} />
+      )}
+      <p className={'formInfoText'}>* indicates a required field</p>
+      <div className={'formGroup'}>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>First Name*</label>
+          <input
+            name="firstName"
+            className={`formInput ${
+              formErrors.includes('firstName') && 'formInputError'
+            }`}
+            placeholder="First Name"
+            value={form?.firstName ?? data?.firstName}
             onChange={handleOnChange}
+          />
+          {formErrors.includes('firstName') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>Last Name*</label>
+          <input
+            name="lastName"
+            className={`formInput ${
+              formErrors.includes('lastName') && 'formInputError'
+            }`}
+            placeholder="Last Name"
+            value={form?.lastName ?? data?.lastName}
+            onChange={handleOnChange}
+          />
+          {formErrors.includes('lastName') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
+      </div>
+      <div className={'formGroup'}>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>Company</label>
+          <input
+            name="company"
+            placeholder="Company name (optional)"
+            className={'formInput'}
+            value={form?.company}
+            onChange={handleOnChange}
+          />
+        </span>
+      </div>
+      <div className={'formGroup'}>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>Street Address*</label>
+          <input
+            name="streetAddress"
+            placeholder="Street Address"
+            className={`formInput ${
+              formErrors.includes('streetAddress') && 'formInputError'
+            }`}
+            value={form?.streetAddress}
+            onChange={handleOnChange}
+          />
+          {formErrors.includes('streetAddress') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
+      </div>
+      <div className={'aptCityGroup'}>
+        <span className={'inputCell aptCell'}>
+          <label className={'inputLabel'}>Apt, Suite</label>
+          <input
+            type="tel"
+            name="number"
+            className={'formInput'}
+            placeholder="No."
+            value={form?.number}
+            onChange={handleOnChange}
+          />
+        </span>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>City*</label>
+          <input
+            name="city"
+            className={`formInput ${
+              formErrors.includes('city') && 'formInputError'
+            }`}
+            placeholder="City"
+            value={form?.city}
+            onChange={handleOnChange}
+          />
+          {formErrors.includes('city') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
+      </div>
+      <div className={'formGroup'}>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>State*</label>
+          <div
+            className={`formInput ${
+              formErrors.includes('province') && 'formInputError'
+            }`}
+            name="countryContainer"
           >
-            <option value="" disabled selected hidden>
-              -- Select --
-            </option>
-            {US_STATES.map((state, idx) => (
-              <option key={idx}>
-                {state.split(' ').slice(0, 3).join(' ')}
+            <AddressIcon
+              style={{position: 'absolute', top: '25%', left: 16}}
+              formErrors={formErrors}
+            />
+            <select
+              name="province"
+              value={form?.province}
+              className={'countrySelect'}
+              onChange={handleOnChange}
+            >
+              <option value="" disabled selected hidden>
+                -- Select --
               </option>
-            ))}
-          </select>
-        </div>
-        {formErrors.includes('province') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
+              {US_STATES.map((state, idx) => (
+                <option key={idx}>
+                  {state.split(' ').slice(0, 3).join(' ')}
+                </option>
+              ))}
+            </select>
+          </div>
+          {formErrors.includes('province') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
 
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>Zip Code*</label>
-        <input
-          type="tel"
-          name="zip"
-          className={`formInput ${formErrors.includes('zip') && 'formInputError'}`}
-          placeholder="Zip Code"
-          value={form?.zip}
-          onChange={handleOnChange}
-          minLength="5"
-          maxLength="5"
-        />
-        {formErrors.includes('zip') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
-    </div>
-    <div className={'formGroup'}>
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>Country*</label>
-        <input
-          name="country"
-          className={`formInput ${formErrors.includes('country') && 'formInputError'}`}
-          value={'United States'}
-          onChange={handleOnChange}
-          readOnly
-        />
-        {formErrors.includes('country') && (
-          <p className={'errorMessage'}>*Required</p>
-        )}
-      </span>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>Zip Code*</label>
+          <input
+            type="tel"
+            name="zip"
+            className={`formInput ${
+              formErrors.includes('zip') && 'formInputError'
+            }`}
+            placeholder="Zip Code"
+            value={form?.zip}
+            onChange={handleOnChange}
+            minLength="5"
+            maxLength="5"
+          />
+          {formErrors.includes('zip') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
+      </div>
+      <div className={'formGroup'}>
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>Country*</label>
+          <input
+            name="country"
+            className={`formInput ${
+              formErrors.includes('country') && 'formInputError'
+            }`}
+            value={'United States'}
+            onChange={handleOnChange}
+            readOnly
+          />
+          {formErrors.includes('country') && (
+            <p className={'errorMessage'}>*Required</p>
+          )}
+        </span>
 
-      <span className={'inputCell'}>
-        <label className={'inputLabel'}>Phone</label>
-        <input
-          name="phone"
-          type="tel"
-          placeholder="( ___ ) ___ - ____"
-          className={'formInput'}
-          aria-label="( ___ ) ___ - ____"
-          ref={phoneRef}
-          value={form?.phone}
-          data-format="(***) *** - ****"
-          data-mask="( ___ ) ___ - ____"
-          onKeyUp={() => format(phoneRef)}
-          onChange={() => handleOnChange(phoneRef)}
+        <span className={'inputCell'}>
+          <label className={'inputLabel'}>Phone</label>
+          <input
+            name="phone"
+            type="tel"
+            placeholder="( ___ ) ___ - ____"
+            className={'formInput'}
+            aria-label="( ___ ) ___ - ____"
+            ref={phoneRef}
+            value={form?.phone}
+            data-format="(***) *** - ****"
+            data-mask="( ___ ) ___ - ____"
+            onKeyUp={() => format(phoneRef)}
+            onChange={() => handleOnChange(phoneRef)}
+          />
+        </span>
+      </div>
+      <div className={'defaultCheckboxContainer'}>
+        <label className={'defaultCheckbox'}>
+          <input
+            type="checkbox"
+            name="isDefault"
+            readOnly
+            checked={form?.isDefault}
+            value={form?.isDefault}
+            onClick={() => setForm({...form, isDefault: !form?.isDefault})}
+          />
+          <span className={'checkmark'}></span>
+        </label>
+        <p>Set as default address</p>
+      </div>
+      <div className={'formBtnContainer'}>
+        <Button
+          type="button"
+          onClick={onSubmit}
+          styleType="solid"
+          disabled={
+            formErrors.length > 0 ||
+            fetcher.state === FETCHER.STATE.SUBMIT ||
+            fetcher.state === FETCHER.STATE.LOADING
+          }
+          message={
+            fetcher.state === FETCHER.STATE.SUBMIT
+              ? 'Submitting'
+              : fetcher.state === FETCHER.STATE.LOADING
+              ? 'Loading'
+              : data.submitBtnMessage
+          }
+          className={'addAddress'}
         />
-      </span>
-    </div>
-    <div className={'defaultCheckboxContainer'}>
-      <label className={'defaultCheckbox'}>
-        <input
-          type="checkbox"
-          name='isDefault'
-          readOnly
-          checked={form?.isDefault}
-          value={form?.isDefault}
-          onClick={() => setForm({ ...form, isDefault: !form?.isDefault })}
+        <Button
+          type="button"
+          message="Cancel"
+          className={'addAddress'}
+          onClick={openModal}
         />
-        <span className={'checkmark'}></span>
-      </label>
-      <p>Set as default address</p>
-    </div>
-    <div className={'formBtnContainer'}>
-      <Button
-        type="submit"
-        styleType="solid"
-        disabled={formErrors.length > 0 || fetcher.state === FETCHER.STATE.SUBMIT || fetcher.state === FETCHER.STATE.LOADING}
-        message={
-          fetcher.state === FETCHER.STATE.SUBMIT ? 'Submitting' :
-            fetcher.state === FETCHER.STATE.LOADING ? 'Loading' :
-              data.submitBtnMessage
-        }
-        className={'addAddress'}
-      />
-      <Button
-        type="button"
-        message="Cancel"
-        className={'addAddress'}
-        onClick={data?.closeForm}
-      />
-    </div>
-  </fetcher.Form>;
+      </div>
+    </fetcher.Form>
+  );
 }
 
-const Button = ({ message, styleType, ...rest }) => {
+const Button = ({message, styleType, ...rest}) => {
   return (
-    <button
-      {...rest}
-      className={`defaultButton ${styleType}`}
-    >
+    <button {...rest} className={`defaultButton ${styleType}`}>
       {message}
     </button>
   );
 };
 
-const AddressIcon = ({ formErrors = [], ...rest }) => (
+const AddressIcon = ({formErrors = [], ...rest}) => (
   <svg
     {...rest}
     xmlns="http://www.w3.org/2000/svg"
@@ -506,3 +721,27 @@ const AddressIcon = ({ formErrors = [], ...rest }) => (
     />
   </svg>
 );
+
+const AddressModal = ({modalData, setModalData}) => {
+  function handleClose() {
+    setModalData((prevState) => ({...prevState, isOpen: !prevState.isOpen}));
+  }
+
+  return (
+    <Modal.ModalBody isOpen={modalData.isOpen} handleClose={handleClose}>
+      <Modal.ModalContainer title={modalData.title} message={modalData.message}>
+        <Modal.ModalBtnContainer>
+          <Modal.ModalButton
+            message={modalData.submitBtnMessage}
+            action={modalData.submitAction}
+          />
+          <Modal.ModalButton
+            message={modalData.cancelBtnMessage}
+            styleType="solid"
+            action={handleClose}
+          />
+        </Modal.ModalBtnContainer>
+      </Modal.ModalContainer>
+    </Modal.ModalBody>
+  );
+};

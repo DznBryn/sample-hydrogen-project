@@ -1,6 +1,9 @@
 import {Suspense, useEffect, useMemo} from 'react';
 import {useCollection} from '~/hooks/useCollection';
 import ListrakRec, {links as listrakRecStyles} from '../listrakRec';
+import RebuyRecommendation, {
+  links as rebuyRecommendationStyles,
+} from '../rebuyRecommendation';
 import ProductBoxLoading, {
   links as productBoxLoadingStyles,
 } from '../productBoxLoading';
@@ -8,14 +11,15 @@ import PLPProductBox, {
   links as plpProductBoxStyles,
 } from '../plp/plpProductBox';
 import {useSearch} from '~/hooks/useSearch';
-
 import styles from './styles.css';
-import {Await, useMatches} from '@remix-run/react';
+import {Await, useMatches, useRouteLoaderData} from '@remix-run/react';
 import {getCMSDoc} from '~/utils/functions/eventFunctions';
 
+import {getIdFromGid} from '~/utils/functions/eventFunctions';
 export const links = () => {
   return [
     {rel: 'stylesheet', href: styles},
+    ...rebuyRecommendationStyles(),
     ...listrakRecStyles(),
     ...productBoxLoadingStyles(),
     ...plpProductBoxStyles(),
@@ -24,7 +28,7 @@ export const links = () => {
 
 const SearchPage = ({searchQuery, algoliaKeys}) => {
   const [root] = useMatches();
-
+  const rootData = useRouteLoaderData('root');
   const {state, products: allProducts} = useCollection('all');
   const {search, status, hits} = useSearch(algoliaKeys);
 
@@ -64,13 +68,20 @@ const SearchPage = ({searchQuery, algoliaKeys}) => {
             Your search for <strong>&quot;{searchQuery}&quot;</strong> did not
             yield any results.
           </h1>
-          <Suspense>
-            <Await resolve={root.data.listrakRec}>
-              {(listrakRec) => (
-                <ListrakRec listrak={getCMSDoc(listrakRec, 'Search')} />
-              )}
-            </Await>
-          </Suspense>
+          {rootData?.ENVS?.SITE_NAME.includes('US') ? (
+            <RebuyRecommendation
+              widgetId="113756"
+              header="check out these best sellers"
+            />
+          ) : (
+            <Suspense>
+              <Await resolve={root.data.listrakRec}>
+                {(listrakRec) => (
+                  <ListrakRec listrak={getCMSDoc(listrakRec, 'Search')} />
+                )}
+              </Await>
+            </Suspense>
+          )}
         </div>
       )}
 
@@ -86,7 +97,29 @@ const SearchPage = ({searchQuery, algoliaKeys}) => {
           </div>
           <div className={'searchPageProducts'}>
             {results.map((product, index) => {
-              return <PLPProductBox product={product} key={index} />;
+              return (
+                <PLPProductBox
+                  product={product}
+                  key={index}
+                  analytics={{
+                    click: {
+                      actionField: {list: 'Homepage'},
+                      products: [
+                        {
+                          name: product?.title,
+                          id: getIdFromGid(product?.id),
+                          price: parseInt(
+                            product?.priceRange?.minVariantPrice?.amount,
+                          )?.toFixed(2),
+                          category: product?.productType,
+                          variant: '',
+                          position: index,
+                        },
+                      ],
+                    },
+                  }}
+                />
+              );
             })}
           </div>
         </>

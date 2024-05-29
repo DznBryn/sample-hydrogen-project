@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useCollection} from '~/hooks/useCollection';
-import {useCustomerState} from '~/hooks/useCostumer';
+import {useCustomer} from '~/hooks/useCustomer';
 
 import RewardEarnPoints, {
   links as rewardEarnPointsStyles,
@@ -43,7 +43,7 @@ export const links = () => {
 };
 
 const RewardsPage = ({yotpoFaq, yotpoRedeemProducts}) => {
-  const {isLoggedIn} = useCustomerState();
+  const {isLoggedIn} = useCustomer();
   const {state, products} = useCollection('all');
   const [data, setData] = useState({});
 
