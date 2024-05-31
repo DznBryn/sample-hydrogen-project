@@ -48,5 +48,5 @@ jobs:
         with:
           oxygen_worker_dir: "./apps/hydroxy/dist/worker"
           oxygen_client_dir: "./apps/hydroxy/dist/client"
-          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000016085 }}
+          oxygen_deployment_token: ${{ secrets.OXYGEN_DEPLOYMENT_TOKEN_1000005119 }}
           build_command: "HYDROGEN_ASSET_BASE_URL=$OXYGEN_ASSET_BASE_URL npm run build:hydroxy"
