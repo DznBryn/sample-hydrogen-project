@@ -72,7 +72,7 @@ const InfluencerPage = ({influencer, cartConfig}) => {
             product={product}
             analytics={{
               click: {
-                actionField: {list: `${collection.name}`},
+                actionField: {list: `${influencer.plpCollection.name}`},
                 products: [
                   {
                     name: product?.title,
@@ -103,7 +103,7 @@ const InfluencerPage = ({influencer, cartConfig}) => {
             product={product}
             analytics={{
               click: {
-                actionField: {list: `${collection.name}`},
+                actionField: {list: `${influencer.plpCollection.name}`},
                 products: [
                   {
                     name: product?.title,
