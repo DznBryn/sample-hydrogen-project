@@ -28,6 +28,7 @@ const PDPVariants = ({classes, details = {}}) => {
   //
 
   useEffect(() => {
+    types.current = getVariantTypes(details.variants);
     setStoreInitialValue();
   }, [location?.pathname]);
 

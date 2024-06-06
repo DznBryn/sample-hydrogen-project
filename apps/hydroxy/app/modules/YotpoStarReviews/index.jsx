@@ -21,7 +21,7 @@ const cacheData = {};
 
 const YotpoStarReviews = ({productExternalID, hideIfNoReview = false}) => {
   const {getProductReviewsData} = useYotpo();
-  const [reviewsObj, setReviewsObj] = useState(getCache());
+  const [reviewsObj, setReviewsObj] = useState(null);
 
   const fetchData = useCallback(() => {
     getProductReviewsData(productExternalID).then((data) => {
@@ -31,8 +31,8 @@ const YotpoStarReviews = ({productExternalID, hideIfNoReview = false}) => {
   }, [productExternalID]);
 
   useLayoutEffect(() => {
-    if (!getCache()) fetchData();
-  }, []);
+    getCache() ? setReviewsObj(getCache()) : fetchData();
+  }, [productExternalID]);
 
   function scrollToReviews() {
     if (typeof document === 'object') {

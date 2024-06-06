@@ -101,8 +101,8 @@ const PDPGallery = ({
           if (variantInit?.split(' / ')[1]) {
             colorCode = variantInit
               .split(' / ')[0]
-              .replace('/', '_')
-              .replace(' ', '_');
+              .replaceAll('/', '_')
+              .replaceAll(' ', '_');
             const size = sizes.filter((size) => {
               return variantInit.includes(size);
             });
@@ -114,7 +114,7 @@ const PDPGallery = ({
           } else {
             colorCode =
               'color_' +
-              variantInit.replace('/', '_').replace(' ', '_') +
+              variantInit.replaceAll('/', '_').replaceAll(' ', '_') +
               '_shade';
           }
 
