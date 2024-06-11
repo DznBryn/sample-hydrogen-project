@@ -45,6 +45,10 @@ import {
   sendShopifyAnalytics,
   useShopifyCookies,
 } from '@shopify/hydrogen';
+import {
+  cartCreate,
+  cartDiscountCodeUpdate,
+} from './utils/graphql/shopify/mutations/cart';
 
 //
 
@@ -74,6 +78,31 @@ export async function loader({context, request}) {
 
   togglePreviewMode(context, url, referer);
   const {SHOPIFY_ANALYTICS} = context.env;
+
+  /**
+   * DISCOUNT_CODE
+   */
+
+  const discountCode = url.searchParams.get('discount_code');
+
+  if (discountCode) {
+    let cartId = await context.session.get('cartId');
+
+    if (!cartId) {
+      const {cart} = await cartCreate({
+        input: {lines: []},
+        storefront: context.storefront,
+      });
+
+      cartId = cart?.id;
+    }
+
+    await cartDiscountCodeUpdate({
+      cartId,
+      discountCodes: [discountCode],
+      storefront: context.storefront,
+    });
+  }
 
   /**
    * REDIRECT

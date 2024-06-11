@@ -72,6 +72,53 @@ export async function cartUpdateCustomerIdentity({
   return cartBuyerIdentityUpdate;
 }
 
+export async function cartDiscountCodeUpdate({
+  cartId,
+  discountCodes,
+  storefront,
+}) {
+  const {cartDiscountCodesUpdate} = await storefront.mutate(
+    UPDATE_CART_DISCOUNT,
+    {
+      variables: {
+        cartId,
+        discountCodes,
+      },
+    },
+  );
+
+  if (!cartDiscountCodesUpdate) {
+    throw new Error('No data returned from discount code items mutation');
+  }
+
+  return cartDiscountCodesUpdate;
+}
+
+export const UPDATE_CART_DISCOUNT = `#graphql
+  mutation(
+    $cartId: ID!,
+    $discountCodes: [String!]!,
+    $country: CountryCode = ZZ,
+    $language: LanguageCode,
+  ) @inContext(country: $country, language: $language){
+    cartDiscountCodesUpdate(cartId: $cartId, discountCodes: $discountCodes) {
+      cart {
+        id
+        discountCodes {
+            applicable
+            code
+        }
+      }
+      userErrors {
+        message
+        field
+        code
+      }
+    }
+  }
+
+`;
+
 const USER_ERROR_FRAGMENT = `#graphql
   fragment ErrorFragment on CartUserError {
     message
