@@ -53,7 +53,7 @@ const FooterCopyright = () => {
       )}
 
       <div id="footerCopyright" className={'footerCopyright'}>
-        © TULA Life, Inc. | All Rights Reserved | Made in NYC |{' '}
+        <p>© TULA Life, Inc. | All Rights Reserved | Made in NYC</p>&nbsp;|{' '}
         <a href="/pages/terms-conditions" target="_self">
           Terms &amp; Conditions
         </a>
@@ -65,6 +65,8 @@ const FooterCopyright = () => {
         <a href="/pages/cookie-policy" target="_self">
           Cookie Policy
         </a>
+        &nbsp;|&nbsp;{' '}
+        <p>&nbsp;NOTICE: We may sell your sensitive personal data.</p>
         {oneTrustID && (
           <>
             &nbsp;|&nbsp;
