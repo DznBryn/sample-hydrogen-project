@@ -125,21 +125,11 @@ const PageMeta = () => {
           }}
         ></script>
       )}
-      
+
       {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
         <script
           defer
           src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
-        ></script>
-      )}
-
-      {/* ABtasty  cookies  */}
-
-      {!rootData?.ENVS?.SITE_NAME.includes('UK') && (
-        <script
-          defer
-          type="text/javascript"
-          src="https://try.abtasty.com/02cdae70c1d789160f8b7d2e1d22ccf3.js"
         ></script>
       )}
 
