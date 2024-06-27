@@ -193,12 +193,7 @@ export const CookieScripts = () => {
       <script
         defer
         src={`https://rapid-cdn.yottaa.com/rapid/lib/${rootData?.ENVS?.YOTTA_KEY}.js`}
-      ></script>
-      <script
-        defer
-        type="text/javascript"
-        src="https://try.abtasty.com/02cdae70c1d789160f8b7d2e1d22ccf3.js"
-      ></script> */}
+      ></script>*/}
     </Helmet>
   );
 };
