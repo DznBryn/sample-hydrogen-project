@@ -97,11 +97,6 @@ const PageMeta = () => {
 
       <script
         defer
-        dangerouslySetInnerHTML={{__html: 'window.lockABTastyTag = true;'}}
-      ></script>
-
-      <script
-        defer
         dangerouslySetInnerHTML={{
           __html: `window.dataLayer = window.dataLayer || [];
                     window.dataLayer.push({
