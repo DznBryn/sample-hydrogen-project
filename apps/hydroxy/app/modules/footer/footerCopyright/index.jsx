@@ -65,8 +65,9 @@ const FooterCopyright = () => {
         <a href="/pages/cookie-policy" target="_self">
           Cookie Policy
         </a>
-        &nbsp;|&nbsp;{' '}
-        <p>&nbsp;NOTICE: We may sell your sensitive personal data.</p>
+        {rootData?.ENVS?.SITE_NAME.includes('US') ? (
+          <p>|&nbsp;NOTICE: We may sell your sensitive personal data</p>
+        ) : null}
         {oneTrustID && (
           <>
             &nbsp;|&nbsp;
