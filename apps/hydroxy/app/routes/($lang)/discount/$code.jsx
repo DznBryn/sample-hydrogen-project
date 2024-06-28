@@ -1,8 +1,7 @@
 import {redirect} from '@remix-run/server-runtime';
 
-export function loader({params, request}) {
+export async function loader({params, request}) {
   const headers = new Headers();
-
   const parsedUrl = new URL(request.url);
 
   let paramsArray = [];
@@ -14,8 +13,15 @@ export function loader({params, request}) {
       paramsArray.push(`${key}=${value}`);
     }
   });
-  const redirectLink =
-    paramsArray.join('&').replace('?&', '?') + `&discount_code=${params.code}`;
+
+  let redirectLink;
+  if (paramsArray.length === 0) {
+    redirectLink = `/${parsedUrl?.pathname?.split('/')[2]}`;
+  } else {
+    redirectLink =
+      paramsArray.join('&').replace('?&', '?') +
+      `&discount_code=${params.code}`;
+  }
 
   const cookies = {
     tulaDiscountCode: `discount_code=${params.code};Path=/;HttpOnly;Secure`,
@@ -23,6 +29,7 @@ export function loader({params, request}) {
       params.code ? '' : ''
     };Path=/;HttpOnly;Secure`,
   };
+
   headers.append('Set-Cookie', cookies.tulaDiscountCode);
   headers.append('Set-Cookie', cookies.tulaDiscountText);
 
